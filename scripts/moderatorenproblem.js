@@ -5,6 +5,9 @@
   const storageKey = 'learningapps2.monty.lab.v1';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let movement = !reducedMotion.matches;
+  const themeKey = 'learningapps2.monty.theme';
+  let darkMode = false;
+  try { darkMode = localStorage.getItem(themeKey) === 'dark'; } catch {}
   let lab = { switch: [], stay: [] }, demoRound = 0, labGame;
   let storageAvailable = true;
   try {
@@ -209,6 +212,17 @@
     $('motion-toggle').setAttribute('aria-pressed',String(movement));
     $('motion-toggle').textContent=movement?'Bewegung an':'Bewegung aus';
   }
+  function setTheme() {
+    document.body.classList.toggle('dark', darkMode);
+    $('theme-toggle').setAttribute('aria-pressed',String(darkMode));
+    $('theme-toggle').textContent=darkMode?'☼ Hellmodus':'◐ Dunkelmodus';
+    document.querySelector('meta[name="theme-color"]').content=darkMode?'#151d27':'#f6f3eb';
+  }
+  $('theme-toggle').addEventListener('click',()=>{
+    darkMode=!darkMode;
+    try { localStorage.setItem(themeKey,darkMode?'dark':'light'); } catch {}
+    setTheme();
+  });
   $('motion-toggle').addEventListener('click',()=>{movement=!movement;setMotion();});
   reducedMotion.addEventListener?.('change',()=>{movement=!reducedMotion.matches;setMotion();});
   function fullscreenState() {
@@ -232,5 +246,5 @@
   });
   document.addEventListener('fullscreenchange',fullscreenState);document.addEventListener('webkitfullscreenchange',fullscreenState);
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('presentation');fullscreenState();}});
-  setMotion(); startDemo(); startLab();
+  setTheme(); setMotion(); startDemo(); startLab();
 })();

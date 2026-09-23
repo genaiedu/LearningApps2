@@ -1,0 +1,136 @@
+body {
+  transition: color .22s ease, background-color .22s ease;
+}
+
+body.dark {
+  color-scheme: dark;
+  --background: #151c25;
+  --surface: #202a35;
+  --text: #edf2f4;
+  --muted: #b5c1c7;
+  --accent: #83d0b4;
+  --accent-text: #10251f;
+  --border: #3b4a56;
+  --focus: #ffd27d;
+  --stage: #191e2b;
+  --mint: #a5e4cb;
+  --peach: #ffb79a;
+  --yellow: #ffda84;
+  background: radial-gradient(ellipse at 80% 0, #223242 0, transparent 42%), var(--background);
+}
+
+body.dark .skip {
+  color: #15202b;
+  background: #fffdf7;
+}
+
+body.dark .app-header {
+  border-color: var(--border);
+}
+
+body.dark .wordmark span {
+  color: #f2a27e;
+}
+
+body.dark .show {
+  box-shadow: 0 22px 42px -25px #000b;
+}
+
+body.dark .show::before {
+  background: radial-gradient(ellipse at 50% 45%, #47556b66, transparent 68%);
+}
+
+body.dark .lab-step {
+  background: #27333d;
+}
+
+body.dark .lab-step > span {
+  color: #b1c0c4;
+}
+
+body.dark .lab-step.active {
+  background: #29463e;
+}
+
+body.dark .lab-step.done {
+  background: #293b38;
+}
+
+body.dark .lab-game,
+body.dark .results {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.dark .strategy-badge {
+  color: #d5f1e4;
+  background: #345449;
+}
+
+body.dark .trial-dot {
+  color: #d5dfe2;
+  background: #27323c;
+  border-color: #46545e;
+}
+
+body.dark .trial-dot.loss {
+  color: #f0d9c4;
+  background: #493d38;
+  border-color: #66544a;
+}
+
+body.dark .result-track {
+  background: #35414b;
+}
+
+body.dark .lab-summary,
+body.dark .long-run {
+  color: var(--text);
+  background: #263b39;
+}
+
+body.dark .case-table,
+body.dark .case-row {
+  border-color: var(--border);
+}
+
+body.dark .case-row {
+  background: #202a35;
+}
+
+body.dark .case-head {
+  background: #2b3944;
+}
+
+body.dark .case-win {
+  color: #8fe0bb;
+}
+
+body.dark .sim-bar {
+  background: #83d0b4;
+}
+
+body.dark .sim-bar.stay {
+  background: #e59c70;
+}
+
+body.dark .lab-game .game-actions button {
+  color: #10251f;
+  background: var(--accent);
+}
+
+body.dark .button--secondary {
+  color: var(--text);
+  border-color: #71828d;
+}
+
+@media (max-width: 600px) {
+  .app-header { flex-wrap: wrap; }
+  .app-header nav { width: 100%; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
+  .app-header nav a { max-width: none; }
+  .app-header nav .text-button { padding-inline: 2px; font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none; }
+}
