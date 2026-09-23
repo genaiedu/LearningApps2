@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles/moderatorenproblem.css?v=birds1">
   <link rel="stylesheet" href="styles/monty-characters.css?v=birds1">
   <link rel="stylesheet" href="styles/dark-mode.css?v=theme1">
+  <link rel="stylesheet" href="styles/chess-invite.css?v=1">
   <script src="scripts/monty-engine.js" defer></script>
   <script src="scripts/monty-birds.js?v=birds2" defer></script>
   <script src="scripts/monty-scenes.js?v=birds1" defer></script>
@@ -54,6 +55,14 @@
       <p>Zwei geschlossene Tore bedeuten hier nicht zwei gleich große Gewinnchancen. Deine erste Wahl trifft den Gewinn nur in einem Drittel der Fälle. In den übrigen zwei Dritteln hilft der Moderator, das andere Nietentor auszusortieren: Der Wechsel führt dann zum Gewinn.</p>
       <div class="long-run"><div><h3>Und bei viel mehr Versuchen?</h3><p>Vergleiche beide Strategien in 1.000 neuen Auslosungen. Jede Auslosung wird für beide Entscheidungen ausgewertet. Deine 20 eigenen Versuche bleiben separat.</p><button class="button" id="simulate">1.000 Versuche simulieren</button></div><div id="simulation-result" aria-live="polite">Noch keine Simulation gestartet.</div></div>
       <p class="source-note">Fachliche Grundlage: <a href="https://encyclopediaofmath.org/wiki/Monty_hall_problem" target="_blank" rel="noopener noreferrer">Encyclopedia of Mathematics · Monty Hall problem</a>. Es gelten die oben beschriebenen festen Regeln des Moderators.</p>
+    </section>
+
+    <section class="chess-invite wrap" aria-labelledby="chess-invite-title">
+      <a class="chess-invite__link" href="https://genaiedu.github.io/LearningApps/schach-ag.html">
+        <span class="chess-invite__piece" aria-hidden="true">♞</span>
+        <span class="chess-invite__copy"><span class="kicker">DEIN NÄCHSTER ZUG BEGINNT HIER</span><strong id="chess-invite-title">Lust auf eine Partie?</strong><span>Entdecke die Schach-AG: Spiele gegen Stockfish, probiere Eröffnungen aus und finde deinen nächsten Zug – auch ohne Vorkenntnisse.</span></span>
+        <span class="chess-invite__action">Schach-AG · Dein nächster Zug <span aria-hidden="true">↗</span></span>
+      </a>
     </section>
 
   </main>

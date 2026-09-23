@@ -1,0 +1,105 @@
+.chess-invite {
+  margin-top: 64px;
+}
+
+.chess-invite__link {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(18px, 3vw, 36px);
+  padding: clamp(22px, 4vw, 40px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text);
+  background: var(--surface);
+  text-decoration: none;
+  box-shadow: 0 18px 42px -34px #182c3970;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.chess-invite__link:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 22px 44px -30px #182c3990;
+}
+
+.chess-invite__piece {
+  display: grid;
+  width: clamp(58px, 8vw, 86px);
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 22px;
+  color: #f6f3eb;
+  background: #242738;
+  font-size: clamp(34px, 5vw, 52px);
+}
+
+.chess-invite__copy {
+  display: grid;
+  gap: 9px;
+}
+
+.chess-invite__copy .kicker {
+  margin: 0;
+  color: var(--accent);
+}
+
+.chess-invite__copy strong {
+  font-family: Poppins, Inter, sans-serif;
+  font-size: clamp(22px, 3vw, 32px);
+  letter-spacing: -.035em;
+  line-height: 1.2;
+}
+
+.chess-invite__copy > span:last-child {
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.chess-invite__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 11px 16px;
+  border-radius: 9px;
+  color: var(--accent-text);
+  background: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chess-invite__action span {
+  font-size: 18px;
+}
+
+body.dark .chess-invite__piece {
+  color: #f8f4e9;
+  background: #30374b;
+}
+
+@media (max-width: 760px) {
+  .chess-invite__link {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .chess-invite__action {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 480px) {
+  .chess-invite { margin-top: 42px; }
+  .chess-invite__link { gap: 14px; padding: 19px; }
+  .chess-invite__piece { width: 48px; font-size: 30px; border-radius: 15px; }
+  .chess-invite__copy > span:last-child { font-size: 12px; }
+  .chess-invite__action { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chess-invite__link { transition: none; }
+}
