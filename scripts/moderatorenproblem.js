@@ -232,10 +232,5 @@
   });
   document.addEventListener('fullscreenchange',fullscreenState);document.addEventListener('webkitfullscreenchange',fullscreenState);
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('presentation');fullscreenState();}});
-  $('backstage').addEventListener('toggle',()=>{
-    if(!$('backstage').open){$('animation-gallery').querySelectorAll('.gallery-item').forEach(el=>pauseObserver?.unobserve(el));$('animation-gallery').replaceChildren();return;}
-    $('animation-gallery').innerHTML=[...S.prizes.map((p,i)=>`<div class="gallery-item">${S.scene('prize',i).html}</div>`), ...S.zonks.map((z,i)=>`<div class="gallery-item">${S.scene('zonk',i).html}<p>${i+1} · ${z.name}</p></div>`)].join('');
-    $('animation-gallery').querySelectorAll('.gallery-item').forEach(el=>pauseObserver?.observe(el));
-  });
   setMotion(); startDemo(); startLab();
 })();

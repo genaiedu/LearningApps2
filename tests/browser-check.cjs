@@ -58,11 +58,6 @@ const out = path.join(__dirname, '../tmp');fs.mkdirSync(out, {recursive:true});
   const download=await downloadPromise;await download.saveAs(path.join(out,'protocol.txt'));
   assert.match(fs.readFileSync(path.join(out,'protocol.txt'),'utf8'),/IMMER WECHSELN[\s\S]*IMMER BLEIBEN/);
   await page.reload();assert.equal(await page.locator('#lab-summary').isVisible(),true);
-  await page.locator('#backstage summary').click();
-  await page.locator('.gallery .prize-scene').first().waitFor();
-  assert.equal(await page.locator('.gallery .prize-scene').count(),10);
-  assert.equal(await page.locator('.gallery .zonk-scene').count(),10);
-  await page.locator('#backstage').screenshot({path:path.join(out,'gallery.png')});
   for(const width of [375,768,1024]){
     await page.setViewportSize({width,height:width===1024?768:1024});
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`No horizontal overflow at ${width}`);
