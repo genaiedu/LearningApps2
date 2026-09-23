@@ -1,0 +1,70 @@
+/* Species-specific joints and loops. Reduced-motion and offscreen pausing are shared. */
+.bird-eye{transform-box:fill-box;transform-origin:center}
+.owl-head{transform-origin:150px 110px;animation:owl-look 5s ease-in-out infinite}
+.scene-eule .bird-eye{animation:bird-blink 4.3s infinite}
+.penguin{transform-origin:150px 199px;animation:penguin-walk 2.8s ease-in-out infinite}
+.penguin-wing-left{transform-origin:109px 111px;animation:penguin-flap 1.4s ease-in-out infinite alternate}
+.penguin-wing-right{transform-origin:191px 111px;animation:penguin-flap 1.4s -.7s ease-in-out infinite alternate-reverse}
+.flamingo{transform-origin:143px 155px;animation:flamingo-sway 4.5s ease-in-out infinite}
+.flamingo-leg{transform-origin:163px 152px;animation:flamingo-step 4.5s ease-in-out infinite}
+.toucan-head{transform-origin:147px 96px;animation:toucan-nod 3.8s ease-in-out infinite}
+.pelican-bill{transform-origin:179px 68px;animation:pelican-gulp 4s ease-in-out infinite}
+.pelican-fish{animation:fish-hop 4s ease-in-out infinite}
+.peacock-fan{transform-origin:150px 183px;animation:peacock-display 6s ease-in-out infinite}
+.peacock{transform-origin:150px 196px;animation:peacock-bow 6s ease-in-out infinite}
+.woodpecker-head{transform-origin:170px 100px;animation:woodpecker-tap 2.8s ease-in-out infinite}
+.peck-lines{animation:peck-marks 2.8s ease-in-out infinite}
+.duck{animation:duck-swim 5s ease-in-out infinite}
+.duck-foot{transform-origin:158px 185px;animation:duck-paddle 1.2s ease-in-out infinite alternate}
+.duck-ripple{transform-origin:150px 204px;animation:duck-waves 2.5s ease-in-out infinite}
+.hummingbird{animation:humming-hover 2.6s ease-in-out infinite}
+.humming-wing{transform-origin:134px 114px;animation:humming-flap .18s linear infinite alternate}
+.humming-wing-back{transform-origin:134px 114px;animation:humming-flap .18s -.09s linear infinite alternate-reverse}
+.parrot{transform-origin:145px 187px;animation:parrot-sway 3.8s ease-in-out infinite}
+.parrot-wing{transform-origin:122px 114px;animation:parrot-wave 3.8s ease-in-out infinite}
+.bicycle{animation:bike-cruise 4s ease-in-out infinite}
+.bike-crank{transform-origin:157px 170px;animation:wheel-turn 2s linear infinite}
+.camera-lens{transform-origin:128px 139px;animation:camera-focus 4.2s ease-in-out infinite}
+.camera-flash{animation:camera-flash 4.2s ease-in-out infinite}
+.photo-card{animation:photo-rise 4.2s ease-in-out infinite}
+.pixel-runner{animation:pixel-jump 2s ease-in-out infinite}
+.pixel-star{transform-origin:199px 75px;animation:pixel-collect 2s ease-in-out infinite}
+.controller{transform-origin:150px 189px;animation:controller-tilt 4s ease-in-out infinite}
+.controller-button{animation:twinkle 2s ease-in-out infinite}
+.robot-arm{transform-origin:189px 151px;animation:robot-wave 3s ease-in-out infinite}
+.robot-light{animation:twinkle 2.5s ease-in-out infinite}
+.robot-eyes{animation:robot-scan 4s ease-in-out infinite}
+.telescope{transform-origin:145px 132px;animation:stargaze 7s ease-in-out infinite}
+.shooting-star{animation:shooting-star 7s ease-out infinite}
+
+@keyframes bird-blink{0%,40%,47%,100%{transform:scaleY(1)}43%{transform:scaleY(.1)}}
+@keyframes owl-look{0%,15%,100%{transform:rotate(0)}35%,45%{transform:rotate(-12deg)}65%,75%{transform:rotate(12deg)}}
+@keyframes penguin-walk{0%,100%{transform:translateX(-13px) rotate(-7deg)}25%{transform:translateX(0) translateY(-3px) rotate(6deg)}50%{transform:translateX(13px) rotate(-6deg)}75%{transform:translateX(0) translateY(-3px) rotate(7deg)}}
+@keyframes penguin-flap{to{transform:rotate(17deg)}}
+@keyframes flamingo-sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
+@keyframes flamingo-step{0%,25%,100%{transform:rotate(0)}55%,75%{transform:rotate(25deg)}}
+@keyframes toucan-nod{0%,55%,100%{transform:rotate(0)}20%{transform:rotate(-13deg)}35%{transform:rotate(6deg)}}
+@keyframes pelican-gulp{0%,30%,100%{transform:rotate(0)}50%,65%{transform:rotate(12deg)}}
+@keyframes fish-hop{0%,20%,100%{transform:translateY(10px) rotate(0);opacity:.3}45%,65%{transform:translateY(-20px) rotate(4deg);opacity:1}}
+@keyframes peacock-display{0%,100%{transform:scale(.5,.85)}30%,75%{transform:scale(1)}}
+@keyframes peacock-bow{0%,30%,100%{transform:rotate(0)}55%{transform:rotate(-5deg)}}
+@keyframes woodpecker-tap{0%,18%,48%,78%,100%{transform:rotate(-9deg)}28%,58%,88%{transform:rotate(12deg)}}
+@keyframes peck-marks{0%,18%,40%,48%,70%,78%,100%{opacity:0}28%,58%,88%{opacity:1}}
+@keyframes duck-swim{0%,100%{transform:translateX(-16px)}50%{transform:translate(16px,-3px)}}
+@keyframes duck-paddle{to{transform:rotate(-25deg)}}
+@keyframes duck-waves{0%,100%{transform:scaleX(.8);opacity:.4}50%{transform:scaleX(1.12);opacity:1}}
+@keyframes humming-hover{0%,100%{transform:translate(-6px,4px)}50%{transform:translate(5px,-7px)}}
+@keyframes humming-flap{from{transform:rotate(-25deg) scaleX(.75)}to{transform:rotate(38deg) scaleX(1)}}
+@keyframes parrot-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+@keyframes parrot-wave{0%,20%,100%{transform:rotate(0)}40%,70%{transform:rotate(48deg)}55%{transform:rotate(30deg)}}
+@keyframes bike-cruise{0%,100%{transform:translateX(-7px)}50%{transform:translate(7px,-2px)}}
+@keyframes camera-focus{0%,100%{transform:scale(1)}40%{transform:scale(.8)}}
+@keyframes camera-flash{0%,40%,65%,100%{opacity:0}50%,55%{opacity:1}}
+@keyframes photo-rise{0%,25%,100%{transform:translateY(9px) rotate(-2deg)}60%,80%{transform:translateY(-7px) rotate(3deg)}}
+@keyframes pixel-jump{0%,100%{transform:translateX(-18px)}45%{transform:translate(32px,-22px)}70%{transform:translateX(35px)}}
+@keyframes pixel-collect{0%,100%{transform:scale(1);opacity:1}55%,75%{transform:scale(1.4);opacity:.3}}
+@keyframes controller-tilt{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes robot-wave{0%,100%{transform:rotate(-8deg)}30%,65%{transform:rotate(18deg)}45%,80%{transform:rotate(-12deg)}}
+@keyframes robot-scan{0%,100%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+@keyframes stargaze{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@keyframes shooting-star{0%,55%,100%{transform:translate(0);opacity:0}60%{opacity:1}85%{transform:translate(130px,55px);opacity:0}}

@@ -43,8 +43,9 @@ Die Schülerseiten enthalten keine Rückverlinkung zur Materialübersicht.
 
 `moderatorenproblem.html`: beliebig wiederholbare Vorführung mit Vollbild und
 iPad-Fallback, gefolgt von zehn Wechsel- und zehn Bleibe-Versuchen. Die Erklärung
-erscheint erst nach diesen Versuchen auf Wunsch. Fünf Gewinne und zehn Bewegungen
-desselben Zonks werden als SVG/CSS animiert. Bewegungsreduktion wird unterstützt.
+erscheint erst nach diesen Versuchen auf Wunsch. Zehn Gewinnmotive und zehn
+verschiedene Vogelarten als Zonks werden als SVG/CSS animiert. Jede Vogelart hat
+eine eigene Bewegung. Bewegungsreduktion wird unterstützt.
 Es gibt weder echte Einsätze noch echte Gewinne.
 
 Der Moderator öffnet stets ein anderes Nietentor und bietet immer den Wechsel

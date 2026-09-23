@@ -60,7 +60,7 @@ const out = path.join(__dirname, '../tmp');fs.mkdirSync(out, {recursive:true});
   await page.reload();assert.equal(await page.locator('#lab-summary').isVisible(),true);
   await page.locator('#backstage summary').click();
   await page.locator('.gallery .prize-scene').first().waitFor();
-  assert.equal(await page.locator('.gallery .prize-scene').count(),5);
+  assert.equal(await page.locator('.gallery .prize-scene').count(),10);
   assert.equal(await page.locator('.gallery .zonk-scene').count(),10);
   await page.locator('#backstage').screenshot({path:path.join(out,'gallery.png')});
   for(const width of [375,768,1024]){
@@ -73,7 +73,7 @@ const out = path.join(__dirname, '../tmp');fs.mkdirSync(out, {recursive:true});
   assert.equal(await page.locator('#lab-doors .open').count(),0);
   assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
   await browser.close();
-  console.log('PASS Chromium: full game, twenty trials, protocol, restore/reset, five prizes/ten Zonks, fullscreen and responsive layouts.');
+  console.log('PASS Chromium: full game, twenty trials, protocol, restore/reset, ten prizes/ten bird Zonks, fullscreen and responsive layouts.');
   let safari;
   try { safari=await webkit.launch({headless:true}); }
   catch(e){console.log('WebKit unavailable: '+e.message.split('\n')[0]);return;}
