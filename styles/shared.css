@@ -1,0 +1,87 @@
+@font-face {
+  font-family: Inter;
+  src: url('/LearningApps/fonts/inter-v20-latin-regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('/LearningApps/fonts/inter-v20-latin-600.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url('/LearningApps/fonts/poppins-v24-latin-700.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --background: #f5f7fb;
+  --surface: #ffffff;
+  --text: #192b3d;
+  --muted: #536579;
+  --border: #cbd7e3;
+  --accent: #145c96;
+  --accent-text: #ffffff;
+  --focus: #e28b34;
+  --radius: 18px;
+  --content-width: 1100px;
+  font-family: Inter, system-ui, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { min-width: 320px; margin: 0; color: var(--text); background: var(--background); }
+img, svg { max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { color: var(--accent); text-underline-offset: .18em; }
+a:hover { text-decoration-thickness: .12em; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+[hidden] { display: none !important; }
+
+h1, h2, h3 { font-family: Poppins, Inter, system-ui, sans-serif; line-height: 1.2; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.45rem, 3vw, 2.25rem); }
+p { max-width: 75ch; }
+.container { width: min(calc(100% - 2rem), var(--content-width)); margin-inline: auto; }
+.site-header, .site-footer { background: var(--surface); }
+.site-header { border-bottom: 1px solid var(--border); }
+.site-footer { margin-top: 4rem; padding-block: 1.5rem; border-top: 1px solid var(--border); }
+.site-header .container, .site-footer .container { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.site-header .container { min-height: 4.5rem; }
+.site-header nav, .site-footer nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+.brand { color: var(--text); font-family: Poppins, Inter, system-ui, sans-serif; font-weight: 700; text-decoration: none; }
+.eyebrow { margin-bottom: .5rem; color: var(--accent); font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.hero { padding-block: clamp(3rem, 8vw, 6rem); }
+.hero h1 { max-width: 18ch; margin: 0 0 1rem; }
+.hero .lead { color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.25rem); }
+.stack > * + * { margin-top: 1.25rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 1rem; }
+.card { padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.card h2, .card h3 { margin-top: 0; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; padding: .7rem 1.1rem; border: 1px solid var(--accent); border-radius: 12px; color: var(--accent-text); background: var(--accent); font-weight: 600; text-align: center; text-decoration: none; }
+.button:hover { filter: brightness(1.08); }
+.button--secondary { color: var(--accent); background: transparent; }
+.field { display: grid; gap: .35rem; font-weight: 600; }
+.field input, .field select, .field textarea { width: 100%; min-height: 44px; padding: .7rem .85rem; border: 1px solid var(--border); border-radius: 10px; color: var(--text); background: var(--surface); }
+.field textarea { min-height: 8rem; resize: vertical; }
+.notice { padding: 1rem 1.25rem; border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; background: var(--surface); }
+
+@media (max-width: 640px) {
+  .site-header .container, .site-footer .container { align-items: flex-start; flex-direction: column; padding-block: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
