@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#242738">
+  <meta name="description" content="Drei Tore, eine Entscheidung: Erlebe das Moderatorenproblem und vergleiche Wechseln und Bleiben in deinem eigenen Experiment.">
+  <title>Drei Tore · Das Moderatorenproblem</title>
+  <link rel="stylesheet" href="styles/shared.css">
+  <link rel="stylesheet" href="styles/moderatorenproblem.css">
+  <script src="scripts/monty-engine.js" defer></script>
+  <script src="scripts/monty-scenes.js" defer></script>
+  <script src="scripts/moderatorenproblem.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#spiel">Zum Spiel</a>
+  <header class="app-header wrap">
+    <a class="wordmark" href="#">DREI TORE<span aria-hidden="true">.</span></a>
+    <nav aria-label="Auf dieser Seite"><a href="#labor">Zum Experimentierlabor <span aria-hidden="true">↗</span></a><button class="text-button" id="motion-toggle" aria-pressed="true">Bewegung an</button></nav>
+  </header>
+  <main>
+    <section class="intro wrap" aria-labelledby="page-title">
+      <div><p class="kicker">DAS MODERATORENPROBLEM</p><h1 id="page-title">Bleiben.<br><span>Oder wechseln?</span></h1><p class="intro-copy">Drei Tore. Ein Gewinn. Zwei Zonks.<br>Und eine zweite Chance auf deine erste Entscheidung.</p></div>
+      <div class="intro-note"><span class="note-arrow" aria-hidden="true">↙</span><p>Dein Bauchgefühl hat<br>bestimmt eine Antwort.</p><span class="tiny-label">PROBIER ES AUS.</span></div>
+    </section>
+
+    <section class="show wrap" id="spiel" aria-labelledby="show-title">
+      <div class="stage-top"><div><p class="kicker">DIE SPIELSHOW</p><h2 id="show-title">Welches Tor nimmst du?</h2></div><div class="stage-tools"><span class="round-label" id="demo-round">Runde 01</span><button id="fullscreen" class="stage-button" aria-pressed="false"><span aria-hidden="true">⛶</span> Vollbild</button></div></div>
+      <ol class="steps" aria-label="Spielablauf"><li data-phase="choose">01 <span>Wählen</span></li><li data-phase="reveal">02 <span>Öffnen</span></li><li data-phase="decide">03 <span>Entscheiden</span></li></ol>
+      <div class="doors" id="demo-doors" aria-label="Drei Tore"></div>
+      <div class="host-row"><span class="host-icon" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="14" y="4" width="12" height="21" rx="6" fill="currentColor"/><path d="M9 18v3a11 11 0 0 0 22 0v-3M20 32v5m-6 0h12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div><p class="host-label">DER MODERATOR</p><p class="host-message" id="demo-message" aria-live="polite" aria-atomic="true">Hinter einem Tor wartet ein Gewinn. Wähle dein Tor.</p></div></div>
+      <div class="game-actions" id="demo-actions"></div>
+      <p class="stage-rule">Der Moderator kennt die Inhalte. Er öffnet immer ein anderes Tor mit einem Zonk und bietet dir danach immer den Wechsel an.</p>
+    </section>
+
+    <section class="lab-section wrap" id="labor" aria-labelledby="lab-title">
+      <div class="section-heading"><div><p class="kicker">JETZT WIRD AUS DEM GEFÜHL EIN EXPERIMENT</p><h2 id="lab-title">Deine Strategie.<br>Deine Daten.</h2></div><p>Spiele zuerst zehnmal mit Wechsel, dann zehnmal ohne Wechsel. Jeder Versuch wird neu ausgelost. Ob ein Gewinn wartet, weißt du vorher nicht.</p></div>
+      <div class="lab-steps"><div id="switch-step" class="lab-step active"><span>01</span><div><strong>Immer wechseln</strong><small id="switch-progress">0 von 10 Versuchen</small></div></div><div id="stay-step" class="lab-step"><span>02</span><div><strong>Immer bleiben</strong><small id="stay-progress">Danach: 10 Versuche</small></div></div></div>
+      <div class="lab-layout">
+        <div class="lab-game" id="lab-game"><div class="lab-game-head"><span class="strategy-badge" id="lab-strategy">IMMER WECHSELN</span><span id="lab-round">Versuch 1 / 10</span></div><div class="doors doors--lab" id="lab-doors" aria-label="Experiment: drei Tore"></div><p class="lab-message" id="lab-message" aria-live="polite" aria-atomic="true"></p><div class="game-actions" id="lab-actions"></div></div>
+        <aside class="results" aria-labelledby="results-title"><p class="kicker">DEIN PROTOKOLL</p><h3 id="results-title">Was kommt heraus?</h3><div class="chart-result" id="result-switch"><div class="result-heading"><strong>Wechseln</strong><span class="result-ratio">0 / 0</span></div><div class="result-dots" aria-label="Noch keine Versuche"></div><div class="result-track"><div class="result-bar"></div></div><p class="result-caption">Noch kein Ergebnis</p></div><div class="chart-result result-stay" id="result-stay"><div class="result-heading"><strong>Bleiben</strong><span class="result-ratio">0 / 0</span></div><div class="result-dots" aria-label="Noch keine Versuche"></div><div class="result-track"><div class="result-bar"></div></div><p class="result-caption">Noch kein Ergebnis</p></div><p class="chart-key"><span>● Gewinn</span><span>× Zonk</span><span>○ offen</span></p><p class="data-note">Die Balken zeigen den Gewinnanteil deiner bisher gespielten Versuche. Ergebnisse bleiben für diesen Browser-Tab gespeichert.</p></aside>
+      </div>
+      <div id="lab-summary" class="lab-summary" hidden><p class="kicker">20 VERSUCHE. EIN ERSTER BEFUND.</p><h3 id="summary-title"></h3><p id="summary-copy"></p><p>Zehn Versuche pro Strategie sind wenig. Einzelne Versuchsreihen können deutlich voneinander abweichen – sogar die eigentlich ungünstigere Strategie kann dabei vorne liegen.</p><div class="summary-actions"><button id="show-explanation" class="button">Warum ist das so? <span aria-hidden="true">↓</span></button><button id="export-results" class="button button--secondary">Protokoll als Text herunterladen</button></div></div>
+      <div class="lab-bottom"><p>Wichtig: Spiele jeden Block mit seiner festen Strategie zu Ende.</p><button class="text-button" id="reset-lab">Versuchsreihe zurücksetzen</button></div>
+    </section>
+
+    <section class="explanation wrap" id="erklaerung" aria-labelledby="explanation-title" hidden>
+      <p class="kicker">DIE AUFLÖSUNG</p><h2 id="explanation-title">Der Moderator<br>öffnet nicht zufällig.</h2><p class="explanation-lead">Er weiß, wo der Gewinn steht, und zeigt dir gezielt einen Zonk. Beim Wechsel gewinnst du genau dann, wenn deine erste Wahl ein Zonk war.</p>
+      <div class="case-table" role="table" aria-label="Drei gleich wahrscheinliche Fälle bei der ersten Wahl"><div class="case-row case-head" role="row"><span role="columnheader">Deine erste Wahl</span><span role="columnheader">Du bleibst</span><span role="columnheader">Du wechselst</span></div><div class="case-row" role="row"><strong role="cell">Gewinn <small>1 von 3 Fällen</small></strong><span role="cell" class="case-win">Gewinn</span><span role="cell">Zonk</span></div><div class="case-row" role="row"><strong role="cell">Zonk A <small>1 von 3 Fällen</small></strong><span role="cell">Zonk</span><span role="cell" class="case-win">Gewinn</span></div><div class="case-row" role="row"><strong role="cell">Zonk B <small>1 von 3 Fällen</small></strong><span role="cell">Zonk</span><span role="cell" class="case-win">Gewinn</span></div></div>
+      <div class="probabilities"><div><strong>⅓</strong><span>Gewinnchance beim Bleiben<br>ungefähr 33 %</span></div><div><strong>⅔</strong><span>Gewinnchance beim Wechseln<br>ungefähr 67 %</span></div></div>
+      <p>Zwei geschlossene Tore bedeuten hier nicht zwei gleich große Gewinnchancen. Deine erste Wahl trifft den Gewinn nur in einem Drittel der Fälle. In den übrigen zwei Dritteln hilft der Moderator, das andere Nietentor auszusortieren: Der Wechsel führt dann zum Gewinn.</p>
+      <div class="long-run"><div><h3>Und bei viel mehr Versuchen?</h3><p>Vergleiche beide Strategien in 1.000 neuen Auslosungen. Jede Auslosung wird für beide Entscheidungen ausgewertet. Deine 20 eigenen Versuche bleiben separat.</p><button class="button" id="simulate">1.000 Versuche simulieren</button></div><div id="simulation-result" aria-live="polite">Noch keine Simulation gestartet.</div></div>
+      <p class="source-note">Fachliche Grundlage: <a href="https://encyclopediaofmath.org/wiki/Monty_hall_problem" target="_blank" rel="noopener noreferrer">Encyclopedia of Mathematics · Monty Hall problem</a>. Es gelten die oben beschriebenen festen Regeln des Moderators.</p>
+    </section>
+
+    <details class="backstage wrap" id="backstage"><summary>Für die Vorführung <span>Animationen ansehen &amp; Spielregeln</span></summary><div class="backstage-content"><p>Die Vorführung oben ist beliebig oft spielbar. Im Vollbild sind nur die Tore und die Spielsteuerung zu sehen. Mit Escape oder „Vollbild verlassen“ kehrst du zurück. Auf Geräten ohne Browser-Vollbild wird die Vorführung bildschirmfüllend innerhalb der Seite gezeigt.</p><p>Fünf Gewinne, ein Zonk mit zehn verschiedenen Auftritten. Die Motive werden gemischt durchlaufen; die Gewinnposition wird davon unabhängig in jeder Runde neu ausgelost.</p><div class="gallery" id="animation-gallery"></div></div></details>
+  </main>
+  <footer class="app-footer wrap"><span>Drei Tore · Dr. Claus Unterberg</span><nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav></footer>
+  <noscript><p class="wrap">Bitte aktiviere JavaScript, um die Tore zu öffnen und deine Versuche durchzuführen.</p></noscript>
+</body>
+</html>
