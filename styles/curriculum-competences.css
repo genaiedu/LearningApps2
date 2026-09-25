@@ -10,7 +10,7 @@
 .competence-dialog-body{overflow-y:auto;padding:.3rem 1.3rem 1.1rem;line-height:1.65;overscroll-behavior:contain}
 .competence-dialog-body p{margin:.8rem 0;max-width:none}
 .competence-dialog .competence-context,.competence-dialog .competence-note{font-size:.9rem;color:#52646c}
-.competence-wording{font-size:1.05rem}
+.competence-wording{font-size:1.05rem;white-space:pre-line}
 .competence-dialog a{color:#17677a}
 [data-theme="dark"] .competence-dialog{background:#17282f;color:#edf3f5;border-color:#536870}
 [data-theme="dark"] .competence-dialog-header{border-color:#41555e}
