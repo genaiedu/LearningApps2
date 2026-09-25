@@ -1,58 +1,66 @@
 %PDF-1.4
-%PDFX ReportLab Generated PDF document (opensource)
+%‚„œ”
 1 0 obj
 <<
-/F1 2 0 R /F2 3 0 R
+/Producer (pypdf)
+/Title (chemie bewertungsraster oberstufe)
+/Author (Fachschaft Chemie \055 Thomaeum Kempen)
 >>
 endobj
 2 0 obj
 <<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+/Type /Pages
+/Count 2
+/Kids [ 4 0 R 10 0 R ]
 >>
 endobj
 3 0 obj
 <<
-/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+/Type /Catalog
+/Pages 2 0 R
+/Outlines 15 0 R
+/AcroForm 35 0 R
 >>
 endobj
 4 0 obj
 <<
-/A <<
-/S /URI /Type /Action /URI (https://genaiedu.github.io/LearningApps2/chemie-curriculum.html)
->> /Border [ 0 0 0 ] /Rect [ 116.8731 105.9298 355.8301 115.8898 ] /Subtype /Link /Type /Annot
+/Annots [ 5 0 R ]
+/Contents 6 0 R
+/MediaBox [ 0 0 595.2756 841.8898 ]
+/Resources <<
+/Font <<
+/F1 7 0 R
+/F1-0 8 0 R
+/F2 9 0 R
+>>
+/ProcSet [ /ImageB /ImageC /ImageI /PDF /Text ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Parent 2 0 R
 >>
 endobj
 5 0 obj
 <<
-/Annots [ 4 0 R ] /Contents 9 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 8 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 
-  /Trans <<
-
->> /Type /Page
+/A <<
+/S /URI
+/Type /Action
+/URI (https\072\057\057genaiedu\056github\056io\057LearningApps2\057chemie\055curriculum\056html)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 116.8731 105.9298 355.8301 115.8898 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 6 0 obj
 <<
-/PageMode /UseNone /Pages 8 0 R /Type /Catalog
->>
-endobj
-7 0 obj
-<<
-/Author (Fachschaft Chemie - Thomaeum Kempen) /CreationDate (D:20260925191735+02'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260925191735+02'00') /Producer (ReportLab PDF Library - \(opensource\)) 
-  /Subject (\(unspecified\)) /Title (chemie bewertungsraster oberstufe) /Trapped /False
->>
-endobj
-8 0 obj
-<<
-/Count 1 /Kids [ 5 0 R ] /Type /Pages
->>
-endobj
-9 0 obj
-<<
-/Length 8691
+/Length 8773
 >>
 stream
+q
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 .090196 .34902 .305882 RG
 .5 w
@@ -542,30 +550,514 @@ BT 1 0 0 1 0 2.7 Tm 11 TL /F1 8.3 Tf 0 0 0 rg (Onlinecurriculum: ) Tj .090196 .3
 Q
 Q
  
+
+Q
+
+q
+0.0 0.0 595.276 841.89 re
+W
+n
+1 0 0 1 0 0 cm
+BT
+/F1-0 12 Tf
+14.4 TL
+ET
+Q
+
+
 endstream
 endobj
+7 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+8 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+9 0 obj
+<<
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+10 0 obj
+<<
+/Contents 11 0 R
+/MediaBox [ 0 0 595.276 841.89 ]
+/Resources <<
+/Font 12 0 R
+/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Parent 2 0 R
+/Annots [ 16 0 R 20 0 R 23 0 R 26 0 R 29 0 R 32 0 R ]
+>>
+endobj
+11 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ]
+/Length 726
+>>
+stream
+Gau1+966RV&BF6eMESBc%n.!3jCU>1p@qKD+['@`O_ktl6#MAnG<Gin>sC\'mBf'%(aQK(Y($69/ccJ9Z6/6U5UV+Y>lo[GZ38$M%`o:A`&ZPhSN1`0X-FYFn.7o^\7#M3#p5>eQVfhn)SmO;:#[o*K$V,Te;s.YY(,>)g-]O<4a*`^n_p_$IeX2j$R@[o8/+V%$Uq$6r\7FbOAi5H+mZ-db+rdLoBO#i]dMh<bnE<g)Tu$d?r3>m"aADGAII5b16jX![9gXFAS,N7dPaGiE6+L^FBfnG3/CDX!*m>X@CnOqb\-Ean$pd8<>5][&=c+K72/G\B\\V@I1T9>&e5nZ+:pd_oP#"]DOdp1LEqK0KG5B#np+j;pUCC'r0`nW!-PNkjN_VTLRT`fk*]7N)46fa<bX(l<I&S$=A6")/AE%QO4Xd4\R(bZY&t(Tc8/!f\=ug/0O@t[^Xmdca"Z7cgq<`/%1@iK]2p?O\_eZCr*i"8cZOqna?rSb>Bj!a>j&)<hNS=$cRQPl=j]:pCX;9h<,/9]i-KsPF(J[4"kDNWiaPIsohN;`G02d'.s2D=M7OHnL<H:5.sl[_b%Qtc\6(md?Mhp+AZ(^.h&BYE1Qu$iBJ/2Hrc3u5H$pst^$.3/4+7+Uk@o1*7cM.]ms:*h4Y!\F\+Mp@0em+29XR@;euQC#?BQP)`\0A&a*SuS&t\D]g?ku'eq1%VG+8aq355LJj-a`~>
+endstream
+endobj
+12 0 obj
+<<
+/F1 13 0 R
+/F2 14 0 R
+>>
+endobj
+13 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+14 0 obj
+<<
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+15 0 obj
+<<
+>>
+endobj
+16 0 obj
+<<
+/AP <<
+/N 17 0 R
+>>
+/BS <<
+/S /S
+/W 0.5
+>>
+/DA (\057Helv 10 Tf 0 0 0 rg)
+/DV ()
+/F 4
+/FT /Tx
+/Ff 4096
+/MK <<
+/BC [ 0.568627 0.643137 0.682353 ]
+/BG [ 0.968627 0.976471 0.980392 ]
+>>
+/MaxLen 4000
+/P 10 0 R
+/Rect [ 48 697.89 547.276 727.89 ]
+/Subtype /Widget
+/T (reflexion0)
+/TU (Name\054 Kurs\054 Datum\054 Aufgabe und Lehrkraft)
+/Type /Annot
+/V ()
+>>
+endobj
+17 0 obj
+<<
+/BBox [ 0 0 499.276 30 ]
+/Filter [ /FlateDecode ]
+/FormType 1
+/Matrix [ 1 0 0 1 0 0 ]
+/Resources <<
+/ProcSet [ /PDF /Text ]
+/Font <<
+/Helv 18 0 R
+>>
+>>
+/Subtype /Form
+/Type /XObject
+/Length 133
+>>
+stream
+xú]Nª
+AÏÛÛ1ó›l6≠á\uÖ"¯j'x˙˘Ó"Ë@föÃÉ£‘¢/Ÿá¶UR(ñ+	9Ç’-æ0$¡r¶±}ú%ß!u≠ö,·0ë∞·ŸX+Â®Ïø)ÌßÂ<hs|a;è†;,Ëó√ˇ[µÚ⁄{¢[÷«M¥ß›<“"¡'»
+endstream
+endobj
+18 0 obj
+<<
+/BaseFont /Helvetica
+/Subtype /Type1
+/Name /Helv
+/Type /Font
+/Encoding 19 0 R
+>>
+endobj
+19 0 obj
+<<
+/Type /Encoding
+/Differences [ 24 /breve /caron /circumflex /dotaccent /hungarumlaut /ogonek /ring /tilde 39 /quotesingle 96 /grave 128 /bullet /dagger /daggerdbl /ellipsis /emdash /endash /florin /fraction /guilsinglleft /guilsinglright /minus /perthousand /quotedblbase /quotedblleft /quotedblright /quoteleft /quoteright /quotesinglbase /trademark /fi /fl /Lslash /OE /Scaron /Ydieresis /Zcaron /dotlessi /lslash /oe /scaron /zcaron 160 /Euro 164 /currency 166 /brokenbar 168 /dieresis /copyright /ordfeminine 172 /logicalnot /.notdef /registered /macron /degree /plusminus /twosuperior /threesuperior /acute /mu 183 /periodcentered /cedilla /onesuperior /ordmasculine 188 /onequarter /onehalf /threequarters 192 /Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla /Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis /Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply /Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls /agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla /egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis /eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide /oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis ]
+>>
+endobj
+20 0 obj
+<<
+/AP <<
+/N 21 0 R
+>>
+/BS <<
+/S /S
+/W 0.5
+>>
+/DA (\057Helv 10 Tf 0 0 0 rg)
+/DV ()
+/F 4
+/FT /Tx
+/Ff 4096
+/MK <<
+/BC [ 0.568627 0.643137 0.682353 ]
+/BG [ 0.968627 0.976471 0.980392 ]
+>>
+/MaxLen 4000
+/P 10 0 R
+/Rect [ 48 613.89 547.276 663.89 ]
+/Subtype /Widget
+/T (reflexion1)
+/TU (Erreichte BE\054 maximal erreichbare BE und berechneter Prozentanteil)
+/Type /Annot
+/V ()
+>>
+endobj
+21 0 obj
+<<
+/BBox [ 0 0 499.276 50 ]
+/Filter [ /FlateDecode ]
+/FormType 1
+/Matrix [ 1 0 0 1 0 0 ]
+/Resources <<
+/ProcSet [ /PDF /Text ]
+/Font <<
+/Helv 22 0 R
+>>
+>>
+/Subtype /Form
+/Type /XObject
+/Length 133
+>>
+stream
+xú]Nª
+AÏÛÛ1∑õl6≠á\uÖ"¯j'x˙˘Ó"Ë@föÃÉ£‘í^‘á¶Ur$,W4Çì[|a0¡r¶±}úEÛêª÷î-„0ë∞·Ÿ8V“®Ïø)ÌßÂ<hs|a;è†;,Ëß·ˇ≠ZyÌ=—≠Î„&⁄”nÈ$©'Œ
+endstream
+endobj
+22 0 obj
+<<
+/BaseFont /Helvetica
+/Subtype /Type1
+/Name /Helv
+/Type /Font
+/Encoding 19 0 R
+>>
+endobj
+23 0 obj
+<<
+/AP <<
+/N 24 0 R
+>>
+/BS <<
+/S /S
+/W 0.5
+>>
+/DA (\057Helv 10 Tf 0 0 0 rg)
+/DV ()
+/F 4
+/FT /Tx
+/Ff 4096
+/MK <<
+/BC [ 0.568627 0.643137 0.682353 ]
+/BG [ 0.968627 0.976471 0.980392 ]
+>>
+/MaxLen 4000
+/P 10 0 R
+/Rect [ 48 544.89 547.276 579.89 ]
+/Subtype /Widget
+/T (reflexion2)
+/TU (Zuordnung nach Tabelle\072 Notenpunkte bzw\056 Note in der EF)
+/Type /Annot
+/V ()
+>>
+endobj
+24 0 obj
+<<
+/BBox [ 0 0 499.276 35 ]
+/Filter [ /FlateDecode ]
+/FormType 1
+/Matrix [ 1 0 0 1 0 0 ]
+/Resources <<
+/ProcSet [ /PDF /Text ]
+/Font <<
+/Helv 25 0 R
+>>
+>>
+/Subtype /Form
+/Type /XObject
+/Length 132
+>>
+stream
+xúeNA
+Aª˜yAùù∂”È’Eˆ¥EÍMp=ËÛùYƒÉö@hìpîZ≤É√ã˙–∏&âåÂJ		¡Ÿ-æc√r¶±}>ã  ùk&Jlx6ÃÜ4*˚èãÚÍÛ†ÕÒÖÌ<ÇÓ4pB_ˇKï¶∑˚›Z±^n¢=ÌÊëﬁ$'≈
+endstream
+endobj
+25 0 obj
+<<
+/BaseFont /Helvetica
+/Subtype /Type1
+/Name /Helv
+/Type /Font
+/Encoding 19 0 R
+>>
+endobj
+26 0 obj
+<<
+/AP <<
+/N 27 0 R
+>>
+/BS <<
+/S /S
+/W 0.5
+>>
+/DA (\057Helv 10 Tf 0 0 0 rg)
+/DV ()
+/F 4
+/FT /Tx
+/Ff 4096
+/MK <<
+/BC [ 0.568627 0.643137 0.682353 ]
+/BG [ 0.968627 0.976471 0.980392 ]
+>>
+/MaxLen 4000
+/P 10 0 R
+/Rect [ 48 340.89 547.276 510.89 ]
+/Subtype /Widget
+/T (reflexion3)
+/TU (Teilaufgaben\072 jeweilige H\366chstzahl\054 erreichte BE und Begr\374ndung)
+/Type /Annot
+/V ()
+>>
+endobj
+27 0 obj
+<<
+/BBox [ 0 0 499.276 170 ]
+/Filter [ /FlateDecode ]
+/FormType 1
+/Matrix [ 1 0 0 1 0 0 ]
+/Resources <<
+/ProcSet [ /PDF /Text ]
+/Font <<
+/Helv 28 0 R
+>>
+>>
+/Subtype /Form
+/Type /XObject
+/Length 133
+>>
+stream
+xúeN9¬@Ï˝äyÅÒ∂◊-JïÑƒÄâP¿ÛŸDàFÚL„98¨Yvp∏UO]õî»òØ$‘ŒÆÒÖ"π`>”ÖX?V´%ïE[.ZpIXÒÏú+’hÏ?1˝©=hs|a;†;%,W√ˇz≠Ò⁄|¢[ﬂ∂ÏiOªi†7õÜ(g
+endstream
+endobj
+28 0 obj
+<<
+/BaseFont /Helvetica
+/Subtype /Type1
+/Name /Helv
+/Type /Font
+/Encoding 19 0 R
+>>
+endobj
+29 0 obj
+<<
+/AP <<
+/N 30 0 R
+>>
+/BS <<
+/S /S
+/W 0.5
+>>
+/DA (\057Helv 10 Tf 0 0 0 rg)
+/DV ()
+/F 4
+/FT /Tx
+/Ff 4096
+/MK <<
+/BC [ 0.568627 0.643137 0.682353 ]
+/BG [ 0.968627 0.976471 0.980392 ]
+>>
+/MaxLen 4000
+/P 10 0 R
+/Rect [ 48 231.89 547.276 306.89 ]
+/Subtype /Widget
+/T (reflexion4)
+/TU (St\344rken der fachlichen Leistung)
+/Type /Annot
+/V ()
+>>
+endobj
+30 0 obj
+<<
+/BBox [ 0 0 499.276 75 ]
+/Filter [ /FlateDecode ]
+/FormType 1
+/Matrix [ 1 0 0 1 0 0 ]
+/Resources <<
+/ProcSet [ /PDF /Text ]
+/Font <<
+/Helv 31 0 R
+>>
+>>
+/Subtype /Form
+/Type /XObject
+/Length 132
+>>
+stream
+xúeNA
+Aª˜yAùù∂”È’Eˆ¥EÍMp=ËÛùYƒÉö@hìpîZ≤É√ã˙–∏&âåÂJ		¡Ÿ-æcp√r¶±}>ã  ùk&Jlx6ÃÜ4*˚èãÚÍÛ†ÕÒÖÌ<ÇÓ4pB_ˇKï¶∑˚›Z±^n¢=ÌÊëﬁ'÷'—
+endstream
+endobj
+31 0 obj
+<<
+/BaseFont /Helvetica
+/Subtype /Type1
+/Name /Helv
+/Type /Font
+/Encoding 19 0 R
+>>
+endobj
+32 0 obj
+<<
+/AP <<
+/N 33 0 R
+>>
+/BS <<
+/S /S
+/W 0.5
+>>
+/DA (\057Helv 10 Tf 0 0 0 rg)
+/DV ()
+/F 4
+/FT /Tx
+/Ff 4096
+/MK <<
+/BC [ 0.568627 0.643137 0.682353 ]
+/BG [ 0.968627 0.976471 0.980392 ]
+>>
+/MaxLen 4000
+/P 10 0 R
+/Rect [ 48 107.89 547.276 197.89 ]
+/Subtype /Widget
+/T (reflexion5)
+/TU (N\344chste Lernschritte und Vereinbarung)
+/Type /Annot
+/V ()
+>>
+endobj
+33 0 obj
+<<
+/BBox [ 0 0 499.276 90 ]
+/Filter [ /FlateDecode ]
+/FormType 1
+/Matrix [ 1 0 0 1 0 0 ]
+/Resources <<
+/ProcSet [ /PDF /Text ]
+/Font <<
+/Helv 34 0 R
+>>
+>>
+/Subtype /Form
+/Type /XObject
+/Length 133
+>>
+stream
+xú]Nª
+AÏÛÛ1∑ªŸ$≠á\uÖ"¯j'x˙˘Ó"Ë@föÃÉ£zM´≈Ü¶.9ñ+	%Çìi|°¡r¶±~úµ‰!wıî5„0ë∞‚Ÿ8)V*·lø)ÌßÂ<hs|a;è†;,ËW¬˛[›yÌ=—≠Î„&⁄”nÈ(y'⁄
+endstream
+endobj
+34 0 obj
+<<
+/BaseFont /Helvetica
+/Subtype /Type1
+/Name /Helv
+/Type /Font
+/Encoding 19 0 R
+>>
+endobj
+35 0 obj
+<<
+/DA (\057Helv 0 Tf 0 g)
+/DR <<
+/Encoding <<
+/RLAFencoding 19 0 R
+>>
+/Font <<
+/Helv 18 0 R
+>>
+>>
+/Fields [ 16 0 R 20 0 R 23 0 R 26 0 R 29 0 R 32 0 R ]
+>>
+endobj
 xref
-0 10
+0 36
 0000000000 65535 f 
-0000000061 00000 n 
-0000000102 00000 n 
-0000000209 00000 n 
-0000000321 00000 n 
-0000000536 00000 n 
-0000000757 00000 n 
-0000000825 00000 n 
-0000001147 00000 n 
-0000001206 00000 n 
+0000000015 00000 n 
+0000000146 00000 n 
+0000000212 00000 n 
+0000000295 00000 n 
+0000000544 00000 n 
+0000000786 00000 n 
+0000009611 00000 n 
+0000009718 00000 n 
+0000009825 00000 n 
+0000009937 00000 n 
+0000010190 00000 n 
+0000011008 00000 n 
+0000011052 00000 n 
+0000011160 00000 n 
+0000011273 00000 n 
+0000011295 00000 n 
+0000011665 00000 n 
+0000012032 00000 n 
+0000012132 00000 n 
+0000013459 00000 n 
+0000013849 00000 n 
+0000014216 00000 n 
+0000014316 00000 n 
+0000014698 00000 n 
+0000015064 00000 n 
+0000015164 00000 n 
+0000015560 00000 n 
+0000015928 00000 n 
+0000016028 00000 n 
+0000016383 00000 n 
+0000016749 00000 n 
+0000016849 00000 n 
+0000017210 00000 n 
+0000017577 00000 n 
+0000017677 00000 n 
 trailer
 <<
-/ID 
-[<83f0477e4cd3d011dc116c425299943e><83f0477e4cd3d011dc116c425299943e>]
-% ReportLab generated PDF document -- digest (opensource)
-
-/Info 7 0 R
-/Root 6 0 R
-/Size 10
+/Size 36
+/Root 3 0 R
+/Info 1 0 R
 >>
 startxref
-9948
+17849
 %%EOF
