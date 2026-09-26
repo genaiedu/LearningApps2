@@ -38,4 +38,7 @@ input{color:var(--text)}
   .cover--mensch-umwelt,[data-theme="dark"] .cover--mensch-umwelt{background-image:linear-gradient(rgba(255,255,255,.78),rgba(255,255,255,.78)),url("../images/mensch-umwelt-cover.png")}
   .cover--projektkurs,[data-theme="dark"] .cover--projektkurs{background-image:linear-gradient(rgba(255,255,255,.78),rgba(255,255,255,.78)),url("../images/projektkurs-cover.png")}
 }
+[data-theme="dark"] .cover--chemie,[data-theme="dark"] .cover--mensch-umwelt,[data-theme="dark"] .cover--projektkurs{background:linear-gradient(125deg,#203d36,#162425);border-bottom:1px solid var(--border);color:var(--text)}
+[data-theme="dark"] .cover--chemie h1,[data-theme="dark"] .cover--mensch-umwelt h1,[data-theme="dark"] .cover--projektkurs h1{color:#a1e1ce}
+[data-theme="dark"] .cover--chemie .subtitle,[data-theme="dark"] .cover--mensch-umwelt .subtitle,[data-theme="dark"] .cover--projektkurs .subtitle,[data-theme="dark"] .cover--chemie .kicker,[data-theme="dark"] .cover--mensch-umwelt .kicker,[data-theme="dark"] .cover--projektkurs .kicker{color:var(--text)}
 @media print{.cover--chemie,.cover--mensch-umwelt,.cover--projektkurs{background-image:none!important}}
