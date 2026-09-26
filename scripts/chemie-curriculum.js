@@ -37,8 +37,6 @@ document.addEventListener('click', event => {
   const link = event.target.closest('a[href^="#"]');
   if (link && input.value) { clearTimeout(timer); input.value = ''; search(); }
 });
-const printButton = document.querySelector('#print'); printButton.hidden = false;
-printButton.addEventListener('click', () => window.print());
 window.addEventListener('beforeprint', () => { clearTimeout(timer); input.value = ''; search(); });
 if (matchMedia('(max-width:900px)').matches) document.querySelector('aside details').open = false;
 
