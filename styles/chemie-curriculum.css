@@ -25,6 +25,8 @@ input{color:var(--text)}
 .cover--chemie{background-image:url("../images/chemie-cover-labor.png");background-size:auto 155%}
 .cover--mensch-umwelt{background-image:url("../images/mensch-umwelt-cover.png");background-size:auto 185%}
 [data-theme="dark"] .cover--chemie,[data-theme="dark"] .cover--mensch-umwelt{background-color:#fff;border-color:transparent;color:#203638}
+[data-theme="dark"] .cover--chemie{background-image:url("../images/chemie-cover-labor.png")}
+[data-theme="dark"] .cover--mensch-umwelt{background-image:url("../images/mensch-umwelt-cover.png")}
 [data-theme="dark"] .cover--chemie h1,[data-theme="dark"] .cover--mensch-umwelt h1{color:#144f48}
 [data-theme="dark"] .cover--chemie .subtitle,[data-theme="dark"] .cover--mensch-umwelt .subtitle,[data-theme="dark"] .cover--chemie .kicker,[data-theme="dark"] .cover--mensch-umwelt .kicker{color:#203638}
 @media(max-width:1100px) and (min-width:761px){.cover--chemie{background-size:auto 120%}.cover--mensch-umwelt{background-size:auto 145%}}
