@@ -1,0 +1,678 @@
+{
+  "title": "Projektkurs Wissenschaftskommunikation",
+  "cohort": "Q1.2 2026/27 bis Q2.1 2027/28",
+  "start": "2027-02-15",
+  "end": "2028-02-04",
+  "firstLesson": "2027-02-16",
+  "lastLesson": "2028-02-01",
+  "hours": "Dienstags · 2 × 45 Minuten",
+  "status": "Planungsstand 27. September 2026",
+  "note": "Bewegliche Ferientage außer Rosenmontag und Faschingsdienstag, pädagogische Tage und Klausurüberschneidungen sind noch offen. Notenschlüsse am 02.07.2027 und 21.01.2028 sind Planungstermine, jeweils zwei Wochen vor dem letzten Schultag; schulische Festlegungen haben Vorrang.",
+  "legal": "Für diesen Kurs gilt die bisherige APO-GOSt: keine Kursnote nach dem ersten Kurshalbjahr; eine Jahresnote am Kursende zu gleichen Teilen aus der Sonstigen Mitarbeit beider Halbjahre und der Jahresdokumentation. Die zwei Arbeitsabschnitte sind keine zwei getrennt benoteten Halbjahresprodukte.",
+  "projectRule": "Vier zusammenhängende Projektwerkstätten reservieren 20 Doppelstunden (40 UE). Jede Doppelstunde in der Werkstatt bietet mindestens 70 Minuten eigenständige Projektarbeit; kurze bedarfsgerechte Beratung ersetzt keine Werkstatt durch einen neuen Theorieblock.",
+  "presentationRule": "Die Vorstellungen erläutern die Jahresdokumentation und machen eigene Leistungen erkennbar. Richtwert: 8 Minuten gemeinsamer Beitrag plus 4 Minuten je Person für fachliche Erläuterung und Rückfragen. Slots werden zu Kursbeginn vereinbart; bei überwiegend Einzelarbeiten oder mehr als 24 Lernenden beginnt die Vorstellungsphase bereits am 7. Dezember. Der 18. Januar bleibt vorrangig Nachholpuffer. Es entsteht kein dritter Bewertungsbereich.",
+  "sources": [
+    {
+      "label": "NRW-Ferien und Halbjahreszeugnisse",
+      "url": "https://bass.schule.nrw/191.htm"
+    },
+    {
+      "label": "Bisherige APO-GOSt · § 14 Absatz 7 und VV 14.7",
+      "url": "https://bass.schule.nrw/9607.htm"
+    },
+    {
+      "label": "Gesetzliche Feiertage NRW",
+      "url": "https://recht.nrw.de/lrgv/gesetz/01012000-bekanntmachung-der-neufassung-des-gesetzes-ueber-die-sonn-und-feiertage/"
+    }
+  ],
+  "forms": {
+    "Projektantrag": {
+      "label": "Projektantrag",
+      "url": "downloads/Projektkurs_Projektantrag.pdf?v=20260927-apogost"
+    },
+    "Arbeitsprotokoll": {
+      "label": "Arbeitsprotokoll",
+      "url": "downloads/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-apogost"
+    },
+    "Feedback": {
+      "label": "Feedback und Zielgruppentest",
+      "url": "downloads/Projektkurs_Feedback.pdf?v=20260927-apogost"
+    },
+    "Reflexion": {
+      "label": "Individuelle Reflexion",
+      "url": "downloads/Projektkurs_Reflexion.pdf?v=20260927-apogost"
+    },
+    "KI_Medien_Abgabe": {
+      "label": "KI- und Mediennachweis",
+      "url": "downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-apogost"
+    },
+    "Mitarbeitsraster": {
+      "label": "Sonstige Mitarbeit",
+      "url": "downloads/Projektkurs_Mitarbeitsraster.pdf?v=20260927-apogost"
+    },
+    "Notenbildung": {
+      "label": "Notenbildung – bisheriges Modell",
+      "url": "downloads/Projektkurs_Notenbildung.pdf?v=20260927-apogost"
+    }
+  },
+  "closures": [
+    {
+      "start": "2027-03-22",
+      "end": "2027-04-03",
+      "label": "Osterferien",
+      "kind": "vacation",
+      "source": "NRW"
+    },
+    {
+      "start": "2027-05-18",
+      "end": "2027-05-18",
+      "label": "Pfingstferien",
+      "kind": "vacation",
+      "source": "NRW"
+    },
+    {
+      "start": "2027-07-19",
+      "end": "2027-08-31",
+      "label": "Sommerferien",
+      "kind": "vacation",
+      "source": "NRW"
+    },
+    {
+      "start": "2027-10-23",
+      "end": "2027-11-06",
+      "label": "Herbstferien",
+      "kind": "vacation",
+      "source": "NRW"
+    },
+    {
+      "start": "2027-12-24",
+      "end": "2028-01-08",
+      "label": "Weihnachtsferien",
+      "kind": "vacation",
+      "source": "NRW"
+    },
+    {
+      "start": "2027-02-08",
+      "end": "2027-02-08",
+      "label": "Rosenmontag · schulfrei",
+      "kind": "school",
+      "source": "Kursleitung"
+    },
+    {
+      "start": "2027-02-09",
+      "end": "2027-02-09",
+      "label": "Faschingsdienstag · schulfrei",
+      "kind": "school",
+      "source": "Kursleitung"
+    },
+    {
+      "start": "2028-02-28",
+      "end": "2028-02-28",
+      "label": "Rosenmontag · schulfrei",
+      "kind": "school",
+      "source": "Kursleitung"
+    },
+    {
+      "start": "2028-02-29",
+      "end": "2028-02-29",
+      "label": "Faschingsdienstag · schulfrei",
+      "kind": "school",
+      "source": "Kursleitung"
+    }
+  ],
+  "holidays": [
+    {
+      "date": "2027-03-26",
+      "label": "Karfreitag"
+    },
+    {
+      "date": "2027-03-29",
+      "label": "Ostermontag"
+    },
+    {
+      "date": "2027-05-01",
+      "label": "Tag der Arbeit"
+    },
+    {
+      "date": "2027-05-06",
+      "label": "Christi Himmelfahrt"
+    },
+    {
+      "date": "2027-05-17",
+      "label": "Pfingstmontag"
+    },
+    {
+      "date": "2027-05-27",
+      "label": "Fronleichnam"
+    },
+    {
+      "date": "2027-10-03",
+      "label": "Tag der Deutschen Einheit"
+    },
+    {
+      "date": "2027-11-01",
+      "label": "Allerheiligen"
+    },
+    {
+      "date": "2027-12-25",
+      "label": "1. Weihnachtstag"
+    },
+    {
+      "date": "2027-12-26",
+      "label": "2. Weihnachtstag"
+    },
+    {
+      "date": "2028-01-01",
+      "label": "Neujahr"
+    }
+  ],
+  "sessions": [
+    {
+      "date": "2027-02-16",
+      "phase": "start",
+      "title": "Kursauftakt und Jahresprojekt",
+      "goal": "Arbeitsweise, Jahresbewertung und Termine sind geklärt; erste Themenideen und persönliche Ziele liegen vor.",
+      "forms": [
+        "Projektantrag",
+        "Notenbildung"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-02-23",
+      "phase": "start",
+      "title": "Quellen prüfen",
+      "goal": "Eine kleine Belegmatrix mit mindestens drei geeigneten Quellen und ersten fachlichen Aussagen liegt vor.",
+      "forms": [
+        "Arbeitsprotokoll"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-03-02",
+      "phase": "start",
+      "title": "Daten und Modelle verstehen",
+      "goal": "Eine zentrale wissenschaftliche Aussage wird mit Daten oder einem Modell erklärt; Aussagegrenzen sind benannt.",
+      "forms": [
+        "Arbeitsprotokoll"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-03-09",
+      "phase": "start",
+      "title": "Zielgruppe und Erklärweg",
+      "goal": "Zielgruppe, Kommunikationsziel und Medienformat sind begründet; ein kurzes Erklärbeispiel ist erprobt.",
+      "forms": [
+        "Feedback",
+        "Projektantrag"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-03-16",
+      "phase": "deadline",
+      "title": "Projektvereinbarung abschließen",
+      "goal": "Leitfrage, Referenzfach, Jahresdokumentation, Rollen, Kriterien und Meilensteine sind mit der Kursleitung vereinbart.",
+      "forms": [
+        "Projektantrag"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-04-06",
+      "phase": "project",
+      "title": "Projektwerkstatt I · Recherche vertiefen",
+      "goal": "Fachliche Kernfragen sind eingegrenzt; Recherche und Belegmatrix werden gezielt erweitert.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-04-13",
+      "phase": "project",
+      "title": "Projektwerkstatt I · Fachliches Konzept",
+      "goal": "Fachliche Argumentation, zentrale Begriffe und Modellgrenzen sind in einem Konzept festgehalten.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-04-20",
+      "phase": "project",
+      "title": "Projektwerkstatt I · Skript und Storyboard",
+      "goal": "Ein erster vollständiger Aufbau bzw. ein Skript oder Storyboard liegt vor.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-04-27",
+      "phase": "project",
+      "title": "Projektwerkstatt I · Prototyp bauen",
+      "goal": "Ein funktionsfähiger oder vorzeigbarer Ausschnitt des Produkts ist erstellt.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-05-04",
+      "phase": "project",
+      "title": "Projektwerkstatt I · Prototyp ausarbeiten",
+      "goal": "Zentrale Inhalte sind im Prototyp umgesetzt; offene fachliche und technische Fragen sind dokumentiert.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-05-11",
+      "phase": "project",
+      "title": "Projektwerkstatt I · Testfassung sichern",
+      "goal": "Eine prüfbare Testfassung und konkrete Verständnisfragen für den Zielgruppentest liegen vor.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-05-25",
+      "phase": "feedback",
+      "title": "Peer-Feedback und Zielgruppentest",
+      "goal": "Die Testfassung ist erprobt; Beobachtungen, Verständnisprobleme und priorisierte Änderungen sind dokumentiert.",
+      "forms": [
+        "Feedback"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-06-01",
+      "phase": "project",
+      "title": "Projektwerkstatt II · Fachlich überarbeiten",
+      "goal": "Fachliche Fehler und missverständliche Darstellungen aus dem Test werden behoben.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-06-08",
+      "phase": "project",
+      "title": "Projektwerkstatt II · Darstellung verbessern",
+      "goal": "Erklärwege und Gestaltung sind auf Basis des Feedbacks überarbeitet; Änderungen werden begründet.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-06-15",
+      "phase": "project",
+      "title": "Projektwerkstatt II · Zwischenstand abschließen",
+      "goal": "Eine zusammenhängende erste Fassung und die zugehörigen Belege sind für die Zwischenvorstellung gesichert.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-06-22",
+      "phase": "presentation",
+      "title": "Zwischenvorstellung",
+      "goal": "Der Arbeitsstand wird erläutert; jede Person weist ihren Beitrag nach. Rückmeldung legt die nächste Vertiefung fest. Keine eigenständige Halbjahresproduktnote.",
+      "forms": [
+        "Feedback",
+        "Reflexion"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-06-29",
+      "phase": "review",
+      "title": "Lernstandsberatung vor dem Sommer",
+      "goal": "Mitarbeit und Entwicklung sind dokumentiert; erforderliche Beratung ist festgehalten. Für das erste Kurshalbjahr wird keine Kursnote erteilt.",
+      "forms": [
+        "Mitarbeitsraster",
+        "Notenbildung",
+        "Reflexion"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-07-06",
+      "phase": "buffer",
+      "title": "Puffer und Vertiefungsplanung",
+      "goal": "Offene Zwischenschritte werden nachgeholt; die Vertiefung nach den Ferien ist fachlich begründet.",
+      "forms": [
+        "Projektantrag",
+        "Arbeitsprotokoll"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-07-13",
+      "phase": "buffer",
+      "title": "Arbeitsstand sichern",
+      "goal": "Dateien, Quellen und Rollen sind gesichert; der Wiedereinstieg ist geplant. Die Sommerferien enthalten keine Pflichtabgabe.",
+      "forms": [
+        "Arbeitsprotokoll"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-09-07",
+      "phase": "project",
+      "title": "Projektwerkstatt III · Wiedereinstieg und Vertiefung",
+      "goal": "Der Arbeitsplan ist aktualisiert; eine zusätzliche fachliche Perspektive für das Jahresprojekt ist festgelegt.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Feedback",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-09-14",
+      "phase": "project",
+      "title": "Projektwerkstatt III · Neue Belege erschließen",
+      "goal": "Die Vertiefung stützt sich auf zusätzliche geeignete Quellen, Daten oder ein begründetes Modell.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Feedback",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-09-21",
+      "phase": "project",
+      "title": "Projektwerkstatt III · Konzept erweitern",
+      "goal": "Die neue Perspektive ist schlüssig in den Aufbau des Jahresprojekts eingebunden.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Feedback",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-09-28",
+      "phase": "project",
+      "title": "Projektwerkstatt III · Produkt weiterentwickeln",
+      "goal": "Eine erweiterte Fassung macht die fachliche Vertiefung sichtbar.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Feedback",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-10-05",
+      "phase": "project",
+      "title": "Projektwerkstatt III · Fachprüfung im Team",
+      "goal": "Kernaussagen, Daten, Einheiten und Modellgrenzen sind überprüft; individuelle Beiträge bleiben zuordenbar.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Feedback",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-10-12",
+      "phase": "project",
+      "title": "Projektwerkstatt III · Zielgruppentest im Arbeitsblock",
+      "goal": "Ein kurzer Test ist ausgewertet; Verbesserungen werden unmittelbar in der Werkstatt umgesetzt.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Feedback",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-10-19",
+      "phase": "project",
+      "title": "Projektwerkstatt III · Vollständige Rohfassung",
+      "goal": "Das Gesamtprodukt und eine gegliederte Rohfassung der Jahresdokumentation sind vollständig. Offene Punkte sind priorisiert.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Feedback",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-11-09",
+      "phase": "project",
+      "title": "Projektwerkstatt IV · Fachliche Endredaktion",
+      "goal": "Offene fachliche Probleme sind bearbeitet; Belege und Kernaussagen stimmen überein.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Reflexion",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-11-16",
+      "phase": "project",
+      "title": "Projektwerkstatt IV · Dokumentation ausarbeiten",
+      "goal": "Die Jahresdokumentation erläutert Leitfrage, Vorgehen, Ergebnisse, Grenzen und eigene Beiträge.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Reflexion",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-11-23",
+      "phase": "project",
+      "title": "Projektwerkstatt IV · Quellen und Eigenleistung prüfen",
+      "goal": "Quellen, Medienrechte, KI-Nachweise und individuelle Verantwortlichkeiten sind vollständig nachvollziehbar.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Reflexion",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-11-30",
+      "phase": "project",
+      "title": "Projektwerkstatt IV · Abgabefassung fertigstellen",
+      "goal": "Produkt, Jahresdokumentation, Quellenverzeichnis und persönliche Nachweise sind technisch geprüft und abgabefertig.",
+      "forms": [
+        "Arbeitsprotokoll",
+        "Reflexion",
+        "KI_Medien_Abgabe"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-12-07",
+      "phase": "deadline",
+      "title": "Jahresdokumentation abgeben",
+      "goal": "Endfassung mit Produkt, fachlicher Dokumentation, Quellen, Eigenanteilen und KI-/Mediennachweis abgeben; Präsentationsplan steht fest. Bei großem Kurs beginnen erste Vorstellungen.",
+      "forms": [
+        "KI_Medien_Abgabe",
+        "Reflexion",
+        "Notenbildung"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-12-14",
+      "phase": "presentation",
+      "title": "Abschlussvorstellungen I",
+      "goal": "Die ersten Projekte werden vorgestellt; die Beteiligten erläutern ihre eigene fachliche Leistung und beantworten Rückfragen.",
+      "forms": [
+        "Reflexion",
+        "Notenbildung"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2027-12-21",
+      "phase": "presentation",
+      "title": "Abschlussvorstellungen II",
+      "goal": "Weitere Projekte sind fachlich erläutert; offene Zuordnungsfragen zur Jahresdokumentation werden geklärt. Keine Pflichtarbeit in den Ferien.",
+      "forms": [
+        "Reflexion",
+        "Notenbildung"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2028-01-11",
+      "phase": "presentation",
+      "title": "Abschlussvorstellungen III",
+      "goal": "Die regulären Vorstellungen werden abgeschlossen. Individuelle fachliche Beiträge und Reflexion sind nachvollziehbar.",
+      "forms": [
+        "Reflexion",
+        "Notenbildung"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2028-01-18",
+      "phase": "buffer",
+      "title": "Nachholtermin und Bewertungsabschluss",
+      "goal": "Unverschuldet ausgefallene Vorstellungen werden nachgeholt; Beurteilungsgrundlagen und begründete Jahresnote werden rechtzeitig abgeschlossen.",
+      "forms": [
+        "Mitarbeitsraster",
+        "Notenbildung"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2028-01-25",
+      "phase": "review",
+      "title": "Rückmeldung zur Jahresleistung",
+      "goal": "Die Jahresbewertung wird erläutert; Ergebnisse und Lernwege werden besprochen. Keine neue benotete Pflichtabgabe nach dem vorläufigen Notenschluss.",
+      "forms": [
+        "Notenbildung",
+        "Reflexion"
+      ],
+      "ue": 2
+    },
+    {
+      "date": "2028-02-01",
+      "phase": "review",
+      "title": "Abschluss und Transfer",
+      "goal": "Ergebnisse werden gesichert, freiwillige Veröffentlichungen vereinbart und der Kurs ausgewertet. Letzte reguläre Doppelstunde.",
+      "forms": [
+        "Feedback"
+      ],
+      "ue": 2
+    }
+  ],
+  "markers": [
+    {
+      "date": "2027-02-12",
+      "label": "Halbjahreszeugnisse · vor Kursbeginn",
+      "provisional": false
+    },
+    {
+      "date": "2027-07-02",
+      "label": "Vorläufiger schulischer Notenschluss · hier nur Lernstands-/Beratungsdokumentation",
+      "provisional": true
+    },
+    {
+      "date": "2027-07-16",
+      "label": "Letzter Schultag vor den Sommerferien",
+      "provisional": false
+    },
+    {
+      "date": "2028-01-21",
+      "label": "Vorläufiger Notenschluss · Jahresnote des Projektkurses",
+      "provisional": true
+    },
+    {
+      "date": "2028-02-04",
+      "label": "Halbjahreszeugnisse und Kursende",
+      "provisional": false
+    }
+  ],
+  "phases": [
+    {
+      "name": "Grundlagen und Vereinbarung",
+      "start": "2027-02-16",
+      "end": "2027-03-16",
+      "sessions": 5,
+      "modules": "M1–M4",
+      "goal": "Leitfrage, fachliche Basis, Zielgruppe, Projektvereinbarung"
+    },
+    {
+      "name": "Projektwerkstatt I",
+      "start": "2027-04-06",
+      "end": "2027-05-11",
+      "sessions": 6,
+      "modules": "M3–M5",
+      "goal": "Recherche, Konzept und Testfassung"
+    },
+    {
+      "name": "Test und Projektwerkstatt II",
+      "start": "2027-05-25",
+      "end": "2027-06-15",
+      "sessions": 4,
+      "modules": "M4–M5",
+      "goal": "Zielgruppentest und überarbeiteter Zwischenstand"
+    },
+    {
+      "name": "Zwischenvorstellung und Beratung",
+      "start": "2027-06-22",
+      "end": "2027-07-13",
+      "sessions": 4,
+      "modules": "M5–M6",
+      "goal": "Lernstand, Rückmeldung, Puffer und Vertiefungsplanung"
+    },
+    {
+      "name": "Projektwerkstatt III",
+      "start": "2027-09-07",
+      "end": "2027-10-19",
+      "sessions": 7,
+      "modules": "M6–M7",
+      "goal": "Fachliche Vertiefung und vollständige Rohfassung"
+    },
+    {
+      "name": "Projektwerkstatt IV",
+      "start": "2027-11-09",
+      "end": "2027-11-30",
+      "sessions": 4,
+      "modules": "M7",
+      "goal": "Endredaktion und Jahresdokumentation"
+    },
+    {
+      "name": "Abgabe und Abschlussvorstellungen",
+      "start": "2027-12-07",
+      "end": "2028-01-18",
+      "sessions": 5,
+      "modules": "M7–M8",
+      "goal": "Jahresdokumentation, individuelle Erläuterung und Nachholpuffer"
+    },
+    {
+      "name": "Rückmeldung und Kursabschluss",
+      "start": "2028-01-25",
+      "end": "2028-02-01",
+      "sessions": 2,
+      "modules": "M8",
+      "goal": "Jahresbewertung erläutern, Transfer und Evaluation"
+    }
+  ]
+}
