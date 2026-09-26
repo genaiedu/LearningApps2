@@ -19,3 +19,14 @@ input{color:var(--text)}
   [data-theme="dark"] tr:nth-child(even){background:#203430}
 }
 @media print{.theme-toggle{display:none!important}}
+
+/* Cover illustration: laboratory image in the upper-right column. */
+.cover-inner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(310px,.9fr);gap:clamp(1.5rem,4vw,4rem);align-items:start}
+.cover-copy{min-width:0}
+.cover-art{margin:0;justify-self:end;align-self:start;width:100%;max-width:590px;height:clamp(315px,31vw,430px);overflow:hidden;border-radius:18px;background:#fff;box-shadow:0 18px 42px rgba(24,61,55,.16)}
+.cover-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:right top;transform:scale(1.28);transform-origin:right top}
+[data-theme="dark"] .cover-art{background:#1a2929;box-shadow:0 18px 42px rgba(0,0,0,.3)}
+[data-theme="dark"] .cover-art img{filter:brightness(.68) contrast(1.08)}
+@media(max-width:1000px){.cover-inner{grid-template-columns:minmax(0,1fr) minmax(240px,.7fr)}.cover-art{height:300px}}
+@media(max-width:760px){.cover-inner{display:flex;flex-direction:column}.cover-art{order:-1;align-self:stretch;max-width:none;height:220px}.cover-art img{transform:scale(1.2)}}
+@media print{.cover-inner{display:block}.cover-art{display:none}}
