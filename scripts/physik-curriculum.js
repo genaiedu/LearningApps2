@@ -29,7 +29,7 @@ function search() {
       fragment.append(text.slice(start)); node.replaceWith(fragment);
     }
   });
-  status.textContent = query ? `${count} von ${chapters.length} Abschnitten gefunden` : '';
+  status.textContent = query ? `${count} von ${chapters.length} Kapiteln gefunden` : '';
   document.querySelector('#empty').hidden = count !== 0;
 }
 input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(search, 180); });
