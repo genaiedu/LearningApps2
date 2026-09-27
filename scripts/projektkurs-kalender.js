@@ -5,14 +5,15 @@
  const date = s => new Date(s+'T12:00:00');
  const fmt = s => date(s).toLocaleDateString('de-DE');
  let data;
- try { const r=await fetch('data/projektkurs-kalender-2027.json?v=20260927'); if(!r.ok)throw Error(r.status); data=await r.json(); }
+ try { const r=await fetch('data/projektkurs-kalender-2027.json?v=20260927-kanban'); if(!r.ok)throw Error(r.status); data=await r.json(); }
  catch(e){$('plan-note').textContent='Der Kalender konnte nicht geladen werden. Bitte die Seite neu laden oder die Kalender-PDF öffnen.';return;}
  const months=Array.from({length:13},(_,i)=>{const d=new Date(2027,1+i,1,12);return {year:d.getFullYear(),month:d.getMonth(),key:d.toISOString().slice(0,7),label:d.toLocaleDateString('de-DE',{month:'long',year:'numeric'})};});
  let index=0,all=false;
  const shortPhase={project:'Projektwerkstatt',deadline:'Meilenstein',presentation:'Vorstellung',start:'Grundlagen',feedback:'Feedback',review:'Rückmeldung',buffer:'Puffer'};
- const formLinks=s=>'<div class="form-links">'+s.forms.map(k=>`<button type="button" data-pdf="${esc(data.forms[k].url)}">${esc(data.forms[k].label)}${k==='Notenbildung'?' · Abschnitt B':''}</button>`).join('')+'</div>';
+ const formLinks=s=>'<div class="form-links">'+s.forms.map(k=>`<button type="button" data-pdf="${esc(data.forms[k].url)}">${esc(data.forms[k].label)}${k==='Notenbildung'?' · Abschnitt B':''}</button>`).join('')+(s.apps||[]).map(k=>`<a href="${esc(data.apps[k].url)}" target="_blank" rel="noopener">${esc(data.apps[k].label)} ↗</a>`).join('')+'</div>';
  const card=s=>`<article class="agenda-item"><time datetime="${s.date}">${fmt(s.date)}</time><span class="phase-tag">${shortPhase[s.phase]}</span><button class="agenda-title" data-event="${s.date}">${esc(s.title)}</button><p>${esc(s.goal)}</p>${formLinks(s)}</article>`;
  $('plan-note').textContent=data.status+' · 37 Doppelstunden / 74 Unterrichtsstunden vor weiteren schulischen Ausfällen. '+data.note;
+ $('kanban-rule').textContent=data.kanbanRule;$('kanban-apps').innerHTML=Object.values(data.apps).map(a=>`<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.label)} ↗</a>`).join('');
  $('legal').textContent=data.legal;$('project-rule').textContent=data.projectRule;$('presentation-rule').textContent=data.presentationRule;
  $('source-links').innerHTML=data.sources.map(s=>`<p><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ↗</a></p>`).join('');
  $('phase-list').innerHTML=data.phases.map(p=>`<div class="phase-row"><div>${fmt(p.start)}–<br>${fmt(p.end)}</div><div><strong>${esc(p.name)}</strong><p>${esc(p.goal)} · ${p.modules.replace(/M[1-8]/g,code=>`<a href="projektkurs-wissenschaftskommunikation.html#${code.toLowerCase()}">${code}</a>`)}</p></div><div>${p.sessions*2} UE</div></div>`).join('');
@@ -30,7 +31,7 @@
    const s=data.sessions.find(s=>s.date===key),closures=data.closures.filter(c=>key>=c.start&&key<=c.end),holiday=data.holidays.find(h=>h.date===key),marker=data.markers.find(x=>x.date===key);
    const outside=key<data.start||key>data.end,classes=['day',s?.phase||'',closures.some(c=>c.kind==='vacation')?'vacation':'',closures.some(c=>c.kind==='school')||holiday?'holiday':'',marker?'marker':'',outside?'outside':'',[0,6].includes(date(key).getDay())?'weekend':''].filter(Boolean).join(' ');
    const labels=[...closures.map(c=>c.label),holiday?.label,marker?.label,s?.title].filter(Boolean);
-   const displayLabels=[...closures.map(c=>c.label.replace(' · schulfrei','')),holiday?.label,marker?(marker.provisional?'Notenschluss (vorläufig)':marker.label.includes('zeugnisse')?'Zeugnisse':'Letzter Schultag'):null,s?(s.phase==='project'?s.title.split(' · ')[0].replace('Projektwerkstatt','Werkstatt'):s.phase==='deadline'?(key==='2027-12-07'?'Abgabe':'Vereinbarung'):shortPhase[s.phase]):null].filter(Boolean);
+   const displayLabels=[...closures.map(c=>c.label.replace(' · schulfrei','')),holiday?.label,marker?(marker.provisional?'Notenschluss (vorläufig)':marker.label.includes('zeugnisse')?'Zeugnisse':'Letzter Schultag'):null,s?(s.phase==='project'?s.title.split(' · ')[0].replace('Projektwerkstatt','Werkstatt'):s.phase==='deadline'?(key==='2027-12-07'?'Abgabe P2':key==='2027-06-29'?'Abgabe P1':'Vereinbarung'):shortPhase[s.phase]):null].filter(Boolean);
    const content=`<span class="day-number">${day}</span>${displayLabels.map(t=>`<small>${esc(t)}</small>`).join('')}`;
    grid+=s?`<button type="button" class="${classes}" data-event="${key}" aria-label="${esc(fmt(key)+' · '+labels.join(' · '))}">${content}</button>`:`<div class="${classes}" aria-label="${esc(fmt(key)+' · '+labels.join(' · '))}">${content}</div>`;
   }

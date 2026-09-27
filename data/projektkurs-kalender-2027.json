@@ -8,8 +8,8 @@
   "hours": "Dienstags · 2 × 45 Minuten",
   "status": "Planungsstand 27. September 2026",
   "note": "Bewegliche Ferientage außer Rosenmontag und Faschingsdienstag, pädagogische Tage und Klausurüberschneidungen sind noch offen. Notenschlüsse am 02.07.2027 und 21.01.2028 sind Planungstermine, jeweils zwei Wochen vor dem letzten Schultag; schulische Festlegungen haben Vorrang.",
-  "legal": "Für diesen Kurs gilt die bisherige APO-GOSt: keine Kursnote nach dem ersten Kurshalbjahr; eine Jahresnote am Kursende zu gleichen Teilen aus der Sonstigen Mitarbeit beider Halbjahre und der Jahresdokumentation. Die zwei Arbeitsabschnitte sind keine zwei getrennt benoteten Halbjahresprodukte.",
-  "projectRule": "Vier zusammenhängende Projektwerkstätten reservieren 20 Doppelstunden (40 UE). Jede Doppelstunde in der Werkstatt bietet mindestens 70 Minuten eigenständige Projektarbeit; kurze bedarfsgerechte Beratung ersetzt keine Werkstatt durch einen neuen Theorieblock.",
+  "legal": "Für diesen Kurs gilt die bisherige APO-GOSt: keine Kursnote nach dem ersten Kurshalbjahr; eine Jahresnote am Kursende zu gleichen Teilen aus der Sonstigen Mitarbeit beider Halbjahre und der Jahresdokumentation. Produkt 1 und Produkt 2 sind eigenständige Arbeitsergebnisse und werden mit fachlicher Begleitung und individuellen Nachweisen in der Jahresdokumentation zusammengeführt.",
+  "projectRule": "Vier zusammenhängende Projektwerkstätten reservieren 20 Doppelstunden (40 UE): Werkstatt I und II für Produkt 1, Werkstatt III und IV für Produkt 2. Jede Doppelstunde in der Werkstatt bietet mindestens 70 Minuten eigenständige Projektarbeit; Beratung erfolgt bedarfsgerecht innerhalb der Arbeit.",
   "presentationRule": "Die Vorstellungen erläutern die Jahresdokumentation und machen eigene Leistungen erkennbar. Richtwert: 8 Minuten gemeinsamer Beitrag plus 4 Minuten je Person für fachliche Erläuterung und Rückfragen. Slots werden zu Kursbeginn vereinbart; bei überwiegend Einzelarbeiten oder mehr als 24 Lernenden beginnt die Vorstellungsphase bereits am 7. Dezember. Der 18. Januar bleibt vorrangig Nachholpuffer. Es entsteht kein dritter Bewertungsbereich.",
   "sources": [
     {
@@ -28,31 +28,31 @@
   "forms": {
     "Projektantrag": {
       "label": "Projektantrag",
-      "url": "downloads/Projektkurs_Projektantrag.pdf?v=20260927-apogost"
+      "url": "downloads/Projektkurs_Projektantrag.pdf?v=20260927-kanban"
     },
     "Arbeitsprotokoll": {
       "label": "Arbeitsprotokoll",
-      "url": "downloads/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-apogost"
+      "url": "downloads/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban"
     },
     "Feedback": {
       "label": "Feedback und Zielgruppentest",
-      "url": "downloads/Projektkurs_Feedback.pdf?v=20260927-apogost"
+      "url": "downloads/Projektkurs_Feedback.pdf?v=20260927-kanban"
     },
     "Reflexion": {
       "label": "Individuelle Reflexion",
-      "url": "downloads/Projektkurs_Reflexion.pdf?v=20260927-apogost"
+      "url": "downloads/Projektkurs_Reflexion.pdf?v=20260927-kanban"
     },
     "KI_Medien_Abgabe": {
       "label": "KI- und Mediennachweis",
-      "url": "downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-apogost"
+      "url": "downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanban"
     },
     "Mitarbeitsraster": {
       "label": "Sonstige Mitarbeit",
-      "url": "downloads/Projektkurs_Mitarbeitsraster.pdf?v=20260927-apogost"
+      "url": "downloads/Projektkurs_Mitarbeitsraster.pdf?v=20260927-kanban"
     },
     "Notenbildung": {
       "label": "Notenbildung – bisheriges Modell",
-      "url": "downloads/Projektkurs_Notenbildung.pdf?v=20260927-apogost"
+      "url": "downloads/Projektkurs_Notenbildung.pdf?v=20260927-kanban"
     }
   },
   "closures": [
@@ -171,12 +171,16 @@
       "date": "2027-02-16",
       "phase": "start",
       "title": "Kursauftakt und Jahresprojekt",
-      "goal": "Arbeitsweise, Jahresbewertung und Termine sind geklärt; erste Themenideen und persönliche Ziele liegen vor.",
+      "goal": "Arbeitsweise und Jahresbewertung sind geklärt; die 45-minütige Kanban-Kurzform ist erprobt und das eigene Jahresprojekt im Arbeitsboard eingerichtet.",
       "forms": [
         "Projektantrag",
         "Notenbildung"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "lernprogramm",
+        "board"
+      ]
     },
     {
       "date": "2027-02-23",
@@ -186,7 +190,10 @@
       "forms": [
         "Arbeitsprotokoll"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-03-02",
@@ -196,7 +203,10 @@
       "forms": [
         "Arbeitsprotokoll"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-03-09",
@@ -207,17 +217,23 @@
         "Feedback",
         "Projektantrag"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-03-16",
       "phase": "deadline",
-      "title": "Projektvereinbarung abschließen",
-      "goal": "Leitfrage, Referenzfach, Jahresdokumentation, Rollen, Kriterien und Meilensteine sind mit der Kursleitung vereinbart.",
+      "title": "Projektvereinbarung für Produkt 1",
+      "goal": "Leitfrage, Referenzfach, Produkt 1, Rollen, Kriterien und Meilensteine sind vereinbart und im Kanban-Board angelegt.",
       "forms": [
         "Projektantrag"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-04-06",
@@ -228,7 +244,10 @@
         "Arbeitsprotokoll",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-04-13",
@@ -239,7 +258,10 @@
         "Arbeitsprotokoll",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-04-20",
@@ -250,7 +272,10 @@
         "Arbeitsprotokoll",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-04-27",
@@ -261,7 +286,10 @@
         "Arbeitsprotokoll",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-05-04",
@@ -272,7 +300,10 @@
         "Arbeitsprotokoll",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-05-11",
@@ -283,7 +314,10 @@
         "Arbeitsprotokoll",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-05-25",
@@ -293,7 +327,10 @@
       "forms": [
         "Feedback"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-06-01",
@@ -304,7 +341,10 @@
         "Arbeitsprotokoll",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-06-08",
@@ -315,86 +355,111 @@
         "Arbeitsprotokoll",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-06-15",
       "phase": "project",
-      "title": "Projektwerkstatt II · Zwischenstand abschließen",
-      "goal": "Eine zusammenhängende erste Fassung und die zugehörigen Belege sind für die Zwischenvorstellung gesichert.",
+      "title": "Projektwerkstatt II · Vollständige Fassung von Produkt 1",
+      "goal": "Produkt 1 liegt vollständig vor; Belege, Quellen und individuelle Beiträge sind gesichert. Die letzten Prüfungen sind als Boardkarten festgelegt.",
       "forms": [
         "Arbeitsprotokoll",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-06-22",
-      "phase": "presentation",
-      "title": "Zwischenvorstellung",
-      "goal": "Der Arbeitsstand wird erläutert; jede Person weist ihren Beitrag nach. Rückmeldung legt die nächste Vertiefung fest. Keine eigenständige Halbjahresproduktnote.",
+      "phase": "project",
+      "title": "Projektwerkstatt II · Produkt 1 abgabefertig machen",
+      "goal": "Produkt 1 wird fachlich und technisch geprüft. Fertig-Kriterien, Quellen, Eigenanteile und KI-/Mediennachweise sind vollständig; offene Punkte werden geschlossen.",
       "forms": [
-        "Feedback",
-        "Reflexion"
+        "Arbeitsprotokoll",
+        "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-06-29",
-      "phase": "review",
-      "title": "Lernstandsberatung vor dem Sommer",
-      "goal": "Mitarbeit und Entwicklung sind dokumentiert; erforderliche Beratung ist festgehalten. Für das erste Kurshalbjahr wird keine Kursnote erteilt.",
+      "phase": "deadline",
+      "title": "Produkt 1 abgeben und Lernstand besprechen",
+      "goal": "Produkt 1 mit fachlichen Begleitunterlagen, Quellen, individuellen Beiträgen, Reflexion und Boardexport abgeben. Lernstand und Beratungsbedarf werden dokumentiert; keine Halbjahreskursnote.",
       "forms": [
+        "KI_Medien_Abgabe",
+        "Reflexion",
         "Mitarbeitsraster",
-        "Notenbildung",
-        "Reflexion"
+        "Notenbildung"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-07-06",
       "phase": "buffer",
-      "title": "Puffer und Vertiefungsplanung",
-      "goal": "Offene Zwischenschritte werden nachgeholt; die Vertiefung nach den Ferien ist fachlich begründet.",
+      "title": "Nachholpuffer und Rückmeldung zu Produkt 1",
+      "goal": "Begründete Nachholfälle werden bearbeitet; Rückmeldungen zu Produkt 1 und mögliche Vertiefungsfragen für Produkt 2 werden festgehalten.",
       "forms": [
         "Projektantrag",
         "Arbeitsprotokoll"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-07-13",
       "phase": "buffer",
-      "title": "Arbeitsstand sichern",
-      "goal": "Dateien, Quellen und Rollen sind gesichert; der Wiedereinstieg ist geplant. Die Sommerferien enthalten keine Pflichtabgabe.",
+      "title": "Produkt 1 und Arbeitsstand sichern",
+      "goal": "Produkt 1, Dateien und Quellen sind archiviert; der Kanban-Stand ist als JSON gesichert. Eine kurze Vorstellung nach den Ferien ist vorbereitet. Keine Pflichtarbeit in den Sommerferien.",
       "forms": [
         "Arbeitsprotokoll"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-09-07",
-      "phase": "project",
-      "title": "Projektwerkstatt III · Wiedereinstieg und Vertiefung",
-      "goal": "Der Arbeitsplan ist aktualisiert; eine zusätzliche fachliche Perspektive für das Jahresprojekt ist festgelegt.",
+      "phase": "presentation",
+      "title": "Produkt 1 gegenseitig vorstellen · Produkt 2 starten",
+      "goal": "Erste Unterrichtsstunde (45 Minuten): gegenseitige Vorstellung von Produkt 1 als Galeriegang oder in Kleingruppen mit Peer-Feedback. Zweite Unterrichtsstunde: Erkenntnisse auswerten und Produkt 2 mit neuer Leitfrage bzw. begründeter Vertiefung im Kanban-Board planen.",
       "forms": [
-        "Arbeitsprotokoll",
         "Feedback",
-        "KI_Medien_Abgabe"
+        "Projektantrag",
+        "Arbeitsprotokoll"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-09-14",
       "phase": "project",
-      "title": "Projektwerkstatt III · Neue Belege erschließen",
-      "goal": "Die Vertiefung stützt sich auf zusätzliche geeignete Quellen, Daten oder ein begründetes Modell.",
+      "title": "Projektwerkstatt III · Produkt 2 fachlich fundieren",
+      "goal": "Projektvereinbarung für Produkt 2 abschließen; Vertiefungsfrage, neue Quellen oder Daten, Rollen und Meilensteine sind im Kanban-Board festgelegt.",
       "forms": [
+        "Projektantrag",
         "Arbeitsprotokoll",
-        "Feedback",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-09-21",
@@ -406,7 +471,10 @@
         "Feedback",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-09-28",
@@ -418,7 +486,10 @@
         "Feedback",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-10-05",
@@ -430,7 +501,10 @@
         "Feedback",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-10-12",
@@ -442,19 +516,25 @@
         "Feedback",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-10-19",
       "phase": "project",
-      "title": "Projektwerkstatt III · Vollständige Rohfassung",
-      "goal": "Das Gesamtprodukt und eine gegliederte Rohfassung der Jahresdokumentation sind vollständig. Offene Punkte sind priorisiert.",
+      "title": "Projektwerkstatt III · Rohfassung von Produkt 2",
+      "goal": "Produkt 2 liegt als vollständige Rohfassung vor. Die fachliche Vertiefung gegenüber Produkt 1 und die individuellen Beiträge sind erkennbar; offene Punkte sind priorisiert.",
       "forms": [
         "Arbeitsprotokoll",
         "Feedback",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-11-09",
@@ -466,19 +546,25 @@
         "Reflexion",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-11-16",
       "phase": "project",
-      "title": "Projektwerkstatt IV · Dokumentation ausarbeiten",
-      "goal": "Die Jahresdokumentation erläutert Leitfrage, Vorgehen, Ergebnisse, Grenzen und eigene Beiträge.",
+      "title": "Projektwerkstatt IV · Beide Produkte dokumentieren",
+      "goal": "Die Jahresdokumentation erläutert beide Produkte, ihre Leitfragen, Ergebnisse und Grenzen sowie die fachliche Weiterentwicklung und die eigenen Beiträge.",
       "forms": [
         "Arbeitsprotokoll",
         "Reflexion",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-11-23",
@@ -490,42 +576,54 @@
         "Reflexion",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-11-30",
       "phase": "project",
-      "title": "Projektwerkstatt IV · Abgabefassung fertigstellen",
-      "goal": "Produkt, Jahresdokumentation, Quellenverzeichnis und persönliche Nachweise sind technisch geprüft und abgabefertig.",
+      "title": "Projektwerkstatt IV · Produkt 2 abgabefertig machen",
+      "goal": "Produkt 2, die Jahresdokumentation beider Produkte, Quellenverzeichnis und persönliche Nachweise sind geprüft und abgabefertig.",
       "forms": [
         "Arbeitsprotokoll",
         "Reflexion",
         "KI_Medien_Abgabe"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-12-07",
       "phase": "deadline",
-      "title": "Jahresdokumentation abgeben",
-      "goal": "Endfassung mit Produkt, fachlicher Dokumentation, Quellen, Eigenanteilen und KI-/Mediennachweis abgeben; Präsentationsplan steht fest. Bei großem Kurs beginnen erste Vorstellungen.",
+      "title": "Produkt 2 und Jahresdokumentation abgeben",
+      "goal": "Produkt 2 und die Jahresdokumentation zu beiden Produkten mit Quellen, Eigenanteilen, KI-/Mediennachweis und abschließendem Boardexport abgeben. Bei großem Kurs beginnen erste Abschlussvorstellungen.",
       "forms": [
         "KI_Medien_Abgabe",
         "Reflexion",
         "Notenbildung"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-12-14",
       "phase": "presentation",
       "title": "Abschlussvorstellungen I",
-      "goal": "Die ersten Projekte werden vorgestellt; die Beteiligten erläutern ihre eigene fachliche Leistung und beantworten Rückfragen.",
+      "goal": "Produkt 2 und der fachliche Fortschritt gegenüber Produkt 1 werden vorgestellt; jede Person erläutert ihren Beitrag und beantwortet Rückfragen.",
       "forms": [
         "Reflexion",
         "Notenbildung"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2027-12-21",
@@ -536,7 +634,10 @@
         "Reflexion",
         "Notenbildung"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2028-01-11",
@@ -547,7 +648,10 @@
         "Reflexion",
         "Notenbildung"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2028-01-18",
@@ -558,7 +662,10 @@
         "Mitarbeitsraster",
         "Notenbildung"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2028-01-25",
@@ -569,7 +676,10 @@
         "Notenbildung",
         "Reflexion"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     },
     {
       "date": "2028-02-01",
@@ -579,7 +689,10 @@
       "forms": [
         "Feedback"
       ],
-      "ue": 2
+      "ue": 2,
+      "apps": [
+        "board"
+      ]
     }
   ],
   "markers": [
@@ -611,60 +724,68 @@
   ],
   "phases": [
     {
-      "name": "Grundlagen und Vereinbarung",
+      "name": "Grundlagen und Vereinbarung für Produkt 1",
       "start": "2027-02-16",
       "end": "2027-03-16",
       "sessions": 5,
       "modules": "M1–M4",
-      "goal": "Leitfrage, fachliche Basis, Zielgruppe, Projektvereinbarung"
+      "goal": "Kanban-Einstieg, fachliche Basis und Projektvereinbarung"
     },
     {
-      "name": "Projektwerkstatt I",
+      "name": "Projektwerkstatt I · Produkt 1",
       "start": "2027-04-06",
       "end": "2027-05-11",
       "sessions": 6,
       "modules": "M3–M5",
-      "goal": "Recherche, Konzept und Testfassung"
+      "goal": "Recherche, Konzept und Testfassung von Produkt 1"
     },
     {
-      "name": "Test und Projektwerkstatt II",
+      "name": "Test und Projektwerkstatt II · Produkt 1",
       "start": "2027-05-25",
-      "end": "2027-06-15",
-      "sessions": 4,
+      "end": "2027-06-22",
+      "sessions": 5,
       "modules": "M4–M5",
-      "goal": "Zielgruppentest und überarbeiteter Zwischenstand"
+      "goal": "Zielgruppentest, Überarbeitung und Abgabefassung"
     },
     {
-      "name": "Zwischenvorstellung und Beratung",
-      "start": "2027-06-22",
+      "name": "Abgabe von Produkt 1 und Rückmeldung",
+      "start": "2027-06-29",
       "end": "2027-07-13",
-      "sessions": 4,
-      "modules": "M5–M6",
-      "goal": "Lernstand, Rückmeldung, Puffer und Vertiefungsplanung"
+      "sessions": 3,
+      "modules": "M5",
+      "goal": "Produkt 1 abgeben, Lernstand, Nachholpuffer und Sicherung"
     },
     {
-      "name": "Projektwerkstatt III",
+      "name": "Gemeinsamer Neustart und Produkt 2",
       "start": "2027-09-07",
-      "end": "2027-10-19",
-      "sessions": 7,
-      "modules": "M6–M7",
-      "goal": "Fachliche Vertiefung und vollständige Rohfassung"
+      "end": "2027-09-07",
+      "sessions": 1,
+      "modules": "M5–M6",
+      "goal": "45 Minuten gegenseitige Vorstellung, danach Produkt 2 planen"
     },
     {
-      "name": "Projektwerkstatt IV",
+      "name": "Projektwerkstatt III · Produkt 2",
+      "start": "2027-09-14",
+      "end": "2027-10-19",
+      "sessions": 6,
+      "modules": "M6–M7",
+      "goal": "Vertiefungsfrage, neue Belege und vollständige Rohfassung"
+    },
+    {
+      "name": "Projektwerkstatt IV · Produkt 2",
       "start": "2027-11-09",
       "end": "2027-11-30",
       "sessions": 4,
       "modules": "M7",
-      "goal": "Endredaktion und Jahresdokumentation"
+      "goal": "Endredaktion und Jahresdokumentation beider Produkte"
     },
     {
-      "name": "Abgabe und Abschlussvorstellungen",
+      "name": "Abgabe von Produkt 2 und Vorstellungen",
       "start": "2027-12-07",
       "end": "2028-01-18",
       "sessions": 5,
       "modules": "M7–M8",
-      "goal": "Jahresdokumentation, individuelle Erläuterung und Nachholpuffer"
+      "goal": "Produkt 2 und Jahresdokumentation, Erläuterung und Puffer"
     },
     {
       "name": "Rückmeldung und Kursabschluss",
@@ -674,5 +795,20 @@
       "modules": "M8",
       "goal": "Jahresbewertung erläutern, Transfer und Evaluation"
     }
-  ]
+  ],
+  "apps": {
+    "lernprogramm": {
+      "label": "Kanban-Lernprogramm",
+      "url": "https://genaiedu.github.io/LearningApps/kanban-projektwerkstatt.html"
+    },
+    "board": {
+      "label": "Kanban-Arbeitsboard",
+      "url": "https://genaiedu.github.io/LearningApps/kanban-board.html"
+    },
+    "lehrkraft": {
+      "label": "Kanban-Lehrkraft-Ansicht",
+      "url": "https://genaiedu.github.io/LearningApps/kanban-lehrer.html"
+    }
+  },
+  "kanbanRule": "Die 45-minütige Kurzform des Lernprogramms startet am 16. Februar 2027. Danach führen die Teams ihr Jahresprojekt im Kanban-Arbeitsboard. Zum Ende jeder Doppelstunde: Karten aktualisieren und JSON-Sicherung exportieren. Ein führendes Board je Team verhindert widersprüchliche Stände; es gibt keine automatische Synchronisation zwischen Geräten."
 }
