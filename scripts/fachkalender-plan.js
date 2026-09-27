@@ -17,24 +17,22 @@ function plan(data,subject,year,closures){
  for(const track of sub.tracks){
   let units=sub.units.filter(u=>u.track===track.id);
   if(subject==='chemie'&&((+year>=2027&&track.id==='EF')||(+year>=2028&&track.id.startsWith('Q1'))||(+year>=2029&&track.id.startsWith('Q2'))))units=sub.units2026.filter(u=>u.track===track.id);
-  const end=track.id.startsWith('Q2')?config.q2end:config.end;
+  const q2=track.id.startsWith('Q2');
+  const end=q2?(config.prepEnd||config.q2end):config.end;
   const days=dates(config.start,end).filter(d=>!closed(d,track.id,closures));
-  if(days.length<units.length*2)throw Error('Für '+track.label+' bleiben zu wenige Unterrichtstage. Bitte freie Tage oder Schuljahresrahmen anpassen.');
-  const hours=units.reduce((n,u)=>n+u.hours,0),requested=hours/track.weekly*5;
-  const usable=Math.min(Math.round(requested),Math.floor(days.length*.92));
+  const preparationDays=q2?20:0;
+  if(days.length-preparationDays<units.length*2)throw Error('Für '+track.label+' bleiben zu wenige Unterrichtstage. Bitte freie Tage oder Schuljahresrahmen anpassen.');
+  const teachingDays=q2?days.slice(0,-preparationDays):days;
+  const hours=units.reduce((n,u)=>n+u.hours,0),usable=teachingDays.length;
   const allocations=distribute(units.map(u=>u.hours),usable);
-  const reserves=distribute(units.map(u=>u.hours),days.length-usable);
   let index=0;
-  const factor=usable/requested;
+  const factor=usable*track.weekly/5/hours;
   units.forEach((u,i)=>{
    const count=allocations[i];if(!count)return;
-   events.push({...u,id:`uv-${subject}-${year}-${u.code}`,subject,year,kind:'unit',start:days[index],end:days[index+count-1],color:i%6,plannedHours:Math.round(count/5*track.weekly*10)/10,notes:`Curriculum: ${u.hours} UStd à 45 Minuten. Kalenderansatz: ca. ${Math.round(count/5*track.weekly*10)/10} UStd. ${factor<.97?'Zeitrahmen proportional an die verfügbaren Unterrichtstage angepasst.':'Zeitrichtwert beibehalten; verbleibende Zeit als Reserve.'}`});index+=count;
-   if(reserves[i]){
-    events.push({id:`buffer-${subject}-${year}-${u.code}`,subject,year,track:track.id,kind:'buffer',title:'Vertiefung, Leistungsnachweise und Reserve',start:days[index],end:days[index+reserves[i]-1],color:i%6,notes:'Zeit für Übung, Klausuren bzw. Klassenarbeiten, Rückmeldung und schulbedingte Verschiebungen. Fachliche Reihenfolge bleibt erhalten.'});index+=reserves[i];
-   }
+   events.push({...u,id:`uv-${subject}-${year}-${u.code}`,subject,year,kind:'unit',start:teachingDays[index],end:teachingDays[index+count-1],color:i%6,plannedHours:Math.round(count/5*track.weekly*10)/10,notes:`Curricularer Zeitrichtwert: ${u.hours} UStd à 45 Minuten; Anteil an den Vorhaben dieses Jahrgangs: ${Math.round(u.hours/hours*1000)/10} %. Proportionaler Kalenderansatz: ca. ${Math.round(count/5*track.weekly*10)/10} UStd. Übung, Vertiefung und Leistungsnachweise sind in die Vorhaben integriert.`});index+=count;
   });
-  stats.push({track:track.id,days:days.length,weekly:track.weekly,hours,planned:Math.round(usable/5*track.weekly*10)/10,reserve:Math.round((days.length-usable)/5*track.weekly*10)/10,factor});
-  if(track.id.startsWith('Q2')&&config.prepStart&&config.prepEnd)events.push({id:`prep-${subject}-${year}-${track.id}`,subject,year,track:track.id,kind:'prep',title:'Abiturvorbereitung',start:config.prepStart,end:config.prepEnd,notes:'Amtliche Vorbereitungsphase; konkrete Stunden werden schulisch festgelegt.',source:'https://bass.schule.nrw/192.htm'});
+  stats.push({track:track.id,days:days.length,weekly:track.weekly,hours,planned:Math.round(usable/5*track.weekly*10)/10,preparation:preparationDays/5*track.weekly,factor});
+  if(q2)events.push({id:`prep-${subject}-${year}-${track.id}`,subject,year,track:track.id,kind:'prep',title:'Abiturvorbereitung · vier Unterrichtswochen',start:days[days.length-preparationDays],end:days.at(-1),notes:'Die letzten 20 verfügbaren Schultage (vier Unterrichtswochen) bis zum Ende des Q2-Unterrichts bleiben für Wiederholung, Vernetzung und Abiturvorbereitung reserviert. Ferien und freie Tage zählen nicht mit. Die schulinterne Planung umfasst gegebenenfalls die anschließend amtlich ausgewiesene Vorbereitungsphase.'});
  }
  events.push(...data.exams.filter(e=>e.subject===subject&&e.start>=config.start&&e.start<=config.end).map(e=>({...e,year})));
  return {events,stats};

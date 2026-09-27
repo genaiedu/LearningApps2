@@ -59,7 +59,7 @@ function setContext(){
  if(data.years[year].dynamic)$('notice').textContent='NRW-Ferien und Feiertage aus dem Netz geladen · '+(data.years[year].q2Provisional?'Q2-Unterrichtsende ist ein vorläufiger Planungswert; unter Schuljahresrahmen prüfen. ':'Q2-Rahmen nach eigener Festlegung. ')+(data.years[year].halfProvisional?'Halbjahreswechsel vorläufig. ':'')+'Schulische Klausuren und Abiturtermine bitte ergänzen.';
  refresh();
 }
-function shown(e){return selected.has(e.track)&&($('show-reserve').checked||e.kind!=='buffer')&&($('show-makeup').checked||e.kind!=='makeup')}
+function shown(e){return selected.has(e.track)&&($('show-makeup').checked||e.kind!=='makeup')}
 function onDay(e,d){return d>=e.start&&d<=e.end&&(!['unit','buffer','prep'].includes(e.kind)||!P.closed(d,e.track,closureList()))}
 function chip(e,range=false){
  const custom=e.custom?' ✎':'';const title=(e.code?e.code+' · ':'')+e.title;
@@ -100,7 +100,7 @@ function render(){
    html+='</td>'+ts.map(t=>'<td>'+display.filter(e=>e.track===t.id&&days.some(d=>onDay(e,d))).map(e=>chip(e,true)).join('')+'</td>').join('')+'</tr>';
   }$('calendar').innerHTML=html+'</tbody></table></div>';
  }
- $('stats').innerHTML='<table><thead><tr><th>Jahrgang / Kurs</th><th>Wochenstunden</th><th>Verfügbare Schultage</th><th>Curriculum (UStd)</th><th>Kalenderansatz (UStd)</th><th>Reserve (UStd)</th><th>Anpassung</th></tr></thead><tbody>'+stats.map(s=>`<tr><td>${esc(s.track)}</td><td>${s.weekly}</td><td>${s.days}</td><td>${s.hours}</td><td>${s.planned}</td><td>${s.reserve}</td><td>${s.factor<.97?'ca. '+Math.round((1-s.factor)*100)+' % verdichtet':'Zeitrichtwert beibehalten'}</td></tr>`).join('')+'</tbody></table>';
+ $('stats').innerHTML='<table><thead><tr><th>Jahrgang / Kurs</th><th>Wochenstunden</th><th>Verfügbare Schultage</th><th>Curriculum (UStd)</th><th>Kalenderansatz (UStd)</th><th>Abiturvorbereitung (UStd)</th><th>Anpassung</th></tr></thead><tbody>'+stats.map(s=>`<tr><td>${esc(s.track)}</td><td>${s.weekly}</td><td>${s.days}</td><td>${s.hours}</td><td>${s.planned}</td><td>${s.preparation}</td><td>${Math.round(s.factor*100)} % des Zeitrichtwerts</td></tr>`).join('')+'</tbody></table>';
 }
 function eventWarning(e){
  const warnings=[];
@@ -148,7 +148,7 @@ $('all-tracks').onclick=()=>selectAll(true);$('no-tracks').onclick=()=>selectAll
 $('subject').onchange=setContext;$('year').onchange=setContext;$('month').onchange=()=>{month=$('month').value;render()};
 $('prev').onclick=()=>{const ms=months();month=ms[ms.indexOf(month)-1];render()};$('next').onclick=()=>{const ms=months();month=ms[ms.indexOf(month)+1];render()};
 $('month-view').onclick=()=>{view='month';render()};$('year-view').onclick=()=>{view='year';render()};
-for(const id of ['show-reserve','show-makeup','show-closures'])$(id).onchange=render;
+for(const id of ['show-makeup','show-closures'])$(id).onchange=render;
 $('calendar').onclick=e=>{const el=e.target.closest('[data-event]');if(el)openEvent(el.dataset.event)};$('new-exam').onclick=()=>openEvent(null);
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>$(b.dataset.close).close();
 $('export').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Thomaeum_Fachkalender_Eigene_Planung.json';document.body.append(a);a.click();a.remove();$('save-status').textContent='Die Sicherungsdatei wurde zum Herunterladen bereitgestellt.';setTimeout(()=>URL.revokeObjectURL(url),30000)};
