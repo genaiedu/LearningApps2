@@ -1,0 +1,872 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Thomaeum Kempen//Projektkurs Wissenschaftskommunikation//DE
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Projektkurs Wissenschaftskommunikation 2027/28
+X-WR-CALDESC:Nur Kurstermine und Abgaben. Ganztägige Einträge\, da die Un
+ terrichtsuhrzeit noch nicht feststeht. Dauer jeweils 90 Minuten.
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-02-16@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270216
+DTEND;VALUE=DATE:20270217
+SUMMARY:Projektkurs · Kursauftakt und Jahresprojekt
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Arbeitsweise und Jahresbewertung sind gekl
+ ärt\; die 45-minütige Kanban-Kurzform ist erprobt und das eigene Jahresp
+ rojekt im Arbeitsboard eingerichtet.\n\nFormulare:\nProjektantrag: https:/
+ /genaiedu.github.io/LearningApps2/downloads/Projektkurs_Projektantrag.pdf?
+ v=20260927-kanban\nNotenbildung – bisheriges Modell: https://genaiedu.gi
+ thub.io/LearningApps2/downloads/Projektkurs_Notenbildung.pdf?v=20260927-ka
+ nban\n\nApps:\nKanban-Lernprogramm: https://genaiedu.github.io/LearningApp
+ s/kanban-projektwerkstatt.html\nKanban-Arbeitsboard: https://genaiedu.gith
+ ub.io/LearningApps/kanban-board.html\n\nEs gilt der veröffentlichte Planu
+ ngsstand\; Änderungen durch die Kursleitung bleiben möglich.\nKurskalend
+ er: https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.htm
+ l
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-02-23@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270223
+DTEND;VALUE=DATE:20270224
+SUMMARY:Projektkurs · Quellen prüfen
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Eine kleine Belegmatrix mit mindestens drei
+  geeigneten Quellen und ersten fachlichen Aussagen liegt vor.\n\nFormulare
+ :\nArbeitsprotokoll: https://genaiedu.github.io/LearningApps2/downloads/Pr
+ ojektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbeitsb
+ oard: https://genaiedu.github.io/LearningApps/kanban-board.html\n\nEs gilt
+  der veröffentlichte Planungsstand\; Änderungen durch die Kursleitung bl
+ eiben möglich.\nKurskalender: https://genaiedu.github.io/LearningApps2/pr
+ ojektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-03-02@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270302
+DTEND;VALUE=DATE:20270303
+SUMMARY:Projektkurs · Daten und Modelle verstehen
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Eine zentrale wissenschaftliche Aussage wir
+ d mit Daten oder einem Modell erklärt\; Aussagegrenzen sind benannt.\n\nF
+ ormulare:\nArbeitsprotokoll: https://genaiedu.github.io/LearningApps2/down
+ loads/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\n\nApps:\nKanban-
+ Arbeitsboard: https://genaiedu.github.io/LearningApps/kanban-board.html\n\
+ nEs gilt der veröffentlichte Planungsstand\; Änderungen durch die Kursle
+ itung bleiben möglich.\nKurskalender: https://genaiedu.github.io/Learning
+ Apps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-03-09@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270309
+DTEND;VALUE=DATE:20270310
+SUMMARY:Projektkurs · Zielgruppe und Erklärweg
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Zielgruppe\, Kommunikationsziel und Medienf
+ ormat sind begründet\; ein kurzes Erklärbeispiel ist erprobt.\n\nFormula
+ re:\nFeedback und Zielgruppentest: https://genaiedu.github.io/LearningApps
+ 2/downloads/Projektkurs_Feedback.pdf?v=20260927-kanban\nProjektantrag: htt
+ ps://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Projektantrag.
+ pdf?v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.gith
+ ub.io/LearningApps/kanban-board.html\n\nEs gilt der veröffentlichte Planu
+ ngsstand\; Änderungen durch die Kursleitung bleiben möglich.\nKurskalend
+ er: https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.htm
+ l
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-03-16@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270316
+DTEND;VALUE=DATE:20270317
+SUMMARY:Projektkurs · Projektvereinbarung für Produkt 1
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Leitfrage\, Referenzfach\, Produkt 1\, Roll
+ en\, Kriterien und Meilensteine sind vereinbart und im Kanban-Board angele
+ gt.\n\nFormulare:\nProjektantrag: https://genaiedu.github.io/LearningApps2
+ /downloads/Projektkurs_Projektantrag.pdf?v=20260927-kanban\n\nApps:\nKanba
+ n-Arbeitsboard: https://genaiedu.github.io/LearningApps/kanban-board.html\
+ n\nEs gilt der veröffentlichte Planungsstand\; Änderungen durch die Kurs
+ leitung bleiben möglich.\nKurskalender: https://genaiedu.github.io/Learni
+ ngApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-04-06@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270406
+DTEND;VALUE=DATE:20270407
+SUMMARY:Projektkurs · Projektwerkstatt I · Recherche vertiefen
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Fachliche Kernfragen sind eingegrenzt\; Rec
+ herche und Belegmatrix werden gezielt erweitert.\n\nFormulare:\nArbeitspro
+ tokoll: https://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Arb
+ eitsprotokoll.pdf?v=20260927-kanban\nKI- und Mediennachweis: https://genai
+ edu.github.io/LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=2
+ 0260927-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/L
+ earningApps/kanban-board.html\n\nEs gilt der veröffentlichte Planungsstan
+ d\; Änderungen durch die Kursleitung bleiben möglich.\nKurskalender: htt
+ ps://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-04-13@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270413
+DTEND;VALUE=DATE:20270414
+SUMMARY:Projektkurs · Projektwerkstatt I · Fachliches Konzept
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Fachliche Argumentation\, zentrale Begriffe
+  und Modellgrenzen sind in einem Konzept festgehalten.\n\nFormulare:\nArbe
+ itsprotokoll: https://genaiedu.github.io/LearningApps2/downloads/Projektku
+ rs_Arbeitsprotokoll.pdf?v=20260927-kanban\nKI- und Mediennachweis: https:/
+ /genaiedu.github.io/LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.p
+ df?v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.githu
+ b.io/LearningApps/kanban-board.html\n\nEs gilt der veröffentlichte Planun
+ gsstand\; Änderungen durch die Kursleitung bleiben möglich.\nKurskalende
+ r: https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-04-20@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Projektkurs · Projektwerkstatt I · Skript und Storyboard
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Ein erster vollständiger Aufbau bzw. ein S
+ kript oder Storyboard liegt vor.\n\nFormulare:\nArbeitsprotokoll: https://
+ genaiedu.github.io/LearningApps2/downloads/Projektkurs_Arbeitsprotokoll.pd
+ f?v=20260927-kanban\nKI- und Mediennachweis: https://genaiedu.github.io/Le
+ arningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanban\n
+ \nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApps/kanb
+ an-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änderungen 
+ durch die Kursleitung bleiben möglich.\nKurskalender: https://genaiedu.gi
+ thub.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-04-27@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270427
+DTEND;VALUE=DATE:20270428
+SUMMARY:Projektkurs · Projektwerkstatt I · Prototyp bauen
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Ein funktionsfähiger oder vorzeigbarer Aus
+ schnitt des Produkts ist erstellt.\n\nFormulare:\nArbeitsprotokoll: https:
+ //genaiedu.github.io/LearningApps2/downloads/Projektkurs_Arbeitsprotokoll.
+ pdf?v=20260927-kanban\nKI- und Mediennachweis: https://genaiedu.github.io/
+ LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanban
+ \n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApps/ka
+ nban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änderunge
+ n durch die Kursleitung bleiben möglich.\nKurskalender: https://genaiedu.
+ github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-05-04@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270504
+DTEND;VALUE=DATE:20270505
+SUMMARY:Projektkurs · Projektwerkstatt I · Prototyp ausarbeiten
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Zentrale Inhalte sind im Prototyp umgesetzt
+ \; offene fachliche und technische Fragen sind dokumentiert.\n\nFormulare:
+ \nArbeitsprotokoll: https://genaiedu.github.io/LearningApps2/downloads/Pro
+ jektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\nKI- und Mediennachweis: h
+ ttps://genaiedu.github.io/LearningApps2/downloads/Projektkurs_KI_Medien_Ab
+ gabe.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu
+ .github.io/LearningApps/kanban-board.html\n\nEs gilt der veröffentlichte 
+ Planungsstand\; Änderungen durch die Kursleitung bleiben möglich.\nKursk
+ alender: https://genaiedu.github.io/LearningApps2/projektkurs-kalender-202
+ 7.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-05-11@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270511
+DTEND;VALUE=DATE:20270512
+SUMMARY:Projektkurs · Projektwerkstatt I · Testfassung sichern
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Eine prüfbare Testfassung und konkrete Ver
+ ständnisfragen für den Zielgruppentest liegen vor.\n\nFormulare:\nArbeit
+ sprotokoll: https://genaiedu.github.io/LearningApps2/downloads/Projektkurs
+ _Arbeitsprotokoll.pdf?v=20260927-kanban\nKI- und Mediennachweis: https://g
+ enaiedu.github.io/LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf
+ ?v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.
+ io/LearningApps/kanban-board.html\n\nEs gilt der veröffentlichte Planungs
+ stand\; Änderungen durch die Kursleitung bleiben möglich.\nKurskalender:
+  https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-05-25@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270525
+DTEND;VALUE=DATE:20270526
+SUMMARY:Projektkurs · Peer-Feedback und Zielgruppentest
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Die Testfassung ist erprobt\; Beobachtungen
+ \, Verständnisprobleme und priorisierte Änderungen sind dokumentiert.\n\
+ nFormulare:\nFeedback und Zielgruppentest: https://genaiedu.github.io/Lear
+ ningApps2/downloads/Projektkurs_Feedback.pdf?v=20260927-kanban\n\nApps:\nK
+ anban-Arbeitsboard: https://genaiedu.github.io/LearningApps/kanban-board.h
+ tml\n\nEs gilt der veröffentlichte Planungsstand\; Änderungen durch die 
+ Kursleitung bleiben möglich.\nKurskalender: https://genaiedu.github.io/Le
+ arningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-06-01@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270601
+DTEND;VALUE=DATE:20270602
+SUMMARY:Projektkurs · Projektwerkstatt II · Fachlich überarbeiten
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Fachliche Fehler und missverständliche Dar
+ stellungen aus dem Test werden behoben.\n\nFormulare:\nArbeitsprotokoll: h
+ ttps://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Arbeitsproto
+ koll.pdf?v=20260927-kanban\nKI- und Mediennachweis: https://genaiedu.githu
+ b.io/LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-k
+ anban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningAp
+ ps/kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Ände
+ rungen durch die Kursleitung bleiben möglich.\nKurskalender: https://gena
+ iedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-06-08@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270608
+DTEND;VALUE=DATE:20270609
+SUMMARY:Projektkurs · Projektwerkstatt II · Darstellung verbessern
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Erklärwege und Gestaltung sind auf Basis d
+ es Feedbacks überarbeitet\; Änderungen werden begründet.\n\nFormulare:\
+ nArbeitsprotokoll: https://genaiedu.github.io/LearningApps2/downloads/Proj
+ ektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\nKI- und Mediennachweis: ht
+ tps://genaiedu.github.io/LearningApps2/downloads/Projektkurs_KI_Medien_Abg
+ abe.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.
+ github.io/LearningApps/kanban-board.html\n\nEs gilt der veröffentlichte P
+ lanungsstand\; Änderungen durch die Kursleitung bleiben möglich.\nKurska
+ lender: https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027
+ .html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-06-15@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270615
+DTEND;VALUE=DATE:20270616
+SUMMARY:Projektkurs · Projektwerkstatt II · Vollständige Fassung von Pro
+ dukt 1
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Produkt 1 liegt vollständig vor\; Belege\,
+  Quellen und individuelle Beiträge sind gesichert. Die letzten Prüfungen
+  sind als Boardkarten festgelegt.\n\nFormulare:\nArbeitsprotokoll: https:/
+ /genaiedu.github.io/LearningApps2/downloads/Projektkurs_Arbeitsprotokoll.p
+ df?v=20260927-kanban\nKI- und Mediennachweis: https://genaiedu.github.io/L
+ earningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanban\
+ n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApps/kan
+ ban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änderungen
+  durch die Kursleitung bleiben möglich.\nKurskalender: https://genaiedu.g
+ ithub.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-06-22@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270622
+DTEND;VALUE=DATE:20270623
+SUMMARY:Projektkurs · Projektwerkstatt II · Produkt 1 abgabefertig machen
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Produkt 1 wird fachlich und technisch gepr
+ üft. Fertig-Kriterien\, Quellen\, Eigenanteile und KI-/Mediennachweise si
+ nd vollständig\; offene Punkte werden geschlossen.\n\nFormulare:\nArbeits
+ protokoll: https://genaiedu.github.io/LearningApps2/downloads/Projektkurs_
+ Arbeitsprotokoll.pdf?v=20260927-kanban\nKI- und Mediennachweis: https://ge
+ naiedu.github.io/LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?
+ v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.i
+ o/LearningApps/kanban-board.html\n\nEs gilt der veröffentlichte Planungss
+ tand\; Änderungen durch die Kursleitung bleiben möglich.\nKurskalender: 
+ https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-06-29@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270629
+DTEND;VALUE=DATE:20270630
+SUMMARY:Projektkurs · Produkt 1 abgeben und Lernstand besprechen
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Produkt 1 mit fachlichen Begleitunterlagen\
+ , Quellen\, individuellen Beiträgen\, Reflexion und Boardexport abgeben. 
+ Lernstand und Beratungsbedarf werden dokumentiert\; keine Halbjahreskursno
+ te.\n\nFormulare:\nKI- und Mediennachweis: https://genaiedu.github.io/Lear
+ ningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanban\nIn
+ dividuelle Reflexion: https://genaiedu.github.io/LearningApps2/downloads/P
+ rojektkurs_Reflexion.pdf?v=20260927-kanban\nSonstige Mitarbeit: https://ge
+ naiedu.github.io/LearningApps2/downloads/Projektkurs_Mitarbeitsraster.pdf?
+ v=20260927-kanban\nNotenbildung – bisheriges Modell: https://genaiedu.gi
+ thub.io/LearningApps2/downloads/Projektkurs_Notenbildung.pdf?v=20260927-ka
+ nban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApp
+ s/kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änder
+ ungen durch die Kursleitung bleiben möglich.\nKurskalender: https://genai
+ edu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-07-06@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270706
+DTEND;VALUE=DATE:20270707
+SUMMARY:Projektkurs · Nachholpuffer und Rückmeldung zu Produkt 1
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Begründete Nachholfälle werden bearbeitet
+ \; Rückmeldungen zu Produkt 1 und mögliche Vertiefungsfragen für Produk
+ t 2 werden festgehalten.\n\nFormulare:\nProjektantrag: https://genaiedu.gi
+ thub.io/LearningApps2/downloads/Projektkurs_Projektantrag.pdf?v=20260927-k
+ anban\nArbeitsprotokoll: https://genaiedu.github.io/LearningApps2/download
+ s/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbe
+ itsboard: https://genaiedu.github.io/LearningApps/kanban-board.html\n\nEs 
+ gilt der veröffentlichte Planungsstand\; Änderungen durch die Kursleitun
+ g bleiben möglich.\nKurskalender: https://genaiedu.github.io/LearningApps
+ 2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-07-13@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270713
+DTEND;VALUE=DATE:20270714
+SUMMARY:Projektkurs · Produkt 1 und Arbeitsstand sichern
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Produkt 1\, Dateien und Quellen sind archiv
+ iert\; der Kanban-Stand ist als JSON gesichert. Eine kurze Vorstellung nac
+ h den Ferien ist vorbereitet. Keine Pflichtarbeit in den Sommerferien.\n\n
+ Formulare:\nArbeitsprotokoll: https://genaiedu.github.io/LearningApps2/dow
+ nloads/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\n\nApps:\nKanban
+ -Arbeitsboard: https://genaiedu.github.io/LearningApps/kanban-board.html\n
+ \nEs gilt der veröffentlichte Planungsstand\; Änderungen durch die Kursl
+ eitung bleiben möglich.\nKurskalender: https://genaiedu.github.io/Learnin
+ gApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-09-07@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270907
+DTEND;VALUE=DATE:20270908
+SUMMARY:Projektkurs · Produkt 1 gegenseitig vorstellen · Produkt 2 starte
+ n
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Erste Unterrichtsstunde (45 Minuten): gegen
+ seitige Vorstellung von Produkt 1 als Galeriegang oder in Kleingruppen mit
+  Peer-Feedback. Zweite Unterrichtsstunde: Erkenntnisse auswerten und Produ
+ kt 2 mit neuer Leitfrage bzw. begründeter Vertiefung im Kanban-Board plan
+ en.\n\nFormulare:\nFeedback und Zielgruppentest: https://genaiedu.github.i
+ o/LearningApps2/downloads/Projektkurs_Feedback.pdf?v=20260927-kanban\nProj
+ ektantrag: https://genaiedu.github.io/LearningApps2/downloads/Projektkurs_
+ Projektantrag.pdf?v=20260927-kanban\nArbeitsprotokoll: https://genaiedu.gi
+ thub.io/LearningApps2/downloads/Projektkurs_Arbeitsprotokoll.pdf?v=2026092
+ 7-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/Learnin
+ gApps/kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Ä
+ nderungen durch die Kursleitung bleiben möglich.\nKurskalender: https://g
+ enaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-09-14@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270914
+DTEND;VALUE=DATE:20270915
+SUMMARY:Projektkurs · Projektwerkstatt III · Produkt 2 fachlich fundieren
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Projektvereinbarung für Produkt 2 abschlie
+ ßen\; Vertiefungsfrage\, neue Quellen oder Daten\, Rollen und Meilenstein
+ e sind im Kanban-Board festgelegt.\n\nFormulare:\nProjektantrag: https://g
+ enaiedu.github.io/LearningApps2/downloads/Projektkurs_Projektantrag.pdf?v=
+ 20260927-kanban\nArbeitsprotokoll: https://genaiedu.github.io/LearningApps
+ 2/downloads/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\nKI- und Me
+ diennachweis: https://genaiedu.github.io/LearningApps2/downloads/Projektku
+ rs_KI_Medien_Abgabe.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: h
+ ttps://genaiedu.github.io/LearningApps/kanban-board.html\n\nEs gilt der ve
+ röffentlichte Planungsstand\; Änderungen durch die Kursleitung bleiben m
+ öglich.\nKurskalender: https://genaiedu.github.io/LearningApps2/projektku
+ rs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-09-21@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270921
+DTEND;VALUE=DATE:20270922
+SUMMARY:Projektkurs · Projektwerkstatt III · Konzept erweitern
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Die neue Perspektive ist schlüssig in den 
+ Aufbau des Jahresprojekts eingebunden.\n\nFormulare:\nArbeitsprotokoll: ht
+ tps://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Arbeitsprotok
+ oll.pdf?v=20260927-kanban\nFeedback und Zielgruppentest: https://genaiedu.
+ github.io/LearningApps2/downloads/Projektkurs_Feedback.pdf?v=20260927-kanb
+ an\nKI- und Mediennachweis: https://genaiedu.github.io/LearningApps2/downl
+ oads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanban\n\nApps:\nKanban-A
+ rbeitsboard: https://genaiedu.github.io/LearningApps/kanban-board.html\n\n
+ Es gilt der veröffentlichte Planungsstand\; Änderungen durch die Kurslei
+ tung bleiben möglich.\nKurskalender: https://genaiedu.github.io/LearningA
+ pps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-09-28@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20270928
+DTEND;VALUE=DATE:20270929
+SUMMARY:Projektkurs · Projektwerkstatt III · Produkt weiterentwickeln
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Eine erweiterte Fassung macht die fachliche
+  Vertiefung sichtbar.\n\nFormulare:\nArbeitsprotokoll: https://genaiedu.gi
+ thub.io/LearningApps2/downloads/Projektkurs_Arbeitsprotokoll.pdf?v=2026092
+ 7-kanban\nFeedback und Zielgruppentest: https://genaiedu.github.io/Learnin
+ gApps2/downloads/Projektkurs_Feedback.pdf?v=20260927-kanban\nKI- und Medie
+ nnachweis: https://genaiedu.github.io/LearningApps2/downloads/Projektkurs_
+ KI_Medien_Abgabe.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: http
+ s://genaiedu.github.io/LearningApps/kanban-board.html\n\nEs gilt der verö
+ ffentlichte Planungsstand\; Änderungen durch die Kursleitung bleiben mög
+ lich.\nKurskalender: https://genaiedu.github.io/LearningApps2/projektkurs-
+ kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-10-05@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271005
+DTEND;VALUE=DATE:20271006
+SUMMARY:Projektkurs · Projektwerkstatt III · Fachprüfung im Team
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Kernaussagen\, Daten\, Einheiten und Modell
+ grenzen sind überprüft\; individuelle Beiträge bleiben zuordenbar.\n\nF
+ ormulare:\nArbeitsprotokoll: https://genaiedu.github.io/LearningApps2/down
+ loads/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\nFeedback und Zie
+ lgruppentest: https://genaiedu.github.io/LearningApps2/downloads/Projektku
+ rs_Feedback.pdf?v=20260927-kanban\nKI- und Mediennachweis: https://genaied
+ u.github.io/LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=202
+ 60927-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/Lea
+ rningApps/kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\
+ ; Änderungen durch die Kursleitung bleiben möglich.\nKurskalender: https
+ ://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-10-12@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271012
+DTEND;VALUE=DATE:20271013
+SUMMARY:Projektkurs · Projektwerkstatt III · Zielgruppentest im Arbeitsbl
+ ock
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Ein kurzer Test ist ausgewertet\; Verbesser
+ ungen werden unmittelbar in der Werkstatt umgesetzt.\n\nFormulare:\nArbeit
+ sprotokoll: https://genaiedu.github.io/LearningApps2/downloads/Projektkurs
+ _Arbeitsprotokoll.pdf?v=20260927-kanban\nFeedback und Zielgruppentest: htt
+ ps://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Feedback.pdf?v
+ =20260927-kanban\nKI- und Mediennachweis: https://genaiedu.github.io/Learn
+ ingApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanban\n\nA
+ pps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApps/kanban-
+ board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änderungen dur
+ ch die Kursleitung bleiben möglich.\nKurskalender: https://genaiedu.githu
+ b.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-10-19@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271019
+DTEND;VALUE=DATE:20271020
+SUMMARY:Projektkurs · Projektwerkstatt III · Rohfassung von Produkt 2
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Produkt 2 liegt als vollständige Rohfassun
+ g vor. Die fachliche Vertiefung gegenüber Produkt 1 und die individuellen
+  Beiträge sind erkennbar\; offene Punkte sind priorisiert.\n\nFormulare:\
+ nArbeitsprotokoll: https://genaiedu.github.io/LearningApps2/downloads/Proj
+ ektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\nFeedback und Zielgruppente
+ st: https://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Feedbac
+ k.pdf?v=20260927-kanban\nKI- und Mediennachweis: https://genaiedu.github.i
+ o/LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanb
+ an\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApps/
+ kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änderun
+ gen durch die Kursleitung bleiben möglich.\nKurskalender: https://genaied
+ u.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-11-09@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271109
+DTEND;VALUE=DATE:20271110
+SUMMARY:Projektkurs · Projektwerkstatt IV · Fachliche Endredaktion
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Offene fachliche Probleme sind bearbeitet\;
+  Belege und Kernaussagen stimmen überein.\n\nFormulare:\nArbeitsprotokoll
+ : https://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Arbeitspr
+ otokoll.pdf?v=20260927-kanban\nIndividuelle Reflexion: https://genaiedu.gi
+ thub.io/LearningApps2/downloads/Projektkurs_Reflexion.pdf?v=20260927-kanba
+ n\nKI- und Mediennachweis: https://genaiedu.github.io/LearningApps2/downlo
+ ads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanban\n\nApps:\nKanban-Ar
+ beitsboard: https://genaiedu.github.io/LearningApps/kanban-board.html\n\nE
+ s gilt der veröffentlichte Planungsstand\; Änderungen durch die Kursleit
+ ung bleiben möglich.\nKurskalender: https://genaiedu.github.io/LearningAp
+ ps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-11-16@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271116
+DTEND;VALUE=DATE:20271117
+SUMMARY:Projektkurs · Projektwerkstatt IV · Beide Produkte dokumentieren
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Die Jahresdokumentation erläutert beide Pr
+ odukte\, ihre Leitfragen\, Ergebnisse und Grenzen sowie die fachliche Weit
+ erentwicklung und die eigenen Beiträge.\n\nFormulare:\nArbeitsprotokoll: 
+ https://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Arbeitsprot
+ okoll.pdf?v=20260927-kanban\nIndividuelle Reflexion: https://genaiedu.gith
+ ub.io/LearningApps2/downloads/Projektkurs_Reflexion.pdf?v=20260927-kanban\
+ nKI- und Mediennachweis: https://genaiedu.github.io/LearningApps2/download
+ s/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbe
+ itsboard: https://genaiedu.github.io/LearningApps/kanban-board.html\n\nEs 
+ gilt der veröffentlichte Planungsstand\; Änderungen durch die Kursleitun
+ g bleiben möglich.\nKurskalender: https://genaiedu.github.io/LearningApps
+ 2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-11-23@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271123
+DTEND;VALUE=DATE:20271124
+SUMMARY:Projektkurs · Projektwerkstatt IV · Quellen und Eigenleistung pr
+ üfen
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Quellen\, Medienrechte\, KI-Nachweise und i
+ ndividuelle Verantwortlichkeiten sind vollständig nachvollziehbar.\n\nFor
+ mulare:\nArbeitsprotokoll: https://genaiedu.github.io/LearningApps2/downlo
+ ads/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-kanban\nIndividuelle Refle
+ xion: https://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Refle
+ xion.pdf?v=20260927-kanban\nKI- und Mediennachweis: https://genaiedu.githu
+ b.io/LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-k
+ anban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningAp
+ ps/kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Ände
+ rungen durch die Kursleitung bleiben möglich.\nKurskalender: https://gena
+ iedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-11-30@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271130
+DTEND;VALUE=DATE:20271201
+SUMMARY:Projektkurs · Projektwerkstatt IV · Produkt 2 abgabefertig machen
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Produkt 2\, die Jahresdokumentation beider 
+ Produkte\, Quellenverzeichnis und persönliche Nachweise sind geprüft und
+  abgabefertig.\n\nFormulare:\nArbeitsprotokoll: https://genaiedu.github.io
+ /LearningApps2/downloads/Projektkurs_Arbeitsprotokoll.pdf?v=20260927-kanba
+ n\nIndividuelle Reflexion: https://genaiedu.github.io/LearningApps2/downlo
+ ads/Projektkurs_Reflexion.pdf?v=20260927-kanban\nKI- und Mediennachweis: h
+ ttps://genaiedu.github.io/LearningApps2/downloads/Projektkurs_KI_Medien_Ab
+ gabe.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu
+ .github.io/LearningApps/kanban-board.html\n\nEs gilt der veröffentlichte 
+ Planungsstand\; Änderungen durch die Kursleitung bleiben möglich.\nKursk
+ alender: https://genaiedu.github.io/LearningApps2/projektkurs-kalender-202
+ 7.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-12-07@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271207
+DTEND;VALUE=DATE:20271208
+SUMMARY:Projektkurs · Produkt 2 und Jahresdokumentation abgeben
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Produkt 2 und die Jahresdokumentation zu be
+ iden Produkten mit Quellen\, Eigenanteilen\, KI-/Mediennachweis und abschl
+ ießendem Boardexport abgeben. Bei großem Kurs beginnen erste Abschlussvo
+ rstellungen.\n\nFormulare:\nKI- und Mediennachweis: https://genaiedu.githu
+ b.io/LearningApps2/downloads/Projektkurs_KI_Medien_Abgabe.pdf?v=20260927-k
+ anban\nIndividuelle Reflexion: https://genaiedu.github.io/LearningApps2/do
+ wnloads/Projektkurs_Reflexion.pdf?v=20260927-kanban\nNotenbildung – bish
+ eriges Modell: https://genaiedu.github.io/LearningApps2/downloads/Projektk
+ urs_Notenbildung.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbeitsboard: http
+ s://genaiedu.github.io/LearningApps/kanban-board.html\n\nEs gilt der verö
+ ffentlichte Planungsstand\; Änderungen durch die Kursleitung bleiben mög
+ lich.\nKurskalender: https://genaiedu.github.io/LearningApps2/projektkurs-
+ kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-12-14@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271214
+DTEND;VALUE=DATE:20271215
+SUMMARY:Projektkurs · Abschlussvorstellungen I
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Produkt 2 und der fachliche Fortschritt geg
+ enüber Produkt 1 werden vorgestellt\; jede Person erläutert ihren Beitra
+ g und beantwortet Rückfragen.\n\nFormulare:\nIndividuelle Reflexion: http
+ s://genaiedu.github.io/LearningApps2/downloads/Projektkurs_Reflexion.pdf?v
+ =20260927-kanban\nNotenbildung – bisheriges Modell: https://genaiedu.git
+ hub.io/LearningApps2/downloads/Projektkurs_Notenbildung.pdf?v=20260927-kan
+ ban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApps
+ /kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änderu
+ ngen durch die Kursleitung bleiben möglich.\nKurskalender: https://genaie
+ du.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2027-12-21@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20271221
+DTEND;VALUE=DATE:20271222
+SUMMARY:Projektkurs · Abschlussvorstellungen II
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Weitere Projekte sind fachlich erläutert\;
+  offene Zuordnungsfragen zur Jahresdokumentation werden geklärt. Keine Pf
+ lichtarbeit in den Ferien.\n\nFormulare:\nIndividuelle Reflexion: https://
+ genaiedu.github.io/LearningApps2/downloads/Projektkurs_Reflexion.pdf?v=202
+ 60927-kanban\nNotenbildung – bisheriges Modell: https://genaiedu.github.
+ io/LearningApps2/downloads/Projektkurs_Notenbildung.pdf?v=20260927-kanban\
+ n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApps/kan
+ ban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änderungen
+  durch die Kursleitung bleiben möglich.\nKurskalender: https://genaiedu.g
+ ithub.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2028-01-11@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20280111
+DTEND;VALUE=DATE:20280112
+SUMMARY:Projektkurs · Abschlussvorstellungen III
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Die regulären Vorstellungen werden abgesch
+ lossen. Individuelle fachliche Beiträge und Reflexion sind nachvollziehba
+ r.\n\nFormulare:\nIndividuelle Reflexion: https://genaiedu.github.io/Learn
+ ingApps2/downloads/Projektkurs_Reflexion.pdf?v=20260927-kanban\nNotenbildu
+ ng – bisheriges Modell: https://genaiedu.github.io/LearningApps2/downloa
+ ds/Projektkurs_Notenbildung.pdf?v=20260927-kanban\n\nApps:\nKanban-Arbeits
+ board: https://genaiedu.github.io/LearningApps/kanban-board.html\n\nEs gil
+ t der veröffentlichte Planungsstand\; Änderungen durch die Kursleitung b
+ leiben möglich.\nKurskalender: https://genaiedu.github.io/LearningApps2/p
+ rojektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2028-01-18@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20280118
+DTEND;VALUE=DATE:20280119
+SUMMARY:Projektkurs · Nachholtermin und Bewertungsabschluss
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Unverschuldet ausgefallene Vorstellungen we
+ rden nachgeholt\; Beurteilungsgrundlagen und begründete Jahresnote werden
+  rechtzeitig abgeschlossen.\n\nFormulare:\nSonstige Mitarbeit: https://gen
+ aiedu.github.io/LearningApps2/downloads/Projektkurs_Mitarbeitsraster.pdf?v
+ =20260927-kanban\nNotenbildung – bisheriges Modell: https://genaiedu.git
+ hub.io/LearningApps2/downloads/Projektkurs_Notenbildung.pdf?v=20260927-kan
+ ban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApps
+ /kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änderu
+ ngen durch die Kursleitung bleiben möglich.\nKurskalender: https://genaie
+ du.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2028-01-25@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20280125
+DTEND;VALUE=DATE:20280126
+SUMMARY:Projektkurs · Rückmeldung zur Jahresleistung
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Die Jahresbewertung wird erläutert\; Ergeb
+ nisse und Lernwege werden besprochen. Keine neue benotete Pflichtabgabe na
+ ch dem vorläufigen Notenschluss.\n\nFormulare:\nNotenbildung – bisherig
+ es Modell: https://genaiedu.github.io/LearningApps2/downloads/Projektkurs_
+ Notenbildung.pdf?v=20260927-kanban\nIndividuelle Reflexion: https://genaie
+ du.github.io/LearningApps2/downloads/Projektkurs_Reflexion.pdf?v=20260927-
+ kanban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningA
+ pps/kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änd
+ erungen durch die Kursleitung bleiben möglich.\nKurskalender: https://gen
+ aiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:projektkurs-wisskomm-2027-28-2028-02-01@genaiedu.github.io
+DTSTAMP:20260927T192257Z
+DTSTART;VALUE=DATE:20280201
+DTEND;VALUE=DATE:20280202
+SUMMARY:Projektkurs · Abschluss und Transfer
+DESCRIPTION:Projektkurs Wissenschaftskommunikation\nQ1.2 2026/27 bis Q2.1 2
+ 027/28\nPlanungsstand 27. September 2026\nDauer: 2 × 45 Minuten. Die Unte
+ rrichtsuhrzeit steht noch nicht fest\; deshalb als ganztägiger Eintrag an
+ gelegt.\nArbeitsziel / Abgabe: Ergebnisse werden gesichert\, freiwillige V
+ eröffentlichungen vereinbart und der Kurs ausgewertet. Letzte reguläre D
+ oppelstunde.\n\nFormulare:\nFeedback und Zielgruppentest: https://genaiedu
+ .github.io/LearningApps2/downloads/Projektkurs_Feedback.pdf?v=20260927-kan
+ ban\n\nApps:\nKanban-Arbeitsboard: https://genaiedu.github.io/LearningApps
+ /kanban-board.html\n\nEs gilt der veröffentlichte Planungsstand\; Änderu
+ ngen durch die Kursleitung bleiben möglich.\nKurskalender: https://genaie
+ du.github.io/LearningApps2/projektkurs-kalender-2027.html
+URL:https://genaiedu.github.io/LearningApps2/projektkurs-kalender-2027.html
+CATEGORIES:Projektkurs Wissenschaftskommunikation
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
