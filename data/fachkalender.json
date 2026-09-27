@@ -1,0 +1,3324 @@
+{
+  "version": 1,
+  "status": "Stand 27. September 2026",
+  "subjects": {
+    "chemie": {
+      "label": "Chemie",
+      "curriculum": "chemie-curriculum.html",
+      "tracks": [
+        {
+          "id": "7",
+          "label": "Klasse 7",
+          "weekly": 1
+        },
+        {
+          "id": "8",
+          "label": "Klasse 8",
+          "weekly": 2
+        },
+        {
+          "id": "9",
+          "label": "Klasse 9",
+          "weekly": 2
+        },
+        {
+          "id": "10",
+          "label": "Klasse 10",
+          "weekly": 2
+        },
+        {
+          "id": "EF",
+          "label": "EF",
+          "weekly": 3
+        },
+        {
+          "id": "Q1 GK",
+          "label": "Q1 GK",
+          "weekly": 3
+        },
+        {
+          "id": "Q2 GK",
+          "label": "Q2 GK",
+          "weekly": 3
+        },
+        {
+          "id": "Q1 LK",
+          "label": "Q1 LK",
+          "weekly": 5
+        },
+        {
+          "id": "Q2 LK",
+          "label": "Q2 LK",
+          "weekly": 5
+        }
+      ],
+      "units": [
+        {
+          "code": "07.1",
+          "title": "Chemie - ein neues Fach",
+          "track": "7",
+          "hours": 6,
+          "url": "chemie-curriculum.html#uv_07_1"
+        },
+        {
+          "code": "07.2",
+          "title": "Alltagsstoffe und ihre Eigenschaften",
+          "track": "7",
+          "hours": 16,
+          "url": "chemie-curriculum.html#uv_07_2"
+        },
+        {
+          "code": "07.3",
+          "title": "Luft und Verbrennung",
+          "track": "7",
+          "hours": 8,
+          "url": "chemie-curriculum.html#uv_07_3"
+        },
+        {
+          "code": "08.1",
+          "title": "Metalle - ihre Eigenschaften, ihr Vorkommen und ihre Gewinnung",
+          "track": "8",
+          "hours": 18,
+          "url": "chemie-curriculum.html#uv_08_1"
+        },
+        {
+          "code": "08.2",
+          "title": "Chemische Reaktionen in unserer Umwelt",
+          "track": "8",
+          "hours": 12,
+          "url": "chemie-curriculum.html#uv_08_2"
+        },
+        {
+          "code": "08.3",
+          "title": "Elementfamilien schaffen Ordnung",
+          "track": "8",
+          "hours": 30,
+          "url": "chemie-curriculum.html#uv_08_3"
+        },
+        {
+          "code": "09.1",
+          "title": "Die Welt der Mineralien",
+          "track": "9",
+          "hours": 20,
+          "url": "chemie-curriculum.html#uv_09_1"
+        },
+        {
+          "code": "09.2",
+          "title": "Die Batterie - Energie aus chemischen Reaktionen",
+          "track": "9",
+          "hours": 20,
+          "url": "chemie-curriculum.html#uv_09_2"
+        },
+        {
+          "code": "09.3",
+          "title": "Wasser, mehr als ein Lösemittel",
+          "track": "9",
+          "hours": 20,
+          "url": "chemie-curriculum.html#uv_09_3"
+        },
+        {
+          "code": "10.1",
+          "title": "Saure und alkalische Lösungen in unserer Umwelt",
+          "track": "10",
+          "hours": 26,
+          "url": "chemie-curriculum.html#uv_10_1"
+        },
+        {
+          "code": "10.2",
+          "title": "Alkane und Alkanole in Natur und Technik",
+          "track": "10",
+          "hours": 20,
+          "url": "chemie-curriculum.html#uv_10_2"
+        },
+        {
+          "code": "10.3",
+          "title": "Vielseitige Kunststoffe",
+          "track": "10",
+          "hours": 7,
+          "url": "chemie-curriculum.html#uv_10_3"
+        },
+        {
+          "code": "10.4",
+          "title": "Gase, wichtige Ausgangsstoffe für Industrierohstoffe",
+          "track": "10",
+          "hours": 7,
+          "url": "chemie-curriculum.html#uv_10_4"
+        },
+        {
+          "code": "EF.01",
+          "title": "Die Anwendungsvielfalt der Alkohole",
+          "track": "EF",
+          "hours": 30,
+          "url": "chemie-curriculum.html#uv_EF_01"
+        },
+        {
+          "code": "EF.02",
+          "title": "Säuren contra Kalk",
+          "track": "EF",
+          "hours": 14,
+          "url": "chemie-curriculum.html#uv_EF_02"
+        },
+        {
+          "code": "EF.03",
+          "title": "Aroma- und Zusatzstoffe in Lebensmitteln",
+          "track": "EF",
+          "hours": 20,
+          "url": "chemie-curriculum.html#uv_EF_03"
+        },
+        {
+          "code": "EF.04",
+          "title": "Kohlenstoffkreislauf und Klima",
+          "track": "EF",
+          "hours": 22,
+          "url": "chemie-curriculum.html#uv_EF_04"
+        },
+        {
+          "code": "GK.01",
+          "title": "Saure und basische Reiniger im Haushalt",
+          "track": "Q1 GK",
+          "hours": 32,
+          "url": "chemie-curriculum.html#uv_GK_01"
+        },
+        {
+          "code": "GK.02",
+          "title": "Salze – hilfreich und lebensnotwendig!",
+          "track": "Q1 GK",
+          "hours": 12,
+          "url": "chemie-curriculum.html#uv_GK_02"
+        },
+        {
+          "code": "GK.03",
+          "title": "Mobile Energieträger im Vergleich",
+          "track": "Q1 GK",
+          "hours": 24,
+          "url": "chemie-curriculum.html#uv_GK_03"
+        },
+        {
+          "code": "GK.04",
+          "title": "Wasserstoff – Brennstoff der Zukunft?",
+          "track": "Q1 GK",
+          "hours": 19,
+          "url": "chemie-curriculum.html#uv_GK_04"
+        },
+        {
+          "code": "GK.05",
+          "title": "Korrosion von Metallen",
+          "track": "Q1 GK",
+          "hours": 8,
+          "url": "chemie-curriculum.html#uv_GK_05"
+        },
+        {
+          "code": "GK.06",
+          "title": "Vom Erdöl zur Plastiktüte",
+          "track": "Q2 GK",
+          "hours": 22,
+          "url": "chemie-curriculum.html#uv_GK_06"
+        },
+        {
+          "code": "GK.07",
+          "title": "Kunststoffe – Werkstoffe für viele Anwendungsprodukte",
+          "track": "Q2 GK",
+          "hours": 30,
+          "url": "chemie-curriculum.html#uv_GK_07"
+        },
+        {
+          "code": "GK.08",
+          "title": "Ester in Lebensmitteln und Kosmetikartikeln",
+          "track": "Q2 GK",
+          "hours": 20,
+          "url": "chemie-curriculum.html#uv_GK_08"
+        },
+        {
+          "code": "LK.01",
+          "title": "Saure und basische Reiniger",
+          "track": "Q1 LK",
+          "hours": 40,
+          "url": "chemie-curriculum.html#uv_LK_01"
+        },
+        {
+          "code": "LK.02",
+          "title": "Salze – hilfreich und lebensnotwendig!",
+          "track": "Q1 LK",
+          "hours": 26,
+          "url": "chemie-curriculum.html#uv_LK_02"
+        },
+        {
+          "code": "LK.03",
+          "title": "Mobile Energieträger im Vergleich",
+          "track": "Q1 LK",
+          "hours": 24,
+          "url": "chemie-curriculum.html#uv_LK_03"
+        },
+        {
+          "code": "LK.04",
+          "title": "Wasserstoff – Brennstoff der Zukunft?",
+          "track": "Q1 LK",
+          "hours": 32,
+          "url": "chemie-curriculum.html#uv_LK_04"
+        },
+        {
+          "code": "LK.05",
+          "title": "Korrosion von Metallen",
+          "track": "Q1 LK",
+          "hours": 10,
+          "url": "chemie-curriculum.html#uv_LK_05"
+        },
+        {
+          "code": "LK.06",
+          "title": "Quantitative Analyse von Produkten des Alltags",
+          "track": "Q1 LK",
+          "hours": 18,
+          "url": "chemie-curriculum.html#uv_LK_06"
+        },
+        {
+          "code": "LK.07",
+          "title": "Vom Erdöl zur Kunststoffverpackung",
+          "track": "Q2 LK",
+          "hours": 44,
+          "url": "chemie-curriculum.html#uv_LK_07"
+        },
+        {
+          "code": "LK.08",
+          "title": "„InnoProducts“ – Werkstoffe nach Maß",
+          "track": "Q2 LK",
+          "hours": 34,
+          "url": "chemie-curriculum.html#uv_LK_08"
+        },
+        {
+          "code": "LK.09",
+          "title": "Ester in Lebensmitteln und Kosmetikartikeln",
+          "track": "Q2 LK",
+          "hours": 20,
+          "url": "chemie-curriculum.html#uv_LK_09"
+        },
+        {
+          "code": "LK.10",
+          "title": "Die Welt ist bunt",
+          "track": "Q2 LK",
+          "hours": 16,
+          "url": "chemie-curriculum.html#uv_LK_10"
+        }
+      ],
+      "units2026": [
+        {
+          "code": "07.1",
+          "title": "Chemie - ein neues Fach",
+          "track": "7",
+          "hours": 6,
+          "url": "chemie-curriculum-2026.html#uv_07_1"
+        },
+        {
+          "code": "07.2",
+          "title": "Alltagsstoffe und ihre Eigenschaften",
+          "track": "7",
+          "hours": 16,
+          "url": "chemie-curriculum-2026.html#uv_07_2"
+        },
+        {
+          "code": "07.3",
+          "title": "Luft und Verbrennung",
+          "track": "7",
+          "hours": 8,
+          "url": "chemie-curriculum-2026.html#uv_07_3"
+        },
+        {
+          "code": "08.1",
+          "title": "Metalle - ihre Eigenschaften, ihr Vorkommen und ihre Gewinnung",
+          "track": "8",
+          "hours": 18,
+          "url": "chemie-curriculum-2026.html#uv_08_1"
+        },
+        {
+          "code": "08.2",
+          "title": "Chemische Reaktionen in unserer Umwelt",
+          "track": "8",
+          "hours": 12,
+          "url": "chemie-curriculum-2026.html#uv_08_2"
+        },
+        {
+          "code": "08.3",
+          "title": "Elementfamilien schaffen Ordnung",
+          "track": "8",
+          "hours": 30,
+          "url": "chemie-curriculum-2026.html#uv_08_3"
+        },
+        {
+          "code": "09.1",
+          "title": "Die Welt der Mineralien",
+          "track": "9",
+          "hours": 20,
+          "url": "chemie-curriculum-2026.html#uv_09_1"
+        },
+        {
+          "code": "09.2",
+          "title": "Die Batterie - Energie aus chemischen Reaktionen",
+          "track": "9",
+          "hours": 20,
+          "url": "chemie-curriculum-2026.html#uv_09_2"
+        },
+        {
+          "code": "09.3",
+          "title": "Wasser, mehr als ein Lösemittel",
+          "track": "9",
+          "hours": 20,
+          "url": "chemie-curriculum-2026.html#uv_09_3"
+        },
+        {
+          "code": "10.1",
+          "title": "Saure und alkalische Lösungen in unserer Umwelt",
+          "track": "10",
+          "hours": 26,
+          "url": "chemie-curriculum-2026.html#uv_10_1"
+        },
+        {
+          "code": "10.2",
+          "title": "Alkane und Alkanole in Natur und Technik",
+          "track": "10",
+          "hours": 20,
+          "url": "chemie-curriculum-2026.html#uv_10_2"
+        },
+        {
+          "code": "10.3",
+          "title": "Vielseitige Kunststoffe",
+          "track": "10",
+          "hours": 7,
+          "url": "chemie-curriculum-2026.html#uv_10_3"
+        },
+        {
+          "code": "10.4",
+          "title": "Gase, wichtige Ausgangsstoffe für Industrierohstoffe",
+          "track": "10",
+          "hours": 7,
+          "url": "chemie-curriculum-2026.html#uv_10_4"
+        },
+        {
+          "code": "EF.01",
+          "title": "Die Anwendungsvielfalt der Alkohole",
+          "track": "EF",
+          "hours": 30,
+          "url": "chemie-curriculum-2026.html#uv_EF_01"
+        },
+        {
+          "code": "EF.02",
+          "title": "Säuren contra Kalk",
+          "track": "EF",
+          "hours": 14,
+          "url": "chemie-curriculum-2026.html#uv_EF_02"
+        },
+        {
+          "code": "EF.03",
+          "title": "Aroma- und Zusatzstoffe in Lebensmitteln",
+          "track": "EF",
+          "hours": 20,
+          "url": "chemie-curriculum-2026.html#uv_EF_03"
+        },
+        {
+          "code": "EF.04",
+          "title": "Kohlenstoffkreislauf und Klima",
+          "track": "EF",
+          "hours": 22,
+          "url": "chemie-curriculum-2026.html#uv_EF_04"
+        },
+        {
+          "code": "GK.01",
+          "title": "Saure und basische Reiniger im Haushalt",
+          "track": "Q1 GK",
+          "hours": 32,
+          "url": "chemie-curriculum-2026.html#uv_GK_01"
+        },
+        {
+          "code": "GK.02",
+          "title": "Salze – hilfreich und lebensnotwendig!",
+          "track": "Q1 GK",
+          "hours": 12,
+          "url": "chemie-curriculum-2026.html#uv_GK_02"
+        },
+        {
+          "code": "GK.03",
+          "title": "Mobile Energieträger im Vergleich",
+          "track": "Q1 GK",
+          "hours": 24,
+          "url": "chemie-curriculum-2026.html#uv_GK_03"
+        },
+        {
+          "code": "GK.04",
+          "title": "Wasserstoff – Brennstoff der Zukunft?",
+          "track": "Q1 GK",
+          "hours": 19,
+          "url": "chemie-curriculum-2026.html#uv_GK_04"
+        },
+        {
+          "code": "GK.05",
+          "title": "Korrosion von Metallen",
+          "track": "Q1 GK",
+          "hours": 8,
+          "url": "chemie-curriculum-2026.html#uv_GK_05"
+        },
+        {
+          "code": "GK.06",
+          "title": "Vom Erdöl zur Plastiktüte",
+          "track": "Q2 GK",
+          "hours": 22,
+          "url": "chemie-curriculum-2026.html#uv_GK_06"
+        },
+        {
+          "code": "GK.07",
+          "title": "Kunststoffe – Werkstoffe für viele Anwendungsprodukte",
+          "track": "Q2 GK",
+          "hours": 30,
+          "url": "chemie-curriculum-2026.html#uv_GK_07"
+        },
+        {
+          "code": "GK.08",
+          "title": "Ester in Lebensmitteln und Kosmetikartikeln",
+          "track": "Q2 GK",
+          "hours": 20,
+          "url": "chemie-curriculum-2026.html#uv_GK_08"
+        },
+        {
+          "code": "LK.01",
+          "title": "Saure und basische Reiniger",
+          "track": "Q1 LK",
+          "hours": 40,
+          "url": "chemie-curriculum-2026.html#uv_LK_01"
+        },
+        {
+          "code": "LK.02",
+          "title": "Salze – hilfreich und lebensnotwendig!",
+          "track": "Q1 LK",
+          "hours": 26,
+          "url": "chemie-curriculum-2026.html#uv_LK_02"
+        },
+        {
+          "code": "LK.03",
+          "title": "Mobile Energieträger im Vergleich",
+          "track": "Q1 LK",
+          "hours": 24,
+          "url": "chemie-curriculum-2026.html#uv_LK_03"
+        },
+        {
+          "code": "LK.04",
+          "title": "Wasserstoff – Brennstoff der Zukunft?",
+          "track": "Q1 LK",
+          "hours": 32,
+          "url": "chemie-curriculum-2026.html#uv_LK_04"
+        },
+        {
+          "code": "LK.05",
+          "title": "Korrosion von Metallen",
+          "track": "Q1 LK",
+          "hours": 10,
+          "url": "chemie-curriculum-2026.html#uv_LK_05"
+        },
+        {
+          "code": "LK.06",
+          "title": "Quantitative Analyse von Produkten des Alltags",
+          "track": "Q1 LK",
+          "hours": 18,
+          "url": "chemie-curriculum-2026.html#uv_LK_06"
+        },
+        {
+          "code": "LK.07",
+          "title": "Vom Erdöl zur Kunststoffverpackung",
+          "track": "Q2 LK",
+          "hours": 44,
+          "url": "chemie-curriculum-2026.html#uv_LK_07"
+        },
+        {
+          "code": "LK.08",
+          "title": "„InnoProducts“ – Werkstoffe nach Maß",
+          "track": "Q2 LK",
+          "hours": 34,
+          "url": "chemie-curriculum-2026.html#uv_LK_08"
+        },
+        {
+          "code": "LK.09",
+          "title": "Ester in Lebensmitteln und Kosmetikartikeln",
+          "track": "Q2 LK",
+          "hours": 20,
+          "url": "chemie-curriculum-2026.html#uv_LK_09"
+        },
+        {
+          "code": "LK.10",
+          "title": "Die Welt ist bunt",
+          "track": "Q2 LK",
+          "hours": 16,
+          "url": "chemie-curriculum-2026.html#uv_LK_10"
+        }
+      ]
+    },
+    "physik": {
+      "label": "Physik",
+      "curriculum": "physik-curriculum.html",
+      "tracks": [
+        {
+          "id": "6",
+          "label": "Klasse 6",
+          "weekly": 2
+        },
+        {
+          "id": "7",
+          "label": "Klasse 7",
+          "weekly": 1
+        },
+        {
+          "id": "8",
+          "label": "Klasse 8",
+          "weekly": 1
+        },
+        {
+          "id": "9",
+          "label": "Klasse 9",
+          "weekly": 1
+        },
+        {
+          "id": "10",
+          "label": "Klasse 10",
+          "weekly": 2
+        },
+        {
+          "id": "EF",
+          "label": "EF",
+          "weekly": 3
+        },
+        {
+          "id": "Q1 GK",
+          "label": "Q1 GK",
+          "weekly": 3
+        },
+        {
+          "id": "Q2 GK",
+          "label": "Q2 GK",
+          "weekly": 3
+        },
+        {
+          "id": "Q1 LK",
+          "label": "Q1 LK",
+          "weekly": 5
+        },
+        {
+          "id": "Q2 LK",
+          "label": "Q2 LK",
+          "weekly": 5
+        }
+      ],
+      "units": [
+        {
+          "code": "06.1",
+          "title": "Wir messen Temperaturen",
+          "track": "6",
+          "hours": 10,
+          "url": "physik-curriculum.html#uv-06-1"
+        },
+        {
+          "code": "06.2",
+          "title": "Leben bei verschiedenen Temperaturen",
+          "track": "6",
+          "hours": 10,
+          "url": "physik-curriculum.html#uv-06-2"
+        },
+        {
+          "code": "06.3",
+          "title": "Elektrische Geräte im Alltag",
+          "track": "6",
+          "hours": 14,
+          "url": "physik-curriculum.html#uv-06-3"
+        },
+        {
+          "code": "06.4",
+          "title": "Magnetismus – interessant und hilfreich",
+          "track": "6",
+          "hours": 6,
+          "url": "physik-curriculum.html#uv-06-4"
+        },
+        {
+          "code": "06.5",
+          "title": "Physik und Musik",
+          "track": "6",
+          "hours": 6,
+          "url": "physik-curriculum.html#uv-06-5"
+        },
+        {
+          "code": "06.6",
+          "title": "Achtung Lärm!",
+          "track": "6",
+          "hours": 4,
+          "url": "physik-curriculum.html#uv-06-6"
+        },
+        {
+          "code": "06.7",
+          "title": "Schall in Natur und Technik",
+          "track": "6",
+          "hours": 2,
+          "url": "physik-curriculum.html#uv-06-7"
+        },
+        {
+          "code": "06.8",
+          "title": "Sehen und gesehen werden",
+          "track": "6",
+          "hours": 6,
+          "url": "physik-curriculum.html#uv-06-8"
+        },
+        {
+          "code": "06.9",
+          "title": "Licht nutzbar machen",
+          "track": "6",
+          "hours": 6,
+          "url": "physik-curriculum.html#uv-06-9"
+        },
+        {
+          "code": "07.1",
+          "title": "Spiegelbilder im Straßenverkehr",
+          "track": "7",
+          "hours": 6,
+          "url": "physik-curriculum.html#uv-07-1"
+        },
+        {
+          "code": "07.2",
+          "title": "Die Welt der Farben",
+          "track": "7",
+          "hours": 6,
+          "url": "physik-curriculum.html#uv-07-2"
+        },
+        {
+          "code": "07.3",
+          "title": "Das Auge – ein optisches System",
+          "track": "7",
+          "hours": 6,
+          "url": "physik-curriculum.html#uv-07-3"
+        },
+        {
+          "code": "07.4",
+          "title": "Mit optischen Instrumenten Unsichtbares sichtbar gemacht",
+          "track": "7",
+          "hours": 4,
+          "url": "physik-curriculum.html#uv-07-4"
+        },
+        {
+          "code": "07.5",
+          "title": "Licht und Schatten im Sonnensystem",
+          "track": "7",
+          "hours": 5,
+          "url": "physik-curriculum.html#uv-07-5"
+        },
+        {
+          "code": "07.6",
+          "title": "Objekte am Himmel",
+          "track": "7",
+          "hours": 10,
+          "url": "physik-curriculum.html#uv-07-6"
+        },
+        {
+          "code": "08.1",
+          "title": "100 m in 10 Sekunden",
+          "track": "8",
+          "hours": 6,
+          "url": "physik-curriculum.html#uv-08-1"
+        },
+        {
+          "code": "08.2",
+          "title": "Einfache Maschinen und Werkzeuge: Kleine Kräfte, lange Wege",
+          "track": "8",
+          "hours": 12,
+          "url": "physik-curriculum.html#uv-08-2"
+        },
+        {
+          "code": "08.3",
+          "title": "Energie treibt alles an",
+          "track": "8",
+          "hours": 8,
+          "url": "physik-curriculum.html#uv-08-3"
+        },
+        {
+          "code": "09.1",
+          "title": "Druck und Auftrieb",
+          "track": "9",
+          "hours": 10,
+          "url": "physik-curriculum.html#uv-09-1"
+        },
+        {
+          "code": "09.2",
+          "title": "Blitze und Gewitter",
+          "track": "9",
+          "hours": 8,
+          "url": "physik-curriculum.html#uv-09-2"
+        },
+        {
+          "code": "09.3",
+          "title": "Sicherer Umgang mit Elektrizität",
+          "track": "9",
+          "hours": 14,
+          "url": "physik-curriculum.html#uv-09-3"
+        },
+        {
+          "code": "10.1",
+          "title": "Versorgung mit elektrischer Energie",
+          "track": "10",
+          "hours": 14,
+          "url": "physik-curriculum.html#uv-10-1"
+        },
+        {
+          "code": "10.2",
+          "title": "Gefahren und Nutzen ionisierender Strahlung",
+          "track": "10",
+          "hours": 15,
+          "url": "physik-curriculum.html#uv-10-2"
+        },
+        {
+          "code": "10.3",
+          "title": "Energie aus Atomkernen",
+          "track": "10",
+          "hours": 10,
+          "url": "physik-curriculum.html#uv-10-3"
+        },
+        {
+          "code": "10.4",
+          "title": "Energieversorgung der Zukunft",
+          "track": "10",
+          "hours": 5,
+          "url": "physik-curriculum.html#uv-10-4"
+        },
+        {
+          "code": "EF.01",
+          "title": "Physik in Sport und Verkehr I",
+          "track": "EF",
+          "hours": 25,
+          "url": "physik-curriculum.html#uv-ef-01"
+        },
+        {
+          "code": "EF.02",
+          "title": "Physik in Sport und Verkehr II",
+          "track": "EF",
+          "hours": 15,
+          "url": "physik-curriculum.html#uv-ef-02"
+        },
+        {
+          "code": "EF.03",
+          "title": "Superhelden und Crashtests - Erhaltungssätze in verschiedenen Situationen",
+          "track": "EF",
+          "hours": 12,
+          "url": "physik-curriculum.html#uv-ef-03"
+        },
+        {
+          "code": "EF.04",
+          "title": "Bewegungen im Weltraum",
+          "track": "EF",
+          "hours": 20,
+          "url": "physik-curriculum.html#uv-ef-04"
+        },
+        {
+          "code": "EF.05",
+          "title": "Weltbilder in der Physik",
+          "track": "EF",
+          "hours": 8,
+          "url": "physik-curriculum.html#uv-ef-05"
+        },
+        {
+          "code": "GK.01",
+          "title": "Periodische Vorgänge in alltäglichen Situationen",
+          "track": "Q1 GK",
+          "hours": 10,
+          "url": "physik-curriculum.html#uv-gk-01"
+        },
+        {
+          "code": "GK.02",
+          "title": "Beugung und Interferenz von Wellen - ein neues Lichtmodell",
+          "track": "Q1 GK",
+          "hours": 18,
+          "url": "physik-curriculum.html#uv-gk-02"
+        },
+        {
+          "code": "GK.03",
+          "title": "Erforschung des Elektrons",
+          "track": "Q1 GK",
+          "hours": 26,
+          "url": "physik-curriculum.html#uv-gk-03"
+        },
+        {
+          "code": "GK.04",
+          "title": "Photonen und Elektronen als Quantenobjekte",
+          "track": "Q1 GK",
+          "hours": 18,
+          "url": "physik-curriculum.html#uv-gk-04"
+        },
+        {
+          "code": "GK.05",
+          "title": "Energieversorgung und -transport mit Generatoren und Transformatoren",
+          "track": "Q1 GK",
+          "hours": 18,
+          "url": "physik-curriculum.html#uv-gk-05"
+        },
+        {
+          "code": "GK.06",
+          "title": "Anwendungsbereiche des Kondensators",
+          "track": "Q2 GK",
+          "hours": 15,
+          "url": "physik-curriculum.html#uv-gk-06"
+        },
+        {
+          "code": "GK.07",
+          "title": "Mensch und Strahlung - Chancen und Risiken ionisierender Strahlung",
+          "track": "Q2 GK",
+          "hours": 12,
+          "url": "physik-curriculum.html#uv-gk-07"
+        },
+        {
+          "code": "GK.08",
+          "title": "Erforschung des Mikro- und Makrokosmos",
+          "track": "Q2 GK",
+          "hours": 19,
+          "url": "physik-curriculum.html#uv-gk-08"
+        },
+        {
+          "code": "GK.09",
+          "title": "Massendefekt und Kernumwandlungen",
+          "track": "Q2 GK",
+          "hours": 16,
+          "url": "physik-curriculum.html#uv-gk-09"
+        },
+        {
+          "code": "LK.01",
+          "title": "Untersuchung von Ladungsträgern in elektrischen und magnetischen Feldern",
+          "track": "Q1 LK",
+          "hours": 40,
+          "url": "physik-curriculum.html#uv-lk-01"
+        },
+        {
+          "code": "LK.02",
+          "title": "Massenspektrometer und Zyklotron als Anwendung in der physikalischen Forschung",
+          "track": "Q1 LK",
+          "hours": 10,
+          "url": "physik-curriculum.html#uv-lk-02"
+        },
+        {
+          "code": "LK.03",
+          "title": "Die elektromagnetische Induktion als Grundlage für die Kopplung elektrischer und magnetischer Felder und als Element von Energieumwandlungsketten",
+          "track": "Q1 LK",
+          "hours": 25,
+          "url": "physik-curriculum.html#uv-lk-03"
+        },
+        {
+          "code": "LK.04",
+          "title": "Zeitliche und energetische Betrachtungen bei Kondensator und Spule",
+          "track": "Q1 LK",
+          "hours": 20,
+          "url": "physik-curriculum.html#uv-lk-04"
+        },
+        {
+          "code": "LK.05",
+          "title": "Mechanische und elektromagnetische Schwingungen und deren Eigenschaften",
+          "track": "Q1 LK",
+          "hours": 40,
+          "url": "physik-curriculum.html#uv-lk-05"
+        },
+        {
+          "code": "LK.06",
+          "title": "Wellen und Interferenzphänomene",
+          "track": "Q1 LK",
+          "hours": 10,
+          "url": "physik-curriculum.html#uv-lk-06"
+        },
+        {
+          "code": "LK.07",
+          "title": "Quantenphysik als Weiterentwicklung des physikalischen Weltbildes",
+          "track": "Q2 LK",
+          "hours": 30,
+          "url": "physik-curriculum.html#uv-lk-07"
+        },
+        {
+          "code": "LK.08",
+          "title": "Struktur der Materie",
+          "track": "Q2 LK",
+          "hours": 20,
+          "url": "physik-curriculum.html#uv-lk-08"
+        },
+        {
+          "code": "LK.09",
+          "title": "Mensch und Strahlung -Chancen und Risiken ionisierender Strahlung",
+          "track": "Q2 LK",
+          "hours": 22,
+          "url": "physik-curriculum.html#uv-lk-09"
+        },
+        {
+          "code": "LK.10",
+          "title": "Massendefekt und Kernumwandlung",
+          "track": "Q2 LK",
+          "hours": 20,
+          "url": "physik-curriculum.html#uv-lk-10"
+        }
+      ]
+    },
+    "biologie": {
+      "label": "Biologie",
+      "curriculum": "biologie-curriculum.html",
+      "tracks": [
+        {
+          "id": "5",
+          "label": "Klasse 5",
+          "weekly": 2
+        },
+        {
+          "id": "6",
+          "label": "Klasse 6",
+          "weekly": 2
+        },
+        {
+          "id": "8",
+          "label": "Klasse 8",
+          "weekly": 2
+        },
+        {
+          "id": "9",
+          "label": "Klasse 9",
+          "weekly": 1
+        },
+        {
+          "id": "10",
+          "label": "Klasse 10",
+          "weekly": 2
+        },
+        {
+          "id": "EF",
+          "label": "EF",
+          "weekly": 3
+        },
+        {
+          "id": "Q1 GK",
+          "label": "Q1 GK",
+          "weekly": 3
+        },
+        {
+          "id": "Q2 GK",
+          "label": "Q2 GK",
+          "weekly": 3
+        },
+        {
+          "id": "Q1 LK",
+          "label": "Q1 LK",
+          "weekly": 5
+        },
+        {
+          "id": "Q2 LK",
+          "label": "Q2 LK",
+          "weekly": 5
+        }
+      ],
+      "units": [
+        {
+          "code": "05.1",
+          "title": "Die Biologie erforscht das Leben.",
+          "track": "5",
+          "hours": 10,
+          "url": "biologie-curriculum.html#uv-05-1"
+        },
+        {
+          "code": "05.2",
+          "title": "Wirbeltiere in meiner Umgebung",
+          "track": "5",
+          "hours": 15,
+          "url": "biologie-curriculum.html#uv-05-2"
+        },
+        {
+          "code": "05.3",
+          "title": "Tiergerechter Umgang mit Nutztieren",
+          "track": "5",
+          "hours": 5,
+          "url": "biologie-curriculum.html#uv-05-3"
+        },
+        {
+          "code": "05.4",
+          "title": "Erforschung von Bau und Funktionsweise der Pflanzen",
+          "track": "5",
+          "hours": 9,
+          "url": "biologie-curriculum.html#uv-05-4"
+        },
+        {
+          "code": "05.5",
+          "title": "Vielfalt der Blüten – Fortpflanzung von Blütenpflanzen",
+          "track": "5",
+          "hours": 11,
+          "url": "biologie-curriculum.html#uv-05-5"
+        },
+        {
+          "code": "06.1",
+          "title": "Nahrung – Energie für den Körper",
+          "track": "6",
+          "hours": 12,
+          "url": "biologie-curriculum.html#uv-06-1"
+        },
+        {
+          "code": "06.2",
+          "title": "Atmung und Blutkreislauf – Nahrungsaufnahme allein reicht nicht",
+          "track": "6",
+          "hours": 13,
+          "url": "biologie-curriculum.html#uv-06-2"
+        },
+        {
+          "code": "06.3",
+          "title": "Bewegung – Die Energie wird genutzt",
+          "track": "6",
+          "hours": 6,
+          "url": "biologie-curriculum.html#uv-06-3"
+        },
+        {
+          "code": "06.4",
+          "title": "Pubertät – Erwachsen werden",
+          "track": "6",
+          "hours": 7,
+          "url": "biologie-curriculum.html#uv-06-4"
+        },
+        {
+          "code": "06.5",
+          "title": "Fortpflanzung – Ein Mensch entsteht",
+          "track": "6",
+          "hours": 5,
+          "url": "biologie-curriculum.html#uv-06-5"
+        },
+        {
+          "code": "08.1",
+          "title": "Erkunden eines Ökosystems",
+          "track": "8",
+          "hours": 12,
+          "url": "biologie-curriculum.html#uv-08-1"
+        },
+        {
+          "code": "08.2",
+          "title": "Pilze und ihre Rolle im Ökosystem",
+          "track": "8",
+          "hours": 4,
+          "url": "biologie-curriculum.html#uv-08-2"
+        },
+        {
+          "code": "08.3",
+          "title": "Bodenlebewesen und ihre Rolle im Ökosystem",
+          "track": "8",
+          "hours": 4,
+          "url": "biologie-curriculum.html#uv-08-3"
+        },
+        {
+          "code": "08.4",
+          "title": "Ökologie im Labor",
+          "track": "8",
+          "hours": 4,
+          "url": "biologie-curriculum.html#uv-08-4"
+        },
+        {
+          "code": "08.5",
+          "title": "Energiefluss und Stoffkreisläufe im Ökosystem",
+          "track": "8",
+          "hours": 8,
+          "url": "biologie-curriculum.html#uv-08-5"
+        },
+        {
+          "code": "08.6",
+          "title": "Biodiversität und Naturschutz",
+          "track": "8",
+          "hours": 9,
+          "url": "biologie-curriculum.html#uv-08-6"
+        },
+        {
+          "code": "08.7",
+          "title": "Menschliche Sexualität",
+          "track": "8",
+          "hours": 4,
+          "url": "biologie-curriculum.html#uv-08-7"
+        },
+        {
+          "code": "08.8",
+          "title": "Fruchtbarkeit und Familienplanung",
+          "track": "8",
+          "hours": 8,
+          "url": "biologie-curriculum.html#uv-08-8"
+        },
+        {
+          "code": "09.1",
+          "title": "Mechanismen der Evolution",
+          "track": "9",
+          "hours": 16,
+          "url": "biologie-curriculum.html#uv-09-1"
+        },
+        {
+          "code": "09.2",
+          "title": "Der Stammbaum des Lebens",
+          "track": "9",
+          "hours": 12,
+          "url": "biologie-curriculum.html#uv-09-2"
+        },
+        {
+          "code": "09.3",
+          "title": "Evolution des Menschen",
+          "track": "9",
+          "hours": 12,
+          "url": "biologie-curriculum.html#uv-09-3"
+        },
+        {
+          "code": "10.1",
+          "title": "Immunbiologie – Abwehr und Schutz vor Erkrankungen",
+          "track": "10",
+          "hours": 16,
+          "url": "biologie-curriculum.html#uv-10-1"
+        },
+        {
+          "code": "10.2",
+          "title": "Hormonelle Regulation der Blutzuckerkonzentration",
+          "track": "10",
+          "hours": 8,
+          "url": "biologie-curriculum.html#uv-10-2"
+        },
+        {
+          "code": "10.3",
+          "title": "Neurobiologie - Signale senden, empfangen und verarbeiten",
+          "track": "10",
+          "hours": 8,
+          "url": "biologie-curriculum.html#uv-10-3"
+        },
+        {
+          "code": "10.4",
+          "title": "Die Erbinformation- eine Bauanleitung für Lebewesen",
+          "track": "10",
+          "hours": 10,
+          "url": "biologie-curriculum.html#uv-10-4"
+        },
+        {
+          "code": "10.5",
+          "title": "Gesetzmäßigkeiten der Vererbung",
+          "track": "10",
+          "hours": 12,
+          "url": "biologie-curriculum.html#uv-10-5"
+        },
+        {
+          "code": "EF.01",
+          "title": "Aufbau und Funktion der Zelle",
+          "track": "EF",
+          "hours": 24,
+          "url": "biologie-curriculum.html#uv-ef-01"
+        },
+        {
+          "code": "EF.02",
+          "title": "Biomembranen",
+          "track": "EF",
+          "hours": 22,
+          "url": "biologie-curriculum.html#uv-ef-02"
+        },
+        {
+          "code": "EF.03",
+          "title": "Mitose, Zellzyklus und Meiose",
+          "track": "EF",
+          "hours": 22,
+          "url": "biologie-curriculum.html#uv-ef-03"
+        },
+        {
+          "code": "EF.04",
+          "title": "Energie, Stoffwechsel und Enzyme",
+          "track": "EF",
+          "hours": 24,
+          "url": "biologie-curriculum.html#uv-ef-04"
+        },
+        {
+          "code": "Q1.01-GK",
+          "title": "Energieumwandlung in lebenden Systemen",
+          "track": "Q1 GK",
+          "hours": 5,
+          "url": "biologie-curriculum.html#uv-q1-01-gk"
+        },
+        {
+          "code": "Q1.02-GK",
+          "title": "Glucosestoffwechsel – Energiebereitstellung aus Nährstoffen",
+          "track": "Q1 GK",
+          "hours": 11,
+          "url": "biologie-curriculum.html#uv-q1-02-gk"
+        },
+        {
+          "code": "Q1.03-GK",
+          "title": "Informationsübertragung durch Nervenzellen",
+          "track": "Q1 GK",
+          "hours": 20,
+          "url": "biologie-curriculum.html#uv-q1-03-gk"
+        },
+        {
+          "code": "Q1.04-GK",
+          "title": "Angepasstheiten von Lebewesen an Umweltbedingungen",
+          "track": "Q1 GK",
+          "hours": 16,
+          "url": "biologie-curriculum.html#uv-q1-04-gk"
+        },
+        {
+          "code": "Q1.05-GK",
+          "title": "Wechselwirkungen und Dynamik in Lebensgemeinschaften",
+          "track": "Q1 GK",
+          "hours": 9,
+          "url": "biologie-curriculum.html#uv-q1-05-gk"
+        },
+        {
+          "code": "Q1.06-GK",
+          "title": "Stoff- und Energiefluss durch Ökosysteme und der Einfluss des Menschen",
+          "track": "Q1 GK",
+          "hours": 9,
+          "url": "biologie-curriculum.html#uv-q1-06-gk"
+        },
+        {
+          "code": "Q1.07-GK",
+          "title": "Fotosynthese – Umwandlung von Lichtenergie in nutzbare Energie",
+          "track": "Q1 GK",
+          "hours": 9,
+          "url": "biologie-curriculum.html#uv-q1-07-gk"
+        },
+        {
+          "code": "Q2.01-GK",
+          "title": "DNA – Speicherung und Expression genetischer Information",
+          "track": "Q2 GK",
+          "hours": 27,
+          "url": "biologie-curriculum.html#uv-q2-01-gk"
+        },
+        {
+          "code": "Q2.02-GK",
+          "title": "Humangenetik und Gentherapie",
+          "track": "Q2 GK",
+          "hours": 8,
+          "url": "biologie-curriculum.html#uv-q2-02-gk"
+        },
+        {
+          "code": "Q2.03-GK",
+          "title": "Evolutionsfaktoren und Synthetische Evolutionstheorie",
+          "track": "Q2 GK",
+          "hours": 13,
+          "url": "biologie-curriculum.html#uv-q2-03-gk"
+        },
+        {
+          "code": "Q2.04-GK",
+          "title": "Stammbäume und Verwandtschaft",
+          "track": "Q2 GK",
+          "hours": 16,
+          "url": "biologie-curriculum.html#uv-q2-04-gk"
+        },
+        {
+          "code": "Q1.01-LK",
+          "title": "Energieumwandlung in lebenden Systemen",
+          "track": "Q1 LK",
+          "hours": 6,
+          "url": "biologie-curriculum.html#uv-q1-01-lk"
+        },
+        {
+          "code": "Q1.02-LK",
+          "title": "Glucosestoffwechsel – Energiebereitstellung aus Nährstoffen",
+          "track": "Q1 LK",
+          "hours": 16,
+          "url": "biologie-curriculum.html#uv-q1-02-lk"
+        },
+        {
+          "code": "Q1.03-LK",
+          "title": "Erregungsentstehung und Erregungsleitung an einem Neuron",
+          "track": "Q1 LK",
+          "hours": 18,
+          "url": "biologie-curriculum.html#uv-q1-03-lk"
+        },
+        {
+          "code": "Q1.04-LK",
+          "title": "Informationsweitergabe über Zellgrenzen",
+          "track": "Q1 LK",
+          "hours": 14,
+          "url": "biologie-curriculum.html#uv-q1-04-lk"
+        },
+        {
+          "code": "Q1.05-LK",
+          "title": "Angepasstheiten von Lebewesen an Umweltbedingungen",
+          "track": "Q1 LK",
+          "hours": 22,
+          "url": "biologie-curriculum.html#uv-q1-05-lk"
+        },
+        {
+          "code": "Q1.06-LK",
+          "title": "Wechselwirkungen und Dynamik in Lebensgemeinschaften",
+          "track": "Q1 LK",
+          "hours": 18,
+          "url": "biologie-curriculum.html#uv-q1-06-lk"
+        },
+        {
+          "code": "Q1.07-LK",
+          "title": "Stoff- und Energiefluss durch Ökosysteme und der Einfluss des Menschen",
+          "track": "Q1 LK",
+          "hours": 18,
+          "url": "biologie-curriculum.html#uv-q1-07-lk"
+        },
+        {
+          "code": "Q1.08-LK",
+          "title": "Fotosynthese – Umwandlung von Lichtenergie in nutzbare Energie",
+          "track": "Q1 LK",
+          "hours": 24,
+          "url": "biologie-curriculum.html#uv-q1-08-lk"
+        },
+        {
+          "code": "Q1.09-LK",
+          "title": "Fotosynthese – natürliche und anthropogene Prozessoptimierung",
+          "track": "Q1 LK",
+          "hours": 8,
+          "url": "biologie-curriculum.html#uv-q1-09-lk"
+        },
+        {
+          "code": "Q2.01-LK",
+          "title": "DNA – Speicherung und Expression genetischer Information",
+          "track": "Q2 LK",
+          "hours": 28,
+          "url": "biologie-curriculum.html#uv-q2-01-lk"
+        },
+        {
+          "code": "Q2.02-LK",
+          "title": "DNA – Regulation der Genexpression und Krebs",
+          "track": "Q2 LK",
+          "hours": 20,
+          "url": "biologie-curriculum.html#uv-q2-02-lk"
+        },
+        {
+          "code": "Q2.03-LK",
+          "title": "Humangenetik, Gentechnik und Gentherapie",
+          "track": "Q2 LK",
+          "hours": 18,
+          "url": "biologie-curriculum.html#uv-q2-03-lk"
+        },
+        {
+          "code": "Q2.04-LK",
+          "title": "Evolutionsfaktoren und Synthetische Evolutionstheorie",
+          "track": "Q2 LK",
+          "hours": 20,
+          "url": "biologie-curriculum.html#uv-q2-04-lk"
+        },
+        {
+          "code": "Q2.05-LK",
+          "title": "Stammbäume und Verwandtschaft",
+          "track": "Q2 LK",
+          "hours": 16,
+          "url": "biologie-curriculum.html#uv-q2-05-lk"
+        },
+        {
+          "code": "Q2.06-LK",
+          "title": "Humanevolution und kulturelle Evolution",
+          "track": "Q2 LK",
+          "hours": 10,
+          "url": "biologie-curriculum.html#uv-q2-06-lk"
+        }
+      ]
+    },
+    "mensch-und-umwelt": {
+      "label": "Mensch und Umwelt",
+      "curriculum": "mensch-und-umwelt-curriculum.html",
+      "tracks": [
+        {
+          "id": "9",
+          "label": "Klasse 9",
+          "weekly": 3
+        },
+        {
+          "id": "10",
+          "label": "Klasse 10",
+          "weekly": 3
+        }
+      ],
+      "units": [
+        {
+          "code": "09.1",
+          "title": "Natürlicher und anthropogener Treibhauseffekt",
+          "track": "9",
+          "hours": 8,
+          "url": "mensch-und-umwelt-curriculum.html#uv09-1"
+        },
+        {
+          "code": "09.2",
+          "title": "Klimawandel und globale Auswirkungen",
+          "track": "9",
+          "hours": 18,
+          "url": "mensch-und-umwelt-curriculum.html#uv09-2"
+        },
+        {
+          "code": "09.3",
+          "title": "Klimaschutz und begründete Entscheidungen",
+          "track": "9",
+          "hours": 16,
+          "url": "mensch-und-umwelt-curriculum.html#uv09-3"
+        },
+        {
+          "code": "09.4",
+          "title": "Klimadaten verstehen",
+          "track": "9",
+          "hours": 10,
+          "url": "mensch-und-umwelt-curriculum.html#uv09-4"
+        },
+        {
+          "code": "09.5",
+          "title": "Energieformen und Energieträger",
+          "track": "9",
+          "hours": 8,
+          "url": "mensch-und-umwelt-curriculum.html#uv09-5"
+        },
+        {
+          "code": "09.6",
+          "title": "Energieträger und Technologien im Vergleich",
+          "track": "9",
+          "hours": 14,
+          "url": "mensch-und-umwelt-curriculum.html#uv09-6"
+        },
+        {
+          "code": "09.7",
+          "title": "Bauprojekt zur Energienutzung",
+          "track": "9",
+          "hours": 20,
+          "url": "mensch-und-umwelt-curriculum.html#uv09-7"
+        },
+        {
+          "code": "09.8",
+          "title": "Energieverbrauch im Alltag",
+          "track": "9",
+          "hours": 6,
+          "url": "mensch-und-umwelt-curriculum.html#uv09-8"
+        },
+        {
+          "code": "10.1",
+          "title": "Ernährung und Verdauung",
+          "track": "10",
+          "hours": 32,
+          "url": "mensch-und-umwelt-curriculum.html#uv10-1"
+        },
+        {
+          "code": "10.2",
+          "title": "Blut und Blutkreislauf",
+          "track": "10",
+          "hours": 26,
+          "url": "mensch-und-umwelt-curriculum.html#uv10-2"
+        },
+        {
+          "code": "10.3",
+          "title": "Haut und Hautschutz",
+          "track": "10",
+          "hours": 20,
+          "url": "mensch-und-umwelt-curriculum.html#uv10-3"
+        },
+        {
+          "code": "10.4",
+          "title": "Skelett Muskeln und Bewegung",
+          "track": "10",
+          "hours": 22,
+          "url": "mensch-und-umwelt-curriculum.html#uv10-4"
+        }
+      ]
+    }
+  },
+  "years": {
+    "2026": {
+      "label": "2026/27",
+      "start": "2026-09-02",
+      "end": "2027-07-16",
+      "half": "2027-02-15",
+      "q2half": "2027-01-07",
+      "q2end": "2027-03-19",
+      "prepStart": "2027-04-05",
+      "prepEnd": "2027-04-09"
+    },
+    "2027": {
+      "label": "2027/28",
+      "start": "2027-09-01",
+      "end": "2028-07-07",
+      "half": "2028-02-07",
+      "q2half": "2028-01-10",
+      "q2end": "2028-03-30",
+      "prepStart": "2028-03-31",
+      "prepEnd": "2028-04-06"
+    }
+  },
+  "closures": [
+    {
+      "id": "closed-2026-07-20",
+      "start": "2026-07-20",
+      "end": "2026-09-01",
+      "title": "Sommerferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-10-17",
+      "start": "2026-10-17",
+      "end": "2026-10-31",
+      "title": "Herbstferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-12-23",
+      "start": "2026-12-23",
+      "end": "2027-01-06",
+      "title": "Weihnachtsferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-03-22",
+      "start": "2027-03-22",
+      "end": "2027-04-03",
+      "title": "Osterferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-18",
+      "start": "2027-05-18",
+      "end": "2027-05-18",
+      "title": "Pfingstferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-07-19",
+      "start": "2027-07-19",
+      "end": "2027-08-31",
+      "title": "Sommerferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-10-23",
+      "start": "2027-10-23",
+      "end": "2027-11-06",
+      "title": "Herbstferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-12-24",
+      "start": "2027-12-24",
+      "end": "2028-01-08",
+      "title": "Weihnachtsferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-04-10",
+      "start": "2028-04-10",
+      "end": "2028-04-22",
+      "title": "Osterferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-07-10",
+      "start": "2028-07-10",
+      "end": "2028-08-22",
+      "title": "Sommerferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-10-03",
+      "start": "2026-10-03",
+      "end": "2026-10-03",
+      "title": "Tag der Deutschen Einheit",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-11-01",
+      "start": "2026-11-01",
+      "end": "2026-11-01",
+      "title": "Allerheiligen",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-12-25",
+      "start": "2026-12-25",
+      "end": "2026-12-25",
+      "title": "1. Weihnachtstag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-12-26",
+      "start": "2026-12-26",
+      "end": "2026-12-26",
+      "title": "2. Weihnachtstag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-01-01",
+      "start": "2027-01-01",
+      "end": "2027-01-01",
+      "title": "Neujahr",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-03-26",
+      "start": "2027-03-26",
+      "end": "2027-03-26",
+      "title": "Karfreitag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-03-29",
+      "start": "2027-03-29",
+      "end": "2027-03-29",
+      "title": "Ostermontag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-01",
+      "start": "2027-05-01",
+      "end": "2027-05-01",
+      "title": "Tag der Arbeit",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-06",
+      "start": "2027-05-06",
+      "end": "2027-05-06",
+      "title": "Christi Himmelfahrt",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-17",
+      "start": "2027-05-17",
+      "end": "2027-05-17",
+      "title": "Pfingstmontag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-27",
+      "start": "2027-05-27",
+      "end": "2027-05-27",
+      "title": "Fronleichnam",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-10-03",
+      "start": "2027-10-03",
+      "end": "2027-10-03",
+      "title": "Tag der Deutschen Einheit",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-11-01",
+      "start": "2027-11-01",
+      "end": "2027-11-01",
+      "title": "Allerheiligen",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-12-25",
+      "start": "2027-12-25",
+      "end": "2027-12-25",
+      "title": "1. Weihnachtstag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-12-26",
+      "start": "2027-12-26",
+      "end": "2027-12-26",
+      "title": "2. Weihnachtstag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-01-01",
+      "start": "2028-01-01",
+      "end": "2028-01-01",
+      "title": "Neujahr",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-04-14",
+      "start": "2028-04-14",
+      "end": "2028-04-14",
+      "title": "Karfreitag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-04-17",
+      "start": "2028-04-17",
+      "end": "2028-04-17",
+      "title": "Ostermontag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-05-01",
+      "start": "2028-05-01",
+      "end": "2028-05-01",
+      "title": "Tag der Arbeit",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-05-25",
+      "start": "2028-05-25",
+      "end": "2028-05-25",
+      "title": "Christi Himmelfahrt",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-06-05",
+      "start": "2028-06-05",
+      "end": "2028-06-05",
+      "title": "Pfingstmontag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-06-15",
+      "start": "2028-06-15",
+      "end": "2028-06-15",
+      "title": "Fronleichnam",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-02-08",
+      "start": "2027-02-08",
+      "end": "2027-02-08",
+      "title": "Rosenmontag",
+      "kind": "school",
+      "source": "Festlegung der Kursleitung: jährlich schulfrei",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-02-09",
+      "start": "2027-02-09",
+      "end": "2027-02-09",
+      "title": "Faschingsdienstag",
+      "kind": "school",
+      "source": "Festlegung der Kursleitung: jährlich schulfrei",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-02-28",
+      "start": "2028-02-28",
+      "end": "2028-02-28",
+      "title": "Rosenmontag",
+      "kind": "school",
+      "source": "Festlegung der Kursleitung: jährlich schulfrei",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-02-29",
+      "start": "2028-02-29",
+      "end": "2028-02-29",
+      "title": "Faschingsdienstag",
+      "kind": "school",
+      "source": "Festlegung der Kursleitung: jährlich schulfrei",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-09-28",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "title": "Pädagogischer Tag",
+      "kind": "school",
+      "source": "Schulische Klausurpläne 2026/27",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-07",
+      "start": "2027-05-07",
+      "end": "2027-05-07",
+      "title": "Beweglicher Ferientag",
+      "kind": "school",
+      "source": "Schulische Klausurpläne 2026/27",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-03-17",
+      "start": "2027-03-17",
+      "end": "2027-03-17",
+      "title": "Pädagogischer Tag / Berufsorientierung Q1",
+      "kind": "school",
+      "source": "Klausurpläne Q1.2 und Q2.2 2026/27",
+      "tracks": [
+        "Q1 GK",
+        "Q1 LK",
+        "Q2 GK",
+        "Q2 LK"
+      ]
+    }
+  ],
+  "exams": [
+    {
+      "id": "chemie-EF-2026-12-08-0",
+      "subject": "chemie",
+      "track": "EF",
+      "start": "2026-12-08",
+      "end": "2026-12-08",
+      "title": "Klausur · GK10",
+      "kind": "exam",
+      "source": "EF.1 · Schulischer Klausurplan 2026/27",
+      "notes": "3./4. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-EF-2026-12-14-1",
+      "subject": "chemie",
+      "track": "EF",
+      "start": "2026-12-14",
+      "end": "2026-12-14",
+      "title": "Klausur · GK6",
+      "kind": "exam",
+      "source": "EF.1 · Schulischer Klausurplan 2026/27",
+      "notes": "3./4. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-EF-2026-11-25-2",
+      "subject": "physik",
+      "track": "EF",
+      "start": "2026-11-25",
+      "end": "2026-11-25",
+      "title": "Klausur · GK2",
+      "kind": "exam",
+      "source": "EF.1 · Schulischer Klausurplan 2026/27",
+      "notes": "1./2. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-EF-2026-11-26-3",
+      "subject": "biologie",
+      "track": "EF",
+      "start": "2026-11-26",
+      "end": "2026-11-26",
+      "title": "Klausur · GK9",
+      "kind": "exam",
+      "source": "EF.1 · Schulischer Klausurplan 2026/27",
+      "notes": "3./4. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-EF-2027-01-07-4",
+      "subject": "biologie",
+      "track": "EF",
+      "start": "2027-01-07",
+      "end": "2027-01-07",
+      "title": "Klausur · GK8",
+      "kind": "exam",
+      "source": "EF.1 · Schulischer Klausurplan 2026/27",
+      "notes": "1./2. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-EF-2027-01-14-5",
+      "subject": "biologie",
+      "track": "EF",
+      "start": "2027-01-14",
+      "end": "2027-01-14",
+      "title": "Klausur · GK5",
+      "kind": "exam",
+      "source": "EF.1 · Schulischer Klausurplan 2026/27",
+      "notes": "3./4. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2026-09-29-6",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2026-09-29",
+      "end": "2026-09-29",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2026-11-24-7",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2026-11-24",
+      "end": "2026-11-24",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-LK-2026-10-02-8",
+      "subject": "biologie",
+      "track": "Q1 LK",
+      "start": "2026-10-02",
+      "end": "2026-10-02",
+      "title": "Klausur · LK I",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-LK-2026-11-27-9",
+      "subject": "biologie",
+      "track": "Q1 LK",
+      "start": "2026-11-27",
+      "end": "2026-11-27",
+      "title": "Klausur · LK I",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-GK-2026-11-02-10",
+      "subject": "physik",
+      "track": "Q1 GK",
+      "start": "2026-11-02",
+      "end": "2026-11-02",
+      "title": "Klausur · GK2",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-GK-2026-12-07-11",
+      "subject": "physik",
+      "track": "Q1 GK",
+      "start": "2026-12-07",
+      "end": "2026-12-07",
+      "title": "Klausur · GK2",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2026-10-12-12",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2026-10-12",
+      "end": "2026-10-12",
+      "title": "Klausur · GK8",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 3. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2026-11-30-13",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2026-11-30",
+      "end": "2026-11-30",
+      "title": "Klausur · GK8",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 3. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2026-10-14-14",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2026-10-14",
+      "end": "2026-10-14",
+      "title": "Klausur · GK5",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2026-12-09-15",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2026-12-09",
+      "end": "2026-12-09",
+      "title": "Klausur · GK5",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2026-11-10-16",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2026-11-10",
+      "end": "2026-11-10",
+      "title": "Klausur · GK6",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 5. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2026-12-15-17",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2026-12-15",
+      "end": "2026-12-15",
+      "title": "Klausur · GK6",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 5. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-03-02-18",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-03-02",
+      "end": "2027-03-02",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-05-11-19",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-LK-2027-03-05-20",
+      "subject": "biologie",
+      "track": "Q1 LK",
+      "start": "2027-03-05",
+      "end": "2027-03-05",
+      "title": "Klausur · LK I",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-LK-2027-05-14-21",
+      "subject": "biologie",
+      "track": "Q1 LK",
+      "start": "2027-05-14",
+      "end": "2027-05-14",
+      "title": "Klausur · LK I",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-GK-2027-03-08-22",
+      "subject": "physik",
+      "track": "Q1 GK",
+      "start": "2027-03-08",
+      "end": "2027-03-08",
+      "title": "Klausur · GK2",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-GK-2027-05-24-23",
+      "subject": "physik",
+      "track": "Q1 GK",
+      "start": "2027-05-24",
+      "end": "2027-05-24",
+      "title": "Klausur · GK2",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2027-03-15-24",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2027-03-15",
+      "end": "2027-03-15",
+      "title": "Klausur · GK8",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 3. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2027-05-31-25",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2027-05-31",
+      "end": "2027-05-31",
+      "title": "Klausur · GK8",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 3. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2027-04-07-26",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2027-04-07",
+      "end": "2027-04-07",
+      "title": "Klausur · GK5",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2027-06-02-27",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2027-06-02",
+      "end": "2027-06-02",
+      "title": "Klausur · GK5",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "Uhrzeit im Plan nicht angegeben",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2027-04-06-28",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2027-04-06",
+      "end": "2027-04-06",
+      "title": "Klausur · GK6",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 5. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2027-06-15-29",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2027-06-15",
+      "end": "2027-06-15",
+      "title": "Klausur · GK6",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 5. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2026-09-25-30",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2026-09-25",
+      "end": "2026-09-25",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2026-11-13-31",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-LK-2026-09-25-32",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2026-09-25",
+      "end": "2026-09-25",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-LK-2026-11-13-33",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2026-10-01-34",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2026-10-01",
+      "end": "2026-10-01",
+      "title": "Klausur · GK4",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 4. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2026-11-19-35",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2026-11-19",
+      "end": "2026-11-19",
+      "title": "Klausur · GK4",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 5. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-GK-2026-09-30-36",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2026-09-30",
+      "end": "2026-09-30",
+      "title": "Klausur · GK5",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 4. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-GK-2026-11-25-37",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2026-11-25",
+      "end": "2026-11-25",
+      "title": "Klausur · GK5",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 5. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-GK-2026-10-05-38",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2026-10-05",
+      "end": "2026-10-05",
+      "title": "Klausur · GK7",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-GK-2026-11-23-39",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2026-11-23",
+      "end": "2026-11-23",
+      "title": "Klausur · GK7",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-GK-2026-10-07-40",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2026-10-07",
+      "end": "2026-10-07",
+      "title": "Klausur · GK6",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-GK-2026-12-02-41",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2026-12-02",
+      "end": "2026-12-02",
+      "title": "Klausur · GK6",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2027-02-19-42",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2027-02-19",
+      "end": "2027-02-19",
+      "title": "Vorabitur · LK II",
+      "kind": "exam",
+      "source": "Q2.2 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-LK-2027-02-19-43",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2027-02-19",
+      "end": "2027-02-19",
+      "title": "Vorabitur · LK II",
+      "kind": "exam",
+      "source": "Q2.2 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2027-02-23-44",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2027-02-23",
+      "end": "2027-02-23",
+      "title": "Vorabitur · 3. Abiturfach",
+      "kind": "exam",
+      "source": "Q2.2 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde; nur bei Belegung als 3. Abiturfach",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2027-04-21-45",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2027-04-21",
+      "end": "2027-04-21",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-GK-2027-05-11-46",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-LK-2027-04-21-47",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2027-04-21",
+      "end": "2027-04-21",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-LK-2027-05-11-48",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-GK-2028-05-11-49",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2028-05-11",
+      "end": "2028-05-11",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-GK-2028-05-24-50",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2028-05-24",
+      "end": "2028-05-24",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-LK-2028-05-11-51",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2028-05-11",
+      "end": "2028-05-11",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-LK-2028-05-24-52",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2028-05-24",
+      "end": "2028-05-24",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-EF-2026-11-13-53",
+      "subject": "chemie",
+      "track": "EF",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-EF-2027-01-22-54",
+      "subject": "chemie",
+      "track": "EF",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-GK-2026-11-13-55",
+      "subject": "chemie",
+      "track": "Q1 GK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-GK-2027-01-22-56",
+      "subject": "chemie",
+      "track": "Q1 GK",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-GK-2027-04-22-57",
+      "subject": "chemie",
+      "track": "Q1 GK",
+      "start": "2027-04-22",
+      "end": "2027-04-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-GK-2027-07-02-58",
+      "subject": "chemie",
+      "track": "Q1 GK",
+      "start": "2027-07-02",
+      "end": "2027-07-02",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2026-11-13-59",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-01-22-60",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-04-22-61",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-04-22",
+      "end": "2027-04-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-07-02-62",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-07-02",
+      "end": "2027-07-02",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2026-11-04-63",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2026-12-17-64",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2026-12-17",
+      "end": "2026-12-17",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2027-03-09-65",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2027-03-09",
+      "end": "2027-03-09",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2026-11-04-66",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2026-12-17-67",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2026-12-17",
+      "end": "2026-12-17",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2027-03-09-68",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2027-03-09",
+      "end": "2027-03-09",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-GK-2027-02-23-69",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2027-02-23",
+      "end": "2027-02-23",
+      "title": "Vorabitur · 3. Abiturfach",
+      "kind": "exam",
+      "source": "Q2.2 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde; nur bei Belegung als 3. Abiturfach",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-GK-2027-04-20-70",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2027-04-20",
+      "end": "2027-04-20",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "physik-Q2-GK-2027-05-11-71",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "physik-Q2-LK-2027-04-20-72",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2027-04-20",
+      "end": "2027-04-20",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "physik-Q2-LK-2027-05-11-73",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "physik-Q2-GK-2028-05-10-74",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2028-05-10",
+      "end": "2028-05-10",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "physik-Q2-GK-2028-05-24-75",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2028-05-24",
+      "end": "2028-05-24",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "physik-Q2-LK-2028-05-10-76",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2028-05-10",
+      "end": "2028-05-10",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "physik-Q2-LK-2028-05-24-77",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2028-05-24",
+      "end": "2028-05-24",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "physik-EF-2026-11-13-78",
+      "subject": "physik",
+      "track": "EF",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-EF-2027-01-22-79",
+      "subject": "physik",
+      "track": "EF",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-GK-2026-11-13-80",
+      "subject": "physik",
+      "track": "Q1 GK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-GK-2027-01-22-81",
+      "subject": "physik",
+      "track": "Q1 GK",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-GK-2027-04-22-82",
+      "subject": "physik",
+      "track": "Q1 GK",
+      "start": "2027-04-22",
+      "end": "2027-04-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-GK-2027-07-02-83",
+      "subject": "physik",
+      "track": "Q1 GK",
+      "start": "2027-07-02",
+      "end": "2027-07-02",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-LK-2026-11-13-84",
+      "subject": "physik",
+      "track": "Q1 LK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-LK-2027-01-22-85",
+      "subject": "physik",
+      "track": "Q1 LK",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-LK-2027-04-22-86",
+      "subject": "physik",
+      "track": "Q1 LK",
+      "start": "2027-04-22",
+      "end": "2027-04-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q1-LK-2027-07-02-87",
+      "subject": "physik",
+      "track": "Q1 LK",
+      "start": "2027-07-02",
+      "end": "2027-07-02",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-GK-2026-11-04-88",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-GK-2026-12-17-89",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2026-12-17",
+      "end": "2026-12-17",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-GK-2027-03-09-90",
+      "subject": "physik",
+      "track": "Q2 GK",
+      "start": "2027-03-09",
+      "end": "2027-03-09",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-LK-2026-11-04-91",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-LK-2026-12-17-92",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2026-12-17",
+      "end": "2026-12-17",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "physik-Q2-LK-2027-03-09-93",
+      "subject": "physik",
+      "track": "Q2 LK",
+      "start": "2027-03-09",
+      "end": "2027-03-09",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-GK-2027-02-23-94",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2027-02-23",
+      "end": "2027-02-23",
+      "title": "Vorabitur · 3. Abiturfach",
+      "kind": "exam",
+      "source": "Q2.2 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde; nur bei Belegung als 3. Abiturfach",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-GK-2027-04-16-95",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2027-04-16",
+      "end": "2027-04-16",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "biologie-Q2-GK-2027-05-11-96",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "biologie-Q2-LK-2027-04-16-97",
+      "subject": "biologie",
+      "track": "Q2 LK",
+      "start": "2027-04-16",
+      "end": "2027-04-16",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "biologie-Q2-LK-2027-05-11-98",
+      "subject": "biologie",
+      "track": "Q2 LK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "biologie-Q2-GK-2028-05-09-99",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2028-05-09",
+      "end": "2028-05-09",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "biologie-Q2-GK-2028-05-24-100",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2028-05-24",
+      "end": "2028-05-24",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "biologie-Q2-LK-2028-05-09-101",
+      "subject": "biologie",
+      "track": "Q2 LK",
+      "start": "2028-05-09",
+      "end": "2028-05-09",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "biologie-Q2-LK-2028-05-24-102",
+      "subject": "biologie",
+      "track": "Q2 LK",
+      "start": "2028-05-24",
+      "end": "2028-05-24",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "biologie-EF-2026-11-13-103",
+      "subject": "biologie",
+      "track": "EF",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-EF-2027-01-22-104",
+      "subject": "biologie",
+      "track": "EF",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2026-11-13-105",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2027-01-22-106",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2027-04-22-107",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2027-04-22",
+      "end": "2027-04-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-GK-2027-07-02-108",
+      "subject": "biologie",
+      "track": "Q1 GK",
+      "start": "2027-07-02",
+      "end": "2027-07-02",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-LK-2026-11-13-109",
+      "subject": "biologie",
+      "track": "Q1 LK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-LK-2027-01-22-110",
+      "subject": "biologie",
+      "track": "Q1 LK",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-LK-2027-04-22-111",
+      "subject": "biologie",
+      "track": "Q1 LK",
+      "start": "2027-04-22",
+      "end": "2027-04-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q1-LK-2027-07-02-112",
+      "subject": "biologie",
+      "track": "Q1 LK",
+      "start": "2027-07-02",
+      "end": "2027-07-02",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-GK-2026-11-04-113",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-GK-2026-12-17-114",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2026-12-17",
+      "end": "2026-12-17",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-GK-2027-03-09-115",
+      "subject": "biologie",
+      "track": "Q2 GK",
+      "start": "2027-03-09",
+      "end": "2027-03-09",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-LK-2026-11-04-116",
+      "subject": "biologie",
+      "track": "Q2 LK",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-LK-2026-12-17-117",
+      "subject": "biologie",
+      "track": "Q2 LK",
+      "start": "2026-12-17",
+      "end": "2026-12-17",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "biologie-Q2-LK-2027-03-09-118",
+      "subject": "biologie",
+      "track": "Q2 LK",
+      "start": "2027-03-09",
+      "end": "2027-03-09",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    }
+  ],
+  "sources": [
+    {
+      "label": "Amtliche NRW-Ferien und Halbjahrestermine",
+      "url": "https://bass.schule.nrw/191.htm"
+    },
+    {
+      "label": "Amtliche Abiturtermine 2027 und 2028",
+      "url": "https://bass.schule.nrw/192.htm"
+    }
+  ]
+}
