@@ -70,6 +70,13 @@
   });
   mobileQuery.addEventListener('change', () => { mobileOpen = false; syncToc(); });
   syncToc();
+  document.addEventListener('curriculum:search-navigate', closeMobileToc);
+  document.addEventListener('curriculum:search-open', () => {
+    if (mobileQuery.matches) { returnFocus = document.querySelector('.curriculum-search-bar [data-search-action="list"]') || mobileButton; mobileOpen = true; }
+    else collapsed = false;
+    sidebar.querySelector('details').open = true;
+    syncToc();
+  });
 
   function isLocalPdf(link) {
     let url;
