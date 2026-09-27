@@ -1,0 +1,3 @@
+/* Cover supplied for the independent 2026 edition. */
+html:not([data-theme="dark"]) .cover--chemie-2026{background-image:url("../images/chemie-cover-2026.png")}
+@media(max-width:760px){html:not([data-theme="dark"]) .cover--chemie-2026{background-image:linear-gradient(rgba(255,255,255,.78),rgba(255,255,255,.78)),url("../images/chemie-cover-2026.png")}}
