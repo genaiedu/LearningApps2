@@ -1,0 +1,55 @@
+{
+  "design": "original",
+  "name": "Ursprüngliches Design",
+  "restored_from_commit": "4f458f90b59ba35ad44f182bee28b5ea43e0e98d",
+  "pages": 5,
+  "word": {
+    "page": "A4",
+    "margins_mm": {
+      "left": 25,
+      "right": 25,
+      "top": 22,
+      "bottom": 22
+    },
+    "body_font": "Arial",
+    "body_size_pt": 11,
+    "title_font": "Arial Bold",
+    "title_size_pt": 24,
+    "field_heading_font": "Arial Bold",
+    "field_heading_size_pt": 11
+  },
+  "pdf": {
+    "page_pt": [
+      595.28,
+      841.89
+    ],
+    "content_x_pt": [
+      50,
+      545
+    ],
+    "body_font": "Helvetica",
+    "subtitle_size_pt": 11,
+    "title_font": "Helvetica-Bold",
+    "title_size_pt": 22,
+    "field_heading_font": "Helvetica-Bold",
+    "field_heading_size_pt": 10,
+    "form_font": "Helvetica",
+    "form_size_pt": 10,
+    "header_size_pt": 9,
+    "footer_size_pt": 8
+  },
+  "sections": [
+    "Schülerfassung: Aufgaben",
+    "Schülerfassung: Materialien M1–M3",
+    "Lehrkraft: Planung und Zuordnung",
+    "Lehrkraft: Erwartungshorizont",
+    "Lehrkraft: Bewertungsbogen"
+  ],
+  "rules": [
+    "Die verknüpften Word- und PDF-Vorlagen sind unveränderte historische Dateien. Die passende Vorlage zum gewählten Ausgabeformat verwenden.",
+    "Keine Liberation-Serif-Gestaltung oder Maße aus dem Abiturdesign 2025 übernehmen.",
+    "Aufgaben und Umfang an die konkrete Klausur anpassen, keine starre Seitenzahl voraussetzen.",
+    "Lehrkraftunterlagen als eigene Datei; Lösungen nicht in die Schülerfassung aufnehmen.",
+    "Auswahlbogen bei Abitur-Übung vier Aufgaben/drei bearbeiten im gleichen serifenlosen Stil ergänzen."
+  ]
+}
