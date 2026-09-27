@@ -1,0 +1,186 @@
+{
+  "reference": "Vom Nutzer bereitgestellte Chemie-Abiturklausur NRW 2025, ch25_x_l_ht_gg.pdf",
+  "unit": "PostScript-Punkt (1/72 Zoll); Koordinaten von links oben",
+  "page": {
+    "width": 595.32,
+    "height": 841.92,
+    "body_left": 76.56,
+    "body_right": 518.76,
+    "body_width": 442.2,
+    "body_line_height": 13.8,
+    "alignment": "linksbündiger Flattersatz, keine generelle Blocksatzeinstellung"
+  },
+  "fonts": {
+    "body": [
+      "Liberation Serif",
+      12
+    ],
+    "body_bold": [
+      "Liberation Serif Bold",
+      12
+    ],
+    "body_italic": [
+      "Liberation Serif Italic",
+      12
+    ],
+    "exam_title": [
+      "Liberation Sans Bold",
+      20
+    ],
+    "subject_course": [
+      "Liberation Sans Italic",
+      18
+    ],
+    "section_title": [
+      "Liberation Sans Bold",
+      13
+    ],
+    "material_title": [
+      "Liberation Sans Bold",
+      12
+    ],
+    "header_code": [
+      "Liberation Sans Bold",
+      14
+    ],
+    "header_page": [
+      "Liberation Sans",
+      11
+    ],
+    "name": [
+      "Liberation Sans",
+      12
+    ],
+    "footer": [
+      "Liberation Serif",
+      9
+    ],
+    "criteria": [
+      "Liberation Serif",
+      11
+    ],
+    "individual_marking": [
+      "Liberation Serif",
+      10
+    ],
+    "cover_body": [
+      "Arial",
+      12
+    ],
+    "cover_title": [
+      "Arial Bold",
+      17
+    ]
+  },
+  "positions": {
+    "header_code_top": 32.8,
+    "header_page_top": 47.13,
+    "student_name_top": 87.58,
+    "student_title_top": 155.47,
+    "student_subtitle_top": 184.43,
+    "student_rule_y": 207.24,
+    "student_context_top": 229.66,
+    "student_intro_top": 266.32,
+    "student_tasks_heading_top": 363.85,
+    "student_number_x": 79.38,
+    "student_task_text_x": 93.6,
+    "materials_first_heading_top": 129.85,
+    "teacher_continuation_top": 80.62,
+    "teacher_banner": [
+      75.06,
+      76.56,
+      445.2,
+      20.7
+    ],
+    "teacher_title_top": 111.55,
+    "teacher_subtitle_top": 140.51,
+    "teacher_rule_y": 163.32,
+    "teacher_task_box": [
+      76.56,
+      269.22,
+      442.38,
+      395.58
+    ],
+    "footer_top": 791.13
+  },
+  "tables": {
+    "criteria": {
+      "columns": [
+        24.96,
+        378.6,
+        39.06
+      ],
+      "labels": [
+        "Nummer",
+        "Anforderungen / Der Prüfling",
+        "BE max."
+      ],
+      "font_size": 11,
+      "header_rows": [
+        20.22,
+        20.22
+      ],
+      "stroke": 0.72,
+      "no_extra_AFB_column": true
+    },
+    "individual": {
+      "columns": [
+        34.02,
+        34.08,
+        198.42,
+        48.24,
+        42.42,
+        42.6,
+        43.14
+      ],
+      "labels": [
+        "Teilaufgabe",
+        "Kriterium",
+        "Anforderungen",
+        "BE max.",
+        "EK",
+        "ZK",
+        "DK"
+      ],
+      "font_size": 10,
+      "stroke": 0.72
+    },
+    "grade_scale": {
+      "columns": [
+        127.56,
+        59.58,
+        127.5
+      ],
+      "labels": [
+        "Note",
+        "Punkte",
+        "Erreichte BE"
+      ],
+      "font_size": 10,
+      "row_height": 23.3,
+      "stroke": 0.48
+    }
+  },
+  "teacher_sections": [
+    "1. Aufgabenart",
+    "2. Aufgabenstellung (identisch zur Schülerfassung, umrahmt)",
+    "3. Materialgrundlage",
+    "4. Bezüge zum Kernlehrplan und zu den Vorgaben",
+    "5. Zugelassene Hilfsmittel",
+    "6. Vorgaben für die Bewertung der Prüfungsleistung",
+    "7. Bewertungsbogen zur Prüfungsleistung",
+    "8. Festlegung der Gesamtnote der Prüfungsleistung",
+    "Grundsätze für die Bewertung (Notenfindung)"
+  ],
+  "adaptation_rules": [
+    "Kein NRW-Logo, keine Ministeriumskennzeichnung; schulische Klausur bzw. Abitur-Übungsklausur korrekt benennen.",
+    "Alle Fachaufgaben durch eigene Inhalte ersetzen; keine Aufgaben aus der Referenz reproduzieren.",
+    "Schülerfassung und Lehrkraftfassung in zwei getrennten Dateien ausgeben. Die Sammelvorlage zeigt die Seitentypen.",
+    "Vorblatt für Auswahl nur bei entsprechender Aufgabenwahl; Aufgaben und Materialien können mehr Seiten beanspruchen. Leerräume der Blankovorlage sind Platzhalter, keine verbindlichen Leerflächen in der fertigen Klausur.",
+    "Schriften, Größen, Satzspiegel und Tabellenformat beibehalten; inhaltsabhängige Umbrüche anpassen, zusätzliche Seiten statt kleinerer Schrift.",
+    "Datum, Beginn, Ende und Dauer auf Vorblatt bzw. in freien Metadatenbereich, ohne den Titel und Aufgabentext zu verdrängen.",
+    "Materialnummern und Seitenzahlen innerhalb jedes Aufgabenblocks konsistent führen; keine starre Gesamtseitenzahl aus der Vorlage übernehmen.",
+    "AFB-Plan, Unterrichtsvoraussetzungen, Ähnlichkeitsprüfung und Rückmeldung als ergänzende Lehrkraftanlage; das dreispaltige Originalraster nicht um weitere Spalten erweitern.",
+    "BE-Grenzen und Rechtsbezüge passend zur konkret gewählten Klausur verifizieren. Die Gestaltungsvorlage schreibt keine historischen Rechtsvorschriften fest."
+  ]
+}
