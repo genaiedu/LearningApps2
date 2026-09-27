@@ -148,6 +148,6 @@ $('copy').addEventListener('click',async()=>{if(dirty)return;try{await navigator
 $('download').addEventListener('click',()=>{if(dirty)return;const blob=new Blob([$ ('output').value],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Klausurprompt_'+sources[$('subject').value].name+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 function setTheme(dark){document.body.classList.toggle('dark',dark);$('theme').setAttribute('aria-pressed',String(dark));$('theme').textContent=dark?'Helle Ansicht':'Dunkle Ansicht';}
 setTheme(matchMedia('(prefers-color-scheme: dark)').matches);$('theme').addEventListener('click',()=>setTheme(!document.body.classList.contains('dark')));
-$('preview').addEventListener('click',()=>{$('pdf-frame').src='downloads/Blankoklausur_Naturwissenschaften.pdf?v=20260927-layout2025';$('pdf-dialog').showModal();});$('close-preview').addEventListener('click',()=>$('pdf-dialog').close());
+$('preview').addEventListener('click',()=>{$('pdf-frame').src='klausurvorlage-vorschau.html?seite=2';$('pdf-dialog').showModal();});$('close-preview').addEventListener('click',()=>$('pdf-dialog').close());
 refresh();
 })();
