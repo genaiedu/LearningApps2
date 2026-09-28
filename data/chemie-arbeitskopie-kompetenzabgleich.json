@@ -1,0 +1,1891 @@
+{
+  "date": "2026-09-28",
+  "uv_count": 33,
+  "concrete_count": 233,
+  "generic_count": 150,
+  "course_specific_total": 439,
+  "unassigned": [],
+  "hours": [
+    [
+      "Jahrgang 7",
+      "4",
+      "30",
+      "6 + 8 + 8 + 8"
+    ],
+    [
+      "Jahrgang 8",
+      "4",
+      "60",
+      "18 + 10 + 14 + 18"
+    ],
+    [
+      "Jahrgang 9",
+      "3",
+      "60",
+      "20 + 20 + 20"
+    ],
+    [
+      "Jahrgang 10",
+      "4",
+      "60",
+      "26 + 20 + 7 + 7"
+    ],
+    [
+      "EF",
+      "4",
+      "86",
+      "36 + 14 + 16 + 20"
+    ],
+    [
+      "GK",
+      "6",
+      "167",
+      "36 + 22 + 29 + 8 + 42 + 30"
+    ],
+    [
+      "LK",
+      "8",
+      "264",
+      "50 + 30 + 34 + 10 + 26 + 30 + 60 + 24"
+    ]
+  ],
+  "source_wording_repairs": [],
+  "concrete_mapping": {
+    "SI1-1-01": [
+      "07.2",
+      "07.3"
+    ],
+    "SI1-1-02": [
+      "07.2"
+    ],
+    "SI1-1-03": [
+      "07.2",
+      "07.3"
+    ],
+    "SI1-1-05": [
+      "07.2"
+    ],
+    "SI1-1-06": [
+      "07.2",
+      "07.3"
+    ],
+    "SI1-1-04": [
+      "07.3"
+    ],
+    "SI1-3-01": [
+      "07.4"
+    ],
+    "SI1-3-02": [
+      "07.4"
+    ],
+    "SI1-3-03": [
+      "07.4"
+    ],
+    "SI1-3-04": [
+      "07.4"
+    ],
+    "SI1-3-05": [
+      "07.4"
+    ],
+    "SI1-3-06": [
+      "07.4"
+    ],
+    "SI1-3-07": [
+      "07.4"
+    ],
+    "SI1-3-08": [
+      "07.4"
+    ],
+    "SI1-3-09": [
+      "07.4"
+    ],
+    "SI1-4-01": [
+      "08.1"
+    ],
+    "SI1-4-02": [
+      "08.1"
+    ],
+    "SI1-4-03": [
+      "08.1"
+    ],
+    "SI1-4-04": [
+      "08.1"
+    ],
+    "SI1-4-05": [
+      "08.1"
+    ],
+    "SI1-4-06": [
+      "08.1"
+    ],
+    "SI1-4-07": [
+      "08.1"
+    ],
+    "SI1-2-01": [
+      "08.2"
+    ],
+    "SI1-2-02": [
+      "08.2"
+    ],
+    "SI1-2-03": [
+      "08.2"
+    ],
+    "SI1-2-04": [
+      "08.2"
+    ],
+    "SI1-2-05": [
+      "08.2"
+    ],
+    "SI1-2-06": [
+      "08.2"
+    ],
+    "SI1-2-07": [
+      "08.2"
+    ],
+    "SI2-5-03": [
+      "08.3",
+      "09.1"
+    ],
+    "SI2-5-05": [
+      "08.3"
+    ],
+    "SI2-5-06": [
+      "08.3"
+    ],
+    "SI2-6-01": [
+      "08.4"
+    ],
+    "SI2-6-02": [
+      "08.4"
+    ],
+    "SI2-6-03": [
+      "08.4"
+    ],
+    "SI2-6-04": [
+      "08.4"
+    ],
+    "SI2-6-05": [
+      "08.4"
+    ],
+    "SI2-5-01": [
+      "09.1"
+    ],
+    "SI2-5-02": [
+      "09.1"
+    ],
+    "SI2-5-04": [
+      "09.1"
+    ],
+    "SI2-5-07": [
+      "09.1"
+    ],
+    "SI2-7-01": [
+      "09.2"
+    ],
+    "SI2-7-02": [
+      "09.2"
+    ],
+    "SI2-7-03": [
+      "09.2"
+    ],
+    "SI2-7-04": [
+      "09.2"
+    ],
+    "SI2-7-05": [
+      "09.2"
+    ],
+    "SI2-7-06": [
+      "09.2"
+    ],
+    "SI2-7-07": [
+      "09.2"
+    ],
+    "SI2-7-08": [
+      "09.2"
+    ],
+    "SI2-8-01": [
+      "09.3"
+    ],
+    "SI2-8-02": [
+      "09.3"
+    ],
+    "SI2-8-04": [
+      "09.3"
+    ],
+    "SI2-8-05": [
+      "09.3"
+    ],
+    "SI2-8-06": [
+      "09.3"
+    ],
+    "SI2-8-09": [
+      "09.3"
+    ],
+    "SI2-9-01": [
+      "10.1"
+    ],
+    "SI2-9-02": [
+      "10.1"
+    ],
+    "SI2-9-03": [
+      "10.1"
+    ],
+    "SI2-9-04": [
+      "10.1"
+    ],
+    "SI2-9-05": [
+      "10.1"
+    ],
+    "SI2-9-06": [
+      "10.1"
+    ],
+    "SI2-9-07": [
+      "10.1"
+    ],
+    "SI2-9-08": [
+      "10.1"
+    ],
+    "SI2-9-09": [
+      "10.1"
+    ],
+    "SI2-9-10": [
+      "10.1"
+    ],
+    "SI2-10-01": [
+      "10.2"
+    ],
+    "SI2-10-02": [
+      "10.2"
+    ],
+    "SI2-10-03": [
+      "10.2"
+    ],
+    "SI2-10-04": [
+      "10.2"
+    ],
+    "SI2-10-06": [
+      "10.2"
+    ],
+    "SI2-10-07": [
+      "10.2"
+    ],
+    "SI2-10-08": [
+      "10.2"
+    ],
+    "SI2-10-10": [
+      "10.2"
+    ],
+    "SI2-10-05": [
+      "10.3"
+    ],
+    "SI2-10-09": [
+      "10.3"
+    ],
+    "SI2-10-11": [
+      "10.3"
+    ],
+    "SI2-8-03": [
+      "10.4"
+    ],
+    "SI2-8-07": [
+      "10.4"
+    ],
+    "SI2-8-08": [
+      "10.4"
+    ],
+    "EF-OS-01": [
+      "EF.01"
+    ],
+    "EF-OS-02": [
+      "EF.01"
+    ],
+    "EF-OS-03": [
+      "EF.01"
+    ],
+    "EF-OS-04": [
+      "EF.01"
+    ],
+    "EF-OS-05": [
+      "EF.01"
+    ],
+    "EF-OS-06": [
+      "EF.01"
+    ],
+    "EF-OS-07": [
+      "EF.01"
+    ],
+    "EF-OS-08": [
+      "EF.01"
+    ],
+    "EF-OS-09": [
+      "EF.01"
+    ],
+    "EF-OS-10": [
+      "EF.01"
+    ],
+    "EF-OS-11": [
+      "EF.01"
+    ],
+    "EF-RG-01": [
+      "EF.02"
+    ],
+    "EF-RG-05": [
+      "EF.02"
+    ],
+    "EF-RG-06": [
+      "EF.02"
+    ],
+    "EF-RG-07": [
+      "EF.02"
+    ],
+    "EF-RG-02": [
+      "EF.03"
+    ],
+    "EF-RG-03": [
+      "EF.03",
+      "EF.04"
+    ],
+    "EF-RG-04": [
+      "EF.03"
+    ],
+    "EF-RG-08": [
+      "EF.03"
+    ],
+    "EF-RG-09": [
+      "EF.03"
+    ],
+    "EF-RG-10": [
+      "EF.04"
+    ],
+    "EF-RG-11": [
+      "EF.04"
+    ],
+    "GK-SB-01": [
+      "GK.01"
+    ],
+    "GK-SB-02": [
+      "GK.01"
+    ],
+    "GK-SB-03": [
+      "GK.01"
+    ],
+    "GK-SB-04": [
+      "GK.01"
+    ],
+    "GK-SB-09": [
+      "GK.01"
+    ],
+    "GK-SB-10": [
+      "GK.01"
+    ],
+    "GK-SB-11": [
+      "GK.01"
+    ],
+    "GK-SB-13": [
+      "GK.01"
+    ],
+    "GK-SB-14": [
+      "GK.01"
+    ],
+    "GK-SB-05": [
+      "GK.02"
+    ],
+    "GK-SB-06": [
+      "GK.02"
+    ],
+    "GK-SB-07": [
+      "GK.02"
+    ],
+    "GK-SB-08": [
+      "GK.02"
+    ],
+    "GK-SB-12": [
+      "GK.02"
+    ],
+    "GK-EC-08": [
+      "GK.02",
+      "GK.03"
+    ],
+    "GK-EC-12": [
+      "GK.02"
+    ],
+    "GK-EC-01": [
+      "GK.03"
+    ],
+    "GK-EC-02": [
+      "GK.03"
+    ],
+    "GK-EC-03": [
+      "GK.03"
+    ],
+    "GK-EC-04": [
+      "GK.03"
+    ],
+    "GK-EC-05": [
+      "GK.03"
+    ],
+    "GK-EC-06": [
+      "GK.03"
+    ],
+    "GK-EC-09": [
+      "GK.03"
+    ],
+    "GK-EC-11": [
+      "GK.03"
+    ],
+    "GK-EC-13": [
+      "GK.03"
+    ],
+    "GK-EC-14": [
+      "GK.03"
+    ],
+    "GK-EC-07": [
+      "GK.04"
+    ],
+    "GK-EC-10": [
+      "GK.04"
+    ],
+    "GK-EC-15": [
+      "GK.04"
+    ],
+    "GK-OC-01": [
+      "GK.05"
+    ],
+    "GK-OC-02": [
+      "GK.05"
+    ],
+    "GK-OC-03": [
+      "GK.05"
+    ],
+    "GK-OC-04": [
+      "GK.05"
+    ],
+    "GK-OC-05": [
+      "GK.05"
+    ],
+    "GK-OC-06": [
+      "GK.05"
+    ],
+    "GK-OC-07": [
+      "GK.05"
+    ],
+    "GK-OC-08": [
+      "GK.05"
+    ],
+    "GK-OC-09": [
+      "GK.05"
+    ],
+    "GK-OC-10": [
+      "GK.05"
+    ],
+    "GK-OC-11": [
+      "GK.05"
+    ],
+    "GK-MW-01": [
+      "GK.06"
+    ],
+    "GK-MW-02": [
+      "GK.06"
+    ],
+    "GK-MW-03": [
+      "GK.06"
+    ],
+    "GK-MW-04": [
+      "GK.06"
+    ],
+    "GK-MW-05": [
+      "GK.06"
+    ],
+    "GK-MW-06": [
+      "GK.06"
+    ],
+    "GK-MW-07": [
+      "GK.06"
+    ],
+    "GK-MW-08": [
+      "GK.06"
+    ],
+    "GK-MW-09": [
+      "GK.06"
+    ],
+    "GK-MW-10": [
+      "GK.06"
+    ],
+    "LK-SB-01": [
+      "LK.01"
+    ],
+    "LK-SB-02": [
+      "LK.01"
+    ],
+    "LK-SB-03": [
+      "LK.01"
+    ],
+    "LK-SB-04": [
+      "LK.01"
+    ],
+    "LK-SB-05": [
+      "LK.01"
+    ],
+    "LK-SB-06": [
+      "LK.01"
+    ],
+    "LK-SB-07": [
+      "LK.01"
+    ],
+    "LK-SB-08": [
+      "LK.01"
+    ],
+    "LK-SB-13": [
+      "LK.01"
+    ],
+    "LK-SB-14": [
+      "LK.01"
+    ],
+    "LK-SB-15": [
+      "LK.01"
+    ],
+    "LK-SB-16": [
+      "LK.01"
+    ],
+    "LK-SB-17": [
+      "LK.01"
+    ],
+    "LK-SB-20": [
+      "LK.01"
+    ],
+    "LK-SB-21": [
+      "LK.01"
+    ],
+    "LK-SB-22": [
+      "LK.01"
+    ],
+    "LK-SB-09": [
+      "LK.02"
+    ],
+    "LK-SB-10": [
+      "LK.02"
+    ],
+    "LK-SB-11": [
+      "LK.02"
+    ],
+    "LK-SB-12": [
+      "LK.02"
+    ],
+    "LK-SB-18": [
+      "LK.02"
+    ],
+    "LK-SB-19": [
+      "LK.02"
+    ],
+    "LK-EC-09": [
+      "LK.02",
+      "LK.03"
+    ],
+    "LK-EC-10": [
+      "LK.02",
+      "LK.03"
+    ],
+    "LK-EC-15": [
+      "LK.02",
+      "LK.03"
+    ],
+    "LK-EC-19": [
+      "LK.02"
+    ],
+    "LK-EC-01": [
+      "LK.03"
+    ],
+    "LK-EC-02": [
+      "LK.03"
+    ],
+    "LK-EC-03": [
+      "LK.03"
+    ],
+    "LK-EC-04": [
+      "LK.03"
+    ],
+    "LK-EC-05": [
+      "LK.03"
+    ],
+    "LK-EC-06": [
+      "LK.03"
+    ],
+    "LK-EC-07": [
+      "LK.03"
+    ],
+    "LK-EC-08": [
+      "LK.03",
+      "LK.04"
+    ],
+    "LK-EC-11": [
+      "LK.03"
+    ],
+    "LK-EC-12": [
+      "LK.03"
+    ],
+    "LK-EC-13": [
+      "LK.03"
+    ],
+    "LK-EC-14": [
+      "LK.03"
+    ],
+    "LK-EC-16": [
+      "LK.03"
+    ],
+    "LK-EC-20": [
+      "LK.03"
+    ],
+    "LK-EC-21": [
+      "LK.03"
+    ],
+    "LK-EC-22": [
+      "LK.03",
+      "LK.04"
+    ],
+    "LK-EC-17": [
+      "LK.04"
+    ],
+    "LK-EC-18": [
+      "LK.04"
+    ],
+    "LK-EC-23": [
+      "LK.04"
+    ],
+    "LK-OC-01": [
+      "LK.05",
+      "LK.06"
+    ],
+    "LK-OC-03": [
+      "LK.05",
+      "LK.06"
+    ],
+    "LK-OC-04": [
+      "LK.05",
+      "LK.06"
+    ],
+    "LK-OC-06": [
+      "LK.05",
+      "LK.06",
+      "LK.08"
+    ],
+    "LK-OC-11": [
+      "LK.05",
+      "LK.06"
+    ],
+    "LK-OC-12": [
+      "LK.05",
+      "LK.06"
+    ],
+    "LK-OC-17": [
+      "LK.05"
+    ],
+    "LK-OC-18": [
+      "LK.05",
+      "LK.06",
+      "LK.08"
+    ],
+    "LK-OC-02": [
+      "LK.06"
+    ],
+    "LK-OC-05": [
+      "LK.06"
+    ],
+    "LK-OC-07": [
+      "LK.06",
+      "LK.08"
+    ],
+    "LK-OC-08": [
+      "LK.06",
+      "LK.08"
+    ],
+    "LK-OC-13": [
+      "LK.06"
+    ],
+    "LK-OC-14": [
+      "LK.06"
+    ],
+    "LK-OC-19": [
+      "LK.06"
+    ],
+    "LK-MW-06": [
+      "LK.06",
+      "LK.07"
+    ],
+    "LK-MW-01": [
+      "LK.07"
+    ],
+    "LK-MW-02": [
+      "LK.07"
+    ],
+    "LK-MW-03": [
+      "LK.07"
+    ],
+    "LK-MW-04": [
+      "LK.07"
+    ],
+    "LK-MW-05": [
+      "LK.07"
+    ],
+    "LK-MW-07": [
+      "LK.07"
+    ],
+    "LK-MW-08": [
+      "LK.07"
+    ],
+    "LK-MW-09": [
+      "LK.07"
+    ],
+    "LK-MW-10": [
+      "LK.07"
+    ],
+    "LK-MW-11": [
+      "LK.07"
+    ],
+    "LK-MW-12": [
+      "LK.07"
+    ],
+    "LK-MW-13": [
+      "LK.07"
+    ],
+    "LK-MW-14": [
+      "LK.07"
+    ],
+    "LK-MW-15": [
+      "LK.07"
+    ],
+    "LK-MW-16": [
+      "LK.07"
+    ],
+    "LK-MW-17": [
+      "LK.07"
+    ],
+    "LK-OC-09": [
+      "LK.08"
+    ],
+    "LK-OC-10": [
+      "LK.08"
+    ],
+    "LK-OC-15": [
+      "LK.08"
+    ],
+    "LK-OC-16": [
+      "LK.08"
+    ],
+    "LK-OC-20": [
+      "LK.08"
+    ]
+  },
+  "generic_mapping": [
+    {
+      "code": "SI1-UF1",
+      "targets": [
+        "08.2"
+      ],
+      "learning": "Stoff- und Energieumwandlung mit Wortgleichung und Energiedarstellung erklären."
+    },
+    {
+      "code": "SI1-UF2",
+      "targets": [
+        "07.3"
+      ],
+      "learning": "Für ein unbekanntes Gemisch geeignete Stoffeigenschaften und Trennverfahren auswählen."
+    },
+    {
+      "code": "SI1-UF3",
+      "targets": [
+        "08.1"
+      ],
+      "learning": "Metalle und Oxide ordnen und Alltagsvorstellungen zur Metallgewinnung überprüfen."
+    },
+    {
+      "code": "SI1-UF4",
+      "targets": [
+        "07.4"
+      ],
+      "learning": "Die Alltagsvorstellung vom Verschwinden eines Brennstoffs anhand von Reaktionsprodukten hinterfragen."
+    },
+    {
+      "code": "SI1-E1",
+      "targets": [
+        "07.3"
+      ],
+      "learning": "Eine experimentell beantwortbare Frage zur Trennung eines Alltagsgemisches formulieren."
+    },
+    {
+      "code": "SI1-E2",
+      "targets": [
+        "07.1"
+      ],
+      "learning": "Beobachtungen eines einfachen Versuchs sachlich beschreiben."
+    },
+    {
+      "code": "SI1-E3",
+      "targets": [
+        "08.1"
+      ],
+      "learning": "Einen geeigneten Reaktionspartner zur Metallgewinnung vorhersagen und die Vermutung begründen."
+    },
+    {
+      "code": "SI1-E4",
+      "targets": [
+        "07.1"
+      ],
+      "learning": "Einen sicheren Versuchsablauf planen, durchführen und Mess- oder Beobachtungsdaten aufzeichnen."
+    },
+    {
+      "code": "SI1-E5",
+      "targets": [
+        "07.2"
+      ],
+      "learning": "Messwerte ordnen und zur Identifizierung eines Stoffes auswerten."
+    },
+    {
+      "code": "SI1-E6",
+      "targets": [
+        "07.2"
+      ],
+      "learning": "Aggregatzustände am Teilchenmodell erklären und Modell und Stoff unterscheiden."
+    },
+    {
+      "code": "SI1-E7",
+      "targets": [
+        "08.1"
+      ],
+      "learning": "Den Erkenntnisweg vom Metalloxid zur Metallgewinnung nachvollziehen und eine Behauptung prüfen."
+    },
+    {
+      "code": "SI1-K1",
+      "targets": [
+        "07.1"
+      ],
+      "learning": "Ein vollständiges Versuchsprotokoll mit beschrifteter Skizze anfertigen."
+    },
+    {
+      "code": "SI1-K2",
+      "targets": [
+        "07.4"
+      ],
+      "learning": "Informationen zu Luftbestandteilen aus Tabelle und Fachtext entnehmen und die Quelle notieren."
+    },
+    {
+      "code": "SI1-K3",
+      "targets": [
+        "07.4"
+      ],
+      "learning": "Eine digitale Darstellung zu Verbrennungsprodukten und Massenerhaltung fachsprachlich erläutern."
+    },
+    {
+      "code": "SI1-K4",
+      "targets": [
+        "08.2"
+      ],
+      "learning": "Eine Stoffveränderung begründet als chemische Reaktion einordnen und auf Nachfragen eingehen."
+    },
+    {
+      "code": "SI1-B1",
+      "targets": [
+        "07.4"
+      ],
+      "learning": "Bei einer Brandsituation chemische Fakten und Interessen betroffener Personen benennen."
+    },
+    {
+      "code": "SI1-B2",
+      "targets": [
+        "07.4"
+      ],
+      "learning": "Kriterien für Brandvorsorge und mögliche Handlungsoptionen sammeln."
+    },
+    {
+      "code": "SI1-B3",
+      "targets": [
+        "08.1"
+      ],
+      "learning": "Eine geeignete Maßnahme zum Löschen eines Metallbrands begründet auswählen."
+    },
+    {
+      "code": "SI1-B4",
+      "targets": [
+        "08.1"
+      ],
+      "learning": "Eine Entscheidung zum Recycling eines Metallprodukts begründen."
+    },
+    {
+      "code": "SI2-UF1",
+      "targets": [
+        "08.4"
+      ],
+      "learning": "Salzeigenschaften mit Ionenbindung und Teilchenaufbau strukturiert erklären."
+    },
+    {
+      "code": "SI2-UF2",
+      "targets": [
+        "10.3"
+      ],
+      "learning": "Ein Kunststoffprodukt anhand seiner Struktur und Eigenschaften auswählen."
+    },
+    {
+      "code": "SI2-UF3",
+      "targets": [
+        "09.1"
+      ],
+      "learning": "Elemente systematisch Elementfamilien und dem Periodensystem zuordnen."
+    },
+    {
+      "code": "SI2-UF4",
+      "targets": [
+        "09.2"
+      ],
+      "learning": "Elektronenübertragung und Energieumwandlung mit physikalischen Stromkreisvorstellungen verbinden."
+    },
+    {
+      "code": "SI2-E1",
+      "targets": [
+        "10.1"
+      ],
+      "learning": "Eine untersuchbare Frage zur Neutralisation eines Alltagsprodukts formulieren."
+    },
+    {
+      "code": "SI2-E2",
+      "targets": [
+        "09.3"
+      ],
+      "learning": "Die Ablenkung des Wasserstrahls beschreiben und von der Erklärung getrennt notieren."
+    },
+    {
+      "code": "SI2-E3",
+      "targets": [
+        "09.2"
+      ],
+      "learning": "Eine prüfbare Hypothese zur Elektronenaufnahme verschiedener Metallionen formulieren."
+    },
+    {
+      "code": "SI2-E4",
+      "targets": [
+        "10.1"
+      ],
+      "learning": "Eine Neutralisationsuntersuchung mit kontrollierten Variablen sicher planen und protokollieren."
+    },
+    {
+      "code": "SI2-E5",
+      "targets": [
+        "10.1"
+      ],
+      "learning": "Titrationsdaten auswerten und Mess- sowie Ablesefehler reflektieren."
+    },
+    {
+      "code": "SI2-E6",
+      "targets": [
+        "09.3"
+      ],
+      "learning": "Wasser mit Lewis- und räumlichem Modell erklären und deren Grenzen vergleichen."
+    },
+    {
+      "code": "SI2-E7",
+      "targets": [
+        "08.3"
+      ],
+      "learning": "Die Weiterentwicklung des Atommodells anhand experimenteller Befunde erklären."
+    },
+    {
+      "code": "SI2-K1",
+      "targets": [
+        "08.4"
+      ],
+      "learning": "Messdaten zum Salzgehalt analog und digital mit Einheiten dokumentieren."
+    },
+    {
+      "code": "SI2-K2",
+      "targets": [
+        "10.2"
+      ],
+      "learning": "Quellen zu fossilen und regenerativen Energieträgern auf Relevanz, Qualität und Intention prüfen."
+    },
+    {
+      "code": "SI2-K3",
+      "targets": [
+        "10.1"
+      ],
+      "learning": "Eine Neutralisation auf Teilchenebene für die Lerngruppe digital präsentieren."
+    },
+    {
+      "code": "SI2-K4",
+      "targets": [
+        "10.3"
+      ],
+      "learning": "Einen Produktvergleich faktenbasiert diskutieren und konstruktive Rückmeldung geben."
+    },
+    {
+      "code": "SI2-B1",
+      "targets": [
+        "10.1"
+      ],
+      "learning": "Eine Werbeaussage zu einem Reiniger prüfen und fehlende chemische Informationen beschaffen."
+    },
+    {
+      "code": "SI2-B2",
+      "targets": [
+        "10.4"
+      ],
+      "learning": "Bewertungskriterien und Handlungsoptionen für die Industrierohstoffgewinnung entwickeln."
+    },
+    {
+      "code": "SI2-B3",
+      "targets": [
+        "10.3"
+      ],
+      "learning": "Produktalternativen gewichtet nach Umwelt-, Nutzungs- und gesellschaftlichen Folgen vergleichen."
+    },
+    {
+      "code": "SI2-B4",
+      "targets": [
+        "10.2"
+      ],
+      "learning": "Eine Entscheidung für einen Energieträger argumentativ vertreten und nach Gegenargumenten überprüfen."
+    },
+    {
+      "code": "EF-S1",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Alkohole und ihre Oxidationsprodukte nach funktionellen Gruppen ordnen."
+    },
+    {
+      "code": "EF-S2",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Löslichkeit und Siedetemperatur aus Struktur und Wechselwirkungen vorhersagen."
+    },
+    {
+      "code": "EF-S3",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Energieprofile einer katalysierten und unkatalysierten Reaktion erklären."
+    },
+    {
+      "code": "EF-S4",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Oxidationen der Alkanole als Redoxreaktionen bestimmen."
+    },
+    {
+      "code": "EF-S5",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Den Kohlenstoffkreislauf als Folge chemischer Reaktionen darstellen."
+    },
+    {
+      "code": "EF-S6",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Beobachtbare Stoffeigenschaft und Erklärung auf Teilchenebene trennen."
+    },
+    {
+      "code": "EF-S7",
+      "targets": [
+        "EF.03",
+        "EF.01"
+      ],
+      "learning": "Dynamisches Gleichgewicht bei der Estersynthese und Umkehrbarkeit erläutern; das Donator-Akzeptor-Prinzip der Alkoholoxidation einbeziehen."
+    },
+    {
+      "code": "EF-S8",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Einfluss von Konzentration, Oberfläche, Temperatur und Katalysator untersuchen."
+    },
+    {
+      "code": "EF-S9",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Unterschiedliche Reaktionsverläufe mit der Stoßtheorie erklären."
+    },
+    {
+      "code": "EF-S10",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Ethanolabbau mit biologischen Vorgängen verknüpfen."
+    },
+    {
+      "code": "EF-S11",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Konstitutionsisomere und funktionelle Gruppen zur Erklärung der Stoffvielfalt nutzen."
+    },
+    {
+      "code": "EF-S12",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Oxidation anhand von Teilchenänderung, Bindungen und Oxidationszahlen deuten."
+    },
+    {
+      "code": "EF-S13",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "EPA-Modell und Wechselwirkungsmodelle auf Alkohole anwenden."
+    },
+    {
+      "code": "EF-S14",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Die Oxidationsreihe der Alkanole auf Teilchenebene darstellen."
+    },
+    {
+      "code": "EF-S15",
+      "targets": [
+        "EF.03"
+      ],
+      "learning": "Konstante Stoffmengen im dynamischen Gleichgewicht von fortlaufenden Teilchenreaktionen unterscheiden."
+    },
+    {
+      "code": "EF-S16",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Reaktionsgleichungen für die Oxidationsreihe entwickeln."
+    },
+    {
+      "code": "EF-S17",
+      "targets": [
+        "EF.03"
+      ],
+      "learning": "Gleichgewichtslage aus vorgegebenen Stoffmengen mit dem Massenwirkungsgesetz berechnen."
+    },
+    {
+      "code": "EF-E1",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Entkalken als chemisch untersuchbare Alltagssituation erschließen."
+    },
+    {
+      "code": "EF-E2",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Eine Frage zum Einfluss der Temperatur auf die Entkalkung entwickeln."
+    },
+    {
+      "code": "EF-E3",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Eine überprüfbare Hypothese zum Konzentrationseinfluss aufstellen."
+    },
+    {
+      "code": "EF-E4",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Eine Messreihe mit kontrollierten Variablen planen."
+    },
+    {
+      "code": "EF-E5",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Eine Estersynthese sicher durchführen, protokollieren und angeleitet auswerten."
+    },
+    {
+      "code": "EF-E6",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Messwerte digital auswerten und eine Teilchensimulation verwenden."
+    },
+    {
+      "code": "EF-E7",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Ein EPA-Modell für Molekülgeometrie und Stoffeigenschaften nutzen."
+    },
+    {
+      "code": "EF-E8",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Trends in Zeitreihen erkennen und mit der Stoßtheorie erklären."
+    },
+    {
+      "code": "EF-E9",
+      "targets": [
+        "EF.03"
+      ],
+      "learning": "Möglichkeiten und Grenzen eines Gleichgewichtsmodells diskutieren."
+    },
+    {
+      "code": "EF-E10",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Messverfahren, eigene Ergebnisse und mögliche Störgrößen besprechen."
+    },
+    {
+      "code": "EF-E11",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Befunde zum Ethanolabbau mit biologischen Kenntnissen verknüpfen."
+    },
+    {
+      "code": "EF-E12",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Aussagegrenzen des Modellversuchs zur Meeresversauerung reflektieren."
+    },
+    {
+      "code": "EF-K1",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Angeleitet Quellen zum Kohlenstoffkreislauf recherchieren."
+    },
+    {
+      "code": "EF-K2",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Relevante Angaben aus Text, Diagramm und Reaktionsschema auswählen."
+    },
+    {
+      "code": "EF-K3",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Aussagen zweier Quellen zum selben Kohlenstoffdioxid-Datensatz vergleichen."
+    },
+    {
+      "code": "EF-K4",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Urheberschaft, Aktualität und fachliche Belege einer Quelle prüfen."
+    },
+    {
+      "code": "EF-K5",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Informationen für einen verständlichen Blogbeitrag zu Aromastoffen auswählen."
+    },
+    {
+      "code": "EF-K6",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Alltagsbegriff Alkohol und chemische Stoffklasse unterscheiden."
+    },
+    {
+      "code": "EF-K7",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Messwerttabelle in ein Diagramm und dessen Verlauf in einen Erklärungstext übertragen."
+    },
+    {
+      "code": "EF-K8",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Informationen zu Konservierungsstoffen ordnen und Schlussfolgerungen formulieren."
+    },
+    {
+      "code": "EF-K9",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Reaktionsgeschwindigkeit mit korrekten Begriffen und Einheiten erläutern."
+    },
+    {
+      "code": "EF-K10",
+      "targets": [
+        "EF.03"
+      ],
+      "learning": "Das dynamische Gleichgewicht mit fachlich schlüssigen Argumenten erklären."
+    },
+    {
+      "code": "EF-K11",
+      "targets": [
+        "EF.02"
+      ],
+      "learning": "Eine digitale Simulation zur Stoßtheorie erläutern."
+    },
+    {
+      "code": "EF-K12",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Quellen angeben und Zitate in der Klimadarstellung kennzeichnen."
+    },
+    {
+      "code": "EF-K13",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Einen Informationstext digital gemeinsam überarbeiten und eigene Positionen nach Rückmeldung reflektieren."
+    },
+    {
+      "code": "EF-B1",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Lösemittelverwendung aus Sicht von Anwendung und Entsorgung beurteilen."
+    },
+    {
+      "code": "EF-B2",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Quellen nach vorgegebenen fachlichen Kriterien beurteilen."
+    },
+    {
+      "code": "EF-B3",
+      "targets": [
+        "EF.03"
+      ],
+      "learning": "Die Reichweite von Daten zur industriellen Gleichgewichtssteuerung beurteilen."
+    },
+    {
+      "code": "EF-B4",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Auswahl von Diagrammen mit der Intention ihrer Urheber in Beziehung setzen."
+    },
+    {
+      "code": "EF-B5",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Kriterien für den Konsum aromatisierter und konservierter Produkte entwickeln."
+    },
+    {
+      "code": "EF-B6",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Chancen und Risiken der Ethanolverwendung fachlich bewerten."
+    },
+    {
+      "code": "EF-B7",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Eine Entscheidung zum Lösemittelgebrauch mit fachlichen Kriterien begründen."
+    },
+    {
+      "code": "EF-B8",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Die Bedeutung chemischer Kenntnisse für die sichere Produktverwendung erläutern."
+    },
+    {
+      "code": "EF-B9",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Chemische Produktbewertung von Geschmack, Kosten und persönlichen Präferenzen abgrenzen."
+    },
+    {
+      "code": "EF-B10",
+      "targets": [
+        "EF.03"
+      ],
+      "learning": "Gesellschaftlichen und ökologischen Nutzen der Ammoniaksynthese beurteilen."
+    },
+    {
+      "code": "EF-B11",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Gefahren und Schutzmaßnahmen beim Umgang mit Alkoholen und Lösemitteln begründen."
+    },
+    {
+      "code": "EF-B12",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Eingriffe in den Kohlenstoffkreislauf im gesellschaftlichen Zusammenhang bewerten."
+    },
+    {
+      "code": "EF-B13",
+      "targets": [
+        "EF.04"
+      ],
+      "learning": "Folgen eigener Mobilitätsentscheidungen ökologisch und ökonomisch abwägen."
+    },
+    {
+      "code": "EF-B14",
+      "targets": [
+        "EF.01"
+      ],
+      "learning": "Chemische Kriterien für eine Entscheidung zur Verwendung und Entsorgung eines Lösemittels identifizieren."
+    },
+    {
+      "code": "Q-S1",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Alltagsstoffe nach dem Brønsted-Konzept einordnen und die Ordnung begründen."
+    },
+    {
+      "code": "Q-S2",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Werkstoffeigenschaften aus Struktur und Wechselwirkungen vorhersagen."
+    },
+    {
+      "code": "Q-S3",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Stoff- und Energieumwandlung einer Brennstoffzelle interpretieren."
+    },
+    {
+      "code": "Q-S4",
+      "targets": [
+        "GK.05",
+        "LK.05",
+        "LK.06"
+      ],
+      "learning": "Reaktionstypen in organischen Synthesewegen bestimmen."
+    },
+    {
+      "code": "Q-S5",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Rohstoffgewinnung, Synthese und Verwertung als chemisches Reaktionssystem beschreiben."
+    },
+    {
+      "code": "Q-S6",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "pH-Beobachtung und Protolysemodell konsequent unterscheiden."
+    },
+    {
+      "code": "Q-S7",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Umkehrbarkeit und Gleichgewicht von Protolysen mit dem Donator-Akzeptor-Prinzip erklären."
+    },
+    {
+      "code": "Q-S8",
+      "targets": [
+        "GK.05",
+        "LK.06"
+      ],
+      "learning": "Ausbeute einer Estersynthese durch Reaktionsbedingungen und Katalyse beeinflussen."
+    },
+    {
+      "code": "Q-S9",
+      "targets": [
+        "GK.05",
+        "LK.05",
+        "LK.06"
+      ],
+      "learning": "Unterschiedliche organische Reaktionsverläufe begründet erklären."
+    },
+    {
+      "code": "Q-S10",
+      "targets": [
+        "GK.02",
+        "LK.02"
+      ],
+      "learning": "Chemische Energetik mit physikalischer Arbeit und Energieerhaltung vernetzen."
+    },
+    {
+      "code": "Q-S11",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Kunststoffvielfalt aus Kettenaufbau und Vernetzung erklären."
+    },
+    {
+      "code": "Q-S12",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Stoff- und Energieumwandlungen beim Laden und Entladen auf Teilchenebene deuten."
+    },
+    {
+      "code": "Q-S13",
+      "targets": [
+        "GK.05",
+        "LK.06"
+      ],
+      "learning": "Fetteigenschaften mit Modellen intra- und intermolekularer Wechselwirkungen erklären."
+    },
+    {
+      "code": "Q-S14",
+      "targets": [
+        "GK.05",
+        "LK.05",
+        "LK.06"
+      ],
+      "learning": "Ausgewählte organische Reaktionsmechanismen schrittweise darstellen."
+    },
+    {
+      "code": "Q-S15",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Die dynamischen Vorgänge an einer Elektrode vom makroskopischen Gleichgewicht unterscheiden."
+    },
+    {
+      "code": "Q-S16",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Aus Teilchenmodellen ausgeglichene Protolysegleichungen entwickeln."
+    },
+    {
+      "code": "Q-S17",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Zellspannungen berechnen; im LK Konzentrationseinflüsse einbeziehen."
+    },
+    {
+      "code": "Q-E1",
+      "targets": [
+        "GK.04",
+        "LK.04"
+      ],
+      "learning": "Aus einer Korrosionserscheinung eine chemische Problemstellung ableiten."
+    },
+    {
+      "code": "Q-E2",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Eine Untersuchungsfrage zur Konzentration eines Alltagsprodukts entwickeln."
+    },
+    {
+      "code": "Q-E3",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Reaktionshypothesen aus der Spannungsreihe ableiten und prüfen."
+    },
+    {
+      "code": "Q-E4",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Eigenschaftsuntersuchungen mit kontrollierten Variablen planen."
+    },
+    {
+      "code": "Q-E5",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Quantitative Analyse sicher durchführen, protokollieren und auswerten."
+    },
+    {
+      "code": "Q-E6",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Elektrochemische Messwerte digital aufnehmen, darstellen und für Berechnungen nutzen."
+    },
+    {
+      "code": "Q-E7",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Ein passendes Modell zur Erklärung eines Funktionspolymers auswählen."
+    },
+    {
+      "code": "Q-E8",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Beziehungen in Zellspannungsdaten erkennen und theoriebezogen erklären."
+    },
+    {
+      "code": "Q-E9",
+      "targets": [
+        "GK.05",
+        "LK.05",
+        "LK.06"
+      ],
+      "learning": "Die Aussagegrenzen eines Reaktionsmechanismusmodells diskutieren."
+    },
+    {
+      "code": "Q-E10",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Den eigenen Analyseweg und die Messunsicherheit kritisch reflektieren."
+    },
+    {
+      "code": "Q-E11",
+      "targets": [
+        "GK.05",
+        "LK.06"
+      ],
+      "learning": "Untersuchungsbefunde zu Fetten mit biologischen und ernährungsbezogenen Fragestellungen verbinden."
+    },
+    {
+      "code": "Q-E12",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Reproduzierbarkeit, Modellannahmen und Grenzen einer Energiebilanz beurteilen."
+    },
+    {
+      "code": "Q-K1",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Den Lebensweg eines Kunststoffprodukts zielgerichtet recherchieren."
+    },
+    {
+      "code": "Q-K2",
+      "targets": [
+        "GK.02",
+        "LK.02"
+      ],
+      "learning": "Thermodynamische Daten aus Tabellen, Diagrammen und Texten erschließen."
+    },
+    {
+      "code": "Q-K3",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Wirkungsgradangaben verschiedener Quellen anhand ihrer Systemgrenzen vergleichen."
+    },
+    {
+      "code": "Q-K4",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Vertrauenswürdigkeit und Herkunft von Quellen zu Produktnutzen und Risiken prüfen."
+    },
+    {
+      "code": "Q-K5",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Eine Produktpräsentation auf die Zielgruppe zuschneiden."
+    },
+    {
+      "code": "Q-K6",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Alltagsbezeichnung sauer und chemische Beschreibung der Protolyse unterscheiden."
+    },
+    {
+      "code": "Q-K7",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Reaktionsgleichung, Messwerttabelle, Diagramm und Erklärung ineinander überführen."
+    },
+    {
+      "code": "Q-K8",
+      "targets": [
+        "GK.02",
+        "LK.02"
+      ],
+      "learning": "Daten zu Lösungsvorgängen strukturieren und Schlussfolgerungen ableiten."
+    },
+    {
+      "code": "Q-K9",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Aufbau und Funktion eines Akkumulators fachsprachlich korrekt darstellen."
+    },
+    {
+      "code": "Q-K10",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Das gewählte Analyseverfahren fachlich schlüssig begründen."
+    },
+    {
+      "code": "Q-K11",
+      "targets": [
+        "GK.05",
+        "LK.05",
+        "LK.06"
+      ],
+      "learning": "Reaktionsmechanismen mit geeigneten digitalen Darstellungen präsentieren."
+    },
+    {
+      "code": "Q-K12",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Urheberschaft prüfen, Quellen belegen und Zitate im Energievergleich kennzeichnen."
+    },
+    {
+      "code": "Q-K13",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Eine Werkstoffbewertung digital kollaborativ erarbeiten, Rückmeldungen prüfen und die Position gegebenenfalls korrigieren."
+    },
+    {
+      "code": "Q-B1",
+      "targets": [
+        "GK.05",
+        "LK.06"
+      ],
+      "learning": "Produktnutzen und Risiken aus verschiedenen Perspektiven beurteilen."
+    },
+    {
+      "code": "Q-B2",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Fachliche Richtigkeit und Vertrauenswürdigkeit recherchierter Produktdaten beurteilen."
+    },
+    {
+      "code": "Q-B3",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Tragweite und Grenzen einer Produktanalyse bewerten."
+    },
+    {
+      "code": "Q-B4",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Quellen- und Darstellungswahl auf Interessen der Urheber prüfen."
+    },
+    {
+      "code": "Q-B5",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Handlungsoptionen für eine Werkstoffwahl nach gewichteten Kriterien abwägen."
+    },
+    {
+      "code": "Q-B6",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Chancen und Risiken von Kunststoffverwertungsverfahren fachlich bewerten."
+    },
+    {
+      "code": "Q-B7",
+      "targets": [
+        "GK.05",
+        "LK.06"
+      ],
+      "learning": "Eine Ernährungsentscheidung aus chemischen Kriterien zu Fetten begründen."
+    },
+    {
+      "code": "Q-B8",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Die Bedeutung analytischer Kompetenzen für Alltag und Berufsfelder der Qualitätskontrolle erläutern."
+    },
+    {
+      "code": "Q-B9",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Die Grenzen rein chemischer Bewertung bei sozialen und wirtschaftlichen Produktfragen aufzeigen."
+    },
+    {
+      "code": "Q-B10",
+      "targets": [
+        "GK.03",
+        "LK.03"
+      ],
+      "learning": "Gesellschaftliche Relevanz und ökologische Bedeutung elektrochemischer Verfahren bewerten."
+    },
+    {
+      "code": "Q-B11",
+      "targets": [
+        "GK.01",
+        "LK.01"
+      ],
+      "learning": "Sichere Handlungsoptionen bei der Anwendung eines Reinigers ableiten."
+    },
+    {
+      "code": "Q-B12",
+      "targets": [
+        "GK.04",
+        "LK.04"
+      ],
+      "learning": "Folgen von Korrosionsschutz in historischen und aktuellen technischen Anwendungen beurteilen."
+    },
+    {
+      "code": "Q-B13",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Werkstoffwahl und eigenes Konsumverhalten ökologisch, ökonomisch und sozial bewerten."
+    },
+    {
+      "code": "Q-B14",
+      "targets": [
+        "GK.06",
+        "LK.07"
+      ],
+      "learning": "Die Gewichtung von Kriterien der Werkstoffentscheidung reflektieren."
+    }
+  ]
+}
