@@ -1,0 +1,12 @@
+.cover h1{font-size:clamp(2.2rem,5vw,4rem);letter-spacing:-.035em;max-width:24ch;line-height:1.16}
+.cover p:not(.eyebrow){max-width:76ch}
+.layout{grid-template-columns:285px minmax(0,1fr);max-width:1480px}
+.chapter{line-height:1.75}
+.chapter h2{font-size:clamp(1.3rem,2.4vw,1.7rem)}
+.table-wrap:focus-visible{outline-offset:4px}
+.chapter table{min-width:620px}
+.chapter table th{white-space:normal}
+.chapter .actions{margin-top:1rem}
+.chapter a{overflow-wrap:anywhere}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.cover{padding-top:2rem}.chapter table{font-size:.86rem}}
+@media print{.chapter table{min-width:0}.chapter.downloads{display:none!important}.cover h1{font-size:32pt}.chapter{break-before:auto} .chapter h2{margin-top:1.5rem}}
