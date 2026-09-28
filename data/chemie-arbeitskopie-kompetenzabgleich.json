@@ -1,6 +1,6 @@
 {
   "date": "2026-09-28",
-  "uv_count": 33,
+  "uv_count": 34,
   "concrete_count": 233,
   "generic_count": 150,
   "course_specific_total": 439,
@@ -38,15 +38,15 @@
     ],
     [
       "GK",
-      "6",
+      "7",
       "167",
-      "36 + 22 + 29 + 8 + 42 + 30"
+      "36 + 22 + 29 + 8 + 30 + 12 + 30"
     ],
     [
       "LK",
       "8",
       "264",
-      "50 + 30 + 34 + 10 + 26 + 30 + 60 + 24"
+      "50 + 30 + 34 + 10 + 44 + 12 + 60 + 24"
     ]
   ],
   "source_wording_repairs": [],
@@ -450,9 +450,6 @@
     "GK-OC-01": [
       "GK.05"
     ],
-    "GK-OC-02": [
-      "GK.05"
-    ],
     "GK-OC-03": [
       "GK.05"
     ],
@@ -471,44 +468,47 @@
     "GK-OC-08": [
       "GK.05"
     ],
-    "GK-OC-09": [
-      "GK.05"
-    ],
     "GK-OC-10": [
       "GK.05"
     ],
+    "GK-OC-02": [
+      "GK.06"
+    ],
+    "GK-OC-09": [
+      "GK.06"
+    ],
     "GK-OC-11": [
-      "GK.05"
+      "GK.06"
     ],
     "GK-MW-01": [
-      "GK.06"
+      "GK.07"
     ],
     "GK-MW-02": [
-      "GK.06"
+      "GK.07"
     ],
     "GK-MW-03": [
-      "GK.06"
+      "GK.07"
     ],
     "GK-MW-04": [
-      "GK.06"
+      "GK.07"
     ],
     "GK-MW-05": [
-      "GK.06"
+      "GK.07"
     ],
     "GK-MW-06": [
-      "GK.06"
+      "GK.07"
     ],
     "GK-MW-07": [
-      "GK.06"
+      "GK.07"
     ],
     "GK-MW-08": [
-      "GK.06"
+      "GK.07"
     ],
     "GK-MW-09": [
-      "GK.06"
+      "GK.07"
     ],
     "GK-MW-10": [
-      "GK.06"
+      "GK.07"
     ],
     "LK-SB-01": [
       "LK.01"
@@ -651,53 +651,50 @@
       "LK.04"
     ],
     "LK-OC-01": [
-      "LK.05",
-      "LK.06"
+      "LK.05"
     ],
     "LK-OC-03": [
-      "LK.05",
-      "LK.06"
+      "LK.05"
     ],
     "LK-OC-04": [
-      "LK.05",
-      "LK.06"
+      "LK.05"
     ],
     "LK-OC-06": [
       "LK.05",
-      "LK.06",
       "LK.08"
     ],
     "LK-OC-11": [
-      "LK.05",
-      "LK.06"
+      "LK.05"
     ],
     "LK-OC-12": [
-      "LK.05",
-      "LK.06"
+      "LK.05"
     ],
     "LK-OC-17": [
       "LK.05"
     ],
     "LK-OC-18": [
       "LK.05",
-      "LK.06",
       "LK.08"
     ],
-    "LK-OC-02": [
-      "LK.06"
-    ],
     "LK-OC-05": [
-      "LK.06"
+      "LK.05"
     ],
     "LK-OC-07": [
-      "LK.06",
+      "LK.05",
       "LK.08"
     ],
     "LK-OC-08": [
-      "LK.06",
+      "LK.05",
       "LK.08"
     ],
     "LK-OC-13": [
+      "LK.05"
+    ],
+    "LK-MW-06": [
+      "LK.05",
+      "LK.07"
+    ],
+    "LK-OC-02": [
       "LK.06"
     ],
     "LK-OC-14": [
@@ -705,10 +702,6 @@
     ],
     "LK-OC-19": [
       "LK.06"
-    ],
-    "LK-MW-06": [
-      "LK.06",
-      "LK.07"
     ],
     "LK-MW-01": [
       "LK.07"
@@ -1445,7 +1438,7 @@
     {
       "code": "Q-S2",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Werkstoffeigenschaften aus Struktur und Wechselwirkungen vorhersagen."
@@ -1462,15 +1455,14 @@
       "code": "Q-S4",
       "targets": [
         "GK.05",
-        "LK.05",
-        "LK.06"
+        "LK.05"
       ],
       "learning": "Reaktionstypen in organischen Synthesewegen bestimmen."
     },
     {
       "code": "Q-S5",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Rohstoffgewinnung, Synthese und Verwertung als chemisches Reaktionssystem beschreiben."
@@ -1495,7 +1487,7 @@
       "code": "Q-S8",
       "targets": [
         "GK.05",
-        "LK.06"
+        "LK.05"
       ],
       "learning": "Ausbeute einer Estersynthese durch Reaktionsbedingungen und Katalyse beeinflussen."
     },
@@ -1503,8 +1495,7 @@
       "code": "Q-S9",
       "targets": [
         "GK.05",
-        "LK.05",
-        "LK.06"
+        "LK.05"
       ],
       "learning": "Unterschiedliche organische Reaktionsverläufe begründet erklären."
     },
@@ -1519,7 +1510,7 @@
     {
       "code": "Q-S11",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Kunststoffvielfalt aus Kettenaufbau und Vernetzung erklären."
@@ -1535,7 +1526,7 @@
     {
       "code": "Q-S13",
       "targets": [
-        "GK.05",
+        "GK.06",
         "LK.06"
       ],
       "learning": "Fetteigenschaften mit Modellen intra- und intermolekularer Wechselwirkungen erklären."
@@ -1544,8 +1535,7 @@
       "code": "Q-S14",
       "targets": [
         "GK.05",
-        "LK.05",
-        "LK.06"
+        "LK.05"
       ],
       "learning": "Ausgewählte organische Reaktionsmechanismen schrittweise darstellen."
     },
@@ -1600,7 +1590,7 @@
     {
       "code": "Q-E4",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Eigenschaftsuntersuchungen mit kontrollierten Variablen planen."
@@ -1624,7 +1614,7 @@
     {
       "code": "Q-E7",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Ein passendes Modell zur Erklärung eines Funktionspolymers auswählen."
@@ -1641,8 +1631,7 @@
       "code": "Q-E9",
       "targets": [
         "GK.05",
-        "LK.05",
-        "LK.06"
+        "LK.05"
       ],
       "learning": "Die Aussagegrenzen eines Reaktionsmechanismusmodells diskutieren."
     },
@@ -1657,7 +1646,7 @@
     {
       "code": "Q-E11",
       "targets": [
-        "GK.05",
+        "GK.06",
         "LK.06"
       ],
       "learning": "Untersuchungsbefunde zu Fetten mit biologischen und ernährungsbezogenen Fragestellungen verbinden."
@@ -1673,7 +1662,7 @@
     {
       "code": "Q-K1",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Den Lebensweg eines Kunststoffprodukts zielgerichtet recherchieren."
@@ -1697,7 +1686,7 @@
     {
       "code": "Q-K4",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Vertrauenswürdigkeit und Herkunft von Quellen zu Produktnutzen und Risiken prüfen."
@@ -1705,7 +1694,7 @@
     {
       "code": "Q-K5",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Eine Produktpräsentation auf die Zielgruppe zuschneiden."
@@ -1754,8 +1743,7 @@
       "code": "Q-K11",
       "targets": [
         "GK.05",
-        "LK.05",
-        "LK.06"
+        "LK.05"
       ],
       "learning": "Reaktionsmechanismen mit geeigneten digitalen Darstellungen präsentieren."
     },
@@ -1770,7 +1758,7 @@
     {
       "code": "Q-K13",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Eine Werkstoffbewertung digital kollaborativ erarbeiten, Rückmeldungen prüfen und die Position gegebenenfalls korrigieren."
@@ -1779,14 +1767,14 @@
       "code": "Q-B1",
       "targets": [
         "GK.05",
-        "LK.06"
+        "LK.05"
       ],
       "learning": "Produktnutzen und Risiken aus verschiedenen Perspektiven beurteilen."
     },
     {
       "code": "Q-B2",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Fachliche Richtigkeit und Vertrauenswürdigkeit recherchierter Produktdaten beurteilen."
@@ -1802,7 +1790,7 @@
     {
       "code": "Q-B4",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Quellen- und Darstellungswahl auf Interessen der Urheber prüfen."
@@ -1810,7 +1798,7 @@
     {
       "code": "Q-B5",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Handlungsoptionen für eine Werkstoffwahl nach gewichteten Kriterien abwägen."
@@ -1818,7 +1806,7 @@
     {
       "code": "Q-B6",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Chancen und Risiken von Kunststoffverwertungsverfahren fachlich bewerten."
@@ -1826,7 +1814,7 @@
     {
       "code": "Q-B7",
       "targets": [
-        "GK.05",
+        "GK.06",
         "LK.06"
       ],
       "learning": "Eine Ernährungsentscheidung aus chemischen Kriterien zu Fetten begründen."
@@ -1842,7 +1830,7 @@
     {
       "code": "Q-B9",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Die Grenzen rein chemischer Bewertung bei sozialen und wirtschaftlichen Produktfragen aufzeigen."
@@ -1874,7 +1862,7 @@
     {
       "code": "Q-B13",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Werkstoffwahl und eigenes Konsumverhalten ökologisch, ökonomisch und sozial bewerten."
@@ -1882,7 +1870,7 @@
     {
       "code": "Q-B14",
       "targets": [
-        "GK.06",
+        "GK.07",
         "LK.07"
       ],
       "learning": "Die Gewichtung von Kriterien der Werkstoffentscheidung reflektieren."
