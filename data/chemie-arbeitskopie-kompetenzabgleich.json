@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-28",
+  "date": "2026-09-29",
   "uv_count": 34,
   "concrete_count": 233,
   "generic_count": 150,
@@ -8,48 +8,62 @@
   "hours": [
     [
       "Jahrgang 7",
-      "4",
-      "30",
-      "6 + 8 + 8 + 8"
+      4,
+      38,
+      "6 + 10 + 10 + 12"
     ],
     [
       "Jahrgang 8",
-      "4",
-      "60",
-      "18 + 10 + 14 + 18"
+      4,
+      76,
+      "22 + 14 + 18 + 22"
     ],
     [
       "Jahrgang 9",
-      "3",
-      "60",
-      "20 + 20 + 20"
+      3,
+      76,
+      "24 + 26 + 26"
     ],
     [
       "Jahrgang 10",
-      "4",
-      "60",
-      "26 + 20 + 7 + 7"
+      4,
+      76,
+      "28 + 24 + 12 + 12"
     ],
     [
       "EF",
-      "4",
-      "86",
-      "36 + 14 + 16 + 20"
+      4,
+      113,
+      "44 + 21 + 24 + 24"
     ],
     [
-      "GK",
-      "7",
-      "167",
-      "36 + 22 + 29 + 8 + 30 + 12 + 30"
+      "Q1 GK",
+      5,
+      113,
+      "28 + 24 + 40 + 10 + 11"
     ],
     [
-      "LK",
-      "8",
-      "264",
-      "50 + 30 + 34 + 10 + 44 + 12 + 60 + 24"
+      "Q2 GK",
+      3,
+      62,
+      "18 + 10 + 34"
+    ],
+    [
+      "Q1 LK",
+      5,
+      188,
+      "42 + 32 + 50 + 12 + 52"
+    ],
+    [
+      "Q2 LK",
+      4,
+      103,
+      "8 + 12 + 59 + 24"
     ]
   ],
-  "source_wording_repairs": [],
+  "source_wording_repairs": [
+    "SI1-K3: irrtümlich übernommene Seitenzahl 19 aus dem Kompetenzwortlaut entfernt."
+  ],
   "concrete_mapping": {
     "SI1-1-01": [
       "07.2",
@@ -1875,5 +1889,1425 @@
       ],
       "learning": "Die Gewichtung von Kriterien der Werkstoffentscheidung reflektieren."
     }
-  ]
+  ],
+  "source_verification": {
+    "concrete_counts": {
+      "SI1": 29,
+      "SI2": 50,
+      "EF": 22,
+      "GK": 50,
+      "LK": 82
+    },
+    "generic_counts": {
+      "SI1": 19,
+      "SI2": 19,
+      "EF": 56,
+      "Q": 56
+    },
+    "unmatched": [],
+    "missing": [],
+    "generic_unmatched": [],
+    "official_competencies": [
+      {
+        "stage": "SI1",
+        "page": 20,
+        "text": "Reinstoffe aufgrund charakteristischer Eigenschaften (Schmelztemperatur/Siedetemperatur, Dichte, Löslichkeit) identifizieren (UF1, UF2),",
+        "id": "SI1-1-01"
+      },
+      {
+        "stage": "SI1",
+        "page": 20,
+        "text": "Stoffe aufgrund ihrer Eigenschaften klassifizieren (UF2, UF3).",
+        "id": "SI1-1-02"
+      },
+      {
+        "stage": "SI1",
+        "page": 20,
+        "text": "eine geeignete messbare Stoffeigenschaft experimentell ermitteln (E4, E5, K1),",
+        "id": "SI1-1-03"
+      },
+      {
+        "stage": "SI1",
+        "page": 20,
+        "text": "Experimente zur Trennung eines Stoffgemisches in Reinstoffe (Filtration, Destillation) unter Nutzung relevanter Stoffeigenschaften planen und sachgerecht durchführen (E1, E2, E3, E4, K1),",
+        "id": "SI1-1-04"
+      },
+      {
+        "stage": "SI1",
+        "page": 20,
+        "text": "Aggregatzustände und deren Änderungen auf der Grundlage eines einfachen Teilchenmodells erklären (E6, K3).",
+        "id": "SI1-1-05"
+      },
+      {
+        "stage": "SI1",
+        "page": 20,
+        "text": "die Verwendung ausgewählter Stoffe im Alltag mithilfe ihrer Eigenschaften begründen (B1, K2).",
+        "id": "SI1-1-06"
+      },
+      {
+        "stage": "SI1",
+        "page": 21,
+        "text": "chemische Reaktionen an der Bildung von neuen Stoffen mit anderen Eigenschaften und in Abgrenzung zu physikalischen Vorgängen identifizieren (UF2, UF3),",
+        "id": "SI1-2-01"
+      },
+      {
+        "stage": "SI1",
+        "page": 21,
+        "text": "chemische Reaktionen in Form von Reaktionsschemata in Worten darstellen (UF1, K1),",
+        "id": "SI1-2-02"
+      },
+      {
+        "stage": "SI1",
+        "page": 21,
+        "text": "bei ausgewählten chemischen Reaktionen die Energieumwandlung der in den Stoffen gespeicherten Energie (chemische Energie) in andere Energieformen begründet angeben (UF1),",
+        "id": "SI1-2-03"
+      },
+      {
+        "stage": "SI1",
+        "page": 21,
+        "text": "bei ausgewählten chemischen Reaktionen die Bedeutung der Aktivierungsenergie zum Auslösen einer Reaktion beschreiben (UF1).",
+        "id": "SI1-2-04"
+      },
+      {
+        "stage": "SI1",
+        "page": 21,
+        "text": "einfache chemische Reaktionen sachgerecht durchführen und auswerten (E4, E5, K1),",
+        "id": "SI1-2-05"
+      },
+      {
+        "stage": "SI1",
+        "page": 21,
+        "text": "chemische Reaktionen anhand von Stoffund Energieumwandlungen auch im Alltag identifizieren (E2, UF4).",
+        "id": "SI1-2-06"
+      },
+      {
+        "stage": "SI1",
+        "page": 21,
+        "text": "die Bedeutung chemischer Reaktionen in der Lebenswelt begründen (B1, K4).",
+        "id": "SI1-2-07"
+      },
+      {
+        "stage": "SI1",
+        "page": 22,
+        "text": "anhand von Beispielen Reinstoffe in chemische Elemente und Verbindungen einteilen (UF2, UF3),",
+        "id": "SI1-3-01"
+      },
+      {
+        "stage": "SI1",
+        "page": 22,
+        "text": "die wichtigsten Bestandteile des Gasgemisches Luft, ihre Eigenschaften und Anteile nennen (UF1, UF4),",
+        "id": "SI1-3-02"
+      },
+      {
+        "stage": "SI1",
+        "page": 22,
+        "text": "die Verbrennung als eine chemische Reaktion mit Sauerstoff identifizieren und als Oxidbildung klassifizieren (UF3),",
+        "id": "SI1-3-03"
+      },
+      {
+        "stage": "SI1",
+        "page": 22,
+        "text": "die Analyse und Synthese von Wasser als Beispiel für die Umkehrbarkeit chemischer Reaktionen beschreiben (UF1).",
+        "id": "SI1-3-04"
+      },
+      {
+        "stage": "SI1",
+        "page": 22,
+        "text": "mit einem einfachen Atommodell Massenänderungen bei chemischen Reaktionen mit Sauerstoff erklären (E5, E6),",
+        "id": "SI1-3-05"
+      },
+      {
+        "stage": "SI1",
+        "page": 22,
+        "text": "Nachweisreaktionen von Gasen (Sauerstoff, Wasserstoff, Kohlenstoffdioxid) und Wasser durchführen (E4),",
+        "id": "SI1-3-06"
+      },
+      {
+        "stage": "SI1",
+        "page": 22,
+        "text": "den Verbleib von Verbrennungsprodukten (Kohlenstoffdioxid, Wasser) mit dem Gesetz von der Erhaltung der Masse begründen (E3, E6, E7, K3).",
+        "id": "SI1-3-07"
+      },
+      {
+        "stage": "SI1",
+        "page": 23,
+        "text": "in vorgegebenen Situationen Handlungsmöglichkeiten zum Umgang mit brennbaren Stoffen zur Brandvorsorge sowie mit offenem Feuer zur Brandbekämpfung bewerten und sich begründet für eine Handlung entscheiden (B2, B3, K4),",
+        "id": "SI1-3-08"
+      },
+      {
+        "stage": "SI1",
+        "page": 23,
+        "text": "Vorund Nachteile einer ressourcenschonenden Energieversorgung auf Grundlage der Umkehrbarkeit chemischer Reaktionen am Beispiel von Wasser beschreiben (B1).",
+        "id": "SI1-3-09"
+      },
+      {
+        "stage": "SI1",
+        "page": 24,
+        "text": "chemische Reaktionen, bei denen Sauerstoff abgegeben wird, als Zerlegung von Oxiden klassifizieren (UF3),",
+        "id": "SI1-4-01"
+      },
+      {
+        "stage": "SI1",
+        "page": 24,
+        "text": "ausgewählte Metalle aufgrund ihrer Reaktionsfähigkeit mit Sauerstoff als edle und unedle Metalle ordnen (UF2, UF3).",
+        "id": "SI1-4-02"
+      },
+      {
+        "stage": "SI1",
+        "page": 24,
+        "text": "Experimente zur Zerlegung von ausgewählten Metalloxiden hypothesengeleitet planen und geeignete Reaktionspartner auswählen (E3, E4),",
+        "id": "SI1-4-03"
+      },
+      {
+        "stage": "SI1",
+        "page": 24,
+        "text": "Sauerstoffübertragungsreaktionen im Sinne des Donator-Akzeptor-Konzeptes modellhaft erklären (E6),",
+        "id": "SI1-4-04"
+      },
+      {
+        "stage": "SI1",
+        "page": 24,
+        "text": "ausgewählte Verfahren zur Herstellung von Metallen erläutern und ihre Bedeutung für die gesellschaftliche Entwicklung beschreiben (E7).",
+        "id": "SI1-4-05"
+      },
+      {
+        "stage": "SI1",
+        "page": 24,
+        "text": "die Bedeutung des Metallrecyclings im Zusammenhang mit Ressourcenschonung und Energieeinsparung beschreiben und auf dieser Basis das eigene Konsumund Entsorgungsverhalten bewerten (B1, B4, K4),",
+        "id": "SI1-4-06"
+      },
+      {
+        "stage": "SI1",
+        "page": 24,
+        "text": "Maßnahmen zum Löschen von Metallbränden auf der Grundlage der Sauerstoffübertragungsreaktion begründet auswählen (B3).",
+        "id": "SI1-4-07"
+      },
+      {
+        "stage": "SI2",
+        "page": 28,
+        "text": "Vorkommen und Nutzen ausgewählter chemischer Elemente und ihrer Verbindungen in Alltag und Umwelt beschreiben (UF1),",
+        "id": "SI2-5-01"
+      },
+      {
+        "stage": "SI2",
+        "page": 28,
+        "text": "chemische Elemente anhand ihrer charakteristischen physikalischen und chemischen Eigenschaften den Elementfamilien zuordnen (UF3),",
+        "id": "SI2-5-02"
+      },
+      {
+        "stage": "SI2",
+        "page": 28,
+        "text": "aus dem Periodensystem der Elemente wesentliche Informationen zum Atombau der Hauptgruppenelemente (Elektronenkonfiguration, Atommasse) herleiten (UF3, UF4, K3).",
+        "id": "SI2-5-03"
+      },
+      {
+        "stage": "SI2",
+        "page": 28,
+        "text": "physikalische und chemische Eigenschaften von Alkalimetallen, Halogenen und Edelgasen mithilfe ihrer Stellung im Periodensystem begründet vorhersagen (E3),",
+        "id": "SI2-5-04"
+      },
+      {
+        "stage": "SI2",
+        "page": 29,
+        "text": "die Entwicklung eines differenzierten Kern-Hülle-Modells auf der Grundlage von Experimenten, Beobachtungen und Schlussfolgerungen beschreiben (E2, E6, E7),",
+        "id": "SI2-5-05"
+      },
+      {
+        "stage": "SI2",
+        "page": 29,
+        "text": "die Aussagekraft verschiedener Kern-Hülle-Modelle beschreiben (E6, E7).",
+        "id": "SI2-5-06"
+      },
+      {
+        "stage": "SI2",
+        "page": 29,
+        "text": "vor dem Hintergrund der begrenzten Verfügbarkeit eines chemischen Elements bzw. seiner Verbindungen Handlungsoptionen für ein ressourcenschonendes Konsumverhalten entwickeln (B3).",
+        "id": "SI2-5-07"
+      },
+      {
+        "stage": "SI2",
+        "page": 29,
+        "text": "ausgewählte Eigenschaften von Salzen mit ihrem Aufbau aus Ionen und der Ionenbindung erläutern (UF1),",
+        "id": "SI2-6-01"
+      },
+      {
+        "stage": "SI2",
+        "page": 30,
+        "text": "an einem Beispiel die Salzbildung unter Einbezug energetischer Betrachtungen auch mit Angabe einer Reaktionsgleichung in Ionenschreibweise erläutern (UF2).",
+        "id": "SI2-6-02"
+      },
+      {
+        "stage": "SI2",
+        "page": 30,
+        "text": "den Gehalt von Salzen in einer Lösung durch Eindampfen ermitteln (E4),",
+        "id": "SI2-6-03"
+      },
+      {
+        "stage": "SI2",
+        "page": 30,
+        "text": "an einem Beispiel das Gesetz der konstanten Massenverhältnisse erklären und eine chemische Verhältnisformel herleiten (E6, E7, K1).",
+        "id": "SI2-6-04"
+      },
+      {
+        "stage": "SI2",
+        "page": 30,
+        "text": "unter Umweltund Gesundheitsaspekten die Verwendung von Salzen im Alltag reflektieren (B1).",
+        "id": "SI2-6-05"
+      },
+      {
+        "stage": "SI2",
+        "page": 31,
+        "text": "die Abgabe von Elektronen als Oxidation einordnen (UF3),",
+        "id": "SI2-7-01"
+      },
+      {
+        "stage": "SI2",
+        "page": 31,
+        "text": "die Aufnahme von Elektronen als Reduktion einordnen (UF3),",
+        "id": "SI2-7-02"
+      },
+      {
+        "stage": "SI2",
+        "page": 31,
+        "text": "Reaktionen zwischen Metallatomen und Metallionen als Elektronenübertragungsreaktionen deuten und diese auch mithilfe digitaler Animationen und Teilgleichungen erläutern (UF1),",
+        "id": "SI2-7-03"
+      },
+      {
+        "stage": "SI2",
+        "page": 31,
+        "text": "die chemischen Prozesse eines galvanischen Elements und einer Elektrolyse unter dem Aspekt der Umwandlung in Stoffen gespeicherter Energie in elektrische Energie und umgekehrt erläutern (UF2, UF4),",
+        "id": "SI2-7-04"
+      },
+      {
+        "stage": "SI2",
+        "page": 31,
+        "text": "den grundlegenden Aufbau und die Funktionsweise einer Batterie, eines Akkumulators und einer Brennstoffzelle beschreiben (UF1).",
+        "id": "SI2-7-05"
+      },
+      {
+        "stage": "SI2",
+        "page": 31,
+        "text": "Experimente planen, die eine Einordnung von Metallionen hinsichtlich ihrer Fähigkeit zur Elektronenaufnahme erlauben und diese sachgerecht durchführen (E3, E4),",
+        "id": "SI2-7-06"
+      },
+      {
+        "stage": "SI2",
+        "page": 31,
+        "text": "Elektronenübertragungsreaktionen im Sinne des Donator-Akzeptor-Prinzips modellhaft erklären (E6).",
+        "id": "SI2-7-07"
+      },
+      {
+        "stage": "SI2",
+        "page": 31,
+        "text": "Kriterien für den Gebrauch unterschiedlicher elektrochemischer Energiequellen im Alltag reflektieren (B2, B3, K2).",
+        "id": "SI2-7-08"
+      },
+      {
+        "stage": "SI2",
+        "page": 32,
+        "text": "an ausgewählten Beispielen die Elektronenpaarbindung erläutern (UF1),",
+        "id": "SI2-8-01"
+      },
+      {
+        "stage": "SI2",
+        "page": 32,
+        "text": "mithilfe der Lewis-Schreibweise den Aufbau einfacher Moleküle beschreiben (UF1),",
+        "id": "SI2-8-02"
+      },
+      {
+        "stage": "SI2",
+        "page": 32,
+        "text": "die Synthese eines Industrierohstoffs aus Synthesegas (z.B. Methan oder Ammoniak) auch mit Angabe von Reaktionsgleichungen erläutern (UF1, UF2).",
+        "id": "SI2-8-03"
+      },
+      {
+        "stage": "SI2",
+        "page": 32,
+        "text": "die räumliche Struktur von Molekülen mit dem Elektronenpaarabstoßungsmodell veranschaulichen (E6, K1),",
+        "id": "SI2-8-04"
+      },
+      {
+        "stage": "SI2",
+        "page": 33,
+        "text": "die Temperaturänderung beim Lösen von Salzen in Wasser erläutern (E1, E2, E6),",
+        "id": "SI2-8-05"
+      },
+      {
+        "stage": "SI2",
+        "page": 33,
+        "text": "typische Eigenschaften von Wasser mithilfe des Dipol-Charakters der Wassermoleküle und der Ausbildung von Wasserstoffbrücken zwischen den Molekülen erläutern (E2, E6),",
+        "id": "SI2-8-06"
+      },
+      {
+        "stage": "SI2",
+        "page": 33,
+        "text": "die Wirkungsweise eines Katalysators modellhaft an der Synthese eines Industrierohstoffs erläutern (E6).",
+        "id": "SI2-8-07"
+      },
+      {
+        "stage": "SI2",
+        "page": 33,
+        "text": "Informationen für ein technisches Verfahren zur Industrierohstoffgewinnung aus Gasen mithilfe digitaler Medien beschaffen und Bewertungskriterien auch unter Berücksichtigung der Energiespeicherung festlegen (B2, K2),",
+        "id": "SI2-8-08"
+      },
+      {
+        "stage": "SI2",
+        "page": 33,
+        "text": "unterschiedliche Darstellungen von Modellen kleiner Moleküle auch mithilfe einer Software vergleichend gegenüberstellen (B1, K1, K3).",
+        "id": "SI2-8-09"
+      },
+      {
+        "stage": "SI2",
+        "page": 34,
+        "text": "die Eigenschaften von sauren und alkalischen Lösungen mit dem Vorhandensein charakteristischer hydratisierter Ionen erklären (UF1),",
+        "id": "SI2-9-01"
+      },
+      {
+        "stage": "SI2",
+        "page": 34,
+        "text": "Protonendonatoren als Säuren und Protonenakzeptoren als Basen klassifizieren (UF3),",
+        "id": "SI2-9-02"
+      },
+      {
+        "stage": "SI2",
+        "page": 34,
+        "text": "an einfachen Beispielen die Vorgänge der Protonenabgabe und -aufnahme beschreiben (UF1),",
+        "id": "SI2-9-03"
+      },
+      {
+        "stage": "SI2",
+        "page": 34,
+        "text": "Neutralisationsreaktionen und Salzbildungen erläutern (UF1).",
+        "id": "SI2-9-04"
+      },
+      {
+        "stage": "SI2",
+        "page": 34,
+        "text": "charakteristische Eigenschaften von sauren Lösungen (elektrische Leitfähigkeit, Reaktionen mit Metallen, Reaktionen mit Kalk) und alkalischen Lösungen ermitteln und auch unter Angabe von Reaktionsgleichungen erläutern (E4, E5, E6),",
+        "id": "SI2-9-05"
+      },
+      {
+        "stage": "SI2",
+        "page": 34,
+        "text": "den pH-Wert einer Lösung bestimmen und die pH-Wertskala mithilfe von Verdünnungen ableiten (E4, E5, K1),",
+        "id": "SI2-9-06"
+      },
+      {
+        "stage": "SI2",
+        "page": 34,
+        "text": "ausgehend von einfachen stöchiometrischen Berechnungen Hypothesen und Reaktionsgleichungen zur Neutralisation von sauren bzw. alkalischen Lösungen aufstellen und experimentell überprüfen (E3, E4),",
+        "id": "SI2-9-07"
+      },
+      {
+        "stage": "SI2",
+        "page": 34,
+        "text": "eine ausgewählte Neutralisationsreaktion auf Teilchenebene als digitale Präsentation gestalten (E6, K3).",
+        "id": "SI2-9-08"
+      },
+      {
+        "stage": "SI2",
+        "page": 35,
+        "text": "beim Umgang mit sauren und alkalischen Lösungen Risiken und Nutzen abwägen und angemessene Sicherheitsmaßnahmen begründet auswählen (B3),",
+        "id": "SI2-9-09"
+      },
+      {
+        "stage": "SI2",
+        "page": 35,
+        "text": "Aussagen zu sauren, alkalischen und neutralen Lösungen in analogen und digitalen Medien kritisch hinterfragen (B1, K2).",
+        "id": "SI2-9-10"
+      },
+      {
+        "stage": "SI2",
+        "page": 35,
+        "text": "organische Molekülverbindungen aufgrund ihrer Eigenschaften in Stoffklassen einordnen (UF3),",
+        "id": "SI2-10-01"
+      },
+      {
+        "stage": "SI2",
+        "page": 35,
+        "text": "ausgewählte organische Verbindungen nach der systematischen Nomenklatur benennen (UF2),",
+        "id": "SI2-10-02"
+      },
+      {
+        "stage": "SI2",
+        "page": 35,
+        "text": "Treibhausgase und ihre Ursprünge beschreiben (UF1),",
+        "id": "SI2-10-03"
+      },
+      {
+        "stage": "SI2",
+        "page": 35,
+        "text": "die Abfolge verschiedener Reaktionen in einem Stoffkreislauf erklären (UF4),",
+        "id": "SI2-10-04"
+      },
+      {
+        "stage": "SI2",
+        "page": 35,
+        "text": "die vielseitige Verwendung von Kunststoffen im Alltag mit ihren Eigenschaften begründen (UF2).",
+        "id": "SI2-10-05"
+      },
+      {
+        "stage": "SI2",
+        "page": 36,
+        "text": "räumliche Strukturen von Kohlenwasserstoffmolekülen auch mithilfe von digitalen Modellen veranschaulichen (E6, K1),",
+        "id": "SI2-10-06"
+      },
+      {
+        "stage": "SI2",
+        "page": 36,
+        "text": "typische Stoffeigenschaften wie Löslichkeit und Siedetemperatur von ausgewählten Alkanen und Alkanolen ermitteln und mithilfe ihrer Molekülstrukturen und zwischenmolekularen Wechselwirkungen erklären (E4, E5, E6),",
+        "id": "SI2-10-07"
+      },
+      {
+        "stage": "SI2",
+        "page": 36,
+        "text": "Messdaten von Verbrennungsvorgängen fossiler und regenerativer Energierohstoffe digital beschaffen und vergleichen (E5, K2),",
+        "id": "SI2-10-08"
+      },
+      {
+        "stage": "SI2",
+        "page": 36,
+        "text": "ausgewählte Eigenschaften von Kunststoffen auf deren makromolekulare Struktur und räumliche Anordnung zurückführen (E6).",
+        "id": "SI2-10-09"
+      },
+      {
+        "stage": "SI2",
+        "page": 36,
+        "text": "Vorund Nachteile der Nutzung von fossilen und regenerativen Energieträgern unter ökologischen, ökonomischen und ethischen Gesichtspunkten diskutieren (B4, K4),",
+        "id": "SI2-10-10"
+      },
+      {
+        "stage": "SI2",
+        "page": 36,
+        "text": "am Beispiel eines chemischen Produkts Kriterien hinsichtlich Verwendung, Ökonomie, Recyclingfähigkeit und Umweltverträglichkeit abwägen und im Hinblick auf die Verwendung einen eigenen sachlich fundierten Standpunkt beziehen (B3, B4, K4).",
+        "id": "SI2-10-11"
+      },
+      {
+        "stage": "EF",
+        "page": 28,
+        "text": "ordnen organische Verbindungen aufgrund ihrer funktionellen Gruppen in Stoffklassen ein und benennen diese nach systematischer Nomenklatur (S1, S6, S11),",
+        "id": "EF-OS-01"
+      },
+      {
+        "stage": "EF",
+        "page": 28,
+        "text": "erläutern intermolekulare Wechselwirkungen organischer Verbindungen und erklären ausgewählte Eigenschaften sowie die Verwendung organischer Stoffe auf dieser Grundlage (S2, S13, E7),",
+        "id": "EF-OS-02"
+      },
+      {
+        "stage": "EF",
+        "page": 28,
+        "text": "erläutern das Donator-Akzeptor-Prinzip unter Verwendung der Oxidationszahlen am Beispiel der Oxidationsreihe der Alkanole (S4, S12, S14, S16),",
+        "id": "EF-OS-03"
+      },
+      {
+        "stage": "EF",
+        "page": 28,
+        "text": "stellen Isomere von Alkanolen dar und erklären die Konstitutionsisomerie (S11, E7).",
+        "id": "EF-OS-04"
+      },
+      {
+        "stage": "EF",
+        "page": 28,
+        "text": "stellen auch unter Nutzung digitaler Werkzeuge die Molekülgeometrie von Kohlenstoffverbindungen dar und erklären die Molekülgeometrie mithilfe des EPA-Modells (E7, S13),",
+        "id": "EF-OS-05"
+      },
+      {
+        "stage": "EF",
+        "page": 28,
+        "text": "deuten die Beobachtungen von Experimenten zur Oxidationsreihe der Alkanole und weisen die jeweiligen Produkte nach (E2, E5, S14),",
+        "id": "EF-OS-06"
+      },
+      {
+        "stage": "EF",
+        "page": 28,
+        "text": "führen Estersynthesen durch und leiten aus Stoffeigenschaften der erhaltenen Produkte Hypothesen zum strukturellen Aufbau der Estergruppe ab (E3, E5),",
+        "id": "EF-OS-07"
+      },
+      {
+        "stage": "EF",
+        "page": 28,
+        "text": "stellen Hypothesen zu Struktureigenschaftsbeziehungen einer ausgewählten Stoffklasse auf und untersuchen diese experimentell (E3, E4).",
+        "id": "EF-OS-08"
+      },
+      {
+        "stage": "EF",
+        "page": 29,
+        "text": "beurteilen die Auswirkungen der Aufnahme von Ethanol hinsichtlich oxidativer Abbauprozesse im menschlichen Körper unter Aspekten der Gesunderhaltung (B6, B7, E1, E11, K6),",
+        "id": "EF-OS-09"
+      },
+      {
+        "stage": "EF",
+        "page": 29,
+        "text": "diskutieren den Einsatz von Konservierungsund Aromastoffen in der Lebensmittelindustrie aus gesundheitlicher und ökonomischer Perspektive und leiten entsprechende Handlungsoptionen zu deren Konsum ab (B5, B9, B10, K5, K8, K13),",
+        "id": "EF-OS-10"
+      },
+      {
+        "stage": "EF",
+        "page": 29,
+        "text": "beurteilen die Verwendung von Lösemitteln in Produkten des Alltags auch im Hinblick auf die Entsorgung aus chemischer und ökologischer Perspektive (B1, B7, B8, B11, B14, S2, S10, E11).",
+        "id": "EF-OS-11"
+      },
+      {
+        "stage": "EF",
+        "page": 30,
+        "text": "erklären den Einfluss eines Katalysators auf die Reaktionsgeschwindigkeit auch anhand grafischer Darstellungen (S3, S8, S9),",
+        "id": "EF-RG-01"
+      },
+      {
+        "stage": "EF",
+        "page": 30,
+        "text": "beschreiben die Merkmale eines chemischen Gleichgewichtes anhand ausgewählter Reaktionen (S7, S15, K10),",
+        "id": "EF-RG-02"
+      },
+      {
+        "stage": "EF",
+        "page": 30,
+        "text": "erklären anhand ausgewählter Reaktionen die Beeinflussung des chemischen Gleichgewichts nach dem Prinzip von Le Chatelier auch im Zusammenhang mit einem technischen Verfahren (S8, S15, K10),",
+        "id": "EF-RG-03"
+      },
+      {
+        "stage": "EF",
+        "page": 30,
+        "text": "bestimmen rechnerisch Gleichgewichtslagen ausgewählter Reaktionen mithilfe des Massenwirkungsgesetzes und interpretieren die Ergebnisse (S7, S8, S17).",
+        "id": "EF-RG-04"
+      },
+      {
+        "stage": "EF",
+        "page": 30,
+        "text": "definieren die Durchschnittsgeschwindigkeit chemischer Reaktionen und ermitteln diese grafisch aus experimentellen Daten (E5, K7, K9),",
+        "id": "EF-RG-05"
+      },
+      {
+        "stage": "EF",
+        "page": 30,
+        "text": "überprüfen aufgestellte Hypothesen zum Einfluss verschiedener Faktoren auf die Reaktionsgeschwindigkeit durch Untersuchungen des zeitlichen Ablaufs einer chemischen Reaktion (E3, E4, E10, S9),",
+        "id": "EF-RG-06"
+      },
+      {
+        "stage": "EF",
+        "page": 30,
+        "text": "stellen den zeitlichen Ablauf chemischer Reaktionen auf molekularer Ebene mithilfe der Stoßtheorie auch unter Nutzung digitaler Werkzeuge dar und deuten die Ergebnisse (E6, E7, E8, K11),",
+        "id": "EF-RG-07"
+      },
+      {
+        "stage": "EF",
+        "page": 30,
+        "text": "simulieren den chemischen Gleichgewichtszustand als dynamisches Gleichgewicht auch unter Nutzung digitaler Werkzeuge (E6, E9, S15, K10).",
+        "id": "EF-RG-08"
+      },
+      {
+        "stage": "EF",
+        "page": 31,
+        "text": "beurteilen den ökologischen wie ökonomischen Nutzen und die Grenzen der Beeinflussbarkeit chemischer Gleichgewichtslagen in einem technischen Verfahren (B3, B10, B12, E12),",
+        "id": "EF-RG-09"
+      },
+      {
+        "stage": "EF",
+        "page": 31,
+        "text": "analysieren und beurteilen im Zusammenhang mit der jeweiligen Intention der Urheberschaft verschiedene Quellen und Darstellungsformen zu den Folgen anthropogener Einflüsse in einen natürlichen Stoffkreislauf (B2, B4, S5, K1, K2, K3, K4, K12),",
+        "id": "EF-RG-10"
+      },
+      {
+        "stage": "EF",
+        "page": 31,
+        "text": "bewerten die Folgen eines Eingriffs in einen Stoffkreislauf mit Blick auf Gleichgewichtsprozesse in aktuell-gesellschaftlichen Zusammenhängen (B12, B13, B14, S5, E12, K13).",
+        "id": "EF-RG-11"
+      },
+      {
+        "stage": "GK",
+        "page": 38,
+        "text": "klassifizieren die auch in Alltagsprodukten identifizierten Säuren und Basen mithilfe des Säure-Base-Konzepts von Brønsted und erläutern ihr Reaktionsverhalten unter Berücksichtigung von Protolysegleichungen (S1, S6, S7, S16, K6),",
+        "id": "GK-SB-01"
+      },
+      {
+        "stage": "GK",
+        "page": 38,
+        "text": "erklären die unterschiedlichen Reaktionsgeschwindigkeiten von starken und schwachen Säuren mit unedlen Metallen oder Salzen anhand der Protolysereaktionen (S3, S7, S16),",
+        "id": "GK-SB-02"
+      },
+      {
+        "stage": "GK",
+        "page": 38,
+        "text": "interpretieren die Gleichgewichtslage von Protolysereaktionen mithilfe des Massenwirkungsgesetzes und die daraus resultierenden Säure-/Base-Konstanten (S2, S7),",
+        "id": "GK-SB-03"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "berechnen pH-Werte wässriger Lösungen von Säuren und Basen bei vollständiger Protolyse (S17),",
+        "id": "GK-SB-04"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "definieren den Begriff der Reaktionsenthalpie und grenzen diesen von der inneren Energie ab (S3),",
+        "id": "GK-SB-05"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "erklären im Zusammenhang mit der Neutralisationsreaktion den ersten Hauptsatz der Thermodynamik (Prinzip der Energieerhaltung) (S3, S10),",
+        "id": "GK-SB-06"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "erläutern die Neutralisationsreaktion unter Berücksichtigung der Neutralisationsenthalpie (S3, S12),",
+        "id": "GK-SB-07"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "deuten endotherme und exotherme Lösungsvorgänge bei Salzen unter Berücksichtigung der Gitterund Solvatationsenergie (S12, K8).",
+        "id": "GK-SB-08"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "weisen ausgewählte Ionensorten (Halogenid-Ionen, Ammonium-Ionen, Carbonat-Ionen) salzartiger Verbindungen qualitativ nach (E5),",
+        "id": "GK-SB-09"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "planen hypothesengeleitet Experimente zur Konzentrationsbestimmung von Säuren und Basen auch in Alltagsprodukten (E1, E2, E3, E4),",
+        "id": "GK-SB-10"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "führen das Verfahren einer Säure-Base-Titration mit Endpunktbestimmung mittels Indikator am Beispiel starker Säuren und Basen durch und werten die Ergebnisse auch unter Berücksichtigung einer Fehleranalyse aus (E5, E10, K10),",
+        "id": "GK-SB-11"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "bestimmen die Reaktionsenthalpie der Neutralisationsreaktion von starken Säuren mit starken Basen kalorimetrisch und vergleichen das Ergebnis mit Literaturdaten (E5, K1).",
+        "id": "GK-SB-12"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "beurteilen den Einsatz, die Wirksamkeit und das Gefahrenpotenzial von Säuren, Basen und Salzen als Inhaltsstoffe in Alltagsprodukten und leiten daraus begründet Handlungsoptionen ab (B8, B11, K8),",
+        "id": "GK-SB-13"
+      },
+      {
+        "stage": "GK",
+        "page": 39,
+        "text": "bewerten die Qualität von Produkten des Alltags oder Umweltparameter auf der Grundlage von qualitativen und quantitativen Analyseergebnissen und beurteilen die Daten hinsichtlich ihrer Aussagekraft (B3, B8, K8).",
+        "id": "GK-SB-14"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "erläutern Redoxreaktionen als dynamische Gleichgewichtsreaktionen unter Berücksichtigung des Donator-Akzeptor-Konzepts (S7, S12, K7),",
+        "id": "GK-EC-01"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "nennen die metallische Bindung und die Beweglichkeit hydratisierter Ionen als Voraussetzungen für einen geschlossenen Stromkreislauf der galvanischen Zelle und der Elektrolyse (S12, S15, K10),",
+        "id": "GK-EC-02"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "erläutern den Aufbau und die Funktionsweise einer galvanischen Zelle hinsichtlich der chemischen Prozesse auch mit digitalen Werkzeugen und berechnen die jeweilige Zellspannung (S3, S17, E6, K11),",
+        "id": "GK-EC-03"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "erläutern den Aufbau und die Funktion ausgewählter elektrochemischer Spannungsquellen aus Alltag und Technik (Batterie, Akkumulator, Brennstoffzelle) unter Berücksichtigung der Teilreaktionen und möglicher Zellspannungen (S10, S12, K9),",
+        "id": "GK-EC-04"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "erklären am Beispiel einer Brennstoffzelle die Funktion der heterogenen Katalyse unter Verwendung geeigneter Medien (S8, S12, K11),",
+        "id": "GK-EC-05"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "erläutern die Reaktionen einer Elektrolyse auf stofflicher und energetischer Ebene als Umkehr der Reaktionen eines galvanischen Elements (S7, S12, K8),",
+        "id": "GK-EC-06"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "erläutern die Bildung eines Lokalelements bei Korrosionsvorgängen auch mithilfe von Reaktionsgleichungen (S3, S16, E1),",
+        "id": "GK-EC-07"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "interpretieren energetische Erscheinungen bei Redoxreaktionen auf die Umwandlung eines Teils der in Stoffen gespeicherten Energie in Wärme und Arbeit (S3, E11).",
+        "id": "GK-EC-08"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "entwickeln Hypothesen zum Auftreten von Redoxreaktionen zwischen Metallatomen und -ionen und überprüfen diese experimentell (E3, E4, E5, E10),",
+        "id": "GK-EC-09"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "entwickeln eigenständig ausgewählte Experimente zum Korrosionsschutz (Galvanik, Opferanode) und führen sie durch (E1, E4, E5),",
+        "id": "GK-EC-10"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "ermitteln Messdaten ausgewählter galvanischer Zellen zur Einordnung in die elektrochemische Spannungsreihe (E6, E8),",
+        "id": "GK-EC-11"
+      },
+      {
+        "stage": "GK",
+        "page": 41,
+        "text": "ermitteln auch rechnerisch die Standardreaktionsenthalpien ausgewählter Redoxreaktionen unter Anwendung des Satzes von Hess (E4, E7, S17, K2).",
+        "id": "GK-EC-12"
+      },
+      {
+        "stage": "GK",
+        "page": 42,
+        "text": "bewerten die Verbrennung fossiler Energieträger und elektrochemische Energiewandler hinsichtlich Effizienz und Nachhaltigkeit auch mithilfe von recherchierten thermodynamischen Daten (B2, B4, E8, K3, K12),",
+        "id": "GK-EC-13"
+      },
+      {
+        "stage": "GK",
+        "page": 42,
+        "text": "diskutieren Möglichkeiten und Grenzen bei der Umwandlung, Speicherung und Nutzung elektrischer Energie auf Grundlage der relevanten chemischen und thermodynamischen Aspekte im Hinblick auf nachhaltiges Handeln (B3, B10, B13, E12, K8),",
+        "id": "GK-EC-14"
+      },
+      {
+        "stage": "GK",
+        "page": 42,
+        "text": "beurteilen Folgen von Korrosionsvorgängen und adäquate Korrosionsschutzmaßnahmen unter ökologischen und ökonomischen Aspekten (B12, B14, E1).",
+        "id": "GK-EC-15"
+      },
+      {
+        "stage": "GK",
+        "page": 43,
+        "text": "stellen den Aufbau von Vertretern der Stoffklassen der Alkane, Halogenalkane, Alkene, Alkine, Alkanole, Alkanale, Alkanone, Carbonsäuren, Ester und Amine auch mit digitalen Werkzeugen dar und berücksichtigen dabei auch ausgewählte Isomere (S1, E7, K11),",
+        "id": "GK-OC-01"
+      },
+      {
+        "stage": "GK",
+        "page": 43,
+        "text": "erläutern den Aufbau und die Eigenschaften von gesättigten und ungesättigten Fetten (S1, S11, S13),",
+        "id": "GK-OC-02"
+      },
+      {
+        "stage": "GK",
+        "page": 43,
+        "text": "erklären Stoffeigenschaften und Reaktionsverhalten mit dem Einfluss der jeweiligen funktionellen Gruppen unter Berücksichtigung von interund intramolekularen Wechselwirkungen (S2, S13),",
+        "id": "GK-OC-03"
+      },
+      {
+        "stage": "GK",
+        "page": 43,
+        "text": "erklären Redoxreaktionen in organischen Synthesewegen unter Berücksichtigung der Oxidationszahlen (S3, S11, S16),",
+        "id": "GK-OC-04"
+      },
+      {
+        "stage": "GK",
+        "page": 43,
+        "text": "erklären die Estersynthese aus Alkanolen und Carbonsäuren unter Berücksichtigung der Katalyse (S4, S8, S9, K7),",
+        "id": "GK-OC-05"
+      },
+      {
+        "stage": "GK",
+        "page": 43,
+        "text": "erläutern die Reaktionsmechanismen der radikalischen Substitutionsund elektrophilen Additionsreaktion unter Berücksichtigung der spezifischen Reaktionsbedingungen auch mit digitalen Werkzeugen (S8, S9, S14, E9, K11).",
+        "id": "GK-OC-06"
+      },
+      {
+        "stage": "GK",
+        "page": 43,
+        "text": "schließen mithilfe von spezifischen Nachweisen der Reaktionsprodukte (Doppelbindung zwischen Kohlenstoff-Atomen, Carbonylund Carboxy-Gruppe) auf den Reaktionsverlauf und bestimmen den Reaktionstyp (E5, E7, S4, K10),",
+        "id": "GK-OC-07"
+      },
+      {
+        "stage": "GK",
+        "page": 44,
+        "text": "erläutern die Planung und Durchführung einer Estersynthese in Bezug auf die Optimierung der Ausbeute auf der Grundlage des Prinzips von Le Chatelier (E4, E5, K13),",
+        "id": "GK-OC-08"
+      },
+      {
+        "stage": "GK",
+        "page": 44,
+        "text": "unterscheiden experimentell zwischen gesättigten und ungesättigten Fettsäuren (E5, E11).",
+        "id": "GK-OC-09"
+      },
+      {
+        "stage": "GK",
+        "page": 44,
+        "text": "recherchieren und bewerten Nutzen und Risiken ausgewählter Produkte der organischen Chemie unter vorgegebenen Fragestellungen (B1, B11, K2, K4),",
+        "id": "GK-OC-10"
+      },
+      {
+        "stage": "GK",
+        "page": 44,
+        "text": "beurteilen die Qualität von Fetten hinsichtlich ihrer Zusammensetzung und Verarbeitung im Bereich der Lebensmitteltechnik und der eigenen Ernährung (B7, B8, K8).",
+        "id": "GK-OC-11"
+      },
+      {
+        "stage": "GK",
+        "page": 45,
+        "text": "erklären die Eigenschaften von Kunststoffen aufgrund ihrer molekularen Strukturen (Kettenlänge, Vernetzungsgrad) (S11, S13),",
+        "id": "GK-MW-01"
+      },
+      {
+        "stage": "GK",
+        "page": 45,
+        "text": "klassifizieren Kunststoffe anhand ihrer Eigenschaften begründet nach Thermoplasten, Duroplasten und Elastomeren (S1, S2),",
+        "id": "GK-MW-02"
+      },
+      {
+        "stage": "GK",
+        "page": 45,
+        "text": "erläutern die Verknüpfung von Monomermolekülen zu Makromolekülen mithilfe von Reaktionsgleichungen an einem Beispiel (S4, S12, S16),",
+        "id": "GK-MW-03"
+      },
+      {
+        "stage": "GK",
+        "page": 45,
+        "text": "beschreiben den Weg eines Anwendungsproduktes von der Rohstoffgewinnung über die Produktion bis zur Verwertung (S5, S10, K1, K2).",
+        "id": "GK-MW-04"
+      },
+      {
+        "stage": "GK",
+        "page": 45,
+        "text": "führen eigenständig geplante Experimente zur Untersuchung von Eigenschaften organischer Werkstoffe durch und werten diese aus (E4, E5),",
+        "id": "GK-MW-05"
+      },
+      {
+        "stage": "GK",
+        "page": 45,
+        "text": "planen zielgerichtet anhand der Eigenschaften verschiedener Kunststoffe Experimente zur Trennung und Verwertung von Verpackungsabfällen (E4, S2),",
+        "id": "GK-MW-06"
+      },
+      {
+        "stage": "GK",
+        "page": 45,
+        "text": "erklären ermittelte Stoffeigenschaften am Beispiel eines Funktionspolymers mit geeigneten Modellen (E1, E5, E7, S2).",
+        "id": "GK-MW-07"
+      },
+      {
+        "stage": "GK",
+        "page": 45,
+        "text": "bewerten den Einsatz von Erdöl und nachwachsenden Rohstoffen für die Herstellung und die Verwendung von Produkten aus Kunststoffen im Sinne einer nachhaltigen Entwicklung aus ökologischer, ökonomischer und sozialer Perspektive (B9, B12, B13),",
+        "id": "GK-MW-08"
+      },
+      {
+        "stage": "GK",
+        "page": 45,
+        "text": "vergleichen anhand von Bewertungskriterien Produkte aus unterschiedlichen Kunststoffen und leiten daraus Handlungsoptionen für die alltägliche Nutzung ab (B5, B14, K2, K8, K13),",
+        "id": "GK-MW-09"
+      },
+      {
+        "stage": "GK",
+        "page": 46,
+        "text": "bewerten stoffliche und energetische Verfahren der Kunststoffverwertung unter Berücksichtigung ausgewählter Nachhaltigkeitsziele (B6, B13, S3, K5, K8).",
+        "id": "GK-MW-10"
+      },
+      {
+        "stage": "LK",
+        "page": 47,
+        "text": "klassifizieren die auch in Produkten des Alltags identifizierten Säuren und Basen mithilfe des Säure-Base-Konzepts von Brønsted und erläutern ihr Reaktionsverhalten unter Berücksichtigung von Protolysegleichungen (S1, S6, S7, S16, K6),",
+        "id": "LK-SB-01"
+      },
+      {
+        "stage": "LK",
+        "page": 47,
+        "text": "erläutern die unterschiedlichen Reaktionsgeschwindigkeiten von starken und schwachen Säuren mit unedlen Metallen oder Salzen anhand der unterschiedlichen Gleichgewichtslage der Protolysereaktionen (S3, S7, S16),",
+        "id": "LK-SB-02"
+      },
+      {
+        "stage": "LK",
+        "page": 47,
+        "text": "leiten die Säure-/Base-Konstante und den pKS/pKB-Wert von Säuren und Basen mithilfe des Massenwirkungsgesetzes ab und berechnen diese (S7, S17),",
+        "id": "LK-SB-03"
+      },
+      {
+        "stage": "LK",
+        "page": 47,
+        "text": "interpretieren die Gleichgewichtslage von Protolysereaktionen mithilfe des Massenwirkungsgesetzes und die daraus resultierenden Säure-/Base-Konstanten (S2, S7),",
+        "id": "LK-SB-04"
+      },
+      {
+        "stage": "LK",
+        "page": 47,
+        "text": "berechnen pH-Werte wässriger Lösungen von Säuren und Basen auch bei nicht vollständiger Protolyse (S17),",
+        "id": "LK-SB-05"
+      },
+      {
+        "stage": "LK",
+        "page": 47,
+        "text": "sagen den Verlauf von Titrationskurven von starken und schwachen Säuren und Basen anhand der Berechnung der charakteristischen Punkte (AnfangspH-Wert, Halbäquivalenzpunkt, Äquivalenzpunkt) voraus (S10, S17),",
+        "id": "LK-SB-06"
+      },
+      {
+        "stage": "LK",
+        "page": 47,
+        "text": "erläutern die Wirkung eines Puffersystems auf Grundlage seiner Zusammensetzung (S2, S7, S16),",
+        "id": "LK-SB-07"
+      },
+      {
+        "stage": "LK",
+        "page": 47,
+        "text": "berechnen den pH-Wert von Puffersystemen anhand der Henderson-Hasselbalch-Gleichung (S17),",
+        "id": "LK-SB-08"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "definieren den Begriff der Reaktionsenthalpie und grenzen diesen von der inneren Energie ab (S3),",
+        "id": "LK-SB-09"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "erklären im Zusammenhang mit der Neutralisationsreaktion den ersten Hauptsatz der Thermodynamik (Prinzip der Energieerhaltung) (S3, S10),",
+        "id": "LK-SB-10"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "erläutern die Neutralisationsreaktion unter Berücksichtigung der Neutralisationsenthalpie (S3, S12),",
+        "id": "LK-SB-11"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "erklären endotherme und exotherme Lösungsvorgänge bei Salzen unter Einbeziehung der Gitterund Solvatationsenergie und führen den spontanen Ablauf eines endothermen Lösungsvorgangs auf die Entropieänderung zurück (S12, K8),",
+        "id": "LK-SB-12"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "erklären Fällungsreaktionen auf der Grundlage von Löslichkeitsgleichgewichten (S2, S7).",
+        "id": "LK-SB-13"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "weisen ausgewählte Ionensorten (Halogenid-Ionen, Ammonium-Ionen, Carbonat-Ionen) salzartiger Verbindungen qualitativ nach (E5),",
+        "id": "LK-SB-14"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "planen hypothesengeleitet Experimente zur Konzentrationsbestimmung von Säuren und Basen auch in Alltagsprodukten (E1, E2, E3, E4),",
+        "id": "LK-SB-15"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "führen das Verfahren einer Säure-Base-Titration mit Endpunktbestimmung mittels Indikator durch und werten die Ergebnisse auch unter Berücksichtigung einer Fehleranalyse aus (E5, E10, K10),",
+        "id": "LK-SB-16"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "werten pH-metrische Titrationen von einund mehrprotonigen Säuren aus und erläutern den Verlauf der Titrationskurven auch bei unvollständiger Protolyse (S9, E8, E10, K7),",
+        "id": "LK-SB-17"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "bestimmen die Reaktionsenthalpie der Neutralisationsreaktion von starken Säuren mit starken Basen kalorimetrisch und vergleichen das Ergebnis mit Literaturdaten (E5, K1),",
+        "id": "LK-SB-18"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "interpretieren die Messdaten von Lösungsenthalpien verschiedener Salze unter Berücksichtigung der Entropie (S12, E8).",
+        "id": "LK-SB-19"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "beurteilen den Einsatz, die Wirksamkeit und das Gefahrenpotenzial von Säuren, Basen und Salzen als Inhaltsstoffe in Alltagsprodukten und leiten daraus begründet Handlungsoptionen ab (B8, B11, K8),",
+        "id": "LK-SB-20"
+      },
+      {
+        "stage": "LK",
+        "page": 48,
+        "text": "bewerten die Qualität von Produkten des Alltags oder Umweltparameter auf der Grundlage von qualitativen und quantitativen Analyseergebnissen und beurteilen die Daten hinsichtlich ihrer Aussagekraft (B3, B8, K8),",
+        "id": "LK-SB-21"
+      },
+      {
+        "stage": "LK",
+        "page": 49,
+        "text": "beurteilen verschiedene Säure-Base-Titrationsverfahren hinsichtlich ihrer Angemessenheit und Grenzen (B3, K8, K9).",
+        "id": "LK-SB-22"
+      },
+      {
+        "stage": "LK",
+        "page": 50,
+        "text": "erläutern Redoxreaktionen als dynamische Gleichgewichtsreaktionen unter Berücksichtigung des Donator-Akzeptor-Konzepts (S7, S12, K7),",
+        "id": "LK-EC-01"
+      },
+      {
+        "stage": "LK",
+        "page": 50,
+        "text": "nennen die metallische Bindung und die Beweglichkeit hydratisierter Ionen als Voraussetzungen für einen geschlossenen Stromkreislauf der galvanischen Zelle und der Elektrolyse (S12, S15, K10),",
+        "id": "LK-EC-02"
+      },
+      {
+        "stage": "LK",
+        "page": 50,
+        "text": "erläutern den Aufbau und die Funktionsweise galvanischer Zellen hinsichtlich der chemischen Prozesse auch mithilfe digitaler Werkzeuge und berechnen auch unter Berücksichtigung der Nernst-Gleichung die jeweilige Zellspannung (S3, S17, E6, K11),",
+        "id": "LK-EC-03"
+      },
+      {
+        "stage": "LK",
+        "page": 50,
+        "text": "erläutern und vergleichen den Aufbau und die Funktion ausgewählter elektrochemischer Spannungsquellen aus Alltag und Technik (Batterie, Akkumulator, Brennstoffzelle) unter Berücksichtigung der Teilreaktionen sowie möglicher Zellspannungen (S10, S12, S16, K9),",
+        "id": "LK-EC-04"
+      },
+      {
+        "stage": "LK",
+        "page": 50,
+        "text": "erklären am Beispiel einer Brennstoffzelle die Funktion der heterogenen Katalyse unter Verwendung geeigneter Medien (S8, S12, K11),",
+        "id": "LK-EC-05"
+      },
+      {
+        "stage": "LK",
+        "page": 50,
+        "text": "erläutern die Reaktionen einer Elektrolyse auf stofflicher und energetischer Ebene als Umkehr der Reaktionen eines galvanischen Elements (S7, S16, K10),",
+        "id": "LK-EC-06"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "erklären die für die Elektrolyse benötigte Zersetzungsspannung unter Berücksichtigung des Phänomens der Überspannung (S12, K8),",
+        "id": "LK-EC-07"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "berechnen Stoffumsätze unter Anwendung der Faraday-Gesetze (S3, S17),",
+        "id": "LK-EC-08"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "interpretieren energetische Erscheinungen bei Redoxreaktionen auf die Umwandlung eines Teils der in Stoffen gespeicherten Energie in Wärme und Arbeit unter Berücksichtigung der Einschränkung durch den zweiten Hauptsatz der Thermodynamik (S3, S12, K10),",
+        "id": "LK-EC-09"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "berechnen die freie Enthalpie bei Redoxreaktionen (S3, S17, K8).",
+        "id": "LK-EC-10"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "entwickeln Hypothesen zum Auftreten von Redoxreaktionen zwischen Metallund Nichtmetallatomen sowie Ionen und überprüfen diese experimentell (E3, E4, E5, E10),",
+        "id": "LK-EC-11"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "wenden das Verfahren der Redoxtitration zur Ermittlung der Konzentration eines Stoffes begründet an (E5, S3, K10),",
+        "id": "LK-EC-12"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "ermitteln Messdaten ausgewählter galvanischer Zellen zur Einordnung in die elektrochemische Spannungsreihe (E6, E8),",
+        "id": "LK-EC-13"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "ermitteln die Ionenkonzentration von ausgewählten Metallund Nichtmetallionen mithilfe der Nernst-Gleichung aus Messdaten galvanischer Zellen (E6, E8, S17, K5),",
+        "id": "LK-EC-14"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "erklären die Herleitung elektrochemischer und thermodynamischer Gesetzmä- ßigkeiten (Faraday, Nernst, Gibbs-Helmholtz) aus experimentellen Daten (E8, S17, K8),",
+        "id": "LK-EC-15"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "ermitteln die Leistung einer elektrochemischen Spannungsquelle an einem Beispiel (E5, E10, S17),",
+        "id": "LK-EC-16"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "entwickeln Hypothesen zur Bildung von Lokalelementen als Grundlage von Korrosionsvorgängen und überprüfen diese experimentell (E1, E3, E5, S15),",
+        "id": "LK-EC-17"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "entwickeln ausgewählte Verfahren zum Korrosionsschutz (Galvanik, Opferanode) und führen diese durch (E1, E4, E5, K13),",
+        "id": "LK-EC-18"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "ermitteln die Standardreaktionsenthalpien ausgewählter Redoxreaktionen unter Anwendung des Satzes von Hess auch rechnerisch (E2, E4, E7, S16, S17, K2).",
+        "id": "LK-EC-19"
+      },
+      {
+        "stage": "LK",
+        "page": 51,
+        "text": "bewerten auch unter Berücksichtigung des energetischen Wirkungsgrads fossile und elektrochemische Energiequellen (B2, B4, K3, K12),",
+        "id": "LK-EC-20"
+      },
+      {
+        "stage": "LK",
+        "page": 52,
+        "text": "diskutieren Möglichkeiten und Grenzen bei der Umwandlung, Speicherung und Nutzung elektrischer Energie auch unter Berücksichtigung thermodynamischer Gesetzmäßigkeiten im Hinblick auf nachhaltiges Handeln (B3, B10, B13, E12, K8),",
+        "id": "LK-EC-21"
+      },
+      {
+        "stage": "LK",
+        "page": 52,
+        "text": "diskutieren ökologische und ökonomische Aspekte der elektrolytischen Gewinnung eines Stoffes unter Berücksichtigung der Faraday-Gesetze (B10, B13, E8, K13),",
+        "id": "LK-EC-22"
+      },
+      {
+        "stage": "LK",
+        "page": 52,
+        "text": "beurteilen Folgen von Korrosionsvorgängen und adäquate Korrosionsschutzmaßnahmen unter ökologischen und ökonomischen Aspekten (B12, B14, E1).",
+        "id": "LK-EC-23"
+      },
+      {
+        "stage": "LK",
+        "page": 53,
+        "text": "stellen den Aufbau der Moleküle (Konstitutionsisomerie, Stereoisomerie, Molekülgeometrie, Chiralität am asymmetrischen C-Atom) von Vertretern der Stoffklassen der Alkane, Halogenalkane, Alkene, Alkine Alkanole, Alkanale, Alkanone, Carbonsäuren, Ester und Amine auch mit digitalen Werkzeugen dar (S1, E7, K11),",
+        "id": "LK-OC-01"
+      },
+      {
+        "stage": "LK",
+        "page": 53,
+        "text": "erläutern den Aufbau und die Eigenschaften von gesättigten und ungesättigten Fetten (S1, S11, S13),",
+        "id": "LK-OC-02"
+      },
+      {
+        "stage": "LK",
+        "page": 53,
+        "text": "erklären Stoffeigenschaften und Reaktionsverhalten mit dem Einfluss der jeweiligen funktionellen Gruppen unter der Berücksichtigung von interund intramolekularen Wechselwirkungen (S2, S13, K11),",
+        "id": "LK-OC-03"
+      },
+      {
+        "stage": "LK",
+        "page": 53,
+        "text": "erklären Redoxreaktionen in organischen Synthesewegen unter Berücksichtigung der Oxidationszahlen (S3, S11, S16),",
+        "id": "LK-OC-04"
+      },
+      {
+        "stage": "LK",
+        "page": 53,
+        "text": "erklären die Estersynthese aus Alkanolen und Carbonsäuren unter Berücksichtigung der Katalyse (S4, S8, S9, K7),",
+        "id": "LK-OC-05"
+      },
+      {
+        "stage": "LK",
+        "page": 53,
+        "text": "erläutern auch mit digitalen Werkzeugen die Reaktionsmechanismen unter Berücksichtigung der spezifischen Reaktionsbedingungen (S8, S9, S14, E9, K11),",
+        "id": "LK-OC-06"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "beschreiben den Aufbau und die Wirkungsweise eines Katalysators unter Berücksichtigung des Konzepts der koordinativen Bindung als Wechselwirkung von Metallkationen mit freien Elektronenpaaren (S13, S15),",
+        "id": "LK-OC-07"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "erklären die Reaktivität eines aromatischen Systems anhand der Struktur und erläutern in diesem Zusammenhang die Mesomerie (S9, S13, E9, E12),",
+        "id": "LK-OC-08"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "klassifizieren Farbstoffe sowohl auf Grundlage struktureller Merkmale als auch nach ihrer Verwendung (S10, S11, K8),",
+        "id": "LK-OC-09"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "erläutern die Farbigkeit ausgewählter Stoffe durch Lichtabsorption auch unter Berücksichtigung der Molekülstruktur mithilfe des Mesomeriemodells (mesomere Grenzstrukturen, Delokalisation von Elektronen, Donator-Akzeptor-Gruppen) (S2, E7, K10).",
+        "id": "LK-OC-10"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "schließen mithilfe von spezifischen Nachweisen der Reaktionsprodukte (Doppelbindung zwischen Kohlenstoff-Atomen, Chloridund Bromid-Ionen, Carbonylund Carboxy-Gruppe) auf den Reaktionsverlauf und bestimmen den Reaktionstyp (E5, E7, S4, K10),",
+        "id": "LK-OC-11"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "entwickeln Hypothesen zum Reaktionsverhalten aus der Molekülstruktur (E3, E12, K2),",
+        "id": "LK-OC-12"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "erläutern die Planung und Durchführung einer Estersynthese in Bezug auf die Optimierung der Ausbeute auf der Grundlage des Prinzips von Le Chatelier (E4, E5, K13),",
+        "id": "LK-OC-13"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "unterscheiden experimentell zwischen gesättigten und ungesättigten Fettsäuren (E5, E11),",
+        "id": "LK-OC-14"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "trennen mithilfe eines chromatografischen Verfahrens Stoffgemische und analysieren ihre Bestandteile durch Interpretation der Retentionsfaktoren (E4, E5),",
+        "id": "LK-OC-15"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "interpretieren Absorptionsspektren ausgewählter Farbstofflösungen (E8, K2, B1).",
+        "id": "LK-OC-16"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "recherchieren und bewerten Nutzen und Risiken ausgewählter Produkte der organischen Chemie unter selbst entwickelten Fragestellungen (B1, B11, K2, K4),",
+        "id": "LK-OC-17"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "beurteilen die Möglichkeiten und Grenzen von Modellvorstellungen bezüglich der Struktur organischer Verbindungen und die Reaktionsschritte von Synthesen für die Vorhersage der Bildung von Reaktionsprodukten (B1, B2, K10),",
+        "id": "LK-OC-18"
+      },
+      {
+        "stage": "LK",
+        "page": 54,
+        "text": "beurteilen die Qualität von Fetten hinsichtlich ihrer Zusammensetzung und Verarbeitung im Bereich der Lebensmitteltechnik und der eigenen Ernährung (B7, B8, K8),",
+        "id": "LK-OC-19"
+      },
+      {
+        "stage": "LK",
+        "page": 55,
+        "text": "bewerten den Einsatz verschiedener Farbstoffe in Alltagsprodukten aus chemischer, ökologischer und ökonomischer Sicht (B9, B13, S13).",
+        "id": "LK-OC-20"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "erklären die Eigenschaften von Kunststoffen aufgrund der molekularen Strukturen (Kettenlänge, Vernetzungsgrad, Anzahl und Wechselwirkung verschiedenartiger Monomere) (S11, S13),",
+        "id": "LK-MW-01"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "klassifizieren Kunststoffe anhand ihrer Eigenschaften begründet nach Thermoplasten, Duroplasten und Elastomeren (S1, S2),",
+        "id": "LK-MW-02"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "erläutern die Verknüpfung von Monomermolekülen zu Makromolekülen mithilfe von Reaktionsgleichungen an einem Beispiel (S4, S12, S16),",
+        "id": "LK-MW-03"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "erläutern die Reaktionsschritte einer radikalischen Polymerisation (S4, S14, S16),",
+        "id": "LK-MW-04"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "beschreiben den Weg eines Anwendungsproduktes von der Rohstoffgewinnung über die Produktion bis zur Verwertung (S5, S10, K1, K2),",
+        "id": "LK-MW-05"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "erläutern ein technisches Syntheseverfahren auch unter Berücksichtigung der eingesetzten Katalysatoren (S8, S9),",
+        "id": "LK-MW-06"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "beschreiben Merkmale von Nanomaterialien am Beispiel von Alltagsprodukten (S1, S9).",
+        "id": "LK-MW-07"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "führen eigenständig geplante Experimente zur Untersuchung von Eigenschaften organischer Werkstoffe durch und werten diese aus (E4, E5),",
+        "id": "LK-MW-08"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "planen zielgerichtet anhand der Eigenschaften verschiedener Kunststoffe Experimente zur Trennung und Verwertung von Verpackungsabfällen (E4, S2),",
+        "id": "LK-MW-09"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "erläutern ermittelte Stoffeigenschaften am Beispiel eines Funktionspolymers mit geeigneten Modellen (E1, E5, E7, S13),",
+        "id": "LK-MW-10"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "veranschaulichen die Größenordnung und Reaktivität von Nanopartikeln (E7, E8),",
+        "id": "LK-MW-11"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "erklären eine experimentell ermittelte Oberflächeneigenschaft eines ausgewählten Nanoprodukts anhand der Nanostruktur (E5, S11).",
+        "id": "LK-MW-12"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "bewerten den Einsatz von Erdöl und nachwachsenden Rohstoffen für die Herstellung und die Verwendung von Produkten aus Kunststoffen im Sinne einer nachhaltigen Entwicklung aus ökologischer, ökonomischer und sozialer Perspektive (B9, B12, B13),",
+        "id": "LK-MW-13"
+      },
+      {
+        "stage": "LK",
+        "page": 56,
+        "text": "vergleichen anhand von Bewertungskriterien Produkte aus unterschiedlichen Kunststoffen und leiten daraus Handlungsoptionen für die alltägliche Nutzung ab (B5, B14, K2, K8, K13),",
+        "id": "LK-MW-14"
+      },
+      {
+        "stage": "LK",
+        "page": 57,
+        "text": "bewerten stoffliche und energetische Verfahren der Kunststoffverwertung unter Berücksichtigung ausgewählter Nachhaltigkeitsziele (B6, B13, S3, K5, K8),",
+        "id": "LK-MW-15"
+      },
+      {
+        "stage": "LK",
+        "page": 57,
+        "text": "beurteilen die Bedeutung der Reaktionsbedingungen für die Synthese eines Kunststoffs im Hinblick auf Atomund Energieeffizienz, Abfallund Risikovermeidung sowie erneuerbare Ressourcen (B1, B10),",
+        "id": "LK-MW-16"
+      },
+      {
+        "stage": "LK",
+        "page": 57,
+        "text": "recherchieren in verschiedenen Quellen die Chancen und Risiken von Nanomaterialien am Beispiel eines Alltagsproduktes und bewerten diese unter Berücksichtigung der Intention der Autoren (B2, B4, B13, K2, K4).",
+        "id": "LK-MW-17"
+      }
+    ]
+  },
+  "calendar": "chemie-arbeitskopie-kalender.html",
+  "calendar_note": "Eigene Arbeitskopie; übrige Curriculum- und Kalenderdateien unverändert."
 }

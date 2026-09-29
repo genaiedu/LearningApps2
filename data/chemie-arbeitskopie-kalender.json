@@ -1,0 +1,1389 @@
+{
+  "version": 1,
+  "status": "Arbeitskopie · Stand 29. September 2026",
+  "subjects": {
+    "chemie": {
+      "label": "Chemie · Arbeitskopie",
+      "curriculum": "chemie-curriculum-arbeitskopie.html",
+      "tracks": [
+        {
+          "id": "7",
+          "label": "Klasse 7",
+          "weekly": 1
+        },
+        {
+          "id": "8",
+          "label": "Klasse 8",
+          "weekly": 2
+        },
+        {
+          "id": "9",
+          "label": "Klasse 9",
+          "weekly": 2
+        },
+        {
+          "id": "10",
+          "label": "Klasse 10",
+          "weekly": 2
+        },
+        {
+          "id": "EF",
+          "label": "EF",
+          "weekly": 3
+        },
+        {
+          "id": "Q1 GK",
+          "label": "Q1 GK",
+          "weekly": 3
+        },
+        {
+          "id": "Q2 GK",
+          "label": "Q2 GK",
+          "weekly": 3
+        },
+        {
+          "id": "Q1 LK",
+          "label": "Q1 LK",
+          "weekly": 5
+        },
+        {
+          "id": "Q2 LK",
+          "label": "Q2 LK",
+          "weekly": 5
+        }
+      ],
+      "units": [
+        {
+          "code": "07.1",
+          "title": "Laborführerschein",
+          "track": "7",
+          "hours": 6,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_07_1"
+        },
+        {
+          "code": "07.2",
+          "title": "Alltagsstoffe und ihre Eigenschaften",
+          "track": "7",
+          "hours": 10,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_07_2"
+        },
+        {
+          "code": "07.3",
+          "title": "Stoffgemische trennen",
+          "track": "7",
+          "hours": 10,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_07_3"
+        },
+        {
+          "code": "07.4",
+          "title": "Luft und Verbrennung",
+          "track": "7",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_07_4"
+        },
+        {
+          "code": "08.1",
+          "title": "Metalle und ihre Gewinnung",
+          "track": "8",
+          "hours": 22,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_08_1"
+        },
+        {
+          "code": "08.2",
+          "title": "Chemische Reaktionen in unserer Umwelt",
+          "track": "8",
+          "hours": 14,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_08_2"
+        },
+        {
+          "code": "08.3",
+          "title": "Atommodelle",
+          "track": "8",
+          "hours": 18,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_08_3"
+        },
+        {
+          "code": "08.4",
+          "title": "Die Welt der Mineralien",
+          "track": "8",
+          "hours": 22,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_08_4"
+        },
+        {
+          "code": "09.1",
+          "title": "Elementfamilien",
+          "track": "9",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_09_1"
+        },
+        {
+          "code": "09.2",
+          "title": "Die Batterie und chemische Energiespeicherung",
+          "track": "9",
+          "hours": 26,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_09_2"
+        },
+        {
+          "code": "09.3",
+          "title": "Wasser als besonderer Stoff und Lösemittel",
+          "track": "9",
+          "hours": 26,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_09_3"
+        },
+        {
+          "code": "10.1",
+          "title": "Saure und alkalische Lösungen",
+          "track": "10",
+          "hours": 28,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_10_1"
+        },
+        {
+          "code": "10.2",
+          "title": "Alkane und Alkanole in Natur und Technik",
+          "track": "10",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_10_2"
+        },
+        {
+          "code": "10.3",
+          "title": "Vielseitige Kunststoffe",
+          "track": "10",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_10_3"
+        },
+        {
+          "code": "10.4",
+          "title": "Gase als Ausgangsstoffe für Industrierohstoffe",
+          "track": "10",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_10_4"
+        },
+        {
+          "code": "EF.01",
+          "title": "Duftstoffe und Aromastoffe am Beispiel Parfum",
+          "track": "EF",
+          "hours": 44,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_EF_01"
+        },
+        {
+          "code": "EF.02",
+          "title": "Beeinflussung der Reaktionsgeschwindigkeit",
+          "track": "EF",
+          "hours": 21,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_EF_02"
+        },
+        {
+          "code": "EF.03",
+          "title": "Das chemische Gleichgewicht",
+          "track": "EF",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_EF_03"
+        },
+        {
+          "code": "EF.04",
+          "title": "Kohlenstoffkreislauf und Klima",
+          "track": "EF",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_EF_04"
+        },
+        {
+          "code": "GK.01",
+          "title": "Säuren und Basen mit analytischen Verfahren",
+          "track": "Q1 GK",
+          "hours": 28,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_01"
+        },
+        {
+          "code": "GK.02",
+          "title": "Thermodynamik",
+          "track": "Q1 GK",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_02"
+        },
+        {
+          "code": "GK.03",
+          "title": "Elektrochemie mit galvanischer Zelle und Elektrolyse",
+          "track": "Q1 GK",
+          "hours": 40,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_03"
+        },
+        {
+          "code": "GK.04",
+          "title": "Korrosion von Metallen",
+          "track": "Q1 GK",
+          "hours": 10,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_04"
+        },
+        {
+          "code": "GK.05a",
+          "title": "Organische Chemie: verschiedene Reaktionswege · Q1",
+          "track": "Q1 GK",
+          "hours": 11,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_05"
+        },
+        {
+          "code": "GK.05b",
+          "title": "Organische Chemie: verschiedene Reaktionswege · Q2",
+          "track": "Q2 GK",
+          "hours": 18,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_05"
+        },
+        {
+          "code": "GK.06",
+          "title": "Fette",
+          "track": "Q2 GK",
+          "hours": 10,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_06"
+        },
+        {
+          "code": "GK.07",
+          "title": "Kunststoffe und funktionale Werkstoffe",
+          "track": "Q2 GK",
+          "hours": 34,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_07"
+        },
+        {
+          "code": "LK.01",
+          "title": "Säuren und Basen mit analytischen Verfahren",
+          "track": "Q1 LK",
+          "hours": 42,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_01"
+        },
+        {
+          "code": "LK.02",
+          "title": "Thermodynamik",
+          "track": "Q1 LK",
+          "hours": 32,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_02"
+        },
+        {
+          "code": "LK.03",
+          "title": "Elektrochemie mit galvanischer Zelle und Elektrolyse",
+          "track": "Q1 LK",
+          "hours": 50,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_03"
+        },
+        {
+          "code": "LK.04",
+          "title": "Korrosion von Metallen",
+          "track": "Q1 LK",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_04"
+        },
+        {
+          "code": "LK.05a",
+          "title": "Organische Chemie: verschiedene Reaktionswege · Q1",
+          "track": "Q1 LK",
+          "hours": 52,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_05"
+        },
+        {
+          "code": "LK.05b",
+          "title": "Organische Chemie: verschiedene Reaktionswege · Q2",
+          "track": "Q2 LK",
+          "hours": 8,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_05"
+        },
+        {
+          "code": "LK.06",
+          "title": "Fette",
+          "track": "Q2 LK",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_06"
+        },
+        {
+          "code": "LK.07",
+          "title": "Kunststoffe und funktionale Werkstoffe",
+          "track": "Q2 LK",
+          "hours": 59,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_07"
+        },
+        {
+          "code": "LK.08",
+          "title": "Farbstoffe",
+          "track": "Q2 LK",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_08"
+        }
+      ],
+      "units2026": [
+        {
+          "code": "07.1",
+          "title": "Laborführerschein",
+          "track": "7",
+          "hours": 6,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_07_1"
+        },
+        {
+          "code": "07.2",
+          "title": "Alltagsstoffe und ihre Eigenschaften",
+          "track": "7",
+          "hours": 10,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_07_2"
+        },
+        {
+          "code": "07.3",
+          "title": "Stoffgemische trennen",
+          "track": "7",
+          "hours": 10,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_07_3"
+        },
+        {
+          "code": "07.4",
+          "title": "Luft und Verbrennung",
+          "track": "7",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_07_4"
+        },
+        {
+          "code": "08.1",
+          "title": "Metalle und ihre Gewinnung",
+          "track": "8",
+          "hours": 22,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_08_1"
+        },
+        {
+          "code": "08.2",
+          "title": "Chemische Reaktionen in unserer Umwelt",
+          "track": "8",
+          "hours": 14,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_08_2"
+        },
+        {
+          "code": "08.3",
+          "title": "Atommodelle",
+          "track": "8",
+          "hours": 18,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_08_3"
+        },
+        {
+          "code": "08.4",
+          "title": "Die Welt der Mineralien",
+          "track": "8",
+          "hours": 22,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_08_4"
+        },
+        {
+          "code": "09.1",
+          "title": "Elementfamilien",
+          "track": "9",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_09_1"
+        },
+        {
+          "code": "09.2",
+          "title": "Die Batterie und chemische Energiespeicherung",
+          "track": "9",
+          "hours": 26,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_09_2"
+        },
+        {
+          "code": "09.3",
+          "title": "Wasser als besonderer Stoff und Lösemittel",
+          "track": "9",
+          "hours": 26,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_09_3"
+        },
+        {
+          "code": "10.1",
+          "title": "Saure und alkalische Lösungen",
+          "track": "10",
+          "hours": 28,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_10_1"
+        },
+        {
+          "code": "10.2",
+          "title": "Alkane und Alkanole in Natur und Technik",
+          "track": "10",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_10_2"
+        },
+        {
+          "code": "10.3",
+          "title": "Vielseitige Kunststoffe",
+          "track": "10",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_10_3"
+        },
+        {
+          "code": "10.4",
+          "title": "Gase als Ausgangsstoffe für Industrierohstoffe",
+          "track": "10",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_10_4"
+        },
+        {
+          "code": "EF.01",
+          "title": "Duftstoffe und Aromastoffe am Beispiel Parfum",
+          "track": "EF",
+          "hours": 44,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_EF_01"
+        },
+        {
+          "code": "EF.02",
+          "title": "Beeinflussung der Reaktionsgeschwindigkeit",
+          "track": "EF",
+          "hours": 21,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_EF_02"
+        },
+        {
+          "code": "EF.03",
+          "title": "Das chemische Gleichgewicht",
+          "track": "EF",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_EF_03"
+        },
+        {
+          "code": "EF.04",
+          "title": "Kohlenstoffkreislauf und Klima",
+          "track": "EF",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_EF_04"
+        },
+        {
+          "code": "GK.01",
+          "title": "Säuren und Basen mit analytischen Verfahren",
+          "track": "Q1 GK",
+          "hours": 28,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_01"
+        },
+        {
+          "code": "GK.02",
+          "title": "Thermodynamik",
+          "track": "Q1 GK",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_02"
+        },
+        {
+          "code": "GK.03",
+          "title": "Elektrochemie mit galvanischer Zelle und Elektrolyse",
+          "track": "Q1 GK",
+          "hours": 40,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_03"
+        },
+        {
+          "code": "GK.04",
+          "title": "Korrosion von Metallen",
+          "track": "Q1 GK",
+          "hours": 10,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_04"
+        },
+        {
+          "code": "GK.05a",
+          "title": "Organische Chemie: verschiedene Reaktionswege · Q1",
+          "track": "Q1 GK",
+          "hours": 11,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_05"
+        },
+        {
+          "code": "GK.05b",
+          "title": "Organische Chemie: verschiedene Reaktionswege · Q2",
+          "track": "Q2 GK",
+          "hours": 18,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_05"
+        },
+        {
+          "code": "GK.06",
+          "title": "Fette",
+          "track": "Q2 GK",
+          "hours": 10,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_06"
+        },
+        {
+          "code": "GK.07",
+          "title": "Kunststoffe und funktionale Werkstoffe",
+          "track": "Q2 GK",
+          "hours": 34,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_GK_07"
+        },
+        {
+          "code": "LK.01",
+          "title": "Säuren und Basen mit analytischen Verfahren",
+          "track": "Q1 LK",
+          "hours": 42,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_01"
+        },
+        {
+          "code": "LK.02",
+          "title": "Thermodynamik",
+          "track": "Q1 LK",
+          "hours": 32,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_02"
+        },
+        {
+          "code": "LK.03",
+          "title": "Elektrochemie mit galvanischer Zelle und Elektrolyse",
+          "track": "Q1 LK",
+          "hours": 50,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_03"
+        },
+        {
+          "code": "LK.04",
+          "title": "Korrosion von Metallen",
+          "track": "Q1 LK",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_04"
+        },
+        {
+          "code": "LK.05a",
+          "title": "Organische Chemie: verschiedene Reaktionswege · Q1",
+          "track": "Q1 LK",
+          "hours": 52,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_05"
+        },
+        {
+          "code": "LK.05b",
+          "title": "Organische Chemie: verschiedene Reaktionswege · Q2",
+          "track": "Q2 LK",
+          "hours": 8,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_05"
+        },
+        {
+          "code": "LK.06",
+          "title": "Fette",
+          "track": "Q2 LK",
+          "hours": 12,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_06"
+        },
+        {
+          "code": "LK.07",
+          "title": "Kunststoffe und funktionale Werkstoffe",
+          "track": "Q2 LK",
+          "hours": 59,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_07"
+        },
+        {
+          "code": "LK.08",
+          "title": "Farbstoffe",
+          "track": "Q2 LK",
+          "hours": 24,
+          "url": "chemie-curriculum-arbeitskopie.html#uv_LK_08"
+        }
+      ]
+    }
+  },
+  "years": {
+    "2026": {
+      "label": "2026/27",
+      "start": "2026-09-02",
+      "end": "2027-07-16",
+      "half": "2027-02-15",
+      "q2half": "2027-01-07",
+      "q2end": "2027-03-19",
+      "prepStart": "2027-04-05",
+      "prepEnd": "2027-04-09"
+    },
+    "2027": {
+      "label": "2027/28",
+      "start": "2027-09-01",
+      "end": "2028-07-07",
+      "half": "2028-02-07",
+      "q2half": "2028-01-10",
+      "q2end": "2028-03-30",
+      "prepStart": "2028-03-31",
+      "prepEnd": "2028-04-06"
+    }
+  },
+  "closures": [
+    {
+      "id": "closed-2026-07-20",
+      "start": "2026-07-20",
+      "end": "2026-09-01",
+      "title": "Sommerferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-10-17",
+      "start": "2026-10-17",
+      "end": "2026-10-31",
+      "title": "Herbstferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-12-23",
+      "start": "2026-12-23",
+      "end": "2027-01-06",
+      "title": "Weihnachtsferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-03-22",
+      "start": "2027-03-22",
+      "end": "2027-04-03",
+      "title": "Osterferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-18",
+      "start": "2027-05-18",
+      "end": "2027-05-18",
+      "title": "Pfingstferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-07-19",
+      "start": "2027-07-19",
+      "end": "2027-08-31",
+      "title": "Sommerferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-10-23",
+      "start": "2027-10-23",
+      "end": "2027-11-06",
+      "title": "Herbstferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-12-24",
+      "start": "2027-12-24",
+      "end": "2028-01-08",
+      "title": "Weihnachtsferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-04-10",
+      "start": "2028-04-10",
+      "end": "2028-04-22",
+      "title": "Osterferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-07-10",
+      "start": "2028-07-10",
+      "end": "2028-08-22",
+      "title": "Sommerferien",
+      "kind": "vacation",
+      "source": "https://bass.schule.nrw/191.htm",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-10-03",
+      "start": "2026-10-03",
+      "end": "2026-10-03",
+      "title": "Tag der Deutschen Einheit",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-11-01",
+      "start": "2026-11-01",
+      "end": "2026-11-01",
+      "title": "Allerheiligen",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-12-25",
+      "start": "2026-12-25",
+      "end": "2026-12-25",
+      "title": "1. Weihnachtstag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-12-26",
+      "start": "2026-12-26",
+      "end": "2026-12-26",
+      "title": "2. Weihnachtstag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-01-01",
+      "start": "2027-01-01",
+      "end": "2027-01-01",
+      "title": "Neujahr",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-03-26",
+      "start": "2027-03-26",
+      "end": "2027-03-26",
+      "title": "Karfreitag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-03-29",
+      "start": "2027-03-29",
+      "end": "2027-03-29",
+      "title": "Ostermontag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-01",
+      "start": "2027-05-01",
+      "end": "2027-05-01",
+      "title": "Tag der Arbeit",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-06",
+      "start": "2027-05-06",
+      "end": "2027-05-06",
+      "title": "Christi Himmelfahrt",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-17",
+      "start": "2027-05-17",
+      "end": "2027-05-17",
+      "title": "Pfingstmontag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-27",
+      "start": "2027-05-27",
+      "end": "2027-05-27",
+      "title": "Fronleichnam",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-10-03",
+      "start": "2027-10-03",
+      "end": "2027-10-03",
+      "title": "Tag der Deutschen Einheit",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-11-01",
+      "start": "2027-11-01",
+      "end": "2027-11-01",
+      "title": "Allerheiligen",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-12-25",
+      "start": "2027-12-25",
+      "end": "2027-12-25",
+      "title": "1. Weihnachtstag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-12-26",
+      "start": "2027-12-26",
+      "end": "2027-12-26",
+      "title": "2. Weihnachtstag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-01-01",
+      "start": "2028-01-01",
+      "end": "2028-01-01",
+      "title": "Neujahr",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-04-14",
+      "start": "2028-04-14",
+      "end": "2028-04-14",
+      "title": "Karfreitag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-04-17",
+      "start": "2028-04-17",
+      "end": "2028-04-17",
+      "title": "Ostermontag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-05-01",
+      "start": "2028-05-01",
+      "end": "2028-05-01",
+      "title": "Tag der Arbeit",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-05-25",
+      "start": "2028-05-25",
+      "end": "2028-05-25",
+      "title": "Christi Himmelfahrt",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-06-05",
+      "start": "2028-06-05",
+      "end": "2028-06-05",
+      "title": "Pfingstmontag",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-06-15",
+      "start": "2028-06-15",
+      "end": "2028-06-15",
+      "title": "Fronleichnam",
+      "kind": "holiday",
+      "source": "Gesetzliche Feiertage NRW",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-02-08",
+      "start": "2027-02-08",
+      "end": "2027-02-08",
+      "title": "Rosenmontag",
+      "kind": "school",
+      "source": "Festlegung der Kursleitung: jährlich schulfrei",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-02-09",
+      "start": "2027-02-09",
+      "end": "2027-02-09",
+      "title": "Faschingsdienstag",
+      "kind": "school",
+      "source": "Festlegung der Kursleitung: jährlich schulfrei",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-02-28",
+      "start": "2028-02-28",
+      "end": "2028-02-28",
+      "title": "Rosenmontag",
+      "kind": "school",
+      "source": "Festlegung der Kursleitung: jährlich schulfrei",
+      "tracks": []
+    },
+    {
+      "id": "closed-2028-02-29",
+      "start": "2028-02-29",
+      "end": "2028-02-29",
+      "title": "Faschingsdienstag",
+      "kind": "school",
+      "source": "Festlegung der Kursleitung: jährlich schulfrei",
+      "tracks": []
+    },
+    {
+      "id": "closed-2026-09-28",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "title": "Pädagogischer Tag",
+      "kind": "school",
+      "source": "Schulische Klausurpläne 2026/27",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-05-07",
+      "start": "2027-05-07",
+      "end": "2027-05-07",
+      "title": "Beweglicher Ferientag",
+      "kind": "school",
+      "source": "Schulische Klausurpläne 2026/27",
+      "tracks": []
+    },
+    {
+      "id": "closed-2027-03-17",
+      "start": "2027-03-17",
+      "end": "2027-03-17",
+      "title": "Pädagogischer Tag / Berufsorientierung Q1",
+      "kind": "school",
+      "source": "Klausurpläne Q1.2 und Q2.2 2026/27",
+      "tracks": [
+        "Q1 GK",
+        "Q1 LK",
+        "Q2 GK",
+        "Q2 LK"
+      ]
+    }
+  ],
+  "exams": [
+    {
+      "id": "chemie-EF-2026-12-08-0",
+      "subject": "chemie",
+      "track": "EF",
+      "start": "2026-12-08",
+      "end": "2026-12-08",
+      "title": "Klausur · GK10",
+      "kind": "exam",
+      "source": "EF.1 · Schulischer Klausurplan 2026/27",
+      "notes": "3./4. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-EF-2026-12-14-1",
+      "subject": "chemie",
+      "track": "EF",
+      "start": "2026-12-14",
+      "end": "2026-12-14",
+      "title": "Klausur · GK6",
+      "kind": "exam",
+      "source": "EF.1 · Schulischer Klausurplan 2026/27",
+      "notes": "3./4. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2026-09-29-6",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2026-09-29",
+      "end": "2026-09-29",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2026-11-24-7",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2026-11-24",
+      "end": "2026-11-24",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q1.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-03-02-18",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-03-02",
+      "end": "2027-03-02",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-05-11-19",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q1.2 · Schulischer Klausurplan 2026/27 (Dateiname Q1.2_Klausurplan2027.27_Thomaeum..pdf; Dokumentkopf: 2026/2027)",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2026-09-25-30",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2026-09-25",
+      "end": "2026-09-25",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2026-11-13-31",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Klausur · LK II",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2026-10-01-34",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2026-10-01",
+      "end": "2026-10-01",
+      "title": "Klausur · GK4",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 4. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2026-11-19-35",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2026-11-19",
+      "end": "2026-11-19",
+      "title": "Klausur · GK4",
+      "kind": "exam",
+      "source": "Q2.1 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 5. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2027-02-19-42",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2027-02-19",
+      "end": "2027-02-19",
+      "title": "Vorabitur · LK II",
+      "kind": "exam",
+      "source": "Q2.2 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2027-02-23-44",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2027-02-23",
+      "end": "2027-02-23",
+      "title": "Vorabitur · 3. Abiturfach",
+      "kind": "exam",
+      "source": "Q2.2 · Schulischer Klausurplan 2026/27",
+      "notes": "ab 1. Stunde; nur bei Belegung als 3. Abiturfach",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2027-04-21-45",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2027-04-21",
+      "end": "2027-04-21",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-GK-2027-05-11-46",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-LK-2027-04-21-47",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2027-04-21",
+      "end": "2027-04-21",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-LK-2027-05-11-48",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2027-05-11",
+      "end": "2027-05-11",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-GK-2028-05-11-49",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2028-05-11",
+      "end": "2028-05-11",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-GK-2028-05-24-50",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2028-05-24",
+      "end": "2028-05-24",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-LK-2028-05-11-51",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2028-05-11",
+      "end": "2028-05-11",
+      "title": "Schriftliches Abitur",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Amtlicher Haupttermin",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-Q2-LK-2028-05-24-52",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2028-05-24",
+      "end": "2028-05-24",
+      "title": "Abitur · Nachschreibtermin",
+      "kind": "abitur",
+      "source": "https://bass.schule.nrw/192.htm",
+      "notes": "Nur für angemeldete Nachschreibende",
+      "time": "09:00"
+    },
+    {
+      "id": "chemie-EF-2026-11-13-53",
+      "subject": "chemie",
+      "track": "EF",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-EF-2027-01-22-54",
+      "subject": "chemie",
+      "track": "EF",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-GK-2026-11-13-55",
+      "subject": "chemie",
+      "track": "Q1 GK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-GK-2027-01-22-56",
+      "subject": "chemie",
+      "track": "Q1 GK",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-GK-2027-04-22-57",
+      "subject": "chemie",
+      "track": "Q1 GK",
+      "start": "2027-04-22",
+      "end": "2027-04-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-GK-2027-07-02-58",
+      "subject": "chemie",
+      "track": "Q1 GK",
+      "start": "2027-07-02",
+      "end": "2027-07-02",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2026-11-13-59",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-01-22-60",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-01-22",
+      "end": "2027-01-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-04-22-61",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-04-22",
+      "end": "2027-04-22",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q1-LK-2027-07-02-62",
+      "subject": "chemie",
+      "track": "Q1 LK",
+      "start": "2027-07-02",
+      "end": "2027-07-02",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2026-11-04-63",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2026-12-17-64",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2026-12-17",
+      "end": "2026-12-17",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-GK-2027-03-09-65",
+      "subject": "chemie",
+      "track": "Q2 GK",
+      "start": "2027-03-09",
+      "end": "2027-03-09",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2026-11-04-66",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2026-12-17-67",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2026-12-17",
+      "end": "2026-12-17",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    },
+    {
+      "id": "chemie-Q2-LK-2027-03-09-68",
+      "subject": "chemie",
+      "track": "Q2 LK",
+      "start": "2027-03-09",
+      "end": "2027-03-09",
+      "title": "Nachschreibreserve · Thomaeum",
+      "kind": "makeup",
+      "source": "Schulische Klausurpläne 2026/27",
+      "notes": "Allgemeiner Nachschreibtermin; individuelle Fachzuordnung durch die Schule.",
+      "time": ""
+    }
+  ],
+  "sources": [
+    {
+      "label": "Amtliche NRW-Ferien und Halbjahrestermine",
+      "url": "https://bass.schule.nrw/191.htm"
+    },
+    {
+      "label": "Amtliche Abiturtermine 2027 und 2028",
+      "url": "https://bass.schule.nrw/192.htm"
+    }
+  ]
+}
