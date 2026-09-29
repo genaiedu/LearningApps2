@@ -15,7 +15,7 @@ function distribute(weights,total){
 function unitsFor(data,subject,year,trackId){
  const sub=data.subjects[subject];
  let units=sub.units.filter(u=>u.track===trackId);
- if(subject==='chemie'&&((+year>=2027&&trackId==='EF')||(+year>=2028&&trackId.startsWith('Q1'))||(+year>=2029&&trackId.startsWith('Q2'))))units=sub.units2026.filter(u=>u.track===trackId);
+ if(['chemie','chemie-arbeitskopie'].includes(subject)&&((+year>=2027&&trackId==='EF')||(+year>=2028&&trackId.startsWith('Q1'))||(+year>=2029&&trackId.startsWith('Q2'))))units=sub.units2026.filter(u=>u.track===trackId);
  return units;
 }
 function plan(data,subject,year,closures,orders={}){

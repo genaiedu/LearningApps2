@@ -6,7 +6,13 @@ const blankState=()=>({version:2,overrides:{},added:[],free:[],filters:{},years:
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=s=>P.parse(s).toLocaleDateString('de-DE',{timeZone:'UTC'}),monthName=s=>P.parse(s).toLocaleDateString('de-DE',{month:'long',year:'numeric',timeZone:'UTC'});
 let data;try{const r=await fetch('data/fachkalender.json?v=20260927');if(!r.ok)throw Error();data=await r.json()}catch{$('save-status').textContent='Der Kalender konnte nicht geladen werden. Bitte die Seite erneut öffnen.';return}
-const builtinYears=structuredClone(data.years);
+const publishedData=data;
+let workingData=null;try{const r=await fetch('data/chemie-arbeitskopie-kalender.json?v=20260930');if(!r.ok)throw Error();const copy=await r.json();workingData={...copy,subjects:{...copy.subjects,'chemie-arbeitskopie':copy.subjects.chemie},exams:copy.exams.map(e=>({...e,subject:'chemie-arbeitskopie'}))}}catch{}
+const knownSubjects={...publishedData.subjects,...(workingData?{'chemie-arbeitskopie':workingData.subjects['chemie-arbeitskopie']}: {})};
+const params=new URLSearchParams(location.search);
+let edition=params.get('fassung')==='arbeitsversion'&&workingData&&(!params.get('fach')||params.get('fach')==='chemie')?'arbeitsversion':'veroeffentlicht';
+data=edition==='arbeitsversion'?workingData:publishedData;
+let builtinYears=structuredClone(data.years);
 let state=blankState(),storageOK=true,loadWarning='',currentUser=null,authReady=false,authMode='login',cloudTimer=null,cloudQueue=Promise.resolve(),editingOrder=null;
 const kinds=['unit','buffer','prep','exam','abitur','makeup','event'];
 const validDate=s=>typeof s==='string'&&/^20\d{2}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(P.parse(s).getTime())&&P.iso(P.parse(s))===s;
@@ -20,7 +26,7 @@ function validState(s){
  const configs={...builtinYears,...s.years};
  if(Object.entries(s.remoteClosures||{}).some(([y,cs])=>!configs[y]||!Array.isArray(cs)||cs.length>100||cs.some(c=>!validDate(c.start)||!validDate(c.end)||c.start>c.end||typeof c.title!=='string'||c.title.length>200||!Array.isArray(c.tracks))))return false;
  const bounded=(v,n)=>typeof v==='string'&&v.length<=n;
- const event=e=>e&&bounded(e.id,200)&&data.subjects[e.subject]&&configs[e.year]&&data.subjects[e.subject].tracks.some(t=>t.id===e.track)&&kinds.includes(e.kind)&&validDate(e.start)&&validDate(e.end)&&e.start<=e.end&&e.start>=e.year+'-07-01'&&e.end<=(+e.year+1)+'-09-30'&&bounded(e.title,250)&&bounded(e.notes||'',5000)&&(!e.time||/^([01]\d|2[0-3]):[0-5]\d$/.test(e.time));
+ const event=e=>e&&bounded(e.id,200)&&knownSubjects[e.subject]&&configs[e.year]&&knownSubjects[e.subject].tracks.some(t=>t.id===e.track)&&kinds.includes(e.kind)&&validDate(e.start)&&validDate(e.end)&&e.start<=e.end&&e.start>=e.year+'-07-01'&&e.end<=(+e.year+1)+'-09-30'&&bounded(e.title,250)&&bounded(e.notes||'',5000)&&(!e.time||/^([01]\d|2[0-3]):[0-5]\d$/.test(e.time));
  if(!s.added.every(event)||new Set(s.added.map(e=>e.id)).size!==s.added.length)return false;
  if(!Object.entries(s.overrides).every(([id,e])=>bounded(id,200)&&id!=='__proto__'&&(e===null||event(e)&&e.id===id)))return false;
  if(s.orders!=null&&(!s.orders||typeof s.orders!=='object'||Array.isArray(s.orders)||Object.keys(s.orders).length>300||Object.entries(s.orders).some(([key,order])=>!/^[-a-z]+:20\d{2}:.+$/.test(key)||!Array.isArray(order)||order.length>50||!order.every(code=>bounded(code,80)))))return false;
@@ -31,9 +37,9 @@ function loadLocal(key){try{const raw=localStorage.getItem(key);if(!raw)return b
 state=blankState();data.years={...builtinYears};
 function updateYears(){ $('year').innerHTML=Object.keys(data.years).sort().map(y=>`<option value="${y}">${esc(data.years[y].label)}</option>`).join('') }
 updateYears();
-const params=new URLSearchParams(location.search);let subject=data.subjects[params.get('fach')]?params.get('fach'):'chemie',year=data.years[params.get('jahr')]?params.get('jahr'):'2026';
+let subject='chemie',year=data.years[params.get('jahr')]?params.get('jahr'):'2026';
 let month=data.years[year].start.slice(0,7)+'-01',view='year',events=[],stats=[],selected=new Set(),editId=null,baseEvents=[];
-$('subject').value=subject;$('year').value=year;
+$('subject').value=publishedData.subjects[params.get('fach')]?params.get('fach'):'chemie';$('chemie-edition').value=edition;$('year').value=year;
 function profileRef(uid){return doc(db,'users',uid,'workStates','fachkalender-v1')}
 function save(message){
  const key=currentUser?profileKey(currentUser.uid):GUEST_KEY;
@@ -70,18 +76,25 @@ function tracks(){
 }
 function months(){const out=[];for(let m=data.years[year].start.slice(0,7)+'-01';m<=data.years[year].end;){out.push(m);const d=P.parse(m);d.setUTCMonth(d.getUTCMonth()+1);m=P.iso(d)}return out}
 function setContext(){
- subject=$('subject').value;year=$('year').value;month=data.years[year].start.slice(0,7)+'-01';tracks();
+ const visibleSubject=$('subject').value;
+ edition=visibleSubject==='chemie'&&workingData?$('chemie-edition').value:'veroeffentlicht';
+ $('chemie-edition-wrap').hidden=visibleSubject!=='chemie'||!workingData;
+ data=edition==='arbeitsversion'?workingData:publishedData;builtinYears=structuredClone(data.years);
+ subject=edition==='arbeitsversion'?'chemie-arbeitskopie':visibleSubject;
+ data.years={...builtinYears,...state.years};updateYears();
+ year=data.years[$('year').value]?$('year').value:Object.keys(data.years).sort()[0];$('year').value=year;
+ month=data.years[year].start.slice(0,7)+'-01';tracks();
  $('month').innerHTML=months().map(m=>`<option value="${m}">${monthName(m)}</option>`).join('');
  $('subtitle').textContent=data.subjects[subject].label+' · '+data.years[year].label;
  $('curriculum-link').href=data.subjects[subject].curriculum;
- const colors={chemie:'#19665d',physik:'#245d91',biologie:'#9c493c','mensch-und-umwelt':'#466b37'};
+ const colors={chemie:'#19665d','chemie-arbeitskopie':'#19665d',physik:'#245d91',biologie:'#9c493c','mensch-und-umwelt':'#466b37'};
  document.body.dataset.subject=subject;
  if(document.documentElement.dataset.theme!=='dark')document.body.style.setProperty('--accent',colors[subject]);else document.body.style.removeProperty('--accent');
- const url=new URL(location.href);url.searchParams.set('fach',subject);url.searchParams.set('jahr',year);history.replaceState(null,'',url);
- $('notice').textContent='Planungsvorschlag aus dem Curriculum · '+(year==='2026'?'Bekannte schulische Klausuren und amtliche Abiturtermine sind eingetragen.':'Amtliche Abiturtermine sind eingetragen; schulische Klausurtermine können ergänzt werden.')+' Jahrgänge und Kursarten sind unabhängig auswählbar.';
- $('cohort-note').textContent=+year>=2027?(subject==='chemie'?'Chemie: Die Fassung zum Kernlehrplan 2026 wird jahrgangsweise eingesetzt: EF ab 2027/28, Q1 ab 2028/29 und Q2 ab 2029/30. Frühere Jahrgänge und Sek I behalten ihre jeweilige Grundlage.':subject==='mensch-und-umwelt'?'Mensch und Umwelt: Klassen 9 und 10, jeweils drei Wochenstunden.':'Für die ab 2027/28 neu eintretenden EF-Jahrgänge und ihre späteren Q-Phasen dient die Vorhabenfolge des vorhandenen Curriculums als Übergangsplanung. Der Abgleich mit dem neuen Kernlehrplan 2026 ist vor der Umsetzung erforderlich.'):'Planungsgrundlage ist die für diese Jahrgänge bestehende Fassung des schulinternen Curriculums.';
+ const url=new URL(location.href);url.searchParams.set('fach',visibleSubject);url.searchParams.set('jahr',year);if(edition==='arbeitsversion')url.searchParams.set('fassung','arbeitsversion');else url.searchParams.delete('fassung');history.replaceState(null,'',url);
+ $('notice').textContent=edition==='arbeitsversion'?'Arbeitsversion des schulinternen Chemiecurriculums · Die Zeiträume werden anhand der dort ausgewiesenen Zeitrichtwerte berechnet.':'Planungsvorschlag aus dem Curriculum · '+(year==='2026'?'Bekannte schulische Klausuren und amtliche Abiturtermine sind eingetragen.':'Amtliche Abiturtermine sind eingetragen; schulische Klausurtermine können ergänzt werden.')+' Jahrgänge und Kursarten sind unabhängig auswählbar.';
+ $('cohort-note').textContent=edition==='arbeitsversion'?'Arbeitsversion: Sek I nach KLP 2019, Oberstufe nach dem geltenden KLP 2022. Der Kalender zeigt die dort ausgewiesenen Unterrichtsvorhaben; die Arbeitsfassung bleibt getrennt von der veröffentlichten Fassung.':+year>=2027?(subject==='chemie'?'Chemie: Die Fassung zum Kernlehrplan 2026 wird jahrgangsweise eingesetzt: EF ab 2027/28, Q1 ab 2028/29 und Q2 ab 2029/30. Frühere Jahrgänge und Sek I behalten ihre jeweilige Grundlage.':subject==='mensch-und-umwelt'?'Mensch und Umwelt: Klassen 9 und 10, jeweils drei Wochenstunden.':'Für die ab 2027/28 neu eintretenden EF-Jahrgänge und ihre späteren Q-Phasen dient die Vorhabenfolge des vorhandenen Curriculums als Übergangsplanung. Der Abgleich mit dem neuen Kernlehrplan 2026 ist vor der Umsetzung erforderlich.'):'Planungsgrundlage ist die für diese Jahrgänge bestehende Fassung des schulinternen Curriculums.';
  if(data.years[year].dynamic)$('notice').textContent='NRW-Ferien und Feiertage aus dem Netz geladen · '+(data.years[year].q2Provisional?'Q2-Unterrichtsende ist ein vorläufiger Planungswert; unter Schuljahresrahmen prüfen. ':'Q2-Rahmen nach eigener Festlegung. ')+(data.years[year].halfProvisional?'Halbjahreswechsel vorläufig. ':'')+'Schulische Klausuren und Abiturtermine bitte ergänzen.';
- refresh();
+ $('stand').textContent=data.status;$('sources').innerHTML=data.sources.map(x=>`<p><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)} ↗</a></p>`).join('');refresh();
 }
 function shown(e){return selected.has(e.track)&&($('show-makeup').checked||e.kind!=='makeup')}
 function onDay(e,d){return d>=e.start&&d<=e.end&&(!['unit','buffer','prep'].includes(e.kind)||!P.closed(d,e.track,closureList()))}
@@ -194,7 +207,7 @@ $('free-list').onclick=e=>{const edit=e.target.closest('[data-free-edit]'),del=e
 $('tracks').onchange=()=>{selected=new Set([...$('tracks').querySelectorAll('input:checked')].map(x=>x.value));state.filters[subject]=[...selected];save('Auswahl der Jahrgangsstufen gespeichert.');render()};
 function selectAll(on){$('tracks').querySelectorAll('input').forEach(x=>x.checked=on);$('tracks').onchange()}
 $('all-tracks').onclick=()=>selectAll(true);$('no-tracks').onclick=()=>selectAll(false);
-$('subject').onchange=setContext;$('year').onchange=setContext;$('month').onchange=()=>{month=$('month').value;render()};
+$('subject').onchange=setContext;$('chemie-edition').onchange=setContext;$('year').onchange=setContext;$('month').onchange=()=>{month=$('month').value;render()};
 $('prev').onclick=()=>{const ms=months();month=ms[ms.indexOf(month)-1];render()};$('next').onclick=()=>{const ms=months();month=ms[ms.indexOf(month)+1];render()};
 $('month-view').onclick=()=>{view='month';render()};$('year-view').onclick=()=>{view='year';render()};
 for(const id of ['show-makeup','show-closures'])$(id).onchange=render;
@@ -253,6 +266,5 @@ async function leaveProfile(){try{$('save-status').textContent='Abmeldung läuft
 $('signout').onclick=leaveProfile;$('auth-signout').onclick=leaveProfile;
 onAuthStateChanged(auth,user=>{authReady=true;activateProfile(user)});
 
-$('sources').innerHTML=data.sources.map(x=>`<p><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)} ↗</a></p>`).join('');$('stand').textContent=data.status;
 setContext();theme();$('save-status').textContent=loadWarning||(storageOK?'Gastmodus: Änderungen bleiben auf diesem Gerät. Melde dich an, um sie privat in deinem Profil zu speichern.':'Lokale Speicherung ist nicht verfügbar. Bitte Änderungen exportieren.');
 })();
