@@ -12,11 +12,21 @@ function distribute(weights,total){
  raw.map((v,i)=>({i,rest:v-n[i]})).sort((a,b)=>b.rest-a.rest||a.i-b.i).slice(0,remaining).forEach(x=>n[x.i]++);
  return n;
 }
-function plan(data,subject,year,closures){
+function unitsFor(data,subject,year,trackId){
+ const sub=data.subjects[subject];
+ let units=sub.units.filter(u=>u.track===trackId);
+ if(subject==='chemie'&&((+year>=2027&&trackId==='EF')||(+year>=2028&&trackId.startsWith('Q1'))||(+year>=2029&&trackId.startsWith('Q2'))))units=sub.units2026.filter(u=>u.track===trackId);
+ return units;
+}
+function plan(data,subject,year,closures,orders={}){
  const config=data.years[year],sub=data.subjects[subject],events=[],stats=[];
  for(const track of sub.tracks){
-  let units=sub.units.filter(u=>u.track===track.id);
-  if(subject==='chemie'&&((+year>=2027&&track.id==='EF')||(+year>=2028&&track.id.startsWith('Q1'))||(+year>=2029&&track.id.startsWith('Q2'))))units=sub.units2026.filter(u=>u.track===track.id);
+  let units=unitsFor(data,subject,year,track.id);
+  const order=orders[`${subject}:${year}:${track.id}`],byCode=new Map(units.map(u=>[u.code,u]));
+  if(Array.isArray(order)){
+   const seen=new Set();
+   units=[...order.filter(code=>byCode.has(code)&&!seen.has(code)&&(seen.add(code),true)).map(code=>byCode.get(code)),...units.filter(u=>!seen.has(u.code))];
+  }
   const q2=track.id.startsWith('Q2');
   const end=q2?(config.prepEnd||config.q2end):config.end;
   const days=dates(config.start,end).filter(d=>!closed(d,track.id,closures));
@@ -37,5 +47,5 @@ function plan(data,subject,year,closures){
  events.push(...data.exams.filter(e=>e.subject===subject&&e.start>=config.start&&e.start<=config.end).map(e=>({...e,year})));
  return {events,stats};
 }
-const api={parse,iso,add,dates,closed,distribute,plan};root.Fachplan=api;if(typeof module!=='undefined')module.exports=api;
+const api={parse,iso,add,dates,closed,distribute,unitsFor,plan};root.Fachplan=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof globalThis!=='undefined'?globalThis:window);
