@@ -130,7 +130,12 @@ function chip(e,range=false,day=null){
 }
 function weekLabel(d){const date=P.parse(d);date.setUTCDate(date.getUTCDate()+4-(date.getUTCDay()||7));return Math.ceil((((date-new Date(Date.UTC(date.getUTCFullYear(),0,1)))/86400000)+1)/7)}
 function render(){
+ if(view==='week'){
+  const config=data.years[year],visible=weekStart<config.start?config.start:weekStart>config.end?config.end:weekStart;
+  month=visible.slice(0,7)+'-01';
+ }
  $('period-title').textContent=view==='month'?monthName(month):view==='week'?`${fmt(weekStart)}–${fmt(P.add(weekStart,6))}`:'Schuljahr '+data.years[year].label;$('month').value=month;
+ $('prev').setAttribute('aria-label',view==='week'?'Vorherige Woche':'Vorheriger Monat');$('next').setAttribute('aria-label',view==='week'?'Nächste Woche':'Nächster Monat');
  $('week-view').setAttribute('aria-pressed',String(view==='week'));$('month-view').setAttribute('aria-pressed',String(view==='month'));$('year-view').setAttribute('aria-pressed',String(view==='year'));
  const ms=months(),config=data.years[year];$('prev').disabled=view==='year'||(view==='month'?month===ms[0]:weekStart<=config.start);$('next').disabled=view==='year'||(view==='month'?month===ms.at(-1):P.add(weekStart,6)>=config.end);$('month').disabled=view!=='month';
  const display=events.filter(shown),c=data.years[year],free=closureList(),today=new Date().toLocaleDateString('sv-SE');
@@ -151,7 +156,7 @@ function render(){
   }$('calendar').innerHTML=html+'</div></div>';
  }else if(view==='week'){
   const days=P.dates(weekStart,P.add(weekStart,6));let html='<div class="month-scroll"><div class="month-grid">'+days.map(d=>`<div class="weekday ${P.iso(P.parse(d))===today?'current-weekday':''}">${weekdayNames[(P.parse(d).getUTCDay()+6)%7]||'Wochenende'}<br>${fmt(d)}</div>`).join('');
-  for(const d of days){const closures=free.filter(x=>d>=x.start&&d<=x.end&&(!x.tracks.length||x.tracks.some(t=>selected.has(t))));const items=d<config.start||d>config.end?[]:display.filter(e=>onDay(e,d));html+=`<div class="day ${[0,6].includes(P.parse(d).getUTCDay())?'weekend':''} ${closures.length&&$('show-closures').checked?'free':''} ${d===today?'today':''}"><time class="date-number" datetime="${d}">${P.parse(d).getUTCDate()}</time>`;if($('show-closures').checked)html+=closures.map(x=>`<span class="closure-label">${esc(x.title)}</span>`).join('');html+=items.map(e=>chip(e,false,d)).join('')||(!closures.length?'<span class="hint">Keine geplante Stunde</span>':'')+'</div>'}
+  for(const d of days){const closures=free.filter(x=>d>=x.start&&d<=x.end&&(!x.tracks.length||x.tracks.some(t=>selected.has(t))));const items=d<config.start||d>config.end?[]:display.filter(e=>onDay(e,d));html+=`<div class="day ${[0,6].includes(P.parse(d).getUTCDay())?'weekend':''} ${closures.length&&$('show-closures').checked?'free':''} ${d===today?'today':''}"><time class="date-number" datetime="${d}">${P.parse(d).getUTCDate()}</time>`;if($('show-closures').checked)html+=closures.map(x=>`<span class="closure-label">${esc(x.title)}</span>`).join('');html+=(items.map(e=>chip(e,false,d)).join('')||(!closures.length?'<span class="hint">Keine geplante Stunde</span>':''))+'</div>'}
   $('calendar').innerHTML=html+'</div></div>';
  }else{
   const ts=data.subjects[subject].tracks.filter(t=>selected.has(t.id));
