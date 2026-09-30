@@ -1,8 +1,8 @@
-import { auth, db, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail, reload, getIdToken, doc, getDoc, setDoc, serverTimestamp } from './fachkalender-firebase.js';
+import { auth, db, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail, reload, getIdToken, doc, getDoc, setDoc, onSnapshot, serverTimestamp } from './fachkalender-firebase.js';
 'use strict';
 (async()=>{
-const $=id=>document.getElementById(id),P=window.Fachplan,GUEST_KEY='thomaeum-fachkalender-v1',APP_ID='fachkalender',ACTIVITY_ID='personal-plan';
-const blankState=()=>({version:4,overrides:{},added:[],customUnits:[],free:[],filters:{},timetable:{},groups:{},cancelled:{},completed:{},years:{},remoteClosures:{},orders:{}});
+const $=id=>document.getElementById(id),P=window.Fachplan,S=window.FachkalenderSchool,GUEST_KEY='thomaeum-fachkalender-v1',APP_ID='fachkalender',ACTIVITY_ID='personal-plan';
+const blankState=()=>({version:4,overrides:{},added:[],customUnits:[],absences:[],filters:{},timetable:{},groups:{},cancelled:{},completed:{},orders:{}});
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=s=>P.parse(s).toLocaleDateString('de-DE',{timeZone:'UTC'}),monthName=s=>P.parse(s).toLocaleDateString('de-DE',{month:'long',year:'numeric',timeZone:'UTC'});
 let data;try{const r=await fetch('data/fachkalender.json?v=20260927');if(!r.ok)throw Error();data=await r.json()}catch{$('save-status').textContent='Der Kalender konnte nicht geladen werden. Bitte die Seite erneut öffnen.';return}
@@ -12,21 +12,22 @@ const knownSubjects={...publishedData.subjects,...(workingData?{'chemie-arbeitsk
 const params=new URLSearchParams(location.search);
 let edition=params.get('fassung')==='arbeitsversion'&&workingData&&(!params.get('fach')||params.get('fach')==='chemie')?'arbeitsversion':'veroeffentlicht';
 data=edition==='arbeitsversion'?workingData:publishedData;
-let builtinYears=structuredClone(data.years);
+let sharedSettings={version:1,years:{},closures:[]},builtinYears=structuredClone(data.years);
 let state=blankState(),storageOK=true,loadWarning='',currentUser=null,authReady=false,authMode='login',cloudTimer=null,cloudQueue=Promise.resolve(),editingOrder=null;
 const kinds=['unit','buffer','prep','exam','abitur','makeup','event','grade'];
 const validDate=s=>typeof s==='string'&&/^20\d{2}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(P.parse(s).getTime())&&P.iso(P.parse(s))===s;
 function validConfig(c,y){
  return c&&['start','end','half','q2half','q2end'].every(k=>validDate(c[k]))&&c.start<c.end&&c.start.startsWith(y+'-')&&c.end.startsWith((+y+1)+'-')&&c.q2end>=c.start&&c.q2end<=c.end&&c.half>=c.start&&c.half<=c.end&&c.q2half>=c.start&&c.q2half<=c.q2end&&(!c.prepStart&&!c.prepEnd||validDate(c.prepStart)&&validDate(c.prepEnd)&&c.prepStart<=c.prepEnd&&c.prepStart>c.q2end&&c.prepEnd<=c.end);
 }
-function normalizeState(s){return {...blankState(),...s,version:4,customUnits:Array.isArray(s?.customUnits)?s.customUnits:[],timetable:s?.timetable&&typeof s.timetable==='object'?s.timetable:{},groups:s?.groups&&typeof s.groups==='object'?s.groups:{},cancelled:s?.cancelled&&typeof s.cancelled==='object'?s.cancelled:{},completed:s?.completed&&typeof s.completed==='object'?s.completed:{},orders:s?.orders&&typeof s.orders==='object'?s.orders:{}}}
+function normalizeState(s){const {years,remoteClosures,free,...personal}=s||{};return {...blankState(),...personal,version:4,customUnits:Array.isArray(s?.customUnits)?s.customUnits:[],absences:Array.isArray(s?.absences)?s.absences:[],timetable:s?.timetable&&typeof s.timetable==='object'?s.timetable:{},groups:s?.groups&&typeof s.groups==='object'?s.groups:{},cancelled:s?.cancelled&&typeof s.cancelled==='object'?s.cancelled:{},completed:s?.completed&&typeof s.completed==='object'?s.completed:{},orders:s?.orders&&typeof s.orders==='object'?s.orders:{}}}
 function validState(s){
- if(!s||![1,2,3,4].includes(s.version)||!s.overrides||typeof s.overrides!=='object'||Array.isArray(s.overrides)||!Array.isArray(s.added)||!Array.isArray(s.free)||s.added.length>2000||s.free.length>500||Object.keys(s.overrides).length>3000)return false;
+ if(!s||![1,2,3,4].includes(s.version)||!s.overrides||typeof s.overrides!=='object'||Array.isArray(s.overrides)||!Array.isArray(s.added)||(s.free!=null&&!Array.isArray(s.free))||s.added.length>2000||(s.free||[]).length>500||Object.keys(s.overrides).length>3000)return false;
  if(Object.entries(s.years||{}).some(([y,c])=>!/^20\d{2}$/.test(y)||+y<2026||!validConfig(c,y)))return false;
- const configs={...builtinYears,...s.years};
+ const configs={...builtinYears,...sharedSettings.years,...s.years};
+ const knownYear=y=>Boolean(configs[y])||/^20\d{2}$/.test(y)&&+y>=2026&&+y<=2099;
  if(Object.entries(s.remoteClosures||{}).some(([y,cs])=>!configs[y]||!Array.isArray(cs)||cs.length>100||cs.some(c=>!validDate(c.start)||!validDate(c.end)||c.start>c.end||typeof c.title!=='string'||c.title.length>200||!Array.isArray(c.tracks))))return false;
  const bounded=(v,n)=>typeof v==='string'&&v.length<=n;
- if(s.customUnits!=null&&(!Array.isArray(s.customUnits)||s.customUnits.length>500||!s.customUnits.every(u=>u&&bounded(u.id,200)&&u.id.startsWith('uvx-')&&knownSubjects[u.subject]&&configs[u.year]&&knownSubjects[u.subject].tracks.some(t=>t.id===u.track)&&bounded(u.title,250)&&u.title.trim()&&Number.isFinite(u.hours)&&u.hours>=1&&u.hours<=400&&bounded(u.notes||'',2000))||new Set((s.customUnits||[]).map(u=>u.id)).size!==(s.customUnits||[]).length))return false;
+ if(s.customUnits!=null&&(!Array.isArray(s.customUnits)||s.customUnits.length>500||!s.customUnits.every(u=>u&&bounded(u.id,200)&&u.id.startsWith('uvx-')&&knownSubjects[u.subject]&&knownYear(u.year)&&knownSubjects[u.subject].tracks.some(t=>t.id===u.track)&&bounded(u.title,250)&&u.title.trim()&&Number.isFinite(u.hours)&&u.hours>=1&&u.hours<=400&&bounded(u.notes||'',2000))||new Set((s.customUnits||[]).map(u=>u.id)).size!==(s.customUnits||[]).length))return false;
  if(s.timetable!=null){
   if(!s.timetable||typeof s.timetable!=='object'||Array.isArray(s.timetable))return false;
   for(const [sub,tracks] of Object.entries(s.timetable)){
@@ -43,7 +44,7 @@ function validState(s){
   for(const [sub,byYear] of Object.entries(s.groups)){
    if(!knownSubjects[sub]||!byYear||typeof byYear!=='object'||Array.isArray(byYear))return false;
    for(const [y,groups] of Object.entries(byYear)){
-    if(!configs[y]||!Array.isArray(groups)||groups.length>100||new Set(groups.map(g=>g.id)).size!==groups.length)return false;
+    if(!knownYear(y)||!Array.isArray(groups)||groups.length>100||new Set(groups.map(g=>g.id)).size!==groups.length)return false;
     for(const g of groups){
      if(!g||!bounded(g.id,100)||!bounded(g.label,80)||!g.label.trim()||!knownSubjects[sub].tracks.some(t=>t.id===g.track)||!g.days||typeof g.days!=='object'||Array.isArray(g.days))return false;
      const entries=Object.entries(g.days);
@@ -54,11 +55,12 @@ function validState(s){
  }
  if(s.cancelled!=null&&(!s.cancelled||typeof s.cancelled!=='object'||Array.isArray(s.cancelled)||Object.keys(s.cancelled).length>12000||Object.entries(s.cancelled).some(([key,value])=>!bounded(key,300)||typeof value!=='boolean')))return false;
  if(s.completed!=null&&(!s.completed||typeof s.completed!=='object'||Array.isArray(s.completed)||Object.keys(s.completed).length>12000||Object.entries(s.completed).some(([key,value])=>!bounded(key,300)||typeof value!=='boolean')))return false;
- const event=e=>e&&bounded(e.id,200)&&knownSubjects[e.subject]&&configs[e.year]&&knownSubjects[e.subject].tracks.some(t=>t.id===e.track)&&(!e.groupId||bounded(e.groupId,100))&&kinds.includes(e.kind)&&validDate(e.start)&&validDate(e.end)&&e.start<=e.end&&e.start>=e.year+'-07-01'&&e.end<=(+e.year+1)+'-09-30'&&bounded(e.title,250)&&bounded(e.notes||'',5000)&&(!e.time||/^([01]\d|2[0-3]):[0-5]\d$/.test(e.time));
+ if(s.absences!=null&&(!Array.isArray(s.absences)||s.absences.length>500||s.absences.some(a=>!a||!bounded(a.id,100)||!knownSubjects[a.subject]||!knownYear(a.year)||!validDate(a.start)||!validDate(a.end)||a.start>a.end||!bounded(a.title,200)||!Array.isArray(a.optionIds)||a.optionIds.length>100||a.optionIds.some(id=>!bounded(id,100)))))return false;
+ const event=e=>e&&bounded(e.id,200)&&knownSubjects[e.subject]&&knownYear(e.year)&&knownSubjects[e.subject].tracks.some(t=>t.id===e.track)&&(!e.groupId||bounded(e.groupId,100))&&kinds.includes(e.kind)&&validDate(e.start)&&validDate(e.end)&&e.start<=e.end&&e.start>=e.year+'-07-01'&&e.end<=(+e.year+1)+'-09-30'&&bounded(e.title,250)&&bounded(e.notes||'',5000)&&(!e.time||/^([01]\d|2[0-3]):[0-5]\d$/.test(e.time));
  if(!s.added.every(event)||new Set(s.added.map(e=>e.id)).size!==s.added.length)return false;
  if(!Object.entries(s.overrides).every(([id,e])=>bounded(id,200)&&id!=='__proto__'&&(e===null||event(e)&&e.id===id)))return false;
  if(s.orders!=null&&(!s.orders||typeof s.orders!=='object'||Array.isArray(s.orders)||Object.keys(s.orders).length>300||Object.entries(s.orders).some(([key,order])=>!/^[-a-z]+:20\d{2}:.+$/.test(key)||!Array.isArray(order)||order.length>50||!order.every(code=>bounded(code,80)))))return false;
- return s.free.every(c=>c&&bounded(c.id,200)&&c.id.startsWith('free-')&&bounded(c.title,200)&&validDate(c.start)&&validDate(c.end)&&c.start<=c.end&&c.start>='2026-08-01'&&c.end<='2100-08-31'&&Array.isArray(c.tracks)&&c.tracks.every(t=>['5','6','7','8','9','10','EF','Q1 GK','Q1 LK','Q2 GK','Q2 LK'].includes(t))&&(!c.subject||knownSubjects[c.subject]));
+ return (s.free||[]).every(c=>c&&bounded(c.id,200)&&c.id.startsWith('free-')&&bounded(c.title,200)&&validDate(c.start)&&validDate(c.end)&&c.start<=c.end&&c.start>='2026-08-01'&&c.end<='2100-08-31'&&Array.isArray(c.tracks)&&c.tracks.every(t=>['5','6','7','8','9','10','EF','Q1 GK','Q1 LK','Q2 GK','Q2 LK'].includes(t))&&(!c.subject||knownSubjects[c.subject]));
 }
 function profileKey(uid){return `thomaeum-fachkalender-profile-v1:${uid}`}
 function loadLocal(key){try{const raw=localStorage.getItem(key);if(!raw)return blankState();const value=JSON.parse(raw);if(validState(value))return normalizeState(value);loadWarning='Gespeicherte eigene Planung konnte nicht übernommen werden. Die Curriculumsplanung wird angezeigt.'}catch{storageOK=false}return blankState()}
@@ -85,6 +87,7 @@ function choiceId(e){return e.groupId||e.track}
 function scheduleFor(e){return optionFor(choiceId(e))?.days||{}}
 function filterKey(){return subject+':'+year}
 function cancelledKey(e,day){return `${subject}|${year}|${choiceId(e)}|${day}`}
+function isCancelled(key){if(Object.hasOwn(state.cancelled||{},key))return state.cancelled[key];const [sub,y,id,day]=key.split('|');return (state.absences||[]).some(a=>a.subject===sub&&a.year===y&&a.start<=day&&a.end>=day&&a.optionIds.includes(id))}
 function selectedTracks(){return new Set(trackOptions().filter(o=>selected.has(o.id)).map(o=>o.track))}
 function clearUnitOverrides(track){const ids=[...P.unitsFor(data,subject,year,track).map(u=>`uv-${subject}-${year}-${u.code}`),...(state.customUnits||[]).filter(u=>u.subject===subject&&u.year===year&&u.track===track).map(u=>`xuv-${subject}-${year}-${u.id}`)];for(const id of Object.keys(state.overrides))if(ids.some(base=>id===base||id.startsWith(base+'~')))delete state.overrides[id]}
 let weekStart=(()=>{const now=new Date(),today=P.iso(new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())));return P.add(today,-((P.parse(today).getUTCDay()+6)%7))})();
@@ -100,17 +103,17 @@ function save(message){
 function friendlyError(error){const messages={'auth/invalid-email':'Bitte eine gültige E-Mail-Adresse eingeben.','auth/invalid-credential':'E-Mail-Adresse oder Passwort stimmen nicht.','auth/email-already-in-use':'Für diese E-Mail-Adresse gibt es bereits ein Konto.','auth/weak-password':'Das Passwort muss mindestens 8 Zeichen lang sein.','auth/too-many-requests':'Zu viele Versuche. Bitte später erneut probieren.','permission-denied':'Zugriff abgelehnt. Bitte E-Mail-Bestätigung und Anmeldung prüfen.','unavailable':'Firebase ist vorübergehend nicht erreichbar.'};return messages[error?.code]||'Bitte Verbindung und Eingaben prüfen.'}
 async function activateProfile(user){
  clearTimeout(cloudTimer);currentUser=user;state=blankState();data.years=structuredClone(builtinYears);updateYears();
- if(!user){currentUser=null;state=loadLocal(GUEST_KEY);data.years={...builtinYears,...state.years};updateYears();$('account').textContent='Anmelden';$('account-label').textContent='Gastmodus';$('signout').hidden=true;$('save-status').textContent='Gastmodus: Änderungen werden nur auf diesem Gerät gespeichert.';setContext();return}
+ if(!user){currentUser=null;state=loadLocal(GUEST_KEY);$('account').textContent='Anmelden';$('account-label').textContent='Gastmodus';$('signout').hidden=true;$('save-status').textContent='Gastmodus: Änderungen werden nur auf diesem Gerät gespeichert.';setContext();return}
  $('account').textContent=user.email||'Mein Konto';$('account-label').textContent=user.emailVerified?'Persönliches Profil':'E-Mail bestätigen';$('signout').hidden=false;setContext();
  if(!user.emailVerified){$('save-status').textContent='Bitte bestätige deine E-Mail-Adresse, um Änderungen in deinem Profil zu sichern.';setContext();return}
  try{const snapshot=await getDoc(profileRef(user.uid));let loaded=blankState();if(snapshot.exists()){const value=snapshot.data();if(value.appId!==APP_ID||value.activityId!==ACTIVITY_ID||!validState(value.payload))throw Error('invalid-profile');loaded=normalizeState(value.payload)}else{const local=loadLocal(profileKey(user.uid));if(JSON.stringify(local)!==JSON.stringify(blankState()))loaded=local}
-   if(currentUser?.uid!==user.uid)return;state=loaded;data.years={...builtinYears,...state.years};updateYears();$('save-status').textContent=snapshot.exists()?'Persönliche Planung aus deinem Konto geladen.':'Noch keine Kontoplanung vorhanden. Änderungen werden privat gespeichert.';setContext();
+   if(currentUser?.uid!==user.uid)return;state=loaded;$('save-status').textContent=snapshot.exists()?'Persönliche Planung aus deinem Konto geladen.':'Noch keine Kontoplanung vorhanden. Änderungen werden privat gespeichert.';setContext();
  }catch(error){$('save-status').textContent=error.message==='invalid-profile'?'Das gespeicherte Profil hat ein ungültiges Format. Angezeigt wird die unveränderte Curriculumsplanung.':'Persönliche Planung konnte nicht geladen werden. Bitte Verbindung prüfen; die gemeinsame Curriculumsplanung bleibt sichtbar.';}
 }
-function closureList(){const values=[...data.closures,...Object.values(state.remoteClosures||{}).flat(),...state.free.filter(c=>!c.subject||c.subject===subject)],seen=new Set();return values.filter(c=>{const key=[c.subject||'all',c.start,c.end,c.title,...c.tracks].join('|');if(seen.has(key))return false;seen.add(key);return true})}
+function closureList(){const values=S.merged(data,sharedSettings).closures,seen=new Set();return values.filter(c=>{const key=[c.start,c.end,c.title,...c.tracks].join('|');if(seen.has(key))return false;seen.add(key);return true})}
 function refresh(){
  const explicit=Array.isArray(state.groups?.[subject]?.[year]);
- let result;try{result=P.plan(data,subject,year,closureList(),state.orders||{},(state.customUnits||[]).filter(u=>u.subject===subject&&u.year===year),explicit?{}:state.timetable?.[subject]||{},groupList())}catch(e){$('calendar').innerHTML='<p class="empty">'+esc(e.message)+'</p>';$('save-status').textContent='Bitte Stundenplan, freie Tage und Schuljahresrahmen prüfen.';return}baseEvents=result.events;stats=result.stats;
+ let result;try{result=window.FachkalenderFrozen.build(data,builtinYears,sharedSettings,subject,year,state.orders||{},(state.customUnits||[]).filter(u=>u.subject===subject&&u.year===year),explicit?{}:state.timetable?.[subject]||{},groupList(),state.absences||[],new Date().toLocaleDateString('sv-SE'))}catch(e){$('calendar').innerHTML='<p class="empty">'+esc(e.message)+'</p>';$('save-status').textContent='Bitte Stundenplan und schulweite Kalendereinstellungen prüfen.';return}baseEvents=result.events;stats=result.stats;
  events=baseEvents.filter(e=>state.overrides[e.id]!==null).map(e=>{
   const own=state.overrides[e.id];if(!own)return e;
   if(e.kind==='unit'){const schedule=scheduleFor(e);return {...e,start:own.start,end:own.end,meetingDays:P.dates(own.start,own.end).filter(d=>!P.closed(d,e.track,closureList())&&(!Object.keys(schedule).length||schedule[P.parse(d).getUTCDay()])),notes:own.notes||e.notes,custom:true};}
@@ -125,6 +128,7 @@ function tracks(){
  selected=new Set(chosen);
  $('tracks').innerHTML=options.map(o=>`<label><input type="checkbox" value="${esc(o.id)}" ${selected.has(o.id)?'checked':''}>${esc(o.label)}${o.groupId?` <small>· ${esc(o.trackLabel)}</small>`:''}</label>`).join('');
  $('event-track').innerHTML=options.map(o=>`<option value="${esc(o.id)}">${esc(o.label)}${o.groupId?' · '+esc(o.trackLabel):''}</option>`).join('');
+ $('absence-group').innerHTML='<option value="all">Alle meine eingetragenen Lerngruppen</option>'+options.map(o=>`<option value="${esc(o.id)}">${esc(o.label)}${o.groupId?' · '+esc(o.trackLabel):''}</option>`).join('');
 }
 function months(){const out=[];for(let m=data.years[year].start.slice(0,7)+'-01';m<=data.years[year].end;){out.push(m);const d=P.parse(m);d.setUTCMonth(d.getUTCMonth()+1);m=P.iso(d)}return out}
 function setContext(){
@@ -133,7 +137,7 @@ function setContext(){
  $('chemie-edition-wrap').hidden=visibleSubject!=='chemie'||!workingData;
  data=edition==='arbeitsversion'?workingData:publishedData;builtinYears=structuredClone(data.years);
  subject=edition==='arbeitsversion'?'chemie-arbeitskopie':visibleSubject;
- data.years={...builtinYears,...state.years};updateYears();
+ data.years={...builtinYears,...sharedSettings.years};updateYears();
  year=data.years[$('year').value]?$('year').value:Object.keys(data.years).sort()[0];$('year').value=year;
  month=data.years[year].start.slice(0,7)+'-01';if(weekStart<data.years[year].start||weekStart>data.years[year].end)weekStart=P.add(data.years[year].start,-((P.parse(data.years[year].start).getUTCDay()+6)%7));tracks();
  $('month').innerHTML=months().map(m=>`<option value="${m}">${monthName(m)}</option>`).join('');
@@ -145,19 +149,19 @@ function setContext(){
  const url=new URL(location.href);url.searchParams.set('fach',visibleSubject);url.searchParams.set('jahr',year);if(edition==='arbeitsversion')url.searchParams.set('fassung','arbeitsversion');else url.searchParams.delete('fassung');history.replaceState(null,'',url);
  $('notice').textContent=edition==='arbeitsversion'?'Arbeitsversion des schulinternen Chemiecurriculums · Die Zeiträume werden anhand der dort ausgewiesenen Zeitrichtwerte berechnet.':'Planungsvorschlag aus dem Curriculum · '+(year==='2026'?'Bekannte schulische Klausuren und amtliche Abiturtermine sind eingetragen.':'Amtliche Abiturtermine sind eingetragen; schulische Klausurtermine können ergänzt werden.')+' Jahrgänge und Kursarten sind unabhängig auswählbar.';
  $('cohort-note').textContent=edition==='arbeitsversion'?'Arbeitsversion: Sek I nach KLP 2019, Oberstufe nach dem geltenden KLP 2022. Der Kalender zeigt die dort ausgewiesenen Unterrichtsvorhaben; die Arbeitsfassung bleibt getrennt von der veröffentlichten Fassung.':+year>=2027?(subject==='chemie'?'Chemie: Die Fassung zum Kernlehrplan 2026 wird jahrgangsweise eingesetzt: EF ab 2027/28, Q1 ab 2028/29 und Q2 ab 2029/30. Frühere Jahrgänge und Sek I behalten ihre jeweilige Grundlage.':subject==='mensch-und-umwelt'?'Mensch und Umwelt: Klassen 9 und 10, jeweils drei Wochenstunden.':'Für die ab 2027/28 neu eintretenden EF-Jahrgänge und ihre späteren Q-Phasen dient die Vorhabenfolge des vorhandenen Curriculums als Übergangsplanung. Der Abgleich mit dem neuen Kernlehrplan 2026 ist vor der Umsetzung erforderlich.'):'Planungsgrundlage ist die für diese Jahrgänge bestehende Fassung des schulinternen Curriculums.';
- if(data.years[year].dynamic)$('notice').textContent='NRW-Ferien und Feiertage aus dem Netz geladen · '+(data.years[year].q2Provisional?'Q2-Unterrichtsende ist ein vorläufiger Planungswert; unter Schuljahresrahmen prüfen. ':'Q2-Rahmen nach eigener Festlegung. ')+(data.years[year].halfProvisional?'Halbjahreswechsel vorläufig. ':'')+'Schulische Klausuren und Abiturtermine bitte ergänzen.';
+ if(data.years[year].dynamic)$('notice').textContent='NRW-Ferien und Feiertage aus dem Netz geladen · '+(data.years[year].q2Provisional?'Q2-Unterrichtsende ist ein vorläufiger Planungswert; die Kalenderverwaltung prüft den amtlichen Rahmen. ':'Q2-Rahmen schulweit festgelegt. ')+(data.years[year].halfProvisional?'Halbjahreswechsel vorläufig. ':'')+'Schulische Klausuren und Abiturtermine bitte ergänzen.';
  $('stand').textContent=data.status;$('sources').innerHTML=data.sources.map(x=>`<p><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)} ↗</a></p>`).join('');refresh();
 }
 function shown(e){return selected.has(choiceId(e))&&(e.custom||e.kind!=='makeup')}
 function onDay(e,d){const schedule=scheduleFor(e);if(['unit','prep'].includes(e.kind)&&Array.isArray(e.meetingDays))return e.meetingDays.includes(d);return d>=e.start&&d<=e.end&&(!['unit','buffer','prep'].includes(e.kind)||(!P.closed(d,e.track,closureList())&&(!Object.keys(schedule).length||Boolean(schedule[P.parse(d).getUTCDay()]))))}
 function semesterStart(track,c,today){const boundary=track.startsWith('Q2')?c.q2half:c.half;return today>=boundary?boundary:c.start}
 function semesterEnd(track,c,from){const boundary=track.startsWith('Q2')?c.q2half:c.half;return from>=boundary?(track.startsWith('Q2')?c.q2end:c.end):P.add(boundary,-1)}
-function lessonCount(option,start,end){const t=data.subjects[subject].tracks.find(x=>x.id===option.track);if(!t||end<start)return {planned:0,held:0,remaining:0,cancelled:0,exact:false};const schedule=option.days||{},exact=Object.keys(schedule).length>0,today=new Date().toLocaleDateString('sv-SE');let planned=0,held=0,remaining=0,cancelled=0;for(const day of P.dates(start,end)){if(P.closed(day,option.track,closureList()))continue;const weekday=P.parse(day).getUTCDay(),periods=exact?(schedule[weekday]||0):weekday>0&&weekday<6?t.weekly/5:0;if(!periods)continue;planned+=periods;if(state.cancelled?.[`${subject}|${year}|${option.id}|${day}`])cancelled+=periods;else if(day<today)held+=periods;else remaining+=periods}const round=n=>Math.round(n*10)/10;return {planned:round(planned),held:round(held),remaining:round(remaining),cancelled:round(cancelled),exact}}
+function lessonCount(option,start,end){const t=data.subjects[subject].tracks.find(x=>x.id===option.track);if(!t||end<start)return {planned:0,held:0,remaining:0,cancelled:0,exact:false};const schedule=option.days||{},exact=Object.keys(schedule).length>0,today=new Date().toLocaleDateString('sv-SE');let planned=0,held=0,remaining=0,cancelled=0;for(const day of P.dates(start,end)){if(P.closed(day,option.track,closureList()))continue;const weekday=P.parse(day).getUTCDay(),periods=exact?(schedule[weekday]||0):weekday>0&&weekday<6?t.weekly/5:0;if(!periods)continue;planned+=periods;if(isCancelled(`${subject}|${year}|${option.id}|${day}`))cancelled+=periods;else if(day<today)held+=periods;else remaining+=periods}const round=n=>Math.round(n*10)/10;return {planned:round(planned),held:round(held),remaining:round(remaining),cancelled:round(cancelled),exact}}
 function renderLessonSummary(){const c=data.years[year],today=new Date().toLocaleDateString('sv-SE'),rows=trackOptions().filter(o=>selected.has(o.id)).map(o=>{const from=semesterStart(o.track,c,today),to=semesterEnd(o.track,c,from),grade=events.filter(e=>e.kind==='grade'&&choiceId(e)===o.id&&e.start>=from&&e.start<=to).sort((a,b)=>a.start.localeCompare(b.start))[0],total=lessonCount(o,from,to),beforeGrade=grade?lessonCount(o,from,P.add(grade.start,-1)):null;return `<tr><th scope="row">${esc(o.label)}${o.groupId?`<small>${esc(o.trackLabel)}</small>`:''}</th><td>${from>=(o.track.startsWith('Q2')?c.q2half:c.half)?'2. Halbjahr':'1. Halbjahr'}<small>${fmt(from)}–${fmt(to)}</small></td><td>${total.planned}${total.exact?'':' · ca.'}</td><td>${total.held}${total.exact?'':' · ca.'}</td><td>${grade?`${beforeGrade.remaining}${beforeGrade.exact?'':' · ca.'}`:'–'}</td><td>${total.remaining}${total.exact?'':' · ca.'}</td><td>${total.cancelled}${total.exact?'':' · ca.'}</td><td>${grade?`<button type="button" class="grade-edit" data-event="${esc(grade.id)}">${esc(grade.title)} · ${fmt(grade.start)} bearbeiten</button>`:'<span class="hint">Kein Noteneintrag gesetzt</span>'}</td></tr>`}).join('');$('lesson-summary-table').innerHTML=rows?`<table><thead><tr><th scope="col">Lerngruppe</th><th scope="col">Halbjahr</th><th scope="col">Geplant im Halbjahr</th><th scope="col">Bisher erteilt</th><th scope="col">Noch bis Noteneintrag</th><th scope="col">Noch im Halbjahr</th><th scope="col">Ausgefallen</th><th scope="col">Noteneintrag</th></tr></thead><tbody>${rows}</tbody></table>`:'<p class="empty">Wähle mindestens eine Lerngruppe, um die Stundenübersicht zu sehen.</p>'}
 function renderGradePreview(){const box=$('grade-summary');if($('event-kind').value!=='grade'){box.hidden=true;box.innerHTML='';return}const option=optionFor($('event-track').value),c=data.years[year],date=$('event-start').value||new Date().toLocaleDateString('sv-SE');if(!option){box.hidden=true;return}const from=semesterStart(option.track,c,date),to=semesterEnd(option.track,c,from),total=lessonCount(option,from,to),count=lessonCount(option,from,P.add(date,-1));box.hidden=false;box.innerHTML=`<strong>${esc(option.label)}: Unterricht vor dem Noteneintrag (${fmt(from)}–${fmt(P.add(date,-1))})</strong><br>${count.planned}${count.exact?'':' · ca.'} planmäßig; ${count.held}${count.exact?'':' · ca.'} bisher erteilt, ${count.remaining}${count.exact?'':' · ca.'} noch vorgesehen, ${count.cancelled}${count.exact?'':' · ca.'} ausgefallen. Im gesamten Halbjahr: ${total.planned}${total.exact?'':' · ca.'} Unterrichtsstunden.${count.exact?'':' Ergänze „Mein Stundenplan“ für eine taggenaue Berechnung.'}`}
 function chip(e,range=false,day=null){
  const custom=e.custom?' ✎':'',title=(e.code?e.code+' · ':'')+e.title,option=optionFor(choiceId(e));
- const cancelled=day&&state.cancelled?.[cancelledKey(e,day)];
+ const cancelled=day&&isCancelled(cancelledKey(e,day));
  const classes=`event-chip ${esc(e.kind)} c${Number.isInteger(e.color)?e.color%6:0} ${e.custom?'custom':''} ${cancelled?'cancelled':''}`;
  const periods=day?scheduleFor(e)?.[P.parse(day).getUTCDay()]:null;
  const body=`<strong>${esc(option?.label||e.groupLabel||e.track)}${custom}${e.time?' · '+esc(e.time):''}${periods?` · ${periods===2?'Doppelstunde':'Einzelstunde'}`:''}</strong>${esc(title)}${range?`<small>${fmt(e.start)}${e.end!==e.start?'–'+fmt(e.end):''}</small>`:''}`;
@@ -306,16 +310,29 @@ $('order-save').onclick=()=>{
  editingOrder=null;save('Persönliche Reihenfolge gespeichert; die Vorhaben wurden nach ihren curricularen Zeitanteilen neu verteilt.');$('order-dialog').close();refresh();
 };
 $('order-reset').onclick=()=>{const track=$('order-track').value,key=orderKey(track);delete state.orders[key];editingOrder=null;clearUnitOverrides(track);save('Curriculare Reihenfolge für diesen Jahrgang wiederhergestellt.');$('order-dialog').close();refresh()};
-function resetFree(){$('free-form').reset();$('free-id').value='';$('free-start').value=month;$('free-end').value=month}
-function listFree(){
- const c=data.years[year],relevant=x=>x.start<=c.end&&x.end>=c.start&&(!x.subject||x.subject===subject);
- $('free-list').innerHTML=state.free.filter(relevant).map(x=>`<div class="free-row"><div><strong>${esc(x.title)}</strong><br>${fmt(x.start)}${x.end!==x.start?'–'+fmt(x.end):''} · ${x.tracks.length?esc(x.tracks.join(', ')):'Alle Jahrgänge dieses Fachs'}</div><button data-free-edit="${esc(x.id)}">Ändern</button><button data-free-delete="${esc(x.id)}">Löschen</button></div>`).join('')||'<p class="hint">Noch keine eigenen Zeiträume für dieses Fach in diesem Schuljahr.</p>';
- $('fixed-free-list').innerHTML=closureList().filter(x=>!x.id.startsWith('free-')).filter(relevant).sort((a,b)=>a.start.localeCompare(b.start)).map(x=>`<div class="fixed-row"><strong>${esc(x.title)}</strong> · ${fmt(x.start)}${x.start!==x.end?'–'+fmt(x.end):''}${x.tracks.length?' · '+esc(x.tracks.join(', ')):''}</div>`).join('');
+function resetAbsence(){$('absence-form').reset();$('absence-id').value='';$('absence-start').value='';$('absence-end').value=''}
+function listAbsences(){
+ const relevant=(state.absences||[]).filter(a=>a.subject===subject&&a.year===year).sort((a,b)=>a.start.localeCompare(b.start));
+ $('absence-list').innerHTML=relevant.map(a=>`<div class="free-row"><div><strong>${esc(a.title)}</strong><br>${fmt(a.start)}${a.end!==a.start?'–'+fmt(a.end):''} · ${esc(a.optionIds.map(id=>optionFor(id)?.label||id).join(', '))}</div><button data-absence-edit="${esc(a.id)}">Ändern</button><button data-absence-delete="${esc(a.id)}">Entfernen</button></div>`).join('')||'<p class="hint">Noch keine persönlichen Ausfälle in diesem Schuljahr.</p>';
 }
-$('free-days').onclick=()=>{resetFree();listFree();$('free-dialog').showModal()};$('free-new').onclick=resetFree;
-$('free-form').onsubmit=e=>{e.preventDefault();const start=$('free-start').value,end=$('free-end').value;if(end<start||start<'2026-08-01'||end>'2100-08-31'){$('free-end').setCustomValidity('Bitte einen gültigen Zeitraum ab August 2026 wählen.');$('free-end').reportValidity();return}$('free-end').setCustomValidity('');const scope=$('free-scope').value,item={id:$('free-id').value||'free-'+crypto.randomUUID(),subject,start,end,title:$('free-title').value.trim(),kind:'school',source:'Eigene Planung',tracks:scope==='all'?[]:!scope.startsWith('Q')?[scope]:[scope+' GK',scope+' LK']};const i=state.free.findIndex(x=>x.id===item.id);if(i>=0)state.free[i]=item;else state.free.push(item);for(const track of data.subjects[subject].tracks)clearUnitOverrides(track.id);save();refresh();resetFree();listFree()};
-$('free-end').oninput=()=>{$('free-end').setCustomValidity('')};$('free-start').oninput=()=>{$('free-end').setCustomValidity('')};
-$('free-list').onclick=e=>{const edit=e.target.closest('[data-free-edit]'),del=e.target.closest('[data-free-delete]');if(edit){const c=state.free.find(x=>x.id===edit.dataset.freeEdit);$('free-id').value=c.id;for(const f of ['title','start','end'])$('free-'+f).value=c[f];$('free-scope').value=c.tracks.length?c.tracks[0].split(' ')[0]:'all';$('free-title').focus()}if(del){const removed=state.free.find(x=>x.id===del.dataset.freeDelete);state.free=state.free.filter(x=>x.id!==del.dataset.freeDelete);if(removed)for(const track of data.subjects[subject].tracks)clearUnitOverrides(track.id);save();refresh();listFree();resetFree()}};
+$('new-absence').onclick=()=>{resetAbsence();listAbsences();$('absence-dialog').showModal()};
+$('absence-reset').onclick=resetAbsence;
+$('absence-form').onsubmit=e=>{
+ e.preventDefault();const start=$('absence-start').value,end=$('absence-end').value,c=data.years[year],selection=$('absence-group').value;
+ if(start>end||start<c.start||end>c.end){$('absence-end').setCustomValidity('Bitte einen Zeitraum innerhalb des Schuljahres wählen.');$('absence-end').reportValidity();return}
+ $('absence-end').setCustomValidity('');
+ const ids=selection==='all'?groupList().map(g=>g.id):[selection];
+ if(!ids.length){$('save-status').textContent='Bitte zuerst einen Stundenplan mit deinen Lerngruppen anlegen oder eine einzelne Lerngruppe auswählen.';return}
+ const item={id:$('absence-id').value||'absence-'+crypto.randomUUID(),subject,year,start,end,title:$('absence-title').value.trim(),optionIds:ids};
+ const index=state.absences.findIndex(a=>a.id===item.id);if(index>=0)state.absences[index]=item;else state.absences.push(item);
+ save('Persönlicher Unterrichtsausfall gespeichert.');render();resetAbsence();listAbsences();
+};
+$('absence-start').oninput=$('absence-end').oninput=()=>$('absence-end').setCustomValidity('');
+$('absence-list').onclick=e=>{
+ const edit=e.target.closest('[data-absence-edit]'),remove=e.target.closest('[data-absence-delete]');
+ if(edit){const a=state.absences.find(x=>x.id===edit.dataset.absenceEdit);if(!a)return;$('absence-id').value=a.id;for(const key of ['title','start','end'])$('absence-'+key).value=a[key];$('absence-group').value=a.optionIds.length===1?a.optionIds[0]:'all';$('absence-title').focus()}
+ if(remove){state.absences=state.absences.filter(a=>a.id!==remove.dataset.absenceDelete);save('Persönlicher Unterrichtsausfall entfernt.');render();listAbsences();resetAbsence()}
+};
 $('tracks').onchange=()=>{selected=new Set([...$('tracks').querySelectorAll('input:checked')].map(x=>x.value));state.filters[filterKey()]=[...selected];save('Auswahl der Lerngruppen gespeichert.');render()};
 function selectAll(on){$('tracks').querySelectorAll('input').forEach(x=>x.checked=on);$('tracks').onchange()}
 $('all-tracks').onclick=()=>selectAll(true);$('no-tracks').onclick=()=>selectAll(false);
@@ -324,31 +341,17 @@ $('prev').onclick=()=>{if(view==='week'){weekStart=P.add(weekStart,-7)}else if(v
 $('week-view').onclick=()=>{view='week';render()};$('month-view').onclick=()=>{view='month';render()};$('year-view').onclick=()=>{view='year';render()};
 $('show-closures').onchange=render;
 $('lesson-summary-table').onclick=e=>{const button=e.target.closest('[data-event]');if(button)openEvent(button.dataset.event)};
-$('calendar').onclick=e=>{const cancelled=e.target.closest('[data-cancelled]');if(cancelled){state.cancelled=state.cancelled||{};const key=cancelled.dataset.cancelled;state.cancelled[key]=!state.cancelled[key];save(state.cancelled[key]?'Unterrichtsausfall vermerkt.':'Unterrichtsausfall zurückgenommen.');render();return}const custom=e.target.closest('[data-custom-unit]');if(custom){openCustomUnit(custom.dataset.customUnit);return}const el=e.target.closest('[data-event]');if(el)openEvent(el.dataset.event)};$('new-exam').onclick=()=>openEvent(null);
+$('calendar').onclick=e=>{const cancelled=e.target.closest('[data-cancelled]');if(cancelled){state.cancelled=state.cancelled||{};const key=cancelled.dataset.cancelled;state.cancelled[key]=!isCancelled(key);save(state.cancelled[key]?'Unterrichtsausfall vermerkt.':'Unterrichtsausfall zurückgenommen.');render();return}const custom=e.target.closest('[data-custom-unit]');if(custom){openCustomUnit(custom.dataset.customUnit);return}const el=e.target.closest('[data-event]');if(el)openEvent(el.dataset.event)};$('new-exam').onclick=()=>openEvent(null);
 $('new-grade-entry').onclick=()=>{const today=new Date().toLocaleDateString('sv-SE'),c=data.years[year],start=today>=c.start&&today<=c.end?today:month<c.start?c.start:month;openEvent(null,{kind:'grade',title:'Noteneintrag',start})};
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>$(b.dataset.close).close();
 $('export').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Thomaeum_Fachkalender_Eigene_Planung.json';document.body.append(a);a.click();a.remove();$('save-status').textContent='Die Sicherungsdatei wurde zum Herunterladen bereitgestellt.';setTimeout(()=>URL.revokeObjectURL(url),30000)};
-$('import').onchange=async()=>{const file=$('import').files[0];if(!file)return;try{if(file.size>2000000)throw Error();const next=JSON.parse(await file.text());if(!validState(next))throw Error();state=normalizeState(next);state.years=next.years||{};state.remoteClosures=next.remoteClosures||{};data.years={...builtinYears,...state.years};updateYears();$('year').value=data.years[year]?year:'2026';state.filters=next.filters&&typeof next.filters==='object'?next.filters:{};save('Planung importiert und in diesem Browser gespeichert.');setContext()}catch{$('save-status').textContent='Import nicht möglich: Bitte eine gültige exportierte Fachkalender-Datei wählen. Die bestehende Planung bleibt erhalten.'}$('import').value=''};
-$('reset').onclick=()=>$('confirm-dialog').showModal();$('confirm-reset').onclick=()=>{state=blankState();data.years=structuredClone(builtinYears);updateYears();$('year').value='2026';save('Eigene Änderungen zurückgesetzt.');$('confirm-dialog').close();setContext()};
+$('import').onchange=async()=>{const file=$('import').files[0];if(!file)return;try{if(file.size>2000000)throw Error();const next=JSON.parse(await file.text());if(!validState(next))throw Error();state=normalizeState(next);$('year').value=data.years[year]?year:'2026';state.filters=next.filters&&typeof next.filters==='object'?next.filters:{};save('Planung importiert und in diesem Browser gespeichert.');setContext()}catch{$('save-status').textContent='Import nicht möglich: Bitte eine gültige exportierte Fachkalender-Datei wählen. Die bestehende Planung bleibt erhalten.'}$('import').value=''};
+$('reset').onclick=()=>$('confirm-dialog').showModal();$('confirm-reset').onclick=()=>{state=blankState();$('year').value='2026';save('Eigene Änderungen zurückgesetzt.');$('confirm-dialog').close();setContext()};
 function theme(){const dark=document.documentElement.dataset.theme==='dark';$('theme').textContent=dark?'Helle Darstellung':'Dunkle Darstellung';if(dark)document.body.style.removeProperty('--accent');else document.body.style.setProperty('--accent',{chemie:'#19665d',physik:'#245d91',biologie:'#9c493c','mensch-und-umwelt':'#466b37'}[subject])}
 $('theme').onclick=()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('chemie-curriculum-theme',document.documentElement.dataset.theme)}catch{}theme()};
 function board(on){document.body.classList.toggle('board-mode',on);$('fullscreen').textContent=on?'Vollbild beenden':'Vollbild'}
 $('fullscreen').onclick=async()=>{if(document.fullscreenElement){await document.exitFullscreen();return}if(document.body.classList.contains('board-mode')){board(false);return}board(true);try{await document.documentElement.requestFullscreen()}catch{}};
 document.addEventListener('fullscreenchange',()=>board(!!document.fullscreenElement));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.fullscreenElement)board(false)});
-
-$('add-year').onclick=()=>{$('year-status').textContent='';$('year-number').value=Math.max(2028,...Object.keys(data.years).map(y=>+y+1));$('year-dialog').showModal()};
-$('year-form').onsubmit=async e=>{
- e.preventDefault();const y=+$('year-number').value;if(data.years[y]){$('year-status').textContent='Dieses Schuljahr ist bereits vorhanden.';return}
- $('load-year').disabled=true;$('year-status').textContent='NRW-Ferien und Feiertage werden geladen …';
- try{const result=await Fachferien.loadYear(y);if(!validConfig(result.config,String(y)))throw Error('Die geladenen Termine ergeben keinen gültigen Schuljahresrahmen.');state.years[y]=result.config;state.remoteClosures[y]=result.closures;data.years[y]=result.config;updateYears();$('year').value=String(y);save('Schuljahr mit geladenen NRW-Ferien angelegt. Q2-Rahmen bitte prüfen.');$('year-dialog').close();setContext()}
- catch(error){$('year-status').textContent=error.name==='TimeoutError'?'Die Ferienabfrage hat zu lange gedauert. Bitte erneut versuchen.':error.message||'Ferien konnten nicht geladen werden.'}
- finally{$('load-year').disabled=false}
-};
-$('year-settings').onclick=()=>{const c=data.years[year];for(const key of ['start','end','half','q2half','q2end','prepStart','prepEnd'])$('settings-'+key).value=c[key]||'';$('settings-confirmed').checked=!c.q2Provisional;$('settings-status').textContent='';$('settings-dialog').showModal()};
-$('settings-form').onsubmit=e=>{e.preventDefault();const c={...data.years[year]};for(const key of ['start','end','half','q2half','q2end','prepStart','prepEnd'])c[key]=$('settings-'+key).value||null;c.q2Provisional=!$('settings-confirmed').checked;c.halfProvisional=false;
- if(!validConfig(c,year)){$('settings-status').textContent='Bitte die Datumsfolge prüfen. Die Vorbereitungsphase muss vollständig angegeben werden und nach dem Ende der regulären Q2-Planung liegen.';return}
- state.years[year]=c;data.years[year]=c;save('Schuljahresrahmen gespeichert; automatische Vorhaben neu verteilt.');$('settings-dialog').close();setContext();
-};
 
 function authDialogFor(user=currentUser){
  $('auth-status').textContent='';$('auth-email').value=user?.email||$('auth-email').value;
@@ -375,10 +378,19 @@ $('auth-form').onsubmit=async e=>{
  }catch(error){$('auth-status').textContent=friendlyError(error)}finally{$('auth-submit').disabled=false}
 };
 $('resend-verification').onclick=async()=>{try{await sendEmailVerification(auth.currentUser);$('auth-status').textContent='Bestätigungsnachricht erneut gesendet.'}catch(error){$('auth-status').textContent=friendlyError(error)}};
-$('check-verification').onclick=async()=>{try{await reload(auth.currentUser);const user=auth.currentUser;if(!user.emailVerified){$('auth-status').textContent='Die Adresse ist noch nicht bestätigt. Öffne bitte den Bestätigungslink aus der E-Mail.';return}await getIdToken(user,true);await activateProfile(user);authDialogFor(user);$('auth-status').textContent='E-Mail bestätigt. Deine private Kalenderplanung ist jetzt freigeschaltet.'}catch(error){$('auth-status').textContent=friendlyError(error)}};
+$('check-verification').onclick=async()=>{try{await reload(auth.currentUser);const user=auth.currentUser;if(!user.emailVerified){$('auth-status').textContent='Die Adresse ist noch nicht bestätigt. Öffne bitte den Bestätigungslink aus der E-Mail.';return}await getIdToken(user,true);watchSchool(user);await activateProfile(user);authDialogFor(user);$('auth-status').textContent='E-Mail bestätigt. Deine private Kalenderplanung ist jetzt freigeschaltet.'}catch(error){$('auth-status').textContent=friendlyError(error)}};
 async function leaveProfile(){try{$('save-status').textContent='Abmeldung läuft …';await signOut(auth);$('auth-dialog').close()}catch(error){$('save-status').textContent=friendlyError(error)}}
 $('signout').onclick=leaveProfile;$('auth-signout').onclick=leaveProfile;
-onAuthStateChanged(auth,user=>{authReady=true;activateProfile(user)});
+const schoolRef=doc(db,'schoolCalendar','config');
+let schoolUnsubscribe=null;
+function watchSchool(user){
+ if(schoolUnsubscribe){schoolUnsubscribe();schoolUnsubscribe=null}
+ sharedSettings={version:1,years:{},closures:[]};
+ if(!user?.emailVerified){$('school-status').textContent='Melde dich mit bestätigter E-Mail-Adresse an, um schulweite Zusatztermine zu sehen.';setContext();return}
+ $('school-status').textContent='Schulweite Termine werden geladen …';
+ schoolUnsubscribe=onSnapshot(schoolRef,snapshot=>{const value=snapshot.exists()?snapshot.data():{version:1,years:{},closures:[]};if(!S.validSettings(value)){$('school-status').textContent='Die schulweiten Einstellungen sind ungültig; die hinterlegten Grunddaten bleiben sichtbar.';return}sharedSettings=value;$('school-status').textContent=snapshot.exists()?'Schulweite Termine sind synchronisiert.':'Schulweite Grunddaten aus dem Curriculum werden angezeigt.';setContext()},()=>{$('school-status').textContent='Schulweite Einstellungen konnten nicht geladen werden; die hinterlegten Grunddaten bleiben sichtbar.'});
+}
+onAuthStateChanged(auth,user=>{authReady=true;watchSchool(user);activateProfile(user)});
 
 setContext();theme();$('save-status').textContent=loadWarning||(storageOK?'Gastmodus: Änderungen bleiben auf diesem Gerät. Melde dich an, um sie privat in deinem Profil zu speichern.':'Lokale Speicherung ist nicht verfügbar. Bitte Änderungen exportieren.');
 })();

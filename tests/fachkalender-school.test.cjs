@@ -1,0 +1,30 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const P=require('../scripts/fachkalender-plan.js');
+const S=require('../scripts/fachkalender-school.js');
+const F=require('../scripts/fachkalender-frozen.js');
+const data=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/fachkalender.json'),'utf8'));
+const baseYears=structuredClone(data.years);
+const today='2026-09-30';
+const closure={id:'school-test-october',title:'Projekttag',start:'2026-10-06',end:'2026-10-06',kind:'project',tracks:['7'],source:'Test'};
+const old={version:1,years:{},closures:[],removedClosureIds:[]};
+const settings={version:1,years:{},closures:[closure],removedClosureIds:[],revisions:[{until:today,settings:old}]};
+assert.equal(S.validSettings(settings),true);
+const groups=[{id:'group-a',track:'7',label:'7a',days:{2:2,5:2}},{id:'group-b',track:'7',label:'7b',days:{4:2}}];
+const before=P.plan(data,'chemie','2026',data.closures,{},[],{},groups);
+const after=F.build(data,baseYears,settings,'chemie','2026',{},[],{},groups,[],today);
+function assignments(result,id,predicate){
+ return result.events.filter(e=>e.kind==='unit'&&e.groupId===id).flatMap(e=>e.meetingDays.filter(predicate).map(day=>day+'='+e.code)).sort();
+}
+assert.deepEqual(assignments(after,'group-a',d=>d<today),assignments(before,'group-a',d=>d<today),'Past lessons must keep their original unit');
+assert.deepEqual(assignments(after,'group-b',d=>d<today),assignments(before,'group-b',d=>d<today),'Parallel groups must freeze independently');
+assert.equal(assignments(after,'group-a',d=>d===closure.start).length,0,'The new free day must be removed');
+assert.ok(assignments(after,'group-a',d=>d>=today).length>0,'Future lessons must still be distributed');
+assert.ok(after.events.filter(e=>e.kind==='unit'&&e.groupId==='group-a').every(e=>e.end<=data.years['2026'].end));
+const absent=[{id:'absence-test',subject:'chemie',year:'2026',title:'Erkrankung',start:'2026-10-09',end:'2026-10-09',optionIds:['group-a']}];
+const personal=F.build(data,baseYears,settings,'chemie','2026',{},[],{},groups,absent,today);
+assert.equal(assignments(personal,'group-a',d=>d==='2026-10-09').length,0,'Only the absent group loses this meeting');
+assert.equal(assignments(personal,'group-b',d=>d==='2026-10-09').length,0,'Other group has no Friday timetable');
+assert.deepEqual(assignments(personal,'group-b',d=>d>=today),assignments(after,'group-b',d=>d>=today),'Other group stays unchanged');
+console.log('PASS schoolwide updates freeze past lessons and adjust only affected future group meetings');

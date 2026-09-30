@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Kalenderverwaltung · Thomaeum</title>
+<link rel="stylesheet" href="styles/shared.css"><link rel="stylesheet" href="styles/fachkalender.css?v=20260930-admin"><link rel="stylesheet" href="styles/fachkalender-admin.css?v=20260930-admin">
+<script src="scripts/fachkalender-plan.js" defer></script><script src="scripts/fachkalender-holidays.js" defer></script><script src="scripts/fachkalender-school.js" defer></script>
+<script type="module" src="scripts/fachkalender-admin.js?v=20260930-admin"></script>
+</head>
+<body><main id="app">
+<header><div><p class="eyebrow">Gymnasium Thomaeum Kempen</p><h1>Kalenderverwaltung</h1><p>Schulweite Termine für alle Fachkalender</p></div><div class="actions"><a href="fachkalender.html">Zum Fachkalender ↗</a><button id="signout" hidden>Abmelden</button></div></header>
+<section id="login-panel" class="admin-panel">
+<h2>Geschützter Zugang</h2><p>Schulweite Änderungen sind ausschließlich mit der bestätigten Adresse <strong>claus.unterberg@thomaeum.de</strong> möglich. Firebase Authentication prüft das Passwort; die Webseite speichert es nicht.</p>
+<form id="login-form"><div class="form-grid"><label>E-Mail-Adresse<input id="email" type="email" autocomplete="username" value="claus.unterberg@thomaeum.de" required></label><label>Passwort<input id="password" type="password" autocomplete="current-password" minlength="8" required></label></div><div class="actions"><button class="primary" id="login-submit" type="submit">Anmelden</button><button id="reset-password" type="button">Passwort zurücksetzen</button></div></form>
+<p id="login-status" role="status" aria-live="polite"></p><p id="role-help" hidden>Die Anmeldung ist nur mit der bestätigten Verwaltungsadresse möglich.</p>
+</section>
+<div id="admin-content" hidden>
+<p id="sync-status" role="status" aria-live="polite" class="notice"></p>
+<section class="admin-panel"><h2>Schuljahre und Halbjahre</h2><p>Diese Daten bestimmen die automatische Verteilung aller Unterrichtsvorhaben. Änderungen gelten nach dem Speichern für alle Kolleginnen und Kollegen, die sich im Fachkalender mit bestätigter E-Mail-Adresse anmelden.</p>
+<div class="actions"><label>Schuljahr<select id="year"></select></label><button id="new-year">+ Weiteres Schuljahr mit NRW-Ferien laden</button></div>
+<form id="year-form"><div class="form-grid"><label>Erster Unterrichtstag<input id="start" type="date" required></label><label>Letzter Unterrichtstag (Sek I / EF / Q1)<input id="end" type="date" required></label><label>Beginn zweites Halbjahr<input id="half" type="date" required></label><label>Beginn Q2.2<input id="q2half" type="date" required></label><label>Ende regulärer Q2-Unterricht<input id="q2end" type="date" required></label><label>Vorbereitungsphase von (optional)<input id="prepStart" type="date"></label><label>Vorbereitungsphase bis (optional)<input id="prepEnd" type="date"></label></div><label class="inline-check"><input id="confirmed" type="checkbox"> Q2-Rahmentermine bestätigt</label><div class="actions"><button class="primary" type="submit">Schuljahresrahmen für alle speichern</button></div></form>
+</section>
+<section class="admin-panel"><h2>Zusätzliche unterrichtsfreie Zeiten</h2><p>Pädagogische Tage, Projekttage und Prüfungstage können die gesamte Schule betreffen. Fahrten lassen sich auf einzelne Jahrgänge begrenzen. An den ausgewählten Tagen werden keine Fachstunden gezählt.</p>
+<form id="closure-form"><input id="closure-id" type="hidden"><div class="form-grid"><label>Bezeichnung<input id="closure-title" required maxlength="200" placeholder="z. B. Projekttag oder Klassenfahrt 7"></label><label>Art<select id="closure-kind"><option value="school">Weiterer schulfreier Tag</option><option value="pedagogical">Pädagogischer Tag</option><option value="project">Projekttag</option><option value="exam">Prüfungstag</option><option value="trip">Schulfahrt</option></select></label><label>Von<input id="closure-start" type="date" required></label><label>Bis<input id="closure-end" type="date" required></label></div>
+<fieldset><legend>Betroffene Jahrgänge</legend><label class="inline-check"><input id="all-tracks" type="checkbox" checked> Alle Jahrgänge</label><div id="track-options" class="track-options"></div><p class="hint">Q1 und Q2 gelten jeweils für Grund- und Leistungskurse.</p></fieldset>
+<div class="actions"><button class="primary" type="submit">Unterrichtsfreie Zeit für alle speichern</button><button id="closure-reset" type="button">Neuen Eintrag beginnen</button></div></form>
+<h3>Zusätzliche schulweite Einträge</h3><div id="closure-list"></div>
+<h3>Bereits hinterlegte schulische Tage</h3><div id="base-list"></div>
+<details><summary>Amtliche Ferien und Feiertage anzeigen</summary><div id="official-list"></div></details>
+</section>
+</div>
+<footer><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></footer>
+</main></body></html>

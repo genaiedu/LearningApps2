@@ -4,6 +4,9 @@ service cloud.firestore {
     function signedIn() {
       return request.auth != null && request.auth.token.email_verified == true;
     }
+    function isCalendarAdmin() {
+      return signedIn() && request.auth.token.email == 'claus.unterberg@thomaeum.de';
+    }
     function userPath(uid) {
       return /databases/$(database)/documents/users/$(uid);
     }
@@ -49,6 +52,22 @@ service cloud.firestore {
         && (!('track' in data) || data.track is string)
         && (!('color' in data) || data.color is string)
         && (!('curriculumUrl' in data) || data.curriculumUrl is string);
+    }
+
+    match /schoolCalendar/{documentId} {
+      allow get: if documentId == 'config' && signedIn();
+      allow list: if false;
+      allow create, update: if documentId == 'config' && isCalendarAdmin()
+        && request.resource.data.keys().hasOnly(['version', 'years', 'closures', 'removedClosureIds', 'revisions', 'updatedAt', 'updatedBy'])
+        && request.resource.data.keys().hasAll(['version', 'years', 'closures', 'removedClosureIds', 'revisions', 'updatedAt', 'updatedBy'])
+        && request.resource.data.version == 1
+        && request.resource.data.years is map && request.resource.data.years.size() <= 20
+        && request.resource.data.closures is list && request.resource.data.closures.size() <= 300
+        && request.resource.data.removedClosureIds is list && request.resource.data.removedClosureIds.size() <= 200
+        && request.resource.data.revisions is list && request.resource.data.revisions.size() <= 100
+        && request.resource.data.updatedBy == request.auth.uid
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if false;
     }
 
     // Private profiles and work saved by a user across different LearningApps.
