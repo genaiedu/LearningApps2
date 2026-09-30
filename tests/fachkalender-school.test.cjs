@@ -21,6 +21,9 @@ assert.deepEqual(assignments(after,'group-a',d=>d<today),assignments(before,'gro
 assert.deepEqual(assignments(after,'group-b',d=>d<today),assignments(before,'group-b',d=>d<today),'Parallel groups must freeze independently');
 assert.equal(assignments(after,'group-a',d=>d===closure.start).length,0,'The new free day must be removed');
 assert.ok(assignments(after,'group-a',d=>d>=today).length>0,'Future lessons must still be distributed');
+const futureA=assignments(after,'group-a',d=>d>=today).map(item=>item.slice(0,10));
+const expectedA=P.dates(today,data.years['2026'].end).filter(day=>!P.closed(day,'7',[...data.closures,closure])&&groups[0].days[P.parse(day).getUTCDay()]);
+assert.deepEqual(futureA,expectedA,'Every remaining scheduled meeting is assigned exactly once');
 assert.ok(after.events.filter(e=>e.kind==='unit'&&e.groupId==='group-a').every(e=>e.end<=data.years['2026'].end));
 const absent=[{id:'absence-test',subject:'chemie',year:'2026',title:'Erkrankung',start:'2026-10-09',end:'2026-10-09',optionIds:['group-a']}];
 const personal=F.build(data,baseYears,settings,'chemie','2026',{},[],{},groups,absent,today);
