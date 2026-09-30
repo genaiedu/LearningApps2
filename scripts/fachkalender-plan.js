@@ -26,14 +26,15 @@ function plan(data,subject,year,closures,orders={},customUnits=[],timetable={},g
   instancesByTrack.set(track.id,instances);
   for(const group of instances){
    let units=unitsFor(data,subject,year,track.id);
-   const order=orders[`${subject}:${year}:${track.id}`],byCode=new Map(units.map(u=>[u.code,u]));
-   if(Array.isArray(order)){
-    const seen=new Set();
-    units=[...order.filter(code=>byCode.has(code)&&!seen.has(code)&&(seen.add(code),true)).map(code=>byCode.get(code)),...units.filter(u=>!seen.has(u.code))];
-   }
    const curriculumHours=units.reduce((n,u)=>n+u.hours,0);
    const additions=customUnits.filter(u=>u.track===track.id).map(u=>({code:'',title:u.title,hours:u.hours,track:track.id,customUnitId:u.id,notes:u.notes||''}));
    units=[...units,...additions];
+   const unitKey=u=>u.customUnitId||u.code;
+   const order=orders[`${subject}:${year}:${track.id}`],byCode=new Map(units.map(u=>[unitKey(u),u]));
+   if(Array.isArray(order)){
+    const seen=new Set();
+    units=[...order.filter(code=>byCode.has(code)&&!seen.has(code)&&(seen.add(code),true)).map(code=>byCode.get(code)),...units.filter(u=>!seen.has(unitKey(u)))];
+   }
    const groupId=group.id===track.id?null:group.id,groupLabel=group.label||track.label;
    const suffix=groupId&&!String(groupId).startsWith('legacy-')?'~'+groupId:'';
    const q2=track.id.startsWith('Q2');
@@ -46,7 +47,7 @@ function plan(data,subject,year,closures,orders={},customUnits=[],timetable={},g
    const hours=units.reduce((n,u)=>n+u.hours,0),usable=hasSchedule?teachingDays.reduce((n,d)=>n+lessonWeight(d),0):teachingDays.length;
    if(usable<units.length)throw Error('Für '+groupLabel+' bleiben zu wenige Unterrichtsstunden. Bitte freie Zeiträume oder Schuljahresrahmen anpassen.');
    const raw=distribute(units.map(u=>u.hours),usable-units.length),allocations=raw.map(n=>n+1),assignedDays=units.map(()=>[]);let cursor=0;
-   units.forEach((u,i)=>{const left=units.length-i-1,start=cursor,target=allocations[i];let amount=0;while(cursor<teachingDays.length-left&&(amount<target||cursor===start)){amount+=lessonWeight(teachingDays[cursor]);cursor++}assignedDays[i]=teachingDays.slice(start,cursor)});
+   units.forEach((u,i)=>{const left=units.length-i-1,start=cursor,target=allocations[i];let amount=0;while(cursor<teachingDays.length-left&&(i===units.length-1||amount<target||cursor===start)){amount+=lessonWeight(teachingDays[cursor]);cursor++}assignedDays[i]=teachingDays.slice(start,cursor)});
    const factor=usable/hours;
    units.forEach((u,i)=>{
     const datesForUnit=assignedDays[i];if(!datesForUnit.length)return;const count=hasSchedule?datesForUnit.reduce((n,d)=>n+lessonWeight(d),0):allocations[i],plannedHours=hasSchedule?count:Math.round(count/5*track.weekly*10)/10;

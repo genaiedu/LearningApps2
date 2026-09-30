@@ -35,7 +35,7 @@ function row(c,kind){
  }else if(kind==='school'){
   const hidden=settings.removedClosureIds.includes(c.id);
   const toggle=document.createElement('button');toggle.type='button';toggle.textContent=hidden?'Wieder einblenden':'Für alle ausblenden';
-  toggle.onclick=async()=>{if(c.start<today()){status('Vergangene schulfreie Tage bleiben unverändert.');return}const before=[...settings.removedClosureIds];settings.removedClosureIds=hidden?before.filter(id=>id!==c.id):[...before,c.id];if(!await save())settings.removedClosureIds=before;renderClosures()};
+  toggle.onclick=async()=>{const scope=await window.FachkalenderScope.ask();if(!scope)return;if(c.start<today()&&scope==='remaining'){status('Vergangene schulfreie Tage können nur mit „Gesamtes Schuljahr“ geändert werden.');return}const before=[...settings.removedClosureIds];settings.removedClosureIds=hidden?before.filter(id=>id!==c.id):[...before,c.id];if(!await save(scope))settings.removedClosureIds=before;renderClosures()};
   actions.append(toggle);
  }
  if(actions.childElementCount)item.append(actions);
@@ -64,20 +64,22 @@ function editClosure(c){
  for(const input of document.querySelectorAll('#track-options input'))input.checked=c.tracks.some(t=>t===input.value||t.startsWith(input.value+' '));
  el('closure-form').scrollIntoView({behavior:'smooth',block:'center'});el('closure-title').focus();
 }
-async function save(){
+async function save(scope){
  if(!admin||!user?.emailVerified){status('Keine Berechtigung zum Speichern.');return false}
  if(!S.validSettings(settings)){status('Die Eingaben sind ungültig. Bitte Daten und Jahrgangsauswahl prüfen.');return false}
+ scope=scope||await window.FachkalenderScope.ask();if(!scope){status('Änderung abgebrochen.');return false}
  status('Schulweite Änderungen werden gespeichert …');
  const previous=[...(settings.revisions||[])],date=today();
- if(!previous.length||previous.at(-1).until<date)settings.revisions=[...previous,{until:date,settings:{version:1,years:lastSaved.years,closures:lastSaved.closures,removedClosureIds:lastSaved.removedClosureIds}}];
+ settings.revisions=[...previous,{until:date,scope,settings:{version:1,years:lastSaved.years,closures:lastSaved.closures,removedClosureIds:lastSaved.removedClosureIds}}];
  if(!S.validSettings(settings)){settings.revisions=previous;status('Die Änderungshistorie ist voll oder ungültig; keine Daten gespeichert.');return false}
- try{await setDoc(configRef,{...settings,updatedAt:serverTimestamp(),updatedBy:user.uid});lastSaved=JSON.parse(JSON.stringify(settings));status('Schulweite Änderungen gespeichert; vergangene Termine bleiben eingefroren.');return true}
+ try{await setDoc(configRef,{...settings,updatedAt:serverTimestamp(),updatedBy:user.uid});lastSaved=JSON.parse(JSON.stringify(settings));status('Schulweite Änderungen gespeichert. '+(scope==='year'?'Das gesamte Schuljahr wird neu berechnet.':'Nur die verbleibende Unterrichtszeit wird neu verteilt; bereits erteilte Stunden bleiben erhalten.'));return true}
  catch(error){settings.revisions=previous;status(error.code==='permission-denied'?'Firebase hat das Speichern abgelehnt. Bitte Verwaltungsberechtigung prüfen.':'Speichern fehlgeschlagen. Bitte Verbindung prüfen.');return false}
 }
 async function removeClosure(id){
- const existing=settings.closures.find(c=>c.id===id);if(existing?.start<today()){status('Vergangene schulfreie Tage bleiben unverändert.');return}
+ const scope=await window.FachkalenderScope.ask();if(!scope)return;
+ const existing=settings.closures.find(c=>c.id===id);if(existing?.start<today()&&scope==='remaining'){status('Vergangene schulfreie Tage können nur mit „Gesamtes Schuljahr“ geändert werden.');return}
  const before=[...settings.closures];settings.closures=before.filter(c=>c.id!==id);
- if(!await save())settings.closures=before;
+ if(!await save(scope))settings.closures=before;
  renderClosures();
 }
 function beginRealtime(){
@@ -113,11 +115,13 @@ async function init(){
  el('closure-form').onsubmit=async event=>{
   event.preventDefault();const id=el('closure-id').value||'school-'+crypto.randomUUID();
   const item={id,title:el('closure-title').value.trim(),kind:el('closure-kind').value,start:el('closure-start').value,end:el('closure-end').value,tracks:checkedTracks(),source:'Schulweite Kalenderverwaltung'};
-  if(item.start<today()){status('Vergangene unterrichtsfreie Tage können nicht nachträglich verändert werden.');return}
   if(!S.validClosure(item)){status('Bitte Titel, Zeitraum und Jahrgangsauswahl prüfen.');return}
+  const scope=await window.FachkalenderScope.ask();if(!scope)return;
+  const prior=settings.closures.find(c=>c.id===id);
+  if((item.start<today()||prior?.start<today())&&scope==='remaining'){status('Vergangene unterrichtsfreie Tage können nur mit „Gesamtes Schuljahr“ geändert werden.');return}
   const before=[...settings.closures],index=settings.closures.findIndex(c=>c.id===id);
   if(index>=0)settings.closures[index]=item;else settings.closures.push(item);
-  if(!await save())settings.closures=before;else resetClosure();
+  if(!await save(scope))settings.closures=before;else resetClosure();
   renderClosures();
  };
  el('year-form').onsubmit=async event=>{
