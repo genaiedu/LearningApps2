@@ -39,11 +39,11 @@ function plan(data,subject,year,closures,orders={},customUnits=[],timetable={}){
   const lessonWeight=d=>hasSchedule?schedule[parse(d).getUTCDay()]:1;
   const hours=units.reduce((n,u)=>n+u.hours,0),usable=hasSchedule?teachingDays.reduce((n,d)=>n+lessonWeight(d),0):teachingDays.length;
   if(usable<units.length)throw Error('Für '+track.label+' bleiben zu wenige Unterrichtsstunden. Bitte freie Zeiträume oder Schuljahresrahmen anpassen.');
-  const allocations=distribute(units.map(u=>u.hours),usable),assignedDays=units.map(()=>[]);let slot=0,unitIndex=0,unitEnd=allocations[0]||0;
-  teachingDays.forEach(day=>{const weight=lessonWeight(day),midpoint=slot+weight/2;while(unitIndex<allocations.length-1&&midpoint>unitEnd){unitIndex++;unitEnd+=allocations[unitIndex]}assignedDays[unitIndex].push(day);slot+=weight});
+  const raw=distribute(units.map(u=>u.hours),usable-units.length),allocations=raw.map(n=>n+1),assignedDays=units.map(()=>[]);let cursor=0;
+  units.forEach((u,i)=>{const left=units.length-i-1,start=cursor,target=allocations[i];let amount=0;while(cursor<teachingDays.length-left&&(amount<target||cursor===start)){amount+=lessonWeight(teachingDays[cursor]);cursor++}assignedDays[i]=teachingDays.slice(start,cursor)});
   const factor=usable/hours;
   units.forEach((u,i)=>{
-   const datesForUnit=assignedDays[i];if(!datesForUnit.length)return;const count=allocations[i],plannedHours=hasSchedule?count:Math.round(count/5*track.weekly*10)/10;
+   const datesForUnit=assignedDays[i];if(!datesForUnit.length)return;const count=hasSchedule?datesForUnit.reduce((n,d)=>n+lessonWeight(d),0):allocations[i],plannedHours=hasSchedule?count:Math.round(count/5*track.weekly*10)/10;
    events.push({...u,id:u.customUnitId?`xuv-${subject}-${year}-${u.customUnitId}`:`uv-${subject}-${year}-${u.code}`,subject,year,kind:'unit',extraUnit:Boolean(u.customUnitId),start:datesForUnit[0],end:datesForUnit.at(-1),meetingDays:datesForUnit,color:i%6,plannedHours,notes:u.customUnitId?`Zusätzliches persönliches Unterrichtsvorhaben · Zeitansatz ${u.hours} UStd. Die übrigen Vorhaben wurden proportional angepasst.${u.notes?' '+u.notes:''}`:`Curricularer Zeitrichtwert: ${u.hours} UStd à 45 Minuten; Anteil an den Vorhaben dieses Jahrgangs: ${Math.round(u.hours/hours*1000)/10} %. Proportionaler Kalenderansatz: ca. ${plannedHours} UStd. Übung, Vertiefung und Leistungsnachweise sind in die Vorhaben integriert.`});
   });
   const preparationHours=hasSchedule?preparationDates.reduce((n,d)=>n+lessonWeight(d),0):preparationDates.length/5*track.weekly;
