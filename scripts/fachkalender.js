@@ -2,7 +2,7 @@ import { auth, db, onAuthStateChanged, createUserWithEmailAndPassword, signInWit
 'use strict';
 (async()=>{
 const $=id=>document.getElementById(id),P=window.Fachplan,GUEST_KEY='thomaeum-fachkalender-v1',APP_ID='fachkalender',ACTIVITY_ID='personal-plan';
-const blankState=()=>({version:3,overrides:{},added:[],customUnits:[],free:[],filters:{},timetable:{},completed:{},years:{},remoteClosures:{},orders:{}});
+const blankState=()=>({version:4,overrides:{},added:[],customUnits:[],free:[],filters:{},timetable:{},groups:{},cancelled:{},completed:{},years:{},remoteClosures:{},orders:{}});
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=s=>P.parse(s).toLocaleDateString('de-DE',{timeZone:'UTC'}),monthName=s=>P.parse(s).toLocaleDateString('de-DE',{month:'long',year:'numeric',timeZone:'UTC'});
 let data;try{const r=await fetch('data/fachkalender.json?v=20260927');if(!r.ok)throw Error();data=await r.json()}catch{$('save-status').textContent='Der Kalender konnte nicht geladen werden. Bitte die Seite erneut öffnen.';return}
@@ -19,9 +19,9 @@ const validDate=s=>typeof s==='string'&&/^20\d{2}-\d{2}-\d{2}$/.test(s)&&!Number
 function validConfig(c,y){
  return c&&['start','end','half','q2half','q2end'].every(k=>validDate(c[k]))&&c.start<c.end&&c.start.startsWith(y+'-')&&c.end.startsWith((+y+1)+'-')&&c.q2end>=c.start&&c.q2end<=c.end&&c.half>=c.start&&c.half<=c.end&&c.q2half>=c.start&&c.q2half<=c.q2end&&(!c.prepStart&&!c.prepEnd||validDate(c.prepStart)&&validDate(c.prepEnd)&&c.prepStart<=c.prepEnd&&c.prepStart>c.q2end&&c.prepEnd<=c.end);
 }
-function normalizeState(s){return {...blankState(),...s,version:3,customUnits:Array.isArray(s?.customUnits)?s.customUnits:[],timetable:s?.timetable&&typeof s.timetable==='object'?s.timetable:{},completed:s?.completed&&typeof s.completed==='object'?s.completed:{},orders:s?.orders&&typeof s.orders==='object'?s.orders:{}}}
+function normalizeState(s){return {...blankState(),...s,version:4,customUnits:Array.isArray(s?.customUnits)?s.customUnits:[],timetable:s?.timetable&&typeof s.timetable==='object'?s.timetable:{},groups:s?.groups&&typeof s.groups==='object'?s.groups:{},cancelled:s?.cancelled&&typeof s.cancelled==='object'?s.cancelled:{},completed:s?.completed&&typeof s.completed==='object'?s.completed:{},orders:s?.orders&&typeof s.orders==='object'?s.orders:{}}}
 function validState(s){
- if(!s||![1,2,3].includes(s.version)||!s.overrides||typeof s.overrides!=='object'||Array.isArray(s.overrides)||!Array.isArray(s.added)||!Array.isArray(s.free)||s.added.length>2000||s.free.length>500||Object.keys(s.overrides).length>3000)return false;
+ if(!s||![1,2,3,4].includes(s.version)||!s.overrides||typeof s.overrides!=='object'||Array.isArray(s.overrides)||!Array.isArray(s.added)||!Array.isArray(s.free)||s.added.length>2000||s.free.length>500||Object.keys(s.overrides).length>3000)return false;
  if(Object.entries(s.years||{}).some(([y,c])=>!/^20\d{2}$/.test(y)||+y<2026||!validConfig(c,y)))return false;
  const configs={...builtinYears,...s.years};
  if(Object.entries(s.remoteClosures||{}).some(([y,cs])=>!configs[y]||!Array.isArray(cs)||cs.length>100||cs.some(c=>!validDate(c.start)||!validDate(c.end)||c.start>c.end||typeof c.title!=='string'||c.title.length>200||!Array.isArray(c.tracks))))return false;
@@ -38,8 +38,23 @@ function validState(s){
    }
   }
  }
+ if(s.groups!=null){
+  if(!s.groups||typeof s.groups!=='object'||Array.isArray(s.groups))return false;
+  for(const [sub,byYear] of Object.entries(s.groups)){
+   if(!knownSubjects[sub]||!byYear||typeof byYear!=='object'||Array.isArray(byYear))return false;
+   for(const [y,groups] of Object.entries(byYear)){
+    if(!configs[y]||!Array.isArray(groups)||groups.length>100||new Set(groups.map(g=>g.id)).size!==groups.length)return false;
+    for(const g of groups){
+     if(!g||!bounded(g.id,100)||!bounded(g.label,80)||!g.label.trim()||!knownSubjects[sub].tracks.some(t=>t.id===g.track)||!g.days||typeof g.days!=='object'||Array.isArray(g.days))return false;
+     const entries=Object.entries(g.days);
+     if(!entries.length||entries.length>5||entries.some(([weekday,periods])=>!['1','2','3','4','5'].includes(weekday)||![1,2].includes(periods)))return false;
+    }
+   }
+  }
+ }
+ if(s.cancelled!=null&&(!s.cancelled||typeof s.cancelled!=='object'||Array.isArray(s.cancelled)||Object.keys(s.cancelled).length>12000||Object.entries(s.cancelled).some(([key,value])=>!bounded(key,300)||typeof value!=='boolean')))return false;
  if(s.completed!=null&&(!s.completed||typeof s.completed!=='object'||Array.isArray(s.completed)||Object.keys(s.completed).length>12000||Object.entries(s.completed).some(([key,value])=>!bounded(key,300)||typeof value!=='boolean')))return false;
- const event=e=>e&&bounded(e.id,200)&&knownSubjects[e.subject]&&configs[e.year]&&knownSubjects[e.subject].tracks.some(t=>t.id===e.track)&&kinds.includes(e.kind)&&validDate(e.start)&&validDate(e.end)&&e.start<=e.end&&e.start>=e.year+'-07-01'&&e.end<=(+e.year+1)+'-09-30'&&bounded(e.title,250)&&bounded(e.notes||'',5000)&&(!e.time||/^([01]\d|2[0-3]):[0-5]\d$/.test(e.time));
+ const event=e=>e&&bounded(e.id,200)&&knownSubjects[e.subject]&&configs[e.year]&&knownSubjects[e.subject].tracks.some(t=>t.id===e.track)&&(!e.groupId||bounded(e.groupId,100))&&kinds.includes(e.kind)&&validDate(e.start)&&validDate(e.end)&&e.start<=e.end&&e.start>=e.year+'-07-01'&&e.end<=(+e.year+1)+'-09-30'&&bounded(e.title,250)&&bounded(e.notes||'',5000)&&(!e.time||/^([01]\d|2[0-3]):[0-5]\d$/.test(e.time));
  if(!s.added.every(event)||new Set(s.added.map(e=>e.id)).size!==s.added.length)return false;
  if(!Object.entries(s.overrides).every(([id,e])=>bounded(id,200)&&id!=='__proto__'&&(e===null||event(e)&&e.id===id)))return false;
  if(s.orders!=null&&(!s.orders||typeof s.orders!=='object'||Array.isArray(s.orders)||Object.keys(s.orders).length>300||Object.entries(s.orders).some(([key,order])=>!/^[-a-z]+:20\d{2}:.+$/.test(key)||!Array.isArray(order)||order.length>50||!order.every(code=>bounded(code,80)))))return false;
@@ -53,6 +68,25 @@ updateYears();
 let subject='chemie',year=data.years[params.get('jahr')]?params.get('jahr'):'2026';
 let month=data.years[year].start.slice(0,7)+'-01',view='week',events=[],stats=[],selected=new Set(),editId=null,baseEvents=[];
 const weekdayNames=['Montag','Dienstag','Mittwoch','Donnerstag','Freitag'];
+function groupList(){
+ const explicit=state.groups?.[subject]?.[year];
+ if(Array.isArray(explicit))return explicit;
+ return Object.entries(state.timetable?.[subject]||{}).filter(([,days])=>Object.keys(days).length).map(([track,days])=>({id:'legacy-'+track.toLowerCase().replace(/[^a-z0-9]+/g,'-'),track,label:data.subjects[subject].tracks.find(t=>t.id===track)?.label||track,days}));
+}
+function trackOptions(){
+ const groups=groupList();
+ return data.subjects[subject].tracks.flatMap(track=>{
+  const configured=groups.filter(g=>g.track===track.id);
+  return configured.length?configured.map(g=>({id:g.id,track:track.id,trackLabel:track.label,label:g.label,days:g.days,groupId:g.id})): [{id:track.id,track:track.id,trackLabel:track.label,label:track.label,days:{},groupId:null}];
+ });
+}
+function optionFor(id){return trackOptions().find(o=>o.id===id)}
+function choiceId(e){return e.groupId||e.track}
+function scheduleFor(e){return optionFor(choiceId(e))?.days||{}}
+function filterKey(){return subject+':'+year}
+function cancelledKey(e,day){return `${subject}|${year}|${choiceId(e)}|${day}`}
+function selectedTracks(){return new Set(trackOptions().filter(o=>selected.has(o.id)).map(o=>o.track))}
+function clearUnitOverrides(track){const ids=[...P.unitsFor(data,subject,year,track).map(u=>`uv-${subject}-${year}-${u.code}`),...(state.customUnits||[]).filter(u=>u.subject===subject&&u.year===year&&u.track===track).map(u=>`xuv-${subject}-${year}-${u.id}`)];for(const id of Object.keys(state.overrides))if(ids.some(base=>id===base||id.startsWith(base+'~')))delete state.overrides[id]}
 let weekStart=(()=>{const now=new Date(),today=P.iso(new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())));return P.add(today,-((P.parse(today).getUTCDay()+6)%7))})();
 $('subject').value=publishedData.subjects[params.get('fach')]?params.get('fach'):'chemie';$('chemie-edition').value=edition;$('year').value=year;
 function profileRef(uid){return doc(db,'users',uid,'workStates','fachkalender-v1')}
@@ -60,7 +94,7 @@ function save(message){
  const key=currentUser?profileKey(currentUser.uid):GUEST_KEY;
  try{const serialized=JSON.stringify(state);localStorage.setItem(key,serialized);storageOK=true;if(new TextEncoder().encode(serialized).length>850000){$('save-status').textContent='Die persönliche Planung ist für die Cloud zu groß. Exportiere eine Sicherung und entferne nicht benötigte Einträge.';return}}catch{storageOK=false}
  if(currentUser&&!currentUser.emailVerified){$('save-status').textContent='Diese Änderung bleibt vorerst auf diesem Gerät. Bitte bestätige deine E-Mail-Adresse, damit sie mit deinem Profil synchronisiert werden kann.';return}
- if(currentUser){$('save-status').textContent=message||'Änderung lokal gesichert; Synchronisierung läuft …';clearTimeout(cloudTimer);const uid=currentUser.uid,payload=normalizeState(JSON.parse(JSON.stringify(state)));cloudTimer=setTimeout(()=>{cloudQueue=cloudQueue.then(()=>setDoc(profileRef(uid),{appId:APP_ID,activityId:ACTIVITY_ID,title:'Fachkalender',payload,schemaVersion:2,updatedAt:serverTimestamp()},{merge:true})).then(()=>{if(currentUser?.uid===uid)$('save-status').textContent='Persönliche Planung mit deinem Konto synchronisiert.'}).catch(error=>{if(currentUser?.uid===uid)$('save-status').textContent='Synchronisierung nicht möglich. Die lokale Sicherung bleibt erhalten ('+friendlyError(error)+').'})},450);return}
+ if(currentUser){$('save-status').textContent=message||'Änderung lokal gesichert; Synchronisierung läuft …';clearTimeout(cloudTimer);const uid=currentUser.uid,payload=normalizeState(JSON.parse(JSON.stringify(state)));cloudTimer=setTimeout(()=>{cloudQueue=cloudQueue.then(()=>setDoc(profileRef(uid),{appId:APP_ID,activityId:ACTIVITY_ID,title:'Fachkalender',payload,schemaVersion:3,updatedAt:serverTimestamp()},{merge:true})).then(()=>{if(currentUser?.uid===uid)$('save-status').textContent='Persönliche Planung mit deinem Konto synchronisiert.'}).catch(error=>{if(currentUser?.uid===uid)$('save-status').textContent='Synchronisierung nicht möglich. Die lokale Sicherung bleibt erhalten ('+friendlyError(error)+').'})},450);return}
  $('save-status').textContent=message||'Änderung nur auf diesem Gerät gespeichert. Melde dich an, um sie in deinem persönlichen Profil zu sichern.';
 }
 function friendlyError(error){const messages={'auth/invalid-email':'Bitte eine gültige E-Mail-Adresse eingeben.','auth/invalid-credential':'E-Mail-Adresse oder Passwort stimmen nicht.','auth/email-already-in-use':'Für diese E-Mail-Adresse gibt es bereits ein Konto.','auth/weak-password':'Das Passwort muss mindestens 8 Zeichen lang sein.','auth/too-many-requests':'Zu viele Versuche. Bitte später erneut probieren.','permission-denied':'Zugriff abgelehnt. Bitte E-Mail-Bestätigung und Anmeldung prüfen.','unavailable':'Firebase ist vorübergehend nicht erreichbar.'};return messages[error?.code]||'Bitte Verbindung und Eingaben prüfen.'}
@@ -75,19 +109,22 @@ async function activateProfile(user){
 }
 function closureList(){const values=[...data.closures,...Object.values(state.remoteClosures||{}).flat(),...state.free.filter(c=>!c.subject||c.subject===subject)],seen=new Set();return values.filter(c=>{const key=[c.subject||'all',c.start,c.end,c.title,...c.tracks].join('|');if(seen.has(key))return false;seen.add(key);return true})}
 function refresh(){
- let result;try{result=P.plan(data,subject,year,closureList(),state.orders||{},(state.customUnits||[]).filter(u=>u.subject===subject&&u.year===year),state.timetable?.[subject]||{})}catch(e){$('calendar').innerHTML='<p class="empty">'+esc(e.message)+'</p>';$('save-status').textContent='Bitte Stundenplan, freie Tage und Schuljahresrahmen prüfen.';return}baseEvents=result.events;stats=result.stats;
+ const explicit=Array.isArray(state.groups?.[subject]?.[year]);
+ let result;try{result=P.plan(data,subject,year,closureList(),state.orders||{},(state.customUnits||[]).filter(u=>u.subject===subject&&u.year===year),explicit?{}:state.timetable?.[subject]||{},groupList())}catch(e){$('calendar').innerHTML='<p class="empty">'+esc(e.message)+'</p>';$('save-status').textContent='Bitte Stundenplan, freie Tage und Schuljahresrahmen prüfen.';return}baseEvents=result.events;stats=result.stats;
  events=baseEvents.filter(e=>state.overrides[e.id]!==null).map(e=>{
   const own=state.overrides[e.id];if(!own)return e;
-  if(e.kind==='unit'){const schedule=state.timetable?.[subject]?.[e.track]||{};return {...e,start:own.start,end:own.end,meetingDays:P.dates(own.start,own.end).filter(d=>!P.closed(d,e.track,closureList())&&(!Object.keys(schedule).length||schedule[P.parse(d).getUTCDay()])),notes:own.notes||e.notes,custom:true};}
+  if(e.kind==='unit'){const schedule=scheduleFor(e);return {...e,start:own.start,end:own.end,meetingDays:P.dates(own.start,own.end).filter(d=>!P.closed(d,e.track,closureList())&&(!Object.keys(schedule).length||schedule[P.parse(d).getUTCDay()])),notes:own.notes||e.notes,custom:true};}
   return {...e,...own,custom:true};
  });
- events.push(...state.added.filter(e=>e.subject===subject&&e.year===year).map(e=>({...e,custom:true})));
+ events.push(...state.added.filter(e=>e.subject===subject&&e.year===year).map(e=>{const option=optionFor(choiceId(e))||trackOptions().find(o=>o.track===e.track);return {...e,groupId:option?.groupId||null,groupLabel:option?.label||e.track,custom:true}}));
  render();
 }
 function tracks(){
- const ts=data.subjects[subject].tracks,stored=state.filters[subject],schedule=state.timetable?.[subject]||{},scheduled=ts.filter(t=>Object.keys(schedule[t.id]||{}).length).map(t=>t.id);selected=new Set(Array.isArray(stored)?stored.filter(id=>ts.some(t=>t.id===id)):scheduled.length?scheduled:ts.map(t=>t.id));
- $('tracks').innerHTML=ts.map(t=>`<label><input type="checkbox" value="${esc(t.id)}" ${selected.has(t.id)?'checked':''}>${esc(t.label)}</label>`).join('');
- $('event-track').innerHTML=ts.map(t=>`<option value="${esc(t.id)}">${esc(t.label)}</option>`).join('');
+ const options=trackOptions(),stored=state.filters[filterKey()]||state.filters[subject],configured=options.filter(o=>o.groupId).map(o=>o.id);
+ const chosen=Array.isArray(stored)?stored.flatMap(id=>options.some(o=>o.id===id)?[id]:options.filter(o=>o.track===id).map(o=>o.id)):configured.length?configured:options.map(o=>o.id);
+ selected=new Set(chosen);
+ $('tracks').innerHTML=options.map(o=>`<label><input type="checkbox" value="${esc(o.id)}" ${selected.has(o.id)?'checked':''}>${esc(o.label)}${o.groupId?` <small>· ${esc(o.trackLabel)}</small>`:''}</label>`).join('');
+ $('event-track').innerHTML=options.map(o=>`<option value="${esc(o.id)}">${esc(o.label)}${o.groupId?' · '+esc(o.trackLabel):''}</option>`).join('');
 }
 function months(){const out=[];for(let m=data.years[year].start.slice(0,7)+'-01';m<=data.years[year].end;){out.push(m);const d=P.parse(m);d.setUTCMonth(d.getUTCMonth()+1);m=P.iso(d)}return out}
 function setContext(){
@@ -111,22 +148,25 @@ function setContext(){
  if(data.years[year].dynamic)$('notice').textContent='NRW-Ferien und Feiertage aus dem Netz geladen · '+(data.years[year].q2Provisional?'Q2-Unterrichtsende ist ein vorläufiger Planungswert; unter Schuljahresrahmen prüfen. ':'Q2-Rahmen nach eigener Festlegung. ')+(data.years[year].halfProvisional?'Halbjahreswechsel vorläufig. ':'')+'Schulische Klausuren und Abiturtermine bitte ergänzen.';
  $('stand').textContent=data.status;$('sources').innerHTML=data.sources.map(x=>`<p><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)} ↗</a></p>`).join('');refresh();
 }
-function shown(e){return selected.has(e.track)&&(e.custom||e.kind!=='makeup')}
-function onDay(e,d){const schedule=state.timetable?.[subject]?.[e.track];if(e.kind==='unit'&&Array.isArray(e.meetingDays))return e.meetingDays.includes(d);return d>=e.start&&d<=e.end&&(!['unit','buffer','prep'].includes(e.kind)||(!P.closed(d,e.track,closureList())&&(!schedule||!Object.keys(schedule).length||Boolean(schedule[P.parse(d).getUTCDay()]))))}
+function shown(e){return selected.has(choiceId(e))&&(e.custom||e.kind!=='makeup')}
+function onDay(e,d){const schedule=scheduleFor(e);if(['unit','prep'].includes(e.kind)&&Array.isArray(e.meetingDays))return e.meetingDays.includes(d);return d>=e.start&&d<=e.end&&(!['unit','buffer','prep'].includes(e.kind)||(!P.closed(d,e.track,closureList())&&(!Object.keys(schedule).length||Boolean(schedule[P.parse(d).getUTCDay()]))))}
 function semesterStart(track,c,today){const boundary=track.startsWith('Q2')?c.q2half:c.half;return today>=boundary?boundary:c.start}
 function semesterEnd(track,c,from){const boundary=track.startsWith('Q2')?c.q2half:c.half;return from>=boundary?(track.startsWith('Q2')?c.q2end:c.end):P.add(boundary,-1)}
-function lessonCount(track,start,end){const t=data.subjects[subject].tracks.find(x=>x.id===track);if(!t||end<start)return {planned:0,held:0,exact:false};const schedule=state.timetable?.[subject]?.[track]||{},exact=Object.keys(schedule).length>0;let planned=0,held=0;for(const day of P.dates(start,end)){if(P.closed(day,track,closureList()))continue;const weekday=P.parse(day).getUTCDay(),periods=exact?(schedule[weekday]||0):weekday>0&&weekday<6?t.weekly/5:0;planned+=periods;if(periods){const unit=events.find(e=>e.kind==='unit'&&e.track===track&&e.meetingDays?.includes(day));if(unit&&state.completed?.[unit.id+'|'+day])held+=periods}}return {planned:Math.round(planned*10)/10,held:Math.round(held*10)/10,exact}}
-function renderLessonSummary(){const c=data.years[year],today=new Date().toLocaleDateString('sv-SE'),rows=data.subjects[subject].tracks.filter(t=>selected.has(t.id)).map(t=>{const from=semesterStart(t.id,c,today),to=semesterEnd(t.id,c,from),grade=events.filter(e=>e.kind==='grade'&&e.track===t.id&&e.start>=from&&e.start<=to).sort((a,b)=>a.start.localeCompare(b.start))[0],until=grade?grade.start:(today<from?P.add(from,-1):today>to?to:today),total=lessonCount(t.id,from,to),count=lessonCount(t.id,from,until);return `<tr><th scope="row">${esc(t.label)}</th><td>${from>=(t.id.startsWith('Q2')?c.q2half:c.half)?'2. Halbjahr':'1. Halbjahr'}<small>${fmt(from)}–${fmt(to)}</small></td><td>${total.planned}${total.exact?'':' · ca.'}</td><td>${count.planned}${count.exact?'':' · ca.'}<small>${grade?'Noteneintrag am '+fmt(grade.start):'bis '+(today<from?'Halbjahresbeginn':today>to?'Halbjahresende':'heute')}</small></td><td>${count.held}</td><td>${grade?`<button type="button" class="grade-edit" data-event="${esc(grade.id)}">${esc(grade.title)} · ${fmt(grade.start)} bearbeiten</button>`:'<span class="hint">Kein Noteneintrag gesetzt</span>'}</td></tr>`}).join('');$('lesson-summary-table').innerHTML=rows?`<table><thead><tr><th scope="col">Lerngruppe</th><th scope="col">Halbjahr</th><th scope="col">Planmäßige Stunden im Halbjahr</th><th scope="col">Bis Noteneintrag / heute</th><th scope="col">Als durchgeführt markiert</th><th scope="col">Noteneintrag</th></tr></thead><tbody>${rows}</tbody></table>`:'<p class="empty">Wähle mindestens eine Lerngruppe, um die Stundenübersicht zu sehen.</p>'}
-function renderGradePreview(){const box=$('grade-summary');if($('event-kind').value!=='grade'){box.hidden=true;box.innerHTML='';return}const track=$('event-track').value,c=data.years[year],date=$('event-start').value||new Date().toLocaleDateString('sv-SE'),from=semesterStart(track,c,date),to=semesterEnd(track,c,from),total=lessonCount(track,from,to),count=lessonCount(track,from,date);box.hidden=false;box.innerHTML=`<strong>Unterricht bis zum Noteneintrag (${fmt(from)}–${fmt(date)})</strong><br>${count.planned}${count.exact?'':' · ca.'} planmäßige Unterrichtsstunden bis zum Noteneintrag; ${count.held} davon im Kalender als durchgeführt markiert. Im gesamten Halbjahr: ${total.planned}${total.exact?'':' · ca.'} Unterrichtsstunden.${count.exact?'':' Ergänze „Mein Stundenplan“ für eine taggenaue Berechnung.'}`}
+function lessonCount(option,start,end){const t=data.subjects[subject].tracks.find(x=>x.id===option.track);if(!t||end<start)return {planned:0,held:0,remaining:0,cancelled:0,exact:false};const schedule=option.days||{},exact=Object.keys(schedule).length>0,today=new Date().toLocaleDateString('sv-SE');let planned=0,held=0,remaining=0,cancelled=0;for(const day of P.dates(start,end)){if(P.closed(day,option.track,closureList()))continue;const weekday=P.parse(day).getUTCDay(),periods=exact?(schedule[weekday]||0):weekday>0&&weekday<6?t.weekly/5:0;if(!periods)continue;planned+=periods;if(state.cancelled?.[`${subject}|${year}|${option.id}|${day}`])cancelled+=periods;else if(day<today)held+=periods;else remaining+=periods}const round=n=>Math.round(n*10)/10;return {planned:round(planned),held:round(held),remaining:round(remaining),cancelled:round(cancelled),exact}}
+function renderLessonSummary(){const c=data.years[year],today=new Date().toLocaleDateString('sv-SE'),rows=trackOptions().filter(o=>selected.has(o.id)).map(o=>{const from=semesterStart(o.track,c,today),to=semesterEnd(o.track,c,from),grade=events.filter(e=>e.kind==='grade'&&choiceId(e)===o.id&&e.start>=from&&e.start<=to).sort((a,b)=>a.start.localeCompare(b.start))[0],total=lessonCount(o,from,to),beforeGrade=grade?lessonCount(o,from,P.add(grade.start,-1)):null;return `<tr><th scope="row">${esc(o.label)}${o.groupId?`<small>${esc(o.trackLabel)}</small>`:''}</th><td>${from>=(o.track.startsWith('Q2')?c.q2half:c.half)?'2. Halbjahr':'1. Halbjahr'}<small>${fmt(from)}–${fmt(to)}</small></td><td>${total.planned}${total.exact?'':' · ca.'}</td><td>${total.held}${total.exact?'':' · ca.'}</td><td>${grade?`${beforeGrade.remaining}${beforeGrade.exact?'':' · ca.'}`:'–'}</td><td>${total.remaining}${total.exact?'':' · ca.'}</td><td>${total.cancelled}${total.exact?'':' · ca.'}</td><td>${grade?`<button type="button" class="grade-edit" data-event="${esc(grade.id)}">${esc(grade.title)} · ${fmt(grade.start)} bearbeiten</button>`:'<span class="hint">Kein Noteneintrag gesetzt</span>'}</td></tr>`}).join('');$('lesson-summary-table').innerHTML=rows?`<table><thead><tr><th scope="col">Lerngruppe</th><th scope="col">Halbjahr</th><th scope="col">Geplant im Halbjahr</th><th scope="col">Bisher erteilt</th><th scope="col">Noch bis Noteneintrag</th><th scope="col">Noch im Halbjahr</th><th scope="col">Ausgefallen</th><th scope="col">Noteneintrag</th></tr></thead><tbody>${rows}</tbody></table>`:'<p class="empty">Wähle mindestens eine Lerngruppe, um die Stundenübersicht zu sehen.</p>'}
+function renderGradePreview(){const box=$('grade-summary');if($('event-kind').value!=='grade'){box.hidden=true;box.innerHTML='';return}const option=optionFor($('event-track').value),c=data.years[year],date=$('event-start').value||new Date().toLocaleDateString('sv-SE');if(!option){box.hidden=true;return}const from=semesterStart(option.track,c,date),to=semesterEnd(option.track,c,from),total=lessonCount(option,from,to),count=lessonCount(option,from,P.add(date,-1));box.hidden=false;box.innerHTML=`<strong>${esc(option.label)}: Unterricht vor dem Noteneintrag (${fmt(from)}–${fmt(P.add(date,-1))})</strong><br>${count.planned}${count.exact?'':' · ca.'} planmäßig; ${count.held}${count.exact?'':' · ca.'} bisher erteilt, ${count.remaining}${count.exact?'':' · ca.'} noch vorgesehen, ${count.cancelled}${count.exact?'':' · ca.'} ausgefallen. Im gesamten Halbjahr: ${total.planned}${total.exact?'':' · ca.'} Unterrichtsstunden.${count.exact?'':' Ergänze „Mein Stundenplan“ für eine taggenaue Berechnung.'}`}
 function chip(e,range=false,day=null){
- const custom=e.custom?' ✎':'';const title=(e.code?e.code+' · ':'')+e.title;
- const classes=`event-chip ${esc(e.kind)} c${Number.isInteger(e.color)?e.color%6:0} ${e.custom?'custom':''}`;
- const periods=day?state.timetable?.[subject]?.[e.track]?.[P.parse(day).getUTCDay()]:null;
- const body=`<strong>${esc(e.track)}${custom}${e.time?' · '+esc(e.time):''}${periods?` · ${periods===2?'Doppelstunde':'Einzelstunde'}`:''}</strong>${esc(title)}${range?`<small>${fmt(e.start)}${e.end!==e.start?'–'+fmt(e.end):''}</small>`:''}`;
+ const custom=e.custom?' ✎':'',title=(e.code?e.code+' · ':'')+e.title,option=optionFor(choiceId(e));
+ const cancelled=day&&state.cancelled?.[cancelledKey(e,day)];
+ const classes=`event-chip ${esc(e.kind)} c${Number.isInteger(e.color)?e.color%6:0} ${e.custom?'custom':''} ${cancelled?'cancelled':''}`;
+ const periods=day?scheduleFor(e)?.[P.parse(day).getUTCDay()]:null;
+ const body=`<strong>${esc(option?.label||e.groupLabel||e.track)}${custom}${e.time?' · '+esc(e.time):''}${periods?` · ${periods===2?'Doppelstunde':'Einzelstunde'}`:''}</strong>${esc(title)}${range?`<small>${fmt(e.start)}${e.end!==e.start?'–'+fmt(e.end):''}</small>`:''}`;
+ const attendance=day&&['unit','prep'].includes(e.kind)?`<button class="attendance ${cancelled?'cancelled':''}" data-cancelled="${esc(cancelledKey(e,day))}" aria-label="${cancelled?'Ausfall zurücknehmen':'Stunde als ausgefallen markieren'}">${cancelled?'↶ Ausfall zurücknehmen':'☐ Als ausgefallen markieren'}</button>`:'';
  const url=baseEvents.find(x=>x.id===e.id)?.url;
- if(e.kind==='unit'&&e.extraUnit)return `<div class="${classes} unit-card"><button class="unit-link custom-unit-link" data-custom-unit="${esc(e.customUnitId)}">${body}<span class="unit-open">Persönliches Vorhaben · bearbeiten</span></button>${day?`<button class="attendance ${state.completed?.[e.id+'|'+day]?'done':''}" data-taught="${esc(e.id+'|'+day)}">${state.completed?.[e.id+'|'+day]?'✓ Hat stattgefunden':'☐ Als stattgefunden markieren'}</button>`:''}</div>`;
- if(e.kind==='unit'&&url)return `<div class="${classes} unit-card"><a class="unit-link" href="${esc(url)}" target="_blank" rel="noopener" title="${esc(title+' im Curriculum öffnen')}">${body}<span class="unit-open">Im Curriculum öffnen ↗</span></a><button class="unit-edit" data-event="${esc(e.id)}" aria-label="${esc(e.track+' · '+title+': Zeitraum bearbeiten')}">✎ Bearbeiten</button>${day?`<button class="attendance ${state.completed?.[e.id+'|'+day]?'done':''}" data-taught="${esc(e.id+'|'+day)}" aria-label="${state.completed?.[e.id+'|'+day]?'Unterricht fand statt':'Unterricht als stattgefunden markieren'}">${state.completed?.[e.id+'|'+day]?'✓ Hat stattgefunden':'☐ Als stattgefunden markieren'}</button>`:''}</div>`;
- return `<button class="${classes}" data-event="${esc(e.id)}" title="${esc(e.track+' · '+title+' · '+fmt(e.start)+'–'+fmt(e.end))}">${body}</button>`;
+ if(e.kind==='unit'&&e.extraUnit)return `<div class="${classes} unit-card"><button class="unit-link custom-unit-link" data-custom-unit="${esc(e.customUnitId)}">${body}<span class="unit-open">Persönliches Vorhaben · bearbeiten</span></button>${attendance}</div>`;
+ if(e.kind==='unit'&&url)return `<div class="${classes} unit-card"><a class="unit-link" href="${esc(url)}" target="_blank" rel="noopener" title="${esc(title+' im Curriculum öffnen')}">${body}<span class="unit-open">Im Curriculum öffnen ↗</span></a><button class="unit-edit" data-event="${esc(e.id)}" aria-label="${esc((option?.label||e.track)+' · '+title+': Zeitraum bearbeiten')}">✎ Bearbeiten</button>${attendance}</div>`;
+ if(e.kind==='prep')return `<div class="${classes} unit-card"><button class="unit-link custom-unit-link" data-event="${esc(e.id)}">${body}</button>${attendance}</div>`;
+ return `<button class="${classes}" data-event="${esc(e.id)}" title="${esc((option?.label||e.track)+' · '+title+' · '+fmt(e.start)+'–'+fmt(e.end))}">${body}</button>`;
 }
 function weekLabel(d){const date=P.parse(d);date.setUTCDate(date.getUTCDate()+4-(date.getUTCDay()||7));return Math.ceil((((date-new Date(Date.UTC(date.getUTCFullYear(),0,1)))/86400000)+1)/7)}
 function render(){
@@ -145,43 +185,44 @@ function render(){
   const last=P.add(P.iso(endDate),6-((endDate.getUTCDay()+6)%7));
   let html='<div class="month-scroll"><div class="month-grid">'+['Mo','Di','Mi','Do','Fr','Sa','So'].map(x=>`<div class="weekday">${x}</div>`).join('');
   for(const day of P.dates(first,last)){
-   const closures=free.filter(x=>day>=x.start&&day<=x.end&&(!x.tracks.length||x.tracks.some(t=>selected.has(t))));
+   const closures=free.filter(x=>day>=x.start&&day<=x.end&&(!x.tracks.length||x.tracks.some(t=>selectedTracks().has(t))));
    const outside=day<c.start||day>c.end||day.slice(0,7)!==month.slice(0,7);
    const items=day<c.start||day>c.end?[]:display.filter(e=>onDay(e,day));
    html+=`<div class="day ${outside?'outside':''} ${[0,6].includes(P.parse(day).getUTCDay())?'weekend':''} ${closures.length&&$('show-closures').checked?'free':''} ${today===day?'today':''}"><time class="date-number" datetime="${day}">${P.parse(day).getUTCDate()}</time>`;
    if($('show-closures').checked)html+=closures.map(x=>`<span class="closure-label">${esc(x.title)}${x.tracks.length?' · '+esc([...new Set(x.tracks.map(t=>t.split(' ')[0]))].join('/')):''}</span>`).join('');
    if(day===c.half)html+='<span class="closure-label">Beginn 2. Halbjahr · EF/Q1/Sek I</span>';
-   if(day===c.q2half&&[...selected].some(t=>t.startsWith('Q2')))html+='<span class="closure-label">Beginn Q2.2</span>';
+   if(day===c.q2half&&[...selectedTracks()].some(t=>t.startsWith('Q2')))html+='<span class="closure-label">Beginn Q2.2</span>';
    html+=items.map(e=>chip(e,false,day)).join('')+'</div>';
   }$('calendar').innerHTML=html+'</div></div>';
  }else if(view==='week'){
   const days=P.dates(weekStart,P.add(weekStart,6));let html='<div class="month-scroll"><div class="month-grid">'+days.map(d=>`<div class="weekday ${P.iso(P.parse(d))===today?'current-weekday':''}">${weekdayNames[(P.parse(d).getUTCDay()+6)%7]||'Wochenende'}<br>${fmt(d)}</div>`).join('');
-  for(const d of days){const closures=free.filter(x=>d>=x.start&&d<=x.end&&(!x.tracks.length||x.tracks.some(t=>selected.has(t))));const items=d<config.start||d>config.end?[]:display.filter(e=>onDay(e,d));html+=`<div class="day ${[0,6].includes(P.parse(d).getUTCDay())?'weekend':''} ${closures.length&&$('show-closures').checked?'free':''} ${d===today?'today':''}"><time class="date-number" datetime="${d}">${P.parse(d).getUTCDate()}</time>`;if($('show-closures').checked)html+=closures.map(x=>`<span class="closure-label">${esc(x.title)}</span>`).join('');html+=(items.map(e=>chip(e,false,d)).join('')||(!closures.length?'<span class="hint">Keine geplante Stunde</span>':''))+'</div>'}
+  for(const d of days){const closures=free.filter(x=>d>=x.start&&d<=x.end&&(!x.tracks.length||x.tracks.some(t=>selectedTracks().has(t))));const items=d<config.start||d>config.end?[]:display.filter(e=>onDay(e,d));html+=`<div class="day ${[0,6].includes(P.parse(d).getUTCDay())?'weekend':''} ${closures.length&&$('show-closures').checked?'free':''} ${d===today?'today':''}"><time class="date-number" datetime="${d}">${P.parse(d).getUTCDate()}</time>`;if($('show-closures').checked)html+=closures.map(x=>`<span class="closure-label">${esc(x.title)}</span>`).join('');html+=(items.map(e=>chip(e,false,d)).join('')||(!closures.length?'<span class="hint">Keine geplante Stunde</span>':''))+'</div>'}
   $('calendar').innerHTML=html+'</div></div>';
  }else{
-  const ts=data.subjects[subject].tracks.filter(t=>selected.has(t.id));
+  const ts=trackOptions().filter(o=>selected.has(o.id));
   let html='<div class="table-scroll"><table class="year-table"><thead><tr><th scope="col">Woche</th>'+ts.map(t=>`<th scope="col">${esc(t.label)}</th>`).join('')+'</tr></thead><tbody>';
   for(let a=P.add(c.start,-((P.parse(c.start).getUTCDay()+6)%7));a<=c.end;a=P.add(a,7)){
-   const b=P.add(a,6),days=P.dates(a,b),closures=free.filter(x=>x.start<=b&&x.end>=a&&(!x.tracks.length||x.tracks.some(t=>selected.has(t))));
+   const b=P.add(a,6),days=P.dates(a,b),closures=free.filter(x=>x.start<=b&&x.end>=a&&(!x.tracks.length||x.tracks.some(t=>selectedTracks().has(t))));
    html+=`<tr class="${closures.length&&$('show-closures').checked?'holiday-row':''}"><td><strong>KW ${weekLabel(a)}</strong><br>${fmt(a)}<br>bis ${fmt(b)}`;
    if($('show-closures').checked)html+=closures.map(x=>`<span class="closure-label">${esc(x.title)}</span>`).join('');
-   html+='</td>'+ts.map(t=>'<td>'+display.filter(e=>e.track===t.id&&days.some(d=>onDay(e,d))).map(e=>chip(e,true)).join('')+'</td>').join('')+'</tr>';
+   html+='</td>'+ts.map(t=>'<td>'+display.filter(e=>choiceId(e)===t.id&&days.some(d=>onDay(e,d))).map(e=>chip(e,true)).join('')+'</td>').join('')+'</tr>';
   }$('calendar').innerHTML=html+'</tbody></table></div>';
  }
- $('stats').innerHTML='<table><thead><tr><th>Jahrgang / Kurs</th><th>Wochenstunden</th><th>Verfügbare Schultage</th><th>Curriculum (UStd)</th><th>Eigene zusätzliche Vorhaben (UStd.)</th><th>Kalenderansatz (UStd)</th><th>Abiturvorbereitung (UStd)</th><th>Anpassung</th></tr></thead><tbody>'+stats.map(s=>`<tr><td>${esc(s.track)}</td><td>${s.weekly}</td><td>${s.days}</td><td>${s.hours}</td><td>${s.extraHours||0}</td><td>${s.planned}</td><td>${s.preparation}</td><td>${Math.round(s.factor*100)} % des Zeitrichtwerts</td></tr>`).join('')+'</tbody></table>';
+ $('stats').innerHTML='<table><thead><tr><th>Jahrgang / Kurs</th><th>Wochenstunden</th><th>Verfügbare Schultage</th><th>Curriculum (UStd)</th><th>Eigene zusätzliche Vorhaben (UStd.)</th><th>Kalenderansatz (UStd)</th><th>Abiturvorbereitung (UStd)</th><th>Anpassung</th></tr></thead><tbody>'+stats.map(s=>`<tr><td>${esc(s.groupLabel||s.track)}</td><td>${s.weekly}</td><td>${s.days}</td><td>${s.hours}</td><td>${s.extraHours||0}</td><td>${s.planned}</td><td>${s.preparation}</td><td>${Math.round(s.factor*100)} % des Zeitrichtwerts</td></tr>`).join('')+'</tbody></table>';
  renderLessonSummary();
 }
 function eventWarning(e){
  const warnings=[];
  if(['exam','abitur','makeup','event'].includes(e.kind)&&P.dates(e.start,e.end).some(d=>P.closed(d,e.track,closureList())))warnings.push('Der Termin liegt ganz oder teilweise an einem Wochenende oder schulfreien Tag.');
- if(e.kind==='unit'&&events.some(x=>x.id!==e.id&&x.track===e.track&&x.kind==='unit'&&x.start<=e.end&&x.end>=e.start))warnings.push('Der Zeitraum überschneidet sich mit einem anderen Unterrichtsvorhaben. Die übrigen Vorhaben werden nicht automatisch verschoben.');
+ if(e.kind==='unit'&&events.some(x=>x.id!==e.id&&choiceId(x)===choiceId(e)&&x.kind==='unit'&&x.start<=e.end&&x.end>=e.start))warnings.push('Der Zeitraum überschneidet sich mit einem anderen Unterrichtsvorhaben. Die übrigen Vorhaben werden nicht automatisch verschoben.');
  return warnings.join(' ');
 }
 function openEvent(id,defaults={}){
- editId=id;const start=defaults.start||(month<data.years[year].start?data.years[year].start:month);const e=id?events.find(x=>x.id===id):{title:defaults.title||'',kind:defaults.kind||'exam',track:defaults.track||[...selected][0]||data.subjects[subject].tracks[0].id,start,end:start,notes:''};
+ editId=id;const start=defaults.start||(month<data.years[year].start?data.years[year].start:month),choice=defaults.track||[...selected][0]||trackOptions()[0].id,option=optionFor(choice);const e=id?events.find(x=>x.id===id):{title:defaults.title||'',kind:defaults.kind||'exam',track:option?.track||data.subjects[subject].tracks[0].id,groupId:option?.groupId||null,start,end:start,notes:''};
  if(!e)return;
  $('event-heading').textContent=id?'Termin / Vorhaben bearbeiten':'Neuen Termin hinzufügen';
- for(const f of ['title','track','kind','start','end','time','notes'])$('event-'+f).value=e[f]||'';
+ for(const f of ['title','kind','start','end','time','notes'])$('event-'+f).value=e[f]||'';
+ $('event-track').value=choiceId(e);
  const fixedCurriculumUnit=e.kind==='unit'&&Boolean(id);
  for(const f of ['title','track','kind'])$('event-'+f).disabled=fixedCurriculumUnit;
  for(const f of ['start','end']){$('event-'+f).min=data.years[year].start;$('event-'+f).max=data.years[year].end}
@@ -196,7 +237,11 @@ $('event-kind').onchange=renderGradePreview;$('event-track').onchange=renderGrad
 $('event-form').onsubmit=e=>{
  e.preventDefault();const existing=events.find(x=>x.id===editId);const item={...(existing||{}),id:editId||'custom-'+crypto.randomUUID(),subject,year};
  for(const f of ['start','end','time','notes'])item[f]=$('event-'+f).value.trim();
- if(!existing||existing.kind!=='unit')for(const f of ['title','track','kind'])item[f]=$('event-'+f).value.trim();
+ if(!existing||existing.kind!=='unit'){
+  for(const f of ['title','kind'])item[f]=$('event-'+f).value.trim();
+  const option=optionFor($('event-track').value);if(!option){$('event-warning').textContent='Bitte eine gültige Lerngruppe wählen.';return}
+  item.track=option.track;item.groupId=option.groupId;
+ }
  if(item.end<item.start){$('event-warning').textContent='Das Ende darf nicht vor dem Beginn liegen.';return}
  if(item.start<data.years[year].start||item.end>data.years[year].end){$('event-warning').textContent='Bitte einen Zeitraum innerhalb des gewählten Schuljahres wählen.';return}
  const index=state.added.findIndex(x=>x.id===editId);
@@ -215,34 +260,52 @@ function renderOrderList(){
 }
 $('arrange-units').onclick=()=>{
  const ts=data.subjects[subject].tracks;$('order-track').innerHTML=ts.map(t=>`<option value="${esc(t.id)}">${esc(t.label)}</option>`).join('');
- $('order-track').value=[...selected][0]||ts[0].id;$('order-status').textContent='';editingOrder=null;renderOrderList();$('order-dialog').showModal();
+ $('order-track').value=optionFor([...selected][0])?.track||ts[0].id;$('order-status').textContent='';editingOrder=null;renderOrderList();$('order-dialog').showModal();
 };
-function drawTimetable(){
- const ts=data.subjects[subject].tracks,schedules=state.timetable?.[subject]||{};
- $('timetable-rows').innerHTML='<div class="timetable-head"><span>Jahrgang / Kurs</span>'+weekdayNames.map(x=>`<span>${x}</span>`).join('')+'</div>'+ts.map(t=>`<div class="timetable-row"><strong>${esc(t.label)}</strong>${weekdayNames.map((d,i)=>{const day=i+1,value=schedules[t.id]?.[day]||0;return `<div class="timetable-cell"><label for="tt-${esc(t.id)}-${day}">${esc(d)}</label><select id="tt-${esc(t.id)}-${day}" data-tt-track="${esc(t.id)}" data-tt-day="${day}" aria-label="${esc(t.label)} am ${d}"><option value="0" ${value===0?'selected':''}>Kein Unterricht</option><option value="1" ${value===1?'selected':''}>Einzelstunde</option><option value="2" ${value===2?'selected':''}>Doppelstunde</option></select></div>`}).join('')}</div>`).join('');
+function timetableCard(group){
+ const tracks=data.subjects[subject].tracks,days=group.days||{};
+ const card=document.createElement('div');card.className='timetable-card';card.dataset.groupId=group.id;
+ card.innerHTML=`<div class="timetable-card-head"><label>Lerngruppe<input class="tt-label" maxlength="80" required value="${esc(group.label)}" placeholder="z. B. 7a oder Q2 LK A"></label><label>Jahrgang / Kurs<select class="tt-track">${tracks.map(t=>`<option value="${esc(t.id)}" ${group.track===t.id?'selected':''}>${esc(t.label)}</option>`).join('')}</select></label><button type="button" class="tt-remove" aria-label="Lerngruppe ${esc(group.label)} entfernen">Entfernen</button></div><div class="timetable-days">${weekdayNames.map((d,i)=>{const value=days[i+1]||0;return `<label>${esc(d)}<select class="tt-day" data-day="${i+1}"><option value="0" ${value===0?'selected':''}>Kein Unterricht</option><option value="1" ${value===1?'selected':''}>Einzelstunde</option><option value="2" ${value===2?'selected':''}>Doppelstunde</option></select></label>`}).join('')}</div>`;
+ $('timetable-rows').append(card);
 }
+function drawTimetable(){ $('timetable-rows').replaceChildren();for(const group of groupList())timetableCard(group) }
 $('timetable').onclick=()=>{drawTimetable();$('timetable-status').textContent='';$('timetable-dialog').showModal()};
+$('timetable-add').onclick=()=>timetableCard({id:'lg-'+crypto.randomUUID(),track:data.subjects[subject].tracks[0].id,label:'',days:{}});
+$('timetable-rows').onclick=e=>{const button=e.target.closest('.tt-remove');if(button)button.closest('.timetable-card').remove()};
 $('timetable-save').onclick=()=>{
- const next={};for(const track of data.subjects[subject].tracks){const days={};document.querySelectorAll(`[data-tt-track="${CSS.escape(track.id)}"]`).forEach(sel=>{if(Number(sel.value))days[sel.dataset.ttDay]=Number(sel.value)});if(Object.keys(days).length)next[track.id]=days}
- const before=state.timetable?.[subject]||{};for(const track of data.subjects[subject].tracks){if(JSON.stringify(before[track.id]||{})!==JSON.stringify(next[track.id]||{}))for(const unit of P.unitsFor(data,subject,year,track.id))delete state.overrides[`uv-${subject}-${year}-${unit.code}`]}
- state.timetable=state.timetable||{};if(Object.keys(next).length)state.timetable[subject]=next;else delete state.timetable[subject];state.filters[subject]=Object.keys(next).length?Object.keys(next):data.subjects[subject].tracks.map(t=>t.id);
- save('Persönlicher Stundenplan gespeichert; Vorhaben werden an den eingetragenen Tagen und mit passender Einzel- oder Doppelstundenzeit verteilt.');$('timetable-dialog').close();tracks();refresh();
+ const previous=groupList(),next=[];
+ for(const card of $('timetable-rows').querySelectorAll('.timetable-card')){
+  const label=card.querySelector('.tt-label').value.trim(),track=card.querySelector('.tt-track').value,days={};
+  card.querySelectorAll('.tt-day').forEach(sel=>{if(Number(sel.value))days[sel.dataset.day]=Number(sel.value)});
+  if(!label){$('timetable-status').textContent='Bitte jede Lerngruppe benennen.';card.querySelector('.tt-label').focus();return}
+  if(!Object.keys(days).length){$('timetable-status').textContent='Bitte für '+label+' mindestens einen Unterrichtstag wählen.';return}
+  let id=card.dataset.groupId;if(previous.find(g=>g.id===id)?.track!==track)id='lg-'+crypto.randomUUID();
+  next.push({id,track,label,days});
+ }
+ if(new Set(next.map(g=>g.label.toLowerCase())).size!==next.length){$('timetable-status').textContent='Bitte verschiedene Namen für die Lerngruppen wählen.';return}
+ const oldById=new Map(previous.map(g=>[g.id,g]));
+ for(const group of [...previous,...next]){const before=oldById.get(group.id);if(!before||JSON.stringify(before)!==JSON.stringify(group))clearUnitOverrides(group.track)}
+ state.groups=state.groups||{};state.groups[subject]=state.groups[subject]||{};state.groups[subject][year]=next;
+ const available=new Set(next.map(g=>g.id));
+ for(const item of state.added.filter(e=>e.subject===subject&&e.year===year&&e.groupId&&!available.has(e.groupId))){const replacement=next.find(g=>g.track===item.track);item.groupId=replacement?.id||null}
+ state.filters[filterKey()]=next.length?next.map(g=>g.id):data.subjects[subject].tracks.map(t=>t.id);
+ save('Persönlicher Stundenplan gespeichert. Jede Lerngruppe wird eigenständig geplant und ausgewertet.');$('timetable-dialog').close();tracks();refresh();
 };
-$('timetable-clear').onclick=()=>{delete state.timetable[subject];delete state.filters[subject];for(const t of data.subjects[subject].tracks)for(const u of P.unitsFor(data,subject,year,t.id))delete state.overrides[`uv-${subject}-${year}-${u.code}`];save('Stundenplan dieses Fachs gelöscht.');$('timetable-dialog').close();tracks();refresh()};
+$('timetable-clear').onclick=()=>{state.groups=state.groups||{};state.groups[subject]=state.groups[subject]||{};state.groups[subject][year]=[];delete state.filters[filterKey()];for(const t of data.subjects[subject].tracks)clearUnitOverrides(t.id);save('Stundenplan dieses Fachs und Schuljahres gelöscht.');$('timetable-dialog').close();tracks();refresh()};
 $('new-unit').onclick=()=>{const ts=data.subjects[subject].tracks;$('unit-track').innerHTML=ts.map(t=>`<option value="${esc(t.id)}">${esc(t.label)}</option>`).join('');$('unit-id').value='';$('unit-title').value='';$('unit-hours').value='10';$('unit-notes').value='';$('unit-delete').hidden=true;$('unit-status').textContent='';$('unit-dialog').showModal()};
 function openCustomUnit(id){const u=state.customUnits.find(x=>x.id===id);if(!u)return;$('unit-track').innerHTML=data.subjects[subject].tracks.map(t=>`<option value="${esc(t.id)}">${esc(t.label)}</option>`).join('');$('unit-id').value=u.id;$('unit-track').value=u.track;$('unit-title').value=u.title;$('unit-hours').value=u.hours;$('unit-notes').value=u.notes||'';$('unit-delete').hidden=false;$('unit-status').textContent='Zeitansatz und Titel lassen sich anpassen; die Verteilung wird neu berechnet.';$('unit-dialog').showModal()}
-$('unit-form').onsubmit=e=>{e.preventDefault();const id=$('unit-id').value||'uvx-'+crypto.randomUUID(),track=$('unit-track').value,item={id,subject,year,track,title:$('unit-title').value.trim(),hours:Number($('unit-hours').value),notes:$('unit-notes').value.trim()};if(!Number.isFinite(item.hours)||item.hours<1||item.hours>400){$('unit-status').textContent='Bitte einen Zeitansatz zwischen 1 und 400 Unterrichtsstunden eingeben.';return}const existing=state.customUnits.findIndex(x=>x.id===id),prior=existing>=0?state.customUnits[existing]:null;if(prior)for(const u of P.unitsFor(data,subject,year,prior.track))delete state.overrides[`uv-${subject}-${year}-${u.code}`];for(const u of P.unitsFor(data,subject,year,track))delete state.overrides[`uv-${subject}-${year}-${u.code}`];if(existing>=0)state.customUnits[existing]=item;else state.customUnits.push(item);save('Persönliches Unterrichtsvorhaben gespeichert; die curriculare Zeit wurde proportional neu verteilt.');$('unit-dialog').close();refresh()};
-$('unit-delete').onclick=()=>{const id=$('unit-id').value,u=state.customUnits.find(x=>x.id===id);state.customUnits=state.customUnits.filter(x=>x.id!==id);if(u)for(const unit of P.unitsFor(data,subject,year,u.track))delete state.overrides[`uv-${subject}-${year}-${unit.code}`];save('Eigenes Unterrichtsvorhaben entfernt; die curriculare Zeit wurde neu verteilt.');$('unit-dialog').close();refresh()};
+$('unit-form').onsubmit=e=>{e.preventDefault();const id=$('unit-id').value||'uvx-'+crypto.randomUUID(),track=$('unit-track').value,item={id,subject,year,track,title:$('unit-title').value.trim(),hours:Number($('unit-hours').value),notes:$('unit-notes').value.trim()};if(!Number.isFinite(item.hours)||item.hours<1||item.hours>400){$('unit-status').textContent='Bitte einen Zeitansatz zwischen 1 und 400 Unterrichtsstunden eingeben.';return}const existing=state.customUnits.findIndex(x=>x.id===id),prior=existing>=0?state.customUnits[existing]:null;if(prior)clearUnitOverrides(prior.track);clearUnitOverrides(track);if(existing>=0)state.customUnits[existing]=item;else state.customUnits.push(item);save('Persönliches Unterrichtsvorhaben gespeichert; die curriculare Zeit wurde proportional neu verteilt.');$('unit-dialog').close();refresh()};
+$('unit-delete').onclick=()=>{const id=$('unit-id').value,u=state.customUnits.find(x=>x.id===id);state.customUnits=state.customUnits.filter(x=>x.id!==id);if(u)clearUnitOverrides(u.track);save('Eigenes Unterrichtsvorhaben entfernt; die curriculare Zeit wurde neu verteilt.');$('unit-dialog').close();refresh()};
 $('order-track').onchange=()=>{editingOrder=null;renderOrderList()};
 $('order-list').onclick=e=>{const button=e.target.closest('[data-order-move]');if(!button)return;const list=editingOrder||currentOrder($('order-track').value),i=Number(button.dataset.orderIndex),j=i+(button.dataset.orderMove==='up'?-1:1);if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];editingOrder=list;renderOrderList()};
 $('order-save').onclick=()=>{
  const track=$('order-track').value,ordered=editingOrder||currentOrder(track),key=orderKey(track),canonical=canonicalOrder(track);
  if(ordered.length!==canonical.length||new Set(ordered).size!==canonical.length){$('order-status').textContent='Die Reihenfolge ist unvollständig. Bitte Dialog neu öffnen.';return}
  state.orders=state.orders||{};if(ordered.every((code,i)=>code===canonical[i]))delete state.orders[key];else state.orders[key]=ordered.slice();
- for(const unit of P.unitsFor(data,subject,year,track))delete state.overrides[`uv-${subject}-${year}-${unit.code}`];
+ clearUnitOverrides(track);
  editingOrder=null;save('Persönliche Reihenfolge gespeichert; die Vorhaben wurden nach ihren curricularen Zeitanteilen neu verteilt.');$('order-dialog').close();refresh();
 };
-$('order-reset').onclick=()=>{const track=$('order-track').value,key=orderKey(track);delete state.orders[key];editingOrder=null;for(const unit of P.unitsFor(data,subject,year,track))delete state.overrides[`uv-${subject}-${year}-${unit.code}`];save('Curriculare Reihenfolge für diesen Jahrgang wiederhergestellt.');$('order-dialog').close();refresh()};
+$('order-reset').onclick=()=>{const track=$('order-track').value,key=orderKey(track);delete state.orders[key];editingOrder=null;clearUnitOverrides(track);save('Curriculare Reihenfolge für diesen Jahrgang wiederhergestellt.');$('order-dialog').close();refresh()};
 function resetFree(){$('free-form').reset();$('free-id').value='';$('free-start').value=month;$('free-end').value=month}
 function listFree(){
  const c=data.years[year],relevant=x=>x.start<=c.end&&x.end>=c.start&&(!x.subject||x.subject===subject);
@@ -250,10 +313,10 @@ function listFree(){
  $('fixed-free-list').innerHTML=closureList().filter(x=>!x.id.startsWith('free-')).filter(relevant).sort((a,b)=>a.start.localeCompare(b.start)).map(x=>`<div class="fixed-row"><strong>${esc(x.title)}</strong> · ${fmt(x.start)}${x.start!==x.end?'–'+fmt(x.end):''}${x.tracks.length?' · '+esc(x.tracks.join(', ')):''}</div>`).join('');
 }
 $('free-days').onclick=()=>{resetFree();listFree();$('free-dialog').showModal()};$('free-new').onclick=resetFree;
-$('free-form').onsubmit=e=>{e.preventDefault();const start=$('free-start').value,end=$('free-end').value;if(end<start||start<'2026-08-01'||end>'2100-08-31'){$('free-end').setCustomValidity('Bitte einen gültigen Zeitraum ab August 2026 wählen.');$('free-end').reportValidity();return}$('free-end').setCustomValidity('');const scope=$('free-scope').value,item={id:$('free-id').value||'free-'+crypto.randomUUID(),subject,start,end,title:$('free-title').value.trim(),kind:'school',source:'Eigene Planung',tracks:scope==='all'?[]:!scope.startsWith('Q')?[scope]:[scope+' GK',scope+' LK']};const i=state.free.findIndex(x=>x.id===item.id);if(i>=0)state.free[i]=item;else state.free.push(item);for(const track of data.subjects[subject].tracks)for(const u of P.unitsFor(data,subject,year,track.id))delete state.overrides[`uv-${subject}-${year}-${u.code}`];save();refresh();resetFree();listFree()};
+$('free-form').onsubmit=e=>{e.preventDefault();const start=$('free-start').value,end=$('free-end').value;if(end<start||start<'2026-08-01'||end>'2100-08-31'){$('free-end').setCustomValidity('Bitte einen gültigen Zeitraum ab August 2026 wählen.');$('free-end').reportValidity();return}$('free-end').setCustomValidity('');const scope=$('free-scope').value,item={id:$('free-id').value||'free-'+crypto.randomUUID(),subject,start,end,title:$('free-title').value.trim(),kind:'school',source:'Eigene Planung',tracks:scope==='all'?[]:!scope.startsWith('Q')?[scope]:[scope+' GK',scope+' LK']};const i=state.free.findIndex(x=>x.id===item.id);if(i>=0)state.free[i]=item;else state.free.push(item);for(const track of data.subjects[subject].tracks)clearUnitOverrides(track.id);save();refresh();resetFree();listFree()};
 $('free-end').oninput=()=>{$('free-end').setCustomValidity('')};$('free-start').oninput=()=>{$('free-end').setCustomValidity('')};
-$('free-list').onclick=e=>{const edit=e.target.closest('[data-free-edit]'),del=e.target.closest('[data-free-delete]');if(edit){const c=state.free.find(x=>x.id===edit.dataset.freeEdit);$('free-id').value=c.id;for(const f of ['title','start','end'])$('free-'+f).value=c[f];$('free-scope').value=c.tracks.length?c.tracks[0].split(' ')[0]:'all';$('free-title').focus()}if(del){const removed=state.free.find(x=>x.id===del.dataset.freeDelete);state.free=state.free.filter(x=>x.id!==del.dataset.freeDelete);if(removed)for(const track of data.subjects[subject].tracks)for(const u of P.unitsFor(data,subject,year,track.id))delete state.overrides[`uv-${subject}-${year}-${u.code}`];save();refresh();listFree();resetFree()}};
-$('tracks').onchange=()=>{selected=new Set([...$('tracks').querySelectorAll('input:checked')].map(x=>x.value));state.filters[subject]=[...selected];save('Auswahl der Jahrgangsstufen gespeichert.');render()};
+$('free-list').onclick=e=>{const edit=e.target.closest('[data-free-edit]'),del=e.target.closest('[data-free-delete]');if(edit){const c=state.free.find(x=>x.id===edit.dataset.freeEdit);$('free-id').value=c.id;for(const f of ['title','start','end'])$('free-'+f).value=c[f];$('free-scope').value=c.tracks.length?c.tracks[0].split(' ')[0]:'all';$('free-title').focus()}if(del){const removed=state.free.find(x=>x.id===del.dataset.freeDelete);state.free=state.free.filter(x=>x.id!==del.dataset.freeDelete);if(removed)for(const track of data.subjects[subject].tracks)clearUnitOverrides(track.id);save();refresh();listFree();resetFree()}};
+$('tracks').onchange=()=>{selected=new Set([...$('tracks').querySelectorAll('input:checked')].map(x=>x.value));state.filters[filterKey()]=[...selected];save('Auswahl der Lerngruppen gespeichert.');render()};
 function selectAll(on){$('tracks').querySelectorAll('input').forEach(x=>x.checked=on);$('tracks').onchange()}
 $('all-tracks').onclick=()=>selectAll(true);$('no-tracks').onclick=()=>selectAll(false);
 $('subject').onchange=setContext;$('chemie-edition').onchange=setContext;$('year').onchange=setContext;$('month').onchange=()=>{month=$('month').value;render()};
@@ -261,11 +324,11 @@ $('prev').onclick=()=>{if(view==='week'){weekStart=P.add(weekStart,-7)}else if(v
 $('week-view').onclick=()=>{view='week';render()};$('month-view').onclick=()=>{view='month';render()};$('year-view').onclick=()=>{view='year';render()};
 $('show-closures').onchange=render;
 $('lesson-summary-table').onclick=e=>{const button=e.target.closest('[data-event]');if(button)openEvent(button.dataset.event)};
-$('calendar').onclick=e=>{const taught=e.target.closest('[data-taught]');if(taught){state.completed=state.completed||{};const key=taught.dataset.taught;state.completed[key]=!state.completed[key];save('Durchgeführte Unterrichtsstunde im persönlichen Kalender vermerkt.');render();return}const custom=e.target.closest('[data-custom-unit]');if(custom){openCustomUnit(custom.dataset.customUnit);return}const el=e.target.closest('[data-event]');if(el)openEvent(el.dataset.event)};$('new-exam').onclick=()=>openEvent(null);
+$('calendar').onclick=e=>{const cancelled=e.target.closest('[data-cancelled]');if(cancelled){state.cancelled=state.cancelled||{};const key=cancelled.dataset.cancelled;state.cancelled[key]=!state.cancelled[key];save(state.cancelled[key]?'Unterrichtsausfall vermerkt.':'Unterrichtsausfall zurückgenommen.');render();return}const custom=e.target.closest('[data-custom-unit]');if(custom){openCustomUnit(custom.dataset.customUnit);return}const el=e.target.closest('[data-event]');if(el)openEvent(el.dataset.event)};$('new-exam').onclick=()=>openEvent(null);
 $('new-grade-entry').onclick=()=>{const today=new Date().toLocaleDateString('sv-SE'),c=data.years[year],start=today>=c.start&&today<=c.end?today:month<c.start?c.start:month;openEvent(null,{kind:'grade',title:'Noteneintrag',start})};
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>$(b.dataset.close).close();
 $('export').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Thomaeum_Fachkalender_Eigene_Planung.json';document.body.append(a);a.click();a.remove();$('save-status').textContent='Die Sicherungsdatei wurde zum Herunterladen bereitgestellt.';setTimeout(()=>URL.revokeObjectURL(url),30000)};
-$('import').onchange=async()=>{const file=$('import').files[0];if(!file)return;try{if(file.size>2000000)throw Error();const next=JSON.parse(await file.text());if(!validState(next))throw Error();state=next;state.years=next.years||{};state.remoteClosures=next.remoteClosures||{};data.years={...builtinYears,...state.years};updateYears();$('year').value=data.years[year]?year:'2026';state.filters=next.filters&&typeof next.filters==='object'?next.filters:{};save('Planung importiert und in diesem Browser gespeichert.');setContext()}catch{$('save-status').textContent='Import nicht möglich: Bitte eine gültige exportierte Fachkalender-Datei wählen. Die bestehende Planung bleibt erhalten.'}$('import').value=''};
+$('import').onchange=async()=>{const file=$('import').files[0];if(!file)return;try{if(file.size>2000000)throw Error();const next=JSON.parse(await file.text());if(!validState(next))throw Error();state=normalizeState(next);state.years=next.years||{};state.remoteClosures=next.remoteClosures||{};data.years={...builtinYears,...state.years};updateYears();$('year').value=data.years[year]?year:'2026';state.filters=next.filters&&typeof next.filters==='object'?next.filters:{};save('Planung importiert und in diesem Browser gespeichert.');setContext()}catch{$('save-status').textContent='Import nicht möglich: Bitte eine gültige exportierte Fachkalender-Datei wählen. Die bestehende Planung bleibt erhalten.'}$('import').value=''};
 $('reset').onclick=()=>$('confirm-dialog').showModal();$('confirm-reset').onclick=()=>{state=blankState();data.years=structuredClone(builtinYears);updateYears();$('year').value='2026';save('Eigene Änderungen zurückgesetzt.');$('confirm-dialog').close();setContext()};
 function theme(){const dark=document.documentElement.dataset.theme==='dark';$('theme').textContent=dark?'Helle Darstellung':'Dunkle Darstellung';if(dark)document.body.style.removeProperty('--accent');else document.body.style.setProperty('--accent',{chemie:'#19665d',physik:'#245d91',biologie:'#9c493c','mensch-und-umwelt':'#466b37'}[subject])}
 $('theme').onclick=()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('chemie-curriculum-theme',document.documentElement.dataset.theme)}catch{}theme()};

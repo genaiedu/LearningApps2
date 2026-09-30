@@ -11,3 +11,12 @@
 .lesson-summary td small{display:block;margin-top:4px;color:var(--muted);font-size:.72rem}.grade-edit{min-height:36px;padding:5px 8px;background:var(--soft);color:var(--ink);border:1px solid var(--line);text-align:left}.legend-grade{color:#7c356c;background:#f2d7ec;border-radius:5px;padding:3px 7px;font-weight:700}[data-theme=dark] .legend-grade{color:#f2d7ec;background:#51354c}
 .timetable-cell{min-width:0}.timetable-cell label{display:none}.timetable-cell select{width:100%}
 @media(max-width:900px){.timetable-head,.timetable-row{grid-template-columns:repeat(2,minmax(0,1fr))}.timetable-head span:first-child{display:none}.timetable-row strong{grid-column:1/-1}.timetable-cell label{display:block;font-size:.72rem;color:var(--muted);margin-bottom:3px}}
+.timetable-card{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
+.timetable-card-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:10px;align-items:end}
+.timetable-card label{display:flex;flex-direction:column;gap:4px;font-size:.8rem;font-weight:650}
+.timetable-card-head select,.timetable-days select{width:100%;min-width:0}
+.timetable-days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}
+.timetable-days select{font-size:.75rem;padding:.4rem}
+.event-chip.cancelled{opacity:.6;text-decoration:line-through}
+.attendance.cancelled{font-weight:700;background:#ffffff75}
+@media(max-width:700px){.timetable-card-head{grid-template-columns:1fr 1fr}.timetable-card-head .tt-remove{grid-column:1/-1}.timetable-days{grid-template-columns:repeat(2,minmax(0,1fr))}}
