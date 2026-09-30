@@ -27,7 +27,17 @@ function validState(s){
  if(Object.entries(s.remoteClosures||{}).some(([y,cs])=>!configs[y]||!Array.isArray(cs)||cs.length>100||cs.some(c=>!validDate(c.start)||!validDate(c.end)||c.start>c.end||typeof c.title!=='string'||c.title.length>200||!Array.isArray(c.tracks))))return false;
  const bounded=(v,n)=>typeof v==='string'&&v.length<=n;
  if(s.customUnits!=null&&(!Array.isArray(s.customUnits)||s.customUnits.length>500||!s.customUnits.every(u=>u&&bounded(u.id,200)&&u.id.startsWith('uvx-')&&knownSubjects[u.subject]&&configs[u.year]&&knownSubjects[u.subject].tracks.some(t=>t.id===u.track)&&bounded(u.title,250)&&u.title.trim()&&Number.isFinite(u.hours)&&u.hours>=1&&u.hours<=400&&bounded(u.notes||'',2000))||new Set((s.customUnits||[]).map(u=>u.id)).size!==(s.customUnits||[]).length))return false;
- if(s.timetable!=null&&(!s.timetable||typeof s.timetable!=='object'||Array.isArray(s.timetable)||Object.entries(s.timetable).some(([sub,tracks])=>!knownSubjects[sub]||!tracks||typeof tracks!=='object'||Array.isArray(tracks)||Object.entries(tracks).some(([track,days])=>!knownSubjects[sub].tracks.some(t=>t.id===track)||!days||typeof days!=='object'||Array.isArray(days)||Object.entries(days).length>5||Object.entries(days).some(([weekday,periods])=>!['1','2','3','4','5'].includes(weekday)||![1,2].includes(periods)))))))return false;
+ if(s.timetable!=null){
+  if(!s.timetable||typeof s.timetable!=='object'||Array.isArray(s.timetable))return false;
+  for(const [sub,tracks] of Object.entries(s.timetable)){
+   if(!knownSubjects[sub]||!tracks||typeof tracks!=='object'||Array.isArray(tracks))return false;
+   for(const [track,days] of Object.entries(tracks)){
+    if(!knownSubjects[sub].tracks.some(t=>t.id===track)||!days||typeof days!=='object'||Array.isArray(days))return false;
+    const entries=Object.entries(days);
+    if(entries.length>5||entries.some(([weekday,periods])=>!['1','2','3','4','5'].includes(weekday)||![1,2].includes(periods)))return false;
+   }
+  }
+ }
  if(s.completed!=null&&(!s.completed||typeof s.completed!=='object'||Array.isArray(s.completed)||Object.keys(s.completed).length>12000||Object.entries(s.completed).some(([key,value])=>!bounded(key,300)||typeof value!=='boolean')))return false;
  const event=e=>e&&bounded(e.id,200)&&knownSubjects[e.subject]&&configs[e.year]&&knownSubjects[e.subject].tracks.some(t=>t.id===e.track)&&kinds.includes(e.kind)&&validDate(e.start)&&validDate(e.end)&&e.start<=e.end&&e.start>=e.year+'-07-01'&&e.end<=(+e.year+1)+'-09-30'&&bounded(e.title,250)&&bounded(e.notes||'',5000)&&(!e.time||/^([01]\d|2[0-3]):[0-5]\d$/.test(e.time));
  if(!s.added.every(event)||new Set(s.added.map(e=>e.id)).size!==s.added.length)return false;
