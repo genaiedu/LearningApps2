@@ -2,7 +2,7 @@ import { auth, db, onAuthStateChanged, createUserWithEmailAndPassword, signInWit
 'use strict';
 (async()=>{
 const $=id=>document.getElementById(id),P=window.Fachplan,GUEST_KEY='thomaeum-fachkalender-v1',APP_ID='fachkalender',ACTIVITY_ID='personal-plan';
-const blankState=()=>({version:2,overrides:{},added:[],free:[],filters:{},years:{},remoteClosures:{},orders:{}});
+const blankState=()=>({version:3,overrides:{},added:[],customUnits:[],free:[],filters:{},timetable:{},completed:{},years:{},remoteClosures:{},orders:{}});
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=s=>P.parse(s).toLocaleDateString('de-DE',{timeZone:'UTC'}),monthName=s=>P.parse(s).toLocaleDateString('de-DE',{month:'long',year:'numeric',timeZone:'UTC'});
 let data;try{const r=await fetch('data/fachkalender.json?v=20260927');if(!r.ok)throw Error();data=await r.json()}catch{$('save-status').textContent='Der Kalender konnte nicht geladen werden. Bitte die Seite erneut öffnen.';return}
@@ -19,18 +19,21 @@ const validDate=s=>typeof s==='string'&&/^20\d{2}-\d{2}-\d{2}$/.test(s)&&!Number
 function validConfig(c,y){
  return c&&['start','end','half','q2half','q2end'].every(k=>validDate(c[k]))&&c.start<c.end&&c.start.startsWith(y+'-')&&c.end.startsWith((+y+1)+'-')&&c.q2end>=c.start&&c.q2end<=c.end&&c.half>=c.start&&c.half<=c.end&&c.q2half>=c.start&&c.q2half<=c.q2end&&(!c.prepStart&&!c.prepEnd||validDate(c.prepStart)&&validDate(c.prepEnd)&&c.prepStart<=c.prepEnd&&c.prepStart>c.q2end&&c.prepEnd<=c.end);
 }
-function normalizeState(s){return {...blankState(),...s,version:2,orders:s?.orders&&typeof s.orders==='object'?s.orders:{}}}
+function normalizeState(s){return {...blankState(),...s,version:3,customUnits:Array.isArray(s?.customUnits)?s.customUnits:[],timetable:s?.timetable&&typeof s.timetable==='object'?s.timetable:{},completed:s?.completed&&typeof s.completed==='object'?s.completed:{},orders:s?.orders&&typeof s.orders==='object'?s.orders:{}}}
 function validState(s){
- if(!s||![1,2].includes(s.version)||!s.overrides||typeof s.overrides!=='object'||Array.isArray(s.overrides)||!Array.isArray(s.added)||!Array.isArray(s.free)||s.added.length>2000||s.free.length>500||Object.keys(s.overrides).length>3000)return false;
+ if(!s||![1,2,3].includes(s.version)||!s.overrides||typeof s.overrides!=='object'||Array.isArray(s.overrides)||!Array.isArray(s.added)||!Array.isArray(s.free)||s.added.length>2000||s.free.length>500||Object.keys(s.overrides).length>3000)return false;
  if(Object.entries(s.years||{}).some(([y,c])=>!/^20\d{2}$/.test(y)||+y<2026||!validConfig(c,y)))return false;
  const configs={...builtinYears,...s.years};
  if(Object.entries(s.remoteClosures||{}).some(([y,cs])=>!configs[y]||!Array.isArray(cs)||cs.length>100||cs.some(c=>!validDate(c.start)||!validDate(c.end)||c.start>c.end||typeof c.title!=='string'||c.title.length>200||!Array.isArray(c.tracks))))return false;
  const bounded=(v,n)=>typeof v==='string'&&v.length<=n;
+ if(s.customUnits!=null&&(!Array.isArray(s.customUnits)||s.customUnits.length>500||!s.customUnits.every(u=>u&&bounded(u.id,200)&&u.id.startsWith('uvx-')&&knownSubjects[u.subject]&&configs[u.year]&&knownSubjects[u.subject].tracks.some(t=>t.id===u.track)&&bounded(u.title,250)&&u.title.trim()&&Number.isFinite(u.hours)&&u.hours>=1&&u.hours<=400&&bounded(u.notes||'',2000))||new Set((s.customUnits||[]).map(u=>u.id)).size!==(s.customUnits||[]).length))return false;
+ if(s.timetable!=null&&(!s.timetable||typeof s.timetable!=='object'||Array.isArray(s.timetable)||Object.entries(s.timetable).some(([sub,tracks])=>!knownSubjects[sub]||!tracks||typeof tracks!=='object'||Array.isArray(tracks)||Object.entries(tracks).some(([track,days])=>!knownSubjects[sub].tracks.some(t=>t.id===track)||!days||typeof days!=='object'||Array.isArray(days)||Object.entries(days).length>5||Object.entries(days).some(([weekday,periods])=>!['1','2','3','4','5'].includes(weekday)||![1,2].includes(periods)))))))return false;
+ if(s.completed!=null&&(!s.completed||typeof s.completed!=='object'||Array.isArray(s.completed)||Object.keys(s.completed).length>12000||Object.entries(s.completed).some(([key,value])=>!bounded(key,300)||typeof value!=='boolean')))return false;
  const event=e=>e&&bounded(e.id,200)&&knownSubjects[e.subject]&&configs[e.year]&&knownSubjects[e.subject].tracks.some(t=>t.id===e.track)&&kinds.includes(e.kind)&&validDate(e.start)&&validDate(e.end)&&e.start<=e.end&&e.start>=e.year+'-07-01'&&e.end<=(+e.year+1)+'-09-30'&&bounded(e.title,250)&&bounded(e.notes||'',5000)&&(!e.time||/^([01]\d|2[0-3]):[0-5]\d$/.test(e.time));
  if(!s.added.every(event)||new Set(s.added.map(e=>e.id)).size!==s.added.length)return false;
  if(!Object.entries(s.overrides).every(([id,e])=>bounded(id,200)&&id!=='__proto__'&&(e===null||event(e)&&e.id===id)))return false;
  if(s.orders!=null&&(!s.orders||typeof s.orders!=='object'||Array.isArray(s.orders)||Object.keys(s.orders).length>300||Object.entries(s.orders).some(([key,order])=>!/^[-a-z]+:20\d{2}:.+$/.test(key)||!Array.isArray(order)||order.length>50||!order.every(code=>bounded(code,80)))))return false;
- return s.free.every(c=>c&&bounded(c.id,200)&&c.id.startsWith('free-')&&bounded(c.title,200)&&validDate(c.start)&&validDate(c.end)&&c.start<=c.end&&c.start>='2026-08-01'&&c.end<='2100-08-31'&&Array.isArray(c.tracks)&&c.tracks.every(t=>['5','6','7','8','9','10','EF','Q1 GK','Q1 LK','Q2 GK','Q2 LK'].includes(t)));
+ return s.free.every(c=>c&&bounded(c.id,200)&&c.id.startsWith('free-')&&bounded(c.title,200)&&validDate(c.start)&&validDate(c.end)&&c.start<=c.end&&c.start>='2026-08-01'&&c.end<='2100-08-31'&&Array.isArray(c.tracks)&&c.tracks.every(t=>['5','6','7','8','9','10','EF','Q1 GK','Q1 LK','Q2 GK','Q2 LK'].includes(t))&&(!c.subject||knownSubjects[c.subject]));
 }
 function profileKey(uid){return `thomaeum-fachkalender-profile-v1:${uid}`}
 function loadLocal(key){try{const raw=localStorage.getItem(key);if(!raw)return blankState();const value=JSON.parse(raw);if(validState(value))return normalizeState(value);loadWarning='Gespeicherte eigene Planung konnte nicht übernommen werden. Die Curriculumsplanung wird angezeigt.'}catch{storageOK=false}return blankState()}
@@ -38,7 +41,9 @@ state=blankState();data.years={...builtinYears};
 function updateYears(){ $('year').innerHTML=Object.keys(data.years).sort().map(y=>`<option value="${y}">${esc(data.years[y].label)}</option>`).join('') }
 updateYears();
 let subject='chemie',year=data.years[params.get('jahr')]?params.get('jahr'):'2026';
-let month=data.years[year].start.slice(0,7)+'-01',view='year',events=[],stats=[],selected=new Set(),editId=null,baseEvents=[];
+let month=data.years[year].start.slice(0,7)+'-01',view='week',events=[],stats=[],selected=new Set(),editId=null,baseEvents=[];
+const weekdayNames=['Montag','Dienstag','Mittwoch','Donnerstag','Freitag'];
+let weekStart=(()=>{const now=new Date(),today=P.iso(new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())));return P.add(today,-((P.parse(today).getUTCDay()+6)%7))})();
 $('subject').value=publishedData.subjects[params.get('fach')]?params.get('fach'):'chemie';$('chemie-edition').value=edition;$('year').value=year;
 function profileRef(uid){return doc(db,'users',uid,'workStates','fachkalender-v1')}
 function save(message){
@@ -60,17 +65,17 @@ async function activateProfile(user){
 }
 function closureList(){const values=[...data.closures,...Object.values(state.remoteClosures||{}).flat(),...state.free],seen=new Set();return values.filter(c=>{const key=[c.start,c.end,c.title,...c.tracks].join('|');if(seen.has(key))return false;seen.add(key);return true})}
 function refresh(){
- let result;try{result=P.plan(data,subject,year,closureList(),state.orders||{})}catch(e){$('calendar').innerHTML='<p class="empty">'+esc(e.message)+'</p>';$('save-status').textContent='Bitte freie Tage und Schuljahresrahmen prüfen.';return}baseEvents=result.events;stats=result.stats;
+ let result;try{result=P.plan(data,subject,year,closureList(),state.orders||{},(state.customUnits||[]).filter(u=>u.subject===subject&&u.year===year),state.timetable?.[subject]||{})}catch(e){$('calendar').innerHTML='<p class="empty">'+esc(e.message)+'</p>';$('save-status').textContent='Bitte Stundenplan, freie Tage und Schuljahresrahmen prüfen.';return}baseEvents=result.events;stats=result.stats;
  events=baseEvents.filter(e=>state.overrides[e.id]!==null).map(e=>{
   const own=state.overrides[e.id];if(!own)return e;
-  if(e.kind==='unit')return {...e,start:own.start,end:own.end,notes:own.notes||e.notes,custom:true};
+  if(e.kind==='unit'){const schedule=state.timetable?.[subject]?.[e.track]||{};return {...e,start:own.start,end:own.end,meetingDays:P.dates(own.start,own.end).filter(d=>!P.closed(d,e.track,closureList())&&(!Object.keys(schedule).length||schedule[P.parse(d).getUTCDay()])),notes:own.notes||e.notes,custom:true};}
   return {...e,...own,custom:true};
  });
  events.push(...state.added.filter(e=>e.subject===subject&&e.year===year).map(e=>({...e,custom:true})));
  render();
 }
 function tracks(){
- const ts=data.subjects[subject].tracks,stored=state.filters[subject];selected=new Set(Array.isArray(stored)?stored.filter(id=>ts.some(t=>t.id===id)):ts.map(t=>t.id));
+ const ts=data.subjects[subject].tracks,stored=state.filters[subject],schedule=state.timetable?.[subject]||{},scheduled=ts.filter(t=>Object.keys(schedule[t.id]||{}).length).map(t=>t.id);selected=new Set(Array.isArray(stored)?stored.filter(id=>ts.some(t=>t.id===id)):scheduled.length?scheduled:ts.map(t=>t.id));
  $('tracks').innerHTML=ts.map(t=>`<label><input type="checkbox" value="${esc(t.id)}" ${selected.has(t.id)?'checked':''}>${esc(t.label)}</label>`).join('');
  $('event-track').innerHTML=ts.map(t=>`<option value="${esc(t.id)}">${esc(t.label)}</option>`).join('');
 }
@@ -83,7 +88,7 @@ function setContext(){
  subject=edition==='arbeitsversion'?'chemie-arbeitskopie':visibleSubject;
  data.years={...builtinYears,...state.years};updateYears();
  year=data.years[$('year').value]?$('year').value:Object.keys(data.years).sort()[0];$('year').value=year;
- month=data.years[year].start.slice(0,7)+'-01';tracks();
+ month=data.years[year].start.slice(0,7)+'-01';if(weekStart<data.years[year].start||weekStart>data.years[year].end)weekStart=P.add(data.years[year].start,-((P.parse(data.years[year].start).getUTCDay()+6)%7));tracks();
  $('month').innerHTML=months().map(m=>`<option value="${m}">${monthName(m)}</option>`).join('');
  $('subtitle').textContent=data.subjects[subject].label+' · '+data.years[year].label;
  $('curriculum-link').href=data.subjects[subject].curriculum;
@@ -97,20 +102,21 @@ function setContext(){
  $('stand').textContent=data.status;$('sources').innerHTML=data.sources.map(x=>`<p><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)} ↗</a></p>`).join('');refresh();
 }
 function shown(e){return selected.has(e.track)&&(e.custom||e.kind!=='makeup')}
-function onDay(e,d){return d>=e.start&&d<=e.end&&(!['unit','buffer','prep'].includes(e.kind)||!P.closed(d,e.track,closureList()))}
-function chip(e,range=false){
+function onDay(e,d){const schedule=state.timetable?.[subject]?.[e.track];if(e.kind==='unit'&&Array.isArray(e.meetingDays))return e.meetingDays.includes(d);return d>=e.start&&d<=e.end&&(!['unit','buffer','prep'].includes(e.kind)||(!P.closed(d,e.track,closureList())&&(!schedule||!Object.keys(schedule).length||Boolean(schedule[P.parse(d).getUTCDay()]))))}
+function chip(e,range=false,day=null){
  const custom=e.custom?' ✎':'';const title=(e.code?e.code+' · ':'')+e.title;
  const classes=`event-chip ${esc(e.kind)} c${Number.isInteger(e.color)?e.color%6:0} ${e.custom?'custom':''}`;
- const body=`<strong>${esc(e.track)}${custom}${e.time?' · '+esc(e.time):''}</strong>${esc(title)}${range?`<small>${fmt(e.start)}${e.end!==e.start?'–'+fmt(e.end):''}</small>`:''}`;
+ const periods=day?state.timetable?.[subject]?.[e.track]?.[P.parse(day).getUTCDay()]:null;
+ const body=`<strong>${esc(e.track)}${custom}${e.time?' · '+esc(e.time):''}${periods?` · ${periods===2?'Doppelstunde':'Einzelstunde'}`:''}</strong>${esc(title)}${range?`<small>${fmt(e.start)}${e.end!==e.start?'–'+fmt(e.end):''}</small>`:''}`;
  const url=baseEvents.find(x=>x.id===e.id)?.url;
  if(e.kind==='unit'&&url)return `<div class="${classes} unit-card"><a class="unit-link" href="${esc(url)}" target="_blank" rel="noopener" title="${esc(title+' im Curriculum öffnen')}">${body}<span class="unit-open">Im Curriculum öffnen ↗</span></a><button class="unit-edit" data-event="${esc(e.id)}" aria-label="${esc(e.track+' · '+title+': Zeitraum bearbeiten')}">✎ Bearbeiten</button></div>`;
  return `<button class="${classes}" data-event="${esc(e.id)}" title="${esc(e.track+' · '+title+' · '+fmt(e.start)+'–'+fmt(e.end))}">${body}</button>`;
 }
 function weekLabel(d){const date=P.parse(d);date.setUTCDate(date.getUTCDate()+4-(date.getUTCDay()||7));return Math.ceil((((date-new Date(Date.UTC(date.getUTCFullYear(),0,1)))/86400000)+1)/7)}
 function render(){
- $('period-title').textContent=view==='month'?monthName(month):'Schuljahr '+data.years[year].label;$('month').value=month;
- $('month-view').setAttribute('aria-pressed',String(view==='month'));$('year-view').setAttribute('aria-pressed',String(view==='year'));
- const ms=months();$('prev').disabled=view==='year'||month===ms[0];$('next').disabled=view==='year'||month===ms.at(-1);$('month').disabled=view==='year';
+ $('period-title').textContent=view==='month'?monthName(month):view==='week'?`${fmt(weekStart)}–${fmt(P.add(weekStart,6))}`:'Schuljahr '+data.years[year].label;$('month').value=month;
+ $('week-view').setAttribute('aria-pressed',String(view==='week'));$('month-view').setAttribute('aria-pressed',String(view==='month'));$('year-view').setAttribute('aria-pressed',String(view==='year'));
+ const ms=months(),config=data.years[year];$('prev').disabled=view==='year'||(view==='month'?month===ms[0]:weekStart<=config.start);$('next').disabled=view==='year'||(view==='month'?month===ms.at(-1):P.add(weekStart,6)>=config.end);$('month').disabled=view!=='month';
  const display=events.filter(shown),c=data.years[year],free=closureList(),today=new Date().toLocaleDateString('sv-SE');
  if(!selected.size){$('calendar').innerHTML='<p class="empty">Keine Jahrgangsstufe ausgewählt. Oben die gewünschten Klassen oder Kurse einschalten.</p>'}
  else if(view==='month'){
@@ -125,8 +131,12 @@ function render(){
    if($('show-closures').checked)html+=closures.map(x=>`<span class="closure-label">${esc(x.title)}${x.tracks.length?' · '+esc([...new Set(x.tracks.map(t=>t.split(' ')[0]))].join('/')):''}</span>`).join('');
    if(day===c.half)html+='<span class="closure-label">Beginn 2. Halbjahr · EF/Q1/Sek I</span>';
    if(day===c.q2half&&[...selected].some(t=>t.startsWith('Q2')))html+='<span class="closure-label">Beginn Q2.2</span>';
-   html+=items.map(e=>chip(e)).join('')+'</div>';
+   html+=items.map(e=>chip(e,false,day)).join('')+'</div>';
   }$('calendar').innerHTML=html+'</div></div>';
+ }else if(view==='week'){
+  const days=P.dates(weekStart,P.add(weekStart,6));let html='<div class="month-scroll"><div class="month-grid">'+days.map(d=>`<div class="weekday ${P.iso(P.parse(d))===today?'current-weekday':''}">${weekdayNames[(P.parse(d).getUTCDay()+6)%7]||'Wochenende'}<br>${fmt(d)}</div>`).join('');
+  for(const d of days){const closures=free.filter(x=>d>=x.start&&d<=x.end&&(!x.tracks.length||x.tracks.some(t=>selected.has(t))));const items=d<config.start||d>config.end?[]:display.filter(e=>onDay(e,d));html+=`<div class="day ${[0,6].includes(P.parse(d).getUTCDay())?'weekend':''} ${closures.length&&$('show-closures').checked?'free':''} ${d===today?'today':''}"><time class="date-number" datetime="${d}">${P.parse(d).getUTCDate()}</time>`;if($('show-closures').checked)html+=closures.map(x=>`<span class="closure-label">${esc(x.title)}</span>`).join('');html+=items.map(e=>chip(e,false,d)).join('')||(!closures.length?'<span class="hint">Keine geplante Stunde</span>':'')+'</div>'}
+  $('calendar').innerHTML=html+'</div></div>';
  }else{
   const ts=data.subjects[subject].tracks.filter(t=>selected.has(t.id));
   let html='<div class="table-scroll"><table class="year-table"><thead><tr><th scope="col">Woche</th>'+ts.map(t=>`<th scope="col">${esc(t.label)}</th>`).join('')+'</tr></thead><tbody>';
@@ -184,6 +194,18 @@ $('arrange-units').onclick=()=>{
  const ts=data.subjects[subject].tracks;$('order-track').innerHTML=ts.map(t=>`<option value="${esc(t.id)}">${esc(t.label)}</option>`).join('');
  $('order-track').value=[...selected][0]||ts[0].id;$('order-status').textContent='';editingOrder=null;renderOrderList();$('order-dialog').showModal();
 };
+function drawTimetable(){
+ const ts=data.subjects[subject].tracks,schedules=state.timetable?.[subject]||{};
+ $('timetable-rows').innerHTML='<div class="timetable-head"><span>Jahrgang / Kurs</span>'+weekdayNames.map(x=>`<span>${x}</span>`).join('')+'</div>'+ts.map(t=>`<div class="timetable-row"><strong>${esc(t.label)}</strong>${weekdayNames.map((d,i)=>{const day=i+1,value=schedules[t.id]?.[day]||0;return `<label class="sr-only" for="tt-${esc(t.id)}-${day}">${esc(t.label)} am ${d}</label><select id="tt-${esc(t.id)}-${day}" data-tt-track="${esc(t.id)}" data-tt-day="${day}" aria-label="${esc(t.label)} am ${d}"><option value="0" ${value===0?'selected':''}>Kein Unterricht</option><option value="1" ${value===1?'selected':''}>Einzelstunde</option><option value="2" ${value===2?'selected':''}>Doppelstunde</option></select>`}).join('')}</div>`).join('');
+}
+$('timetable').onclick=()=>{drawTimetable();$('timetable-status').textContent='';$('timetable-dialog').showModal()};
+$('timetable-save').onclick=()=>{
+ const next={};for(const track of data.subjects[subject].tracks){const days={};document.querySelectorAll(`[data-tt-track="${CSS.escape(track.id)}"]`).forEach(sel=>{if(Number(sel.value))days[sel.dataset.ttDay]=Number(sel.value)});if(Object.keys(days).length)next[track.id]=days}
+ const before=state.timetable?.[subject]||{};for(const track of data.subjects[subject].tracks){if(JSON.stringify(before[track.id]||{})!==JSON.stringify(next[track.id]||{}))for(const unit of P.unitsFor(data,subject,year,track.id))delete state.overrides[`uv-${subject}-${year}-${unit.code}`]}
+ state.timetable=state.timetable||{};if(Object.keys(next).length)state.timetable[subject]=next;else delete state.timetable[subject];if(!Array.isArray(state.filters[subject]))state.filters[subject]=Object.keys(next);
+ save('Persönlicher Stundenplan gespeichert; Vorhaben werden an den eingetragenen Tagen und mit passender Einzel- oder Doppelstundenzeit verteilt.');$('timetable-dialog').close();tracks();refresh();
+};
+$('timetable-clear').onclick=()=>{delete state.timetable[subject];delete state.filters[subject];for(const t of data.subjects[subject].tracks)for(const u of P.unitsFor(data,subject,year,t.id))delete state.overrides[`uv-${subject}-${year}-${u.code}`];save('Stundenplan dieses Fachs gelöscht.');$('timetable-dialog').close();tracks();refresh()};
 $('order-track').onchange=()=>{editingOrder=null;renderOrderList()};
 $('order-list').onclick=e=>{const button=e.target.closest('[data-order-move]');if(!button)return;const list=editingOrder||currentOrder($('order-track').value),i=Number(button.dataset.orderIndex),j=i+(button.dataset.orderMove==='up'?-1:1);if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];editingOrder=list;renderOrderList()};
 $('order-save').onclick=()=>{
@@ -208,8 +230,8 @@ $('tracks').onchange=()=>{selected=new Set([...$('tracks').querySelectorAll('inp
 function selectAll(on){$('tracks').querySelectorAll('input').forEach(x=>x.checked=on);$('tracks').onchange()}
 $('all-tracks').onclick=()=>selectAll(true);$('no-tracks').onclick=()=>selectAll(false);
 $('subject').onchange=setContext;$('chemie-edition').onchange=setContext;$('year').onchange=setContext;$('month').onchange=()=>{month=$('month').value;render()};
-$('prev').onclick=()=>{const ms=months();month=ms[ms.indexOf(month)-1];render()};$('next').onclick=()=>{const ms=months();month=ms[ms.indexOf(month)+1];render()};
-$('month-view').onclick=()=>{view='month';render()};$('year-view').onclick=()=>{view='year';render()};
+$('prev').onclick=()=>{if(view==='week'){weekStart=P.add(weekStart,-7)}else if(view==='month'){const ms=months();month=ms[ms.indexOf(month)-1]}render()};$('next').onclick=()=>{if(view==='week'){weekStart=P.add(weekStart,7)}else if(view==='month'){const ms=months();month=ms[ms.indexOf(month)+1]}render()};
+$('week-view').onclick=()=>{view='week';render()};$('month-view').onclick=()=>{view='month';render()};$('year-view').onclick=()=>{view='year';render()};
 $('show-closures').onchange=render;
 $('calendar').onclick=e=>{const el=e.target.closest('[data-event]');if(el)openEvent(el.dataset.event)};$('new-exam').onclick=()=>openEvent(null);
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>$(b.dataset.close).close();

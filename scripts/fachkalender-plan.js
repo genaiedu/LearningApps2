@@ -18,7 +18,7 @@ function unitsFor(data,subject,year,trackId){
  if(['chemie','chemie-arbeitskopie'].includes(subject)&&((+year>=2027&&trackId==='EF')||(+year>=2028&&trackId.startsWith('Q1'))||(+year>=2029&&trackId.startsWith('Q2'))))units=sub.units2026.filter(u=>u.track===trackId);
  return units;
 }
-function plan(data,subject,year,closures,orders={}){
+function plan(data,subject,year,closures,orders={},customUnits=[],timetable={}){
  const config=data.years[year],sub=data.subjects[subject],events=[],stats=[];
  for(const track of sub.tracks){
   let units=unitsFor(data,subject,year,track.id);
@@ -27,22 +27,28 @@ function plan(data,subject,year,closures,orders={}){
    const seen=new Set();
    units=[...order.filter(code=>byCode.has(code)&&!seen.has(code)&&(seen.add(code),true)).map(code=>byCode.get(code)),...units.filter(u=>!seen.has(u.code))];
   }
+  const curriculumHours=units.reduce((n,u)=>n+u.hours,0);
+  const additions=customUnits.filter(u=>u.track===track.id).map((u,i)=>({code:'',title:u.title,hours:u.hours,track:track.id,customUnitId:u.id,notes:u.notes||''}));
+  units=[...units,...additions];
   const q2=track.id.startsWith('Q2');
-  const end=q2?(config.prepEnd||config.q2end):config.end;
-  const days=dates(config.start,end).filter(d=>!closed(d,track.id,closures));
-  const preparationDays=q2?20:0;
-  if(days.length-preparationDays<units.length*2)throw Error('Für '+track.label+' bleiben zu wenige Unterrichtstage. Bitte freie Tage oder Schuljahresrahmen anpassen.');
-  const teachingDays=q2?days.slice(0,-preparationDays):days;
-  const hours=units.reduce((n,u)=>n+u.hours,0),usable=teachingDays.length;
-  const allocations=distribute(units.map(u=>u.hours),usable);
-  let index=0;
-  const factor=usable*track.weekly/5/hours;
+  const end=q2?(config.prepEnd||config.q2end):config.end,schedule=timetable[track.id]||{},scheduledWeekdays=Object.keys(schedule).map(Number).filter(d=>schedule[d]===1||schedule[d]===2),hasSchedule=scheduledWeekdays.length>0;
+  const days=dates(config.start,end).filter(d=>!closed(d,track.id,closures)&&(!hasSchedule||schedule[parse(d).getUTCDay()]));
+  const meetingDaysPerWeek=hasSchedule?scheduledWeekdays.length:5,preparationDateCount=q2?(hasSchedule?meetingDaysPerWeek*4:20):0;
+  if(days.length-preparationDateCount<units.length)throw Error('Für '+track.label+' bleiben zu wenige Unterrichtstage. Bitte freie Zeiträume oder Schuljahresrahmen anpassen.');
+  const teachingDays=q2?days.slice(0,-preparationDateCount):days,preparationDates=q2?days.slice(-preparationDateCount):[];
+  const lessonWeight=d=>hasSchedule?schedule[parse(d).getUTCDay()]:1;
+  const hours=units.reduce((n,u)=>n+u.hours,0),usable=hasSchedule?teachingDays.reduce((n,d)=>n+lessonWeight(d),0):teachingDays.length;
+  if(usable<units.length)throw Error('Für '+track.label+' bleiben zu wenige Unterrichtsstunden. Bitte freie Zeiträume oder Schuljahresrahmen anpassen.');
+  const allocations=distribute(units.map(u=>u.hours),usable),assignedDays=units.map(()=>[]);let slot=0,unitIndex=0,unitEnd=allocations[0]||0;
+  teachingDays.forEach(day=>{const weight=lessonWeight(day),midpoint=slot+weight/2;while(unitIndex<allocations.length-1&&midpoint>unitEnd){unitIndex++;unitEnd+=allocations[unitIndex]}assignedDays[unitIndex].push(day);slot+=weight});
+  const factor=usable/hours;
   units.forEach((u,i)=>{
-   const count=allocations[i];if(!count)return;
-   events.push({...u,id:`uv-${subject}-${year}-${u.code}`,subject,year,kind:'unit',start:teachingDays[index],end:teachingDays[index+count-1],color:i%6,plannedHours:Math.round(count/5*track.weekly*10)/10,notes:`Curricularer Zeitrichtwert: ${u.hours} UStd à 45 Minuten; Anteil an den Vorhaben dieses Jahrgangs: ${Math.round(u.hours/hours*1000)/10} %. Proportionaler Kalenderansatz: ca. ${Math.round(count/5*track.weekly*10)/10} UStd. Übung, Vertiefung und Leistungsnachweise sind in die Vorhaben integriert.`});index+=count;
+   const datesForUnit=assignedDays[i];if(!datesForUnit.length)return;const count=allocations[i],plannedHours=hasSchedule?count:Math.round(count/5*track.weekly*10)/10;
+   events.push({...u,id:u.customUnitId?`xuv-${subject}-${year}-${u.customUnitId}`:`uv-${subject}-${year}-${u.code}`,subject,year,kind:'unit',extraUnit:Boolean(u.customUnitId),start:datesForUnit[0],end:datesForUnit.at(-1),meetingDays:datesForUnit,color:i%6,plannedHours,notes:u.customUnitId?`Zusätzliches persönliches Unterrichtsvorhaben · Zeitansatz ${u.hours} UStd. Die übrigen Vorhaben wurden proportional angepasst.${u.notes?' '+u.notes:''}`:`Curricularer Zeitrichtwert: ${u.hours} UStd à 45 Minuten; Anteil an den Vorhaben dieses Jahrgangs: ${Math.round(u.hours/hours*1000)/10} %. Proportionaler Kalenderansatz: ca. ${plannedHours} UStd. Übung, Vertiefung und Leistungsnachweise sind in die Vorhaben integriert.`});
   });
-  stats.push({track:track.id,days:days.length,weekly:track.weekly,hours,planned:Math.round(usable/5*track.weekly*10)/10,preparation:preparationDays/5*track.weekly,factor});
-  if(q2)events.push({id:`prep-${subject}-${year}-${track.id}`,subject,year,track:track.id,kind:'prep',title:'Abiturvorbereitung · vier Unterrichtswochen',start:days[days.length-preparationDays],end:days.at(-1),notes:'Die letzten 20 verfügbaren Schultage (vier Unterrichtswochen) bis zum Ende des Q2-Unterrichts bleiben für Wiederholung, Vernetzung und Abiturvorbereitung reserviert. Ferien und freie Tage zählen nicht mit. Die schulinterne Planung umfasst gegebenenfalls die anschließend amtlich ausgewiesene Vorbereitungsphase.'});
+  const preparationHours=hasSchedule?preparationDates.reduce((n,d)=>n+lessonWeight(d),0):preparationDates.length/5*track.weekly;
+  stats.push({track:track.id,days:days.length,weekly:track.weekly,hours:curriculumHours,extraHours:additions.reduce((n,u)=>n+u.hours,0),planned:hasSchedule?usable:Math.round(usable/5*track.weekly*10)/10,preparation:preparationHours,factor});
+  if(q2)events.push({id:`prep-${subject}-${year}-${track.id}`,subject,year,track:track.id,kind:'prep',title:'Abiturvorbereitung · vier Unterrichtswochen',start:preparationDates[0],end:preparationDates.at(-1),notes:'Die letzten vier Unterrichtswochen bis zum Ende des Q2-Unterrichts bleiben für Wiederholung, Vernetzung und Abiturvorbereitung reserviert. Berücksichtigt werden die eingetragenen Einzel- und Doppelstunden sowie Ferien und freie Tage.'});
  }
  events.push(...data.exams.filter(e=>e.subject===subject&&e.start>=config.start&&e.start<=config.end).map(e=>({...e,year})));
  return {events,stats};
