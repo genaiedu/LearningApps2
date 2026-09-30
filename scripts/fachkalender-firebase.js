@@ -1,15 +1,17 @@
-// Firebase ist für Kontensynchronisierung optional. Wenn ein Browser das CDN
-// blockiert oder offline ist, muss die lokale Kalenderplanung trotzdem starten.
-let authSdk, firestoreSdk, firebaseAvailable = false;
+// Firebase ist nur für Kontensynchronisierung erforderlich. Das Laden des SDKs
+// läuft im Hintergrund, damit ein blockiertes CDN den Kalenderstart nicht stoppt.
+let authSdk, firestoreSdk;
 export let auth = null;
 export let db = null;
+export let firebaseAvailable = false;
 
-try {
-  const [appSdk, loadedAuthSdk, loadedFirestoreSdk] = await Promise.all([
-    import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js'),
-    import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js'),
-    import('https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js')
-  ]);
+const unavailable = () => Promise.reject(Object.assign(new Error('Firebase ist in diesem Browser nicht erreichbar. Änderungen bleiben auf diesem Gerät gespeichert.'), { code: 'firebase/unavailable' }));
+
+export const firebaseReady = Promise.all([
+  import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js'),
+  import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js'),
+  import('https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js')
+]).then(([appSdk, loadedAuthSdk, loadedFirestoreSdk]) => {
   const app = appSdk.initializeApp({
     apiKey: 'AIzaSyA5x2cmUHLewZmJY0VYeb0Yvp3nol3nZDk',
     authDomain: 'learningapps-thomaeum.firebaseapp.com',
@@ -23,20 +25,25 @@ try {
   auth = authSdk.getAuth(app);
   db = firestoreSdk.getFirestore(app);
   firebaseAvailable = true;
-} catch (error) {
+}).catch(error => {
   console.warn('Firebase ist nicht erreichbar; der Fachkalender läuft lokal weiter.', error);
-}
+});
 
-export { firebaseAvailable };
-const unavailable = () => Promise.reject(Object.assign(new Error('Firebase ist in diesem Browser nicht erreichbar. Änderungen bleiben auf diesem Gerät gespeichert.'), { code: 'firebase/unavailable' }));
-const authCall = name => (...args) => firebaseAvailable ? authSdk[name](...args) : unavailable();
-const firestoreCall = name => (...args) => firebaseAvailable ? firestoreSdk[name](...args) : unavailable();
+const authCall = name => (...args) => firebaseReady.then(() => firebaseAvailable ? authSdk[name](...args) : unavailable());
+const firestoreCall = name => (...args) => firebaseReady.then(() => firebaseAvailable ? firestoreSdk[name](...args) : unavailable());
 
 export const onAuthStateChanged = (instance, callback) => {
-  if (firebaseAvailable) return authSdk.onAuthStateChanged(instance, callback);
-  queueMicrotask(() => callback(null));
-  return () => {};
+  let cancelled = false, unsubscribe = null;
+  // Sofort freigeben: Die Oberfläche bleibt im lokalen Gastmodus, auch wenn
+  // ein blockierter Netzwerkrequest nie mit einem Fehler beantwortet wird.
+  queueMicrotask(() => { if (!cancelled) callback(null); });
+  firebaseReady.then(() => {
+    if (cancelled) return;
+    if (firebaseAvailable) unsubscribe = authSdk.onAuthStateChanged(auth, callback);
+  });
+  return () => { cancelled = true; unsubscribe?.(); };
 };
+
 export const createUserWithEmailAndPassword = authCall('createUserWithEmailAndPassword');
 export const signInWithEmailAndPassword = authCall('signInWithEmailAndPassword');
 export const signOut = authCall('signOut');

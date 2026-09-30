@@ -1,4 +1,4 @@
-import { auth, db, firebaseAvailable, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail, reload, getIdToken, doc, getDoc, setDoc, serverTimestamp } from './fachkalender-firebase.js?v=20260930-firebase-fallback';
+import { auth, db, firebaseAvailable, firebaseReady, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail, reload, getIdToken, doc, getDoc, setDoc, serverTimestamp } from './fachkalender-firebase.js?v=20260930-firebase-background';
 'use strict';
 (async()=>{
 const $=id=>document.getElementById(id),P=window.Fachplan,GUEST_KEY='thomaeum-fachkalender-v1',APP_ID='fachkalender',ACTIVITY_ID='personal-plan';
@@ -287,6 +287,7 @@ function setAuthMode(mode){authMode=mode;$('auth-heading').textContent=mode==='r
 setAuthMode('login');
 $('account').onclick=()=>authDialogFor();
 if(!firebaseAvailable){$('account').disabled=true;$('account').title='Anmeldung ist nicht erreichbar. Die Planung wird lokal auf diesem Gerät gespeichert.';$('account-label').textContent='Lokaler Gastmodus';}
+firebaseReady.then(()=>{if(firebaseAvailable){$('account').disabled=false;$('account').title='';if(!currentUser)$('account-label').textContent='Gastmodus';}});
 $('auth-mode').onclick=()=>{setAuthMode(authMode==='login'?'register':'login');$('auth-status').textContent=''};
 $('forgot-password').onclick=async()=>{const email=$('auth-email').value.trim();if(!email){$('auth-status').textContent='Gib zuerst deine E-Mail-Adresse ein.';return}try{await sendPasswordResetEmail(auth,email);$('auth-status').textContent='Wenn es zu dieser Adresse ein Konto gibt, wurde eine Nachricht zum Zurücksetzen des Passworts gesendet.'}catch(error){$('auth-status').textContent=friendlyError(error)}};
 $('auth-form').onsubmit=async e=>{
