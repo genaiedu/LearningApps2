@@ -40,6 +40,14 @@ test('Every draft begins with the exact unchanged general formulation for its po
   assert.match(fragment('formulations'),/zuerst die allgemeine Formulierung/);
 });
 
+test('The formulation tool is explicitly for preparation rather than use during an examination', () => {
+  assert.match(fragment('formulations'),/Nur zur Vorbereitung, nicht während der Prüfung verwenden/);
+  assert.match(fragment('formulations'),/Für die Vorlage angenommene Punktstufe/);
+  assert.match(fragment('formulations'),/keine vorab festgelegte Note/);
+  assert.match(fragment('formulations'),/an Prüfungsaufgaben und erwartbare Leistungen anpassen/);
+  assert.doesNotMatch(fragment('formulations'),/Bereits beurteilte Punktstufe|Punktstufe wird nach der fachlichen Gesamtbeurteilung gewählt/);
+});
+
 test('AFB matrix covers seven chemical perspectives without treating topics as fixed levels', () => {
   assert.equal((fragment('afb').match(/<th scope="row">/g)||[]).length,7);
   assert.match(fragment('afb'),/keine amtliche Liste fester Inhaltszuordnungen/);

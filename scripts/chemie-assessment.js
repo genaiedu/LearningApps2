@@ -111,7 +111,7 @@ if (typeof document !== 'undefined') {
       askBeforeReplacing(() => {
         output.value = chemistryAssessment.compose(points,
         [...builder.querySelectorAll('input:checked')].map(input => input.value), generalByPoints.get(points));
-        status.textContent = 'Entwurf erstellt. Bitte mit konkreten Prüfungsbeobachtungen ergänzen und fachlich prüfen.';
+        status.textContent = 'Vorlage für die Vorbereitung erstellt. Bitte auf Prüfungsaufgaben und erwartbare Leistungen zuschneiden; nicht während der Prüfung verwenden.';
       }, 'Den vorhandenen Entwurf durch die neu gewählten Bausteine ersetzen?', 'Ja, Entwurf ersetzen');
     });
     builder.querySelector('[data-clear]').addEventListener('click', () => {
