@@ -1,0 +1,154 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+    function isCalendarAdmin() {
+      return signedIn() && request.auth.token.email == 'claus.unterberg@thomaeum.de';
+    }
+    function userPath(uid) {
+      return /databases/$(database)/documents/users/$(uid);
+    }
+    function calendarPath(calendarId) {
+      return /databases/$(database)/documents/calendars/$(calendarId);
+    }
+    function memberPath(calendarId, uid) {
+      return /databases/$(database)/documents/calendars/$(calendarId)/members/$(uid);
+    }
+    function ownsCalendar(calendarId) {
+      return signedIn()
+        && exists(calendarPath(calendarId))
+        && get(calendarPath(calendarId)).data.ownerUid == request.auth.uid;
+    }
+    function hasCalendarRole(calendarId, allowedRoles) {
+      return signedIn()
+        && exists(calendarPath(calendarId))
+        && (get(calendarPath(calendarId)).data.ownerUid == request.auth.uid
+          || (exists(memberPath(calendarId, request.auth.uid))
+            && get(memberPath(calendarId, request.auth.uid)).data.role in allowedRoles));
+    }
+    function validCalendar(data) {
+      return data.keys().hasOnly(['title', 'subject', 'ownerUid', 'description', 'color', 'createdAt', 'updatedAt', 'archived'])
+        && data.keys().hasAll(['title', 'ownerUid', 'createdAt', 'updatedAt'])
+        && data.title is string && data.title.size() > 0 && data.title.size() <= 120
+        && data.ownerUid is string
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp
+        && (!('subject' in data) || data.subject is string)
+        && (!('description' in data) || (data.description is string && data.description.size() <= 2000))
+        && (!('color' in data) || data.color is string)
+        && (!('archived' in data) || data.archived is bool);
+    }
+    function validEvent(data) {
+      return data.keys().hasOnly(['title', 'description', 'start', 'end', 'allDay', 'kind', 'track', 'color', 'curriculumUrl', 'createdBy', 'updatedAt'])
+        && data.keys().hasAll(['title', 'start', 'end', 'allDay', 'createdBy', 'updatedAt'])
+        && data.title is string && data.title.size() > 0 && data.title.size() <= 200
+        && data.start is timestamp && data.end is timestamp && data.end >= data.start
+        && data.allDay is bool && data.createdBy == request.auth.uid
+        && data.updatedAt is timestamp
+        && (!('description' in data) || (data.description is string && data.description.size() <= 4000))
+        && (!('kind' in data) || data.kind is string)
+        && (!('track' in data) || data.track is string)
+        && (!('color' in data) || data.color is string)
+        && (!('curriculumUrl' in data) || data.curriculumUrl is string);
+    }
+
+    match /schoolCalendar/{documentId} {
+      allow get: if documentId == 'config' && signedIn();
+      allow list: if false;
+      allow create, update: if documentId == 'config' && isCalendarAdmin()
+        && request.resource.data.keys().hasOnly(['version', 'years', 'closures', 'removedClosureIds', 'revisions', 'updatedAt', 'updatedBy'])
+        && request.resource.data.keys().hasAll(['version', 'years', 'closures', 'removedClosureIds', 'revisions', 'updatedAt', 'updatedBy'])
+        && request.resource.data.version == 1
+        && request.resource.data.years is map && request.resource.data.years.size() <= 20
+        && request.resource.data.closures is list && request.resource.data.closures.size() <= 300
+        && request.resource.data.removedClosureIds is list && request.resource.data.removedClosureIds.size() <= 200
+        && request.resource.data.revisions is list && request.resource.data.revisions.size() <= 100
+        && request.resource.data.updatedBy == request.auth.uid
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if false;
+    }
+
+    // Private profiles and work saved by a user across different LearningApps.
+    match /users/{uid} {
+      allow get, create, update: if signedIn() && request.auth.uid == uid;
+      allow list: if false;
+      allow delete: if false;
+
+      match /workStates/{stateId} {
+        allow read, delete: if signedIn() && request.auth.uid == uid;
+        allow create: if signedIn() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['appId', 'activityId', 'title', 'payload', 'schemaVersion', 'updatedAt'])
+          && request.resource.data.keys().hasAll(['appId', 'activityId', 'payload', 'schemaVersion', 'updatedAt'])
+          && request.resource.data.appId is string
+          && request.resource.data.activityId is string
+          && request.resource.data.payload is map
+          && request.resource.data.schemaVersion is int
+          && request.resource.data.updatedAt == request.time;
+        allow update: if signedIn() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['appId', 'activityId', 'title', 'payload', 'schemaVersion', 'updatedAt'])
+          && request.resource.data.appId == resource.data.appId
+          && request.resource.data.activityId == resource.data.activityId
+          && request.resource.data.payload is map
+          && request.resource.data.schemaVersion is int
+          && request.resource.data.updatedAt == request.time;
+      }
+
+      // Index used to list calendars shared with this account. Only the calendar owner can change it.
+      match /calendarAccess/{calendarId} {
+        allow get, list: if signedIn() && request.auth.uid == uid;
+        allow create, update: if ownsCalendar(calendarId)
+          && request.resource.data.keys().hasOnly(['calendarId', 'role', 'title', 'subject'])
+          && request.resource.data.calendarId == calendarId
+          && request.resource.data.role in ['editor', 'viewer']
+          && existsAfter(memberPath(calendarId, uid))
+          && getAfter(memberPath(calendarId, uid)).data.role == request.resource.data.role;
+        allow delete: if ownsCalendar(calendarId)
+          && !existsAfter(memberPath(calendarId, uid));
+      }
+    }
+
+    // Each colleague owns one or more calendars. Membership is granted by the owner.
+    match /calendars/{calendarId} {
+      // Use the existing calendar document directly; do not read this document again via get().
+      allow get: if signedIn() && (resource.data.ownerUid == request.auth.uid
+        || (exists(memberPath(calendarId, request.auth.uid))
+          && get(memberPath(calendarId, request.auth.uid)).data.role in ['editor', 'viewer']));
+      allow list: if signedIn() && resource.data.ownerUid == request.auth.uid;
+      allow create: if signedIn() && request.resource.data.ownerUid == request.auth.uid
+        && validCalendar(request.resource.data)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+      allow update: if ownsCalendar(calendarId)
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && validCalendar(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if false; // Archive instead; deleting a Firestore document does not delete subcollections.
+
+      match /members/{memberUid} {
+        allow get: if signedIn() && (request.auth.uid == memberUid || ownsCalendar(calendarId));
+        allow list: if ownsCalendar(calendarId);
+        allow create, update: if ownsCalendar(calendarId)
+          && memberUid != request.auth.uid
+          && request.resource.data.keys().hasOnly(['role', 'grantedAt'])
+          && request.resource.data.role in ['editor', 'viewer']
+          && request.resource.data.grantedAt == request.time;
+        allow delete: if ownsCalendar(calendarId);
+      }
+
+      match /events/{eventId} {
+        allow read: if hasCalendarRole(calendarId, ['editor', 'viewer']);
+        allow create: if hasCalendarRole(calendarId, ['editor'])
+          && validEvent(request.resource.data)
+          && request.resource.data.updatedAt == request.time;
+        allow update: if hasCalendarRole(calendarId, ['editor'])
+          && validEvent(request.resource.data)
+          && request.resource.data.createdBy == resource.data.createdBy
+          && request.resource.data.updatedAt == request.time;
+        allow delete: if hasCalendarRole(calendarId, ['editor']);
+      }
+    }
+  }
+}

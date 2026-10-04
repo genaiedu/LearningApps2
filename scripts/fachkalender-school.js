@@ -1,0 +1,12 @@
+/* Shared school calendar settings. Personal profiles must never override these. */
+(function(root){
+'use strict';
+const date=s=>typeof s==='string'&&/^20\d{2}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(Date.parse(s+'T12:00:00Z'))&&new Date(s+'T12:00:00Z').toISOString().slice(0,10)===s;
+const tracks=new Set(['5','6','7','8','9','10','EF','Q1 GK','Q1 LK','Q2 GK','Q2 LK']);
+const kinds=new Set(['school','pedagogical','project','exam','trip','vacation','holiday']);
+function validYear(c,y){return c&&typeof c.label==='string'&&c.label.length<=20&&['start','end','half','q2half','q2end'].every(k=>date(c[k]))&&c.start.startsWith(y+'-')&&c.end.startsWith(String(+y+1)+'-')&&c.start<c.end&&c.half>=c.start&&c.half<=c.end&&c.q2half>=c.start&&c.q2half<=c.q2end&&c.q2end<=c.end&&(!c.prepStart&&!c.prepEnd||date(c.prepStart)&&date(c.prepEnd)&&c.prepStart<=c.prepEnd&&c.prepStart>c.q2end&&c.prepEnd<=c.end)}
+function validClosure(c){return c&&typeof c.id==='string'&&/^school-[a-z0-9-]{1,90}$/.test(c.id)&&typeof c.title==='string'&&c.title.trim().length>0&&c.title.length<=200&&date(c.start)&&date(c.end)&&c.start<=c.end&&kinds.has(c.kind)&&Array.isArray(c.tracks)&&c.tracks.length<=11&&c.tracks.every(t=>tracks.has(t))&&typeof c.source==='string'&&c.source.length<=200}
+function validSettings(value){return value&&value.version===1&&value.years&&typeof value.years==='object'&&!Array.isArray(value.years)&&Object.keys(value.years).length<=20&&Object.entries(value.years).every(([y,c])=>/^20\d{2}$/.test(y)&&+y>=2026&&+y<=2099&&validYear(c,y))&&Array.isArray(value.closures)&&value.closures.length<=300&&value.closures.every(validClosure)&&new Set(value.closures.map(c=>c.id)).size===value.closures.length&&(!value.removedClosureIds||Array.isArray(value.removedClosureIds)&&value.removedClosureIds.length<=200&&value.removedClosureIds.every(id=>typeof id==='string'&&id.length<=100))&&(!value.revisions||Array.isArray(value.revisions)&&value.revisions.length<=100&&value.revisions.every((r,i)=>date(r.until)&&(!r.scope||['year','remaining'].includes(r.scope))&&r.settings&&validSettings({...r.settings,revisions:[]})&&(i===0||value.revisions[i-1].until<=r.until)))}
+function merged(base,shared){return {years:{...base.years,...(shared?.years||{})},closures:[...base.closures.filter(c=>!shared?.removedClosureIds?.includes(c.id)),...(shared?.closures||[])]}}
+const api={date,validYear,validClosure,validSettings,merged};root.FachkalenderSchool=api;if(typeof module!=='undefined')module.exports=api;
+})(typeof globalThis!=='undefined'?globalThis:window);
