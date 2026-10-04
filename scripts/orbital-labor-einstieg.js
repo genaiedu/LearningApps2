@@ -45,10 +45,6 @@
     $('orbital-atlas-grid').append(section);
   }
   const observer=new IntersectionObserver(entries=>{if(!entries.some(e=>e.isIntersecting))return;observer.disconnect();if(!atlasSelected)select(families[1],'pz','p𝓏');},{rootMargin:'300px'});observer.observe($('atlas-lab'));
-  const cloud=$('probability-cloud'),ctx=cloud.getContext('2d');let samples=[];
-  function drawCloud(){ctx.clearRect(0,0,cloud.width,cloud.height);ctx.fillStyle='#b27750';for(const [x,y] of samples){ctx.globalAlpha=.42;ctx.beginPath();ctx.arc(x,y,1.15,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;ctx.strokeStyle='#6b7e8b';ctx.beginPath();ctx.arc(cloud.width/2,cloud.height/2,4,0,Math.PI*2);ctx.stroke();$('probability-count').textContent=`${samples.length.toLocaleString('de-DE')} unabhängige Messungen`;}
-  $('probability-more').onclick=()=>{if(samples.length>=12000){$('probability-count').textContent='12.000 Messungen · Für einen neuen Versuch die Punktwolke leeren.';return;}for(let i=0;i<300;i++){const r=-Math.log(Math.max(Number.MIN_VALUE,Math.random()*Math.random()*Math.random()))/2,cos=2*Math.random()-1,phi=2*Math.PI*Math.random(),s=Math.sqrt(1-cos*cos);samples.push([cloud.width/2+60*r*s*Math.cos(phi),cloud.height/2+60*r*cos]);}drawCloud();};
-  $('probability-reset').onclick=()=>{samples=[];drawCloud();};drawCloud();
   function nodeExample(key){
     const n=Number(key[0]),l={s:0,p:1,d:2,f:3}[key[1]],k=n-l-1,radial=r=>Math.pow(2*n*r,l)*C.laguerre(k,2*l+1,2*n*r)*Math.exp(-n*r),points=Array.from({length:501},(_,i)=>[i*4/500,radial(i*4/500)]),max=Math.max(...points.map(p=>Math.abs(p[1]))),roots=[];
     for(let i=1;i<points.length;i++)if(points[i-1][1]*points[i][1]<0){let a=points[i-1][0],b=points[i][0];for(let j=0;j<35;j++){const m=(a+b)/2;if(radial(a)*radial(m)<=0)b=m;else a=m;}roots.push((a+b)/2);}
