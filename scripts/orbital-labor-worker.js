@@ -1,5 +1,5 @@
 'use strict';
-importScripts('orbital-labor-core.js','orbital-labor-surface.js');
+importScripts('orbital-labor-core.js?v=20261004-4','orbital-labor-surface.js');
 self.onmessage=({data})=>{
   try{
     const result=OrbitalSurface.generate(data.spec,OrbitalCore.fieldValue);

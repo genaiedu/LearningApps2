@@ -28,11 +28,14 @@
   });
   const bySymbol=Object.fromEntries(elements.map(e=>[e.symbol,e]));
   function orbitalOccupancy(count,size){return Array.from({length:size},(_,i)=>(count>i?1:0)+(count>size+i?1:0));}
+  function subshellOrbitals(element,key){
+    const count=element.config[key],types=orientations[key?.[1]];
+    if(!count || !types)return [];
+    const occupancy=orbitalOccupancy(count,types.length),n=Number(key[0]);
+    return types.map((type,index)=>({id:`${n}${type}`,n,type,count:occupancy[index],subshell:key}));
+  }
   function outerOrbitals(element){
-    return Object.entries(element.config).filter(([key,count])=>Number(key[0])===element.outer && count>0).flatMap(([key,count])=>{
-      const types=orientations[key[1]],occupancy=orbitalOccupancy(count,types.length);
-      return types.map((type,index)=>({id:`${key[0]}${type}`,n:element.outer,type,count:occupancy[index],subshell:key}));
-    });
+    return order.filter(key=>Number(key[0])===element.outer).flatMap(key=>subshellOrbitals(element,key));
   }
   function laguerre(k,alpha,x){
     if(k===0)return 1;
@@ -49,10 +52,21 @@
     if(type==='dxz')return Math.sqrt(3)*x*z/r2;
     if(type==='dyz')return Math.sqrt(3)*y*z/r2;
     if(type==='dx2-y2')return Math.sqrt(3)/2*(x*x-y*y)/r2;
-    return (2*z*z-x*x-y*y)/(2*r2);
+    if(type==='dz2')return (2*z*z-x*x-y*y)/(2*r2);
+    const r3=r2*r;
+    // Seven real tesseral l=3 harmonics, in an orthogonal conventional basis.
+    // Overall normalization is irrelevant to relative-isovalue surfaces.
+    if(type==='fz3')return z*(5*z*z-3*r2)/r3;
+    if(type==='fxz2')return x*(5*z*z-r2)/r3;
+    if(type==='fyz2')return y*(5*z*z-r2)/r3;
+    if(type==='fzx2-y2')return z*(x*x-y*y)/r3;
+    if(type==='fxyz')return x*y*z/r3;
+    if(type==='fx3-3xy2')return x*(x*x-3*y*y)/r3;
+    if(type==='f3x2y-y3')return y*(3*x*x-y*y)/r3;
+    throw new Error('Unbekannte Orbitalform');
   }
   function atomicValue(spec,x,y,z){
-    const r=Math.hypot(x,y,z),l=spec.type==='s'?0:spec.type[0]==='p'?1:2;
+    const r=Math.hypot(x,y,z),l={s:0,p:1,d:2,f:3}[spec.type[0]];
     const angle=angular(spec.type,x,y,z,r);
     if(!spec.radial)return Math.pow(r,l)*Math.exp(-1.6*r)*angle;
     // r is displayed in n²-scaled, dimensionless units. Z_eff is not fitted.
@@ -114,7 +128,85 @@
     ].sort((a,b)=>a.energy-b.energy);
     return fillLevels(levels,n?10:12);
   }
-  function levelsFor(key,tub=true){return key==='benzene'?ringLevels(6,false):key==='cot'?ringLevels(8,tub):diatomicLevels(key);}
+  const hydrocarbonKeys=['methane','ethane','ethene','ethyne'];
+  const polyatomicKeys=[...hydrocarbonKeys,'water','ammonia'];
+  function polyatomicGeometry(key){
+    const atoms=[],labels=[],bonds=[];
+    const add=(label,point)=>{labels.push(label);atoms.push(point);return atoms.length-1;};
+    const hydrogen=(center,direction,length=1.09)=>{const h=add('H',atoms[center].map((v,i)=>v+length*direction[i]));bonds.push([center,h]);};
+    if(key==='water'){
+      add('O',[0,0,0]);const angle=104.5*Math.PI/360;
+      [-1,1].forEach(side=>hydrogen(0,[side*Math.sin(angle),0,Math.cos(angle)],.96));
+    }else if(key==='ammonia'){
+      add('N',[0,0,0]);const z=-Math.sqrt((1+2*Math.cos(107*Math.PI/180))/3),radius=Math.sqrt(1-z*z);
+      for(let i=0;i<3;i++){const angle=i*2*Math.PI/3;hydrogen(0,[radius*Math.cos(angle),radius*Math.sin(angle),z],1.01);}
+    }else if(key==='methane'){
+      add('C',[0,0,0]);
+      [[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]].forEach(v=>hydrogen(0,v.map(x=>x/Math.sqrt(3))));
+    }else{
+      const half=key==='ethane'?.765:key==='ethene'?.67:.60;
+      add('C',[-half,0,0]);add('C',[half,0,0]);bonds.push([0,1]);
+      for(let carbon=0;carbon<2;carbon++){
+        const side=carbon===0?-1:1;
+        if(key==='ethane')for(let i=0;i<3;i++){
+          const angle=2*Math.PI*i/3+carbon*Math.PI/3;
+          hydrogen(carbon,[side/3,Math.sqrt(8/9)*Math.cos(angle),Math.sqrt(8/9)*Math.sin(angle)]);
+        }
+        else if(key==='ethene')[-1,1].forEach(sign=>hydrogen(carbon,[side/2,sign*Math.sqrt(3)/2,0]));
+        else hydrogen(carbon,[side,0,0]);
+      }
+    }
+    return {atoms,labels,bonds};
+  }
+  function polyatomicLevels(key){
+    const {atoms,labels,bonds}=polyatomicGeometry(key),aos=[];
+    labels.forEach((label,atom)=>(label!=='H'?['2s','px','py','pz']:['1s']).forEach(type=>aos.push({atom,type})));
+    // Original qualitative valence-only LCAO model. These on-site and bond
+    // parameters are illustrative, not fitted orbital energies. Bond direction
+    // cosines preserve tetrahedral symmetry and the separate pi subspaces.
+    const onsite={C:{s:-1.8,p:-.8},N:{s:-2.1,p:-1.1},O:{s:-2.4,p:-1.6}};
+    const h=aos.map(a=>aos.map(b=>a===b?(a.type==='1s'?-1:onsite[labels[a.atom]][a.type==='2s'?'s':'p']):0));
+    const axis=type=>({px:0,py:1,pz:2})[type];
+    for(const [a,b] of bonds){
+      const direction=minus(atoms[b],atoms[a]),length=Math.hypot(...direction),u=direction.map(v=>v/length);
+      for(let i=0;i<aos.length;i++)for(let j=0;j<aos.length;j++){
+        const left=aos[i],right=aos[j];if(left.atom!==a||right.atom!==b)continue;
+        const p=axis(left.type),q=axis(right.type);let coupling;
+        if(labels[b]==='H')coupling=p===undefined?-({C:1,N:.9,O:.65}[labels[a]]):-1.2*u[p];
+        else if(p===undefined&&q===undefined)coupling=-1;
+        else if(p===undefined)coupling=1.1*u[q];
+        else if(q===undefined)coupling=-1.1*u[p];
+        else{const pi=key==='ethyne'?-.48:key==='ethene'?-.40:-.30;coupling=pi*Number(p===q)+(1.4-pi)*u[p]*u[q];}
+        h[i][j]=h[j][i]=coupling;
+      }
+    }
+    const electrons=labels.reduce((sum,label)=>sum+({C:4,N:5,O:6,H:1}[label]),0);
+    const levels=fillLevels(eigenSymmetric(h),electrons),counts={sigma:0,pi:0,sigmaStar:0,piStar:0};
+    const subscripts=['₁','₂','₃','₄','₅','₆','₇'];let t2=0,t2Star=0,a1=2,b2=1,e=0;
+    return levels.map((level,index)=>{
+      const piWeight=aos.reduce((sum,ao,i)=>sum+((key==='ethene'&&ao.type==='pz')||(key==='ethyne'&&['py','pz'].includes(ao.type))?level.coeff[i]**2:0),0);
+      const loneCount=key==='water'?2:key==='ammonia'?1:0,occupied=level.count>0;
+      const lone=occupied&&index>=electrons/2-loneCount;
+      const family=lone?'lone':piWeight>.9?'pi':'sigma',kind=lone?'nonbonding':occupied?'bonding':'antibonding';
+      const serial=lone?index-(electrons/2-loneCount)+1:++counts[family+(occupied?'':'Star')];let label=lone?`n${subscripts[serial-1]}`:`${family==='pi'?'π':'σ'}${occupied?'':'*'}${subscripts[serial-1]}`;
+      if(key==='methane'){
+        const a1=Math.abs(level.coeff[0])>.1;
+        label=`σ${occupied?'':'*'}(${a1?'a₁':'t₂'})${a1?'':subscripts[(occupied?t2++:t2Star++)]}`;
+      }
+      if(key==='water'){
+        const outOfPlane=Math.abs(level.coeff[2])>.9,inPlaneOdd=Math.abs(level.coeff[0])<1e-8&&Math.abs(level.coeff[3])<1e-8;
+        label=outOfPlane?'1b₁':inPlaneOdd?`${b2++}b₂`:`${a1++}a₁`;
+        if(lone)label+=' · n';
+      }
+      if(key==='ammonia'){
+        const eWeight=level.coeff[1]**2+level.coeff[2]**2;
+        label=eWeight>.1?`${Math.floor(e++/2)+1}e${e%2===1?'₁':'₂'}`:`${a1++}a₁`;
+        if(lone)label+=' · n';
+      }
+      return {...level,id:`valence-${index+1}`,label,kind,basis:'valence',family,atoms,atomLabels:labels,bonds,aos,key};
+    });
+  }
+  function levelsFor(key,tub=true){return key==='benzene'?ringLevels(6,false):key==='cot'?ringLevels(8,tub):polyatomicKeys.includes(key)?polyatomicLevels(key):diatomicLevels(key);}
   function bondOrder(levels){return levels.reduce((sum,o)=>sum+(o.kind==='bonding'?o.count:o.kind==='antibonding'?-o.count:0),0)/2;}
   function basisValue(type,x,y,z){
     const r=Math.hypot(x,y,z);
@@ -125,8 +217,14 @@
   function molecularValue(spec,x,y,z){
     const level=spec.level;
     if(level.basis==='ring')return level.atoms.reduce((sum,p,i)=>{const r=[x-p[0],y-p[1],z-p[2]];return sum+level.coeff[i]*dot(r,level.normals[i])*Math.exp(-1.6*Math.hypot(...r));},0);
+    if(level.basis==='valence')return level.aos.reduce((sum,ao,i)=>{
+      const p=level.atoms[ao.atom],r=[x-p[0],y-p[1],z-p[2]];
+      // The 2s phase convention is positive in its outer radial region.
+      const value=ao.type==='1s'?basisValue('1s',...r):ao.type==='2s'?-atomicValue({n:2,type:'s',radial:true},...r):atomicValue({n:2,type:ao.type,radial:true},...r);
+      return sum+level.coeff[i]*value;
+    },0);
     return basisValue(level.basis,x,y,z+.82)+level.sign*basisValue(level.basis,x,y,z-.82);
   }
   function fieldValue(spec,x,y,z){return spec.mode==='ao'?atomicValue(spec,x,y,z):molecularValue(spec,x,y,z);}
-  return {elements,bySymbol,order,configuration,outerOrbitals,orbitalOccupancy,laguerre,atomicValue,ringGeometry,eigenSymmetric,levelsFor,bondOrder,molecularValue,fieldValue};
+  return {elements,bySymbol,order,configuration,subshellOrbitals,outerOrbitals,orbitalOccupancy,laguerre,atomicValue,ringGeometry,polyatomicGeometry,polyatomicKeys,hydrocarbonKeys,eigenSymmetric,levelsFor,bondOrder,molecularValue,fieldValue};
 });

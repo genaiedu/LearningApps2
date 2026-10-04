@@ -8,7 +8,7 @@
       try{this.renderer=new T.WebGLRenderer({antialias:true,alpha:true});}catch(error){
         host.innerHTML='<p class="webgl-error">Die 3D-Ansicht benötigt WebGL. Bitte öffne die App in einem aktuellen Browser mit aktivierter Grafikbeschleunigung. Die Erklärungen und Energiediagramme bleiben lesbar.</p>';this.failed=true;return;
       }
-      this.renderer.setPixelRatio(Math.min(devicePixelRatio,2));this.renderer.localClippingEnabled=true;this.renderer.outputEncoding=T.sRGBEncoding;
+      this.renderer.setPixelRatio(Math.min(devicePixelRatio,2));this.renderer.outputEncoding=T.sRGBEncoding;
       host.append(this.renderer.domElement);this.renderer.domElement.tabIndex=0;this.renderer.domElement.setAttribute('aria-label','3D-Modell: mit Maus oder Finger drehen; Pfeiltasten drehen, Plus und Minus zoomen');
       this.scene=new T.Scene();this.camera=new T.PerspectiveCamera(35,1,.1,100);this.camera.position.set(0,0,15);
       this.scene.add(new T.AmbientLight(0xffffff,.5));const key=new T.DirectionalLight(0xffffff,.7);key.position.set(3,5,6);this.scene.add(key);const rim=new T.DirectionalLight(0xb7dcff,.3);rim.position.set(-4,-2,-3);this.scene.add(rim);
@@ -16,7 +16,7 @@
       this.axes=new T.AxesHelper(2.2);this.root.add(this.axes);this.axes.visible=false;
       // Some browsers disallow workers for file:// URLs. The same local
       // calculation remains available as a fallback, without external loading.
-      try{this.worker=new Worker('scripts/orbital-labor-worker.js');}catch(_){this.worker=null;}
+      try{this.worker=new Worker('scripts/orbital-labor-worker.js?v=20261004-4');}catch(_){this.worker=null;}
       if(this.worker){
         this.worker.onmessage=({data})=>{const waiting=this.pending.get(data.id);if(!waiting)return;this.pending.delete(data.id);if(data.error)waiting.reject(new Error(data.error));else waiting.resolve(data);};
         this.worker.onerror=()=>{this.worker.terminate();this.worker=null;this.pending.forEach(waiting=>waiting.reject(new Error('Worker unavailable')));this.pending.clear();};
@@ -52,7 +52,6 @@
       });
       this.container.querySelectorAll('[data-align]').forEach(button=>button.addEventListener('click',()=>this.align(button.dataset.align)));
       this.container.querySelector('[data-axes]')?.addEventListener('change',event=>{this.axes.visible=event.target.checked;this.render();});
-      this.container.querySelector('[data-cut]')?.addEventListener('change',event=>{this.cut=event.target.checked;this.model.traverse(o=>{if(o.userData.orbital)o.material.clippingPlanes=this.cut?[new T.Plane(new T.Vector3(1,0,0),0)]:[];});this.render();});
       this.container.querySelector('[data-auto]')?.addEventListener('click',event=>{this.auto=!this.auto;event.currentTarget.setAttribute('aria-pressed',String(this.auto));});
     }
     addAtom(point,label){const sphere=new T.Mesh(new T.SphereGeometry(.105,16,12),new T.MeshPhongMaterial({color:0x748994}));sphere.position.set(...point);sphere.userData.label=label;this.model.add(sphere);}
@@ -78,6 +77,7 @@
       if(this.failed)return;const generation=++this.generation;this.disposeModel();
       const status=this.container.querySelector('.viewer-status');status.textContent='Orbitalfläche wird berechnet …';this.container.setAttribute('aria-busy','true');
       if(spec.mode==='ao')this.addAtom([0,0,0],'Kern');
+      else if(spec.level.basis==='valence'){spec.level.atoms.forEach((point,i)=>this.addAtom(point,spec.level.atomLabels[i]));spec.level.bonds.forEach(([a,b])=>this.addBond(spec.level.atoms[a],spec.level.atoms[b]));}
       else if(spec.level.basis==='ring'){const atoms=spec.level.atoms;atoms.forEach((point,i)=>{this.addAtom(point,`C${i+1}`);this.addBond(point,atoms[(i+1)%atoms.length]);});}
       else {this.addAtom([0,0,-.82],'A');this.addAtom([0,0,.82],'B');this.addBond([0,0,-.82],[0,0,.82]);}
       this.render();
@@ -85,11 +85,14 @@
         const data=await this.calculate(spec);if(generation!==this.generation)return;
         for(const [name,color] of [['positive',0xeb9965],['negative',0x50b8cf]]){
           if(!data[name].length)continue;
-          const material=new T.MeshPhongMaterial({color:new T.Color(color).convertSRGBToLinear(),shininess:40,specular:0x303e49,transparent:true,opacity:.85,side:T.DoubleSide,depthWrite:true,clippingPlanes:this.cut?[new T.Plane(new T.Vector3(1,0,0),0)]:[]});
+          const material=new T.MeshPhongMaterial({color:new T.Color(color).convertSRGBToLinear(),shininess:40,specular:0x303e49,transparent:true,opacity:.85,side:T.DoubleSide,depthWrite:true});
           const mesh=new T.Mesh(this.geometry(data[name],spec,name==='positive'?1:-1),material);mesh.userData.orbital=true;this.model.add(mesh);
         }
         // Same spatial fit for all molecular levels; changing MO never changes zoom.
-        if(this.lastMode!==spec.mode){this.camera.position.z=(spec.mode==='ao'?13:18)/Math.min(1,this.camera.aspect);this.lastMode=spec.mode;}
+        if(spec.fit){
+          let radius=0;for(const mesh of [data.positive,data.negative])for(let i=0;i<mesh.length;i+=3)radius=Math.max(radius,Math.hypot(mesh[i],mesh[i+1],mesh[i+2]));
+          this.camera.position.z=Math.max(6,1.15*radius/Math.sin(this.camera.fov*Math.PI/360))/Math.min(1,this.camera.aspect);this.lastMode=spec.mode;
+        }else if(this.lastMode!==spec.mode){this.camera.position.z=(spec.mode==='ao'?13:18)/Math.min(1,this.camera.aspect);this.lastMode=spec.mode;}
         status.textContent='Ziehen: frei drehen · Mausrad / zwei Finger: zoomen';this.container.setAttribute('aria-busy','false');this.host.dataset.triangles=String((data.positive.length+data.negative.length)/9);this.render();
       }catch(error){if(generation!==this.generation)return;status.textContent=error.message;this.container.setAttribute('aria-busy','false');}
     }
