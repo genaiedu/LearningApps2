@@ -3,22 +3,22 @@
 export function wikipediaArticle(value) {
   try {
     const url = new URL(value, 'https://de.wikipedia.org/wiki/');
-    if (url.protocol !== 'https:' || url.hostname !== 'de.wikipedia.org' || url.port || url.username || url.password || !url.pathname.startsWith('/wiki/')) return null;
+    if (url.protocol !== 'https:' || !['de.wikipedia.org','en.wikipedia.org'].includes(url.hostname) || url.port || url.username || url.password || !url.pathname.startsWith('/wiki/')) return null;
     const title = decodeURIComponent(url.pathname.slice(6)).replace(/_/g, ' ');
     if (!title.trim() || title.includes(':')) return null;
-    return {title, fragment: decodeURIComponent(url.hash.slice(1))};
+    return {title, fragment: decodeURIComponent(url.hash.slice(1)), language:url.hostname.slice(0,2)};
   } catch (_) { return null; }
 }
-export function wikipediaResource(value) {
+export function wikipediaResource(value, language='de') {
   if (!value || value.startsWith('#')) return '';
   try {
-    const url = new URL(value, 'https://de.wikipedia.org/wiki/');
+    const url = new URL(value, 'https://'+(language==='en'?'en':'de')+'.wikipedia.org/wiki/');
     const host = url.hostname;
-    return url.protocol === 'https:' && !url.username && !url.password && !url.port && (host === 'de.wikipedia.org' || host === 'wikimedia.org' || host.endsWith('.wikimedia.org')) ? url.href : '';
+    return url.protocol === 'https:' && !url.username && !url.password && !url.port && (['de.wikipedia.org','en.wikipedia.org','wikimedia.org'].includes(host) || host.endsWith('.wikimedia.org')) ? url.href : '';
   } catch (_) { return ''; }
 }
 
-export function renderWikipediaArticle(document, html, articleTitle) {
+export function renderWikipediaArticle(document, html, articleTitle, language='de') {
   const template = document.createElement('template');
   template.innerHTML = String(html || '');
   const body = document.createElement('div'), ids = new Map();
@@ -41,12 +41,12 @@ export function renderWikipediaArticle(document, html, articleTitle) {
     for (const attr of ['title', 'lang', 'dir', 'scope']) if (old[attr]) node.setAttribute(attr, old[attr]);
     for (const attr of ['colspan', 'rowspan']) if (/^\d{1,2}$/.test(old[attr] || '')) node.setAttribute(attr, old[attr]);
     if (node.localName === 'img') {
-      const src = wikipediaResource(old.src);
+      const src = wikipediaResource(old.src,language);
       if (!src) { node.remove(); continue; }
       node.src = src;
       const srcset = (old.srcset || '').split(',').map(entry => {
         const [source, size = ''] = entry.trim().split(/\s+/);
-        const safe = wikipediaResource(source);
+        const safe = wikipediaResource(source,language);
         return safe && (!size || /^(?:\d+(?:\.\d+)?x|\d+w)$/.test(size)) ? `${safe} ${size}`.trim() : '';
       }).filter(Boolean).join(', ');
       if (srcset) node.srcset = srcset;
@@ -57,7 +57,7 @@ export function renderWikipediaArticle(document, html, articleTitle) {
     if (node.localName === 'a' && old.href) {
       if (old.href.startsWith('#')) node.dataset.fragment = old.href.slice(1);
       else {
-        const url = wikipediaResource(old.href);
+        const url = wikipediaResource(old.href,language);
         if (url) {
           node.href = url;
           if (wikipediaArticle(url)) { node.dataset.chessWikiLink = ''; node.dataset.externalConsentSkip = ''; node.removeAttribute('target'); }
@@ -78,9 +78,8 @@ export function renderWikipediaArticle(document, html, articleTitle) {
 }
 
 
-const $=id=>document.getElementById(id), key='orbital-labor:wikipedia-consent:v1';
+const $=id=>document.getElementById(id);
 let allowed=false, version=0, controller=null, opener=null;
-try{allowed=sessionStorage.getItem(key)==='accepted';}catch(_){}
 document.body.insertAdjacentHTML('beforeend', `<dialog id="orbital-wiki-reader" class="orbital-wiki-reader" aria-labelledby="orbital-wiki-title"><div class="orbital-wiki-shell"><header><div><p class="eyebrow">Wikipedia · im OrbitalLabor lesen</p><h2 id="orbital-wiki-title">Artikel</h2></div><button type="button" class="button button--secondary" id="orbital-wiki-close" aria-label="Lesefenster schließen">Schließen ×</button></header><p id="orbital-wiki-status" role="status"></p><article id="orbital-wiki-content" tabindex="0"></article><footer id="orbital-wiki-source"></footer></div></dialog>`);
 const reader=$('orbital-wiki-reader'), content=$('orbital-wiki-content');
 async function permission(){
@@ -88,11 +87,11 @@ async function permission(){
   if(!window.ExternalConsent)return false;
   allowed=await ExternalConsent.request('https://de.wikipedia.org/',{
     title:'Wikipedia-Inhalte im OrbitalLabor erlauben?',
-    message:'Porträts und Artikel werden erst nach deinem Klick geladen. Dazu verbindet sich die App mit de.wikipedia.org, commons.wikimedia.org sowie upload.wikimedia.org und gegebenenfalls weiteren Wikimedia-Servern. Dabei werden insbesondere deine IP-Adresse und technische Browserdaten übertragen. Alle Erklärungen und 3D-Modelle funktionieren auch ohne Wikipedia. Deine Zustimmung gilt für diese Browsersitzung; weitere Artikel oder Bilder benötigen dann keine erneute Rückfrage.',
-    providerText:'Wikipedia / Wikimedia · Artikel, Porträts und Bildinformationen',
+    message:'Nach Freigabe werden die Graphit- und Rydberg-Bilder geladen; Artikel und Porträts erst nach deinem Klick. Dazu verbindet sich die App mit de.wikipedia.org, en.wikipedia.org, commons.wikimedia.org, upload.wikimedia.org und gegebenenfalls weiteren Wikimedia-Bildservern. Dabei können deine IP-Adresse sowie Browser- und Gerätedaten übertragen werden. Alle lokalen Modelle und Fragen funktionieren auch ohne Wikipedia. Die Freigabe gilt bis zum erneuten Laden der App oder bis du sie unten zurücknimmst. Andere externe Fachquellen öffnen nur nach gesonderter Bestätigung.',
+    providerText:'Wikipedia / Wikimedia · Artikel, Porträts und Abbildungen',
     acceptLabel:'Zustimmen und Inhalt laden'
   });
-  if(allowed){try{sessionStorage.setItem(key,'accepted');}catch(_){}}
+  if(allowed)loadEvidenceImages();
   return allowed;
 }
 function textFromHtml(value){const t=document.createElement('template');t.innerHTML=String(value||'');return t.content.textContent.replace(/\s+/g,' ').trim();}
@@ -116,15 +115,15 @@ async function article(value){
   $('orbital-wiki-title').textContent=parsed.title;$('orbital-wiki-status').textContent='Artikel wird geladen …';content.replaceChildren();$('orbital-wiki-source').replaceChildren();content.setAttribute('aria-busy','true');
   if(!reader.open)reader.showModal();
   try{
-    const data=await query('de.wikipedia.org',{action:'parse',page:parsed.title,prop:'text|revid',redirects:'1',disableeditsection:'1'},abort.signal);
+    const data=await query(parsed.language+'.wikipedia.org',{action:'parse',page:parsed.title,prop:'text|revid',redirects:'1',disableeditsection:'1'},abort.signal);
     if(current!==version||!reader.open)return;
     if(!data.parse?.text)throw new Error('Kein Artikel');
-    const page=data.parse,rendered=renderWikipediaArticle(document,page.text,page.title);
+    const page=data.parse,rendered=renderWikipediaArticle(document,page.text,page.title,parsed.language);
     content.replaceChildren(rendered.body);content.scrollTop=0;$('orbital-wiki-title').textContent=page.title;
     $('orbital-wiki-status').textContent='Artikellinks bleiben in diesem Lesefenster. Bildseiten öffnen extern.';
     const source=$('orbital-wiki-source');source.append(document.createTextNode('Quelle: Wikipedia · Darstellung angepasst · Bilder: jeweilige Bildseite. '),
-      sourceLink('Originalartikel','https://de.wikipedia.org/wiki/'+encodeURIComponent(page.title.replace(/ /g,'_'))),
-      sourceLink('Autorinnen und Autoren','https://de.wikipedia.org/w/index.php?title='+encodeURIComponent(page.title)+'&action=history'),
+      sourceLink('Originalartikel','https://'+parsed.language+'.wikipedia.org/wiki/'+encodeURIComponent(page.title.replace(/ /g,'_'))),
+      sourceLink('Autorinnen und Autoren','https://'+parsed.language+'.wikipedia.org/w/index.php?title='+encodeURIComponent(page.title)+'&action=history'),
       sourceLink('Text: CC BY-SA 4.0','https://creativecommons.org/licenses/by-sa/4.0/deed.de'));
     content.focus({preventScroll:true});
     if(rendered.ids.has(parsed.fragment))document.getElementById(rendered.ids.get(parsed.fragment))?.scrollIntoView({block:'start'});
@@ -171,5 +170,28 @@ $('load-scientist-images').onclick=async()=>{
 };
 const revoke=document.createElement('button');revoke.type='button';revoke.className='button button--secondary';revoke.id='orbital-wiki-revoke';revoke.textContent='Wikipedia-Zustimmung zurücknehmen';
 $('quellen').append(revoke);
-revoke.onclick=()=>{allowed=false;version++;controller?.abort();if(reader.open)reader.close();try{sessionStorage.removeItem(key);}catch(_){}
- document.querySelectorAll('.scientist-portrait').forEach(host=>{host.replaceChildren(document.createTextNode('Porträt nicht geladen'));});document.querySelectorAll('.portrait-credit').forEach(p=>p.remove());$('portrait-status').textContent='Zustimmung zurückgenommen. Ohne erneute Freigabe werden keine Wikipedia-Inhalte geladen.';};
+revoke.onclick=()=>{allowed=false;version++;controller?.abort();if(reader.open)reader.close();
+ document.querySelectorAll('.scientist-portrait').forEach(host=>{host.replaceChildren(document.createTextNode('Porträt nicht geladen'));});document.querySelectorAll('.portrait-credit').forEach(p=>p.remove());resetEvidenceImages();$('portrait-status').textContent='Zustimmung zurückgenommen. Ohne erneute Freigabe werden keine Wikipedia-Inhalte geladen.';};
+
+function resetEvidenceImages(){
+  document.querySelectorAll('[data-wikimedia-figure]').forEach(figure=>{
+    const slot=figure.querySelector('.evidence-image-slot'),note=document.createElement('p'),button=document.createElement('button');
+    note.textContent='Wikimedia-Bild noch nicht geladen.';button.type='button';button.className='button button--secondary';button.dataset.loadEvidence='';button.textContent='W · Bild laden';slot.replaceChildren(note,button);
+  });
+}
+function loadEvidenceImages(){
+  if(!allowed)return;
+  document.querySelectorAll('[data-wikimedia-figure]').forEach(figure=>{
+    const slot=figure.querySelector('.evidence-image-slot');if(slot.querySelector('img'))return;
+    const url=wikipediaResource(figure.dataset.imageSrc);if(!url||new URL(url).hostname!=='upload.wikimedia.org')return;
+    const image=document.createElement('img');image.alt=figure.dataset.imageAlt;image.referrerPolicy='no-referrer';image.decoding='async';image.loading='lazy';
+    image.addEventListener('error',()=>{if(!allowed||!slot.contains(image))return;const note=document.createElement('p'),retry=document.createElement('button');note.textContent='Das Wikimedia-Bild ist gerade nicht erreichbar. Die Erklärung bleibt nutzbar.';retry.type='button';retry.className='button button--secondary';retry.dataset.loadEvidence='';retry.textContent='W · Erneut laden';slot.replaceChildren(note,retry);},{once:true});
+    image.src=url;slot.replaceChildren(image);
+  });
+}
+document.addEventListener('click',async event=>{if(event.target.closest('[data-load-evidence]')&&await permission())loadEvidenceImages();});
+// Consent precedes all Wikimedia requests, also when a deep link opens the app.
+const start=$('wiki-start-dialog');
+start.addEventListener('close',()=>{allowed=start.returnValue==='allow';if(allowed)loadEvidenceImages();});
+start.showModal();
+$('wiki-start-title').tabIndex=-1;$('wiki-start-title').focus({preventScroll:true});start.scrollTop=0;
