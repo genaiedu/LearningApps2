@@ -98,7 +98,7 @@ for (const file of ['chemie-curriculum-arbeitskopie.html']) {
   html=html.slice(0,end)+block('formulations',formulations())+html.slice(end);
   html=beforeHeading(html,'abschnitt-280',block('gkl',gkl(k)));
   html=html.replace(/<link[^>]*href="styles\/chemie-assessment\.css[^>]*>\s*/g,'').replace(/<script[^>]*src="scripts\/chemie-assessment\.js[^>]*><\/script>\s*/g,'');
-  html=html.replace('</head>','<link rel="stylesheet" href="styles/chemie-assessment.css?v=20261004"><script defer src="scripts/chemie-assessment.js?v=20261004"></script></head>');
+  html=html.replace('</head>','<link rel="stylesheet" href="styles/chemie-assessment.css?v=20261004"><script defer src="scripts/chemie-assessment.js?v=20261004-preparation"></script></head>');
   fs.writeFileSync(location,html);
 }
 console.log('Chemie assessment additions refreshed only in the working copy.');
