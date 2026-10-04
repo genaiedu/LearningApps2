@@ -17,6 +17,7 @@ from docx.shared import Pt, RGBColor
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.opc.constants import RELATIONSHIP_TYPE as RT
+from docx.text.paragraph import Paragraph
 from lxml import html
 
 REPO = Path(__file__).resolve().parents[1]
@@ -25,6 +26,7 @@ BASE_URL = 'https://genaiedu.github.io/LearningApps2/'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--source', type=Path, default=REPO/'downloads'/f'{STEM}.docx')
 parser.add_argument('--output', type=Path, required=True)
+parser.add_argument('--gkl-output', type=Path, help='Also refresh the standalone GKL download from the same chapter')
 args = parser.parse_args()
 doc = Document(args.source)
 source = html.fromstring((REPO/'chemie-curriculum-arbeitskopie.html').read_text())
@@ -365,6 +367,81 @@ for e in chapters['Quellen und Geltungsstand']:
         patch_text(e,[('Kapitel 18','Kapitel 17')])
 gkl_title = next(t for t in chapters if t.startswith('Gleichwertige komplexe Leistungsnachweise'))
 gkl = chapters[gkl_title]
+# Preserve native rubric tables while synchronizing the reorganized chapter.
+# Old page-continuation titles are never real sections, in HTML or in print.
+for e in list(gkl):
+    if style(e) in (['Heading2'], ['Heading3']) and re.search(r'\bFortsetzung\s*$', xmltext(e)):
+        following = gkl[gkl.index(e)+1]
+        if e.xpath('./w:pPr/w:pageBreakBefore') and following.tag == qn('w:p'):
+            following.get_or_add_pPr().append(OxmlElement('w:pageBreakBefore'))
+        gkl.remove(e)
+legacy_gkl = any(xmltext(e) == '14.11 EF Beispiel zu Stoffkreisläufen' for e in gkl)
+gkl_map = {1:1, 11:2, 3:3, 12:4, 2:5, 4:6, 10:7, 5:8, 6:9, 7:10, 8:11, 9:12}
+web_gkl = source.get_element_by_id('gkl').getparent()
+web_headings = web_gkl.xpath('./h3')
+assert len(web_headings) == 12
+block_starts = [i for i,e in enumerate(gkl) if style(e) == ['Heading2'] and re.match(r'^14\.\d+ ',xmltext(e))]
+assert len(block_starts) == 12
+native_blocks = {}
+for k,i in enumerate(block_starts):
+    old_number = int(re.match(r'^14\.(\d+)',xmltext(gkl[i])).group(1))
+    number = gkl_map[old_number] if legacy_gkl else old_number
+    native_blocks[number] = gkl[i:block_starts[k+1] if k+1<len(block_starts) else len(gkl)]
+    if legacy_gkl:
+        for node in native_blocks[number]:
+            for p in ([node] if node.tag == qn('w:p') else node.xpath('.//w:p')):
+                value = xmltext(p)
+                changes = [(m.group(), '14.'+str(gkl_map[int(m.group(1))]))
+                           for m in re.finditer(r'(?<![\d.])14\.(\d+)(?!\d|\.\d)',value)
+                           if int(m.group(1)) in gkl_map]
+                patch_text(p,changes)
+# Use the web introduction rather than retaining obsolete example references.
+temporary = Document()
+for element in web_gkl:
+    if element.tag == 'h3':
+        break
+    if element.tag == 'p':
+        addhtml(element,temporary)
+gkl[:] = [gkl[0]] + [deepcopy(p._p) for p in temporary.paragraphs]
+for heading in web_headings:
+    number = int(re.match(r'^14\.(\d+)',heading.text_content()).group(1))
+    nodes = native_blocks[number]
+    patch_text(nodes[0],[(xmltext(nodes[0]),heading.text_content())])
+    # Reset explicit section starts after movement; paragraphs still flow normally.
+    if not nodes[0].xpath('./w:pPr/w:pageBreakBefore'):
+        nodes[0].get_or_add_pPr().append(OxmlElement('w:pageBreakBefore'))
+    if 2 <= number <= 6:
+        nodes[:] = [nodes[0]] + [e for e in nodes[1:] if not xmltext(e).startswith('Zuordnung:')]
+        temporary = Document()
+        addhtml(heading.getnext(),temporary)
+        nodes.insert(1,deepcopy(temporary.paragraphs[0]._p))
+        introduction = next(e for e in nodes if xmltext(e).startswith('Leitfrage:'))
+        patch_text(introduction,[(xmltext(introduction),heading.getnext().getnext().text_content())])
+    if number == 7:
+        # This explanatory section now covers all five examples, without changing BE.
+        stop = heading.getnext()
+        wrapper = html.Element('section')
+        wrapper.append(deepcopy(heading))
+        while stop is not None and stop.tag != 'h3':
+            wrapper.append(deepcopy(stop))
+            stop = stop.getnext()
+        temporary = Document()
+        addhtml(wrapper,temporary)
+        retained_heading = nodes[0]
+        nodes = [deepcopy(e) for e in temporary._element.body if e.tag != qn('w:sectPr')]
+        nodes[0] = retained_heading
+        nodes[0].get_or_add_pPr().append(OxmlElement('w:pageBreakBefore'))
+    gkl.extend(nodes)
+# Synchronize the cross-reference from the AI chapter as well.
+for chapter in chapters.values():
+    for e in chapter:
+        if 'zeigt die Umsetzung in GKL' in xmltext(e):
+            patch_text(e,[('Kapitel 14.10','Kapitel 14.7'),('Kapitel 15.10','Kapitel 14.7')])
+        if 'Die Kriterien der Kapitel' in xmltext(e) and 'GKL' in xmltext(e):
+            pairs = [('15.6','14.9'),('15.8','14.11')]
+            if legacy_gkl:
+                pairs += [('14.6','14.9'),('14.8','14.11')]
+            patch_text(e,pairs)
 gkl[:] = [e for e in gkl if not e.xpath('.//w:bookmarkStart[@w:name="gkl_afb_verweis"]')]
 # Insert just the requested short reference, not another AFB definition.
 reference = source.get_element_by_id('gkl-afb-verweis')
@@ -378,6 +455,17 @@ assert len(steps)==4
 step_id=fresh_list_id()
 for e in steps:
     number_paragraph(e,step_id)
+
+# New explanatory links must resolve to retained native headings too.
+gkl_targets = {h.text_content(): h.get('id') for h in web_gkl.xpath('.//h3|.//h4') if h.get('id')}
+existing_names = set(doc._element.xpath('//w:bookmarkStart/@w:name'))
+for e in gkl:
+    existing_names.update(e.xpath('.//w:bookmarkStart/@w:name'))
+for e in gkl:
+    name = gkl_targets.get(xmltext(e))
+    if name and name.replace('-','_') not in existing_names:
+        bookmark(Paragraph(e,doc._body),name)
+        existing_names.add(name.replace('-','_'))
 
 ordered = [(h.get('id'),h.text_content()) for h in source.xpath('//main//h2')]
 assert len(ordered)==18
@@ -484,8 +572,8 @@ def section_nodes(start,stop):
     return gkl[i+1:j]
 
 for name,title,start,stop,role_prefix in [
-    ('anhang_c','Anhang C GKL Präsentation Bewertungsbogen',r'^14\.6 ',r'^14\.7 ','P'),
-    ('anhang_d','Anhang D GKL Experimentieren Bewertungsbogen',r'^14\.7 ',r'^14\.8 ','E')]:
+    ('anhang_c','Anhang C GKL Präsentation Bewertungsbogen',r'^14\.9 ',r'^14\.10 ','P'),
+    ('anhang_d','Anhang D GKL Experimentieren Bewertungsbogen',r'^14\.10 ',r'^14\.11 ','E')]:
     temporary=Document()
     appendix_heading(temporary,title,name)
     temporary.add_paragraph('Druckvorlage nach Kapitel 14. Individuelle Bewertung A / 20 + B / 40 + C / 40 = 100 BE. Vor Beginn werden Aufgabe, Kriterien, genau ein passendes Rollenmodul und persönliche Nachweise vereinbart.')
@@ -508,7 +596,10 @@ for name,title,start,stop,role_prefix in [
     temporary.add_paragraph('Nur das zuvor vereinbarte Modul ausfüllen. Höchstens 40 BE je Person; individuelle Belege gehören zu jedem Kriterium.')
     for k in range(1,4):
         index=next(i for i,e in enumerate(gkl) if xmltext(e).startswith(role_prefix+str(k)+' '))
-        temporary._element.body.insert(-1,deepcopy(gkl[index]))
+        copy_heading = deepcopy(gkl[index])
+        for b in copy_heading.xpath('.//w:bookmarkStart|.//w:bookmarkEnd'):
+            b.getparent().remove(b)
+        temporary._element.body.insert(-1,copy_heading)
         table=next(e for e in gkl[index+1:] if e.tag==qn('w:tbl'))
         copy_table(temporary,table)
     endnotes(temporary,summary)
@@ -589,6 +680,7 @@ assert full.rfind('Quellen und Geltungsstand') > full.rfind('Anhang D')
 for link in doc._element.xpath('//w:hyperlink[@r:id]'):
     assert 'downloads/' not in doc.part.rels[link.get(qn('r:id'))].target_ref
 assert not re.search(r'herunterladen|download',full,re.I)
+assert not any(re.search(r'\bFortsetzung\s*$',p.text) for p in doc.paragraphs if p.style.name.startswith('Heading'))
 # Drop the unused download relationships as well, not just their visible text.
 for rel_id,relationship in list(doc.part.rels.items()):
     if relationship.is_external and 'downloads/' in relationship.target_ref:
@@ -596,3 +688,49 @@ for rel_id,relationship in list(doc.part.rels.items()):
 args.output.parent.mkdir(parents=True,exist_ok=True)
 doc.save(args.output)
 print(f'Saved static working copy: {args.output}')
+
+if args.gkl_output:
+    standalone = Document(REPO/'downloads/Chemie_GKL_Aufgaben_und_Bewertung.docx')
+    old_nodes = list(standalone._element.body)
+    beginning = next(i for i,e in enumerate(old_nodes) if style(e)==['Heading1'])
+    ending = next(i for i,e in enumerate(old_nodes) if style(e)==['Heading1'] and xmltext(e)=='Notengrenzen und ergänzende Quellen')
+    front = old_nodes[:beginning]
+    tail = old_nodes[ending:-1]
+    props = old_nodes[-1]
+    for e in list(standalone._element.body):
+        standalone._element.body.remove(e)
+    toc_replacements = [
+        ('Stand 28. September 2026','Stand 4. Oktober 2026'),
+        ('Die Abschnittsnummern 14.1 bis 14.12 entsprechen dem GKL-Kapitel der drei Chemiecurricula, damit Querverweise eindeutig bleiben.',
+         'Die Abschnittsnummern 14.1 bis 14.12 entsprechen der neu gegliederten Arbeitskopie des Chemiecurriculums.'),
+        ('Aufgaben zu Verpackungen, Essigtitration und Polymeren 14.2 bis 14.4','Fünf Aufgabenbeispiele für EF und Qualifikationsphase Grundkurs 14.2 bis 14.6'),
+        ('Individuelle Bewertung und ausfüllbare Raster 14.5 bis 14.10','Die vier K und individuelle Bewertung 14.7 und 14.8'),
+        ('EF Beispiel zu Stoffkreisläufen 14.11','Bewertungsbögen und Rollenmodule 14.9 bis 14.11'),
+        ('GKL Beispiel zum Lithium-Eisenphosphat-Akku 14.12','Beispiel einer individuellen Bewertung 14.12'),
+    ]
+    for e in front:
+        patch_text(e,toc_replacements)
+        standalone._element.body.append(e)
+    for e in gkl:
+        copy = deepcopy(e)
+        for link in copy.xpath('.//w:hyperlink[@r:id]'):
+            relationship = doc.part.rels[link.get(qn('r:id'))]
+            if relationship.is_external:
+                link.set(qn('r:id'),standalone.part.relate_to(relationship.target_ref,RT.HYPERLINK,is_external=True))
+        standalone._element.body.append(copy)
+    for e in tail:
+        patch_text(e,[('14.5','14.8'),('14.12','14.4')])
+        standalone._element.body.append(e)
+    standalone._element.body.append(props)
+    standalone.part.numbering_part._element = deepcopy(doc.part.numbering_part.element)
+    names = set(standalone._element.xpath('//w:bookmarkStart/@w:name'))
+    anchor_ids = {e.get('id').replace('-','_'):e.get('id') for e in source.xpath('//*[@id]')}
+    for link in standalone._element.xpath('//w:hyperlink'):
+        anchor = link.get(qn('w:anchor'))
+        if anchor and anchor not in names:
+            link.attrib.pop(qn('w:anchor'))
+            link.set(qn('r:id'),standalone.part.relate_to(BASE_URL+'chemie-curriculum-arbeitskopie.html#'+anchor_ids.get(anchor,anchor),RT.HYPERLINK,is_external=True))
+    standalone.core_properties.modified = doc.core_properties.modified
+    args.gkl_output.parent.mkdir(parents=True,exist_ok=True)
+    standalone.save(args.gkl_output)
+    print(f'Saved standalone GKL: {args.gkl_output}')

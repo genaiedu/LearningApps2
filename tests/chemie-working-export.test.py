@@ -79,7 +79,7 @@ class WorkingCopyExport(unittest.TestCase):
         self.assertIn('Kapitel 2.5 und 17', self.text)
         self.assertIn('Didaktisch gefasstes Anwendungsbeispiel in Kapitel 17.', self.text)
         self.assertIn('der individuelle Gesamtaufwand folgt 14.1.', self.text)
-        self.assertIn('14.2 bis 14.4 sowie 14.11 und 14.12', self.text)
+        self.assertIn('14.2 bis 14.6', self.text)
         steps = next(p for p in self.doc.paragraphs if p.text.startswith('Vor Beginn: Präsentationsbogen'))
         identity = steps._p.xpath('./w:pPr/w:numPr/w:numId/@w:val')[0]
         start = self.doc.part.numbering_part.element.xpath(
@@ -98,6 +98,47 @@ class WorkingCopyExport(unittest.TestCase):
             self.assertEqual(len(refreshed.tables), len(self.doc.tables))
             self.assertEqual(len(refreshed._element.xpath('//w:bookmarkStart')),
                              len(self.doc._element.xpath('//w:bookmarkStart')))
+
+    def test_gkl_has_contiguous_examples_and_no_continuation_titles(self):
+        gkl = self.web.get_element_by_id('gkl').getparent()
+        web_titles = [e.text_content() for e in gkl.xpath('./h3')]
+        self.assertEqual([re.match(r'^14\.(\d+)',t).group(1) for t in web_titles],
+                         [str(i) for i in range(1,13)])
+        self.assertTrue(all('Beispiel ' in t for t in web_titles[1:6]))
+        for i in range(2,7):
+            heading = gkl.xpath(f'./h3[starts-with(text(),"14.{i} ")]')[0]
+            self.assertTrue(heading.getnext().text_content().startswith('Zuordnung:'))
+            self.assertIn(heading.getnext().text_content(),self.text)
+            self.assertIn(heading.getnext().getnext().text_content(),self.text)
+        standalone = html.fromstring((REPO/'chemie-gkl.html').read_text())
+        standalone_titles = [e.text_content() for e in standalone.xpath('//main//h2')
+                             if re.match(r'^14\.',e.text_content())]
+        self.assertEqual(standalone_titles,web_titles)
+        word_titles = [p.text for p in self.doc.paragraphs if p.style.name=='Heading 2'
+                       and re.match(r'^14\.',p.text)]
+        self.assertEqual(word_titles,web_titles)
+        for titles in ([e.text_content() for e in self.web.xpath('//main//h2|//main//h3')],
+                       [p.text for p in self.doc.paragraphs if p.style.name.startswith('Heading')]):
+            self.assertFalse(any(re.search(r'\bFortsetzung\s*$',t) for t in titles))
+        self.assertNotIn('Fortsetzung',self.printed)
+        self.assertEqual(sum(p.text.startswith('Zuordnung:') for p in self.doc.paragraphs),5)
+        self.assertIn('Präsentationsbogen (14.9) oder Experimentierbogen (14.10)',self.text)
+        self.assertIn('Rollenmodul aus 14.11',self.text)
+
+    def test_standalone_gkl_exports_match_the_working_copy_structure(self):
+        doc = Document(REPO/'downloads/Chemie_GKL_Aufgaben_und_Bewertung.docx')
+        pdf = PdfReader(REPO/'downloads/Chemie_GKL_Aufgaben_und_Bewertung.pdf')
+        texts = [p.text for p in doc.paragraphs]
+        titles = [p.text for p in doc.paragraphs if p.style.name=='Heading 2' and re.match(r'^14\.',p.text)]
+        expected = [e.text_content() for e in self.web.get_element_by_id('gkl').getparent().xpath('./h3')]
+        self.assertEqual(titles,expected)
+        self.assertEqual(sum(t.startswith('Zuordnung:') for t in texts),5)
+        self.assertFalse(any('Fortsetzung' in t for t in texts))
+        self.assertFalse(any('Fortsetzung' in (p.extract_text() or '') for p in pdf.pages))
+        names = doc._element.xpath('//w:bookmarkStart/@w:name')
+        self.assertEqual(len(names),len(set(names)))
+        self.assertTrue(set(doc._element.xpath('//w:hyperlink/@w:anchor')).issubset(names))
+        self.assertEqual(len(doc.tables),20)
 
 
 if __name__ == '__main__':
