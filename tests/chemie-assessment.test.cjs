@@ -38,16 +38,30 @@ test('AFB matrix covers seven chemical perspectives without treating topics as f
   assert.ok(html.indexOf('id="chemie-afb"') < html.indexOf('id="klausuren-3"'));
 });
 
-test('Oral examination guidance links to AFB definitions and distinguishes school guidance from law', () => {
+test('Oral examination guidance links to AFB definitions and omits the rejected disclaimer', () => {
   assert.match(fragment('oral'),/href="#klausuren-2"/);
   assert.match(fragment('oral'),/in 13\.2/);
-  assert.match(fragment('oral'),/angekündigten schulischen Vorlage/);
+  assert.doesNotMatch(fragment('oral'),/Schulische Arbeitshilfe, keine neue Prüfungsordnung|angekündigten schulischen Vorlage|Präsentationsprüfung im fünften Abiturfach/);
   assert.match(fragment('oral'),/weder ein starres Frage-Antwort-Skript/);
   assert.equal((fragment('oral').match(/type="checkbox"/g)||[]).length,11);
   assert.ok(html.indexOf('id="muedlich-erwartungshorizont"') < html.indexOf('id="abitur-bewertung"'));
   assert.ok(html.indexOf('id="abitur-bewertung"') < html.indexOf('id="chemische-formulierungshilfen"'));
   const general = html.slice(html.indexOf('id="abitur-bewertung"'),html.indexOf('<!-- chemie-assessment:formulations -->'));
   assert.equal((general.match(/<tr>/g)||[]).length,17);
+});
+
+test('AFB definitions exist only in the canonical table in 13.2', () => {
+  for (const definition of [
+    'Gelerntes im vertrauten Zusammenhang wiedergeben und geübte Verfahren sicher einsetzen.',
+    'Bekanntes selbstständig ordnen, erklären und auf vergleichbare neue Situationen übertragen.',
+    'Komplexe neue Probleme eigenständig bearbeiten, Methoden auswählen, Lösungen begründen und das Vorgehen reflektieren.'
+  ]) assert.equal(html.split(definition).length - 1, 1);
+  for (const name of ['afb', 'oral', 'gkl', 'formulations']) {
+    assert.match(fragment(name), /href="#klausuren-2"/);
+    assert.doesNotMatch(fragment(name), /AFB I betrifft|AFB II verlangt|AFB III verlangt|Definition und Abgrenzung/);
+  }
+  assert.match(fragment('afb'), /Maßgeblich ist ausschließlich/);
+  assert.match(fragment('afb'), /sie definiert die Anforderungsbereiche nicht erneut/);
 });
 
 test('GKL receives only a short AFB reference, with existing individual assessment preserved', () => {
