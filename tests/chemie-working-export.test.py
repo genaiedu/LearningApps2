@@ -99,6 +99,23 @@ class WorkingCopyExport(unittest.TestCase):
             self.assertEqual(len(refreshed._element.xpath('//w:bookmarkStart')),
                              len(self.doc._element.xpath('//w:bookmarkStart')))
 
+    def test_headings_inherit_consistent_font_weight_and_spacing(self):
+        for p in self.doc.paragraphs:
+            if not p.style.name.startswith('Heading'):
+                continue
+            self.assertFalse(p._p.xpath('.//w:rPr/w:b[@w:val="0"]'), p.text)
+            if p.style.name in ('Heading 1', 'Heading 2', 'Heading 3'):
+                self.assertEqual(p.style.font.name, 'Poppins', p.text)
+                self.assertTrue(p.style.font.bold, p.text)
+            if p.text not in ('Links und Onlinefassungen', 'Inhalt'):
+                self.assertIsNone(p.paragraph_format.space_after, p.text)
+        self.assertFalse(self.doc.styles['Heading 4'].font.italic)
+        fonts = {str(font.get_object().get('/BaseFont', ''))
+                 for page in self.pdf.pages
+                 for font in page['/Resources'].get('/Font', {}).get_object().values()}
+        self.assertTrue(any('Poppins-Bold' in f for f in fonts))
+        self.assertFalse(any('Poppins-Regular' in f for f in fonts), fonts)
+
     def test_gkl_has_contiguous_examples_and_no_continuation_titles(self):
         gkl = self.web.get_element_by_id('gkl').getparent()
         web_titles = [e.text_content() for e in gkl.xpath('./h3')]

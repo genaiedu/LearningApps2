@@ -132,7 +132,9 @@ def number_paragraph(element,identity):
 def inline(p, element, bold=False, italic=False):
     if element.text:
         run = p.add_run(element.text)
-        run.bold, run.italic = bold, italic
+        # Unmarked HTML text inherits its paragraph style. Explicit False would
+        # turn off the bold heading style, including chapter 15's title.
+        run.bold, run.italic = bold or None, italic or None
     for child in element:
         if not isinstance(child.tag, str):
             continue
@@ -162,7 +164,7 @@ def inline(p, element, bold=False, italic=False):
             inline(p, child, bold or child.tag in ('strong', 'b'), italic or child.tag in ('em', 'i'))
         if child.tail:
             run = p.add_run(child.tail)
-            run.bold, run.italic = bold, italic
+            run.bold, run.italic = bold or None, italic or None
 
 
 def addhtml(element, target):
@@ -187,7 +189,8 @@ def addhtml(element, target):
         styles = {'h2':'Heading 1','h3':'Heading 2','h4':'Heading 3','h5':'Heading 4','summary':'Heading 4'}
         p = target.add_paragraph(style=styles.get(tag, 'Normal'))
         inline(p, element)
-        p.paragraph_format.space_after = Pt(7)
+        if tag == 'p':
+            p.paragraph_format.space_after = Pt(7)
         if tag != 'p':
             p.paragraph_format.keep_with_next = True
         if tag in ('h4','h5','summary'):
@@ -656,6 +659,25 @@ if setting is None:
     setting=OxmlElement('w:updateFields')
     doc.settings.element.append(setting)
 setting.set(qn('w:val'),'true')
+
+# All headings of the same level inherit the same typography and spacing.
+# Keep intentional cover/front-matter spacing and all explicit page breaks.
+level_four = doc.styles['Heading 4']
+level_four.font.italic = False
+level_four.paragraph_format.space_after = Pt(7)
+fonts = level_four.element.get_or_add_rPr().get_or_add_rFonts()
+for attribute in list(fonts.attrib):
+    if 'theme' in attribute.lower():
+        del fonts.attrib[attribute]
+for attribute in ('ascii', 'hAnsi', 'eastAsia', 'cs'):
+    fonts.set(qn('w:'+attribute), 'Inter')
+for p in doc.paragraphs:
+    if not p.style.name.startswith('Heading'):
+        continue
+    for prop in p._p.xpath('.//w:rPr/w:b[@w:val="0"]|.//w:rPr/w:i[@w:val="0"]'):
+        prop.getparent().remove(prop)
+    if p.text not in ('Links und Onlinefassungen', 'Inhalt'):
+        p.paragraph_format.space_after = None
 
 # Verify the canonical definitions and both complete grade tables before saving.
 full = xmltext(body)
