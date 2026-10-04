@@ -1,0 +1,105 @@
+// Refresh only the approved additions in the Chemie curriculum working copy.
+// Published curricula and the standalone GKL app must remain unchanged.
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const {grades, areas} = require('./chemie-assessment.js');
+const root = path.join(__dirname, '..');
+const kmk = '<a href="https://www.kmk.org/fileadmin/Dateien/veroeffentlichungen_beschluesse/2020/2020_06_18-BildungsstandardsAHR_Chemie.pdf#page=24" target="_blank" rel="external noopener">KMK-Bildungsstandards Chemie, S. 24–27</a>';
+const klp = '<a href="https://lehrplannavigator.nrw.de/system/files/media/document/file/gost_klp_ch_2022_06_07.pdf#page=62" target="_blank" rel="external noopener">Kernlehrplan Chemie NRW 2022, S. 62–65</a>';
+const matrixRows = [
+  ['Reaktionen und Gleichungen', 'Eine bekannte Reaktion beschreiben und eine eingeübte Reaktionsgleichung einschließlich Stoff- bzw. Ladungsbilanz wiedergeben.', 'Eine Reaktion in einem vergleichbaren neuen Beispiel herleiten, Teilreaktionen verbinden und mithilfe des passenden Donator–Akzeptor-Konzepts erklären.', 'Für eine komplexe neue Fragestellung einen Reaktionsweg entwickeln, Alternativen prüfen und die Wahl unter offengelegten Bedingungen begründen.'],
+  ['Modelle und Darstellungsebenen', 'Ein eingeführtes Teilchen-, Bindungs- oder Gleichgewichtsmodell beschreiben; bekannte Symbole und Darstellungen erläutern.', 'Einen Stoffbefund mit einem geeigneten Modell erklären und zwischen Stoff-, Teilchen- und Symbolebene übersetzen.', 'Konkurrierende Deutungen auf ihre Tragfähigkeit prüfen, Modellannahmen reflektieren und begründet einen anderen Ansatz auswählen.'],
+  ['Struktur–Eigenschafts-Beziehungen', 'Bekannte Strukturmerkmale und zugehörige Eigenschaften nennen.', 'Eigenschaften eines vergleichbaren neuen Stoffes aus Struktur und zwischenmolekularen Wechselwirkungen erklären.', 'Widersprüchliche Eigenschaftsbefunde in einem komplexen Materialvergleich deuten und Grenzen einer vereinfachten Strukturprognose begründen.'],
+  ['Experimente und Messdaten', 'Ein bekanntes Verfahren beschreiben; Messwerte, Beobachtungen und Einheiten sachgerecht wiedergeben.', 'Messreihen auswerten, Beobachtung von Deutung trennen und die Ergebnisse auf die chemische Fragestellung beziehen.', 'Eine neue Untersuchung hypothesengeleitet planen, Kontrollen und Störeinflüsse begründen und Aussagegrenzen sowie Verbesserungen reflektieren.'],
+  ['Berechnungen und quantitative Deutung', 'Ein geübtes Rechenschema mit vorgegebenen Größen verwenden, etwa eine einfache Stoffmengenrechnung.', 'Geeignete Größenbeziehungen selbst auswählen und mehrere vertraute Schritte verbinden; das Ergebnis chemisch deuten.', 'Für eine komplexe neue Problemstellung einen quantitativen Ansatz entwickeln, begründete Annahmen treffen und die Reichweite des Ergebnisses beurteilen.'],
+  ['Material- und Quellenauswertung', 'Chemische Angaben aus einem bekannten Diagramm oder Text entnehmen und wiedergeben.', 'Informationen aus verschiedenen Darstellungen verknüpfen und mit chemischem Fachwissen auf eine vergleichbare Fragestellung anwenden.', 'Die Tragfähigkeit widersprüchlicher Quellen oder Daten prüfen, alternative Erklärungen entwickeln und den eigenen Schluss begrenzen.'],
+  ['Chemisch begründete Entscheidungen', 'Bekannte fachliche Kriterien, Argumente und Handlungsoptionen nennen.', 'Vorgegebene Alternativen anhand gegebener Kriterien chemisch vergleichen und eine nachvollziehbare Folgerung ziehen.', 'In einer komplexen Entscheidung Kriterien und Zielkonflikte selbstständig abwägen, chemische Befunde von Wertentscheidungen unterscheiden und das Urteil reflektieren.']
+];
+function afb(k) { return `
+<div class="assessment-block" id="chemie-afb">
+<h4>Chemiespezifische Konkretisierung der Anforderungsbereiche I, II und III</h4>
+<p>Die Zuordnung beschreibt die verlangte Denkleistung, nicht die Schwierigkeit eines Themas. Maßgeblich sind Unterrichtsvorlauf, Neuartigkeit, Komplexität, Hilfen und Selbstständigkeit. Die folgende Matrix ist eine schulische didaktische Orientierung auf Grundlage der Bildungsstandards, keine amtliche Liste fester Inhaltszuordnungen.</p>
+<div class="assessment-note"><strong>Definition und Abgrenzung:</strong> AFB I betrifft die Wiedergabe im gelernten Zusammenhang sowie geübte Verfahren. AFB II verlangt eigenständige Auswahl, Verarbeitung und Erklärung bekannter Inhalte sowie Übertragung auf vergleichbare neue Situationen. AFB III verlangt eigenständige Lösungswege für komplexe neue Probleme und eine Reflexion des Vorgehens. Sachkompetenz, Erkenntnisgewinnung, Kommunikation und Bewertung sind dagegen Kompetenzbereiche; sie entsprechen nicht den Stufen I, II und III.</div>
+<div class="table-wrap" role="region" aria-label="Chemische Tätigkeiten in den drei Anforderungsbereichen, seitlich scrollbar" tabindex="0"><table class="assessment-matrix"><caption>Typische Leistungen – abhängig von der konkreten Aufgabe und den Lernvoraussetzungen</caption><thead><tr><th scope="col">Chemische Tätigkeit</th><th scope="col">AFB I · Wiedergeben und geübtes Anwenden</th><th scope="col">AFB II · Zusammenhänge erklären und übertragen</th><th scope="col">AFB III · Probleme lösen und reflektieren</th></tr></thead><tbody>${matrixRows.map(row=>'<tr>'+row.map((cell,i)=>i===0?'<th scope="row">'+cell+'</th>':'<td>'+cell+'</td>').join('')+'</tr>').join('\n')}</tbody></table></div>
+<h5>Eine Fragestellung, drei unterschiedliche Anforderungen: Säurebestimmung</h5>
+<div class="assessment-cases">
+<div class="assessment-case"><h5>AFB I · Vertrautes Verfahren</h5><p>Beschreiben Sie die im Unterricht durchgeführte Titration einer Essigprobe und geben Sie die bekannte Neutralisationsgleichung an. Voraussetzungen und Verfahren sind eingeübt.</p></div>
+<div class="assessment-case"><h5>AFB II · Auswerten und übertragen</h5><p>Ermitteln Sie aus einer neuen Messreihe und einer angegebenen Probenverdünnung die titrierbare Säurekonzentration. Wählen Sie die benötigten Beziehungen selbst und erklären Sie den Bezug zwischen Verbrauch, Stoffmenge und Probenkonzentration.</p></div>
+<div class="assessment-case"><h5>AFB III · Ein Verfahren kritisch entwickeln</h5><p>Für eine Probe mit mehreren Säuren wird behauptet, eine einfache Titration bestimme ausschließlich die Essigsäure. Prüfen Sie die Aussage, entwickeln Sie anhand geeigneter Informationen einen ergänzenden Untersuchungsweg und diskutieren Sie dessen Grenzen.</p></div>
+</div>
+<p><strong>Keine automatische Zuordnung:</strong> Eine aufwendige Rechnung ist nicht allein deshalb AFB III. Das Wiedergeben eines bekannten, anspruchsvollen Reaktionsmechanismus kann AFB I sein. Eine neu formulierte Aufgabe ist nicht zwingend neuartig im Sinne von AFB III. Auch ein Operator legt die Zuordnung nicht unabhängig vom Unterricht und von den Hilfen fest. Teilaufgaben können Anteile mehrerer Bereiche enthalten.</p>
+<p>AFB II bildet den Schwerpunkt; die im Kapitel genannten Gewichtungen bleiben Orientierungen für die Aufgabenplanung. Daraus folgt keine feste Zuordnung einer AFB-Stufe zu einer Note. Im Erwartungshorizont werden konkrete Leistungen, ihre Anforderungsbereiche und die Begründung der Zuordnung erkennbar gemacht.</p>
+<p class="reading-note">Grundlage: ${kmk}; für die nach dem Kernlehrplan 2022 unterrichteten Kohorten zusätzlich ${klp}. Die Beispiele sind schulische Konkretisierungen, keine amtlichen Musteraufgaben.</p>
+</div>`; }
+
+function checklist(items) {return '<ul class="assessment-checklist">'+items.map(item=>'<li><label><input type="checkbox">'+item+'</label></li>').join('')+'</ul>';}
+function oral(k) { return `
+<div class="assessment-block" id="muedlich-erwartungshorizont">
+<h4>Erwartungshorizont für die mündliche Abiturprüfung erstellen</h4>
+<p>Der Erwartungshorizont schafft eine gemeinsame Grundlage für Durchführung und Bewertung im Fachprüfungsausschuss. Er beschreibt die wesentlichen fachlichen Erwartungen übersichtlich, konkret und aufgabenbezogen; fachlich gleichwertige alternative Lösungswege bleiben möglich. Die <a href="#klausuren-2">Definitionen der Anforderungsbereiche I, II und III in ${k}.2</a> und die <a href="#chemie-afb">chemiespezifische AFB-Matrix</a> gelten auch für die Planung der mündlichen Prüfung.</p>
+<p class="assessment-note"><strong>Schulische Arbeitshilfe, keine neue Prüfungsordnung:</strong> Diese Empfehlungen konkretisieren die allgemeinen Grundsätze. Sie werden mit der angekündigten schulischen Vorlage abgeglichen, sobald diese vorliegt. Verbindliche Rechtsvorgaben und der abgestimmte aufgabenbezogene Erwartungshorizont haben Vorrang. Die folgenden Hinweise betreffen die mündliche Abiturprüfung; für die Präsentationsprüfung im fünften Abiturfach gelten eigene Vorgaben und Bewertungsraster.</p>
+<h5>1 · Unterrichtliche Voraussetzungen</h5>
+<p>Relevante Unterrichtsvorhaben, chemische Inhalte und Kompetenzen sowie eingeführte Modelle und Verfahren knapp benennen, nicht den Unterrichtsverlauf nacherzählen. Beispielsweise: Säure-Base-Konzept, Stoffmengenrechnung, Titration und die im Unterricht behandelten Grenzen der Endpunkterkennung. Diese Angaben begründen, welche Bearbeitungen vertraut und welche Übertragungen neu sind.</p>
+<h5>2 · Erster Prüfungsteil: vorbereitete Aufgabe</h5>
+<p>Zu jeder Teilaufgabe stichpunktartig die wesentlichen Leistungen, geeignete Bearbeitungswege, Zusammenhänge und erwarteten Transfer- oder Urteilsleistungen festhalten. Erforderliche Fachbegriffe, Reaktionsgleichungen, Skizzen, Größenbeziehungen und zentrale Ergebnisse dürfen enthalten sein. Eine ausformulierte Musterlösung ist nicht nötig; die Erwartungen müssen dennoch fachlich prüfbar und die AFB erkennbar sein.</p>
+<div class="assessment-case"><h5>Chemisches Beispiel: neue Titrationsdaten</h5><p><strong>Erwartete Aspekte:</strong> Reaktionsgrundlage und bekannte Verfahrensschritte erläutern (je nach Unterricht AFB I); Stoffmengenverhältnis, Volumen und Verdünnungsfaktor auf die Daten anwenden und das Ergebnis deuten (AFB II); bei der entsprechend komplex angelegten Zusatzfrage die Behauptung einer selektiven Essigsäurebestimmung prüfen und einen ergänzenden Untersuchungsweg begründen (AFB III). Titration erfasst neutralisierbare Säureäquivalente; in einer Mischung wird nicht ohne Weiteres ausschließlich Essigsäure bestimmt.</p><p>Alternative fachlich gleichwertige Rechnungen und sinnvoll begründete Schwerpunktsetzungen werden berücksichtigt. Die AFB-Zuordnung wird an die tatsächlichen Voraussetzungen angepasst.</p></div>
+<h5>3 · Zweiter Prüfungsteil: Prüfungsgespräch</h5>
+<p>Themen- und Inhaltsbereiche, mögliche Gesprächsimpulse, erwartete fachliche Aspekte sowie Wege zur Vertiefung und Vernetzung vorbereiten. Das Gespräch entwickelt sich aus den Antworten; es ist weder ein starres Frage-Antwort-Skript noch eine Folge isolierter Einzelkenntnisse. Es eröffnet eigenständige Deutungen und Reflexionen. Nicht jede Rückfrage muss AFB III sein; die Gesamtprüfung berücksichtigt alle drei Bereiche mit Schwerpunkt II.</p>
+<ul><li><strong>Impuls:</strong> „Was verändert sich, wenn die Probe außer Essigsäure eine weitere Säure enthält?“ – erwartet werden Grenzen der Zuordnung des Verbrauchs zu einem Einzelstoff.</li><li><strong>Impuls:</strong> „Wie würden Sie prüfen, ob eine Abweichung durch die Maßlösung oder die Probenverdünnung verursacht wurde?“ – mögliche Aspekte sind Kontrollen, unabhängige Prüfung und nachvollziehbare Variablenwahl.</li><li><strong>Vernetzung:</strong> „Welche Rolle spielt ein chemisches Gleichgewicht bei der Wahl des Nachweisverfahrens?“ – die Gesprächsführung verbindet die bisherige Auswertung mit weiteren im Unterricht behandelten Inhalten.</li></ul>
+<h5>4 · Bewertung und Dokumentation</h5>
+<p>Die Bewertung bezieht sich auf beide Prüfungsteile und den abgestimmten Erwartungshorizont. Eine kleinteilige Bepunktung jeder einzelnen Gesprächsäußerung ist für diese Arbeitshilfe nicht erforderlich; entscheidend ist die begründete Gesamtleistung. Fachliche Richtigkeit, Differenziertheit, Umfang und Sicherheit der Kenntnisse, Fachmethoden, Zusammenhänge, Selbstständigkeit, Transfer, Reflexion, Fachsprache sowie Struktur und Kohärenz werden zusammen betrachtet.</p>
+<p>Beobachtungen und Hilfen werden dokumentiert: War ein Impuls lediglich eine offene Nachfrage, ein Hinweis auf eine fehlende Größe oder bereits eine weitgehende Vorgabe des Lösungswegs? Bewertet wird, wie der Prüfling den Impuls aufgreift und eigene Gedanken fachlich weiterführt. Die bloße Anzahl der Hilfen bestimmt die Note nicht. Ein Fehler wird nicht mehrfach für denselben Leistungsaspekt angerechnet.</p>
+<div class="assessment-cases"><div class="assessment-case"><h5>Orientierung: gute Leistung</h5><p>Der Prüfling erklärt die chemische Grundlage sicher, verknüpft Befunde, Modelle und Gleichungen strukturiert, wertet Daten weitgehend selbstständig aus und begründet tragfähige Übertragungen und Urteile. Die konkrete Ausprägung wird am Erwartungshorizont und an den Beobachtungen belegt.</p></div><div class="assessment-case"><h5>Orientierung: ausreichende Leistung</h5><p>Wesentliche chemische Aspekte und grundlegende Verfahren werden erkannt. Zentrale Zusammenhänge werden insgesamt nachvollziehbar dargestellt; einfache Anwendungen und Teile weiterführender Überlegungen gelingen gegebenenfalls mit Unterstützung. Bestehende Mängel und Hilfen werden konkret benannt.</p></div></div>
+<p>Diese Profile ersetzen weder die allgemeinen Notendefinitionen noch die Gesamtbeurteilung. Es gilt nicht „AFB III gezeigt = sehr gut“. Fachlich richtige Alternativen werden ebenso berücksichtigt wie begründete Grenzen einer Aussage.</p>
+<h5>5 · Checkliste vor der Prüfung</h5>
+${checklist(['Unterrichtliche Voraussetzungen knapp und fachbezogen benannt','Erwartete Leistungen für jede Teilaufgabe in Teil I konkretisiert','AFB I–III erkennbar und aufgabenbezogen zugeordnet','Eine eigenständige Leistung im AFB III ist möglich','Themenbereiche und mögliche Impulse für Teil II vorbereitet','Fachliche Erwartungen, Vertiefung und größere Zusammenhänge benannt','Alternative fachlich richtige Wege bleiben möglich','Kein starres Fragenprogramm und keine bloße Musterlösung','Orientierungen für gute und ausreichende Leistungen berücksichtigt','Beobachtungen, Hilfen und individuelle Begründung der Note dokumentierbar','Erwartungshorizont im Fachprüfungsausschuss abgestimmt'])}
+<p><strong>Leitgedanke: So konkret wie nötig – so offen wie möglich.</strong> Die Häkchen dienen nur der Vorbereitung und werden nicht gespeichert oder als Punkteschema verwendet.</p>
+<p class="reading-note">Amtliche fachliche Grundlage: ${kmk} und ${klp}. Die praktische Gliederung und Checkliste sind schulische Empfehlungen.</p>
+</div>`; }
+
+function formulations() { return `
+<div class="assessment-block" id="chemische-formulierungshilfen">
+<h4>Ergänzende chemiespezifische Formulierungshilfen für alle Punktstufen</h4>
+<p>Die allgemeine Liste oben bleibt die übergreifende Orientierung. Die folgende zusätzliche Liste konkretisiert typische chemische Beobachtungsperspektiven. Sie ist keine amtliche Definition einzelner Punktwerte und kein automatisches Bewertungsraster. Nur tatsächlich gestellte Anforderungen und gezeigte Leistungen dürfen für die Begründung verwendet werden; kein Prüfling muss unabhängig von der Aufgabe sämtliche hier genannten Tätigkeiten vorführen.</p>
+<p>Die <a href="#klausuren-2">Definitionen der Anforderungsbereiche im Klausurenkapitel</a> und die <a href="#chemie-afb">chemiespezifische Konkretisierung</a> unterstützen die Aufgabenplanung, legen aber keine Note fest. Maßgeblich bleiben der Erwartungshorizont, die gesamte Prüfungsleistung und die geltenden Bewertungsgrundsätze.</p>
+<div class="table-wrap" role="region" aria-label="Chemische Formulierungshilfen für 16 Punktstufen, seitlich scrollbar" tabindex="0"><table><caption>Chemische Ergänzungen – mit aufgabenbezogenen Belegen anzupassen</caption><thead><tr><th scope="col">Notenpunkte</th><th scope="col">Chemiespezifischer Formulierungsvorschlag</th></tr></thead><tbody>${grades.map(g=>`<tr><th scope="row">${g.points} · ${g.label}</th><td>${g.text}</td></tr>`).join('\n')}</tbody></table></div>
+<details><summary>Beobachtungsperspektiven für die konkrete Begründung</summary><ul><li><strong>Modellverständnis:</strong> Verbindungen zwischen beobachtbaren Stoffen, Teilchenvorgängen und symbolischer Darstellung; Annahmen und Modellgrenzen.</li><li><strong>Reaktionen:</strong> Reaktionskonzepte, Gleichungen, Stoff- und Ladungsbilanzen sowie deren chemische Deutung.</li><li><strong>Berechnungen:</strong> Auswahl der Beziehungen, Einheiten, nachvollziehbarer Ansatz, Annahmen und Bedeutung des Ergebnisses.</li><li><strong>Experimente:</strong> Trennung von Befund und Deutung, Auswertung, Kontrollen, Unsicherheiten und Aussagekraft.</li><li><strong>Argumentation:</strong> Belege, Kriterien, Gegenargumente, fachliche Verknüpfung und begründete Grenzen eines Urteils.</li></ul></details>
+<div class="assessment-builder" data-chemistry-formulations>
+<h5>Formulierungsentwurf aus passenden Bausteinen zusammenstellen</h5><p>Die Punktstufe wird nach der fachlichen Gesamtbeurteilung gewählt, nicht vom Werkzeug berechnet. Wählen Sie nur passende Beobachtungsperspektiven, erstellen Sie den Entwurf und ergänzen Sie konkrete Belege aus der Prüfung. Es werden keine Namen oder Prüfungsdaten übertragen oder gespeichert.</p>
+<label for="chemie-formulierung-punkte">Bereits beurteilte Punktstufe</label><select id="chemie-formulierung-punkte">${grades.map(g=>`<option value="${g.points}"${g.points===11?' selected':''}>${g.points} · ${g.label}</option>`).join('')}</select>
+<fieldset><legend>Passende chemische Beobachtungsperspektiven</legend><div class="assessment-choices">${Object.entries(areas).map(([key,value])=>`<label><input type="checkbox" value="${key}">${value[0]}</label>`).join('')}</div></fieldset>
+<div class="actions"><button type="button" class="button" data-compose>Entwurf erstellen</button><button type="button" class="button button--secondary" data-copy>Entwurf kopieren</button><button type="button" class="button button--secondary" data-clear>Zurücksetzen</button></div>
+<div class="assessment-confirm" data-confirmation hidden><p data-confirmation-message></p><div class="actions"><button type="button" class="button" data-confirm>Ja, Entwurf ersetzen</button><button type="button" class="button button--secondary" data-cancel>Abbrechen · Entwurf behalten</button></div></div>
+<label for="chemie-formulierung-entwurf">Entwurf – fachlich prüfen und um konkrete Beobachtungen ergänzen</label><textarea id="chemie-formulierung-entwurf" spellcheck="true" placeholder="Hier erscheint der anpassbare Formulierungsentwurf. Bei neuen Bausteinen wird vor dem Ersetzen eines bearbeiteten Entwurfs nachgefragt."></textarea><p role="status" aria-live="polite">Ohne Namensangaben arbeiten; der Entwurf geht beim Verlassen oder Neuladen der Seite verloren.</p>
+</div></div>`; }
+
+function gkl(k) {return `
+<p id="gkl-afb-verweis"><strong>Anforderungsbereiche:</strong> Für die aufgabenbezogene Zuordnung der fachlichen Leistungen gelten die <a href="#klausuren-2">Definitionen von AFB I, II und III in Abschnitt ${k}.2 des Klausurenkapitels</a>, ergänzt durch die dortige <a href="#chemie-afb">chemiespezifische Konkretisierung</a>.</p>`;}
+
+function stripBlocks(html) {return html.replace(/\n?<!-- chemie-assessment:[a-z-]+ -->[\s\S]*?<!-- \/chemie-assessment:[a-z-]+ -->\n?/g,'');}
+function block(name, content) {return `\n<!-- chemie-assessment:${name} -->${content}\n<!-- /chemie-assessment:${name} -->\n`;}
+function beforeHeading(html, id, addition) {
+  const marker = new RegExp(`<h[23][^>]*id="${id}"[^>]*>`);
+  assert.ok(marker.test(html), 'Missing heading: '+id);
+  return html.replace(marker, match=>addition+match);
+}
+function chapterRange(html, id) {
+  const index = html.indexOf(`id="${id}"`);
+  assert.ok(index >= 0, id);
+  return [html.lastIndexOf('<section', index),html.indexOf('</section>',index)];
+}
+for (const file of ['chemie-curriculum-arbeitskopie.html']) {
+  const location = path.join(root,file);
+  let html=stripBlocks(fs.readFileSync(location,'utf8'));
+  const k=Number(html.match(/id="klausuren-2">(\d+)\.2/)[1]);
+  html=beforeHeading(html,'klausuren-3',block('afb',afb(k)));
+  html=beforeHeading(html,'abitur-bewertung',block('oral',oral(k)));
+  const [,end]=chapterRange(html,'abiturpruefung');
+  html=html.slice(0,end)+block('formulations',formulations())+html.slice(end);
+  html=beforeHeading(html,'abschnitt-280',block('gkl',gkl(k)));
+  html=html.replace(/<link[^>]*href="styles\/chemie-assessment\.css[^>]*>\s*/g,'').replace(/<script[^>]*src="scripts\/chemie-assessment\.js[^>]*><\/script>\s*/g,'');
+  html=html.replace('</head>','<link rel="stylesheet" href="styles/chemie-assessment.css?v=20261004"><script defer src="scripts/chemie-assessment.js?v=20261004"></script></head>');
+  fs.writeFileSync(location,html);
+}
+console.log('Chemie assessment additions refreshed only in the working copy.');

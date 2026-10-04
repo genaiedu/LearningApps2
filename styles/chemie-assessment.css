@@ -1,0 +1,17 @@
+.assessment-block{margin:1.6rem 0;padding:clamp(1rem,2vw,1.5rem);border:1px solid var(--border);border-radius:12px;background:var(--surface,#fff);color:var(--text)}
+.assessment-block h4:first-child{margin-top:0}
+.assessment-note{border-left:4px solid var(--accent);padding:.8rem 1rem;margin:1rem 0;background:var(--surface,#fff)}
+.assessment-block .table-wrap{max-width:100%}
+.assessment-matrix{min-width:850px}.assessment-matrix th{min-width:180px}.assessment-matrix td{min-width:210px}
+.assessment-cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:1rem;margin:1rem 0}
+.assessment-case{padding:1rem;border:1px solid var(--border);border-radius:10px}.assessment-case h5{font:600 1rem Inter,system-ui,sans-serif;margin:0 0 .5rem;color:var(--accent)}
+.assessment-block ul{padding-left:1.25rem}.assessment-checklist{list-style:none;padding-left:0!important;display:grid;gap:.6rem}
+.assessment-checklist label,.assessment-choices label{display:flex;align-items:flex-start;gap:.7rem;font-weight:400}
+.assessment-checklist input,.assessment-choices input{width:1.1rem;height:1.1rem;flex:0 0 1.1rem;margin-top:.3rem;padding:0;accent-color:var(--accent)}
+.assessment-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:.75rem}
+.assessment-builder select,.assessment-builder textarea{display:block;width:100%;color:var(--text);background:var(--surface,#fff);border:1px solid var(--border);border-radius:8px;padding:.7rem}
+.assessment-builder fieldset{border:1px solid var(--border);border-radius:9px;padding:1rem;margin:1rem 0}
+.assessment-builder legend{padding:0 .35rem;font-weight:600}.assessment-builder textarea{min-height:13rem;resize:vertical;line-height:1.6;margin-top:.5rem}
+.assessment-builder .actions{margin:1rem 0}.assessment-builder [role=status]{min-height:1.7em;font-size:.9rem;color:var(--muted)}
+.assessment-confirm{padding:1rem;border:2px solid var(--accent);border-radius:9px;margin:1rem 0}.assessment-confirm[hidden]{display:none!important}.assessment-confirm p{margin-top:0}
+@media print{.assessment-block{background:none!important;border-color:#aaa;break-inside:auto}.assessment-builder{display:none}.assessment-matrix{min-width:0}.assessment-matrix td,.assessment-matrix th{min-width:0}.assessment-checklist input{appearance:none;width:.8rem;height:.8rem;border:1px solid #555}.assessment-cases{display:block}.assessment-case{margin:.7rem 0;break-inside:avoid}}
