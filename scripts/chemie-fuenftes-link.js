@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const chapterLink = document.createElement('a');
   chapterLink.href = 'chemie-fuenftes-abiturfach.html';
   chapterLink.className = 'button button--secondary';
-  chapterLink.textContent = 'Kapitel 16 als eigene Webseite öffnen';
+  const chapterNumber = chapter.textContent.trim().match(/^\d+/)?.[0];
+  chapterLink.textContent = chapterNumber
+    ? `Kapitel ${chapterNumber} als eigene Webseite öffnen`
+    : 'Kapitel als eigene Webseite öffnen';
   const chapterActions = document.createElement('div');
   chapterActions.className = 'actions';
   chapterActions.append(chapterLink);

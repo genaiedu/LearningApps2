@@ -1,4 +1,12 @@
 @media screen {
+  .layout > aside {
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
   .curriculum-toc-toggle,
   .curriculum-mobile-toc,
   .curriculum-pdf-close,
@@ -84,13 +92,27 @@
     inset: 0 auto 0 0;
     z-index: 1101;
     width: min(23rem, calc(100vw - 3rem));
-    max-height: none;
+    /* A fixed grid child with align-self:start otherwise stays content-sized. */
+    box-sizing: border-box;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    min-height: 0;
     overflow-y: auto;
-    padding: 1rem;
+    overscroll-behavior-y: contain;
+    scrollbar-gutter: stable;
+    padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
     border: 0;
     border-radius: 0 14px 14px 0;
     background: var(--surface, #fff);
     box-shadow: 12px 0 40px #0004;
+  }
+  body.curriculum-mobile-toc-open .curriculum-toc-toggle {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    box-shadow: 0 0 .5rem .25rem var(--surface, #fff);
   }
   .layout.curriculum-toc-collapsed > aside > :not(.curriculum-toc-toggle) { display: revert !important; }
   .layout.curriculum-toc-collapsed .curriculum-toc-toggle-label { display: inline; }
