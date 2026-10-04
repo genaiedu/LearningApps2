@@ -68,6 +68,18 @@ test('Oral examination guidance links to AFB definitions and omits the rejected 
   assert.equal((general.match(/<tr>/g)||[]).length,17);
 });
 
+test('Oral examination templates are downloadable Word and PDF files within the working copy chapter', () => {
+  assert.match(fragment('oral'), /id="muendliche-pruefung-vorlagen"/);
+  for (const [extension, signature] of [['docx','PK'],['pdf','%PDF-']]) {
+    const file = `downloads/Vorlage_Muendliche_Abiturpruefung_Chemie.${extension}`;
+    assert.ok(fragment('oral').includes(`href="${file}" download`));
+    assert.equal(fs.readFileSync(path.join(root,file)).subarray(0,signature.length).toString(), signature);
+    for (const curriculum of ['chemie-curriculum.html','chemie-curriculum-2026.html']) {
+      assert.ok(!fs.readFileSync(path.join(root,curriculum),'utf8').includes(file));
+    }
+  }
+});
+
 test('AFB definitions exist only in the canonical table in 13.2', () => {
   for (const definition of [
     'Gelerntes im vertrauten Zusammenhang wiedergeben und geübte Verfahren sicher einsetzen.',
