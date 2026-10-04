@@ -85,7 +85,7 @@
         const data=await this.calculate(spec);if(generation!==this.generation)return;
         for(const [name,color] of [['positive',0xeb9965],['negative',0x50b8cf]]){
           if(!data[name].length)continue;
-          const material=new T.MeshPhongMaterial({color:new T.Color(color).convertSRGBToLinear(),shininess:40,specular:0x303e49,transparent:true,opacity:.85,side:T.DoubleSide,depthWrite:true});
+          const material=new T.MeshPhongMaterial({color:new T.Color(color).convertSRGBToLinear(),shininess:spec.opaque?24:40,specular:spec.opaque?0x182026:0x303e49,transparent:!spec.opaque,opacity:spec.opaque?1:.85,side:T.DoubleSide,depthWrite:true});
           const mesh=new T.Mesh(this.geometry(data[name],spec,name==='positive'?1:-1),material);mesh.userData.orbital=true;this.model.add(mesh);
         }
         // Same spatial fit for all molecular levels; changing MO never changes zoom.

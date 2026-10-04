@@ -17,24 +17,34 @@
     document.querySelectorAll('[data-atlas]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.atlas===type)));
     $('atlas-title').textContent=`${family.n}${label} · ${family.family}-Familie`;
     $('atlas-explanation').textContent=`ℓ = ${family.l}: ${family.l} Winkelknoten. Die ${family.family}-Unterschale umfasst ${family.types.length} räumliche Orbitale und fasst insgesamt ${family.types.length*2} Elektronen. Das hier gewählte einzelne Orbital fasst höchstens zwei. ${family.family==='f'?'Die sieben f-Formen gehören zu ℓ = 3; Knoten können Ebenen und Kegelflächen sein. Die Kurzbezeichnungen stehen für die üblichen reellen harmonischen Funktionen, etwa z(5z² − 3r²) bei f𝓏³.':family.family==='d'?'Der ringförmige Bereich bei d𝓏² gehört zum selben Orbital wie seine beiden Lappen. Er ist weder eine Elektronenbahn noch ein weiteres Orbital.':family.family==='p'?'Beide Lappen gehören zum selben Orbital; die Ebene zwischen ihnen ist ein Winkelknoten.':'Kugelsymmetrisch bedeutet: keine bevorzugte Richtung. Es bedeutet nicht, dass das Elektron auf der Kugeloberfläche kreist.'}`;
-    viewer.orbital({mode:'ao',n:family.n,type,radial:false,threshold:.14,resolution:65,extent:5.6,fit:true});
+    viewer.orbital({mode:'ao',n:family.n,type,radial:false,threshold:.14,resolution:65,extent:5.6,fit:true,opaque:true});
+  }
+  // Keep all 16 choices inside the large viewer's fullscreen boundary.
+  for(const family of families){
+    const group=document.createElement('div');group.className='atlas-choice-family';group.setAttribute('role','group');group.setAttribute('aria-label',`${family.family}-Orbitale für die Großansicht`);
+    const name=document.createElement('strong');name.textContent=family.family;group.append(name);
+    const choices=document.createElement('div');group.append(choices);
+    for(const [type,label] of family.types){
+      const button=document.createElement('button');button.type='button';button.dataset.atlas=type;button.dataset.atlasChoice=type;button.textContent=`${family.n}${label}`;button.setAttribute('aria-label',`${family.n}${label} groß darstellen`);button.setAttribute('aria-pressed',String(type==='pz'));button.addEventListener('click',()=>select(family,type,label));choices.append(button);
+    }
+    $('atlas-choices').append(group);
   }
   for(const family of families){
     const section=document.createElement('section');section.className='atlas-family';
     const heading=document.createElement('h3');heading.textContent=`${family.family} · ℓ = ${family.l} · ${family.types.length} ${family.types.length===1?'Orbital':'Orbitale'}`;section.append(heading);
     const row=document.createElement('div');row.className='atlas-family-orbitals';section.append(row);
     for(const [type,label] of family.types){
-      const button=document.createElement('button');button.type='button';button.dataset.atlas=type;button.setAttribute('aria-pressed',String(type==='s'));button.setAttribute('aria-label',`${family.n}${label} in drehbarer 3D-Ansicht`);
+      const button=document.createElement('button');button.type='button';button.dataset.atlas=type;button.setAttribute('aria-pressed',String(type==='pz'));button.setAttribute('aria-label',`${family.n}${label} in drehbarer 3D-Ansicht`);
       const tile=document.createElement('div');tile.className='atlas-tile mini-orbital';
       const canvas=document.createElement('canvas');canvas.dataset.label=`${family.n}${label}`;canvas.dataset.miniOrbital=type;canvas.className='mini-3d-canvas';
       const reset=document.createElement('button');reset.type='button';reset.dataset.miniReset='';reset.className='mini-reset';reset.textContent='↺';reset.setAttribute('aria-label',`${family.n}${label} ausrichten`);reset.title='Ansicht ausrichten';
       const text=document.createElement('span');text.textContent=label;const hint=document.createElement('small');hint.textContent='Groß ansehen';button.append(text,hint);
       tile.append(canvas,reset,button);row.append(tile);
-      button.addEventListener('click',()=>select(family,type,label));minis.add(canvas,{mode:'ao',n:family.n,type,radial:false,resolution:49,threshold:.14,extent:5.6});
+      button.addEventListener('click',()=>{select(family,type,label);$('atlas-lab').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});});minis.add(canvas,{mode:'ao',n:family.n,type,radial:false,resolution:49,threshold:.14,extent:5.6});
     }
     $('orbital-atlas-grid').append(section);
   }
-  const observer=new IntersectionObserver(entries=>{if(!entries.some(e=>e.isIntersecting))return;observer.disconnect();if(!atlasSelected)select(families[0],'s','s');},{rootMargin:'300px'});observer.observe($('orbital-atlas-grid'));
+  const observer=new IntersectionObserver(entries=>{if(!entries.some(e=>e.isIntersecting))return;observer.disconnect();if(!atlasSelected)select(families[1],'pz','p𝓏');},{rootMargin:'300px'});observer.observe($('atlas-lab'));
   const cloud=$('probability-cloud'),ctx=cloud.getContext('2d');let samples=[];
   function drawCloud(){ctx.clearRect(0,0,cloud.width,cloud.height);ctx.fillStyle='#b27750';for(const [x,y] of samples){ctx.globalAlpha=.42;ctx.beginPath();ctx.arc(x,y,1.15,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;ctx.strokeStyle='#6b7e8b';ctx.beginPath();ctx.arc(cloud.width/2,cloud.height/2,4,0,Math.PI*2);ctx.stroke();$('probability-count').textContent=`${samples.length.toLocaleString('de-DE')} unabhängige Messungen`;}
   $('probability-more').onclick=()=>{if(samples.length>=12000){$('probability-count').textContent='12.000 Messungen · Für einen neuen Versuch die Punktwolke leeren.';return;}for(let i=0;i<300;i++){const r=-Math.log(Math.max(Number.MIN_VALUE,Math.random()*Math.random()*Math.random()))/2,cos=2*Math.random()-1,phi=2*Math.PI*Math.random(),s=Math.sqrt(1-cos*cos);samples.push([cloud.width/2+60*r*s*Math.cos(phi),cloud.height/2+60*r*cos]);}drawCloud();};
