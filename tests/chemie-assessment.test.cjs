@@ -5,10 +5,13 @@ const path = require('node:path');
 const os = require('node:os');
 const vm = require('node:vm');
 const {execFileSync} = require('node:child_process');
-const {grades, areas, compose} = require('../scripts/chemie-assessment.js');
+const {grades, areas, compose: composeWithGeneral} = require('../scripts/chemie-assessment.js');
 const root = path.join(__dirname, '..');
 const working = 'chemie-curriculum-arbeitskopie.html';
 const html = fs.readFileSync(path.join(root, working), 'utf8');
+const generalSection = html.slice(html.indexOf('id="abitur-bewertung"'),html.indexOf('<!-- chemie-assessment:formulations -->'));
+const generalByPoints = Object.fromEntries([...generalSection.matchAll(/<tr><td>[^<]*· (\d+)[^<]*<\/td><td>([^<]+)<\/td><\/tr>/g)].map(m=>[Number(m[1]),m[2]]));
+const compose = (points, selected) => composeWithGeneral(points, selected, generalByPoints[Number(points)]);
 const fragment = name => html.match(new RegExp(`<!-- chemie-assessment:${name} -->([\\s\\S]*?)<!-- /chemie-assessment:${name} -->`))[1];
 
 test('Sixteen grade levels have distinct chemistry formulations and matching static rows', () => {
@@ -16,7 +19,7 @@ test('Sixteen grade levels have distinct chemistry formulations and matching sta
   assert.equal(new Set(grades.map(g => g.text)).size, 16);
   for (const grade of grades) {
     assert.ok(fragment('formulations').includes(grade.text));
-    assert.ok(compose(String(grade.points), []).startsWith(grade.text));
+    assert.equal(compose(String(grade.points), []), generalByPoints[grade.points]+'\n\n'+grade.text);
   }
   assert.equal((fragment('formulations').match(/<th scope="row">/g) || []).length,16);
 });
@@ -25,9 +28,16 @@ test('Drafts use the selected chemistry areas and correct grade bands only', () 
   for (const points of [15,13,12,10,9,7,6,4,3,1,0]) {
     const band = points>=13?1:points>=10?2:points>=7?3:points>=4?4:points>=1?5:6;
     const draft = compose(points,['model','calculation','model','unknown']);
-    assert.equal(draft, [grades.find(g=>g.points===points).text,areas.model[band],areas.calculation[band]].join('\n\n'));
+    assert.equal(draft, [generalByPoints[points],grades.find(g=>g.points===points).text,areas.model[band],areas.calculation[band]].join('\n\n'));
   }
   for (const value of [-1,16,4.5,'not-a-grade']) assert.throws(()=>compose(value,[]),RangeError);
+});
+
+test('Every draft begins with the exact unchanged general formulation for its point level', () => {
+  assert.equal(Object.keys(generalByPoints).length,16);
+  for (const grade of grades) assert.equal(compose(grade.points,['reaction']).split('\n\n')[0],generalByPoints[grade.points]);
+  assert.throws(()=>composeWithGeneral(11,[],undefined),/allgemeine Formulierung/);
+  assert.match(fragment('formulations'),/zuerst die allgemeine Formulierung/);
 });
 
 test('AFB matrix covers seven chemical perspectives without treating topics as fixed levels', () => {
@@ -92,7 +102,8 @@ test('Edited drafts are preserved on cancellation; reset and copy work without s
   let copied='';
   const source=fs.readFileSync(path.join(root,'scripts/chemie-assessment.js'),'utf8');
   assert.doesNotMatch(source,/\bconfirm\s*\(|\balert\s*\(/);
-  const context={document:{querySelectorAll:()=>[builder]},navigator:{clipboard:{writeText:async text=>{copied=text;}}}};
+  const generalRows=Object.entries(generalByPoints).map(([points,text])=>({querySelectorAll:()=>[{textContent:'Punktstufe · '+points},{textContent:text}]}));
+  const context={document:{querySelectorAll:selector=>selector==='#abitur-bewertung ~ .table-wrap tbody tr'?generalRows:[builder]},navigator:{clipboard:{writeText:async text=>{copied=text;}}}};
   vm.runInNewContext(source,context);
   handlers.compose(); assert.equal(output.value,'Eigene fachliche Beobachtung');
   assert.equal(panel.hidden,false); handlers.cancel(); assert.equal(panel.hidden,true);

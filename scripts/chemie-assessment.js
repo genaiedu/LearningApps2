@@ -57,18 +57,26 @@ const chemistryAssessment = (() => {
       'Einzelne Aussagen sind fachlich zutreffend, tragen aber kein hinreichend begründetes chemisches Urteil.',
       'Auch mit Hilfen entsteht keine fachlich tragfähige Begründung zur gestellten chemischen Frage.']
   };
-  function compose(points, selected) {
+  function compose(points, selected, generalText) {
     const grade = grades.find(g => g.points === Number(points));
     if (!grade) throw new RangeError('Ungültige Punktstufe');
+    if (typeof generalText !== 'string' || !generalText.trim()) throw new Error('Die allgemeine Formulierung zur Punktstufe fehlt.');
     const band = points >= 13 ? 1 : points >= 10 ? 2 : points >= 7 ? 3 : points >= 4 ? 4 : points >= 1 ? 5 : 6;
     const keys = [...new Set(selected)].filter(k => Object.hasOwn(areas, k));
-    return [grade.text, ...keys.map(k => areas[k][band])].join('\n\n');
+    return [generalText.trim(), grade.text, ...keys.map(k => areas[k][band])].join('\n\n');
   }
   return {grades, areas, compose};
 })();
 
 if (typeof module !== 'undefined' && module.exports) module.exports = chemistryAssessment;
 if (typeof document !== 'undefined') {
+  // Read the existing general list rather than maintain a competing copy of it.
+  const generalByPoints = new Map();
+  for (const row of document.querySelectorAll('#abitur-bewertung ~ .table-wrap tbody tr')) {
+    const cells = row.querySelectorAll('td');
+    const match = cells[0]?.textContent.match(/·\s*(\d+)/);
+    if (match && cells[1]) generalByPoints.set(Number(match[1]), cells[1].textContent.trim());
+  }
   for (const builder of document.querySelectorAll('[data-chemistry-formulations]')) {
     const output = builder.querySelector('textarea');
     const status = builder.querySelector('[role="status"]');
@@ -95,9 +103,14 @@ if (typeof document !== 'undefined') {
       status.textContent = 'Der vorhandene Entwurf bleibt unverändert.';
     });
     builder.querySelector('[data-compose]').addEventListener('click', () => {
+      const points = Number(builder.querySelector('select').value);
+      if (!generalByPoints.has(points)) {
+        status.textContent = 'Die allgemeine Formulierung konnte nicht gelesen werden. Bitte die Seite neu laden; der vorhandene Entwurf bleibt erhalten.';
+        return;
+      }
       askBeforeReplacing(() => {
-        output.value = chemistryAssessment.compose(builder.querySelector('select').value,
-        [...builder.querySelectorAll('input:checked')].map(input => input.value));
+        output.value = chemistryAssessment.compose(points,
+        [...builder.querySelectorAll('input:checked')].map(input => input.value), generalByPoints.get(points));
         status.textContent = 'Entwurf erstellt. Bitte mit konkreten Prüfungsbeobachtungen ergänzen und fachlich prüfen.';
       }, 'Den vorhandenen Entwurf durch die neu gewählten Bausteine ersetzen?', 'Ja, Entwurf ersetzen');
     });
