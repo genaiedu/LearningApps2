@@ -14,7 +14,7 @@ html[data-projector="true"] .flock-layer{opacity:.23}
 .flock-revealed .flock-outline{fill:color-mix(in srgb,var(--ink) 15%,var(--bg) 85%);fill-opacity:1;stroke:var(--ink);stroke-opacity:.72;stroke-width:.7;vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .flock-revealed .flock-eyes{display:inline;animation:flock-blink 6.8s linear infinite;animation-delay:var(--blink-delay)}
 @keyframes flock-blink{0%,93%,97%,100%{opacity:1}94%,96%{opacity:0}}
-.flock-revealed>.slide-heading,.flock-revealed>.scene-bottom,.flock-revealed .investigation-status,.flock-revealed .diagram-note{background:color-mix(in srgb,var(--bg) 92%,transparent);border-radius:8px}
+.flock-revealed>.scene-bottom,.flock-revealed .investigation-status,.flock-revealed .diagram-note{background:color-mix(in srgb,var(--bg) 92%,transparent);border-radius:8px}
 body.page-inactive .flock-eyes,body:has(dialog[open]) .flock-eyes{animation-play-state:paused}
 .population-note{display:flex;align-items:baseline;gap:3px 10px;flex-wrap:wrap;margin:0 0 5px;font-size:.75rem;line-height:1.3;color:var(--muted)}
 .population-note strong{color:var(--ink);font-size:.9rem}

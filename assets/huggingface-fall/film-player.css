@@ -15,6 +15,10 @@ body:is([data-film=discovery],[data-film=flight]) #flock{display:none!important}
 /* The same host flock remains visible through every part of the illustration,
    including letterboxing. No opaque rectangle hides the birds behind it. */
 html:has(body:is([data-film=discovery],[data-film=flight])),body:is([data-film=discovery],[data-film=flight]),body:is([data-film=discovery],[data-film=flight]) #root{background:transparent!important}
+/* Flight preserves the small illustration's starting coordinates but is only
+   clipped at the full presentation window, not at the illustration boundary. */
+body[data-film=flight],body[data-film=flight] #root{overflow:visible!important}
+body[data-film=flight] .feather-floor{left:var(--flight-left)!important;right:auto!important;width:var(--flight-width)!important;top:var(--flight-floor)!important}
 html[data-theme=light]:has(body[data-film=discovery]),html[data-theme=light]:has(body[data-film=intro]){--bg:#f7f5f0}
 body:is([data-film=discovery],[data-film=flight])[data-theme=light]{--bg:#f7f5f0;--ink:#20233a;--muted:#565d70;--gold:#8a5100;--mint:#086d63;--line:#aab0bd;--bird-fill:#e4e0e9}
 body[data-film=discovery][data-theme=light] #root{background:var(--bg)}

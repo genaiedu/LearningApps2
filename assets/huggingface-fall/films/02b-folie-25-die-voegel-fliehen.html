@@ -71,7 +71,7 @@
       #cue { position: relative; display: block; overflow: hidden; padding-bottom: 10px; margin-bottom: -10px; }
       #cue span { display: inline-block; white-space: nowrap; font: 600 38px/1.15 Outfit, sans-serif; color: var(--ink); }
     </style>
-  <link rel="stylesheet" href="../film-player.css?v=20261006-continuous-finale">
+  <link rel="stylesheet" href="../film-player.css?v=20261006-full-agent-flight">
 </head>
   <body data-film="flight">
     <div data-hf-id="hf-z7xn" id="root" data-composition-id="main" data-start="0" data-duration="6" data-width="1920" data-height="1080">
@@ -431,7 +431,7 @@ fb.length = 0; document.getElementById("flock").replaceChildren();
         const fe = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         fe.setAttribute("viewBox", "-10 -36 20 40");
         fe.setAttribute("class", "falling-feather");
-        const floorY = 1048 - (cy - 18);
+        const floorY = () => (window.HF_FLIGHT_BOUNDS?.floorY ?? 1048) - (cy - 18);
         fe.style.cssText = `position:absolute;left:${cx - 9}px;top:${cy - 18}px;width:18px;height:36px;overflow:visible;opacity:0;z-index:950`;
         fe.innerHTML = `<path d="M0 2 C 7 -8 8 -22 0 -34 C -8 -22 -7 -8 0 2Z" fill="${featherColors[n]}"/><path d="M0 2 L0 -30" stroke="#15162f" stroke-width="1.2" opacity="0.5"/>`;
         front.appendChild(fe);
@@ -440,10 +440,10 @@ fb.length = 0; document.getElementById("flock").replaceChildren();
         T.set(fe, { opacity: 1 }, ft);
         gsap.set(fe, { x: 0, y: 0, rotation: -40 + rng() * 80 });
         T.to(fe, { keyframes: [
-          { x: sx * 0.4 + 30, y: floorY * 0.22, rotation: 50, duration: 0.7, ease: "sine.inOut" },
-          { x: sx * 0.7 - 30, y: floorY * 0.49, rotation: -35, duration: 0.8, ease: "sine.inOut" },
-          { x: sx + 25, y: floorY * 0.78, rotation: 30, duration: 0.85, ease: "sine.inOut" },
-          { x: sx - 18, y: floorY * 0.94, rotation: -24, duration: 0.65, ease: "sine.inOut" },
+          { x: sx * 0.4 + 30, y: () => floorY() * 0.22, rotation: 50, duration: 0.7, ease: "sine.inOut" },
+          { x: sx * 0.7 - 30, y: () => floorY() * 0.49, rotation: -35, duration: 0.8, ease: "sine.inOut" },
+          { x: sx + 25, y: () => floorY() * 0.78, rotation: 30, duration: 0.85, ease: "sine.inOut" },
+          { x: sx - 18, y: () => floorY() * 0.94, rotation: -24, duration: 0.65, ease: "sine.inOut" },
           { x: sx + 12, y: floorY, rotation: 90, duration: 0.5, ease: "sine.out" },
         ] }, ft);
       }
@@ -454,8 +454,8 @@ fb.length = 0; document.getElementById("flock").replaceChildren();
         { x: (F.x - cx) * 0.25 + (rng() - 0.5) * 160, y: (F.y - cy) * 0.25 - 20, scale: 2.8, rotation: 10, duration: 0.5, ease: "sine.inOut" },
       ] }, a);
       const e = a + 1.05;
-      const out = outward(cx, cy, 1800 + r.w * 18 * 0.75);
-      T.to(box, { x: out.x - cx, y: out.y - cy, scale: 18, rotation: (rng() - 0.5) * 90, duration: 0.6, ease: "power2.in" }, e);
+      const out = () => { const b = window.HF_FLIGHT_BOUNDS || { width: 1920, height: 1080 }; return outward(cx, cy, Math.max(b.width, b.height) * 1.8 + Math.hypot(r.w, r.h) * 18); };
+      T.to(box, { x: () => out().x - cx, y: () => out().y - cy, scale: 18, rotation: (rng() - 0.5) * 90, duration: 0.6, ease: "power2.in" }, e);
     });
 
     // the owl (PHASEONE10841, who started it all) comes straight at the lens
@@ -467,7 +467,7 @@ fb.length = 0; document.getElementById("flock").replaceChildren();
       { x: ox * 0.75, y: oy * 0.75 + 30, scale: 4.6, rotation: 8, duration: 0.55, ease: "sine.inOut" },
       { x: ox, y: oy - 20, scale: 6.5, rotation: -4, duration: 0.4, ease: "sine.inOut" },
     ] }, 2.55);
-    T.to(owl, { x: ox + 40, y: oy + 260, scale: 90, duration: 0.5, ease: "power3.in" }, 4.05);
+    T.to(owl, { x: ox + 40, y: () => { const b = window.HF_FLIGHT_BOUNDS || { top: 0, height: 1080 }; return b.top + b.height + ob.h * 90 - ob.y; }, scale: 90, duration: 0.5, ease: "power3.in" }, 4.05);
     T.set(owl, { opacity: 0 }, 4.56);
 
     // ---------- the room reacts ----------
@@ -493,5 +493,5 @@ fb.length = 0; document.getElementById("flock").replaceChildren();
 
     </script>
   
-<script src="../film-player.js?v=20261006-continuous-finale"></script>
+<script src="../film-player.js?v=20261006-full-agent-flight"></script>
 </body></html>

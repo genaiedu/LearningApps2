@@ -31,12 +31,15 @@ const geometry=page=>page.evaluate(()=>Object.fromEntries(['.topbar','.transport
   for(const theme of ['dark','light'])for(const viewport of [{width:1440,height:900},{width:1024,height:768},{width:768,height:1024},{width:390,height:844},{width:844,height:390}]){
    await page.setViewportSize(viewport);await page.locator('#settings').click();await page.locator('input[name=theme][value='+theme+']').check();await page.locator('#motion').uncheck();await page.locator('[data-close=settingsDialog]').click();
    await jump(page,'aufarbeitung');
-   let zoomCenter;
+   let zoomCenter,headingAt19;
    for(let i=0;i<3;i++){
     if(i)await page.locator('#next').click();await page.waitForTimeout(120);
     const snap=await state(page,'sceneFilm');assert(Math.abs(snap.time-[.9,2.25,5][i])<.01);assert(snap.paused);
     assert.match(await page.locator('.calendar').textContent(),new RegExp(['16.–17. Juli','19. Juli','20. Juli'][i]));
     assert.match(await page.locator('.investigation-status .visible').textContent(),new RegExp(['als Kunde','Sicherheitsalarm','Dieselben Zugangsdaten'][i]));
+    const heading=await page.locator('.slide-heading').evaluate(e=>[...e.children].map(el=>{const r=el.getBoundingClientRect();return {text:el.textContent,rect:[r.x,r.y,r.width,r.height]};}));
+    if(i===1)headingAt19=heading;
+    if(i===2){heading.forEach((item,n)=>{item.rect.forEach((v,k)=>{if(n===1&&k===2)return;assert(Math.abs(v-headingAt19[n].rect[k])<.1,'heading does not move on discovery: '+theme+' '+viewport.width+' child '+n+' before '+headingAt19[n].rect+' after '+item.rect);});if(n!==1)assert.equal(item.text,headingAt19[n].text,'only the date changes');});}
     const frame=page.frameLocator('#sceneFilm');assert.equal(await frame.locator('#topbar').isVisible(),false);assert.equal(await frame.locator('#heading').isVisible(),false);
     const scale=await frame.locator('#net').evaluate(e=>new DOMMatrix(getComputedStyle(e).transform).a);assert(Math.abs(scale-(i===0?1:.63))<.01);
     const center=await frame.locator('#net').evaluate(e=>{const p=new DOMPoint(460,257.5).matrixTransform(e.getScreenCTM());return [p.x,p.y];});
@@ -55,10 +58,20 @@ const geometry=page=>page.evaluate(()=>Object.fromEntries(['.topbar','.transport
    assert(painted.data.every((v,k)=>Math.abs(v-behind.data[k])<=2),'painted iframe canvas is transparent in '+theme+' mode');
    assert.equal((await state(page,'sceneFlight')).time,0,'flight waits for an explicit gesture');
    assert.equal(await page.locator('#next').textContent(),'Schwarm auflösen →');
+   const originalAgents=await page.frameLocator('#sceneFilm').locator('#net .agent svg').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};}));
+   const artBox=await page.locator('#sceneFilm').boundingBox();
    await page.locator('#next').click();await page.waitForTimeout(140);
    assert.equal((await state(page,'sceneFlight')).time,6);assert((await state(page,'sceneFlight')).paused);
-   const landed=await page.frameLocator('#sceneFlight').locator('.falling-feather').evaluateAll(es=>es.map(e=>({top:parseFloat(e.style.top)+gsap.getProperty(e,'y'),rotation:gsap.getProperty(e,'rotation')})));
-   assert.equal(landed.length,16);assert(landed.every(e=>Math.abs(e.top-1048)<.1&&e.rotation===90),'all feathers land horizontally on the common floor');
+   const flightBox=await page.locator('#sceneFlight').boundingBox(),flightView=await page.locator('#viewport').boundingBox();
+   for(const p of ['x','y','width','height'])assert(Math.abs(flightBox[p]-flightView[p])<1,'agent flight uses the full presentation window '+p);
+   const exits=await page.frameLocator('#sceneFlight').locator('#front > [id^=ag]').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return r.right<0||r.bottom<0||r.left>innerWidth||r.top>innerHeight;}));
+   assert.equal(exits.length,8);assert(exits.every(Boolean),'all eight agents fly completely beyond the actual viewport');
+   const landed=await page.frameLocator('#sceneFlight').locator('.falling-feather').evaluateAll(es=>es.map(e=>({top:parseFloat(e.style.top)+gsap.getProperty(e,'y'),floor:HF_FLIGHT_BOUNDS.floorY,rotation:gsap.getProperty(e,'rotation')})));
+   assert.equal(landed.length,16);assert(landed.every(e=>Math.abs(e.top-e.floor)<.1&&e.rotation===90),'all feathers land horizontally at the full presentation floor');
+   await seek(page,'sceneFlight',0);await page.waitForTimeout(80);
+   const restored=await page.frameLocator('#sceneFlight').locator('#net .agent svg').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};}));
+   restored.forEach((r,i)=>{for(const p of ['width','height'])assert(Math.abs(r[p]-originalAgents[i][p])<.7,'starting agent size stays unchanged');assert(Math.abs(r.x+flightBox.x-originalAgents[i].x-artBox.x)<.7&&Math.abs(r.y+flightBox.y-originalAgents[i].y-artBox.y)<.7,'starting agent position stays unchanged');});
+   await seek(page,'sceneFlight',6);await page.waitForTimeout(80);
    assert.equal(await page.locator('.flock-layer').evaluate(e=>getComputedStyle(e).opacity),'0','reduced motion skips to the empty flock');
    await page.screenshot({path:path.join(shots,`${theme}-${viewport.width}-flight-end.png`)});
    await jump(page,'quintessenz');assert.match(await page.locator('#position').textContent(),/30 \/ 31/);
@@ -129,6 +142,11 @@ const geometry=page=>page.evaluate(()=>Object.fromEntries(['.topbar','.transport
   const frozen=await state(page,'sceneFlight');const nativeTime=await page.locator('.flock-bird').first().evaluate(e=>e.getAnimations().find(a=>a.effect.getTiming().duration===6000)?.currentTime);
   await page.waitForTimeout(250);assert.equal((await state(page,'sceneFlight')).time,frozen.time);assert.equal(await page.locator('.flock-bird').first().evaluate(e=>e.getAnimations().find(a=>a.effect.getTiming().duration===6000)?.currentTime),nativeTime);
   await page.locator('#play').click();await page.waitForTimeout(1800);await page.locator('#play').click();await page.screenshot({path:path.join(shots,'flight-middle.png')});
+  await seek(page,'sceneFlight',3.2);await page.waitForTimeout(100);
+  const illustration=await page.locator('#sceneFilm').boundingBox(),fullFlight=await page.locator('#sceneFlight').boundingBox();
+  const expanded=await page.frameLocator('#sceneFlight').locator('#front > [id^=ag]').evaluateAll((es,{art,frame})=>es.some(e=>{const r=e.getBoundingClientRect(),x=r.x+frame.x,y=r.y+frame.y;return r.right>0&&r.bottom>0&&r.left<innerWidth&&r.top<innerHeight&&(x<art.x||y<art.y||x+r.width>art.x+art.width||y+r.height>art.y+art.height);}),{art:illustration,frame:fullFlight});
+  assert(expanded,'flying agents remain visible beyond the old small illustration boundary');
+  await page.screenshot({path:path.join(shots,'agents-full-window.png')});
   await seek(page,'sceneFlight',3);await page.waitForTimeout(100);
   const feather=page.frameLocator('#sceneFlight').locator('.falling-feather').first(),featherBefore=await feather.boundingBox();
   await page.waitForTimeout(150);assert.deepEqual(await feather.boundingBox(),featherBefore,'feathers pause with the flight');

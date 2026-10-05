@@ -43,6 +43,12 @@
     scrubFinaleFade(movie.time);
   }
   function clearBirdFlight(){birdFlight.forEach(a=>a.cancel());birdFlight=[];const layer=$('slide').querySelector('.flock-layer');if(layer)layer.style.opacity='';}
+  function layoutAgentFlight(){
+    if(!flightMovie)return;
+    const frame=$('sceneFlight'),view=$('viewport').getBoundingClientRect(),art=$('sceneFilm').parentElement.getBoundingClientRect();
+    Object.assign(frame.style,{left:view.left+'px',top:view.top+'px',width:view.width+'px',height:view.height+'px'});
+    flightMovie.command('layout',{x:art.left-view.left,y:art.top-view.top,width:art.width,height:art.height});
+  }
   function scrubBirdFlight(time){
     const layer=$('slide').querySelector('.flock-layer');if(!layer)return;
     if(!state.motion||reduced.matches){layer.style.opacity=time>=6?'0':'1';return;}
@@ -269,12 +275,12 @@
     return '<div class="diagram" aria-hidden="true">'+extras+'<svg class="connections" viewBox="0 0 1000 600" preserveAspectRatio="none">'+defs+edges+'</svg>'+nodes+'</div>'+legend+'<p class="diagram-note">'+esc(d.note)+'</p>';
   }
   function special(s){
-    if(filmFiles[s.scene])return '<div class="film-wrap"><iframe id="sceneFilm" class="scene-film" src="assets/huggingface-fall/films/'+filmFiles[s.scene]+'?v=20261006-continuous-finale" title="'+esc(s.scene==='investigation'?'Symbolische Untersuchung des Agentennetzes':'Quintessenz: Vögel formieren sich und landen auf einem Draht')+'" tabindex="-1" aria-hidden="true"></iframe>'+(s.scene==='investigation'?'<iframe id="sceneFlight" class="scene-film scene-flight" src="assets/huggingface-fall/films/02b-folie-25-die-voegel-fliehen.html?v=20261006-continuous-finale" title="Der Schwarm löst sich auf" tabindex="-1" aria-hidden="true"></iframe>':'')+'<p class="film-fallback" id="filmFallback" role="status">Animation wird vorbereitet …</p></div>'+(s.scene==='investigation'?'<div class="investigation-status">'+s.discoveryLabels.map((cue,i)=>'<p data-enter="'+i+'" data-leave="'+(i+1)+'">'+esc(cue)+'</p>').join('')+'</div><p class="diagram-note">Symbolische Rekonstruktion · keine Originalaufnahme · kein genauer Zeitpunkt der ersten menschlichen Beobachtung</p>':'');
+    if(filmFiles[s.scene])return '<div class="film-wrap"><iframe id="sceneFilm" class="scene-film" src="assets/huggingface-fall/films/'+filmFiles[s.scene]+'?v=20261006-full-agent-flight" title="'+esc(s.scene==='investigation'?'Symbolische Untersuchung des Agentennetzes':'Quintessenz: Vögel formieren sich und landen auf einem Draht')+'" tabindex="-1" aria-hidden="true"></iframe>'+(s.scene==='investigation'?'<iframe id="sceneFlight" class="scene-film scene-flight" src="assets/huggingface-fall/films/02b-folie-25-die-voegel-fliehen.html?v=20261006-full-agent-flight" title="Der Schwarm löst sich auf" tabindex="-1" aria-hidden="true"></iframe>':'')+'<p class="film-fallback" id="filmFallback" role="status">Animation wird vorbereitet …</p></div>'+(s.scene==='investigation'?'<div class="investigation-status">'+s.discoveryLabels.map((cue,i)=>'<p data-enter="'+i+'" data-leave="'+(i+1)+'">'+esc(cue)+'</p>').join('')+'</div><p class="diagram-note">Symbolische Rekonstruktion · keine Originalaufnahme · kein genauer Zeitpunkt der ersten menschlichen Beobachtung</p>':'');
     if(s.scene==='title-card')return '<div class="portrait-stage title-portrait"><div class="portrait-backdrop"><span class="portrait-band band-one"></span><span class="portrait-band band-two"></span><span class="portrait-grid"></span></div><div class="portrait-field" aria-hidden="true"><span class="portrait-orbit orbit-one"></span><span class="portrait-orbit orbit-two"></span><div class="intro-art">'+avatar('anon1',true)+'</div></div><div class="portrait-copy"><p class="title-author">'+esc(s.author)+'</p><h2>Der Schwarm,<br>der nicht<br><span>geplant war</span></h2><p class="portrait-sticker">Der Hugging-Face-Fall</p></div></div>';
     if(s.scene==='agent-concept')return '<div class="concept-scene"><div class="concept-agent" aria-hidden="true">'+avatar('anon1',true)+'<span>Ein Arbeitslauf</span></div><div class="concept-panels">'+s.conceptCards.map((c,i)=>'<section class="concept-card" data-enter="'+i+'" data-leave="'+(i+1)+'"><p class="concept-label">'+esc(c.label)+'</p><h2>'+esc(c.heading)+'</h2><p class="concept-definition">'+esc(c.text)+'</p><div class="concept-tags">'+c.tags.map((tag,j)=>'<span>'+esc(tag)+'</span>'+(j<2?'<b aria-hidden="true">'+(i===1?'→':'+')+'</b>':'')).join('')+'</div><p class="concept-foot">'+esc(c.foot)+'</p></section>').join('')+'</div></div>';
     if(s.scene==='early-warning')return '<ol class="warning-history">'+s.milestones.map((m,i)=>'<li data-enter="'+i+'"><p class="history-date">'+esc(m.date)+'</p><h2>'+esc(m.title)+'</h2><p>'+esc(m.text)+'</p>'+(m.detail?'<p class="history-detail">'+esc(m.detail)+'</p>':'')+'</li>').join('')+'</ol>';
     if(s.scene==='sources')return '<div class="source-list">'+sources.slice(0,3).map((x,i)=>'<section><span class="source-no">0'+(i+1)+'</span><h2><a href="'+x.url+'" target="_blank" rel="noopener noreferrer">'+esc(x.name)+'</a></h2><p>'+esc(x.scope)+'</p><small>'+esc(x.date)+'</small></section>').join('')+'</div>';
-    return '<div class="download-scene"><div class="script-symbol" aria-hidden="true">'+icon('file')+'</div><div><a class="primary download-link overview-download" href="output/pdf/der-schwarm-der-nicht-geplant-war.pdf?v=20260922-artikel" download="Der-Schwarm-der-nicht-geplant-war.pdf">Übersicht „Der Schwarm, der nicht geplant war“ ↓</a><a class="primary download-link" href="output/pdf/huggingface-fall-begleitskript.pdf?v=20261006-continuous-finale" download="Hugging-Face-Fall-Vortragsskript.pdf">Vortragsskript als PDF ↓</a><button id="downloadText">Editierbare Textversion ↓</button><p>'+slides.length+' Folien · Regiehinweise · Originalauszüge · Quellen</p><p class="muted">Auf dem iPad: PDF öffnen und über das Teilen-Menü in „Dateien“ sichern.</p><p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutzhinweise</a></p></div></div>';
+    return '<div class="download-scene"><div class="script-symbol" aria-hidden="true">'+icon('file')+'</div><div><a class="primary download-link overview-download" href="output/pdf/der-schwarm-der-nicht-geplant-war.pdf?v=20260922-artikel" download="Der-Schwarm-der-nicht-geplant-war.pdf">Übersicht „Der Schwarm, der nicht geplant war“ ↓</a><a class="primary download-link" href="output/pdf/huggingface-fall-begleitskript.pdf?v=20261006-full-agent-flight" download="Hugging-Face-Fall-Vortragsskript.pdf">Vortragsskript als PDF ↓</a><button id="downloadText">Editierbare Textversion ↓</button><p>'+slides.length+' Folien · Regiehinweise · Originalauszüge · Quellen</p><p class="muted">Auf dem iPad: PDF öffnen und über das Teilen-Menü in „Dateien“ sichern.</p><p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutzhinweise</a></p></div></div>';
   }
   function render(){
     clearFinaleTransition();
@@ -304,7 +310,7 @@
           change:()=>{if(flightMovie===flight&&current().scene==='investigation'&&state.step===3){moviePlayback();scrubBirdFlight(flight.time);}},
           ended:()=>{if(flightMovie===flight)moviePlayback();}
         });
-        flight.theme(state.theme);flight.seek(0);
+        layoutAgentFlight();flight.theme(state.theme);flight.seek(0);
         setTimeout(()=>{if(flightMovie===flight&&!flight.ready){flight.pause();flight.failed=true;moviePlayback();}},7000);
       }
       showFilmStep(s.scene!=='quintessence'&&state.step===0&&state.motion&&!reduced.matches);
@@ -593,7 +599,7 @@ function syncMotion(){cancelDocking();if(!state.motion||reduced.matches){opening
     }catch(_){open('settingsDialog');$('fullscreenStatus').textContent='Vollbild ist in diesem Browser nicht verfügbar. Die Präsentation passt sich auch im Browserfenster an.';}
   };
   document.addEventListener('fullscreenchange',()=>{cancelDocking();$('fullscreen').textContent=document.fullscreenElement?'Vollbild beenden':'Vollbild einschalten';});
-  window.addEventListener('resize',()=>{cancelDocking();if(openingActive&&openingStarted){clearTitleArrival();scrubOpeningTitle(openingMovie.time);}if(current().scene==='investigation'&&state.step===3&&flightMovie){clearBirdFlight();scrubBirdFlight(flightMovie.time);}});
+  window.addEventListener('resize',()=>{cancelDocking();layoutAgentFlight();if(openingActive&&openingStarted){clearTitleArrival();scrubOpeningTitle(openingMovie.time);}if(current().scene==='investigation'&&state.step===3&&flightMovie){clearBirdFlight();scrubBirdFlight(flightMovie.time);}});
   $('viewport').addEventListener('scroll',()=>{if(docking)cancelDocking();},{passive:true});
   $('reset').onclick=()=>{$('settingsDialog').close();open('resetDialog');};
   $('confirmReset').onclick=()=>{$('resetDialog').close();go(0);startOpening();};

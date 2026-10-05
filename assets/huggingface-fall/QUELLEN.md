@@ -43,6 +43,8 @@ Das Agentennetz verkleinert sich um einen festen Mittelpunkt. Die transparente
 Zeichenfläche lässt den durchgehenden Hintergrundschwarm sichtbar. Nach der
 Zuordnung am 20. Juli bleibt die Ansicht stehen. Erst „Schwarm auflösen“ startet
 die Fluchtkomposition und die synchronisierte Auflösung des Hintergrundschwarms.
+Die acht Agenten behalten ihre Ausgangspositionen, können aber über den gesamten
+Präsentationsbereich fliegen und verlassen erst dessen tatsächliche Bildschirmränder.
 Pause, Fortsetzen und Wiederholen bleiben verfügbar. Das leere Schlussbild
 wartet auf den nächsten Klick. Die Flucht ist ein symbolischer Übergang zum
 Nachspiel, kein zusätzlich behauptetes oder datiertes Ereignis.
