@@ -249,6 +249,7 @@ html[data-projector=true] .cinema .scene-set svg{opacity:.2}
 @media(max-height:450px) and (min-width:801px){.title-portrait .portrait-copy{top:8%}.title-portrait h2{font-size:clamp(1.7rem,7vh,2.5rem)}.title-portrait .title-author{font-size:.8rem;margin-bottom:10px}.title-portrait .portrait-sticker{font-size:.85rem;margin-top:14px;padding:7px 12px}}
 .scene-film{display:block;border:0;width:100%;height:100%;min-height:0;pointer-events:none;background:var(--bg)}
 .investigation .scene-film{background:transparent}
+.investigation .film-fallback{background:transparent}
 .scene-flight{position:absolute;inset:0;visibility:hidden}
 .investigation[data-step="3"] #sceneFilm{visibility:hidden}
 .investigation[data-step="3"] .scene-flight{visibility:visible}

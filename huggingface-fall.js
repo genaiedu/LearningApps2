@@ -280,16 +280,20 @@
     clearFinaleTransition();
     sceneMovie?.dispose();flightMovie?.dispose();sceneMovie=null;flightMovie=null;clearBirdFlight();
     const s=current();
+    const oldFlock=$('slide').querySelector('.flock-layer');
+    const retainedFlock=backgroundFlockAllowed()&&oldFlock?.querySelector('.flock-bird')?oldFlock:null;
     finaleStarted=s.scene==='quintessence'&&state.step>0;
     const art=window.HF_ART[s.scene];
     $('slide').className='scene-slide cinema '+s.scene+' tone-'+art.tone+' set-'+art.set+(s.quotes?' has-quotes':'');
     $('slide').innerHTML=sceneSet(s)+flock()+'<div class="slide-heading"><p class="eyebrow">'+esc(s.chapter)+'</p><p class="calendar">'+esc(s.date)+'<span>2026</span></p><h1 id="slideTitle" tabindex="-1">'+sceneTitle(s)+'</h1><p class="lead">'+esc(s.lead)+'</p></div><div class="stage">'+(scenes[s.scene]?diagram(s):special(s))+(s.quotes?'<div id="quoteArea" class="quote-area"></div>':'')+'</div><div class="scene-bottom"><p id="populationNote" class="population-note" hidden></p><p id="cue" role="status" aria-live="polite"></p>'+citations(s)+'</div>'+(s.introductions?'<section id="introPanel" class="intro-panel" aria-labelledby="introName" hidden></section>':'');
+    // Keep the existing birds across scene changes instead of restarting their arrival.
+    if(retainedFlock)$('slide').querySelector('.flock-layer').replaceWith(retainedFlock);
     // Establish the previous density before fading in the additional silhouettes.
     $('slide').querySelector('.flock-layer').getBoundingClientRect();
     updateStep(false);
     if(filmSteps[s.scene]){
       const movie=sceneMovie=new HFMovie($('sceneFilm'),{
-        ready:()=>{if(sceneMovie===movie)$('filmFallback').hidden=true;},
+        ready:()=>{if(sceneMovie===movie){$('filmFallback').hidden=true;startFilmCrossfade(movie);}},
         change:()=>{if(sceneMovie===movie){syncFinaleStep(movie);moviePlayback();}},
         ended:()=>{if(sceneMovie===movie)moviePlayback();}
       });
@@ -304,7 +308,7 @@
         setTimeout(()=>{if(flightMovie===flight&&!flight.ready){flight.pause();flight.failed=true;moviePlayback();}},7000);
       }
       showFilmStep(s.scene!=='quintessence'&&state.step===0&&state.motion&&!reduced.matches);
-      setTimeout(()=>{if(sceneMovie===movie&&!movie.ready){movie.pause();$('filmFallback').textContent='Die Animation konnte nicht geladen werden. Alle Aussagen stehen darunter und im Sprechtext. Du kannst weiterblättern.';}},7000);
+      setTimeout(()=>{if(sceneMovie===movie&&!movie.ready){movie.pause();$('filmFallback').textContent='Die Animation konnte nicht geladen werden. Alle Aussagen stehen darunter und im Sprechtext. Du kannst weiterblättern.';startFilmCrossfade(movie);}},7000);
     }
   }
   function moviePlayback(){
@@ -432,17 +436,23 @@
     Object.assign(copy.style,{position:'absolute',left:(box.left-viewport.left)+'px',top:(box.top-viewport.top)+'px',width:box.width+'px',height:box.height+'px',minHeight:'0',margin:'0'});
     layer.append(copy);return layer;
   }
-  function blendSlides(layer){
-    document.body.append(layer);crossfade={layer,animations:[]};
+  function startFilmCrossfade(movie){
+    if(crossfade?.movie===movie){crossfade.movie=null;crossfade.animations.forEach(a=>a.play());}
+  }
+  function blendSlides(layer,waitForMovie=null){
+    document.body.append(layer);crossfade={layer,animations:[],movie:waitForMovie};
     try{
-      const options={duration:480,easing:'ease-in-out',fill:'both'};
+      const options={duration:waitForMovie?800:480,easing:'ease-in-out',fill:'both'};
       const outgoing=layer.animate([{opacity:1},{opacity:0}],options);
       const incoming=[...$('slide').children].filter(el=>!el.classList.contains('flock-layer'))
         .map(el=>{
-          const move=!$('slide').classList.contains('introducing')&&el.matches('.slide-heading,.stage');
+          const move=!waitForMovie&&!$('slide').classList.contains('introducing')&&el.matches('.slide-heading,.stage');
           return el.animate(move?[{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}]:[{opacity:0},{opacity:1}],options);
         });
       crossfade.animations=[outgoing,...incoming];
+      // Hold the old composition until the iframe can paint its first frame.
+      if(waitForMovie&&!waitForMovie.ready)crossfade.animations.forEach(a=>{a.pause();a.currentTime=0;});
+      else crossfade.movie=null;
       Promise.all(crossfade.animations.map(a=>a.finished)).then(()=>{if(crossfade?.layer===layer)cancelCrossfade();},()=>{});
     }catch(_){cancelCrossfade();}
   }
@@ -502,12 +512,13 @@
     if(index<0||index>=slides.length)return;
     finishOpening(false);
     stop();cancelDocking();
+    const discoveryTransition=current().id==='schwarm-organigramm'&&slides[index].id==='aufarbeitung';
     const snapshot=index!==state.index&&state.motion&&!reduced.matches&&$('slide').hasChildNodes()?snapshotSlide():index===state.index?portraitSnapshot(step):null;
     state.index=index;state.step=Math.max(0,Math.min(step,slides[index].cues.length-1));
     render();$('viewport').scrollTop=0;
     if(snapshot&&current().scene==='quintessence'&&!finaleStarted){
       finaleCover=snapshot;finaleCover.classList.add('finale-backdrop');document.body.append(finaleCover);
-    }else if(snapshot)blendSlides(snapshot);
+    }else if(snapshot)blendSlides(snapshot,discoveryTransition?sceneMovie:null);
     if(hash){try{history.replaceState(null,'','#'+current().id);}catch(_){}}
     if(focus)($('introName')||$('slideTitle')).focus({preventScroll:true});
   }

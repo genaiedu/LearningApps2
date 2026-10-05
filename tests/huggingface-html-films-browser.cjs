@@ -90,6 +90,31 @@ const geometry=page=>page.evaluate(()=>Object.fromEntries(['.topbar','.transport
   }
   // Film segments finish and stop; opening settings cancels pending playback.
   await page.setViewportSize({width:1440,height:900});await page.locator('#settings').click();await page.locator('#motion').check();await page.locator('[data-close=settingsDialog]').click();
+  // Slide 24 stays visible while slide 25 loads, then dissolves without moving
+  // the foreground or rebuilding/fading out the background birds.
+  await jump(page,'aufarbeitung');await page.locator('#prev').click();await page.waitForTimeout(4700);
+  assert.match(await page.locator('#position').textContent(),/24 \/ 31/);
+  await page.evaluate(()=>window.testFlock=document.querySelector('#slide>.flock-layer'));
+  const discoveryRoute='**/02-folie-25-die-spuren.html*';
+  await page.route(discoveryRoute,async route=>{await new Promise(r=>setTimeout(r,900));await route.continue();});
+  await page.locator('#next').click();await page.waitForTimeout(100);
+  assert(await page.evaluate(()=>window.testFlock===document.querySelector('#slide>.flock-layer')),'retain the exact flock DOM');
+  assert.equal(await page.locator('.slide-crossfade').evaluate(e=>getComputedStyle(e).opacity),'1','old slide remains fully visible until film ready');
+  assert.equal(await page.locator('#slide>.stage').evaluate(e=>getComputedStyle(e).opacity),'0','loading film cannot cover the flock');
+  for(let i=0;i<5;i++){
+   const birds=await page.locator('#slide .flock-bird.present').evaluateAll(es=>({count:es.length,minOpacity:Math.min(...es.map(e=>Number(getComputedStyle(e).opacity)))}));
+   assert(birds.count>=300&&birds.minOpacity===1,'birds never restart their arrival or disappear: '+JSON.stringify(birds));
+   await page.waitForTimeout(60);
+  }
+  await page.waitForFunction(()=>document.getElementById('filmFallback').hidden);
+  await page.waitForTimeout(200);
+  const fading=await page.locator('.slide-crossfade').evaluate(e=>Number(getComputedStyle(e).opacity));
+  assert(fading>0&&fading<1,'crossfade starts only after the first film frame is ready');
+  assert.equal(await page.locator('#slide>.stage').evaluate(e=>getComputedStyle(e).transform),'none','pure dissolve, no vertical slide');
+  await page.screenshot({path:path.join(shots,'slide-24-to-25-crossfade.png')});
+  await page.waitForFunction(()=>!document.querySelector('.slide-crossfade'));
+  await page.unroute(discoveryRoute);
+  await page.evaluate(()=>delete window.testFlock);
   await jump(page,'aufarbeitung');await page.waitForTimeout(1400);assert((await state(page,'sceneFilm')).paused);assert(Math.abs((await state(page,'sceneFilm')).time-.9)<.01);
   await page.locator('#next').click();await page.waitForTimeout(200);await page.locator('#settings').click();const stopped=await state(page,'sceneFilm');await page.waitForTimeout(300);assert.equal((await state(page,'sceneFilm')).time,stopped.time);await page.locator('[data-close=settingsDialog]').click();
   await page.locator('#play').click();await page.waitForTimeout(1600);assert(Math.abs((await state(page,'sceneFilm')).time-2.25)<.01);assert((await state(page,'sceneFilm')).paused);
