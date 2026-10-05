@@ -1,0 +1,17 @@
+html{width:100%!important;height:100%!important;overflow:hidden!important;background:var(--bg)!important}
+body{position:absolute!important;left:0;top:0;transform-origin:0 0;cursor:default}
+/* The actual responsive title slide takes over during the intro's last seconds. */
+body[data-film=intro] #title{display:none!important}
+/* Keep all explanatory text native, readable and selectable in the host slide.
+   The supplied drawing gets the full illustration area, without duplicate bars. */
+body[data-film=discovery] :is(#topbar,#heading,#status,#note,#bottom){display:none!important}
+body[data-film=discovery] #art{left:0!important;top:0!important;width:1920px!important;height:1080px!important}
+body[data-film=discovery] #art svg{width:100%;height:100%}
+body[data-film=discovery] #flock{display:none!important}
+html[data-theme=light]:has(body[data-film=discovery]),html[data-theme=light]:has(body[data-film=intro]){--bg:#f7f5f0}
+body[data-film=discovery][data-theme=light]{--bg:#f7f5f0;--ink:#20233a;--muted:#565d70;--gold:#8a5100;--mint:#086d63;--line:#aab0bd;--bird-fill:#e4e0e9}
+body[data-film=discovery][data-theme=light] #root{background:var(--bg)}
+body[data-film=intro][data-theme=light]{--bg:#f7f5f0;--ink:#20233a;--muted:#565d70;--gold:#8a5100;--mint:#086d63}
+body[data-film=intro][data-theme=light] #bg-fill{background:radial-gradient(ellipse at 64% 46%,#e8e3f4,#f7f5f0 80%)}
+/* These are cinema captions, independent of the surrounding light/dark UI. */
+body[data-film=finale] .cap p{background:#15162fd9;padding:14px 24px;border-radius:12px;text-shadow:0 2px 6px #15162f}

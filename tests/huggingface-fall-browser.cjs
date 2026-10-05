@@ -22,7 +22,7 @@ assert.match(signatures.notes[1],/Allererstes.*nicht eindeutig/);
 assert.match(signatures.notes[3],/kein belegter Erstentdecker/);
 assert.equal(swarm.introductions.length,8);
 assert.match(swarm.date,/13/);
-assert.equal(data.slides.length,30);assert.equal(new Set(data.slides.map(s=>s.id)).size,30);
+assert.equal(data.slides.length,31);assert.equal(new Set(data.slides.map(s=>s.id)).size,31);
 assert.match(data.slides.find(s=>s.id==='warnzeichen').notes[2],/Begründung.*nennt.*nicht/);
 assert.equal(data.slides.find(s=>s.id==='warnzeichen').milestones[2].date,'27. Juni');
 assert.ok(data.slides.every(s=>s.cues.every(c=>!/Weiter führt|nimmt den Platz im Organigramm/.test(c))));
@@ -41,7 +41,7 @@ for(const s of data.slides){
  assert.equal(s.notes.length,s.cues.length);assert.ok(s.notes.every(n=>n.length>150));assert.ok(s.date);
  assert.ok(s.notes.every(n=>!/(Wir zeigen|Beim Weitergehen|Beim nächsten Weiter|Nach dem Verkleinern|verkleinerte Figur|Regiezeile|Porträt|Schaubild|Animation)/i.test(n)),'speaker notes must not narrate presentation mechanics: '+s.id);
  assert.ok(s.sources.every(id=>data.sources.some(x=>x.id===id)));assert.ok(!s.questions&&!s.question&&!s.prompt);
- assert.ok(!s.title.includes('?'));assert.ok(scenes[s.scene]||['sources','download','early-warning','investigation','title-card','agent-concept'].includes(s.scene));
+ assert.ok(!s.title.includes('?'));assert.ok(scenes[s.scene]||['sources','download','early-warning','investigation','quintessence','title-card','agent-concept'].includes(s.scene));
  if(scenes[s.scene])for(const edge of scenes[s.scene].edges)assert.ok([edge.from,edge.to].every(id=>scenes[s.scene].nodes.some(n=>n.id===id)));
 }
 assert.ok(fs.existsSync(path.join(root,'output/pdf/huggingface-fall-begleitskript.pdf')));
@@ -71,9 +71,7 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
         assert.equal(await page.locator('.investigation-magnifier').count(),0,'quiet history has no discovery spectacle');
       }
       if(s.id==='aufarbeitung'){
-        assert.equal(await page.locator('.screen-frame').evaluate(e=>getComputedStyle(e).fill),'none','network background remains transparent to the flock');
-        assert.equal(await page.locator('.investigation-magnifier.visible').count(),step===2?1:0);
-        assert.equal(await page.locator('.investigation-alert.visible').count(),step===2?7:0);
+        assert.equal(await page.locator('#sceneFilm').count(),1,'one controlled HTML illustration');
         assert.equal(await page.locator('.flock-eyes').first().evaluate(e=>getComputedStyle(e).display),step===2?'inline':'none');
         if(step===2){
           assert.notEqual(await page.locator('.flock-outline').first().evaluate(e=>getComputedStyle(e).stroke),'none');
@@ -82,8 +80,7 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
           assert.equal(await page.locator('.flock-bird').first().locator('.flock-eyes').evaluate(e=>Number(e.children[1].getAttribute('cx'))-Number(e.children[0].getAttribute('cx'))),4);
           assert.equal(await page.locator('.flock-eyes').first().evaluate(e=>getComputedStyle(e).animationName),'none','reduced movement keeps the eyes still');
         }
-        const scale=await page.locator('.investigation-network').evaluate(el=>new DOMMatrix(getComputedStyle(el).transform).a);
-        assert.ok(Math.abs(scale-(step===2?.63:1))<.01,'network shrinks only when the investigation starts');
+        assert.match(await page.locator('.calendar').textContent(),new RegExp(['16.–17. Juli','19. Juli','20. Juli'][step]));
       }
       if(s.overviewPortraits){
         const start=s.introductions.length*2;
@@ -147,21 +144,21 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
   assert.deepEqual(overflow,[],'slides must fit tablet and desktop views');
   await page.setViewportSize({width:1024,height:768});await jump('uebergabe');await page.locator('#replay').tap();
   assert.equal(await page.locator('.actor.visible').count(),1);await page.locator('#next').tap();assert.equal(await page.locator('.actor.visible').count(),2);
-  await page.reload();await page.locator('#next').click();assert.equal(await page.locator('#position').textContent(),'Folie 01 / 30');assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau 1 / 1');
+  await page.reload();await page.locator('#next').click();assert.equal(await page.locator('#position').textContent(),'Folie 01 / 31');assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau 1 / 1');
   await jump('uebergabe');await page.locator('#next').tap();
   await page.locator('#prev').tap();assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau 1 / '+handoffSteps);
   await page.locator('#play').tap();await page.waitForTimeout(4200);assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau 2 / '+handoffSteps);
   await page.locator('#notes').tap();await page.waitForTimeout(4200);assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau 2 / '+handoffSteps);await page.locator('[data-close=notesDialog]').tap();
-  await page.locator('#play').tap();await page.waitForTimeout((handoffSteps-2)*4100);assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau '+handoffSteps+' / '+handoffSteps);assert.equal(await page.locator('#play').getAttribute('aria-pressed'),'false');assert.equal(await page.locator('#position').textContent(),'Folie 10 / 30');
+  await page.locator('#play').tap();await page.waitForTimeout((handoffSteps-2)*4100);assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau '+handoffSteps+' / '+handoffSteps);assert.equal(await page.locator('#play').getAttribute('aria-pressed'),'false');assert.equal(await page.locator('#position').textContent(),'Folie 10 / 31');
   await jump('mitnehmen');
   const response=await page.request.get(base+'/output/pdf/huggingface-fall-begleitskript.pdf');assert.equal(response.status(),200);assert.equal((await response.body()).subarray(0,4).toString(),'%PDF');
   const overview=await page.request.get(base+'/output/pdf/der-schwarm-der-nicht-geplant-war.pdf');assert.equal(overview.status(),200);assert.equal((await overview.body()).subarray(0,4).toString(),'%PDF');assert.equal(await page.locator('.overview-download').getAttribute('download'),'Der-Schwarm-der-nicht-geplant-war.pdf');assert.equal(await page.locator('.download-scene .overview-download').getAttribute('class'),'primary download-link overview-download');assert.equal(await page.locator('.download-scene .overview-download').evaluate(el=>el.nextElementSibling?.getAttribute('download')),'Hugging-Face-Fall-Vortragsskript.pdf');
-  const downloadPromise=page.waitForEvent('download');await page.locator('#downloadText').tap();const download=await downloadPromise;assert.match(download.suggestedFilename(),/\.txt$/);const text=fs.readFileSync(await download.path(),'utf8');assert.ok(text.includes('FOLIE 30'));assert.ok(text.includes('AUFBAU 3'));assert.ok(text.includes('https://huggingface.co/'));assert.ok(!text.includes('Gesprächsimpuls'));
+  const downloadPromise=page.waitForEvent('download');await page.locator('#downloadText').tap();const download=await downloadPromise;assert.match(download.suggestedFilename(),/\.txt$/);const text=fs.readFileSync(await download.path(),'utf8');assert.ok(text.includes('FOLIE 31'));assert.ok(text.includes('AUFBAU 3'));assert.ok(text.includes('https://huggingface.co/'));assert.ok(!text.includes('Gesprächsimpuls'));
   for(const q of deepDives){assert.ok(text.includes(q.question));for(const p of q.answer)assert.ok(text.includes(p));}
   assert.equal((text.match(/VERTIEFUNG BEI NACHFRAGEN/g)||[]).length,12);
-  await page.locator('#overview').tap();assert.equal(await page.locator('#slideList button').count(),30);await page.locator('[data-slide="0"]').tap();assert.ok(await page.locator('#prev').isDisabled());
+  await page.locator('#overview').tap();assert.equal(await page.locator('#slideList button').count(),31);await page.locator('[data-slide="0"]').tap();assert.ok(await page.locator('#prev').isDisabled());
   await page.locator('#slideTitle').focus();await page.keyboard.press('ArrowRight');assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau 1 / 4');await page.keyboard.press('End');assert.ok(await page.locator('#next').isDisabled());
-  await page.locator('#settings').tap();await page.locator('#reset').tap();assert.match(await page.locator('#resetDialog').textContent(),/keine Antworten/);await page.locator('#confirmReset').tap();assert.equal(await page.locator('#position').textContent(),'Start');await page.locator('#next').click();assert.equal(await page.locator('#position').textContent(),'Folie 01 / 30');
+  await page.locator('#settings').tap();await page.locator('#reset').tap();assert.match(await page.locator('#resetDialog').textContent(),/keine Antworten/);await page.locator('#confirmReset').tap();assert.equal(await page.locator('#position').textContent(),'Start');await page.locator('#next').click();assert.equal(await page.locator('#position').textContent(),'Folie 01 / 31');
   await jump('schwarm-organigramm');await page.locator('#settings').tap();await page.locator('#motion').check();await page.locator('[data-close=settingsDialog]').tap();
   for(let i=0;i<swarm.introductions.length*2-1;i++)await page.locator('#next').tap();
   assert.equal(await page.locator('#slide .edge.visible').count(),0);
@@ -194,7 +191,7 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
   await page.waitForFunction(()=>!document.querySelector('.slide-crossfade'));
   await jump('auftrag');await page.locator('#next').tap();assert.equal(await page.locator('.slide-crossfade').count(),0);
   await page.evaluate(()=>localStorage.setItem('huggingface-fall:story-v4',JSON.stringify({index:19,step:10,motion:true})));
-  await openStory(page,app+'?fresh-entry=1#schwarm-organigramm');assert.equal(await page.locator('#position').textContent(),'Folie 01 / 30');
+  await openStory(page,app+'?fresh-entry=1#schwarm-organigramm');assert.equal(await page.locator('#position').textContent(),'Folie 01 / 31');
   assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau 1 / 1');
   assert.deepEqual(await page.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('huggingface-fall:story-v4')))),['motion','theme','projector']);
   await page.locator('#next').tap();await page.reload();await page.locator('#next').click();assert.equal(await page.locator('#buildPosition').textContent(),'Aufbau 1 / 1');
@@ -290,7 +287,7 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
   await page.screenshot({path:path.join(shots,'light-settings.png')});
   await page.locator('[data-close=settingsDialog]').tap();await page.reload();await page.locator('#next').click();
   assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
-  assert.equal(await page.locator('#position').textContent(),'Folie 01 / 30');
+  assert.equal(await page.locator('#position').textContent(),'Folie 01 / 31');
   const luminance=h=>{const rgb=h.trim().slice(1).match(/../g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return rgb[0]*.2126+rgb[1]*.7152+rgb[2]*.0722;};
   const palette=await page.evaluate(()=>{const s=getComputedStyle(document.documentElement);return Object.fromEntries(['bg','ink','muted','gold','mint','order','risk',...['p','b','c','r','m','j','l'].map(k=>'agent-'+k)].map(k=>[k,s.getPropertyValue('--'+k)]));});
   for(const [key,color]of Object.entries(palette).filter(([k])=>k!=='bg'))assert.ok((luminance(palette.bg)+.05)/(luminance(color)+.05)>=4.5,'light text contrast '+key);
@@ -322,19 +319,19 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
   }
   await page.locator('[data-close=settingsDialog]').tap();await page.reload();await page.locator('#next').click();
   assert.equal(await page.locator('html').getAttribute('data-projector'),'true');
-  assert.equal(await page.locator('#position').textContent(),'Folie 01 / 30');
+  assert.equal(await page.locator('#position').textContent(),'Folie 01 / 31');
   await page.locator('#settings').tap();assert.ok(await page.locator('#projector').isChecked());
   await page.locator('#projector').uncheck();await page.locator('[data-close=settingsDialog]').tap();
   assert.equal(await page.locator('#slide .flock-layer').evaluate(e=>getComputedStyle(e).opacity),'0.13');
   console.log('PASS: projector contrast in both palettes, touch controls and saved preference.');
   assert.deepEqual(errors,[]);assert.deepEqual(missing,[]);assert.ok(requests.every(u=>u.startsWith(base+'/')||u.startsWith(origin+'/LearningApps/fonts/')||u.startsWith('blob:')),'unexpected external request');
-  await openStory(page,'file://'+path.join(root,'huggingface-fall.html')+'#nachrichtenbrett');assert.equal(await page.locator('#position').textContent(),'Folie 01 / 30');await jump('flag-umweg');await page.locator('#next').tap();assert.match(await page.locator('#buildPosition').textContent(),/2 \/ 4/);
-  console.log('PASS: 30 narrative slides; 5 layouts; no node collisions; staged diagrams; playback pause/end; start at slide one; notes; reset; reduced motion; downloads; local files; no remote requests.');
+  await openStory(page,'file://'+path.join(root,'huggingface-fall.html')+'#nachrichtenbrett');assert.equal(await page.locator('#position').textContent(),'Folie 01 / 31');await jump('flag-umweg');await page.locator('#next').tap();assert.match(await page.locator('#buildPosition').textContent(),/2 \/ 4/);
+  console.log('PASS: 31 narrative slides; 5 layouts; no node collisions; staged diagrams; playback pause/end; start at slide one; notes; reset; reduced motion; downloads; local files; no remote requests.');
   let w;
-  try{w=await webkit.launch({headless:true,...(process.env.HF_WEBKIT_EXECUTABLE_PATH?{executablePath:process.env.HF_WEBKIT_EXECUTABLE_PATH}:{})});const p=await w.newPage({viewport:{width:1024,height:768},hasTouch:true});await openStory(p,app);await p.locator('#next').tap();assert.equal(await p.locator('#buildPosition').textContent(),'Aufbau 1 / 4');await p.locator('#settings').tap();await p.locator('#motion').uncheck();await p.locator('[data-close=settingsDialog]').tap();for(const s of data.slides){await openStory(p,app+'?fresh-entry='+s.id+'#'+s.id);assert.equal(await p.locator('#position').textContent(),'Folie 01 / 30');await p.evaluate(id=>location.hash=id,s.id);await p.waitForFunction(id=>document.getElementById('slideTitle').textContent===HF_CASE_DATA.slides.find(s=>s.id===id).title,s.id);await p.evaluate(()=>document.fonts.ready);assert.ok(await p.locator('#viewport').evaluate(e=>e.scrollWidth<=e.clientWidth+1&&e.scrollHeight<=e.clientHeight+2),'WebKit overflow '+s.id);}
+  try{w=await webkit.launch({headless:true,...(process.env.HF_WEBKIT_EXECUTABLE_PATH?{executablePath:process.env.HF_WEBKIT_EXECUTABLE_PATH}:{})});const p=await w.newPage({viewport:{width:1024,height:768},hasTouch:true});await openStory(p,app);await p.locator('#next').tap();assert.equal(await p.locator('#buildPosition').textContent(),'Aufbau 1 / 4');await p.locator('#settings').tap();await p.locator('#motion').uncheck();await p.locator('[data-close=settingsDialog]').tap();for(const s of data.slides){await openStory(p,app+'?fresh-entry='+s.id+'#'+s.id);assert.equal(await p.locator('#position').textContent(),'Folie 01 / 31');await p.evaluate(id=>location.hash=id,s.id);await p.waitForFunction(id=>document.getElementById('slideTitle').textContent===HF_CASE_DATA.slides.find(s=>s.id===id).title,s.id);await p.evaluate(()=>document.fonts.ready);assert.ok(await p.locator('#viewport').evaluate(e=>e.scrollWidth<=e.clientWidth+1&&e.scrollHeight<=e.clientHeight+2),'WebKit overflow '+s.id);}
     await p.locator('#settings').tap();await p.locator('#motion').check();await p.locator('[data-close=settingsDialog]').tap();
     for(const s of data.slides.filter(s=>s.introductions)){
-      await openStory(p,app+'?fresh-entry='+s.id+'#'+s.id);assert.equal(await p.locator('#position').textContent(),'Folie 01 / 30');await p.evaluate(id=>location.hash=id,s.id);await p.waitForFunction(id=>document.getElementById('slideTitle').textContent===HF_CASE_DATA.slides.find(s=>s.id===id).title,s.id);await p.locator('#replay').tap();
+      await openStory(p,app+'?fresh-entry='+s.id+'#'+s.id);assert.equal(await p.locator('#position').textContent(),'Folie 01 / 31');await p.evaluate(id=>location.hash=id,s.id);await p.waitForFunction(id=>document.getElementById('slideTitle').textContent===HF_CASE_DATA.slides.find(s=>s.id===id).title,s.id);await p.locator('#replay').tap();
       const intro=s.introductions[0];for(let i=0;i<intro.step;i++)await p.locator('#next').tap();
       if(intro.step>0)assert.equal(await p.locator('.slide-crossfade').count(),1,'WebKit portrait fade');
       await p.waitForFunction(()=>!document.querySelector('.slide-crossfade'));
@@ -353,7 +350,7 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
     if(!await p.locator('#settingsDialog').isVisible())await p.locator('#settings').tap();
     await p.locator('input[name=theme][value=light]').check();await p.locator('[data-close=settingsDialog]').tap();await p.reload();await p.locator('#next').click();
     assert.equal(await p.locator('html').getAttribute('data-theme'),'light');
-    assert.equal(await p.locator('#position').textContent(),'Folie 01 / 30');
+    assert.equal(await p.locator('#position').textContent(),'Folie 01 / 31');
     console.log('PASS: WebKit touch, all slide layouts, animated docking, fullscreen/fallback and theme persistence.');
 
 }catch(e){if(/Executable doesn't exist|browserType.launch/.test(e.message))console.log('WebKit unavailable; no claim of physical iPad testing.');else throw e;}finally{await w?.close();}

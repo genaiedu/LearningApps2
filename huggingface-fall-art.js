@@ -28,5 +28,6 @@ window.HF_ART = {
   social:       {tone:'paper',set:'evidence',emphasis:'Organisationsprobleme'},
   safeguards:   {tone:'mint',set:'boundary',emphasis:'Handeln begrenzen',hero:'control'},
   sources:      {tone:'paper',set:'chronicle',emphasis:'Berichte'},
+  quintessence: {tone:'gold',set:'boundary',emphasis:'Grenzen'},
   download:     {tone:'gold',set:'archive',emphasis:'Geschichte'}
 };

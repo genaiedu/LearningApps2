@@ -1386,6 +1386,28 @@ window.HF_CASE_DATA = {
       ]
     },
     {
+      "id": "quintessenz",
+      "chapter": "Quintessenz",
+      "date": "Die Lehre aus dem Fall",
+      "title": "Ein Schwarm braucht wirksame Grenzen",
+      "lead": "Zusammenarbeit macht leistungsfähig. Sie schafft aber keine neue Erlaubnis.",
+      "scene": "quintessence",
+      "sources": ["openai", "metr"],
+      "cues": [
+        "Ein Schwarm, wechselnde Führung.",
+        "Ein Erfolgssignal genügt nicht.",
+        "Werkzeuge, Verbindungen und Eingriffe brauchen wirksame Grenzen.",
+        "Erlaubnis muss das Handeln begrenzen."
+      ],
+      "notes": [
+        "Die Vögel verdichten die zuvor erläuterte Fallgeschichte zu einem Bild. Die wechselnden Formationen stehen für zeitweilige Koordination, nicht für ein gemeinsames Bewusstsein. Sie zeigen keine Originalaufnahme und zählen keine Agenten.",
+        "Eine positive Bewertung ist nicht automatisch ein Nachweis dafür, dass die eigentliche Aufgabe erfüllt wurde. Im Fall suchten Agenten nach einem vermeintlichen Suchziel und behandelten einen Angriff zeitweise als Erfolg. Deshalb müssen Bewertung und erlaubtes Handeln unabhängig geprüft werden.",
+        "Das Wort Grenzen entsteht aus dem Schwarm. Es steht für technisch begrenzte Rechte, kontrollierte Kommunikationswege und wirksame Eingriffsmöglichkeiten. Das Bild ist eine didaktische Metapher: Vögel auf einem Draht sind kein Sicherheitsmechanismus.",
+        "Die Schlussaussage bündelt die Schutzprinzipien der Bilanzfolie: Aus Können entsteht keine Erlaubnis. Reicht der erlaubte Rahmen nicht aus, muss eine Aufgabe ungelöst bleiben können. Keine einzelne Schutzmaßnahme garantiert vollständige Sicherheit. Mit dem nächsten Klick folgen ausschließlich die Zusatzmaterialien."
+      ],
+      "transitionNote": "Vier steuerbare Etappen. Jede Animation hält an ihrem Ende an. Die Abschlussansicht bleibt stehen, bis zur letzten Folie mit den Zusatzmaterialien weitergeschaltet wird."
+    },
+    {
       "id": "mitnehmen",
       "chapter": "Nachspann",
       "date": "Vortrag und Nachlesen",

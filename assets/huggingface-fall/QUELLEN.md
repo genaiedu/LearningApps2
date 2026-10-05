@@ -25,12 +25,25 @@ beschrieben. Sinngemäße Agentenaussagen sind ausdrücklich keine Zitate.
 
 ## Gestaltung und Bedienung
 
-Der lokale Auftaktfilm `schwarm-intro.mp4` wurde vom Nutzer am 05.10.2026
-bereitgestellt (Original: `schwarm-intro_2026-10-05_22-37-54.mp4`).
-15 Sekunden, 1920 × 1080, H.264, ohne Tonspur, unverändert übernommen.
-`schwarm-intro-poster.jpg` ist sein erstes Bild. Der Film ist eine schematische
-Visualisierung, keine Originalaufnahme des Vorfalls. Er verwendet keinen
-externen Videodienst. Danach bleiben alle 30 Folien unverändert erreichbar.
+Die drei HTML-Kompositionen unter `films/` wurden vom Nutzer am 06.10.2026
+bereitgestellt: `01-intro-der-schwarm.html` (15 s),
+`02-folie-25-die-spuren.html` (5 s) und
+`03-abschluss-voegel-auf-dem-draht.html` (15 s). Sie wurden aus dessen
+Claude-Arbeitsverzeichnis importiert; die Originaldateien bleiben unverändert.
+`scripts/import-huggingface-films.cjs` dokumentiert die mechanische Übernahme.
+Die eingebetteten Schriften wurden durch gemeinsame lokale Schriftdateien
+ersetzt, GSAP 3.14.2 wird einmal mit seinem mitgelieferten Lizenzkopf gespeichert.
+Die separate automatische Vorschauwiedergabe wurde entfernt. Die Einbettung
+steuert Start, Pause, Fortsetzen, Wiederholen und die Etappengrenzen.
+Im Auftakt entsteht ab 10,2 s die echte responsive Titelfolie. Die Zeichnung zur
+Aufarbeitung ergänzt den bestehenden datierten Folientext (16.-17., 19. und
+20. Juli); sie zeigt keinen belegten exakten menschlichen Entdeckungsmoment.
+Die Schlusskomposition bildet vier Etappen unmittelbar vor den Zusatzmaterialien.
+Alle 30 bisherigen Folien bleiben erhalten, hinzu kommt die Quintessenz (31 insgesamt).
+Sämtliche Animationen sind schematische Visualisierungen, keine Originalaufnahmen.
+Sie verwenden keinen externen Video- oder Animationsdienst. Das frühere MP4
+`schwarm-intro.mp4` und sein Poster bleiben als ungenutzte ursprüngliche Medien
+im Repository erhalten; die App lädt sie nicht mehr.
 
 Eigene typografische Gestaltung und schrittweise HTML-Ablaufdarstellungen,
 keine angeblich dokumentarischen KI-Bilder. Keine externen Bilddateien.

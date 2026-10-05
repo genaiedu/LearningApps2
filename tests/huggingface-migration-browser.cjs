@@ -24,7 +24,7 @@ const server=http.createServer((req,res)=>{
    const entry=new URL(await page.evaluate(()=>migrationEntry));
    assert(entry.pathname.endsWith('/LearningApps2/huggingface-fall.html'));assert.equal(entry.search,'?from=legacy');assert.equal(entry.hash,'#schwarm-organigramm');
    assert(await page.locator('#startOpeningButton').isVisible());
-   assert(await page.locator('#openingVideo').evaluate(v=>v.paused&&v.currentTime===0),'redirect never starts the movie');
+   assert(await page.locator('#openingFilm').isHidden(),'redirect never starts the movie');
    await page.locator('#next').click();await page.evaluate(()=>document.fonts.ready);
    const fonts=await page.evaluate(()=>[...document.fonts].filter(f=>f.status==='loaded').map(f=>f.family));
    assert(fonts.includes('Inter')&&fonts.includes('Outfit'),'shared fonts loaded over '+entry.protocol);

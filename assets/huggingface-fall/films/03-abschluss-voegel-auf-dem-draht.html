@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>Vögel auf dem Draht</title>
+    <script>window.__timelines = {};</script>
+<script src="gsap.min.js"></script>
+    <style>
+      @font-face { font-family: Inter; src: url("../../../../LearningApps/fonts/inter-v20-latin-regular.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: Inter; src: url("../../../../LearningApps/fonts/inter-v20-latin-600.woff2") format("woff2"); font-weight: 600 900; }
+      @font-face { font-family: Outfit; src: url("../../../../LearningApps/fonts/outfit-v15-latin-600.woff2") format("woff2"); font-weight: 500 900; }
+
+      :root {
+        --bg: #15162f;
+        --ink: #fff6e4;
+        --muted: #b8b9d4;
+        --gold: #ffd477;
+        --order: #bba1ff;
+        --bird-fill: #2a2a48;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: Inter, sans-serif; color: var(--ink); }
+      .clip { position: absolute; inset: 0; }
+
+      /* sky */
+      #sky { position: absolute; inset: 0; background: linear-gradient(180deg, #17183d 0%, #2c2865 24%, #54428a 44%, #8e6aa6 58%, #d18f98 68%, #f0b483 74%, #9a6c9a 82%, #3e2f68 92%, #1d1b42 100%); }
+      #sun {
+        position: absolute; left: 560px; top: 260px; width: 800px; height: 800px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,236,190,0.95) 0%, rgba(255,214,140,0.9) 13%, rgba(255,190,130,0.55) 15.5%, rgba(255,170,140,0.25) 32%, rgba(220,140,170,0) 62%);
+      }
+      #haze { position: absolute; left: -200px; right: -200px; top: 600px; height: 260px; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,212,119,0.18), rgba(255,212,119,0) 70%); }
+      .cloud { position: absolute; height: 40px; border-radius: 50%; background: rgba(90,60,120,0.38); filter: blur(10px); }
+      #stars circle { fill: #fff6e4; }
+
+      #stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+      #wire { fill: none; stroke: var(--gold); stroke-width: 3.5; stroke-linecap: round; }
+      #wire-dark { fill: none; stroke: #15142e; stroke-width: 8; stroke-linecap: round; }
+      #wire-glow { fill: none; stroke: rgba(255,226,150,0.55); stroke-width: 16; stroke-linecap: round; filter: blur(6px); }
+      #pen { fill: #fff6e4; }
+      #pen-halo { fill: rgba(255,212,119,0.45); }
+      .gull path { fill: #141329; stroke: #141329; stroke-width: 1; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+      .perch .pb { fill: #141329; stroke: #141329; stroke-width: 1; vector-effect: non-scaling-stroke; }
+      .perch .pk { fill: var(--gold); }
+      .perch .pe { fill: #f0b483; }
+
+      /* captions */
+      .cap { display: flex; align-items: flex-end; justify-content: center; padding: 0 160px 96px; }
+      .cap p { font: 600 44px/1.2 Outfit, sans-serif; text-align: center; color: var(--ink); }
+      .cap p.soft { color: var(--muted); }
+      .cap .w { display: inline-block; }
+
+      /* finale */
+      #finale { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 150px 160px 0; text-align: center; }
+      #f-kick { display: flex; align-items: center; gap: 18px; font: 600 24px/1 Inter, sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 30px; }
+      #f-kick .rule { display: block; width: 56px; height: 3px; background: var(--gold); }
+      .f-line { display: block; overflow: hidden; padding-bottom: 22px; margin-bottom: -22px; }
+      .f-line > span { display: inline-block; font: 600 112px/1.04 Outfit, sans-serif; letter-spacing: -0.01em; text-shadow: 0 6px 30px rgba(10,10,30,0.6); }
+      #f-gold { position: relative; color: var(--gold); }
+      #f-under { position: absolute; left: 0; bottom: -6px; width: 100%; height: 20px; overflow: visible; }
+      #f-under path { fill: none; stroke: var(--gold); stroke-width: 5; stroke-linecap: round; }
+      #hero { position: absolute; left: 875px; top: 616px; width: 170px; height: 170px; }
+      #hero svg { width: 100%; height: 100%; overflow: visible; }
+    </style>
+  </head>
+  <body data-film="finale">
+    <div data-hf-id="hf-kbh8" id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1920" data-height="1080">
+
+      <div data-hf-id="hf-hp7o" id="sky-clip" class="clip" data-start="0" data-duration="15" data-track-index="0">
+        <div data-hf-id="hf-f7j0" id="sky"></div>
+        <svg data-hf-id="hf-w2g9" id="stars" viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:1920px;height:1080px" />
+        <div data-hf-id="hf-ys19" id="sun"></div>
+        <div data-hf-id="hf-is07" id="haze"></div>
+        <div data-hf-id="hf-cvun" class="cloud" id="cl1" style="left:120px;top:520px;width:620px"></div>
+        <div data-hf-id="hf-akr2" class="cloud" id="cl2" style="left:1180px;top:470px;width:760px"></div>
+        <div data-hf-id="hf-eg9c" class="cloud" id="cl3" style="left:520px;top:600px;width:900px;opacity:0.7"></div>
+      </div>
+
+      <div data-hf-id="hf-ldxx" id="world" class="clip" data-start="0" data-duration="15" data-track-index="1">
+        <svg data-hf-id="hf-rroy" id="stage" viewBox="0 0 1920 1080">
+          <defs data-hf-id="hf-mh0t">
+            <symbol data-hf-id="hf-pvuh" id="gull" viewBox="0 0 86 48"><path data-hf-id="hf-ytib" d="M4 30C13 14 24 10 35 20L41 29C49 9 64 6 82 15C67 14 57 22 49 35L42 41L37 35C27 23 16 21 4 30Z" /></symbol>
+          </defs>
+          <path data-hf-id="hf-rnlu" id="wire-glow" d="M -140 700 Q 960 840 2060 700" />
+          <path data-hf-id="hf-ptup" id="wire-dark" d="M -140 700 Q 960 840 2060 700" />
+          <path data-hf-id="hf-kue4" id="wire" d="M -140 700 Q 960 840 2060 700" />
+          <circle data-hf-id="hf-bvyh" id="pen-halo" r="22" cx="-140" cy="700" />
+          <circle data-hf-id="hf-yaj9" id="pen" r="7" cx="-140" cy="700" />
+          <g data-hf-id="hf-h5pe" id="flock" />
+        </svg>
+      </div>
+
+      <section data-hf-id="hf-lowb" id="c1" class="clip cap" data-start="0.5" data-duration="3.5" data-track-index="2">
+        <p data-hf-id="hf-ba4r" id="c1p" class="soft"><span data-hf-id="hf-2vlx" class="w">Ein Schwarm,</span> <span data-hf-id="hf-0r98" class="w">wechselnde Führung.</span></p>
+      </section>
+      <section data-hf-id="hf-4z5y" id="c2" class="clip cap" data-start="4.1" data-duration="1.9" data-track-index="2">
+        <p data-hf-id="hf-gac9" id="c2p"><span data-hf-id="hf-fbme" class="w">Ein Erfolgssignal</span> <span data-hf-id="hf-hopf" class="w">genügt nicht.</span></p>
+      </section>
+      <section data-hf-id="hf-4fcr" id="c3" class="clip cap" data-start="6.2" data-duration="2.9" data-track-index="2">
+        <p data-hf-id="hf-iy9t" id="c3p" class="soft"><span data-hf-id="hf-y3q3" class="w">Werkzeuge,</span> <span data-hf-id="hf-6j9x" class="w">Verbindungen</span> <span data-hf-id="hf-gqu2" class="w">und Eingriffe</span> <span data-hf-id="hf-g86m" class="w">brauchen wirksame Grenzen.</span></p>
+      </section>
+
+      <section data-hf-id="hf-rjer" id="finale" class="clip" data-start="11.6" data-duration="3.4" data-track-index="3">
+        <div data-hf-id="hf-zsug" id="f-kick"><span data-hf-id="hf-6o6j" class="rule"></span>Die Lehre aus dem Fall<span data-hf-id="hf-424r" class="rule"></span></div>
+        <div data-hf-id="hf-9xdp" class="f-line"><span data-hf-id="hf-1xai" id="f1">Erlaubnis muss das Handeln</span></div>
+        <div data-hf-id="hf-b2hd" class="f-line"><span data-hf-id="hf-nojs" id="f2"><span data-hf-id="hf-r7x1" id="f-gold">begrenzen<svg data-hf-id="hf-27rr" id="f-under" viewBox="0 0 100 20" preserveAspectRatio="none"><path data-hf-id="hf-ubpj" id="f-under-p" d="M2 8 Q 50 18 98 8" /></svg></span>.</span></div>
+      </section>
+
+      <div data-hf-id="hf-chri" id="hero-clip" class="clip" data-start="10.8" data-duration="4.2" data-track-index="4">
+        <div data-hf-id="hf-y3p5" id="hero">
+          <svg data-hf-id="hf-ithg" viewBox="0 0 100 100" aria-hidden="true">
+            <g data-hf-id="hf-y9y0" transform="translate(100 0) scale(-1 1)">
+              <g data-hf-id="hf-m1u8" id="hero-body">
+                <path data-hf-id="hf-uggp" d="M39 79v10m-6 0h12m14-10v10m-6 0h12" stroke="#f7b463" stroke-width="4" stroke-linecap="round" fill="none" />
+                <ellipse data-hf-id="hf-imr8" cx="46" cy="58" rx="26" ry="26" fill="#9ca9cc" />
+                <path data-hf-id="hf-wec0" id="hero-wing" d="M24 43c-15 18 0 38 25 34l4-17z" fill="#6d7da6" />
+                <g data-hf-id="hf-soze" id="hero-head">
+                  <path data-hf-id="hf-xq2d" d="M67 28 91 35 67 42Z" fill="#e9b971" />
+                  <circle data-hf-id="hf-ef24" cx="53" cy="30" r="19" fill="#aab7d7" />
+                  <g data-hf-id="hf-mtij" id="hero-eye"><circle data-hf-id="hf-dtzp" cx="56" cy="28" r="5" fill="#fff8df" /><circle data-hf-id="hf-vgri" cx="57" cy="28" r="2.5" fill="#17182e" /></g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      function mulberry32(a) {
+        return function () {
+          a |= 0; a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const rnd = mulberry32(1307);
+      const N = 470;
+      const TAU = Math.PI * 2;
+      // the wire: quadratic from (-140,700) via (960,840) to (2060,700) → x linear in t
+      const wireAt = (x) => { const t = (x + 140) / 2200; return 700 + 280 * t * (1 - t); };
+      const wireT = (x) => (x + 140) / 2200;
+
+      function build() {
+        const tl = gsap.timeline({ paused: true });
+
+        // ---------- stars ----------
+        const stars = document.getElementById("stars");
+        for (let i = 0; i < 90; i++) {
+          const c = document.createElementNS(NS, "circle");
+          c.setAttribute("cx", rnd() * 1920); c.setAttribute("cy", rnd() * 520);
+          c.setAttribute("r", 0.8 + rnd() * 1.6); c.id = "st" + i;
+          stars.appendChild(c);
+          tl.fromTo(c, { opacity: 0.15 + rnd() * 0.3 }, { opacity: 0.9, duration: 0.8 + rnd() * 1.4, ease: "sine.inOut", yoyo: true, repeat: 7 }, rnd() * 1.5);
+        }
+
+        // ---------- letter targets: "GRENZEN" sampled from the real font ----------
+        const cv = document.createElement("canvas");
+        cv.width = 1920; cv.height = 520;
+        const cx = cv.getContext("2d");
+        cx.fillStyle = "#000"; cx.font = "600 340px Outfit"; cx.textAlign = "center"; cx.textBaseline = "middle";
+        cx.fillText("GRENZEN", 960, 270);
+        const img = cx.getImageData(0, 0, 1920, 520).data;
+        const filled = (x, y) => img[(y * 1920 + x) * 4 + 3] > 140;
+        let area = 0;
+        for (let y = 0; y < 520; y += 4) for (let x = 0; x < 1920; x += 4) if (filled(x, y)) area += 16;
+        const step = Math.max(8, Math.sqrt(area / N) * 0.97);
+        let pts = [];
+        for (let y = step / 2, row = 0; y < 520; y += step, row++)
+          for (let x = (row % 2) * step * 0.5; x < 1920; x += step)
+            if (filled(Math.round(x), Math.round(y))) pts.push({ x, y: y + 60 });
+        if (pts.length > N) { const k = pts.length / N; pts = Array.from({ length: N }, (_, i) => pts[Math.floor(i * k)]); }
+        while (pts.length < N) { const p = pts[Math.floor(rnd() * pts.length)]; pts.push({ x: p.x + (rnd() - 0.5) * step * 0.6, y: p.y + (rnd() - 0.5) * step * 0.6 }); }
+
+        // ---------- murmuration shapes, all continuous in u so the flock folds like a ribbon ----------
+        const shape = {
+          enter: (u, r, s) => ({ x: -120 - r * 520, y: 260 + u * 360 + (s - 0.5) * 120 }),
+          spiral: (u, r, s) => { const a = u * TAU * 2.2 + 0.4; const R = 40 + u * 300; return { x: 720 + Math.cos(a) * R * 1.55 + (r - 0.5) * 50, y: 360 + Math.sin(a) * R * 0.62 + (s - 0.5) * 40 }; },
+          ribbon: (u, r, s) => ({ x: 230 + u * 1460, y: 370 + Math.sin(u * TAU * 1.25 + 0.6) * 150 + (s - 0.5) * (40 + 90 * Math.sin(u * Math.PI)) }),
+          vortex: (u, r, s) => { const a = u * TAU * 2 - 1.2; const R = 250 + (s - 0.5) * 140; return { x: 1150 + Math.cos(a) * R * 1.25, y: 350 + Math.sin(a) * R * 0.55 + (r - 0.5) * 30 }; },
+          funnel: (u, r, s) => { const a = u * TAU * 3.4; const R = 30 + (1 - u) * 230; return { x: 960 + Math.cos(a) * R * 1.7 + (r - 0.5) * 40, y: 160 + u * 330 + Math.sin(a) * R * 0.25 }; },
+        };
+        const SEQ = [["spiral", 0.15, 1.6], ["ribbon", 1.55, 1.25], ["vortex", 2.7, 1.2], ["funnel", 3.85, 1.15]];
+
+        const flock = document.getElementById("flock");
+        const birds = [];
+        for (let i = 0; i < N; i++) {
+          const u = i / (N - 1), r = rnd(), s = rnd();
+          const b = { i, u, r, s, size: 0.7 + rnd() * 0.5, flap: 0.09 + rnd() * 0.05 };
+          b.pos = {};
+          ["enter", "spiral", "ribbon", "vortex", "funnel"].forEach((k) => (b.pos[k] = shape[k](u, r, s)));
+          const g = document.createElementNS(NS, "g");
+          g.id = "b" + i;
+          g.innerHTML =
+            `<g class="fly"><g class="flap"><use class="gull" href="#gull" x="-17" y="-9.5" width="34" height="19"/></g></g>` +
+            `<g class="perch" opacity="0"><ellipse class="pb" cx="0" cy="-10" rx="9" ry="7.5"/><circle class="pb" cx="6.5" cy="-19" r="5.5"/>` +
+            `<path class="pb" d="M-8 -9 L-17 -3 L-7 -5Z"/><path class="pk" d="M11.5 -20 L16 -18.5 L11.5 -17Z"/><circle class="pe" cx="8" cy="-20" r="1.2"/></g>`;
+          flock.appendChild(g);
+          b.el = g;
+          birds.push(b);
+        }
+
+        // letters: map birds (by funnel x) to points (by x) for minimal crossing
+        const byX = [...birds].sort((a, c) => a.pos.funnel.x - c.pos.funnel.x);
+        const ptsX = [...pts].sort((a, c) => a.x - c.x || a.y - c.y);
+        byX.forEach((b, k) => (b.letter = ptsX[k]));
+
+        // perch slots on the wire, leaving room for the hero bird in the middle
+        const slots = [];
+        for (let x = 110; x <= 1810; x += 36) if (x < 850 || x > 1070) slots.push(x);
+        const byLetterX = [...birds].sort((a, c) => a.letter.x - c.letter.x);
+        const every = byLetterX.length / slots.length;
+        slots.forEach((x, k) => { const b = byLetterX[Math.floor(k * every + every / 2)]; b.perchX = x; });
+
+        const bank = (dx) => Math.max(-24, Math.min(24, dx / 18));
+
+        birds.forEach((b) => {
+          const sel = "#b" + b.i, fly = sel + " .fly", flap = sel + " .flap", perch = sel + " .perch";
+          const wave = b.u * 0.42;
+          let prev = b.pos.enter;
+          tl.fromTo(sel, { x: prev.x, y: prev.y, scale: b.size, rotation: 0 }, { x: prev.x, y: prev.y, scale: b.size, rotation: 0, duration: 0.01 }, 0);
+          SEQ.forEach(([k, t, d]) => {
+            const p = b.pos[k];
+            tl.to(sel, { x: p.x, y: p.y, rotation: bank(p.x - prev.x), duration: d, ease: "sine.inOut" }, t + wave);
+            prev = p;
+          });
+          // the word
+          const L = b.letter;
+          const tL = 5.0 + (L.x / 1920) * 0.55 + b.r * 0.12;
+          tl.to(sel, { x: L.x, y: L.y, rotation: 0, scale: 0.95 + b.r * 0.15, duration: 1.15, ease: "power3.inOut" }, tL);
+          tl.to(sel, { y: L.y - 5, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 1 }, 6.6 + b.s * 0.3);
+          // flutter
+          tl.fromTo(flap, { scaleY: 1 }, { scaleY: 0.55, duration: b.flap, ease: "sine.inOut", yoyo: true, repeat: Math.floor(10.5 / b.flap), immediateRender: false }, b.r * 0.2);
+          // release
+          const tR = 8.95 + (1 - L.y / 600) * 0.25 + b.r * 0.35;
+          if (b.perchX !== undefined) {
+            const px = b.perchX, py = wireAt(px);
+            b.perchY = py;
+            tl.to(sel, { keyframes: [
+              { x: L.x + (px - L.x) * 0.35, y: L.y - 70 - b.s * 60, rotation: bank(px - L.x), scale: 1.1, duration: 0.55, ease: "sine.out" },
+              { x: px, y: py, rotation: 0, scale: 1.45, duration: 0.9, ease: "power2.inOut" },
+            ] }, tR);
+            const land = tR + 1.45;
+            tl.to(fly, { opacity: 0, duration: 0.08, ease: "none" }, land - 0.05);
+            tl.to(perch, { opacity: 1, duration: 0.08, ease: "none" }, land - 0.05);
+            tl.fromTo(perch, { rotation: -14, svgOrigin: "0 0" }, { rotation: 0, svgOrigin: "0 0", duration: 0.6, ease: "elastic.out(1.2, 0.4)", immediateRender: false }, land - 0.05);
+            b.land = land;
+          } else {
+            const ex = 2050 + b.r * 380, ey = -140 + b.s * 420;
+            tl.to(sel, { x: ex, y: ey, rotation: -12 + b.r * 10, duration: 1.5 + b.s * 0.5, ease: "power2.in" }, tR);
+          }
+        });
+
+        // ---------- the wire is drawn by a pen of light ----------
+        const wire = document.getElementById("wire"), glow = document.getElementById("wire-glow");
+        const len = wire.getTotalLength();
+        const dark = document.getElementById("wire-dark");
+        [wire, glow, dark].forEach((p) => { p.style.strokeDasharray = len; });
+        tl.fromTo([wire, glow, dark], { strokeDashoffset: len }, { strokeDashoffset: 0, duration: 1.5, ease: "power2.inOut" }, 4.0);
+        const penKeys = [];
+        const pe = gsap.parseEase("power2.inOut");
+        for (let k = 1; k <= 30; k++) { const x = -140 + 2200 * pe(k / 30); penKeys.push({ attr: { cx: x, cy: wireAt(x) }, duration: 1.5 / 30, ease: "none" }); }
+        tl.fromTo(["#pen", "#pen-halo"], { opacity: 0 }, { opacity: 1, duration: 0.15 }, 3.95);
+        tl.to(["#pen", "#pen-halo"], { keyframes: penKeys }, 4.0);
+        tl.to(["#pen", "#pen-halo"], { opacity: 0, duration: 0.3, ease: "power1.in" }, 5.45);
+
+        // ---------- hero lands, the wire gives a little ----------
+        tl.fromTo("#hero", { x: 520, y: -520, rotation: 24, opacity: 0 }, { x: 0, y: 0, rotation: 0, opacity: 1, duration: 1.15, ease: "power3.out" }, 10.85);
+        tl.fromTo("#hero-wing", { rotation: -34, transformOrigin: "80% 30%" }, { rotation: 0, duration: 0.14, ease: "sine.inOut", yoyo: true, repeat: 7 }, 10.85);
+        const D = 16; // wire dip at hero landing
+        const dip = (v) => `M -140 700 Q 960 ${840 + v} 2060 700`;
+        tl.to([wire, glow, dark], { keyframes: [
+          { attr: { d: dip(D) }, duration: 0.18, ease: "power2.out" },
+          { attr: { d: dip(-D * 0.45) }, duration: 0.3, ease: "sine.inOut" },
+          { attr: { d: dip(D * 0.2) }, duration: 0.3, ease: "sine.inOut" },
+          { attr: { d: dip(0) }, duration: 0.35, ease: "sine.out" },
+        ] }, 11.95);
+        tl.to("#hero", { keyframes: [
+          { y: D * 0.5, duration: 0.18, ease: "power2.out" },
+          { y: -D * 0.45 * 0.5, duration: 0.3, ease: "sine.inOut" },
+          { y: D * 0.2 * 0.5, duration: 0.3, ease: "sine.inOut" },
+          { y: 0, duration: 0.35, ease: "sine.out" },
+        ] }, 11.95);
+        birds.forEach((b) => {
+          if (b.perchX === undefined) return;
+          const t = wireT(b.perchX), w = 2 * t * (1 - t);
+          tl.to("#b" + b.i, { keyframes: [
+            { y: b.perchY + D * w, duration: 0.18, ease: "power2.out" },
+            { y: b.perchY - D * 0.45 * w, duration: 0.3, ease: "sine.inOut" },
+            { y: b.perchY + D * 0.2 * w, duration: 0.3, ease: "sine.inOut" },
+            { y: b.perchY, duration: 0.35, ease: "sine.out" },
+          ] }, Math.max(11.95, b.land + 0.1));
+        });
+        tl.fromTo("#hero-head", { rotation: 0, transformOrigin: "40% 80%" }, { rotation: -8, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 1 }, 13.0);
+        tl.fromTo("#hero-eye", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 0.1, duration: 0.08, ease: "power1.in", yoyo: true, repeat: 1 }, 14.1);
+
+        // ---------- sky ----------
+        tl.fromTo("#sun", { y: -60, scale: 0.92 }, { y: 150, scale: 1.04, duration: 15, ease: "sine.inOut" }, 0);
+        tl.fromTo("#haze", { opacity: 0.5 }, { opacity: 1, duration: 15, ease: "none" }, 0);
+        tl.fromTo("#cl1", { x: 0 }, { x: 140, duration: 15, ease: "none" }, 0);
+        tl.fromTo("#cl2", { x: 0 }, { x: -120, duration: 15, ease: "none" }, 0);
+        tl.fromTo("#cl3", { x: -60 }, { x: 60, duration: 15, ease: "none" }, 0);
+        tl.fromTo("#sky", { filter: "brightness(1.05)" }, { filter: "brightness(0.82)", duration: 15, ease: "none" }, 0);
+
+        // ---------- captions: each with its own rhythm ----------
+        tl.fromTo("#c1p .w", { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "sine.out", stagger: 0.5 }, 0.6);
+        tl.to("#c1p", { opacity: 0, duration: 0.35, ease: "power1.in" }, 3.6);
+        tl.fromTo("#c2p .w", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.35, ease: "back.out(2)", stagger: 0.28 }, 4.2);
+        tl.to("#c2p", { opacity: 0, y: -16, duration: 0.25, ease: "power2.in" }, 5.7);
+        tl.fromTo("#c3p .w", { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out", stagger: 0.16 }, 6.35);
+        tl.to("#c3p", { opacity: 0, duration: 0.3, ease: "power1.in" }, 8.75);
+
+        // ---------- finale ----------
+        tl.fromTo("#f-kick", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "sine.out" }, 11.75);
+        tl.fromTo("#f-kick .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "expo.out" }, 11.75);
+        tl.fromTo("#f1", { yPercent: 110 }, { yPercent: 0, duration: 0.9, ease: "expo.out" }, 12.0);
+        tl.fromTo("#f2", { yPercent: 110 }, { yPercent: 0, duration: 0.9, ease: "expo.out" }, 12.3);
+        const up = document.getElementById("f-under-p");
+        const ul = up.getTotalLength();
+        up.style.strokeDasharray = ul;
+        tl.fromTo(up, { strokeDashoffset: ul }, { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" }, 13.0);
+
+        window.__timelines["main"] = tl;
+        tl.seek(0);
+      }
+
+      document.fonts.load("600 340px Outfit").then(build, build);
+    </script>
+  
+<link rel="stylesheet" href="../film-player.css">
+<script src="../film-player.js"></script>
+</body></html>

@@ -235,7 +235,7 @@
 html[data-projector=true] .cinema .scene-set svg{opacity:.2}
 #viewport{position:relative}
 .opening-stage{position:absolute;inset:0;z-index:2;min-height:0;background:#000;overflow:hidden}
-.opening-stage video{display:block;width:100%;height:100%;object-fit:cover;background:#000}
+.opening-stage iframe{display:block;width:100%;height:100%;border:0;pointer-events:none;background:#000}
 .opening-start{position:absolute;inset:0;display:grid;place-items:center;background:#000}
 .opening-start button{background:#000;color:#fff;border:0;border-radius:0;padding:24px 40px;font:400 clamp(1.8rem,3vw,3rem)/1.2 Inter,sans-serif}
 .opening-start button:hover{color:#d5d5d5}
@@ -247,3 +247,15 @@ html[data-projector=true] .cinema .scene-set svg{opacity:.2}
 .transport button{height:48px}
 @media(max-width:520px){.transport{grid-template-rows:40px 46px}.transport button{height:46px}.transport #play{height:40px}}
 @media(max-height:450px) and (min-width:801px){.title-portrait .portrait-copy{top:8%}.title-portrait h2{font-size:clamp(1.7rem,7vh,2.5rem)}.title-portrait .title-author{font-size:.8rem;margin-bottom:10px}.title-portrait .portrait-sticker{font-size:.85rem;margin-top:14px;padding:7px 12px}}
+.scene-film{display:block;border:0;width:100%;height:100%;min-height:0;pointer-events:none;background:var(--bg)}
+.film-wrap{position:relative;width:100%;height:clamp(230px,40dvh,480px);min-height:0}
+.film-fallback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;background:var(--bg);color:var(--muted)}
+.quintessence .film-wrap{height:100%;min-height:260px;background:#15162f}
+.cinema.quintessence{height:100%;min-height:0;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;padding-top:0}
+.quintessence>.slide-heading{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.quintessence>.stage{grid-column:1;grid-row:1;height:100%;min-height:0}
+.quintessence>.scene-bottom{grid-column:1;grid-row:2}
+.quintessence>.flock-layer{display:none}
+@media(min-width:1400px) and (min-height:800px){.investigation .film-wrap{height:100%}}
+@media(max-width:800px){.investigation .film-wrap{height:clamp(220px,31dvh,350px)}}
+@media(max-width:520px){.quintessence .film-wrap{min-height:220px}.quintessence{padding-inline:0!important}.quintessence>.scene-bottom{padding-inline:16px!important}}

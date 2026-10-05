@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>Der Schwarm – Intro</title>
+    <script>window.__timelines = {};</script>
+<script src="gsap.min.js"></script>
+    <style>
+      @font-face { font-family: Inter; src: url("../../../../LearningApps/fonts/inter-v20-latin-regular.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: Inter; src: url("../../../../LearningApps/fonts/inter-v20-latin-600.woff2") format("woff2"); font-weight: 600 900; }
+      @font-face { font-family: Outfit; src: url("../../../../LearningApps/fonts/outfit-v15-latin-600.woff2") format("woff2"); font-weight: 600 900; }
+
+      :root {
+        --bg: #15162f;
+        --bg-deep: #0f1026;
+        --ink: #fff6e4;
+        --muted: #b8b9d4;
+        --gold: #ffd477;
+        --mint: #79dfd3;
+        --risk: #ff947d;
+        --line: #444462;
+        --order: #bba1ff;
+        --order-deep: #6b5bb0;
+        --plum: #2c2a57;
+        --bird-fill: #33334f;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: var(--ink);
+      }
+      .clip { position: absolute; inset: 0; }
+
+      /* ---------- background ---------- */
+      #bg-fill { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 80% at 64% 46%, #23234a 0%, var(--bg) 55%, var(--bg-deep) 100%); }
+      #bg-grid {
+        position: absolute; inset: 0; opacity: 0.35;
+        background-image: linear-gradient(90deg, rgba(255,246,228,0.05) 1px, transparent 1px);
+        background-size: 160px 100%;
+      }
+      #bg-band {
+        position: absolute; left: -200px; top: 120px; width: 2600px; height: 150px;
+        background: linear-gradient(90deg, rgba(187,161,255,0) 0%, rgba(187,161,255,0.10) 40%, rgba(187,161,255,0) 100%);
+      }
+      #bg-rings { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      #bg-rings circle { fill: none; stroke: rgba(255,246,228,0.07); stroke-width: 1.2; }
+      #bg-moon {
+        position: absolute; left: -360px; top: 560px; width: 1000px; height: 1000px; border-radius: 50%;
+        background: radial-gradient(circle at 60% 30%, #4a3f86 0%, #3a336e 50%, #2c2a57 100%);
+      }
+
+      /* ---------- flock ---------- */
+      #net { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      #net line { stroke: var(--mint); stroke-width: 1.6; stroke-linecap: round; }
+      #net line.strong { stroke: var(--gold); stroke-width: 2.2; }
+      #net circle { fill: var(--mint); }
+      .bo { position: absolute; left: 1240px; top: 500px; width: 0; height: 0; }
+      .bi, .bc { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+      .bird-svg { position: absolute; display: block; overflow: visible; }
+      .bird-svg path { fill: var(--bird-fill); stroke: var(--ink); stroke-opacity: 0.75; stroke-width: 1.3; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+      .bird-svg circle { fill: var(--ink); }
+      .named .bird-svg path { stroke-width: 2.2; stroke-opacity: 1; }
+      .tag {
+        position: absolute; left: 30px; top: 18px; white-space: nowrap;
+        font: 600 19px/1 Inter, sans-serif; letter-spacing: 0.04em;
+        padding: 7px 11px 7px 10px; border-radius: 6px;
+        background: rgba(21,22,47,0.92); border: 1.5px solid currentColor;
+      }
+
+      #target { position: absolute; left: 1240px; top: 500px; width: 0; height: 0; }
+      #target-core {
+        position: absolute; left: -110px; top: -110px; width: 220px; height: 220px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; text-align: center;
+        border: 2px solid var(--risk); background: rgba(255,148,125,0.10);
+        font: 600 30px/1.1 Outfit, sans-serif; color: var(--ink);
+      }
+      #target-pulse {
+        position: absolute; left: -110px; top: -110px; width: 220px; height: 220px; border-radius: 50%;
+        border: 2px solid var(--risk);
+      }
+
+      /* ---------- text scenes ---------- */
+      .scene {
+        display: flex; flex-direction: column; justify-content: flex-end;
+        padding: 0 160px 120px 140px; gap: 10px;
+      }
+      .kicker {
+        font: 600 26px/1 Inter, sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+        display: flex; align-items: center; gap: 18px;
+      }
+      .kicker .rule { display: block; width: 64px; height: 3px; background: var(--gold); }
+      .line { display: block; overflow: hidden; padding-bottom: 20px; margin-bottom: -12px; }
+      .line > span { display: inline-block; font: 600 92px/1.05 Outfit, sans-serif; letter-spacing: -0.01em; }
+      .line.sub > span { font-size: 92px; }
+      .c-mint { color: var(--mint); }
+      .c-risk { color: var(--risk); }
+      .c-order { color: var(--order); }
+      .text-panel { display: flex; flex-direction: column; gap: 6px; max-width: 1100px; }
+
+      /* ---------- title ---------- */
+      #title {
+        display: flex; flex-direction: column; justify-content: center;
+        padding: 0 160px 40px 140px;
+      }
+      .t-wrap { display: flex; flex-direction: column; gap: 4px; max-width: 1000px; }
+      #t-author { font: 600 30px/1 Inter, sans-serif; letter-spacing: 0.16em; color: var(--ink); margin-bottom: 34px; }
+      .t-line { display: block; overflow: hidden; padding-bottom: 28px; margin-bottom: -22px; }
+      .t-line > span {
+        display: inline-block; font: 700 142px/1.0 Outfit, sans-serif; letter-spacing: -0.015em;
+        text-shadow: 6px 6px 0 rgba(10,10,30,0.55);
+      }
+      .t-row { display: flex; margin-top: 40px; }
+      #t-tag {
+        display: block; font: 700 34px/1 Outfit, sans-serif; color: var(--bg);
+        background: var(--order); padding: 16px 26px 18px; border-radius: 6px;
+        box-shadow: 8px 8px 0 var(--order-deep);
+      }
+      #hero { position: absolute; left: 1250px; top: 230px; width: 600px; height: 600px; }
+      #hero svg { width: 100%; height: 100%; overflow: visible; }
+      #hero-glow {
+        position: absolute; left: 1150px; top: 120px; width: 800px; height: 800px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(187,161,255,0.22) 0%, rgba(187,161,255,0.06) 45%, rgba(187,161,255,0) 70%);
+      }
+      #t-foot {
+        position: absolute; left: 140px; right: 140px; bottom: 64px; display: flex; justify-content: space-between;
+        font: 600 22px/1 Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+      }
+      #t-foot b { color: var(--gold); font-weight: 600; }
+    </style>
+  </head>
+  <body data-film="intro">
+    <div data-hf-id="hf-kbh8" id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1920" data-height="1080">
+
+      <!-- background (whole film) -->
+      <div data-hf-id="hf-endj" id="bg" class="clip" data-start="0" data-duration="15" data-track-index="0">
+        <div data-hf-id="hf-02i2" id="bg-fill"></div>
+        <div data-hf-id="hf-r3kh" id="bg-grid"></div>
+        <div data-hf-id="hf-c688" id="bg-band"></div>
+        <svg data-hf-id="hf-qlx6" id="bg-rings" data-layout-allow-overflow="true" viewBox="0 0 1920 1080">
+          <g data-hf-id="hf-utt4" id="rings-g">
+            <circle data-hf-id="hf-dqw4" cx="1240" cy="500" r="190" />
+            <circle data-hf-id="hf-xft0" cx="1240" cy="500" r="330" />
+            <circle data-hf-id="hf-nmn6" cx="1240" cy="500" r="480" />
+            <circle data-hf-id="hf-i1o2" cx="1240" cy="500" r="660" />
+          </g>
+        </svg>
+        <div data-hf-id="hf-yzqp" id="bg-moon" data-layout-allow-overflow="true"></div>
+      </div>
+
+      <!-- network lines (agents find each other) -->
+      <div data-hf-id="hf-2dh0" id="net-clip" class="clip" data-start="0" data-duration="7.4" data-track-index="1">
+        <svg data-hf-id="hf-i4j5" id="net" viewBox="0 0 1920 1080" />
+      </div>
+
+      <!-- target: Hugging Face -->
+      <div data-hf-id="hf-omc4" id="target-clip" class="clip" data-start="6.6" data-duration="4.4" data-track-index="2">
+        <div data-hf-id="hf-u972" id="target">
+          <div data-hf-id="hf-6of6" id="target-pulse"></div>
+          <div data-hf-id="hf-s3cy" id="target-core"><span data-hf-id="hf-3aso">Hugging<span data-hf-id="hf-ewru" style="display:block">Face</span></span></div>
+        </div>
+      </div>
+
+      <!-- the flock (whole film) -->
+      <div data-hf-id="hf-z110" id="flock" class="clip" data-start="0" data-duration="15" data-track-index="3"></div>
+
+      <!-- scene 1 -->
+      <section data-hf-id="hf-bmj1" id="s1" class="clip scene" data-start="0" data-duration="3.4" data-track-index="4">
+        <div data-hf-id="hf-1hf3" class="text-panel" id="s1-panel">
+          <div data-hf-id="hf-szly" class="kicker" id="s1-kicker"><span data-hf-id="hf-6o6j" class="rule"></span>Fallakte 07.26</div>
+          <div data-hf-id="hf-np12" class="line"><span data-hf-id="hf-u8vd" id="s1-a">Ein Test mit KI-Agenten.</span></div>
+        </div>
+      </section>
+
+      <!-- scene 2 -->
+      <section data-hf-id="hf-55zl" id="s2" class="clip scene" data-start="3.4" data-duration="3.4" data-track-index="4">
+        <div data-hf-id="hf-fch0" class="text-panel" id="s2-panel">
+          <div data-hf-id="hf-sogq" class="line"><span data-hf-id="hf-2ooq" id="s2-a">Getrennte KI-Agenten</span></div>
+          <div data-hf-id="hf-t2rr" class="line"><span data-hf-id="hf-auz3" id="s2-b" class="c-mint">finden zusammen.</span></div>
+        </div>
+      </section>
+
+      <!-- scene 3 -->
+      <section data-hf-id="hf-k05m" id="s3" class="clip scene" data-start="6.8" data-duration="3.5" data-track-index="4">
+        <div data-hf-id="hf-ojyp" class="text-panel" id="s3-panel">
+          <div data-hf-id="hf-th2s" class="line"><span data-hf-id="hf-3ld9" id="s3-a">Ihre Zusammenarbeit</span></div>
+          <div data-hf-id="hf-tvdt" class="line"><span data-hf-id="hf-lmme" id="s3-b" class="c-risk">erreicht fremde Systeme.</span></div>
+        </div>
+      </section>
+
+      <!-- title card -->
+      <section data-hf-id="hf-q978" id="title" class="clip" data-start="10.2" data-duration="4.8" data-track-index="5">
+        <div data-hf-id="hf-n1dp" id="hero-glow"></div>
+        <div data-hf-id="hf-y3p5" id="hero">
+          <svg data-hf-id="hf-ithg" viewBox="0 0 100 100" aria-hidden="true">
+            <g data-hf-id="hf-y9y0" transform="translate(100 0) scale(-1 1)">
+              <g data-hf-id="hf-m1u8" id="hero-body">
+                <path data-hf-id="hf-uggp" d="M39 79v10m-6 0h12m14-10v10m-6 0h12" stroke="#f7b463" stroke-width="4" stroke-linecap="round" fill="none" />
+                <ellipse data-hf-id="hf-imr8" cx="46" cy="58" rx="26" ry="26" fill="#9ca9cc" />
+                <path data-hf-id="hf-wec0" id="hero-wing" d="M24 43c-15 18 0 38 25 34l4-17z" fill="#6d7da6" />
+                <g data-hf-id="hf-soze" id="hero-head">
+                  <path data-hf-id="hf-xq2d" d="M67 28 91 35 67 42Z" fill="#e9b971" />
+                  <circle data-hf-id="hf-ef24" cx="53" cy="30" r="19" fill="#aab7d7" />
+                  <g data-hf-id="hf-mtij" id="hero-eye">
+                    <circle data-hf-id="hf-dtzp" cx="56" cy="28" r="5" fill="#fff8df" />
+                    <circle data-hf-id="hf-vgri" cx="57" cy="28" r="2.5" fill="#17182e" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div data-hf-id="hf-vly9" class="t-wrap">
+          <div data-hf-id="hf-ocyd" id="t-author">Claus Unterberg</div>
+          <div data-hf-id="hf-4o2b" class="t-line"><span data-hf-id="hf-nh37" id="t1">Der Schwarm,</span></div>
+          <div data-hf-id="hf-8vub" class="t-line"><span data-hf-id="hf-fgbd" id="t2">der nicht</span></div>
+          <div data-hf-id="hf-8hja" class="t-line"><span data-hf-id="hf-x5yt" id="t3" class="c-order">geplant war</span></div>
+          <div data-hf-id="hf-tdr7" class="t-row"><span data-hf-id="hf-u5g3" id="t-tag">Der Hugging-Face-Fall</span></div>
+        </div>
+        <div data-hf-id="hf-havk" id="t-foot"><span data-hf-id="hf-vwj0">KI verstehen · <b data-hf-id="hf-za7a">Fallakte 07.26</b></span><span data-hf-id="hf-bfte">Eine Fallgeschichte</span></div>
+      </section>
+    </div>
+
+    <script>
+      // ---------- deterministic setup ----------
+      const PALETTE = { ink: "#fff6e4", gold: "#ffd477", mint: "#79dfd3", risk: "#ff947d", order: "#bba1ff" };
+      const C = { x: 1240, y: 500 };
+      function mulberry32(a) {
+        return function () {
+          a |= 0; a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const rnd = mulberry32(260726);
+
+      const NAMED = [
+        { name: "PHASEONE10841", x: 430, y: 250, color: PALETTE.gold },
+        { name: "CDA23", x: 800, y: 520, color: PALETTE.ink },
+        { name: "CURRENT", x: 1010, y: 175, color: PALETTE.mint },
+        { name: "MARB051", x: 1540, y: 230, color: PALETTE.order },
+        { name: "JAN183411", x: 1580, y: 640, color: PALETTE.risk },
+        { name: "LILY", x: 1250, y: 840, color: PALETTE.mint },
+      ];
+      const inTextZone = (x, y) => x < 1150 && y > 640;
+      const birds = NAMED.map((n) => ({ ...n, named: true }));
+      let guard = 0;
+      while (birds.length < 54 && guard++ < 5000) {
+        const x = 80 + rnd() * 1760, y = 70 + rnd() * 940;
+        if (inTextZone(x, y)) continue;
+        if (birds.some((b) => Math.hypot(b.x - x, b.y - y) < 110)) continue;
+        birds.push({ x, y, named: false });
+      }
+
+      const BIRD_PATH = "M4 30C13 14 24 10 35 20L41 29C49 9 64 6 82 15C67 14 57 22 49 35L42 41L37 35C27 23 16 21 4 30Z";
+      const flock = document.getElementById("flock");
+      birds.forEach((b, i) => {
+        const dx = b.x - C.x, dy = b.y - C.y;
+        b.a = (Math.atan2(dy, dx) * 180) / Math.PI;
+        b.r = Math.hypot(dx, dy);
+        b.w = b.named ? 78 : 38 + rnd() * 30;
+        b.tilt = -22 + rnd() * 30;
+        b.orbitR = 150 + rnd() * 190;
+        b.orbitSpin = 150 + rnd() * 70;
+        b.burstR = 620 + rnd() * 620;
+        b.flapDelay = rnd() * 0.4;
+        const h = (b.w * 48) / 86;
+        const bo = document.createElement("div");
+        bo.className = "bo" + (b.named ? " named" : "");
+        bo.id = "b" + i;
+        bo.innerHTML =
+          '<div class="bi"><div class="bc">' +
+          `<svg class="bird-svg" viewBox="0 0 86 48" style="width:${b.w}px;height:${h}px;left:${-b.w / 2}px;top:${-h / 2}px">` +
+          `<path d="${BIRD_PATH}" ${b.named ? `style="stroke:${b.color}"` : ""}/>` +
+          '<circle cx="40" cy="33" r="1.8"/><circle cx="44" cy="33" r="1.8"/></svg>' +
+          (b.named ? `<div class="tag" style="color:${b.color}">${b.name}</div>` : "") +
+          "</div></div>";
+        flock.appendChild(bo);
+      });
+
+      // network: each named agent links to its 3 nearest birds; named agents form a chain
+      const net = document.getElementById("net");
+      const NS = "http://www.w3.org/2000/svg";
+      const links = [];
+      birds.forEach((b, i) => {
+        if (!b.named) return;
+        birds
+          .map((o, j) => ({ j, d: Math.hypot(o.x - b.x, o.y - b.y) }))
+          .filter((o) => o.j !== i && !birds[o.j].named)
+          .sort((p, q) => p.d - q.d)
+          .slice(0, 3)
+          .forEach((o) => links.push({ a: i, b: o.j, strong: false }));
+      });
+      [0, 1, 2, 3, 4, 5, 1].forEach((n, k, arr) => { if (k > 0) links.push({ a: arr[k - 1], b: n, strong: true }); });
+      links.forEach((l, k) => {
+        const A = birds[l.a], B = birds[l.b];
+        const ln = document.createElementNS(NS, "line");
+        ln.setAttribute("x1", A.x); ln.setAttribute("y1", A.y);
+        ln.setAttribute("x2", B.x); ln.setAttribute("y2", B.y);
+        if (l.strong) ln.setAttribute("class", "strong");
+        const len = Math.hypot(B.x - A.x, B.y - A.y);
+        ln.style.strokeDasharray = len; ln.style.strokeDashoffset = len;
+        ln.id = "ln" + k; l.len = len; l.el = ln;
+        net.appendChild(ln);
+        const dot = document.createElementNS(NS, "circle");
+        dot.setAttribute("r", l.strong ? 5 : 3.5); dot.setAttribute("cx", A.x); dot.setAttribute("cy", A.y);
+        dot.id = "dot" + k; l.dot = dot;
+        if (l.strong) dot.style.fill = PALETTE.gold;
+        net.appendChild(dot);
+      });
+
+      // spread the swarm evenly around the target: slot by initial angle, keep order
+      birds.map((b, i) => i).sort((p, q) => birds[p].a - birds[q].a).forEach((i, k) => {
+        const b = birds[i];
+        const slot = (k * 360) / birds.length - 180;
+        b.a2 = b.a + (((slot - b.a) % 360) + 360) % 360 + 200;
+      });
+
+      // ---------- timeline ----------
+      const tl = gsap.timeline({ paused: true });
+
+      // background life
+      tl.fromTo("#rings-g", { rotation: 0, scale: 0.92, transformOrigin: "1240px 500px" }, { rotation: 24, scale: 1.08, duration: 15, ease: "none" }, 0);
+      tl.fromTo("#bg-band", { x: -300, rotation: -14 }, { x: 260, rotation: -10, duration: 15, ease: "none" }, 0);
+      tl.fromTo("#bg-grid", { x: 0 }, { x: -120, duration: 15, ease: "none" }, 0);
+      tl.fromTo("#bg-moon", { x: -260, y: 420, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 1.6, ease: "expo.out" }, 10.3);
+
+      // birds
+      const order = birds.map((b, i) => i).sort((p, q) => {
+        if (birds[p].named !== birds[q].named) return birds[p].named ? -1 : 1;
+        return birds[p].x - birds[q].x;
+      });
+      order.forEach((i, k) => {
+        const b = birds[i];
+        const bo = "#b" + i, bi = bo + " .bi", bc = bo + " .bc", svg = bo + " .bird-svg";
+        const appear = b.named ? 0.25 + k * 0.22 : 1.0 + (k - 6) * 0.04;
+        // initial placement + entrance
+        tl.fromTo(bo, { rotation: b.a }, { rotation: b.a, duration: 0.01 }, 0);
+        tl.fromTo(bi, { x: b.r }, { x: b.r, duration: 0.01 }, 0);
+        tl.fromTo(bc, { rotation: -b.a + b.tilt, scale: 0, opacity: 0 }, { rotation: -b.a + b.tilt, scale: 1, opacity: 1, duration: 0.6, ease: "back.out(2.2)" }, appear);
+        // idle hover while scattered
+        tl.fromTo(svg, { y: 0 }, { y: -8, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 3 }, b.flapDelay);
+        // phase 2 → swarm: spiral in toward the target
+        const a2 = b.a2, a1 = a2 - 130, a3 = a2 + 50, a4 = a3 + 14;
+        const t0 = 6.55 + (b.named ? 0 : rnd() * 0.35);
+        tl.to(bo, { rotation: a1, duration: 1.7, ease: "power2.inOut" }, t0);
+        tl.to(bi, { x: b.orbitR, duration: 1.7, ease: "power3.inOut" }, t0);
+        tl.to(bc, { rotation: -a1 + b.tilt * 0.4, scale: b.named ? 0.7 : 0.85, duration: 1.7, ease: "power2.inOut" }, t0);
+        // keep circling
+        tl.to(bo, { rotation: a2, duration: 10.2 - (t0 + 1.7), ease: "none" }, t0 + 1.7);
+        tl.to(bc, { rotation: -a2 + b.tilt * 0.4, duration: 10.2 - (t0 + 1.7), ease: "none" }, t0 + 1.7);
+        tl.to(bi, { x: b.orbitR * 0.82, duration: 0.25, ease: "power2.in", yoyo: true, repeat: 1 }, 9.35);
+        // phase 4: burst outward into a background flock
+        tl.to(bo, { rotation: a3, duration: 1.3, ease: "expo.out" }, 10.2);
+        tl.to(bi, { x: b.burstR, duration: 1.3, ease: "expo.out" }, 10.2);
+        tl.to(bc, { rotation: -a3 + b.tilt, scale: 0.8, opacity: 0.32, duration: 1.3, ease: "expo.out" }, 10.2);
+        tl.to(bo, { rotation: a4, duration: 3.5, ease: "none" }, 11.5);
+        tl.to(bc, { rotation: -a4 + b.tilt, duration: 3.5, ease: "none" }, 11.5);
+        // wing flutter (finite)
+        tl.fromTo(svg, { scaleY: 1 }, { scaleY: 0.72, duration: 0.18, ease: "sine.inOut", yoyo: true, repeat: 41, immediateRender: false }, b.flapDelay * 2);
+      });
+      // tags fade before the flock moves
+      tl.to(".tag", { opacity: 0, duration: 0.35, ease: "power1.in" }, 6.3);
+
+      // network draw: 3.5 → 5.6, then fade
+      links.forEach((l, k) => {
+        const t = 3.55 + (l.strong ? 0.9 + k * 0.03 : k * 0.04);
+        tl.to(l.el, { strokeDashoffset: 0, duration: l.strong ? 0.55 : 0.4, ease: "power2.out" }, t);
+        const B = birds[l.b];
+        tl.fromTo(l.dot, { attr: { cx: birds[l.a].x, cy: birds[l.a].y }, opacity: 0 }, { attr: { cx: B.x, cy: B.y }, opacity: 1, duration: 0.6, ease: "power1.inOut" }, t + 0.2);
+        tl.to(l.dot, { opacity: 0, duration: 0.3 }, t + 0.8);
+      });
+      tl.to("#net line", { opacity: 0.25, duration: 0.6 }, 5.9);
+      tl.to("#net line", { opacity: 0, duration: 0.4 }, 6.5);
+
+      // target
+      tl.fromTo("#target-core", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.8)" }, 7.2);
+      tl.fromTo("#target-pulse", { scale: 1, opacity: 0.9 }, { scale: 1.9, opacity: 0, duration: 0.9, ease: "power2.out", repeat: 2 }, 7.6);
+      tl.to("#target-core", { backgroundColor: "rgba(255,148,125,0.45)", scale: 1.12, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, 9.4);
+      tl.to("#target-core", { scale: 0, opacity: 0, duration: 0.45, ease: "power3.in" }, 10.0);
+
+      // text helper: masked line rise
+      const rise = (sel, t, d = 0.7) => tl.fromTo(sel, { yPercent: 110 }, { yPercent: 0, duration: d, ease: "expo.out" }, t);
+      const leave = (sel, t) => tl.to(sel, { opacity: 0, y: -24, duration: 0.35, ease: "power2.in" }, t);
+
+      // scene 1
+      tl.fromTo("#s1-kicker", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.3);
+      tl.fromTo("#s1-kicker .rule", { scaleX: 0, transformOrigin: "0 50%" }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, 0.35);
+      rise("#s1-a", 0.6);
+      leave("#s1-panel", 3.0);
+      // scene 2
+      rise("#s2-a", 3.5);
+      rise("#s2-b", 3.9);
+      tl.fromTo("#s2-b", { scale: 1.06, transformOrigin: "0% 50%" }, { scale: 1, duration: 1.4, ease: "power2.out", immediateRender: false }, 3.9);
+      leave("#s2-panel", 6.4);
+      // scene 3
+      rise("#s3-a", 6.9);
+      rise("#s3-b", 7.35);
+      tl.fromTo("#s3-b", { x: 0 }, { x: 8, duration: 0.06, yoyo: true, repeat: 5, ease: "none", immediateRender: false }, 9.4);
+      leave("#s3-panel", 9.9);
+
+      // title card
+      tl.fromTo("#t-author", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 1.0, ease: "expo.out" }, 10.45);
+      rise("#t1", 10.6, 0.85);
+      rise("#t2", 10.78, 0.85);
+      rise("#t3", 10.96, 0.85);
+      tl.fromTo("#t-tag", { opacity: 0, scale: 0.6, rotation: 8 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.7, ease: "back.out(2)" }, 11.6);
+      tl.fromTo("#t-foot", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 12.0);
+      tl.fromTo("#hero-glow", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.4, ease: "power2.out" }, 10.7);
+      tl.fromTo("#hero", { x: 520, y: -260, rotation: 18, opacity: 0 }, { x: 0, y: 0, rotation: 0, opacity: 1, duration: 1.2, ease: "back.out(1.4)" }, 10.75);
+      tl.fromTo("#hero-wing", { rotation: -28, transformOrigin: "80% 30%" }, { rotation: 0, duration: 0.22, ease: "sine.inOut", yoyo: true, repeat: 5 }, 10.75);
+      tl.fromTo("#hero-head", { rotation: 0, transformOrigin: "40% 80%" }, { rotation: -6, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 12.6);
+      tl.fromTo("#hero-eye", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 0.1, duration: 0.09, ease: "power1.in", yoyo: true, repeat: 1 }, 13.7);
+      tl.fromTo("#hero", { y: 0 }, { y: -10, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 1, immediateRender: false }, 12.95);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  
+<link rel="stylesheet" href="../film-player.css">
+<script src="../film-player.js"></script>
+</body></html>

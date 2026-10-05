@@ -19,52 +19,60 @@
     if(s&&typeof s.projector==='boolean')state.projector=s.projector;
   } catch(_){storageOK=false;}
   const current=()=>slides[state.index];
-  let openingActive=false,openingStarted=false,openingFade=null;
-  function cancelOpeningFade(){
-    if(!openingFade)return;
-    const old=openingFade;openingFade=null;old.cancel();
-    $('openingStage').hidden=true;$('openingStage').style.opacity='';
+  let openingActive=false,openingStarted=false,openingMovie=null,sceneMovie=null,titleArrival=[];
+  const filmSteps={investigation:[.9,2.25,5],quintessence:[3.55,5.55,8.6,15]};
+  const filmFiles={investigation:'02-folie-25-die-spuren.html',quintessence:'03-abschluss-voegel-auf-dem-draht.html'};
+  function clearTitleArrival(){titleArrival.forEach(a=>a.cancel());titleArrival=[];$('openingStage').style.opacity='';}
+  function scrubOpeningTitle(time){
+    if(!openingActive||!openingStarted)return;
+    $('progress').style.width=(time/15*100)+'%';
+    if(time<10.2){$('slide').hidden=true;$('openingStage').style.opacity='';return;}
+    $('slide').hidden=false;
+    if(!titleArrival.length){
+      // Animate the actual responsive slide, not a second fixed-size title image.
+      const animate=(selector,frames,start,duration)=>{
+        const a=$('slide').querySelector(selector).animate(frames,{duration:duration*1000,fill:'both',easing:'cubic-bezier(.16,1,.3,1)'});a.pause();a.hfStart=start;titleArrival.push(a);
+      };
+      animate('.portrait-backdrop',[{opacity:0},{opacity:1}],10.2,.9);
+      const fieldTransform=getComputedStyle($('slide').querySelector('.portrait-field')).transform;
+      animate('.portrait-field',[{opacity:0,transform:'translate(38vw,-18vh) rotate(18deg) '+fieldTransform},{opacity:1,transform:fieldTransform}],10.75,1.2);
+      animate('.title-author',[{opacity:0,transform:'translateX(-40px)'},{opacity:1,transform:'translateX(0)'}],10.45,1);
+      animate('.title-portrait h2',[{opacity:0,transform:'translateY(60px)'},{opacity:1,transform:'translateY(0)'}],10.6,1.2);
+      animate('.title-portrait .portrait-sticker',[{opacity:0,transform:'rotate(8deg) scale(.6)'},{opacity:1,transform:'rotate(-3deg) scale(1)'}],11.6,.7);
+    }
+    titleArrival.forEach(a=>a.currentTime=Math.max(0,(time-a.hfStart)*1000));
+    $('openingStage').style.opacity=String(Math.max(0,1-(time-10.2)/.9));
   }
-  function finishOpening(focus=true,smooth=false){
+  function finishOpening(focus=true){
     if(!openingActive)return;
-    cancelOpeningFade();
-    const fade=smooth&&openingStarted&&state.motion&&!reduced.matches;
-    openingActive=false;$('openingVideo').pause();$('openingStage').inert=true;
+    openingActive=false;openingMovie?.pause();clearTitleArrival();$('openingStage').inert=true;
     $('openingStart').hidden=true;
     $('slide').hidden=false;$('slide').inert=false;document.body.classList.remove('opening-active');
     updateStep(false);$('replay').setAttribute('aria-label','Aktuelle Szene von vorn zeigen');
     $('play').setAttribute('aria-label','Aktuelle Szene automatisch aufbauen');$('replay').disabled=false;
-    if(fade){
-      // The last video frame stays over the live title: neither stage nor bars resize.
-      const animation=$('openingStage').animate([{opacity:1},{opacity:0}],{duration:380,easing:'ease-in-out',fill:'forwards'});
-      openingFade=animation;animation.finished.then(()=>{if(openingFade===animation)cancelOpeningFade();},()=>{});
-    }else $('openingStage').hidden=true;
+    $('openingStage').hidden=true;
     if(focus)$('slideTitle').focus({preventScroll:true});
   }
   function openingPlayback(){
     if(!openingActive)return;
     $('position').textContent=openingStarted?'Auftaktfilm':'Start';
-    $('play').textContent=!openingStarted?'Start':$('openingVideo').paused?'Video fortsetzen':'Video anhalten';
-    $('play').setAttribute('aria-label',!openingStarted?'Auftaktfilm starten':$('openingVideo').paused?'Auftaktfilm fortsetzen':'Auftaktfilm anhalten');
-    $('play').setAttribute('aria-pressed',String(!$('openingVideo').paused));
+    $('play').textContent=!openingStarted?'Start':openingMovie.paused?'Film fortsetzen':'Film anhalten';
+    $('play').setAttribute('aria-label',!openingStarted?'Auftaktfilm starten':openingMovie.paused?'Auftaktfilm fortsetzen':'Auftaktfilm anhalten');
+    $('play').setAttribute('aria-pressed',String(!openingMovie.paused));
     $('replay').disabled=!openingStarted;
   }
   function toggleOpeningPlayback(){
-    const video=$('openingVideo');
-    if(!video.paused)video.pause();
+    if(!state.motion||reduced.matches){finishOpening();return;}
+    if(!openingMovie.paused)openingMovie.pause();
     else{
-      openingStarted=true;$('openingStart').hidden=true;video.hidden=false;$('openingHint').hidden=true;openingPlayback();
-      video.play().catch(()=>{
-        if(!openingActive)return;
-        openingStarted=false;$('openingStart').hidden=false;video.hidden=true;openingPlayback();
-        $('openingHint').hidden=false;$('openingHint').textContent='Bitte nochmals „Start“ drücken oder mit „Zur Präsentation“ direkt zu den Folien wechseln.';
-      });
+      openingStarted=true;$('openingStart').hidden=true;$('openingFilm').hidden=false;$('openingHint').hidden=true;
+      openingMovie.playTo(15);openingPlayback();
     }
   }
   function startOpening(){
     stop();cancelDocking();openingActive=true;openingStarted=false;
-    const video=$('openingVideo');video.pause();video.currentTime=0;
-    video.hidden=true;$('openingStart').hidden=false;$('openingHint').hidden=true;
+    clearTitleArrival();openingMovie?.seek(0);
+    $('openingFilm').hidden=true;$('openingStart').hidden=false;$('openingHint').hidden=true;
     $('openingStage').hidden=false;$('openingStage').inert=false;$('slide').hidden=true;$('slide').inert=true;
     $('viewport').scrollTop=0;
     document.body.classList.add('opening-active');
@@ -215,19 +223,15 @@
     return '<div class="diagram" aria-hidden="true">'+extras+'<svg class="connections" viewBox="0 0 1000 600" preserveAspectRatio="none">'+defs+edges+'</svg>'+nodes+'</div>'+legend+'<p class="diagram-note">'+esc(d.note)+'</p>';
   }
   function special(s){
+    if(filmFiles[s.scene])return '<div class="film-wrap"><iframe id="sceneFilm" class="scene-film" src="assets/huggingface-fall/films/'+filmFiles[s.scene]+'" title="'+esc(s.scene==='investigation'?'Symbolische Untersuchung des Agentennetzes':'Quintessenz: Vögel formieren sich und landen auf einem Draht')+'" tabindex="-1" aria-hidden="true"></iframe><p class="film-fallback" id="filmFallback" role="status">Animation wird vorbereitet …</p></div>'+(s.scene==='investigation'?'<div class="investigation-status">'+s.discoveryLabels.map((cue,i)=>'<p data-enter="'+i+'" data-leave="'+(i+1)+'">'+esc(cue)+'</p>').join('')+'</div><p class="diagram-note">Symbolische Rekonstruktion · keine Originalaufnahme · kein genauer Zeitpunkt der ersten menschlichen Beobachtung</p>':'');
     if(s.scene==='title-card')return '<div class="portrait-stage title-portrait"><div class="portrait-backdrop"><span class="portrait-band band-one"></span><span class="portrait-band band-two"></span><span class="portrait-grid"></span></div><div class="portrait-field" aria-hidden="true"><span class="portrait-orbit orbit-one"></span><span class="portrait-orbit orbit-two"></span><div class="intro-art">'+avatar('anon1',true)+'</div></div><div class="portrait-copy"><p class="title-author">'+esc(s.author)+'</p><h2>Der Schwarm,<br>der nicht<br><span>geplant war</span></h2><p class="portrait-sticker">Der Hugging-Face-Fall</p></div></div>';
     if(s.scene==='agent-concept')return '<div class="concept-scene"><div class="concept-agent" aria-hidden="true">'+avatar('anon1',true)+'<span>Ein Arbeitslauf</span></div><div class="concept-panels">'+s.conceptCards.map((c,i)=>'<section class="concept-card" data-enter="'+i+'" data-leave="'+(i+1)+'"><p class="concept-label">'+esc(c.label)+'</p><h2>'+esc(c.heading)+'</h2><p class="concept-definition">'+esc(c.text)+'</p><div class="concept-tags">'+c.tags.map((tag,j)=>'<span>'+esc(tag)+'</span>'+(j<2?'<b aria-hidden="true">'+(i===1?'→':'+')+'</b>':'')).join('')+'</div><p class="concept-foot">'+esc(c.foot)+'</p></section>').join('')+'</div></div>';
     if(s.scene==='early-warning')return '<ol class="warning-history">'+s.milestones.map((m,i)=>'<li data-enter="'+i+'"><p class="history-date">'+esc(m.date)+'</p><h2>'+esc(m.title)+'</h2><p>'+esc(m.text)+'</p>'+(m.detail?'<p class="history-detail">'+esc(m.detail)+'</p>':'')+'</li>').join('')+'</ol>';
-    if(s.scene==='investigation'){
-      const positions=[['p',140,90],['b',450,90],['c',770,90],['r',140,255],['m',770,255],['j',140,410],['d',450,410],['l',770,410]];
-      const birds=positions.map(([key,x,y])=>'<g transform="translate('+x+' '+y+')"><svg x="-34" y="-45" width="68" height="68" viewBox="0 0 100 100">'+avatar(key,['c','m','l'].includes(key))+'</svg><text y="45" text-anchor="middle">'+esc(cast[key][0])+'</text></g>').join('');
-      const links=positions.map(([,x,y])=>'<path d="M450 255 L'+x+' '+y+'"/>').join('');
-      return '<div class="investigation-art" role="img" aria-label="Symbolische Rekonstruktion: Das Agentennetz verkleinert sich zu einem Bildschirm; eine Lupe hebt die Untersuchung des Netzes hervor."><svg viewBox="0 0 1000 580"><g class="investigation-network"><rect class="screen-frame" x="55" y="20" width="810" height="475" rx="22"/><g class="investigation-links">'+links+'</g>'+birds+'<rect x="415" y="225" width="70" height="52" rx="8" fill="var(--bg)" stroke="var(--mint)" stroke-width="4"/><path d="M426 239h47m-47 12h47m-47 12h29" stroke="var(--mint)" stroke-width="3"/><text x="450" y="305" text-anchor="middle">Nachrichtenbrett</text></g><g class="investigation-magnifier" data-enter="2"><path d="M587 307l66 75" stroke="#23344f" stroke-width="24" stroke-linecap="round"/><path d="M590 308l62 71" stroke="#4d6382" stroke-width="12" stroke-linecap="round"/><circle cx="526" cy="242" r="91" fill="#74d1d31a" stroke="#243a50" stroke-width="19"/><circle cx="526" cy="242" r="91" fill="none" stroke="#8bdbd7" stroke-width="10"/><circle cx="526" cy="242" r="80" fill="none" stroke="#ecffef99" stroke-width="2"/><path d="M470 205q19-28 52-30" stroke="#ffffffbb" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M584 271l-12 17" stroke="#ffffff77" stroke-width="5" stroke-linecap="round"/></g>'+[[660,94,2],[875,173,2],[906,340,2],[396,106,2],[617,479,2],[916,460,2],[562,58,2]].map(([x,y,step],i)=>'<g class="investigation-alert" data-enter="'+step+'" style="transition-delay:'+i*65+'ms" transform="translate('+x+' '+y+')"><circle r="24" fill="#ffd34e" stroke="#75520c" stroke-width="2"/><text text-anchor="middle" y="12" fill="#342807">!</text></g>').join('')+'</svg></div><div class="investigation-status">'+(s.discoveryLabels||s.cues).map((cue,i)=>'<p data-enter="'+i+'" data-leave="'+(i+1)+'">'+esc(cue)+'</p>').join('')+'</div><p class="diagram-note">Symbolische Rekonstruktion · keine Originalaufnahme · kein genauer Zeitpunkt der ersten menschlichen Beobachtung</p>';
-    }
     if(s.scene==='sources')return '<div class="source-list">'+sources.slice(0,3).map((x,i)=>'<section><span class="source-no">0'+(i+1)+'</span><h2><a href="'+x.url+'" target="_blank" rel="noopener noreferrer">'+esc(x.name)+'</a></h2><p>'+esc(x.scope)+'</p><small>'+esc(x.date)+'</small></section>').join('')+'</div>';
-    return '<div class="download-scene"><div class="script-symbol" aria-hidden="true">'+icon('file')+'</div><div><a class="primary download-link overview-download" href="output/pdf/der-schwarm-der-nicht-geplant-war.pdf?v=20260922-artikel" download="Der-Schwarm-der-nicht-geplant-war.pdf">Übersicht „Der Schwarm, der nicht geplant war“ ↓</a><a class="primary download-link" href="output/pdf/huggingface-fall-begleitskript.pdf?v=20261001-phase-overlap" download="Hugging-Face-Fall-Vortragsskript.pdf">Vortragsskript als PDF ↓</a><button id="downloadText">Editierbare Textversion ↓</button><p>'+slides.length+' Folien · Regiehinweise · Originalauszüge · Quellen</p><p class="muted">Auf dem iPad: PDF öffnen und über das Teilen-Menü in „Dateien“ sichern.</p><p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutzhinweise</a></p></div></div>';
+    return '<div class="download-scene"><div class="script-symbol" aria-hidden="true">'+icon('file')+'</div><div><a class="primary download-link overview-download" href="output/pdf/der-schwarm-der-nicht-geplant-war.pdf?v=20260922-artikel" download="Der-Schwarm-der-nicht-geplant-war.pdf">Übersicht „Der Schwarm, der nicht geplant war“ ↓</a><a class="primary download-link" href="output/pdf/huggingface-fall-begleitskript.pdf?v=20261006-html-films" download="Hugging-Face-Fall-Vortragsskript.pdf">Vortragsskript als PDF ↓</a><button id="downloadText">Editierbare Textversion ↓</button><p>'+slides.length+' Folien · Regiehinweise · Originalauszüge · Quellen</p><p class="muted">Auf dem iPad: PDF öffnen und über das Teilen-Menü in „Dateien“ sichern.</p><p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutzhinweise</a></p></div></div>';
   }
   function render(){
+    sceneMovie?.dispose();sceneMovie=null;
     const s=current();
     const art=window.HF_ART[s.scene];
     $('slide').className='scene-slide cinema '+s.scene+' tone-'+art.tone+' set-'+art.set+(s.quotes?' has-quotes':'');
@@ -235,6 +239,31 @@
     // Establish the previous density before fading in the additional silhouettes.
     $('slide').querySelector('.flock-layer').getBoundingClientRect();
     updateStep(false);
+    if(filmSteps[s.scene]){
+      const movie=sceneMovie=new HFMovie($('sceneFilm'),{
+        ready:()=>{if(sceneMovie===movie)$('filmFallback').hidden=true;},
+        change:()=>{if(sceneMovie===movie)moviePlayback();},
+        ended:()=>{if(sceneMovie===movie)moviePlayback();}
+      });
+      movie.theme(state.theme);
+      showFilmStep(state.step===0&&state.motion&&!reduced.matches);
+      setTimeout(()=>{if(sceneMovie===movie&&!movie.ready){movie.pause();$('filmFallback').textContent='Die Animation konnte nicht geladen werden. Alle Aussagen stehen darunter und im Sprechtext. Du kannst weiterblättern.';}},7000);
+    }
+  }
+  function moviePlayback(){
+    if(!sceneMovie||openingActive)return;
+    const endpoint=filmSteps[current().scene][state.step];
+    $('play').hidden=false;$('replay').hidden=false;
+    $('play').textContent=!sceneMovie.paused?'Etappe anhalten':sceneMovie.time<endpoint-.03?'Etappe fortsetzen':'Etappe wiederholen';
+    $('play').setAttribute('aria-label',$('play').textContent);
+    $('play').setAttribute('aria-pressed',String(!sceneMovie.paused));
+  }
+  function showFilmStep(animate){
+    if(!sceneMovie)return;
+    const ends=filmSteps[current().scene],endpoint=ends[state.step];
+    sceneMovie.seek(animate?(state.step?ends[state.step-1]:0):endpoint);
+    if(animate)sceneMovie.playTo(endpoint);
+    moviePlayback();
   }
   function updateStep(animate=true){
     const s=current();$('slide').dataset.step=state.step;
@@ -278,19 +307,21 @@
     if(s.quotes){const q=s.quotes.filter(q=>q.step<=state.step).at(-1);$('quoteArea').innerHTML=q?quoteHTML(q):'';}
     $('position').textContent='Folie '+String(state.index+1).padStart(2,'0')+' / '+slides.length;
     $('buildPosition').textContent='Aufbau '+(state.step+1)+' / '+s.cues.length;
+    if(s.scene==='investigation')$('slide').querySelector('.calendar').innerHTML=esc(['16.–17. Juli','19. Juli','20. Juli'][state.step])+'<span>2026</span>';
     $('progress').style.width=((state.index+(state.step+1)/s.cues.length)/slides.length*100)+'%';
     $('prev').disabled=state.index===0&&state.step===0;
     $('next').disabled=state.index===slides.length-1&&state.step===s.cues.length-1;
     $('next').textContent=intro?'In die Szene →':state.step<s.cues.length-1?'Weiter aufbauen →':'Nächste Folie →';
     $('play').hidden=s.cues.length===1;$('replay').hidden=s.cues.length===1;
     $('play').textContent=timer?'Anhalten':'Szene abspielen';
+    $('play').setAttribute('aria-label','Aktuelle Szene automatisch aufbauen');
     $('play').setAttribute('aria-pressed',String(!!timer));
     if(state.step===s.cues.length-1)stop();
+    moviePlayback();
     save();
   }
-  function stop(){clearInterval(timer);timer=null;if(openingActive){openingPlayback();return;}$('play').textContent='Szene abspielen';$('play').setAttribute('aria-pressed','false');}
+  function stop(){clearInterval(timer);timer=null;if(openingActive){openingMovie?.pause();openingPlayback();return;}if(sceneMovie){sceneMovie.pause();moviePlayback();return;}$('play').textContent='Szene abspielen';$('play').setAttribute('aria-pressed','false');}
   function cancelDocking(){
-    cancelOpeningFade();
     cancelCrossfade();
     if(docking){const old=docking;docking=null;(old.animations||[old.animation]).filter(Boolean).forEach(animation=>animation.cancel());(old.clones||[old.clone]).filter(Boolean).forEach(clone=>clone.remove());old.target?.classList.remove('arriving');}
     $('slide').classList.remove('portrait-docking');
@@ -307,6 +338,8 @@
     const copy=original.cloneNode(true);
     // Only foreground content crossfades; duplicating the flock causes flicker.
     copy.querySelector('.flock-layer')?.remove();
+    // A cloned iframe would reload and create a second film controller.
+    copy.querySelectorAll('iframe').forEach(el=>el.remove());
     // Namespace snapshot IDs, including SVG arrow markers. The live DOM remains unique.
     copy.querySelectorAll('[id]').forEach(el=>{
       if(el.id==='cue'){
@@ -339,8 +372,10 @@
   }
   function changeBuild(step){
     cancelDocking();
+    const forward=step>state.step;
     const snapshot=portraitSnapshot(step);
     state.step=step;updateStep(!snapshot);
+    showFilmStep(forward&&state.motion&&!reduced.matches);
     if(snapshot)blendSlides(snapshot);
   }
   function advance(){
@@ -399,12 +434,19 @@
   function prev(){stop();cancelDocking();if(state.step>0){changeBuild(state.step-1);}else if(state.index>0)go(state.index-1,slides[state.index-1].cues.length-1);}
   function play(){
     if(openingActive){toggleOpeningPlayback();return;}
+    if(sceneMovie){
+      if(!sceneMovie.paused){sceneMovie.pause();moviePlayback();return;}
+      const ends=filmSteps[current().scene];
+      if(!state.motion||reduced.matches){showFilmStep(false);return;}
+      if(sceneMovie.time>=ends[state.step]-.03)sceneMovie.seek(state.step?ends[state.step-1]:0);
+      sceneMovie.playTo(ends[state.step]);moviePlayback();return;
+    }
     if(timer){stop();return;}
     cancelDocking();if(state.step===current().cues.length-1)changeBuild(0);
     timer=setInterval(advance,4000);
     $('play').textContent='Anhalten';$('play').setAttribute('aria-pressed','true');
   }
-  function open(id){stop();if(openingActive)$('openingVideo').pause();cancelDocking();$(id).showModal();}
+  function open(id){stop();cancelDocking();$(id).showModal();}
   function deepDives(s,step){return(s.deepDives||[]).filter(item=>item.step===step);}
   function deepDiveHTML(item){
     return '<details class="script-depth"><summary>Vertiefung bei Nachfragen: '+esc(item.question)+'</summary>'+item.answer.map(p=>'<p>'+esc(p)+'</p>').join('')+(item.note?'<p class="muted">'+esc(item.note)+'</p>':'')+'<p class="depth-sources">Quellen / Einordnung: '+item.sources.map(id=>'<a href="'+esc(speakerSources[id].url)+'" target="_blank" rel="noopener noreferrer">'+esc(speakerSources[id].name)+'</a>').join(' · ')+'</p></details>';
@@ -424,13 +466,13 @@
     const url=URL.createObjectURL(new Blob(['\uFEFF'+text],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');
     a.href=url;a.download='Hugging-Face-Fall-Vortragsskript.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
   }
-function syncMotion(){cancelDocking();if(openingActive&&(!state.motion||reduced.matches))$('openingVideo').pause();document.body.classList.toggle('no-motion',!state.motion||reduced.matches);$('motion').checked=state.motion&&!reduced.matches;}
-  function syncTheme(){document.documentElement.dataset.theme=state.theme;document.querySelectorAll('input[name="theme"]').forEach(input=>input.checked=input.value===state.theme);}
+function syncMotion(){cancelDocking();if(!state.motion||reduced.matches){openingMovie?.pause();showFilmStep(false);}document.body.classList.toggle('no-motion',!state.motion||reduced.matches);$('motion').checked=state.motion&&!reduced.matches;}
+  function syncTheme(){document.documentElement.dataset.theme=state.theme;openingMovie?.theme(state.theme);sceneMovie?.theme(state.theme);document.querySelectorAll('input[name="theme"]').forEach(input=>input.checked=input.value===state.theme);}
   function syncProjector(){document.documentElement.dataset.projector=String(state.projector);$('projector').checked=state.projector;}
   $('prev').onclick=prev;$('next').onclick=next;$('play').onclick=play;
   $('startOpeningButton').onclick=toggleOpeningPlayback;
-  $('openingVideo').onclick=()=>{if(openingActive)toggleOpeningPlayback();};
-  $('replay').onclick=()=>{if(openingActive){$('openingVideo').currentTime=0;$('openingVideo').play().catch(()=>{});return;}stop();changeBuild(0);$('viewport').scrollTop=0;};
+  $('openingStage').onclick=e=>{if(openingActive&&openingStarted&&!e.target.closest('button'))toggleOpeningPlayback();};
+  $('replay').onclick=()=>{if(openingActive){clearTitleArrival();$('slide').hidden=true;openingMovie.seek(0);toggleOpeningPlayback();return;}stop();changeBuild(0);showFilmStep(state.motion&&!reduced.matches);$('viewport').scrollTop=0;};
   $('notes').onclick=notes;
   $('overview').onclick=()=>{$('slideList').innerHTML=slides.map((s,i)=>'<button data-slide="'+i+'" aria-current="'+(i===state.index)+'"><span>'+String(i+1).padStart(2,'0')+'</span><span>'+esc(s.title)+'<small>'+esc(s.date)+'</small></span></button>').join('');open('menuDialog');};
   $('settings').onclick=()=>{$('storageStatus').textContent=storageOK?'Farbschema, Projektor- und Bewegungseinstellung werden gespeichert. Beim Öffnen oder Neuladen erscheint immer der Startbildschirm, ohne automatische Wiedergabe.':'Beim Öffnen oder Neuladen erscheint immer der Startbildschirm, ohne automatische Wiedergabe. Einstellungen können hier nicht gespeichert werden.';open('settingsDialog');};
@@ -452,7 +494,7 @@ function syncMotion(){cancelDocking();if(openingActive&&(!state.motion||reduced.
     }catch(_){open('settingsDialog');$('fullscreenStatus').textContent='Vollbild ist in diesem Browser nicht verfügbar. Die Präsentation passt sich auch im Browserfenster an.';}
   };
   document.addEventListener('fullscreenchange',()=>{cancelDocking();$('fullscreen').textContent=document.fullscreenElement?'Vollbild beenden':'Vollbild einschalten';});
-  window.addEventListener('resize',cancelDocking);
+  window.addEventListener('resize',()=>{cancelDocking();if(openingActive&&openingStarted){clearTitleArrival();scrubOpeningTitle(openingMovie.time);}});
   $('viewport').addEventListener('scroll',()=>{if(docking)cancelDocking();},{passive:true});
   $('reset').onclick=()=>{$('settingsDialog').close();open('resetDialog');};
   $('confirmReset').onclick=()=>{$('resetDialog').close();go(0);startOpening();};
@@ -462,7 +504,7 @@ function syncMotion(){cancelDocking();if(openingActive&&(!state.motion||reduced.
     if(e.target.closest('#downloadText'))downloadText();
   });
   document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'){stop();if(openingActive)$('openingVideo').pause();}
+    if(e.key==='Escape')stop();
     if(document.querySelector('dialog[open]')||e.altKey||e.ctrlKey||e.metaKey||e.target.closest('input,textarea,select,button,a,video'))return;
     if(openingActive&&['ArrowRight','ArrowLeft',' ','Home'].includes(e.key)){
       e.preventDefault();if(e.key==='ArrowRight')finishOpening();else if(e.key===' ')toggleOpeningPlayback();else if(e.key==='Home')startOpening();return;
@@ -475,18 +517,18 @@ function syncMotion(){cancelDocking();if(openingActive&&(!state.motion||reduced.
   $('viewport').addEventListener('touchmove',e=>{if(e.touches.length!==1)touch=null;},{passive:true});
   $('viewport').addEventListener('touchend',e=>{if(!touch||document.querySelector('dialog[open]'))return;const p=e.changedTouches[0],dx=p.clientX-touch.x,dy=p.clientY-touch.y;touch=null;if(Math.abs(dx)>85&&Math.abs(dx)>Math.abs(dy)*2.5){dx<0?next():prev();}},{passive:true});
   $('viewport').addEventListener('touchcancel',()=>{touch=null;},{passive:true});
-  document.addEventListener('visibilitychange',()=>{document.body.classList.toggle('page-inactive',document.hidden);if(document.hidden){stop();$('openingVideo').pause();cancelDocking();}});
-  window.addEventListener('pagehide',()=>{stop();$('openingVideo').pause();cancelDocking();});
+  document.addEventListener('visibilitychange',()=>{document.body.classList.toggle('page-inactive',document.hidden);if(document.hidden){stop();cancelDocking();}});
+  window.addEventListener('pagehide',()=>{stop();cancelDocking();});
   const aliases={beteiligte:'auftrag',grenze:'zugang',kollektiv:'organisation',ziel:'bewertung',entscheidung:'bewertung',juli:'zugang',hemmung:'reibungen',reaktion:'aufarbeitung',schutz:'bilanz',check:'schwarm-organigramm',einordnung:'schwarm-organigramm','portraet-phaseone-big':'uebergabe','portraet-entdeckung':'zugang','portraet-current':'bestaetigung','portraet-marb':'schwerpunkt','portraet-jan':'codeausfuehrung','portraet-lily':'koordination'};
   const hashIndex=()=>slides.findIndex(s=>s.id===(aliases[location.hash.slice(1)]||location.hash.slice(1)));
   window.addEventListener('hashchange',()=>{const i=hashIndex();if(i>=0)go(i);});
   // A fresh call always starts at the beginning, even with a stale deep link.
   try{history.scrollRestoration='manual';}catch(_){}
-  const openingVideo=$('openingVideo');
-  for(const event of ['play','pause','playing'])openingVideo.addEventListener(event,openingPlayback);
-  openingVideo.addEventListener('ended',()=>finishOpening(true,true));
-  openingVideo.addEventListener('timeupdate',()=>{if(openingActive&&openingVideo.duration)$('progress').style.width=(openingVideo.currentTime/openingVideo.duration*100)+'%';});
-  openingVideo.addEventListener('error',()=>{if(openingActive){$('openingHint').hidden=false;$('openingHint').textContent='Das Video konnte nicht geladen werden. Mit „Zur Präsentation“ kannst du die Folien trotzdem öffnen.';}});
+  openingMovie=new HFMovie($('openingFilm'),{
+    change:movie=>{if(openingActive){openingPlayback();scrubOpeningTitle(movie.time);}},
+    ended:()=>{if(openingActive)finishOpening();}
+  });
+  setTimeout(()=>{if(openingActive&&!openingMovie.ready){$('openingHint').hidden=false;$('openingHint').textContent='Die Animation konnte nicht geladen werden. Mit „Zur Präsentation“ kannst du die Folien trotzdem öffnen.';}},7000);
   syncTheme();syncProjector();syncMotion();go(0,0,true,false);startOpening();
   window.addEventListener('pageshow',e=>{if(e.persisted){document.querySelectorAll('dialog[open]').forEach(d=>d.close());go(0,0,true,false);startOpening();}});
 })();

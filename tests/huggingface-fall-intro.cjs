@@ -15,7 +15,7 @@ const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),asse
    await page.locator('input[name="theme"][value="'+theme+'"]').check();
    await page.locator('[data-close=settingsDialog]').click();
    await page.evaluate(()=>document.fonts.ready);
-   assert.equal(await page.locator('#position').textContent(),'Folie 01 / 30');
+   assert.equal(await page.locator('#position').textContent(),'Folie 01 / 31');
    assert.match(await page.locator('.title-portrait').textContent(),/Claus Unterberg/);
    assert.equal(await page.locator('.title-portrait .bird-anon1').count(),1);
    assert.equal(await page.locator('.concept-agent .bird-anon1').count(),0);
@@ -24,7 +24,7 @@ const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),asse
     assert.ok(b.x>=0&&b.x+b.width<=w&&b.y>=0&&b.y+b.height<nav.y,selector+' clipped '+w+' '+theme);
    }
    await page.screenshot({path:path.join(out,theme+'-'+w+'-title.png')});
-   await page.locator('#next').click();assert.equal(await page.locator('#position').textContent(),'Folie 02 / 30');
+   await page.locator('#next').click();assert.equal(await page.locator('#position').textContent(),'Folie 02 / 31');
    assert.equal(await page.locator('.concept-agent .bird-anon1').count(),1);
    assert.equal(await page.locator('.concept-agent .bird-hero').count(),0);
    for(let i=0;i<4;i++){
@@ -35,7 +35,7 @@ const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),asse
     await page.screenshot({path:path.join(out,theme+'-'+w+'-concept-'+i+'.png')});
     await page.locator('#next').click();
    }
-   assert.equal(await page.locator('#position').textContent(),'Folie 03 / 30');
+   assert.equal(await page.locator('#position').textContent(),'Folie 03 / 31');
   }
   for(const width of [1024,390]){
    await page.setViewportSize({width,height:844});await openStory(page,url);

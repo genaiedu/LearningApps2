@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>Die Spuren führen zusammen</title>
+    <script>window.__timelines = {};</script>
+<script src="gsap.min.js"></script>
+    <style>
+      @font-face { font-family: Inter; src: url("../../../../LearningApps/fonts/inter-v20-latin-regular.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: Inter; src: url("../../../../LearningApps/fonts/inter-v20-latin-600.woff2") format("woff2"); font-weight: 600 900; }
+      @font-face { font-family: Outfit; src: url("../../../../LearningApps/fonts/outfit-v15-latin-600.woff2") format("woff2"); font-weight: 500 900; }
+
+      :root {
+        --bg: #15162f;
+        --ink: #fff6e4;
+        --muted: #b8b9d4;
+        --gold: #ffd477;
+        --mint: #79dfd3;
+        --line: #444462;
+        --panel: rgba(21, 22, 47, 0.92);
+        --bird-fill: #33334f;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: Inter, sans-serif; color: var(--ink); background: var(--bg); }
+      .clip { position: absolute; inset: 0; }
+
+      /* top bar, as in the presentation */
+      #topbar { position: absolute; left: 0; right: 0; top: 0; height: 76px; border-bottom: 1.5px solid #24254a; display: flex; align-items: center; padding: 0 44px; font: 400 24px/1 Inter, sans-serif; color: var(--muted); }
+      #topbar b { color: var(--gold); font-weight: 600; margin-left: 8px; }
+
+      /* background flock (build 3) */
+      .fb { position: absolute; overflow: visible; }
+      .fb path { fill: var(--bird-fill); stroke: var(--ink); stroke-opacity: 0.72; stroke-width: 1.1; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+
+      /* heading block */
+      #heading { position: absolute; left: 110px; top: 200px; width: 900px; padding: 26px 30px 30px 32px; border-radius: 10px; }
+      #heading-bg { position: absolute; inset: 0; border-radius: 10px; background: var(--panel); border-left: 4px solid var(--gold); opacity: 0; }
+      .eyebrow { position: relative; display: flex; align-items: center; gap: 18px; font: 600 21px/1 Inter, sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 30px; }
+      .eyebrow .rule { display: block; width: 52px; height: 3px; background: var(--gold); }
+      .calendar { position: relative; display: flex; align-items: baseline; gap: 14px; border-left: 3px solid var(--gold); padding: 4px 0 4px 18px; margin-bottom: 34px; align-items: center; }
+      .cal-date { position: relative; display: block; width: 190px; height: 46px; overflow: hidden; }
+      .cal-date span { position: absolute; left: 0; top: 2px; font: 600 36px/1.1 Outfit, sans-serif; color: var(--gold); white-space: nowrap; }
+      .cal-year { font: 400 22px/1 Inter, sans-serif; color: var(--muted); }
+      h1 { position: relative; font: 600 102px/1.04 Outfit, sans-serif; letter-spacing: -0.01em; }
+      h1 .ln { display: block; overflow: hidden; padding-bottom: 24px; margin-bottom: -24px; }
+      h1 .ln span { display: inline-block; }
+      h1 .accent { color: var(--gold); }
+      .lead { position: relative; margin-top: 30px; font: 400 29px/1.45 Inter, sans-serif; color: var(--muted); max-width: 660px; }
+
+      /* investigation art */
+      #art { position: absolute; left: 1010px; top: 160px; width: 860px; height: 499px; }
+      #art svg.inv { width: 100%; height: 100%; overflow: visible; }
+      #art text { fill: var(--ink); font: 600 19px Outfit, sans-serif; }
+
+      #status { position: absolute; left: 980px; width: 920px; top: 690px; height: 60px; }
+      #status p { position: absolute; left: 0; right: 0; top: 0; text-align: center; font: 600 25px/1.3 Outfit, sans-serif; color: var(--ink); }
+      #status .bgp { position: absolute; left: 30px; right: 30px; top: -12px; bottom: -14px; border-radius: 10px; background: var(--panel); opacity: 0; }
+      #st1 .d, #st2 .d { color: var(--gold); }
+      #st2 .ph { display: inline-block; }
+      #note { white-space: nowrap; position: absolute; left: 980px; width: 920px; top: 768px; text-align: center; font: 400 15px/1 Inter, sans-serif; color: var(--muted); }
+
+      /* bottom bar */
+      #bottom { position: absolute; left: 120px; right: 120px; top: 850px; padding: 18px 20px 20px; border-radius: 10px; }
+      #bottom-bg { position: absolute; inset: 0; border-radius: 10px; background: var(--panel); opacity: 0; }
+      #bottom-rule { position: absolute; left: 20px; top: 0; width: 70px; height: 3px; background: var(--gold); }
+      #pop { position: relative; display: flex; align-items: baseline; gap: 18px; font: 400 21px/1 Inter, sans-serif; color: var(--muted); margin-bottom: 16px; }
+      #pop strong { font: 600 30px/1 Outfit, sans-serif; color: var(--gold); }
+      #pop small { font-size: 17px; }
+      #cue { position: relative; display: block; overflow: hidden; padding-bottom: 10px; margin-bottom: -10px; }
+      #cue span { display: inline-block; white-space: nowrap; font: 600 38px/1.15 Outfit, sans-serif; color: var(--ink); }
+    </style>
+  </head>
+  <body data-film="discovery">
+    <div data-hf-id="hf-z7xn" id="root" data-composition-id="main" data-start="0" data-duration="5" data-width="1920" data-height="1080">
+
+      <div data-hf-id="hf-kua4" id="flock" class="clip" data-start="0" data-duration="5" data-track-index="0"></div>
+
+      <div data-hf-id="hf-pl9b" id="slide" class="clip" data-start="0" data-duration="5" data-track-index="1">
+        <div data-hf-id="hf-3bng" id="topbar">KI /<b data-hf-id="hf-za7a">Fallakte 07.26</b></div>
+
+        <div data-hf-id="hf-04ox" id="heading">
+          <div data-hf-id="hf-gmb3" id="heading-bg"></div>
+          <div data-hf-id="hf-ucb5" class="eyebrow"><span data-hf-id="hf-6o6j" class="rule"></span>Akt 4 · Die Folgen</div>
+          <div data-hf-id="hf-uere" class="calendar">
+            <span data-hf-id="hf-qpw5" class="cal-date" data-layout-allow-overflow="true"><span data-hf-id="hf-z56a" id="cal19" data-layout-allow-occlusion="true">19. Juli</span><span data-hf-id="hf-pft6" id="cal20" style="top: 50px">20. Juli</span></span>
+            <span data-hf-id="hf-s7ep" class="cal-year">2026</span>
+          </div>
+          <h1 data-hf-id="hf-m3fm">
+            <span data-hf-id="hf-smev" class="ln"><span data-hf-id="hf-w975" id="h-a">Die Spuren</span></span>
+            <span data-hf-id="hf-oupj" class="ln"><span data-hf-id="hf-c05j" id="h-b" class="accent">führen zusammen</span></span>
+          </h1>
+          <p data-hf-id="hf-ohqk" class="lead" id="lead">Ein bekannter Angriff – und erst später die Erkenntnis, dass eigene Agenten beteiligt sind.</p>
+        </div>
+
+        <div data-hf-id="hf-zscs" id="art">
+          <svg data-hf-id="hf-gbur" class="inv" viewBox="0 0 1000 580">
+            <g data-hf-id="hf-0feo" id="net">
+              <rect data-hf-id="hf-jsw1" x="55" y="20" width="810" height="475" rx="22" fill="none" stroke="#444462" stroke-width="3" />
+              <g data-hf-id="hf-wxgv" id="links" fill="none" stroke="#79dfd3" stroke-width="3" opacity="0.65">
+                <path data-hf-id="hf-5hj2" d="M450 255 L140 90" /><path data-hf-id="hf-8bns" d="M450 255 L450 90" /><path data-hf-id="hf-kkov" d="M450 255 L770 90" /><path data-hf-id="hf-0tjz" d="M450 255 L140 255" />
+                <path data-hf-id="hf-sdps" d="M450 255 L770 255" /><path data-hf-id="hf-3vuc" d="M450 255 L140 410" /><path data-hf-id="hf-rh7m" d="M450 255 L450 410" /><path data-hf-id="hf-89hf" d="M450 255 L770 410" />
+              </g>
+              <g data-hf-id="hf-37uj" id="pulses" fill="#79dfd3" />
+
+              <g data-hf-id="hf-yyx1" class="agent" transform="translate(140 90)">
+                <svg data-hf-id="hf-8ywn" x="-34" y="-45" width="68" height="68" viewBox="0 0 100 100"><g data-hf-id="hf-vera">
+                  <path data-hf-id="hf-yp2t" d="M39 79v10m-6 0h12m14-10v10m-6 0h12" stroke="#f7b463" stroke-width="4" stroke-linecap="round" />
+                  <ellipse data-hf-id="hf-8paj" cx="50" cy="56" rx="31" ry="31" fill="#c88753" /><ellipse data-hf-id="hf-8jgq" cx="50" cy="62" rx="21" ry="23" fill="#f3cd8b" />
+                  <path data-hf-id="hf-jvoc" d="M23 40C4 52 13 73 34 79L30 53z" fill="#935f48" />
+                  <path data-hf-id="hf-wr4t" d="m22 16 16 9h25l15-9-3 24H25z" fill="#c88753" />
+                  <circle data-hf-id="hf-ena9" cx="36" cy="38" r="17" fill="#ffe6b3" /><circle data-hf-id="hf-qwvs" cx="64" cy="38" r="17" fill="#ffe6b3" />
+                  <circle data-hf-id="hf-fvgy" cx="36" cy="38" r="5" fill="#fff8df" /><circle data-hf-id="hf-2z59" cx="37" cy="38" r="2.5" fill="#17182e" />
+                  <circle data-hf-id="hf-6ufp" cx="64" cy="38" r="5" fill="#fff8df" /><circle data-hf-id="hf-8kx6" cx="65" cy="38" r="2.5" fill="#17182e" />
+                  <path data-hf-id="hf-ggzv" d="m45 45 5 10 5-10z" fill="#e38745" />
+                  <path data-hf-id="hf-lreb" d="m44 67 6 5 6-5m-12 9 6 5 6-5" fill="none" stroke="#c88753" stroke-width="3" />
+                </g></svg>
+                <text data-hf-id="hf-ph5g" y="45" text-anchor="middle">PHASEONE10841</text>
+              </g>
+              <g data-hf-id="hf-ic23" class="agent" transform="translate(450 90)">
+                <svg data-hf-id="hf-1rcn" x="-34" y="-45" width="68" height="68" viewBox="0 0 100 100"><g data-hf-id="hf-pwpm">
+                  <path data-hf-id="hf-9z1l" d="M39 79v10m-6 0h12m14-10v10m-6 0h12" stroke="#f7b463" stroke-width="4" stroke-linecap="round" />
+                  <path data-hf-id="hf-rla4" d="M23 68 12 93l29-10" fill="#654ea0" /><ellipse data-hf-id="hf-6oky" cx="45" cy="59" rx="25" ry="29" fill="#36314c" />
+                  <path data-hf-id="hf-dxmw" d="M31 40c-15 9-14 33 11 39l11-11z" fill="#8263b7" />
+                  <circle data-hf-id="hf-sn7n" cx="47" cy="30" r="20" fill="#36314c" /><path data-hf-id="hf-4aqs" d="M45 37c11-5 15 0 15 13v12H41z" fill="#fff4c5" />
+                  <path data-hf-id="hf-9o3j" d="M58 14C86 11 98 26 95 39H59z" fill="#ffbb4e" /><path data-hf-id="hf-yj7z" d="M58 31h38l-6 10H58z" fill="#ef7758" />
+                  <path data-hf-id="hf-rw85" d="M87 18c8 5 10 12 8 21H84z" fill="#54406e" />
+                  <circle data-hf-id="hf-cegb" cx="48" cy="27" r="5" fill="#fff8df" /><circle data-hf-id="hf-qoro" cx="49" cy="27" r="2.5" fill="#17182e" />
+                </g></svg>
+                <text data-hf-id="hf-7zls" y="45" text-anchor="middle">PHASEONE[big]</text>
+              </g>
+              <g data-hf-id="hf-x37y" class="agent" transform="translate(770 90)">
+                <svg data-hf-id="hf-1d1m" x="-34" y="-45" width="68" height="68" viewBox="0 0 100 100"><g data-hf-id="hf-y9y0" transform="translate(100 0) scale(-1 1)">
+                  <path data-hf-id="hf-b5yo" d="M39 79v10m-6 0h12m14-10v10m-6 0h12" stroke="#f7b463" stroke-width="4" stroke-linecap="round" />
+                  <path data-hf-id="hf-ljg5" d="M25 62 11 84l30-11" fill="#2666a5" /><ellipse data-hf-id="hf-a9uc" cx="46" cy="57" rx="23" ry="28" fill="#29b4cf" />
+                  <ellipse data-hf-id="hf-u3w8" cx="54" cy="64" rx="16" ry="21" fill="#ffab61" /><path data-hf-id="hf-ld5v" d="M27 41C15 57 23 76 44 76l9-10z" fill="#2877b2" />
+                  <circle data-hf-id="hf-0wfk" cx="49" cy="29" r="21" fill="#29b4cf" /><path data-hf-id="hf-pilp" d="m66 23 32 9-31 7z" fill="#222c43" />
+                  <path data-hf-id="hf-6dk6" d="M36 37h24l-3 8H43z" fill="#fff5de" />
+                  <circle data-hf-id="hf-91bd" cx="54" cy="26" r="5" fill="#fff8df" /><circle data-hf-id="hf-4mo2" cx="55" cy="26" r="2.5" fill="#17182e" />
+                </g></svg>
+                <text data-hf-id="hf-gu4i" y="45" text-anchor="middle">38148c</text>
+              </g>
+              <g data-hf-id="hf-xim6" class="agent" transform="translate(140 255)">
+                <svg data-hf-id="hf-0yql" x="-34" y="-45" width="68" height="68" viewBox="0 0 100 100"><g data-hf-id="hf-qb0n">
+                  <path data-hf-id="hf-arnn" d="M39 79v10m-6 0h12m14-10v10m-6 0h12" stroke="#f7b463" stroke-width="4" stroke-linecap="round" />
+                  <path data-hf-id="hf-b3xn" d="M29 62 10 93l28-12" fill="#244d4e" /><ellipse data-hf-id="hf-cbje" cx="47" cy="56" rx="22" ry="29" fill="#b6e0ba" />
+                  <path data-hf-id="hf-pmv8" d="M28 39C12 56 22 77 42 81l12-18z" fill="#377c69" />
+                  <path data-hf-id="hf-ult7" d="m31 56 10 6m-7 5 10 5" stroke="#e9f3dc" stroke-width="4" />
+                  <path data-hf-id="hf-9d8d" d="M32 26 48 5l18 18z" fill="#f26564" /><circle data-hf-id="hf-aaeo" cx="48" cy="31" r="18" fill="#eaf1d9" />
+                  <path data-hf-id="hf-c9m0" d="M31 28h18v10H32z" fill="#245251" /><path data-hf-id="hf-qx1w" d="m64 28 27 6-27 6z" fill="#c3c9b5" />
+                  <circle data-hf-id="hf-3jgn" cx="54" cy="28" r="5" fill="#fff8df" /><circle data-hf-id="hf-p81k" cx="55" cy="28" r="2.5" fill="#17182e" />
+                </g></svg>
+                <text data-hf-id="hf-7cf2" y="45" text-anchor="middle">CURRENT</text>
+              </g>
+              <g data-hf-id="hf-0z03" class="agent" transform="translate(770 255)">
+                <svg data-hf-id="hf-3qvs" x="-34" y="-45" width="68" height="68" viewBox="0 0 100 100"><g data-hf-id="hf-y81c" transform="translate(100 0) scale(-1 1)">
+                  <path data-hf-id="hf-muub" d="M39 64v27h-9m22-25 13 10-15 15" fill="none" stroke="#f8a4ab" stroke-width="4" stroke-linecap="round" />
+                  <ellipse data-hf-id="hf-2of5" cx="39" cy="57" rx="24" ry="17" fill="#f498c0" /><path data-hf-id="hf-pkvg" d="M17 54c11 24 32 21 41 7L38 49z" fill="#cd6ca3" />
+                  <path data-hf-id="hf-z96x" d="M52 58c34-14-3-29 12-40" fill="none" stroke="#f498c0" stroke-width="11" stroke-linecap="round" />
+                  <circle data-hf-id="hf-rhlj" cx="69" cy="18" r="11" fill="#f8b0cc" /><path data-hf-id="hf-dnsl" d="M77 18h15v14H81z" fill="#ffe6be" />
+                  <path data-hf-id="hf-7y6z" d="M82 27h10l-6 12-6-6z" fill="#343047" />
+                  <circle data-hf-id="hf-pdok" cx="70" cy="16" r="5" fill="#fff8df" /><circle data-hf-id="hf-02ez" cx="71" cy="16" r="2.5" fill="#17182e" />
+                </g></svg>
+                <text data-hf-id="hf-si9n" y="45" text-anchor="middle">MARB051</text>
+              </g>
+              <g data-hf-id="hf-a1tf" class="agent" transform="translate(140 410)">
+                <svg data-hf-id="hf-3ckr" x="-34" y="-45" width="68" height="68" viewBox="0 0 100 100"><g data-hf-id="hf-qpbo">
+                  <path data-hf-id="hf-8s4i" d="M39 79v10m-6 0h12m14-10v10m-6 0h12" stroke="#f7b463" stroke-width="4" stroke-linecap="round" />
+                  <path data-hf-id="hf-ttp1" d="M28 66 8 87l27-5" fill="#292b48" /><ellipse data-hf-id="hf-y1b4" cx="45" cy="59" rx="26" ry="28" fill="#333a59" />
+                  <path data-hf-id="hf-jjbv" d="M25 42C7 63 27 83 50 78L54 55z" fill="#4b597c" />
+                  <path data-hf-id="hf-hb09" d="m28 58 14 7m-12 1 13 7" stroke="#6c7ca5" stroke-width="3" />
+                  <circle data-hf-id="hf-24om" cx="52" cy="28" r="20" fill="#353c59" /><path data-hf-id="hf-9tck" d="M67 23c19 0 24 7 26 15L67 36z" fill="#727a94" />
+                  <circle data-hf-id="hf-8nl1" cx="57" cy="25" r="5" fill="#fff8df" /><circle data-hf-id="hf-al5w" cx="58" cy="25" r="2.5" fill="#17182e" />
+                </g></svg>
+                <text data-hf-id="hf-g2wa" y="45" text-anchor="middle">JAN183411</text>
+              </g>
+              <g data-hf-id="hf-xmn1" class="agent" transform="translate(450 410)">
+                <svg data-hf-id="hf-2y9q" x="-34" y="-45" width="68" height="68" viewBox="0 0 100 100"><g data-hf-id="hf-r3mp">
+                  <path data-hf-id="hf-8dth" d="M39 79v10m-6 0h12m14-10v10m-6 0h12" stroke="#f7b463" stroke-width="4" stroke-linecap="round" />
+                  <path data-hf-id="hf-rx1y" d="m28 65-16 18 26-6" fill="#625e49" /><ellipse data-hf-id="hf-fz2m" cx="46" cy="57" rx="29" ry="30" fill="#898570" />
+                  <ellipse data-hf-id="hf-7ix7" cx="53" cy="62" rx="22" ry="23" fill="#f4e7cf" /><path data-hf-id="hf-fkrh" d="M26 39C8 52 17 77 37 79l13-23z" fill="#686854" />
+                  <circle data-hf-id="hf-cxsu" cx="52" cy="29" r="22" fill="#898570" />
+                  <path data-hf-id="hf-lpzh" d="M53 13c21 0 27 24 13 38-4 6-6 15-17 17-13-1-17-11-12-23-7-14 2-29 16-32z" fill="#e97650" />
+                  <path data-hf-id="hf-8bgc" d="m72 27 18 6-18 5z" fill="#3c3632" />
+                  <circle data-hf-id="hf-haga" cx="60" cy="26" r="5" fill="#fff8df" /><circle data-hf-id="hf-n85d" cx="61" cy="26" r="2.5" fill="#17182e" />
+                </g></svg>
+                <text data-hf-id="hf-jhn6" y="45" text-anchor="middle">CDA23</text>
+              </g>
+              <g data-hf-id="hf-0ffq" class="agent" transform="translate(770 410)">
+                <svg data-hf-id="hf-2jyp" x="-34" y="-45" width="68" height="68" viewBox="0 0 100 100"><g data-hf-id="hf-x149" transform="translate(100 0) scale(-1 1)">
+                  <path data-hf-id="hf-9kqk" d="M39 79v10m-6 0h12m14-10v10m-6 0h12" stroke="#f7b463" stroke-width="4" stroke-linecap="round" />
+                  <path data-hf-id="hf-vazs" d="M29 66 19 92l23-10" fill="#c7d3d2" /><ellipse data-hf-id="hf-h3ib" cx="45" cy="58" rx="24" ry="28" fill="#f4f4df" />
+                  <path data-hf-id="hf-9a77" d="M26 41c-14 17-4 35 20 36l9-16z" fill="#d2dfd6" />
+                  <path data-hf-id="hf-jbnl" d="M36 24 28 3l14 10L47 0l8 15L66 4l-1 23z" fill="#e6dd6d" /><circle data-hf-id="hf-rqnf" cx="52" cy="29" r="20" fill="#f7f5df" />
+                  <path data-hf-id="hf-uhwc" d="M68 26c19 0 20 15 6 24l-7-10z" fill="#737f7a" />
+                  <circle data-hf-id="hf-brnf" cx="56" cy="26" r="5" fill="#fff8df" /><circle data-hf-id="hf-qsa4" cx="57" cy="26" r="2.5" fill="#17182e" />
+                  <circle data-hf-id="hf-w1d7" cx="53" cy="39" r="5" fill="#f4d68c" />
+                </g></svg>
+                <text data-hf-id="hf-kgf5" y="45" text-anchor="middle">LILY</text>
+              </g>
+
+              <g data-hf-id="hf-j00h" id="board">
+                <rect data-hf-id="hf-1dtz" x="415" y="225" width="70" height="52" rx="8" fill="#15162f" stroke="#79dfd3" stroke-width="4" />
+                <path data-hf-id="hf-q73i" d="M426 239h47m-47 12h47m-47 12h29" stroke="#79dfd3" stroke-width="3" />
+                <text data-hf-id="hf-h5sw" x="450" y="305" text-anchor="middle">Nachrichtenbrett</text>
+              </g>
+            </g>
+
+            <g data-hf-id="hf-w2f8" id="mag">
+              <path data-hf-id="hf-vkrz" d="M587 307l66 75" stroke="#23344f" stroke-width="24" stroke-linecap="round" />
+              <path data-hf-id="hf-1jzk" d="M590 308l62 71" stroke="#4d6382" stroke-width="12" stroke-linecap="round" />
+              <circle data-hf-id="hf-d8qa" cx="526" cy="242" r="91" fill="#74d1d31a" stroke="#243a50" stroke-width="19" />
+              <circle data-hf-id="hf-ainh" cx="526" cy="242" r="91" fill="none" stroke="#8bdbd7" stroke-width="10" />
+              <circle data-hf-id="hf-wm1q" cx="526" cy="242" r="80" fill="none" stroke="#ecffef99" stroke-width="2" />
+              <path data-hf-id="hf-cc3q" d="M470 205q19-28 52-30" stroke="#ffffffbb" stroke-width="8" fill="none" stroke-linecap="round" />
+              <path data-hf-id="hf-mzv1" d="M584 271l-12 17" stroke="#ffffff77" stroke-width="5" stroke-linecap="round" />
+            </g>
+
+            <g data-hf-id="hf-puoi" id="alerts">
+              <g data-hf-id="hf-818t" class="alert" transform="translate(660 94)"><circle data-hf-id="hf-pvmw" r="24" fill="#ffd34e" stroke="#75520c" stroke-width="2" /><text data-hf-id="hf-w2fe" text-anchor="middle" y="12" style="font: 700 36px Outfit, sans-serif; fill: #342807">!</text></g>
+              <g data-hf-id="hf-0uz7" class="alert" transform="translate(875 173)"><circle data-hf-id="hf-fexs" r="24" fill="#ffd34e" stroke="#75520c" stroke-width="2" /><text data-hf-id="hf-ugi6" text-anchor="middle" y="12" style="font: 700 36px Outfit, sans-serif; fill: #342807">!</text></g>
+              <g data-hf-id="hf-9tmi" class="alert" transform="translate(906 340)"><circle data-hf-id="hf-e80p" r="24" fill="#ffd34e" stroke="#75520c" stroke-width="2" /><text data-hf-id="hf-uut7" text-anchor="middle" y="12" style="font: 700 36px Outfit, sans-serif; fill: #342807">!</text></g>
+              <g data-hf-id="hf-3mlx" class="alert" transform="translate(396 106)"><circle data-hf-id="hf-embq" r="24" fill="#ffd34e" stroke="#75520c" stroke-width="2" /><text data-hf-id="hf-v948" text-anchor="middle" y="12" style="font: 700 36px Outfit, sans-serif; fill: #342807">!</text></g>
+              <g data-hf-id="hf-nndo" class="alert" transform="translate(617 479)"><circle data-hf-id="hf-dfen" r="24" fill="#ffd34e" stroke="#75520c" stroke-width="2" /><text data-hf-id="hf-sgz1" text-anchor="middle" y="12" style="font: 700 36px Outfit, sans-serif; fill: #342807">!</text></g>
+              <g data-hf-id="hf-lq50" class="alert" transform="translate(916 460)"><circle data-hf-id="hf-dtpo" r="24" fill="#ffd34e" stroke="#75520c" stroke-width="2" /><text data-hf-id="hf-sva2" text-anchor="middle" y="12" style="font: 700 36px Outfit, sans-serif; fill: #342807">!</text></g>
+              <g data-hf-id="hf-d2r4" class="alert" transform="translate(562 58)"><circle data-hf-id="hf-cmsl" r="24" fill="#ffd34e" stroke="#75520c" stroke-width="2" /><text data-hf-id="hf-t9l3" text-anchor="middle" y="12" style="font: 700 36px Outfit, sans-serif; fill: #342807">!</text></g>
+            </g>
+          </svg>
+        </div>
+
+        <div data-hf-id="hf-odm3" id="status">
+          <div data-hf-id="hf-qpjp" class="bgp" id="status-bg"></div>
+          <p data-hf-id="hf-1mie" id="st1"><span data-hf-id="hf-wdeh" class="d">19. Juli</span> · Interner Sicherheitsalarm – die Verbindung zu Hugging Face ist noch offen.</p>
+          <p data-hf-id="hf-w77h" id="st2"><span data-hf-id="hf-xu2g" class="d ph" id="p0">20. Juli ·</span> <span data-hf-id="hf-4s1u" class="ph" id="p1">Dieselben Zugangsdaten.</span> <span data-hf-id="hf-g3r4" class="ph" id="p2">Dieselbe Ablage.</span> <span data-hf-id="hf-70n9" class="ph" id="p3">Spuren der eigenen Agenten.</span></p>
+        </div>
+        <div data-hf-id="hf-bumy" id="note">Symbolische Rekonstruktion · keine Originalaufnahme · kein genauer Zeitpunkt der ersten menschlichen Beobachtung</div>
+
+        <div data-hf-id="hf-hus0" id="bottom">
+          <div data-hf-id="hf-sxbk" id="bottom-bg"></div>
+          <div data-hf-id="hf-4rb7" id="bottom-rule"></div>
+          <div data-hf-id="hf-mnri" id="pop"><strong data-hf-id="hf-axec">Rund 1.200 Agenten</strong><span data-hf-id="hf-sm0c">Am Board · insgesamt 8.–13. Juli</span><small data-hf-id="hf-7erh">Silhouetten symbolisch · keine Live-Zählung</small></div>
+          <div data-hf-id="hf-9dsd" id="cue" data-layout-allow-overflow="true"><span data-hf-id="hf-2pto">20. Juli: Die Spuren passen zusammen – eigene Agenten sind am Hugging-Face-Angriff beteiligt.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ---------- deterministic background flock ----------
+      function mulberry32(a) {
+        return function () {
+          a |= 0; a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const rnd = mulberry32(200726);
+      const BIRD = "M4 30C13 14 24 10 35 20L41 29C49 9 64 6 82 15C67 14 57 22 49 35L42 41L37 35C27 23 16 21 4 30Z";
+      const flock = document.getElementById("flock");
+      const fb = [];
+      for (let i = 0; i < 170; i++) {
+        const w = 30 + rnd() * 34;
+        const x = rnd() * 1920 - 20, y = 90 + rnd() * 980;
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 0 86 48");
+        svg.setAttribute("class", "fb");
+        svg.id = "fb" + i;
+        svg.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${(w * 48) / 86}px`;
+        svg.innerHTML = `<path d="${BIRD}"/>`;
+        flock.appendChild(svg);
+        fb.push({ id: "#fb" + i, rot: -22 + rnd() * 30, d: rnd() });
+      }
+
+      // ---------- timeline ----------
+      const tl = gsap.timeline({ paused: true });
+
+      // build 1: the board as it was (19 July)
+      tl.fromTo("#heading .eyebrow", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 0.05);
+      tl.fromTo("#h-a", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.1);
+      tl.fromTo("#h-b", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.22);
+      tl.fromTo("#lead", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.35);
+      tl.fromTo("#net", { opacity: 0, x: 40, y: 10, scale: 1, svgOrigin: "0 0" }, { opacity: 1, x: 40, y: 10, scale: 1, duration: 0.45, ease: "power2.out" }, 0.05);
+      tl.fromTo("#st1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.3);
+      tl.fromTo("#note", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.5);
+      // messages travelling over the board
+      const ends = [[140, 90], [450, 90], [770, 90], [140, 255], [770, 255], [140, 410], [450, 410], [770, 410]];
+      const pulses = document.getElementById("pulses");
+      ends.forEach(([x, y], k) => {
+        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        c.setAttribute("r", 6); c.setAttribute("cx", x); c.setAttribute("cy", y); c.id = "pl" + k;
+        pulses.appendChild(c);
+        tl.fromTo(c, { attr: { cx: x, cy: y }, opacity: 0 }, { attr: { cx: 450, cy: 255 }, opacity: 1, duration: 0.55, ease: "power1.in" }, 0.25 + k * 0.06);
+        tl.to(c, { opacity: 0, duration: 0.15 }, 0.8 + k * 0.06);
+      });
+
+      // build 2: alarm – network shrinks to a screen, magnifier, alerts (19 July)
+      tl.to("#net", { x: 20, y: 120, scale: 0.63, svgOrigin: "0 0", duration: 0.9, ease: "power3.inOut" }, 0.95);
+      tl.fromTo("#mag", { opacity: 0, x: 120, y: 60, rotation: 12, svgOrigin: "526 242" }, { opacity: 1, x: 0, y: 0, rotation: 0, svgOrigin: "526 242", duration: 0.7, ease: "back.out(1.4)" }, 1.25);
+      gsap.utils.toArray(".alert").forEach((a, k) => {
+        tl.fromTo(a, { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.6)" }, 1.45 + k * 0.07);
+      });
+      tl.to("#mag", { x: -14, y: 8, duration: 0.35, ease: "sine.inOut", yoyo: true, repeat: 1 }, 1.95);
+
+      // the moment: 20 July – the traces match
+      tl.to("#cal19", { y: -50, duration: 0.35, ease: "power3.in" }, 2.3);
+      tl.fromTo("#cal20", { y: 0 }, { y: -48, duration: 0.4, ease: "back.out(1.6)" }, 2.55);
+      tl.to("#st1", { opacity: 0, y: -10, duration: 0.25, ease: "power2.in" }, 2.3);
+      tl.fromTo("#p0", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 2.55);
+      tl.fromTo("#p1", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 2.7);
+      tl.fromTo("#p2", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 2.95);
+      tl.fromTo("#p3", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 3.2);
+      tl.to(".alert", { scale: 1.2, duration: 0.14, ease: "power2.out", yoyo: true, repeat: 1, stagger: 0.03 }, 2.7);
+
+      // build 3: the flock is revealed – roughly 1,200 agents
+      fb.forEach((b) => {
+        tl.fromTo(b.id, { opacity: 0, scale: 0.4, rotation: b.rot - 25 }, { opacity: 1, scale: 1, rotation: b.rot, duration: 0.45, ease: "back.out(2)" }, 3.0 + b.d * 0.7);
+        tl.fromTo(b.id, { y: 0 }, { y: -10, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1, immediateRender: false }, 3.45 + b.d * 0.5);
+      });
+      tl.fromTo("#heading-bg, #status-bg, #bottom-bg", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power1.out" }, 2.95);
+      tl.fromTo("#bottom-rule", { scaleX: 0, transformOrigin: "0 50%" }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 3.2);
+      tl.fromTo("#pop", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 3.3);
+      tl.fromTo("#cue span", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 3.5);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  
+<link rel="stylesheet" href="../film-player.css">
+<script src="../film-player.js"></script>
+</body></html>
