@@ -254,12 +254,14 @@ html[data-projector=true] .cinema .scene-set svg{opacity:.2}
 .investigation[data-step="3"] .scene-flight{visibility:visible}
 .film-wrap{position:relative;width:100%;height:clamp(230px,40dvh,480px);min-height:0}
 .film-fallback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;background:var(--bg);color:var(--muted)}
-.quintessence .film-wrap{height:100%;min-height:260px;background:#15162f}
-.cinema.quintessence{height:100%;min-height:0;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;padding-top:0}
+.quintessence .film-wrap{height:100%;min-height:0;background:#15162f}
+.cinema.quintessence{height:100%;min-height:0;max-width:none;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr);padding:0!important;gap:0;overflow:hidden}
 .quintessence>.slide-heading{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .quintessence>.stage{grid-column:1;grid-row:1;height:100%;min-height:0}
-.quintessence>.scene-bottom{grid-column:1;grid-row:2}
+.quintessence>.scene-bottom{display:none}
+.quintessence[data-film-started=false] .scene-film{opacity:0}
+.finale-backdrop{background:var(--bg)}
+#viewport:has(.quintessence){scrollbar-gutter:auto;overflow:hidden}
 .quintessence>.flock-layer{display:none}
 @media(min-width:1400px) and (min-height:800px){.investigation .film-wrap{height:100%}}
 @media(max-width:800px){.investigation .film-wrap{height:clamp(220px,31dvh,350px)}}
-@media(max-width:520px){.quintessence .film-wrap{min-height:220px}.quintessence{padding-inline:0!important}.quintessence>.scene-bottom{padding-inline:16px!important}}

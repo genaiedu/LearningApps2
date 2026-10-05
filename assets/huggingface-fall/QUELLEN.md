@@ -48,7 +48,13 @@ wartet auf den nächsten Klick. Die Flucht ist ein symbolischer Übergang zum
 Nachspiel, kein zusätzlich behauptetes oder datiertes Ereignis.
 Die zurückgelassenen Federn taumeln innerhalb derselben steuerbaren Zeitleiste
 bis zum Boden am unteren Bildrand und bleiben dort liegen.
-Die Schlusskomposition bildet vier Etappen unmittelbar vor den Zusatzmaterialien.
+Die Schlusskomposition wartet auf einen ausdrücklichen Start. Sie blendet sich
+über 1,6 Sekunden über die vorherige Folie ein und läuft dann ohne automatische
+Etappenstopps bis zum Ende der 15-sekündigen Zeitleiste. Die vier Sprechtextabschnitte
+wechseln passend zu den Bildunterschriften. Der Film füllt den Präsentationsbereich
+randlos; Bildunterschriften und Schlussaussage bleiben innerhalb des sichtbaren
+Ausschnitts. Die Bedienleisten bleiben stehen. Nur eine bewusst gewählte Pause
+unterbricht die Wiedergabe. Die Zusatzmaterialien folgen erst nach dem nächsten Klick.
 Alle 30 bisherigen Folien bleiben erhalten, hinzu kommt die Quintessenz (31 insgesamt).
 Sämtliche Animationen sind schematische Visualisierungen, keine Originalaufnahmen.
 Sie verwenden keinen externen Video- oder Animationsdienst. Das frühere MP4

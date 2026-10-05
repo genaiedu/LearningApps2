@@ -4,7 +4,15 @@
  const duration=Number(root.dataset.duration),clips=[...document.querySelectorAll('[data-start]')].filter(e=>e!==root).map(el=>({el,start:Number(el.dataset.start),end:Number(el.dataset.start)+Number(el.dataset.duration||1e9)}));
  let timeline,time=0,end=duration,paused=true,raf=0,last=0,lastReport=0,ready=false;
  const report=type=>parent.postMessage({channel,type,time,end,duration,paused,ready},'*');
- function fit(){const scale=Math.min(innerWidth/1920,innerHeight/1080);document.body.style.transform=`translate(${(innerWidth-1920*scale)/2}px,${(innerHeight-1080*scale)/2}px) scale(${scale})`;}
+ function fit(){
+  const finale=document.body.dataset.film==='finale';
+  const scale=(finale?Math.max:Math.min)(innerWidth/1920,innerHeight/1080),x=(innerWidth-1920*scale)/2,y=(innerHeight-1080*scale)/2;
+  document.body.style.transform=`translate(${x}px,${y}px) scale(${scale})`;
+  if(finale){
+   const values={'--visible-left':-x/scale,'--visible-top':-y/scale,'--visible-width':innerWidth/scale,'--visible-height':innerHeight/scale,'--safe-inline':24/scale,'--safe-bottom':Math.max(24,innerHeight*.06)/scale,'--caption-size':Math.max(19,Math.min(44,innerWidth*.024))/scale,'--finale-size':Math.min(112,(innerWidth/scale-48/scale)/13),'--kick-size':Math.min(24,(innerWidth/scale-48/scale)/22)};
+   for(const [name,value]of Object.entries(values))document.body.style.setProperty(name,value+'px');
+  }
+ }
  function show(){timeline.time(time,false);clips.forEach(c=>c.el.style.visibility=(time>=c.start&&(time<c.end||time>=duration&&c.end>=duration))?'visible':'hidden');}
  function pause(){if(raf)cancelAnimationFrame(raf);raf=0;paused=true;last=0;report('state');}
  function seek(value){pause();time=Math.max(0,Math.min(duration,Number(value)||0));show();report('state');}

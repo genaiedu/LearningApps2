@@ -64,7 +64,9 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
    await page.setViewportSize({width,height});
    for(const s of data.slides){
     await jump(s.id);await page.locator('#replay').isVisible().then(async v=>{if(v)await page.locator('#replay').evaluate(e=>e.click());});
-    for(let step=0;step<s.cues.length;step++){
+    const testedSteps=s.scene==='quintessence'?[3]:Array.from({length:s.cues.length},(_,i)=>i);
+    if(s.scene==='quintessence')await page.waitForSelector('#sceneFilm').then(()=>page.locator('#play').click());
+    for(const step of testedSteps){
       assert.equal(await page.locator('#cue').textContent(),s.cues[step]);
       if(s.id==='warnzeichen'){
         assert.equal(await page.locator('.warning-history li.visible').count(),step+1);

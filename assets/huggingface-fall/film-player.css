@@ -22,3 +22,12 @@ body[data-film=intro][data-theme=light]{--bg:#f7f5f0;--ink:#20233a;--muted:#565d
 body[data-film=intro][data-theme=light] #bg-fill{background:radial-gradient(ellipse at 64% 46%,#e8e3f4,#f7f5f0 80%)}
 /* These are cinema captions, independent of the surrounding light/dark UI. */
 body[data-film=finale] .cap p{background:#15162fd9;padding:14px 24px;border-radius:12px;text-shadow:0 2px 6px #15162f}
+/* Cover fills the whole cinema window; captions stay inside the visible crop. */
+body[data-film=finale] :is(.cap,#finale){left:var(--visible-left)!important;top:var(--visible-top)!important;width:var(--visible-width)!important;height:var(--visible-height)!important}
+body[data-film=finale] .cap{padding:0 var(--safe-inline) var(--safe-bottom)!important}
+body[data-film=finale] .cap p{font-size:var(--caption-size);max-width:100%;padding:14px 20px}
+body[data-film=finale] .cap .w{display:inline}
+body[data-film=finale] #finale{padding:calc(var(--visible-height)*.13) var(--safe-inline) 0!important}
+body[data-film=finale] .f-line>span{font-size:var(--finale-size)}
+body[data-film=finale] #f-kick{font-size:var(--kick-size);gap:12px}
+body[data-film=finale] #f-kick .rule{width:24px}

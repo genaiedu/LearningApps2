@@ -62,8 +62,19 @@ const geometry=page=>page.evaluate(()=>Object.fromEntries(['.topbar','.transport
    assert.equal(await page.locator('.flock-layer').evaluate(e=>getComputedStyle(e).opacity),'0','reduced motion skips to the empty flock');
    await page.screenshot({path:path.join(shots,`${theme}-${viewport.width}-flight-end.png`)});
    await jump(page,'quintessenz');assert.match(await page.locator('#position').textContent(),/30 \/ 31/);
+   assert.equal((await state(page,'sceneFilm')).time,0,'finale waits for start');
+   assert.equal(await page.locator('#next').textContent(),'Abschlussfilm starten →');
+   await page.locator('#next').click();await page.waitForTimeout(100);
+   assert.equal((await state(page,'sceneFilm')).time,15,'reduced motion shows final image');
+   const filmBox=await page.locator('#sceneFilm').boundingBox(),viewBox=await page.locator('#viewport').boundingBox();
+   for(const p of ['x','y','width','height'])assert(Math.abs(filmBox[p]-viewBox[p])<1,'finale fills whole cinema window '+p);
    for(let i=0;i<4;i++){
-    if(i)await page.locator('#next').click();await page.waitForTimeout(100);assert(Math.abs((await state(page,'sceneFilm')).time-[3.55,5.55,8.6,15][i])<.01);
+    await seek(page,'sceneFilm',[3.55,5.55,8.6,15][i]);await page.waitForTimeout(100);
+    const frame=page.frameLocator('#sceneFilm');
+    const cover=await frame.locator('body').evaluate(e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:innerWidth,height:innerHeight};});
+    assert(cover.x<=.1&&cover.y<=.1&&cover.right>=cover.width-.1&&cover.bottom>=cover.height-.1,'no letterboxing');
+    const caption=frame.locator(['#c1p','#c2p','#c3p','#f1'][i]),captionBox=await caption.boundingBox();
+    assert(captionBox.x>=filmBox.x-1&&captionBox.x+captionBox.width<=filmBox.x+filmBox.width+1&&captionBox.y>=filmBox.y-1&&captionBox.y+captionBox.height<=filmBox.y+filmBox.height+1,'captions remain inside visible image');
     await page.screenshot({path:path.join(shots,`${theme}-${viewport.width}-finale-${i}.png`)});
    }
    await page.locator('#next').click();assert.equal(await page.locator('#position').textContent(),'Folie 31 / 31');assert(await page.locator('#next').isDisabled());assert(await page.locator('#downloadText').isVisible());
@@ -102,11 +113,22 @@ const geometry=page=>page.evaluate(()=>Object.fromEntries(['.topbar','.transport
   await seek(page,'sceneFlight',6);await page.waitForTimeout(100);assert.equal(await page.locator('#slide').getAttribute('data-step'),'3','flight end does not advance');
   assert.equal(await page.locator('.flock-bird').first().evaluate(e=>getComputedStyle(e).opacity),'0');
   await page.locator('#prev').click();assert.equal(await page.locator('#slide').getAttribute('data-step'),'2');assert.equal(await page.locator('.flock-bird').first().evaluate(e=>e.getAnimations().filter(a=>a.effect.getTiming().duration===6000).length),0,'going back restores the intact swarm');
-  await jump(page,'quintessenz');await seek(page,'sceneFilm',15);await page.waitForTimeout(100);assert.equal(await page.locator('#position').textContent(),'Folie 30 / 31','film end does not auto-navigate');
+  await jump(page,'quellen');await jump(page,'quintessenz');
+  assert.equal((await state(page,'sceneFilm')).time,0);assert((await state(page,'sceneFilm')).paused);assert(await page.locator('.finale-backdrop').isVisible(),'previous slide remains for fade-in');
+  await page.screenshot({path:path.join(shots,'finale-before-start.png')});
+  await page.locator('#next').click();await page.waitForTimeout(700);
+  const midOpacity=await page.locator('#sceneFilm').evaluate(e=>Number(getComputedStyle(e).opacity));assert(midOpacity>0&&midOpacity<1,'slow fade-in is in progress');
+  await page.screenshot({path:path.join(shots,'finale-fade.png')});
+  await page.locator('#play').click();const finalePaused=await state(page,'sceneFilm'),fadePaused=await page.locator('#sceneFilm').evaluate(e=>getComputedStyle(e).opacity);await page.waitForTimeout(200);assert.equal((await state(page,'sceneFilm')).time,finalePaused.time);assert.equal(await page.locator('#sceneFilm').evaluate(e=>getComputedStyle(e).opacity),fadePaused,'fade pauses with film');await page.locator('#play').click();
+  await page.waitForTimeout(3600);assert((await state(page,'sceneFilm')).time>3.55);assert.equal((await state(page,'sceneFilm')).paused,false,'first former boundary does not stop film');
+  await page.waitForTimeout(2500);assert((await state(page,'sceneFilm')).time>5.55);assert.equal((await state(page,'sceneFilm')).paused,false,'second former boundary does not stop film');
+  await page.waitForTimeout(3200);assert((await state(page,'sceneFilm')).time>8.6);assert.equal((await state(page,'sceneFilm')).paused,false,'third former boundary does not stop film');
+  await page.waitForFunction(()=>document.getElementById('next').textContent==='Zusatzmaterialien →');
+  assert.equal((await state(page,'sceneFilm')).time,15);assert((await state(page,'sceneFilm')).paused);assert.equal(await page.locator('#position').textContent(),'Folie 30 / 31','film end does not auto-navigate');
   await page.emulateMedia({reducedMotion:'reduce'});await page.reload();assert(await page.locator('#startOpeningButton').isVisible());await page.locator('#play').click();assert(await page.locator('#openingStage').isHidden());
   // The same message bridge works for local file://, without same-origin access.
   await page.goto('file://'+path.join(root,'huggingface-fall.html'));await page.waitForTimeout(600);assert((await state(page,'openingFilm')).paused);await page.locator('#next').click();await jump(page,'quintessenz');assert((await state(page,'sceneFilm')).ready);
   assert.deepEqual(errors,[]);assert.deepEqual(missing,[]);assert.deepEqual(remote,[]);
-  console.log('PASS: manual start, fullscreen, pause/resume/replay, identical live title, dated discovery stages, four finale stages, downloads last, 5 layouts / 2 themes, reduced motion, local file support, no remote assets. Screenshots: '+shots);
+  console.log('PASS: manual start, fullscreen, pause/resume/replay, identical live title, dated discovery stages, transparent flock, landing feathers, uninterrupted 15-second finale, slow fade from previous slide, edge-to-edge image, readable captions, downloads last, 5 layouts / 2 themes, reduced motion, local file support, no remote assets. Screenshots: '+shots);
  }finally{await browser?.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1;});

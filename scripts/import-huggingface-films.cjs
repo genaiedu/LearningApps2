@@ -15,9 +15,9 @@ for(const [file,kind] of files){
  if(font!==3)throw Error('Unexpected embedded font count');
  // Remove the preview wrapper: it auto-starts and resets on every click.
  const wrapper=html.lastIndexOf('<style>');if(!html.slice(wrapper).includes('var W = 1920'))throw Error('Preview wrapper missing');
- html=html.slice(0,wrapper)+'<script src="../film-player.js?v=20261006-zoom-flight"></script>\n</body></html>\n';
+ html=html.slice(0,wrapper)+'<script src="../film-player.js?v=20261006-continuous-finale"></script>\n</body></html>\n';
  // Load layout overrides before the flight script measures agent positions.
- html=html.replace('</head>','<link rel="stylesheet" href="../film-player.css?v=20261006-zoom-flight">\n</head>');
+ html=html.replace('</head>','<link rel="stylesheet" href="../film-player.css?v=20261006-continuous-finale">\n</head>');
  html=html.replace('<body',`<body data-film="${kind}"`);
  if(kind==='discovery'||kind==='flight'){
   // One camera centre: all agents and their links shrink together, without a pan.

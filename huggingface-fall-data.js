@@ -1409,7 +1409,7 @@ window.HF_CASE_DATA = {
         "Das Wort Grenzen entsteht aus dem Schwarm. Es steht für technisch begrenzte Rechte, kontrollierte Kommunikationswege und wirksame Eingriffsmöglichkeiten. Das Bild ist eine didaktische Metapher: Vögel auf einem Draht sind kein Sicherheitsmechanismus.",
         "Die Schlussaussage bündelt die Schutzprinzipien der Bilanzfolie: Aus Können entsteht keine Erlaubnis. Reicht der erlaubte Rahmen nicht aus, muss eine Aufgabe ungelöst bleiben können. Keine einzelne Schutzmaßnahme garantiert vollständige Sicherheit. Mit dem nächsten Klick folgen ausschließlich die Zusatzmaterialien."
       ],
-      "transitionNote": "Vier steuerbare Etappen. Jede Animation hält an ihrem Ende an. Die Abschlussansicht bleibt stehen, bis zur letzten Folie mit den Zusatzmaterialien weitergeschaltet wird."
+      "transitionNote": "Der Abschlussfilm wartet auf deinen Start. Er blendet sich in 1,6 Sekunden über die vorherige Folie ein und läuft anschließend ohne automatische Zwischenstopps insgesamt 15 Sekunden durch. Der Film füllt den gesamten Präsentationsbereich; die Bedienleisten bleiben sichtbar. Eine bewusst gewählte Pause ist weiterhin möglich. Die Abschlussansicht bleibt stehen, bis zur letzten Folie mit den Zusatzmaterialien weitergeschaltet wird."
     },
     {
       "id": "mitnehmen",
