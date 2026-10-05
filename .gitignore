@@ -3,4 +3,8 @@
 .env.*
 node_modules/
 tmp/
-output/
+output/*
+!output/pdf/
+output/pdf/*
+!output/pdf/huggingface-fall-begleitskript.pdf
+!output/pdf/der-schwarm-der-nicht-geplant-war.pdf

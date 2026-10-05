@@ -1,0 +1,249 @@
+/* Stage design: restrained geometry, editorial typography, readable evidence.
+   The existing reveal sequence and narrator-controlled timing remain intact. */
+.cinema.title-card{padding:0;display:block;height:100%;min-height:440px;max-width:none;overflow:hidden;--color:var(--order)}
+.title-card>.slide-heading,.title-card>.scene-bottom{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}
+.title-card>.stage{height:100%}
+.title-portrait .portrait-field{left:78%;top:50%;width:min(78vw,82dvh);height:min(78vw,82dvh)}
+.title-portrait .intro-art{width:92%;height:92%}
+.title-portrait .bird-anon1{filter:drop-shadow(0 24px 34px #070917aa)}
+.title-portrait .portrait-copy{left:5%;top:15%;bottom:auto;width:64%;max-width:1050px}
+.title-portrait .title-author{font-size:clamp(1rem,1.8vw,1.7rem);letter-spacing:.16em;margin:0 0 24px;color:var(--ink)}
+.title-portrait h2{font-size:clamp(3.2rem,6.5vw,7.5rem);line-height:.98;letter-spacing:.012em;text-shadow:0 4px 0 var(--bg)}
+.title-portrait h2 span{color:var(--order)}
+.title-portrait .portrait-sticker{margin-top:28px}
+.concept-scene{display:grid;grid-template-columns:26% 1fr;gap:5%;align-items:center;min-height:310px}
+.concept-agent{position:relative;text-align:center;color:var(--muted);font-size:.8rem}
+.concept-agent>.bird{width:100%;max-height:240px;filter:drop-shadow(0 12px 16px #0002)}
+.concept-agent>span{display:block}
+.concept-agent>.bird.arriving{visibility:hidden}
+.concept-panels{display:grid;min-width:0}
+.concept-card{grid-area:1/1;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .45s;padding:12px 0}
+.concept-card.visible{visibility:visible;opacity:1;pointer-events:auto}
+.concept-label{color:var(--mint);text-transform:uppercase;letter-spacing:.13em;font-size:.8rem}
+.concept-card h2{font-size:clamp(1.55rem,2.8vw,3.2rem);max-width:22ch;line-height:1.07}
+.concept-definition{font-size:clamp(1rem,1.45vw,1.5rem);color:var(--ink);max-width:47ch;margin:18px 0}
+.concept-tags{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.concept-tags span{padding:8px 11px;border:1px solid var(--line);border-radius:6px;color:var(--mint);font-size:clamp(.8rem,1.15vw,1rem)}
+.concept-tags b{color:var(--muted);font-weight:400}
+.concept-foot{max-width:54ch;color:var(--muted);font-size:clamp(.85rem,1.15vw,1rem);line-height:1.45;margin-top:18px}
+@media(max-width:800px){.title-portrait .portrait-copy{top:16%;width:88%}.title-portrait h2{font-size:clamp(3rem,8.1vw,5rem)}.title-portrait .portrait-field{left:89%;top:39%;width:86vw;height:86vw}.concept-scene{grid-template-columns:22% 1fr;gap:5%}.concept-card h2{font-size:1.8rem}}
+@media(max-width:520px){.cinema.title-card{min-height:430px}.title-portrait .portrait-field{left:94%;top:29%;width:90vw;height:90vw}.title-portrait .portrait-copy{top:auto;bottom:11%;left:6%;width:91%}.title-portrait h2{font-size:clamp(2.8rem,11vw,4rem)}.title-portrait .title-author{margin-bottom:18px;font-size:1rem}.title-portrait .portrait-sticker{font-size:1rem}.concept-scene{grid-template-columns:1fr;gap:4px}.concept-agent{display:none}.concept-card h2{font-size:1.8rem}.concept-tags{gap:6px}.concept-card{padding:6px 0}}
+@media(max-height:650px) and (min-width:801px){.title-portrait .portrait-copy{top:10%}.title-portrait h2{font-size:clamp(3rem,9vh,5rem)}.title-portrait .title-author{margin-bottom:15px}.title-portrait .portrait-sticker{margin-top:20px}}
+.portrait-sticker{display:table;max-width:30ch;margin:23px 0 0 10px;padding:10px 18px;background:var(--color);color:#17182f;font:600 clamp(.95rem,1.6vw,1.5rem)/1.15 Outfit,sans-serif;letter-spacing:.02em;text-align:left;transform:rotate(-3deg);box-shadow:5px 5px 0 color-mix(in srgb,var(--ink) 22%,transparent)}
+[data-theme=light] .portrait-sticker{color:white}
+@media(max-width:520px){.portrait-sticker{max-width:27ch;font-size:1rem;margin-top:18px;padding:9px 12px}}
+.cinema.flag-route .scene-hero .portrait{width:80px;height:80px}
+.cinema{--scene-accent:var(--mint);--scene-tint:8%;max-width:1800px}
+.tone-violet{--scene-accent:var(--order)}
+.tone-gold{--scene-accent:var(--gold)}
+.tone-rust{--scene-accent:var(--risk)}
+.tone-paper{--scene-accent:var(--ink);--scene-tint:3%}
+.scene-set{position:absolute;inset:0;z-index:-2;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 89% 45%,color-mix(in srgb,var(--scene-accent) var(--scene-tint),transparent),transparent 66%)}
+.scene-set svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--scene-accent);stroke-width:1;opacity:.14}
+.scene-set .set-fill{fill:var(--scene-accent);fill-opacity:.34}
+.cinema.introducing>.scene-set{display:none}
+.cinema:not(.introducing)>.slide-heading{padding-top:8px}
+.cinema .eyebrow{color:var(--scene-accent);letter-spacing:.2em;font-size:.64rem;display:flex;align-items:center;gap:12px}
+.cinema .eyebrow::before{content:'';width:30px;height:2px;background:var(--scene-accent);flex-shrink:0}
+.cinema .slide-heading h1{line-height:1.03;letter-spacing:-.015em;text-wrap:balance}
+.cinema .title-accent{color:var(--scene-accent)}
+.cinema .calendar{color:var(--scene-accent);border-color:var(--scene-accent);font-size:1.06rem}
+.cinema .lead{line-height:1.45;max-width:59ch;text-wrap:pretty}
+.cinema .diagram{background:none}
+.cinema .scene-prop{filter:drop-shadow(0 8px 10px #0002)}
+.cinema .prop-surface{fill:var(--bg)}
+.cinema .prop-paper-back{fill:color-mix(in srgb,var(--scene-accent) 14%,var(--bg));stroke:color-mix(in srgb,var(--scene-accent) 55%,var(--bg))}
+.cinema .prop-accent{fill:currentColor;stroke:none}
+.cinema .object .portrait{border-radius:0;background:none;color:var(--scene-accent)}
+.cinema .actor strong{font-family:Outfit,Inter,sans-serif;font-weight:600;letter-spacing:.012em;line-height:1.15}
+.cinema .actor small{letter-spacing:.02em}
+.cinema .scene-hero .portrait{width:80px;height:80px}
+.cinema .edge.visible{opacity:.86}
+.cinema .edge path{stroke-width:2.2}
+.cinema .edge.order path{stroke-width:3}
+.cinema .zone{border-radius:3px;border-style:solid;background:color-mix(in srgb,var(--mint) 5%,transparent)}
+.cinema .zone.risk{background:color-mix(in srgb,var(--risk) 5%,transparent)}
+.cinema .zone span{letter-spacing:.1em;text-transform:uppercase;font-size:.59rem;font-weight:600}
+.cinema .annotation{border-radius:0;border-left:2px solid var(--scene-accent);padding:7px 12px;font-family:Outfit,sans-serif;color:var(--scene-accent)}
+.cinema .diagram-note{font-size:.62rem;letter-spacing:.025em}
+.cinema:not(.introducing)>.scene-bottom{position:relative;padding:11px 0 0;border-top:1px solid color-mix(in srgb,var(--scene-accent) 30%,transparent)}
+.cinema:not(.introducing)>.scene-bottom::before{content:'';position:absolute;top:-1px;left:0;width:52px;height:2px;background:var(--scene-accent)}
+.cinema #cue{color:var(--ink);font-weight:600;line-height:1.25;font-size:clamp(1rem,1.55vw,1.5rem);max-width:77ch}
+.cinema .citations{font-size:.6rem;margin-top:7px;gap:5px 20px}
+.cinema .population-note{margin-bottom:5px;gap:3px 12px}
+.cinema .population-note strong{color:var(--scene-accent);font:600 1.2rem/1 Outfit,sans-serif}
+.cinema .agent-quote{position:relative;border:0;border-top:1px solid color-mix(in srgb,var(--scene-accent) 35%,transparent);padding:12px 16px 8px 30px;background:color-mix(in srgb,var(--bg) 88%,transparent)}
+.cinema .agent-quote::before{content:'“';position:absolute;left:0;top:-3px;font:600 3.2rem/1 Outfit,sans-serif;color:var(--scene-accent)}
+.cinema .agent-quote figcaption{color:var(--scene-accent);letter-spacing:.035em}
+.cinema .agent-quote p[lang=en]{color:var(--ink)}
+.cinema .agent-quote small{font-size:.56rem}
+
+/* Different compositions within the same visual language. */
+.cinema.cover .scene-set svg{opacity:.23;transform:rotate(-12deg) scale(1.12)}
+.cinema.cover .title-accent{display:block}
+.cinema.cover .lead{max-width:38ch}
+.cinema.handoff .scene-hero .portrait{transform:rotate(-5deg)}
+.cinema.handoff .scene-hero strong{padding:5px 12px;border-bottom:2px solid var(--gold);display:inline-block}
+.cinema.delegation.has-quotes .diagram{height:300px}
+.cinema.scorer .scene-set svg{opacity:.1}
+.cinema.scorer .actor[data-agent=result] strong{color:var(--risk)}
+.cinema.execution .scene-set{--scene-tint:12%}
+.cinema.conflict .scene-set svg{stroke-width:2;opacity:.15}
+.cinema.conflict .annotation{border-color:var(--risk);color:var(--risk)}
+.cinema.signatures .actor[data-agent=signed] strong{color:var(--mint)}
+.cinema.shutdown .scene-set svg{opacity:.08}
+.cinema.scope .zone span{top:12px;left:16px}
+.cinema.scope .actor[data-agent=hub] .portrait,.cinema.scope .actor[data-agent=software] .portrait{color:var(--mint)}
+.cinema.outcome .actor.object,.cinema.social .actor.object{padding:18px 8px;border-top:2px solid var(--scene-accent);background:color-mix(in srgb,var(--bg) 87%,transparent)}
+.cinema.outcome .actor[data-agent=access]{border-color:var(--mint)}
+.cinema.outcome .actor[data-agent=scorer]{border-color:var(--risk)}
+.cinema.swarm .scene-set svg{opacity:.04}
+.cinema.swarm .diagram{background:none}
+.cinema.swarm .object .portrait{color:var(--muted)}
+.cinema.investigation .scene-set{background:none}
+.cinema.investigation.flock-revealed .slide-heading{border-left:3px solid var(--gold);padding-left:16px}
+.cinema.investigation .investigation-status p{font-family:Outfit,sans-serif;text-wrap:balance}
+.cinema.early-warning .warning-history{gap:16px 26px;counter-reset:milestone}
+.cinema.early-warning .warning-history li{counter-increment:milestone;position:relative;padding:12px 0 12px 42px;border-color:color-mix(in srgb,var(--scene-accent) 35%,transparent)}
+.cinema.early-warning .warning-history li::before{content:'0' counter(milestone);position:absolute;left:0;top:10px;font:600 1.1rem Outfit,sans-serif;color:var(--muted)}
+.cinema.early-warning .history-date{font:600 1.4rem/1.1 Outfit,sans-serif;color:var(--ink);margin-bottom:8px}
+.cinema.early-warning .history-detail{color:var(--muted)}
+.cinema.sources .source-list{gap:28px}
+.cinema.sources .source-list section{padding:18px 22px;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 90%,transparent)}
+.cinema.sources .source-no{color:var(--scene-accent);font-size:3.5rem;line-height:1}
+.cinema.download .script-symbol{padding:20px;border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);transform:rotate(-7deg);box-shadow:9px 9px 0 color-mix(in srgb,var(--gold) 12%,transparent)}
+.cinema.download .download-link{border-radius:3px;border-left:4px solid color-mix(in srgb,var(--gold) 60%,var(--bg));box-shadow:0 5px 0 #0001}
+
+/* Wide screens: let each scene occupy a stage rather than a centered card. */
+@media(min-width:1400px) and (min-height:800px){
+ .cinema:not(.introducing){grid-template-columns:minmax(300px,.82fr) minmax(0,1.4fr);column-gap:44px;padding-inline:clamp(40px,5vw,100px)}
+ .cinema:not(.introducing)>.slide-heading{align-self:center;padding:0}
+ .cinema .slide-heading h1{font-size:clamp(2.7rem,3.7vw,4.8rem);max-width:18ch}
+ .cinema .calendar{font-size:1.15rem;margin:18px 0 24px}
+ .cinema .lead{margin-top:24px;font-size:1.04rem;max-width:38ch}
+ .cinema .diagram{height:460px;max-height:56dvh}
+ .cinema .portrait{width:84px;height:84px}
+ .cinema .object .portrait{width:86px;height:86px}
+ .cinema .scene-hero .portrait{width:118px;height:118px}
+ .cinema.has-quotes .diagram{height:340px}
+ .cinema.has-quotes .portrait{width:68px;height:68px}
+ .cinema.has-quotes .scene-hero .portrait{width:88px;height:88px}
+ .cinema.execution .scene-hero .portrait,.cinema.packages .scene-hero .portrait{width:82px;height:82px}
+ .cinema .agent-quote p{font-size:1.15rem}
+ .cinema.cover .slide-heading h1{font-size:clamp(3.6rem,5vw,6.8rem);max-width:14ch}
+ .cinema.cover .actor.named .portrait{width:90px;height:90px}
+ .cinema.scope .diagram{height:460px}
+ .cinema.swarm{grid-template-columns:minmax(270px,.62fr) minmax(0,1.6fr);column-gap:24px}
+ .cinema.swarm .slide-heading h1{font-size:clamp(2.5rem,3.2vw,4rem)}
+ .cinema.swarm .diagram{height:470px;max-height:56dvh}
+ .cinema.swarm .portrait{width:56px;height:56px}
+ .cinema.swarm .object .portrait{width:62px;height:62px}
+ .cinema.early-warning .warning-history{grid-template-columns:1fr;gap:5px}
+ .cinema.early-warning .warning-history li{padding-block:9px;padding-left:60px}
+ .cinema.early-warning .history-date{float:left;min-width:125px;margin:0 15px 6px 0;font-size:1.35rem}
+ .cinema.early-warning .warning-history h2{font-size:1.05rem}
+ .cinema.early-warning .warning-history p:not(.history-date){clear:both;font-size:.87rem;margin:5px 0}
+ .cinema.sources,.cinema.download{grid-template-columns:1fr}
+ .cinema.sources .slide-heading,.cinema.download .slide-heading{display:grid;grid-template-columns:1fr auto;gap:8px 40px}
+ .cinema.sources .eyebrow,.cinema.download .eyebrow{grid-column:1}
+ .cinema.sources .calendar,.cinema.download .calendar{grid-column:2;grid-row:1/4;position:static;margin:0;width:210px}
+ .cinema.sources h1,.cinema.download h1{max-width:30ch;font-size:3rem}
+ .cinema.sources .lead,.cinema.download .lead{max-width:70ch;margin:4px 0 0}
+ .cinema.sources .source-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .cinema.sources .stage,.cinema.download .stage{grid-column:1/-1}
+}
+
+/* Landscape iPads: preserve the full stage and controls together. */
+@media(min-width:801px) and (max-width:1399px){
+ .cinema:not(.introducing){padding-inline:32px;gap:6px}
+ .cinema.delegation.has-quotes .diagram{height:250px}
+ .cinema .slide-heading h1{font-size:2.2rem;max-width:27ch}
+ .cinema .lead{font-size:.92rem;margin-top:9px}
+ .cinema .eyebrow{margin-bottom:8px}
+ .cinema .scene-hero .portrait{width:72px;height:72px}
+ .cinema.has-quotes .scene-hero .portrait{width:62px;height:62px}
+ .cinema.execution .scene-hero .portrait,.cinema.packages .scene-hero .portrait{width:54px;height:54px}
+ .cinema .agent-quote{padding-top:8px;padding-bottom:6px}
+ .cinema .agent-quote p{font-size:.98rem}
+ .cinema .quote-area{min-height:101px;margin-top:5px}
+ .cinema #cue{font-size:1.02rem;min-height:2.4em}
+ .cinema:not(.introducing)>.scene-bottom{padding-top:7px}
+ .cinema .diagram-note{margin-top:8px}
+ .cinema.cover .slide-heading h1{font-size:clamp(2.5rem,4.2vw,3.4rem);max-width:24ch}
+ .cinema.cover .title-accent{display:inline}
+ .cinema.cover .lead{max-width:65ch}
+ .cinema.early-warning .history-date{font-size:1.1rem}
+ .cinema.early-warning .warning-history{gap:5px 22px}
+ .cinema.early-warning .warning-history li{padding-block:7px;padding-left:32px}
+ .cinema.early-warning .warning-history h2{font-size:1.02rem}
+ .cinema.early-warning .warning-history p{font-size:.8rem}
+ .cinema.early-warning .warning-history .history-detail{font-size:.73rem}
+ .cinema.outcome .actor.object,.cinema.social .actor.object{width:210px;padding:20px 10px}
+}
+@media(min-width:801px){
+ .cinema.handoff .scene-hero .portrait{width:112px;height:112px}
+ .cinema.handoff .named .portrait,.cinema.replication .named .portrait{width:84px;height:84px}
+ .cinema.replication .scene-hero .portrait,.cinema.board .scene-hero .portrait,.cinema.pivot .scene-hero .portrait{width:100px;height:100px}
+ .cinema.cover .scene-hero .portrait{width:120px;height:120px}
+ .cinema.access .named .portrait,.cinema.execution .named .portrait{width:78px;height:78px}
+}
+@media(max-width:800px){
+ .cinema .scene-set svg{opacity:.1}
+ .cinema .eyebrow{font-size:.59rem;letter-spacing:.14em}
+ .cinema .slide-heading h1{font-size:2.5rem;max-width:22ch}
+ .cinema .calendar{font-size:1rem;margin:8px 0 15px}
+ .cinema .lead{font-size:.98rem}
+ .cinema .scene-hero .portrait{width:78px;height:78px}
+ .cinema.has-quotes .scene-hero .portrait{width:64px;height:64px}
+ .cinema .agent-quote{padding-left:25px;padding-top:10px}
+ .cinema .agent-quote p{font-size:1.02rem}
+ .cinema.swarm .actor{width:110px}
+ .cinema.sources .source-list{gap:12px}
+ .cinema.sources .source-list section{padding:16px}
+ .cinema.sources .source-no{font-size:2.5rem}
+}
+@media(min-width:521px) and (max-width:800px){
+ .cinema.handoff .diagram{height:325px}
+}
+@media(max-width:520px){
+ .cinema .slide-heading h1{font-size:2rem}
+ .cinema.cover .slide-heading h1{font-size:2.7rem}
+ .cinema .scene-hero .portrait{width:66px;height:66px}
+ .cinema .actor strong{font-size:.65rem}
+ .cinema.swarm .actor{width:88px}
+ .cinema .scene-bottom #cue{font-size:1rem}
+ .cinema .population-note strong{font-size:1.1rem}
+ .cinema .population-note small{font-size:.59rem}
+ .cinema.early-warning .warning-history{gap:6px}
+ .cinema.early-warning .history-date{font-size:1.2rem}
+ .cinema .agent-quote p{font-size:.96rem}
+ .cinema .annotation{padding:5px;font-size:.67rem}
+ .cinema.outcome .actor.object,.cinema.social .actor.object{padding:10px 4px}
+ .cinema.download .script-symbol{display:none}
+}
+@media(max-height:750px) and (min-width:801px){
+ .cinema .slide-heading h1{font-size:1.9rem}
+ .cinema .lead{font-size:.88rem}
+ .cinema.cover .slide-heading h1{font-size:2.7rem}
+}
+[data-theme=light] .cinema .scene-set{--scene-tint:5%}
+[data-theme=light] .cinema .scene-set svg{opacity:.12}
+[data-theme=light] .cinema .diagram{background:none}
+[data-theme=light] .cinema .object .portrait{background:none}
+[data-theme=light] .cinema .agent-quote{background:color-mix(in srgb,var(--bg) 90%,transparent)}
+[data-theme=light] .cinema .scene-prop{filter:drop-shadow(0 2px 2px #20233a16)}
+html[data-projector=true] .cinema .scene-set svg{opacity:.2}
+#viewport{position:relative}
+.opening-stage{position:absolute;inset:0;z-index:2;min-height:0;background:#000;overflow:hidden}
+.opening-stage video{display:block;width:100%;height:100%;object-fit:cover;background:#000}
+.opening-start{position:absolute;inset:0;display:grid;place-items:center;background:#000}
+.opening-start button{background:#000;color:#fff;border:0;border-radius:0;padding:24px 40px;font:400 clamp(1.8rem,3vw,3rem)/1.2 Inter,sans-serif}
+.opening-start button:hover{color:#d5d5d5}
+.opening-stage p{position:absolute;bottom:16px;left:16px;right:16px;margin:0;padding:10px;text-align:center;font:400 .85rem/1.4 Inter,sans-serif;color:#fff;background:#000c}
+.opening-active #viewport{background:#000}
+.cinema.title-card{min-height:0;padding:0;max-width:none}
+/* Reserve the same navigation geometry for Start, film and every slide. */
+.transport .location{min-height:40px}
+.transport button{height:48px}
+@media(max-width:520px){.transport{grid-template-rows:40px 46px}.transport button{height:46px}.transport #play{height:40px}}
+@media(max-height:450px) and (min-width:801px){.title-portrait .portrait-copy{top:8%}.title-portrait h2{font-size:clamp(1.7rem,7vh,2.5rem)}.title-portrait .title-author{font-size:.8rem;margin-bottom:10px}.title-portrait .portrait-sticker{font-size:.85rem;margin-top:14px;padding:7px 12px}}

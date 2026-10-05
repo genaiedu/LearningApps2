@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Eine animierte Fallgeschichte über die Selbstorganisation von KI-Agenten und den Hugging-Face-Vorfall im Juli 2026. Mit datierter Chronologie und Vortragsskript.">
+<title>Der Hugging-Face-Fall · KI verstehen</title>
+<script>try{const s=JSON.parse(localStorage.getItem('huggingface-fall:story-v4'));document.documentElement.dataset.theme=s?.theme==='light'?'light':'dark';document.documentElement.dataset.projector=String(s?.projector===true);}catch(_){}</script>
+<link rel="stylesheet" href="huggingface-fall.css?v=20261006-learningapps2">
+<link rel="stylesheet" href="huggingface-fall-cinema.css?v=20261006-controlled-start">
+<script defer src="huggingface-fall-data.js?v=20261006-restored-animations"></script>
+<script defer src="huggingface-fall-scenes.js?v=20261001-access-chain"></script>
+<script defer src="huggingface-fall-art.js?v=20260922-delegation"></script>
+<script defer src="huggingface-fall.js?v=20261006-controlled-start"></script>
+</head>
+<body>
+<a class="skip" href="#slide">Zur Folie</a>
+<div class="presentation">
+<header class="topbar"><a class="brand" href="#auftakt" aria-label="Zur ersten Folie">KI / <strong>Fallakte 07.26</strong></a><div><button id="overview">Folien</button><button id="notes">Sprechtext</button><button id="settings" aria-label="Einstellungen öffnen">Einstellungen</button></div></header>
+<main id="viewport"><section id="openingStage" class="opening-stage" aria-label="Start und Auftaktfilm"><video id="openingVideo" playsinline muted preload="auto" tabindex="-1" hidden aria-label="15 Sekunden langer, schematischer Auftaktfilm über zusammenfindende KI-Agenten"><source src="assets/huggingface-fall/schwarm-intro.mp4" type="video/mp4">Dein Browser unterstützt dieses Video nicht. Du kannst mit „Zur Präsentation“ direkt zu den Folien wechseln.</video><div id="openingStart" class="opening-start"><button id="startOpeningButton" aria-label="Auftaktfilm starten">Start</button></div><p id="openingHint" role="status" hidden></p></section><article id="slide" aria-labelledby="slideTitle" hidden inert></article></main>
+<footer class="transport"><div class="progress-track" aria-hidden="true"><span id="progress"></span></div><button id="prev" aria-label="Vorheriger Aufbau oder vorherige Folie">← Zurück</button><div class="location"><span id="position" role="status" aria-live="polite"></span><span id="buildPosition"></span></div><button id="play" aria-label="Aktuelle Szene automatisch aufbauen">Szene abspielen</button><button id="replay" aria-label="Aktuelle Szene von vorn zeigen" title="Szene von vorn">↺</button><button id="next" class="primary">Weiter →</button></footer>
+</div>
+<dialog id="menuDialog"><div class="dialog-head"><h2>Folienübersicht</h2><button data-close="menuDialog">Schließen ×</button></div><nav id="slideList" aria-label="Folie auswählen"></nav></dialog>
+<dialog id="notesDialog"><div class="dialog-head"><h2 id="notesTitle">Begleittext</h2><button data-close="notesDialog">Schließen ×</button></div><div id="notesBody"></div></dialog>
+<dialog id="settingsDialog"><div class="dialog-head"><h2>Einstellungen</h2><button data-close="settingsDialog">Schließen ×</button></div>
+<fieldset class="theme-picker"><legend>Farbschema</legend><label><input type="radio" name="theme" value="dark" checked> Dunkel</label><label><input type="radio" name="theme" value="light"> Hell</label></fieldset>
+<label class="switch"><input type="checkbox" id="projector" aria-describedby="projectorHint">Projektor: Hintergrundvögel deutlicher anzeigen</label><p id="projectorHint">Verstärkt die Silhouetten für Projektionen mit schwachem Kontrast. Funktioniert im hellen und dunklen Farbschema; Texte und Diagramme bleiben im Vordergrund.</p>
+<label class="switch"><input type="checkbox" id="motion">Animationen und Folienübergänge</label><p>Bei reduzierter Bewegung in den Geräteeinstellungen bleiben alle Informationen sichtbar, ohne bewegte Übergänge.</p>
+<button id="fullscreen">Vollbild einschalten</button><p id="fullscreenStatus" role="status"></p>
+<h3>Vortragen und iPad-Bedienung</h3>
+<p>Beim Öffnen, Neuladen oder Neubeginn erscheint ein schwarzer Bildschirm mit „Start“. Das Video läuft niemals von selbst los. Zuerst kannst du hier das Vollbild und das Farbschema einstellen. „Start“ in der Bildmitte oder unten startet anschließend den 15-sekündigen Auftaktfilm.</p>
+<p>Video und Folien nutzen denselben Bildbereich zwischen den dauerhaft sichtbaren Bedienleisten. Das Video füllt ihn ohne Größenwechsel aus; je nach Bildschirmformat wird sein Rand beschnitten. Am Filmende wird die erste Folie sanft eingeblendet. Bei ausgeschalteten Animationen erfolgt dieser Wechsel direkt.</p>
+<p>Der Film lässt sich unten pausieren, fortsetzen, neu starten oder mit „Zur Präsentation“ überspringen. Danach zeigt „Weiter“ zunächst den nächsten Aufbau, anschließend die nächste Folie. „Szene abspielen“ baut nur die aktuelle Folie im Abstand von vier Sekunden auf und hält an ihrem Ende an. „↺“ beginnt diese Szene von vorn. Der Sprechtext passt zu jedem Aufbau.</p>
+<p>Seitlich wischen oder die großen Tasten antippen. Nach oben und unten bleibt die Folie bei Bedarf scrollbar. Vergrößern mit zwei Fingern ist möglich. Mit Tastatur: Pfeiltasten und Leertaste steuern den Aufbau. Am Startbildschirm startet die Leertaste den Film. Pos1 kehrt dort zum wartenden Startbildschirm zurück. Escape schließt ein Fenster oder stoppt die Wiedergabe.</p>
+<button id="reset" class="danger">Präsentation neu beginnen</button><p id="storageStatus"></p><p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutzhinweise</a></p><p class="muted">Keine externen Medien oder Tracker. Erst Quellenlinks rufen fremde Websites auf. Lokale Schriften: Inter und Outfit. Stand: 21.09.2026. Die Figuren sind schematische Zeichen für Agenteninstanzen.</p></dialog>
+<dialog id="resetDialog"><div class="dialog-head"><h2>Neu beginnen?</h2><button data-close="resetDialog">Abbrechen ×</button></div><p>Die aktuelle Folienposition und der Aufbau werden zurückgesetzt. Du kehrst zum schwarzen Startbildschirm zurück; der Film wartet auf deinen Klick. Diese Erzählpräsentation erfasst keine Antworten und vergibt keine Punkte. Andere Apps und heruntergeladene Dateien bleiben unverändert.</p><button id="confirmReset" class="danger">Zum Startbildschirm</button></dialog>
+<noscript><p>Bitte JavaScript für die Präsentation aktivieren. Das <a href="output/pdf/huggingface-fall-begleitskript.pdf">Begleitskript als PDF</a> ist auch ohne JavaScript verfügbar.</p></noscript>
+</body></html>
