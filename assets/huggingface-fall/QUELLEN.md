@@ -25,9 +25,10 @@ beschrieben. Sinngemäße Agentenaussagen sind ausdrücklich keine Zitate.
 
 ## Gestaltung und Bedienung
 
-Die drei HTML-Kompositionen unter `films/` wurden vom Nutzer am 06.10.2026
+Die vier HTML-Kompositionen unter `films/` wurden vom Nutzer am 06.10.2026
 bereitgestellt: `01-intro-der-schwarm.html` (15 s),
-`02-folie-25-die-spuren.html` (5 s) und
+`02-folie-25-die-spuren.html` (5 s),
+`02b-folie-25-die-voegel-fliehen.html` (6 s) und
 `03-abschluss-voegel-auf-dem-draht.html` (15 s). Sie wurden aus dessen
 Claude-Arbeitsverzeichnis importiert; die Originaldateien bleiben unverändert.
 `scripts/import-huggingface-films.cjs` dokumentiert die mechanische Übernahme.
@@ -38,6 +39,15 @@ steuert Start, Pause, Fortsetzen, Wiederholen und die Etappengrenzen.
 Im Auftakt entsteht ab 10,2 s die echte responsive Titelfolie. Die Zeichnung zur
 Aufarbeitung ergänzt den bestehenden datierten Folientext (16.-17., 19. und
 20. Juli); sie zeigt keinen belegten exakten menschlichen Entdeckungsmoment.
+Das Agentennetz verkleinert sich um einen festen Mittelpunkt. Die transparente
+Zeichenfläche lässt den durchgehenden Hintergrundschwarm sichtbar. Nach der
+Zuordnung am 20. Juli bleibt die Ansicht stehen. Erst „Schwarm auflösen“ startet
+die Fluchtkomposition und die synchronisierte Auflösung des Hintergrundschwarms.
+Pause, Fortsetzen und Wiederholen bleiben verfügbar. Das leere Schlussbild
+wartet auf den nächsten Klick. Die Flucht ist ein symbolischer Übergang zum
+Nachspiel, kein zusätzlich behauptetes oder datiertes Ereignis.
+Die zurückgelassenen Federn taumeln innerhalb derselben steuerbaren Zeitleiste
+bis zum Boden am unteren Bildrand und bleiben dort liegen.
 Die Schlusskomposition bildet vier Etappen unmittelbar vor den Zusatzmaterialien.
 Alle 30 bisherigen Folien bleiben erhalten, hinzu kommt die Quintessenz (31 insgesamt).
 Sämtliche Animationen sind schematische Visualisierungen, keine Originalaufnahmen.

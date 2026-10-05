@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1920, height=1080">
-    <title>Die Spuren führen zusammen</title>
+    <title>Die Vögel fliehen</title>
     <script>window.__timelines = {};</script>
 <script src="gsap.min.js"></script>
     <style>
@@ -73,12 +73,12 @@
     </style>
   <link rel="stylesheet" href="../film-player.css?v=20261006-zoom-flight">
 </head>
-  <body data-film="discovery">
-    <div data-hf-id="hf-z7xn" id="root" data-composition-id="main" data-start="0" data-duration="5" data-width="1920" data-height="1080">
+  <body data-film="flight">
+    <div data-hf-id="hf-z7xn" id="root" data-composition-id="main" data-start="0" data-duration="6" data-width="1920" data-height="1080">
 
-      <div data-hf-id="hf-kua4" id="flock" class="clip" data-start="0" data-duration="5" data-track-index="0"></div>
+      <div data-hf-id="hf-kua4" id="flock" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
 
-      <div data-hf-id="hf-pl9b" id="slide" class="clip" data-start="0" data-duration="5" data-track-index="1">
+      <div data-hf-id="hf-pl9b" id="slide" class="clip" data-start="0" data-duration="6" data-track-index="1">
         <div data-hf-id="hf-3bng" id="topbar">KI /<b data-hf-id="hf-za7a">Fallakte 07.26</b></div>
 
         <div data-hf-id="hf-04ox" id="heading">
@@ -244,6 +244,8 @@
           <div data-hf-id="hf-9dsd" id="cue" data-layout-allow-overflow="true"><span data-hf-id="hf-2pto">20. Juli: Die Spuren passen zusammen – eigene Agenten sind am Hugging-Face-Angriff beteiligt.</span></div>
         </div>
       </div>
+
+      <div id="front" class="clip" data-start="0" data-duration="6" data-track-index="2"></div>
     </div>
 
     <script>
@@ -273,8 +275,8 @@
         fb.push({ id: "#fb" + i, rot: -22 + rnd() * 30, d: rnd() });
       }
 
-      // ---------- timeline ----------
-      const tl = gsap.timeline({ paused: true });
+      // ---------- animation 2, used only to pose its final frame (never played or registered) ----------
+      const tl = gsap["timeline"]({ paused: true });
 
       // build 1: the board as it was (19 July)
       tl.fromTo("#heading .eyebrow", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 0.05);
@@ -323,8 +325,172 @@
       tl.fromTo("#pop", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 3.3);
       tl.fromTo("#cue span", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 3.5);
 
-      window.__timelines["main"] = tl;
-      tl.seek(0);
+      // ---------- start exactly on the last frame of animation 2 ----------
+      tl.time(5, false);
+    </script>
+    <script>
+fb.length = 0; document.getElementById("flock").replaceChildren();
+// Animation 4 – the birds panic, come at the viewer and leave the frame.
+// Starts on the exact end state of animation 2 (built above and parked at t = 5).
+(function () {
+  function build() {
+    const T = gsap.timeline({ paused: true });
+    const rng = mulberry32(4711);
+    const F = { x: 960, y: 600 }; // where the camera "is"
+    const front = document.getElementById("front");
+    const rootRect = document.getElementById("root").getBoundingClientRect();
+    const k = rootRect.width / 1920;
+    const local = (r) => ({ x: (r.left - rootRect.left) / k, y: (r.top - rootRect.top) / k, w: r.width / k, h: r.height / k });
+    const panels = ["#heading-bg", "#status-bg", "#bottom-bg"].map((s) => local(document.querySelector(s).getBoundingClientRect()));
+    const under = (x, y) => panels.some((p) => x > p.x - 6 && x < p.x + p.w + 6 && y > p.y - 6 && y < p.y + p.h + 6);
+    const outward = (x, y, dist) => {
+      let dx = x - F.x, dy = y - F.y, L = Math.hypot(dx, dy);
+      if (L < 90) { const a = rng() * Math.PI * 2; dx = Math.cos(a); dy = Math.sin(a); L = 1; }
+      return { x: F.x + (dx / L) * dist, y: F.y + (dy / L) * dist * 0.75 };
+    };
+
+    // ---------- background flock ----------
+    let zTop = 100;
+    fb.forEach((b, i) => {
+      const el = document.querySelector(b.id);
+      const r = local(el.getBoundingClientRect());
+      const cx = r.x + r.w / 2, cy = r.y + r.h / 2;
+      const y0 = gsap.getProperty(el, "y"), rot0 = gsap.getProperty(el, "rotation"), sc0 = gsap.getProperty(el, "scale");
+      const hidden = under(cx, cy);
+      // a twin in the front layer takes over once the bird is airborne (birds behind panels stay behind them)
+      let targets = [el], twin = null;
+      if (!hidden) {
+        twin = el.cloneNode(true);
+        twin.id = "fx" + i;
+        front.appendChild(twin);
+        gsap.set(twin, { x: 0, y: y0, rotation: rot0, scale: sc0, opacity: 0 });
+        targets = [el, twin];
+      }
+      const r1 = rng(), r2 = rng(), r3 = rng(), r4 = rng(), r5 = rng();
+      // startle
+      const st = 0.28 + r1 * 0.45;
+      T.to(targets, { keyframes: [
+        { y: y0 - 10 - r2 * 14, rotation: rot0 + (r3 - 0.5) * 50, duration: 0.09, ease: "power2.out" },
+        { y: y0 - 2, rotation: rot0 + (r2 - 0.5) * 20, duration: 0.14, ease: "power1.inOut" },
+        { y: y0 - 6 - r4 * 8, rotation: rot0, duration: 0.12, ease: "sine.inOut" },
+      ] }, st);
+      // panicked wing beats
+      T.fromTo(targets.map((t) => t.querySelector("path")), { scaleY: 1, transformOrigin: "50% 70%" },
+        { scaleY: 0.35, duration: 0.06 + r5 * 0.03, ease: "sine.inOut", yoyo: true, repeat: 49, immediateRender: false }, st);
+      // approach: erratic zigzag toward the viewer
+      const a = 0.85 + r3 * 0.95;
+      if (twin) { T.set(el, { opacity: 0 }, a); T.set(twin, { opacity: 1 }, a); }
+      const dx = F.x - cx, dy = F.y - cy, j = () => (rng() - 0.5) * 120;
+      T.to(targets, { keyframes: [
+        { x: dx * 0.1 + j(), y: y0 + dy * 0.1 + j() * 0.6, scale: sc0 * (1.4 + r1), rotation: rot0 + j() * 0.3, duration: 0.45, ease: "sine.inOut" },
+        { x: dx * 0.2 + j(), y: y0 + dy * 0.2 + j() * 0.6, scale: sc0 * (2.2 + r2 * 1.4), rotation: rot0 + j() * 0.3, duration: 0.45, ease: "sine.inOut" },
+        { x: dx * 0.28 + j(), y: y0 + dy * 0.28 + j() * 0.6, scale: sc0 * (3 + r4 * 2), rotation: rot0 + j() * 0.3, duration: 0.4, ease: "sine.inOut" },
+      ] }, a + 0.05);
+      // rush past the camera and out of the frame
+      const e = Math.min(4.05, a + 1.35 + r4 * 0.55);
+      const sEnd = 16 + r1 * 22;
+      const out = outward(cx, cy, 1400 + r5 * 500 + r.w / sc0 * sEnd * 0.75);
+      if (twin) T.set(twin, { zIndex: zTop + Math.round(e * 100) }, e);
+      T.to(targets, { x: out.x - cx, y: y0 + out.y - cy, scale: sEnd, rotation: rot0 + (r2 - 0.5) * 120, duration: 0.55 + r3 * 0.35, ease: "power2.in" }, e);
+    });
+
+    // ---------- the eight agents leave their seats ----------
+    const agents = Array.from(document.querySelectorAll("#net .agent"));
+    const floor = document.createElement("div");
+    floor.className = "feather-floor";
+    floor.style.cssText = "position:absolute;left:180px;right:180px;top:1076px;height:2px;background:linear-gradient(90deg,transparent,#77768d88 20%,#77768d88 80%,transparent);opacity:0";
+    front.appendChild(floor);
+    T.to(floor, { opacity: 1, duration: 0.65 }, 4.3);
+    const featherColors = ["#c88753", "#ffbb4e", "#29b4cf", "#b6e0ba", "#f498c0", "#4b597c", "#e97650", "#e6dd6d"];
+    agents.forEach((g, n) => {
+      const inner = g.querySelector("svg");
+      const r = local(inner.getBoundingClientRect());
+      const box = document.createElement("div");
+      box.id = "ag" + n;
+      box.style.cssText = `position:absolute;left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px;opacity:0;z-index:${n === 0 ? 900 : 400 + n}`;
+      const clone = inner.cloneNode(true);
+      clone.removeAttribute("x"); clone.removeAttribute("y");
+      clone.setAttribute("width", "100%"); clone.setAttribute("height", "100%");
+      clone.style.overflow = "visible";
+      box.appendChild(clone);
+      front.appendChild(box);
+      const cx = r.x + r.w / 2, cy = r.y + r.h / 2;
+      const h = 0.4 + n * 0.06;
+      T.set(inner, { opacity: 0 }, h);
+      T.set(box, { opacity: 1 }, h);
+      // frantic hops in place
+      T.to(box, { keyframes: [
+        { y: -24, rotation: -14, duration: 0.11, ease: "power2.out" },
+        { y: 0, rotation: 8, duration: 0.12, ease: "power2.in" },
+        { y: -18, rotation: -6, duration: 0.1, ease: "power2.out" },
+        { y: 0, rotation: 0, duration: 0.11, ease: "power2.in" },
+      ] }, h);
+      T.fromTo(box, { scaleY: 1 }, { scaleY: 0.86, duration: 0.07, yoyo: true, repeat: 7, ease: "sine.inOut", immediateRender: false }, h + 0.45);
+      // feathers fly
+      for (let f = 0; f < 2; f++) {
+        const fe = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        fe.setAttribute("viewBox", "-10 -36 20 40");
+        fe.setAttribute("class", "falling-feather");
+        const floorY = 1048 - (cy - 18);
+        fe.style.cssText = `position:absolute;left:${cx - 9}px;top:${cy - 18}px;width:18px;height:36px;overflow:visible;opacity:0;z-index:950`;
+        fe.innerHTML = `<path d="M0 2 C 7 -8 8 -22 0 -34 C -8 -22 -7 -8 0 2Z" fill="${featherColors[n]}"/><path d="M0 2 L0 -30" stroke="#15162f" stroke-width="1.2" opacity="0.5"/>`;
+        front.appendChild(fe);
+        const ft = h + 1.0 + f * 0.25 + rng() * 0.4;
+        const sx = (rng() - 0.5) * 160;
+        T.set(fe, { opacity: 1 }, ft);
+        gsap.set(fe, { x: 0, y: 0, rotation: -40 + rng() * 80 });
+        T.to(fe, { keyframes: [
+          { x: sx * 0.4 + 30, y: floorY * 0.22, rotation: 50, duration: 0.7, ease: "sine.inOut" },
+          { x: sx * 0.7 - 30, y: floorY * 0.49, rotation: -35, duration: 0.8, ease: "sine.inOut" },
+          { x: sx + 25, y: floorY * 0.78, rotation: 30, duration: 0.85, ease: "sine.inOut" },
+          { x: sx - 18, y: floorY * 0.94, rotation: -24, duration: 0.65, ease: "sine.inOut" },
+          { x: sx + 12, y: floorY, rotation: 90, duration: 0.5, ease: "sine.out" },
+        ] }, ft);
+      }
+      if (n === 0) return; // the owl gets the last word
+      const a = 1.35 + n * 0.17;
+      T.to(box, { keyframes: [
+        { x: (F.x - cx) * 0.12 + (rng() - 0.5) * 140, y: (F.y - cy) * 0.12 - 60, scale: 1.8, rotation: -12, duration: 0.5, ease: "sine.inOut" },
+        { x: (F.x - cx) * 0.25 + (rng() - 0.5) * 160, y: (F.y - cy) * 0.25 - 20, scale: 2.8, rotation: 10, duration: 0.5, ease: "sine.inOut" },
+      ] }, a);
+      const e = a + 1.05;
+      const out = outward(cx, cy, 1800 + r.w * 18 * 0.75);
+      T.to(box, { x: out.x - cx, y: out.y - cy, scale: 18, rotation: (rng() - 0.5) * 90, duration: 0.6, ease: "power2.in" }, e);
+    });
+
+    // the owl (PHASEONE10841, who started it all) comes straight at the lens
+    const owl = document.getElementById("ag0");
+    const ob = local(owl.getBoundingClientRect());
+    const ox = 960 - (ob.x + ob.w / 2), oy = 540 - (ob.y + ob.h / 2);
+    T.to(owl, { keyframes: [
+      { x: ox * 0.35, y: oy * 0.35 - 80, scale: 2.6, rotation: -10, duration: 0.6, ease: "sine.inOut" },
+      { x: ox * 0.75, y: oy * 0.75 + 30, scale: 4.6, rotation: 8, duration: 0.55, ease: "sine.inOut" },
+      { x: ox, y: oy - 20, scale: 6.5, rotation: -4, duration: 0.4, ease: "sine.inOut" },
+    ] }, 2.55);
+    T.to(owl, { x: ox + 40, y: oy + 260, scale: 90, duration: 0.5, ease: "power3.in" }, 4.05);
+    T.set(owl, { opacity: 0 }, 4.56);
+
+    // ---------- the room reacts ----------
+    T.to(".alert", { keyframes: [
+      { scale: 1.35, duration: 0.08, ease: "power2.out" }, { scale: 1, duration: 0.1 }, { scale: 1.25, duration: 0.08 }, { scale: 1, duration: 0.14 },
+    ], stagger: 0.025 }, 0.25);
+    T.to("#mag", { keyframes: [{ rotation: -6, duration: 0.08 }, { rotation: 4, duration: 0.1 }, { rotation: 0, duration: 0.2, ease: "sine.out" }], svgOrigin: "526 242" }, 0.3);
+    const shake = (t, amp) => T.to(["#slide", "#flock"], { keyframes: [
+      { x: amp, y: -amp * 0.6, duration: 0.04 }, { x: -amp * 0.8, y: amp * 0.5, duration: 0.05 },
+      { x: amp * 0.5, y: amp * 0.3, duration: 0.05 }, { x: -amp * 0.25, y: -amp * 0.2, duration: 0.06 }, { x: 0, y: 0, duration: 0.08 },
+    ] }, t);
+    shake(0.3, 5);
+    shake(2.6, 7);
+    shake(4.56, 14);
+    // a darker beat as the owl passes through the lens
+    T.to("#flash", { opacity: 0.12, duration: 1.4, ease: "sine.inOut" }, 4.5);
+
+    window.__timelines["main"] = T;
+    T.seek(0);
+  }
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(build, build);
+})();
+
     </script>
   
 <script src="../film-player.js?v=20261006-zoom-flight"></script>

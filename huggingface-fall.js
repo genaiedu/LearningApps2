@@ -19,9 +19,36 @@
     if(s&&typeof s.projector==='boolean')state.projector=s.projector;
   } catch(_){storageOK=false;}
   const current=()=>slides[state.index];
-  let openingActive=false,openingStarted=false,openingMovie=null,sceneMovie=null,titleArrival=[];
-  const filmSteps={investigation:[.9,2.25,5],quintessence:[3.55,5.55,8.6,15]};
+  let openingActive=false,openingStarted=false,openingMovie=null,sceneMovie=null,flightMovie=null,titleArrival=[],birdFlight=[];
+  const filmSteps={investigation:[.9,2.25,5,6],quintessence:[3.55,5.55,8.6,15]};
   const filmFiles={investigation:'02-folie-25-die-spuren.html',quintessence:'03-abschluss-voegel-auf-dem-draht.html'};
+  const activeMovie=()=>current().scene==='investigation'&&state.step===3?flightMovie:sceneMovie;
+  function clearBirdFlight(){birdFlight.forEach(a=>a.cancel());birdFlight=[];const layer=$('slide').querySelector('.flock-layer');if(layer)layer.style.opacity='';}
+  function scrubBirdFlight(time){
+    const layer=$('slide').querySelector('.flock-layer');if(!layer)return;
+    if(!state.motion||reduced.matches){layer.style.opacity=time>=6?'0':'1';return;}
+    if(!birdFlight.length){
+      const viewport=$('viewport').getBoundingClientRect(),cx=viewport.left+viewport.width/2,cy=viewport.top+viewport.height*.6;
+      layer.querySelectorAll('.flock-bird.present').forEach((bird,i)=>{
+        const r=bird.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
+        const random=salt=>{const v=Math.sin(i*127.1+salt)*43758.5453;return v-Math.floor(v);};
+        const base=getComputedStyle(bird).transform,start=.28+random(2)*.45,approach=.85+random(3)*.95;
+        const dx=cx-x,dy=cy-y,angle=Math.atan2(y-cy,x-cx),distance=Math.max(innerWidth,innerHeight)*1.8+r.width*22;
+        const outX=Math.cos(angle)*distance+dx,outY=Math.sin(angle)*distance+dy;
+        const frames=[
+          {offset:0,transform:base,opacity:1},
+          {offset:start/6,transform:base,opacity:1},
+          {offset:(start+.12)/6,transform:`translate(0,-16px) rotate(12deg) ${base}`,opacity:1},
+          {offset:approach/6,transform:base,opacity:1},
+          {offset:(approach+1.1)/6,transform:`translate(${dx*.25+(random(7)-.5)*100}px,${dy*.25}px) scale(4) ${base}`,opacity:1},
+          {offset:(approach+1.95)/6,transform:`translate(${outX}px,${outY}px) scale(22) rotate(35deg) ${base}`,opacity:0},
+          {offset:1,transform:`translate(${outX}px,${outY}px) scale(22) ${base}`,opacity:0}
+        ];
+        const a=bird.animate(frames,{duration:6000,fill:'both',easing:'linear'});a.pause();birdFlight.push(a);
+      });
+    }
+    birdFlight.forEach(a=>a.currentTime=time*1000);
+  }
   function clearTitleArrival(){titleArrival.forEach(a=>a.cancel());titleArrival=[];$('openingStage').style.opacity='';}
   function scrubOpeningTitle(time){
     if(!openingActive||!openingStarted)return;
@@ -223,15 +250,15 @@
     return '<div class="diagram" aria-hidden="true">'+extras+'<svg class="connections" viewBox="0 0 1000 600" preserveAspectRatio="none">'+defs+edges+'</svg>'+nodes+'</div>'+legend+'<p class="diagram-note">'+esc(d.note)+'</p>';
   }
   function special(s){
-    if(filmFiles[s.scene])return '<div class="film-wrap"><iframe id="sceneFilm" class="scene-film" src="assets/huggingface-fall/films/'+filmFiles[s.scene]+'" title="'+esc(s.scene==='investigation'?'Symbolische Untersuchung des Agentennetzes':'Quintessenz: Vögel formieren sich und landen auf einem Draht')+'" tabindex="-1" aria-hidden="true"></iframe><p class="film-fallback" id="filmFallback" role="status">Animation wird vorbereitet …</p></div>'+(s.scene==='investigation'?'<div class="investigation-status">'+s.discoveryLabels.map((cue,i)=>'<p data-enter="'+i+'" data-leave="'+(i+1)+'">'+esc(cue)+'</p>').join('')+'</div><p class="diagram-note">Symbolische Rekonstruktion · keine Originalaufnahme · kein genauer Zeitpunkt der ersten menschlichen Beobachtung</p>':'');
+    if(filmFiles[s.scene])return '<div class="film-wrap"><iframe id="sceneFilm" class="scene-film" src="assets/huggingface-fall/films/'+filmFiles[s.scene]+'?v=20261006-zoom-flight" title="'+esc(s.scene==='investigation'?'Symbolische Untersuchung des Agentennetzes':'Quintessenz: Vögel formieren sich und landen auf einem Draht')+'" tabindex="-1" aria-hidden="true"></iframe>'+(s.scene==='investigation'?'<iframe id="sceneFlight" class="scene-film scene-flight" src="assets/huggingface-fall/films/02b-folie-25-die-voegel-fliehen.html?v=20261006-zoom-flight" title="Der Schwarm löst sich auf" tabindex="-1" aria-hidden="true"></iframe>':'')+'<p class="film-fallback" id="filmFallback" role="status">Animation wird vorbereitet …</p></div>'+(s.scene==='investigation'?'<div class="investigation-status">'+s.discoveryLabels.map((cue,i)=>'<p data-enter="'+i+'" data-leave="'+(i+1)+'">'+esc(cue)+'</p>').join('')+'</div><p class="diagram-note">Symbolische Rekonstruktion · keine Originalaufnahme · kein genauer Zeitpunkt der ersten menschlichen Beobachtung</p>':'');
     if(s.scene==='title-card')return '<div class="portrait-stage title-portrait"><div class="portrait-backdrop"><span class="portrait-band band-one"></span><span class="portrait-band band-two"></span><span class="portrait-grid"></span></div><div class="portrait-field" aria-hidden="true"><span class="portrait-orbit orbit-one"></span><span class="portrait-orbit orbit-two"></span><div class="intro-art">'+avatar('anon1',true)+'</div></div><div class="portrait-copy"><p class="title-author">'+esc(s.author)+'</p><h2>Der Schwarm,<br>der nicht<br><span>geplant war</span></h2><p class="portrait-sticker">Der Hugging-Face-Fall</p></div></div>';
     if(s.scene==='agent-concept')return '<div class="concept-scene"><div class="concept-agent" aria-hidden="true">'+avatar('anon1',true)+'<span>Ein Arbeitslauf</span></div><div class="concept-panels">'+s.conceptCards.map((c,i)=>'<section class="concept-card" data-enter="'+i+'" data-leave="'+(i+1)+'"><p class="concept-label">'+esc(c.label)+'</p><h2>'+esc(c.heading)+'</h2><p class="concept-definition">'+esc(c.text)+'</p><div class="concept-tags">'+c.tags.map((tag,j)=>'<span>'+esc(tag)+'</span>'+(j<2?'<b aria-hidden="true">'+(i===1?'→':'+')+'</b>':'')).join('')+'</div><p class="concept-foot">'+esc(c.foot)+'</p></section>').join('')+'</div></div>';
     if(s.scene==='early-warning')return '<ol class="warning-history">'+s.milestones.map((m,i)=>'<li data-enter="'+i+'"><p class="history-date">'+esc(m.date)+'</p><h2>'+esc(m.title)+'</h2><p>'+esc(m.text)+'</p>'+(m.detail?'<p class="history-detail">'+esc(m.detail)+'</p>':'')+'</li>').join('')+'</ol>';
     if(s.scene==='sources')return '<div class="source-list">'+sources.slice(0,3).map((x,i)=>'<section><span class="source-no">0'+(i+1)+'</span><h2><a href="'+x.url+'" target="_blank" rel="noopener noreferrer">'+esc(x.name)+'</a></h2><p>'+esc(x.scope)+'</p><small>'+esc(x.date)+'</small></section>').join('')+'</div>';
-    return '<div class="download-scene"><div class="script-symbol" aria-hidden="true">'+icon('file')+'</div><div><a class="primary download-link overview-download" href="output/pdf/der-schwarm-der-nicht-geplant-war.pdf?v=20260922-artikel" download="Der-Schwarm-der-nicht-geplant-war.pdf">Übersicht „Der Schwarm, der nicht geplant war“ ↓</a><a class="primary download-link" href="output/pdf/huggingface-fall-begleitskript.pdf?v=20261006-html-films" download="Hugging-Face-Fall-Vortragsskript.pdf">Vortragsskript als PDF ↓</a><button id="downloadText">Editierbare Textversion ↓</button><p>'+slides.length+' Folien · Regiehinweise · Originalauszüge · Quellen</p><p class="muted">Auf dem iPad: PDF öffnen und über das Teilen-Menü in „Dateien“ sichern.</p><p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutzhinweise</a></p></div></div>';
+    return '<div class="download-scene"><div class="script-symbol" aria-hidden="true">'+icon('file')+'</div><div><a class="primary download-link overview-download" href="output/pdf/der-schwarm-der-nicht-geplant-war.pdf?v=20260922-artikel" download="Der-Schwarm-der-nicht-geplant-war.pdf">Übersicht „Der Schwarm, der nicht geplant war“ ↓</a><a class="primary download-link" href="output/pdf/huggingface-fall-begleitskript.pdf?v=20261006-zoom-flight" download="Hugging-Face-Fall-Vortragsskript.pdf">Vortragsskript als PDF ↓</a><button id="downloadText">Editierbare Textversion ↓</button><p>'+slides.length+' Folien · Regiehinweise · Originalauszüge · Quellen</p><p class="muted">Auf dem iPad: PDF öffnen und über das Teilen-Menü in „Dateien“ sichern.</p><p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutzhinweise</a></p></div></div>';
   }
   function render(){
-    sceneMovie?.dispose();sceneMovie=null;
+    sceneMovie?.dispose();flightMovie?.dispose();sceneMovie=null;flightMovie=null;clearBirdFlight();
     const s=current();
     const art=window.HF_ART[s.scene];
     $('slide').className='scene-slide cinema '+s.scene+' tone-'+art.tone+' set-'+art.set+(s.quotes?' has-quotes':'');
@@ -246,30 +273,48 @@
         ended:()=>{if(sceneMovie===movie)moviePlayback();}
       });
       movie.theme(state.theme);
+      if(s.scene==='investigation'){
+        const flight=flightMovie=new HFMovie($('sceneFlight'),{
+          ready:()=>{if(flightMovie===flight&&state.step===3)$('filmFallback').hidden=true;},
+          change:()=>{if(flightMovie===flight&&current().scene==='investigation'&&state.step===3){moviePlayback();scrubBirdFlight(flight.time);}},
+          ended:()=>{if(flightMovie===flight)moviePlayback();}
+        });
+        flight.theme(state.theme);flight.seek(0);
+        setTimeout(()=>{if(flightMovie===flight&&!flight.ready){flight.pause();flight.failed=true;moviePlayback();}},7000);
+      }
       showFilmStep(state.step===0&&state.motion&&!reduced.matches);
       setTimeout(()=>{if(sceneMovie===movie&&!movie.ready){movie.pause();$('filmFallback').textContent='Die Animation konnte nicht geladen werden. Alle Aussagen stehen darunter und im Sprechtext. Du kannst weiterblättern.';}},7000);
     }
   }
   function moviePlayback(){
-    if(!sceneMovie||openingActive)return;
+    const movie=activeMovie();if(!movie||openingActive)return;
+    if($('filmFallback')){
+      $('filmFallback').hidden=movie.ready;
+      if(movie.failed)$('filmFallback').textContent='Die Animation konnte nicht geladen werden. Du kannst weiterblättern; alle Aussagen stehen im Sprechtext.';
+    }
     const endpoint=filmSteps[current().scene][state.step];
     $('play').hidden=false;$('replay').hidden=false;
-    $('play').textContent=!sceneMovie.paused?'Etappe anhalten':sceneMovie.time<endpoint-.03?'Etappe fortsetzen':'Etappe wiederholen';
+    $('play').textContent=!movie.paused?'Etappe anhalten':movie.time<endpoint-.03?'Etappe fortsetzen':'Etappe wiederholen';
     $('play').setAttribute('aria-label',$('play').textContent);
-    $('play').setAttribute('aria-pressed',String(!sceneMovie.paused));
+    $('play').setAttribute('aria-pressed',String(!movie.paused));
   }
   function showFilmStep(animate){
-    if(!sceneMovie)return;
+    const movie=activeMovie();if(!movie)return;
     const ends=filmSteps[current().scene],endpoint=ends[state.step];
-    sceneMovie.seek(animate?(state.step?ends[state.step-1]:0):endpoint);
-    if(animate)sceneMovie.playTo(endpoint);
+    sceneMovie?.pause();flightMovie?.pause();clearBirdFlight();
+    const flight=current().scene==='investigation'&&state.step===3;
+    if(flight)sceneMovie.seek(5);
+    const start=flight?0:state.step?ends[state.step-1]:0;
+    movie.seek(animate?start:endpoint);
+    if(flight)scrubBirdFlight(animate?0:endpoint);
+    if(animate)movie.playTo(endpoint);
     moviePlayback();
   }
   function updateStep(animate=true){
     const s=current();$('slide').dataset.step=state.step;
     const intro=introduction();
     const population=populationAt(s,state.step),density=backgroundFlockDensity();
-    $('slide').classList.toggle('flock-revealed',s.id==='aufarbeitung'&&state.step===2);
+    $('slide').classList.toggle('flock-revealed',s.id==='aufarbeitung'&&state.step>=2);
     lastFlockDensity=density;
     $('slide').querySelectorAll('.flock-bird').forEach(b=>b.classList.toggle('present',Number(b.dataset.bird)<density));
     $('populationNote').hidden=!population||!!intro;
@@ -307,11 +352,12 @@
     if(s.quotes){const q=s.quotes.filter(q=>q.step<=state.step).at(-1);$('quoteArea').innerHTML=q?quoteHTML(q):'';}
     $('position').textContent='Folie '+String(state.index+1).padStart(2,'0')+' / '+slides.length;
     $('buildPosition').textContent='Aufbau '+(state.step+1)+' / '+s.cues.length;
-    if(s.scene==='investigation')$('slide').querySelector('.calendar').innerHTML=esc(['16.–17. Juli','19. Juli','20. Juli'][state.step])+'<span>2026</span>';
+    if(s.scene==='investigation')$('slide').querySelector('.calendar').innerHTML=state.step===3?'Zum Nachspiel':esc(['16.–17. Juli','19. Juli','20. Juli'][state.step])+'<span>2026</span>';
     $('progress').style.width=((state.index+(state.step+1)/s.cues.length)/slides.length*100)+'%';
     $('prev').disabled=state.index===0&&state.step===0;
     $('next').disabled=state.index===slides.length-1&&state.step===s.cues.length-1;
     $('next').textContent=intro?'In die Szene →':state.step<s.cues.length-1?'Weiter aufbauen →':'Nächste Folie →';
+    if(s.scene==='investigation'&&state.step===2)$('next').textContent='Schwarm auflösen →';
     $('play').hidden=s.cues.length===1;$('replay').hidden=s.cues.length===1;
     $('play').textContent=timer?'Anhalten':'Szene abspielen';
     $('play').setAttribute('aria-label','Aktuelle Szene automatisch aufbauen');
@@ -320,7 +366,7 @@
     moviePlayback();
     save();
   }
-  function stop(){clearInterval(timer);timer=null;if(openingActive){openingMovie?.pause();openingPlayback();return;}if(sceneMovie){sceneMovie.pause();moviePlayback();return;}$('play').textContent='Szene abspielen';$('play').setAttribute('aria-pressed','false');}
+  function stop(){clearInterval(timer);timer=null;if(openingActive){openingMovie?.pause();openingPlayback();return;}if(sceneMovie){sceneMovie.pause();flightMovie?.pause();moviePlayback();return;}$('play').textContent='Szene abspielen';$('play').setAttribute('aria-pressed','false');}
   function cancelDocking(){
     cancelCrossfade();
     if(docking){const old=docking;docking=null;(old.animations||[old.animation]).filter(Boolean).forEach(animation=>animation.cancel());(old.clones||[old.clone]).filter(Boolean).forEach(clone=>clone.remove());old.target?.classList.remove('arriving');}
@@ -435,11 +481,12 @@
   function play(){
     if(openingActive){toggleOpeningPlayback();return;}
     if(sceneMovie){
-      if(!sceneMovie.paused){sceneMovie.pause();moviePlayback();return;}
+      const movie=activeMovie();
+      if(!movie.paused){movie.pause();moviePlayback();return;}
       const ends=filmSteps[current().scene];
       if(!state.motion||reduced.matches){showFilmStep(false);return;}
-      if(sceneMovie.time>=ends[state.step]-.03)sceneMovie.seek(state.step?ends[state.step-1]:0);
-      sceneMovie.playTo(ends[state.step]);moviePlayback();return;
+      if(movie.time>=ends[state.step]-.03){movie.seek(current().scene==='investigation'&&state.step===3?0:state.step?ends[state.step-1]:0);if(movie===flightMovie){clearBirdFlight();scrubBirdFlight(0);}}
+      movie.playTo(ends[state.step]);moviePlayback();return;
     }
     if(timer){stop();return;}
     cancelDocking();if(state.step===current().cues.length-1)changeBuild(0);
@@ -467,7 +514,7 @@
     a.href=url;a.download='Hugging-Face-Fall-Vortragsskript.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
   }
 function syncMotion(){cancelDocking();if(!state.motion||reduced.matches){openingMovie?.pause();showFilmStep(false);}document.body.classList.toggle('no-motion',!state.motion||reduced.matches);$('motion').checked=state.motion&&!reduced.matches;}
-  function syncTheme(){document.documentElement.dataset.theme=state.theme;openingMovie?.theme(state.theme);sceneMovie?.theme(state.theme);document.querySelectorAll('input[name="theme"]').forEach(input=>input.checked=input.value===state.theme);}
+  function syncTheme(){document.documentElement.dataset.theme=state.theme;openingMovie?.theme(state.theme);sceneMovie?.theme(state.theme);flightMovie?.theme(state.theme);document.querySelectorAll('input[name="theme"]').forEach(input=>input.checked=input.value===state.theme);}
   function syncProjector(){document.documentElement.dataset.projector=String(state.projector);$('projector').checked=state.projector;}
   $('prev').onclick=prev;$('next').onclick=next;$('play').onclick=play;
   $('startOpeningButton').onclick=toggleOpeningPlayback;
@@ -494,7 +541,7 @@ function syncMotion(){cancelDocking();if(!state.motion||reduced.matches){opening
     }catch(_){open('settingsDialog');$('fullscreenStatus').textContent='Vollbild ist in diesem Browser nicht verfügbar. Die Präsentation passt sich auch im Browserfenster an.';}
   };
   document.addEventListener('fullscreenchange',()=>{cancelDocking();$('fullscreen').textContent=document.fullscreenElement?'Vollbild beenden':'Vollbild einschalten';});
-  window.addEventListener('resize',()=>{cancelDocking();if(openingActive&&openingStarted){clearTitleArrival();scrubOpeningTitle(openingMovie.time);}});
+  window.addEventListener('resize',()=>{cancelDocking();if(openingActive&&openingStarted){clearTitleArrival();scrubOpeningTitle(openingMovie.time);}if(current().scene==='investigation'&&state.step===3&&flightMovie){clearBirdFlight();scrubBirdFlight(flightMovie.time);}});
   $('viewport').addEventListener('scroll',()=>{if(docking)cancelDocking();},{passive:true});
   $('reset').onclick=()=>{$('settingsDialog').close();open('resetDialog');};
   $('confirmReset').onclick=()=>{$('resetDialog').close();go(0);startOpening();};

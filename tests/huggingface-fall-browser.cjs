@@ -72,7 +72,7 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
       }
       if(s.id==='aufarbeitung'){
         assert.equal(await page.locator('#sceneFilm').count(),1,'one controlled HTML illustration');
-        assert.equal(await page.locator('.flock-eyes').first().evaluate(e=>getComputedStyle(e).display),step===2?'inline':'none');
+        assert.equal(await page.locator('.flock-eyes').first().evaluate(e=>getComputedStyle(e).display),step>=2?'inline':'none');
         if(step===2){
           assert.notEqual(await page.locator('.flock-outline').first().evaluate(e=>getComputedStyle(e).stroke),'none');
           assert.equal(await page.locator('.flock-outline').first().evaluate(e=>getComputedStyle(e).fillOpacity),'1','foreground birds fully cover birds behind them');
@@ -80,7 +80,7 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
           assert.equal(await page.locator('.flock-bird').first().locator('.flock-eyes').evaluate(e=>Number(e.children[1].getAttribute('cx'))-Number(e.children[0].getAttribute('cx'))),4);
           assert.equal(await page.locator('.flock-eyes').first().evaluate(e=>getComputedStyle(e).animationName),'none','reduced movement keeps the eyes still');
         }
-        assert.match(await page.locator('.calendar').textContent(),new RegExp(['16.–17. Juli','19. Juli','20. Juli'][step]));
+        assert.match(await page.locator('.calendar').textContent(),new RegExp(['16.–17. Juli','19. Juli','20. Juli','Zum Nachspiel'][step]));
       }
       if(s.overviewPortraits){
         const start=s.introductions.length*2;
@@ -94,8 +94,8 @@ const server=http.createServer((req,res)=>{const p=path.resolve(workspace,'.'+de
       assert.equal(await page.locator('#slide .flock-bird.present').count(),afterDiscovery?0:Math.max(2,...data.slides.slice(0,data.slides.indexOf(s)+1).flatMap((x,i)=>(x.population||[]).filter(p=>i<data.slides.indexOf(s)||p.step<=step).map(p=>data.populations[p.phase].birds))));
       if(afterDiscovery)assert.equal(await page.locator('#slide .flock-bird').count(),0,'all later backgrounds remain empty');
       assert.equal(await page.locator('#slide .flock-band').count(),3,'only three background animation groups');
-      assert.ok(await page.locator('#slide .flock-layer').evaluate((e,revealed)=>{const css=getComputedStyle(e);return css.pointerEvents==='none'&&(revealed?Number(css.opacity)===1:Number(css.opacity)>=.1&&Number(css.opacity)<=.13)},s.id==='aufarbeitung'&&step===2));
-      assert.equal(await page.locator('#slide.flock-revealed').count(),s.id==='aufarbeitung'&&step===2?1:0);
+      assert.ok(await page.locator('#slide .flock-layer').evaluate((e,{revealed,flight})=>{const css=getComputedStyle(e);return css.pointerEvents==='none'&&(flight?Number(css.opacity)===0:revealed?Number(css.opacity)===1:Number(css.opacity)>=.1&&Number(css.opacity)<=.13)},{revealed:s.id==='aufarbeitung'&&step>=2,flight:s.id==='aufarbeitung'&&step===3}));
+      assert.equal(await page.locator('#slide.flock-revealed').count(),s.id==='aufarbeitung'&&step>=2?1:0);
       assert.equal(await page.locator('#populationNote').isVisible(),!!population&&!intro);
       if(population&&!intro)assert.match(await page.locator('#populationNote').textContent(),new RegExp(population.label.replace('.','\\.')));
       if(intro){

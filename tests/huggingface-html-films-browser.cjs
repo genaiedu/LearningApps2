@@ -1,4 +1,5 @@
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http'),os=require('node:os');
+const {PNG}=require('pngjs');
 const root=path.resolve(__dirname,'..'),workspace=path.dirname(root),shots=fs.mkdtempSync(path.join(os.tmpdir(),'hf-html-films-'));
 const server=http.createServer((req,res)=>{const file=path.resolve(workspace,'.'+decodeURIComponent(req.url.split('?')[0]));if(![root,path.join(workspace,'LearningApps/fonts')].some(p=>file.startsWith(p+path.sep)))return res.writeHead(403).end();fs.readFile(file,(e,b)=>{if(e)return res.writeHead(404).end();res.setHeader('Content-Type',{'.html':'text/html','.js':'text/javascript','.css':'text/css','.woff2':'font/woff2'}[path.extname(file)]||'application/octet-stream');res.end(b);});});
 const state=(page,id)=>page.evaluate(id=>new Promise(resolve=>{
@@ -30,6 +31,7 @@ const geometry=page=>page.evaluate(()=>Object.fromEntries(['.topbar','.transport
   for(const theme of ['dark','light'])for(const viewport of [{width:1440,height:900},{width:1024,height:768},{width:768,height:1024},{width:390,height:844},{width:844,height:390}]){
    await page.setViewportSize(viewport);await page.locator('#settings').click();await page.locator('input[name=theme][value='+theme+']').check();await page.locator('#motion').uncheck();await page.locator('[data-close=settingsDialog]').click();
    await jump(page,'aufarbeitung');
+   let zoomCenter;
    for(let i=0;i<3;i++){
     if(i)await page.locator('#next').click();await page.waitForTimeout(120);
     const snap=await state(page,'sceneFilm');assert(Math.abs(snap.time-[.9,2.25,5][i])<.01);assert(snap.paused);
@@ -37,8 +39,28 @@ const geometry=page=>page.evaluate(()=>Object.fromEntries(['.topbar','.transport
     assert.match(await page.locator('.investigation-status .visible').textContent(),new RegExp(['als Kunde','Sicherheitsalarm','Dieselben Zugangsdaten'][i]));
     const frame=page.frameLocator('#sceneFilm');assert.equal(await frame.locator('#topbar').isVisible(),false);assert.equal(await frame.locator('#heading').isVisible(),false);
     const scale=await frame.locator('#net').evaluate(e=>new DOMMatrix(getComputedStyle(e).transform).a);assert(Math.abs(scale-(i===0?1:.63))<.01);
+    const center=await frame.locator('#net').evaluate(e=>{const p=new DOMPoint(460,257.5).matrixTransform(e.getScreenCTM());return [p.x,p.y];});
+    if(i===0)zoomCenter=center;else center.forEach((v,k)=>assert(Math.abs(v-zoomCenter[k])<.1,`zoom keeps the same center: ${theme} ${viewport.width} step ${i}: ${center} vs ${zoomCenter}`));
     await page.screenshot({path:path.join(shots,`${theme}-${viewport.width}-discovery-${i}.png`)});
    }
+   const transparent=await page.frameLocator('#sceneFilm').locator('html,body,#root').evaluateAll(es=>es.every(e=>getComputedStyle(e).backgroundColor==='rgba(0, 0, 0, 0)'));
+   assert(transparent,'the whole embedded image reveals the host flock');
+   // Computed transparent backgrounds alone miss Chromium's white canvas when
+   // the iframe's color scheme differs from the parent's. Check painted pixels.
+   const box=await page.locator('#sceneFilm').boundingBox(),clip={x:Math.ceil(box.x+4),y:Math.ceil(box.y+4),width:16,height:16};
+   const painted=PNG.sync.read(await page.screenshot({clip}));
+   await page.locator('#sceneFilm').evaluate(e=>e.style.opacity='0');
+   const behind=PNG.sync.read(await page.screenshot({clip}));
+   await page.locator('#sceneFilm').evaluate(e=>e.style.opacity='');
+   assert(painted.data.every((v,k)=>Math.abs(v-behind.data[k])<=2),'painted iframe canvas is transparent in '+theme+' mode');
+   assert.equal((await state(page,'sceneFlight')).time,0,'flight waits for an explicit gesture');
+   assert.equal(await page.locator('#next').textContent(),'Schwarm auflösen →');
+   await page.locator('#next').click();await page.waitForTimeout(140);
+   assert.equal((await state(page,'sceneFlight')).time,6);assert((await state(page,'sceneFlight')).paused);
+   const landed=await page.frameLocator('#sceneFlight').locator('.falling-feather').evaluateAll(es=>es.map(e=>({top:parseFloat(e.style.top)+gsap.getProperty(e,'y'),rotation:gsap.getProperty(e,'rotation')})));
+   assert.equal(landed.length,16);assert(landed.every(e=>Math.abs(e.top-1048)<.1&&e.rotation===90),'all feathers land horizontally on the common floor');
+   assert.equal(await page.locator('.flock-layer').evaluate(e=>getComputedStyle(e).opacity),'0','reduced motion skips to the empty flock');
+   await page.screenshot({path:path.join(shots,`${theme}-${viewport.width}-flight-end.png`)});
    await jump(page,'quintessenz');assert.match(await page.locator('#position').textContent(),/30 \/ 31/);
    for(let i=0;i<4;i++){
     if(i)await page.locator('#next').click();await page.waitForTimeout(100);assert(Math.abs((await state(page,'sceneFilm')).time-[3.55,5.55,8.6,15][i])<.01);
@@ -60,6 +82,26 @@ const geometry=page=>page.evaluate(()=>Object.fromEntries(['.topbar','.transport
   await jump(page,'aufarbeitung');await page.waitForTimeout(1400);assert((await state(page,'sceneFilm')).paused);assert(Math.abs((await state(page,'sceneFilm')).time-.9)<.01);
   await page.locator('#next').click();await page.waitForTimeout(200);await page.locator('#settings').click();const stopped=await state(page,'sceneFilm');await page.waitForTimeout(300);assert.equal((await state(page,'sceneFilm')).time,stopped.time);await page.locator('[data-close=settingsDialog]').click();
   await page.locator('#play').click();await page.waitForTimeout(1600);assert(Math.abs((await state(page,'sceneFilm')).time-2.25)<.01);assert((await state(page,'sceneFilm')).paused);
+  await page.locator('#next').click();await page.waitForTimeout(3000);assert((await state(page,'sceneFilm')).paused);assert.equal((await state(page,'sceneFilm')).time,5);
+  await page.waitForTimeout(350);assert.equal((await state(page,'sceneFlight')).time,0);assert.equal(await page.locator('#slide').getAttribute('data-step'),'2','discovery stays until explicitly dissolved');
+  // Both compositions pose exactly the same scaled network and the new agent
+  // copies sit on the original agents, not on coordinates from the full-page preview.
+  const oldBox=await page.frameLocator('#sceneFilm').locator('#net .agent svg').first().boundingBox();
+  await page.locator('#next').click();await page.waitForTimeout(150);await page.locator('#play').click();
+  const flightBox=await page.frameLocator('#sceneFlight').locator('#net .agent svg').first().boundingBox();
+  for(const p of ['x','y','width','height'])assert(Math.abs(oldBox[p]-flightBox[p])<.7,'no geometry jump to flight '+p);
+  const frozen=await state(page,'sceneFlight');const nativeTime=await page.locator('.flock-bird').first().evaluate(e=>e.getAnimations().find(a=>a.effect.getTiming().duration===6000)?.currentTime);
+  await page.waitForTimeout(250);assert.equal((await state(page,'sceneFlight')).time,frozen.time);assert.equal(await page.locator('.flock-bird').first().evaluate(e=>e.getAnimations().find(a=>a.effect.getTiming().duration===6000)?.currentTime),nativeTime);
+  await page.locator('#play').click();await page.waitForTimeout(1800);await page.locator('#play').click();await page.screenshot({path:path.join(shots,'flight-middle.png')});
+  await seek(page,'sceneFlight',3);await page.waitForTimeout(100);
+  const feather=page.frameLocator('#sceneFlight').locator('.falling-feather').first(),featherBefore=await feather.boundingBox();
+  await page.waitForTimeout(150);assert.deepEqual(await feather.boundingBox(),featherBefore,'feathers pause with the flight');
+  await seek(page,'sceneFlight',5.2);await page.waitForTimeout(100);const featherAfter=await feather.boundingBox();
+  assert(featherAfter.y>featherBefore.y+50,'feathers keep falling after leaving the agents');
+  await page.screenshot({path:path.join(shots,'feathers-landing.png')});
+  await seek(page,'sceneFlight',6);await page.waitForTimeout(100);assert.equal(await page.locator('#slide').getAttribute('data-step'),'3','flight end does not advance');
+  assert.equal(await page.locator('.flock-bird').first().evaluate(e=>getComputedStyle(e).opacity),'0');
+  await page.locator('#prev').click();assert.equal(await page.locator('#slide').getAttribute('data-step'),'2');assert.equal(await page.locator('.flock-bird').first().evaluate(e=>e.getAnimations().filter(a=>a.effect.getTiming().duration===6000).length),0,'going back restores the intact swarm');
   await jump(page,'quintessenz');await seek(page,'sceneFilm',15);await page.waitForTimeout(100);assert.equal(await page.locator('#position').textContent(),'Folie 30 / 31','film end does not auto-navigate');
   await page.emulateMedia({reducedMotion:'reduce'});await page.reload();assert(await page.locator('#startOpeningButton').isVisible());await page.locator('#play').click();assert(await page.locator('#openingStage').isHidden());
   // The same message bridge works for local file://, without same-origin access.

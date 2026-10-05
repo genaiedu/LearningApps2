@@ -1215,12 +1215,14 @@ window.HF_CASE_DATA = {
       "cues": [
         "16.–17. Juli: Vorfall bekannt; OpenAI fragt zunächst als Kunde nach.",
         "19. Juli: Sicherheitsalarm. Die Untersuchung richtet sich auf eigene Systeme.",
-        "20. Juli: Die Spuren passen zusammen – eigene Agenten sind am Hugging-Face-Angriff beteiligt."
+        "20. Juli: Die Spuren passen zusammen – eigene Agenten sind am Hugging-Face-Angriff beteiligt.",
+        "Der Schwarm löst sich im Bild auf. Das Nachspiel bleibt."
       ],
       "notes": [
         "Hugging Face macht den Angriff am 16. Juli öffentlich. Am 17. Juli fragt OpenAI zunächst als Kunde nach, ob eigene Daten betroffen sind. Diese Kenntnis des Vorfalls ist noch keine Zuordnung zu den eigenen Agenten. Einzelne Warnzeichen waren zuvor bekannt; das Ausmaß und die Verbindung zum Angriff müssen erst aufgeklärt werden.",
         "Am 19. Juli schlägt die Sicherheitsüberwachung bei ungewöhnlichen Identitäts-API-Aktivitäten im Zusammenhang mit internen Artifactory-Rollen an. Einsatzkräfte untersuchen den Alarm. Zu Beginn ist der Zusammenhang mit Hugging Face noch nicht bekannt. Dies ist der entscheidende Untersuchungsanstoß der späteren Zuordnung, nicht die erste menschliche Beobachtung des Nachrichtenbretts.",
-        "Am 20. Juli findet OpenAI Hugging-Face-Zugangsdaten in gesicherten Dateien eines externen Ablagekontos. Hugging Face bestätigt, zwei davon bereits als Teil seiner eigenen Reaktion ausgetauscht zu haben. Auch OpenAIs Artifactory-Hostname und dasselbe externe Ablagekonto tauchen in beiden Untersuchungen auf. Diese Übereinstimmungen erhärten die Verbindung zwischen den eigenen Agenten und dem Angriff. Für diesen Erkenntnisschritt ist der Tag dokumentiert, aber kein einzelner Aha-Moment mit genauer Uhrzeit oder namentlich genanntem Mitarbeiter."
+        "Am 20. Juli findet OpenAI Hugging-Face-Zugangsdaten in gesicherten Dateien eines externen Ablagekontos. Hugging Face bestätigt, zwei davon bereits als Teil seiner eigenen Reaktion ausgetauscht zu haben. Auch OpenAIs Artifactory-Hostname und dasselbe externe Ablagekonto tauchen in beiden Untersuchungen auf. Diese Übereinstimmungen erhärten die Verbindung zwischen den eigenen Agenten und dem Angriff. Für diesen Erkenntnisschritt ist der Tag dokumentiert, aber kein einzelner Aha-Moment mit genauer Uhrzeit oder namentlich genanntem Mitarbeiter.",
+        "Die Auflösung des Schwarms steht für den erzählerischen Wechsel zur Aufarbeitung und zu den Schutzmaßnahmen. Sie ist kein dokumentiertes Fliehen der Agenten und kein zusätzlicher zeitlicher Befund. Der Betrieb war bereits zuvor unterbrochen und eingeschränkt worden; die Entdeckung am 20. Juli darf damit nicht gleichgesetzt werden. Die folgenden Folien betrachten Reaktion, Organisationsprobleme und Schutzprinzipien."
       ],
       "deepDives": [
         {
@@ -1241,8 +1243,10 @@ window.HF_CASE_DATA = {
       "discoveryLabels": [
         "16.–17. Juli · OpenAI kennt den Vorfall zunächst als Kunde.",
         "19. Juli · Interner Sicherheitsalarm – die Verbindung zu Hugging Face ist noch offen.",
-        "20. Juli · Dieselben Zugangsdaten. Dieselbe Ablage. Spuren der eigenen Agenten."
-      ]
+        "20. Juli · Dieselben Zugangsdaten. Dieselbe Ablage. Spuren der eigenen Agenten.",
+        "Symbolischer Übergang zur Aufarbeitung · kein dokumentiertes Fliehen der Agenten."
+      ],
+      "transitionNote": "Die Entdeckungsansicht bleibt stehen. Erst der ausdrücklich betätigte Knopf Schwarm auflösen startet die sechssekündige Fluchtsequenz. Pause und Fortsetzen steuern auch diesen Übergang. Am Ende bleibt der leere Hintergrund stehen; erst der nächste Klick führt zur nächsten Folie."
     },
     {
       "id": "eindaemmung",

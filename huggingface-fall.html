@@ -6,12 +6,12 @@
 <title>Der Hugging-Face-Fall · KI verstehen</title>
 <script>try{const s=JSON.parse(localStorage.getItem('huggingface-fall:story-v4'));document.documentElement.dataset.theme=s?.theme==='light'?'light':'dark';document.documentElement.dataset.projector=String(s?.projector===true);}catch(_){}</script>
 <link rel="stylesheet" href="huggingface-fall.css?v=20261006-learningapps2">
-<link rel="stylesheet" href="huggingface-fall-cinema.css?v=20261006-html-films">
-<script defer src="huggingface-fall-data.js?v=20261006-html-films"></script>
+<link rel="stylesheet" href="huggingface-fall-cinema.css?v=20261006-zoom-flight">
+<script defer src="huggingface-fall-data.js?v=20261006-zoom-flight"></script>
 <script defer src="huggingface-fall-scenes.js?v=20261001-access-chain"></script>
 <script defer src="huggingface-fall-art.js?v=20261006-html-films"></script>
 <script defer src="huggingface-fall-films.js?v=20261006-html-films"></script>
-<script defer src="huggingface-fall.js?v=20261006-html-films"></script>
+<script defer src="huggingface-fall.js?v=20261006-zoom-flight"></script>
 </head>
 <body>
 <a class="skip" href="#slide">Zur Folie</a>
@@ -30,7 +30,7 @@
 <h3>Vortragen und iPad-Bedienung</h3>
 <p>Beim Öffnen, Neuladen oder Neubeginn erscheint ein schwarzer Bildschirm mit „Start“. Nichts läuft von selbst los. Zuerst kannst du hier das Vollbild und das Farbschema einstellen. „Start“ in der Bildmitte oder unten startet anschließend den 15-sekündigen HTML-Auftaktfilm.</p>
 <p>Film und Folien nutzen denselben Bildbereich zwischen den dauerhaft sichtbaren Bedienleisten. Im letzten Teil des Auftakts entsteht bereits die echte erste Folie: Titel und Vogel bleiben am Filmende an derselben Stelle. Bei ausgeschalteten Animationen führt „Start“ direkt zur ersten Folie.</p>
-<p>Der Auftakt lässt sich unten pausieren, fortsetzen, neu starten oder mit „Zur Präsentation“ überspringen. Danach zeigt „Weiter“ zunächst den nächsten Aufbau, anschließend die nächste Folie. Auf gewöhnlichen Folien führt „Szene abspielen“ die Aufbauten im Abstand von vier Sekunden vor. Die HTML-Szenen zur Aufarbeitung und zur Quintessenz halten nach jeder Etappe an; „Weiter“ beginnt die nächste Etappe, „Etappe fortsetzen“ setzt eine unterbrochene Animation fort. „↺“ beginnt die Szene von vorn. Der Sprechtext passt zu jedem Aufbau. Die Zusatzmaterialien bleiben die letzte Folie.</p>
+<p>Der Auftakt lässt sich unten pausieren, fortsetzen, neu starten oder mit „Zur Präsentation“ überspringen. Danach zeigt „Weiter“ zunächst den nächsten Aufbau, anschließend die nächste Folie. Auf gewöhnlichen Folien führt „Szene abspielen“ die Aufbauten im Abstand von vier Sekunden vor. Die HTML-Szenen zur Aufarbeitung und zur Quintessenz halten nach jeder Etappe an; „Weiter“ beginnt die nächste Etappe, „Etappe fortsetzen“ setzt eine unterbrochene Animation fort. Nach der Entdeckung bleibt das Agentennetz mit dem Schwarm stehen: Erst „Schwarm auflösen“ startet die sechssekündige Flucht. Du kannst sie anhalten und fortsetzen. Auch danach geht es erst mit deinem nächsten Klick weiter. „↺“ beginnt die Szene von vorn. Der Sprechtext passt zu jedem Aufbau. Die Zusatzmaterialien bleiben die letzte Folie.</p>
 <p>Seitlich wischen oder die großen Tasten antippen. Nach oben und unten bleibt die Folie bei Bedarf scrollbar. Vergrößern mit zwei Fingern ist möglich. Mit Tastatur: Pfeiltasten und Leertaste steuern den Aufbau. Am Startbildschirm startet die Leertaste den Film. Pos1 kehrt dort zum wartenden Startbildschirm zurück. Escape schließt ein Fenster oder stoppt die Wiedergabe.</p>
 <button id="reset" class="danger">Präsentation neu beginnen</button><p id="storageStatus"></p><p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutzhinweise</a></p><p class="muted">Keine externen Medien oder Tracker. Erst Quellenlinks rufen fremde Websites auf. Lokale Schriften: Inter und Outfit. Stand: 21.09.2026. Die Figuren sind schematische Zeichen für Agenteninstanzen.</p></dialog>
 <dialog id="resetDialog"><div class="dialog-head"><h2>Neu beginnen?</h2><button data-close="resetDialog">Abbrechen ×</button></div><p>Die aktuelle Folienposition und der Aufbau werden zurückgesetzt. Du kehrst zum schwarzen Startbildschirm zurück; der Film wartet auf deinen Klick. Diese Erzählpräsentation erfasst keine Antworten und vergibt keine Punkte. Andere Apps und heruntergeladene Dateien bleiben unverändert.</p><button id="confirmReset" class="danger">Zum Startbildschirm</button></dialog>
