@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict'),C=require('../scripts/mo-rechenlabor-core.js');
+const mol=atoms=>({defaults:{atom:{z:6,chg:0,impHs:0,nRad:0}},molecules:[{atoms}]});
+assert.deepEqual(C.validateGraph(mol([{impHs:2},{impHs:2}]),'C=C'),{total:6,heavy:2,n:14,electrons:16,dim:48});
+assert.throws(()=>C.validateGraph(mol([{z:8},{z:8}]),'O=O'),/Triplet/);
+assert.throws(()=>C.validateGraph(mol([{nRad:1,impHs:3}]),'[CH3]'),/Radikale/);
+assert.throws(()=>C.validateGraph(mol([{z:11,chg:1}]),'[Na+]'),/Unterstützt/);
+assert.throws(()=>C.validateGraph(mol(Array.from({length:7},()=>({impHs:2}))), 'CCCCCCC'),/zu groß/);
+assert.throws(()=>C.validateGraph(mol([{impHs:4}]),'C.C'),/Fragmente/);
+assert.equal(C.orbitalLabel(7,8).name,'HOMO');assert.equal(C.orbitalLabel(8,8).name,'LUMO');
+const s=C.spectrum([{energyEV:5,oscillatorStrength:1},{energyEV:-1,oscillatorStrength:1}],40,800,.2);
+assert.equal(s.lines.length,1);assert.ok(Math.abs(s.lines[0].wavelength-247.9684)<.001);assert.equal(Math.max(...s.points.map(p=>p.value)),1);
+assert.ok(C.spectrum([],40,800,.2).points.every(p=>p.value===0));
+assert.match(C.xyz([{z:6,xyz:[0,1,2]}]),/^1\n.*\nC 0.0000000 1.0000000 2.0000000/);
+console.log('PASS MO limits, orbital labels, spectrum units/broadening, XYZ');
