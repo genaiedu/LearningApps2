@@ -37,6 +37,10 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+deco
     assert.equal(await page.locator('#image-credits article').count(),19);
     assert.equal(requests.length,0,'offline mode makes no external requests');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    assert.equal(await page.locator('#lottery-result tbody tr').count(),0);
+    for(const count of [1,2,6,14,26,6]){await page.locator('#lottery-count').fill(String(count));await page.locator('#lottery-draw').click();const result=await page.locator('#lottery-result tbody tr').evaluateAll(rows=>rows.map(r=>[r.querySelector('th').textContent,r.querySelector('td').textContent]));assert.equal(result.length,count);assert.deepEqual(result.map(r=>r[0]),Array.from({length:count},(_,i)=>'Gruppe '+(i+1)));assert.deepEqual(result.map(r=>r[1]).sort(),Array.from({length:count},(_,i)=>'Thema '+String.fromCharCode(65+i)));}
+    const lottery=await page.locator('#lottery-result').textContent();
+    for(const value of ['0','27','2.5','']){await page.locator('#lottery-count').fill(value);await page.locator('#lottery-draw').click();assert.equal(await page.locator('#lottery-result').textContent(),lottery,'invalid count does not replace the distribution');}
     const ids=await page.locator('.task').evaluateAll(xs=>xs.map(x=>x.id));
     const selectedIds=ids.map(x=>x.slice(5));
     assert.equal(new Set(selectedIds).size,24);
@@ -52,11 +56,13 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+deco
     await page.locator('[data-note=question]').fill('Wie wird aus einem globalen Muster eine lokale Folge?');
     await page.locator('#quality-checks input').first().check();
     await page.reload();await page.locator('#consent [value=offline]').click();
+    assert.equal(await page.locator('#lottery-result').textContent(),lottery,'lottery survives reload');assert.equal(await page.locator('#lottery-count').inputValue(),'6');
     assert.deepEqual(await page.locator('.task').evaluateAll(xs=>xs.map(x=>x.id)),ids,'same saved round');
     assert.match(await page.locator('#points').textContent(),/0,5/);
     assert.equal(await page.locator('[data-note=question]').inputValue(),'Wie wird aus einem globalen Muster eine lokale Folge?');
     await page.locator('#new-round').click();assert.equal(await page.locator('#reset-dialog').evaluate(e=>e.open),true);await page.locator('#reset-dialog [value=confirm]').click();
     assert.equal(await page.locator('#points').textContent(),'0 / 24 XP');
+    assert.equal(await page.locator('#lottery-result').textContent(),lottery,'new quiz round preserves lottery');
     assert.notDeepEqual(await page.locator('.task').evaluateAll(xs=>xs.map(x=>x.id)),ids,'fresh round');
     assert.equal(await page.locator('[data-note=question]').inputValue(),'Wie wird aus einem globalen Muster eine lokale Folge?','round preserves notes');
     const round=await page.locator('.task').evaluateAll(xs=>xs.map(x=>x.id.slice(5)));
@@ -78,6 +84,7 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+deco
     await page.setViewportSize({width:390,height:500});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.locator('#navigation summary').click();await page.locator('#navigation').evaluate(n=>n.scrollTop=n.scrollHeight);const scrollable=await page.locator('#navigation').evaluate(n=>n.scrollHeight>n.clientHeight&&n.scrollTop>0);assert.ok(scrollable,'small-screen contents scrolls');
     await page.locator('#navigation summary').click();
     await page.locator('#reset').click();await page.locator('#reset-dialog [value=confirm]').click();assert.equal(await page.locator('[data-note=question]').inputValue(),'');assert.equal(await page.locator('#points').textContent(),'0 / 24 XP');assert.equal(await page.locator('body').getAttribute('data-theme'),'light');assert.equal(await page.locator('#quality-checks input:checked').count(),0);
+    assert.equal(await page.locator('#lottery-result tbody tr').count(),0);assert.equal(await page.evaluate(()=>localStorage.getItem('wetterwelten:v1:lottery')),null,'full reset clears saved lottery');
     assert.deepEqual(errors,[]);
     console.log('WetterWelten: 80 task keys, 24/80 draw, scoring, persistence, reset, 14 projects, media consent/revocation, reader math, models and mobile navigation passed.');
   }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
