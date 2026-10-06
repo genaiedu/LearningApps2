@@ -110,7 +110,9 @@ never published as experimental datasets.
 
 `tests/mo-production-browser.cjs`: repeat a real water calculation on the
 published GitHub Pages app, check required assets, surfaces and CIS table,
-and verify absence of external requests before Wikipedia consent. Its
+and verify absence of external requests before explicit consent. It checks
+ground and excited-state density displays, then explicitly permits and
+starts a real PubChem water-conformer lookup with CID/method metadata. Its
 article-reader test intercepts the Wikipedia endpoint with a harmless
 fixture; it does not fetch third-party article contents or pictures.
 
