@@ -10,5 +10,8 @@ assert.equal(C.orbitalLabel(7,8).name,'HOMO');assert.equal(C.orbitalLabel(8,8).n
 const s=C.spectrum([{energyEV:5,oscillatorStrength:1},{energyEV:-1,oscillatorStrength:1}],40,800,.2);
 assert.equal(s.lines.length,1);assert.ok(Math.abs(s.lines[0].wavelength-247.9684)<.001);assert.equal(Math.max(...s.points.map(p=>p.value)),1);
 assert.ok(C.spectrum([],40,800,.2).points.every(p=>p.value===0));
+const bands=C.bands([{energyEV:10,oscillatorStrength:.2},{energyEV:10.1,oscillatorStrength:.3},{energyEV:20,oscillatorStrength:.8}],.2,.01);
+assert.equal(bands.length,2);assert.equal(bands[0].states.length,2);assert.ok(Math.abs(bands[0].wavelength-C.HC/10.06)<1e-9);
+assert.equal(C.bands([{energyEV:10,oscillatorStrength:1e-9}],.2,.01).length,0);
 assert.match(C.xyz([{z:6,xyz:[0,1,2]}]),/^1\n.*\nC 0.0000000 1.0000000 2.0000000/);
 console.log('PASS MO limits, orbital labels, spectrum units/broadening, XYZ');

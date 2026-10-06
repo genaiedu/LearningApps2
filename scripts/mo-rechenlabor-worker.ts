@@ -8,6 +8,9 @@ import {computeCIS} from '../vendor/gansu-lite/src/core/cis';
 import {computeRHFGradient} from '../vendor/gansu-lite/src/core/gradient';
 import {initWasm} from '../vendor/gansu-lite/src/core/eriWasm';
 import {buildShellNormCache,evaluateBasisFunctionsScreened} from '../vendor/gansu-lite/src/core/xcIntegration';
+import {computeDipoleIntegrals} from '../vendor/gansu-lite/src/core/integralsDipole';
+import {computeMullikenCharges} from '../vendor/gansu-lite/src/core/properties';
+import {cisDensityMO,densityAO} from './mo-state-density';
 
 declare const self:any;
 let OB:any, basis:BasisSet, calculation:any=null, busy=false;
@@ -117,10 +120,22 @@ async function quantum(atoms:any[],refine=false){
   progress('cis','Optische Anregungen: CIS-Matrix und Übergangsstärken …');
   const cis=computeCIS(hf.coefficients,hf.orbitalEnergies,hf.eriStore,nocc,n,Math.min(60,nocc*(n-nocc)),false,mol.primitiveShells,mol.cgtoNormalizationFactors,()=>check());
   check();
-  const states=cis.states.map(s=>({...s,wavelength:s.energyEV>0?1239.841984/s.energyEV:null}));
+  const integrals=computeDipoleIntegrals(mol.primitiveShells,mol.cgtoNormalizationFactors,n);
+  const densities=[hf.density,...cis.states.map(s=>densityAO(cisDensityMO(s.amplitudes,nocc,n),hf.coefficients))];
+  const properties=densities.map((d,stateIndex)=>{
+    const charges=Array.from(computeMullikenCharges(d,hf.overlap,mol.atoms,mol.atomToBasisRange));
+    if(Math.abs(charges.reduce((s,q)=>s+q,0))>1e-5)throw Error('Dichteprüfung: Elektronenzahl nicht erhalten.');
+    const vector=[integrals.Dx,integrals.Dy,integrals.Dz].map((m,k)=>{
+      let v=mol.atoms.reduce((s,a)=>s+a.atomicNumber*[a.coordinate.x,a.coordinate.y,a.coordinate.z][k],0);
+      for(let i=0;i<n;i++)for(let j=0;j<n;j++)v-=d.get(i,j)*m.get(j,i);
+      return v;
+    });
+    return {charges,dipole:{vectorAU:vector,vectorDebye:vector.map(v=>v*2.5417464),debye:Math.hypot(...vector)*2.5417464},densityMethod:stateIndex===0?'RHF-SCF-Grundzustandsdichte':'Unrelaxierte, spin-summierte CIS-Zustandsdichte bei unveränderter Grundzustandsgeometrie'};
+  });
+  const states=cis.states.map(({amplitudes,...s},i)=>({...s,...properties[i+1],wavelength:s.energyEV>0?1239.841984/s.energyEV:null}));
   if(states.some(s=>s.energy<=0))throw Error('CIS liefert nichtpositive Anregungen: instabile Referenz. Kein belastbares Spektrum.');
-  calculation={mol,hf,atoms};
-  return {atoms,n,nocc,electrons:mol.numElectrons,energy:current.energy,iterations:current.iterations,energies:Array.from(hf.orbitalEnergies),states,geomStatus,refineHistory,backend:'WASM',method:'RHF/STO-3G + Singulett-CIS',limits:LIMIT};
+  check();calculation={mol,hf,atoms,densities};
+  return {atoms,n,nocc,electrons:mol.numElectrons,energy:current.energy,iterations:current.iterations,energies:Array.from(hf.orbitalEnergies),groundProperties:properties[0],states,geomStatus,refineHistory,backend:'WASM',method:'RHF/STO-3G + Singulett-CIS',limits:LIMIT};
 }
 async function surface(index:number,threshold=.1){
   if(!calculation)throw Error('Zuerst Molekülorbitale berechnen.');
@@ -148,6 +163,36 @@ async function surface(index:number,threshold=.1){
   }
   return {...result,index,extent};
 }
+async function densitySurface(state:number,mode='density',iso=.02){
+  if(!calculation)throw Error('Zuerst eine elektronische Rechnung starten.');
+  const {mol,atoms,densities}=calculation;
+  if(!Number.isInteger(state)||state< -1||state>=densities.length-1)throw Error('Ungültiger Zustand.');
+  if(!['density','difference'].includes(mode)||!(iso>=.001&&iso<=.1))throw Error('Ungültige Dichteparameter.');
+  if(!self.OrbitalSurface)importScripts('orbital-labor-surface.js');
+  const d=densities[state+1],ground=densities[0],n=mol.numBasis,cache=buildShellNormCache(mol.primitiveShells);
+  const matrix=new Float64Array(n*n);
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++)matrix[i*n+j]=d.get(i,j)-(mode==='difference'?ground.get(i,j):0);
+  const evaluate=(x:number,y:number,z:number,gradient=false)=>{
+    const p=evaluateBasisFunctionsScreened(mol.primitiveShells,cache,mol.cgtoNormalizationFactors,n,x*B,y*B,z*B,gradient);
+    let value=0;const grad=[0,0,0];
+    for(let i=0;i<n;i++){
+      let v=0;for(let j=0;j<n;j++)v+=matrix[i*n+j]*p.phi[j];value+=p.phi[i]*v;
+      if(gradient){grad[0]+=2*v*p.dphiDx[i];grad[1]+=2*v*p.dphiDy[i];grad[2]+=2*v*p.dphiDz[i];}
+    }
+    return {value,grad};
+  };
+  const extent=Math.max(...atoms.flatMap((a:any)=>a.xyz.map(Math.abs)))+2.2;
+  const result=self.OrbitalSurface.generate({resolution:41,extent,iso},(_s:any,x:number,y:number,z:number)=>evaluate(x,y,z).value);
+  for(const [name,sign] of [['positive',1],['negative',-1]] as const){
+    const positions=result[name],normals=new Float32Array(positions.length),seen=new Map<string,number[]>();
+    for(let k=0;k<positions.length;k+=3){
+      const key=[positions[k],positions[k+1],positions[k+2]].map((v:number)=>Math.round(v*1e5)).join(',');let normal=seen.get(key);
+      if(!normal){normal=evaluate(positions[k],positions[k+1],positions[k+2],true).grad.map(v=>-sign*v);const len=Math.hypot(...normal)||1;normal=normal.map(v=>v/len);seen.set(key,normal);}normals.set(normal,k);
+    }
+    result[name+'Normals']=normals;
+  }
+  return {...result,state,mode,extent};
+}
 self.onmessage=async({data}:any)=>{
   if(busy){self.postMessage({type:'error',id:data.id,message:'Eine Rechnung läuft bereits.'});return;}
   busy=true;
@@ -156,8 +201,9 @@ self.onmessage=async({data}:any)=>{
     if(data.action==='prepare'){calculation=null;result=await prepare(data.smiles);}
     else if(data.action==='quantum'){calculation=null;result=await quantum(data.atoms,!!data.refine);}
     else if(data.action==='surface')result=await surface(data.index,data.threshold);
+    else if(data.action==='density')result=await densitySurface(data.state,data.mode,data.iso);
     else throw Error('Unbekannter Auftrag.');
-    const transfer=data.action==='surface'?[result.positive.buffer,result.negative.buffer,result.positiveNormals.buffer,result.negativeNormals.buffer]:[];
+    const transfer=['surface','density'].includes(data.action)?[result.positive.buffer,result.negative.buffer,result.positiveNormals.buffer,result.negativeNormals.buffer]:[];
     self.postMessage({type:'result',id:data.id,result},transfer);
   }catch(e:any){self.postMessage({type:'error',id:data.id,message:e?.message||String(e)});}
   finally{busy=false;}

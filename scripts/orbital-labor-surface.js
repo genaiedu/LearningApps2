@@ -15,7 +15,7 @@
       const v=value(spec,-extent+x*step,-extent+y*step,-extent+z*step);
       values[index(x,y,z)]=v;max=Math.max(max,Math.abs(v));
     }
-    const iso=max*(spec.threshold||.14),positive=[],negative=[];
+    const iso=Number.isFinite(spec.iso)&&spec.iso>0?spec.iso:max*(spec.threshold||.14),positive=[],negative=[];
     for(let z=0;z<n-1;z++)for(let y=0;y<n-1;y++)for(let x=0;x<n-1;x++){
       const pts=corners.map(c=>[-extent+(x+c[0])*step,-extent+(y+c[1])*step,-extent+(z+c[2])*step]);
       const vals=corners.map(c=>values[index(x+c[0],y+c[1],z+c[2])]);

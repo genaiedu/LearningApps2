@@ -18,6 +18,9 @@ export interface CISExcitedState {
   energyEV: number;         // excitation energy in eV
   oscillatorStrength: number;
   dominantTransitions: Array<{ i: number; a: number; coeff: number }>;
+  /** Local extension: complete normalized CIS vector, occupied-major order.
+   * Needed for state densities; the truncated dominant list is insufficient. */
+  amplitudes: number[];
 }
 
 export interface CISResult {
@@ -234,6 +237,7 @@ export function computeCIS(
       energyEV: eigenvalues[n] * HA_TO_EV,
       oscillatorStrength: oscStrengths[n],
       dominantTransitions: transitions.slice(0, 3),
+      amplitudes: Array.from({length: dim}, (_, ia) => eigenvectors.get(ia, n)),
     });
   }
 

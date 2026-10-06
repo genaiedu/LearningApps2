@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),Module=require('node:module');
+const source=require('esbuild').buildSync({entryPoints:[require('node:path').resolve(__dirname,'../scripts/mo-state-density.ts')],bundle:true,platform:'node',format:'cjs',write:false}).outputFiles[0].text;
+const m=new Module(__filename);m._compile(source,__filename);const {cisDensityMO,densityAO}=m.exports;
+const d=cisDensityMO([1,0,0,0],2,4);assert.deepEqual([0,1,2,3].map(i=>d.get(i,i)),[1,2,1,0]);
+const x=cisDensityMO([Math.SQRT1_2,0,Math.SQRT1_2,0],2,4);
+assert.ok(Math.abs(x.get(0,1)+.5)<1e-12,'off-diagonal occupied coherence must be retained');assert.equal(x.get(2,2),1.0000000000000002);assert.ok(Math.abs([0,1,2,3].reduce((s,i)=>s+x.get(i,i),0)-4)<1e-12);
+assert.throws(()=>cisDensityMO([.2,0,0,0],2,4),/normiert/);
+const identity={rows:4,get:(i,j)=>i===j?1:0},ao=densityAO(x,identity);assert.ok(Math.abs(ao.get(0,1)+.5)<1e-12);
+const S=require('../scripts/orbital-labor-surface.js');const s=S.generate({resolution:15,extent:2,iso:.02},(_,x,y,z)=>Math.exp(-x*x-y*y-z*z));assert.equal(s.iso,.02);assert.ok(s.positive.length>0);assert.equal(s.negative.length,0);
+console.log('PASS normalized CIS state density, off-diagonal coherence, electron count, AO transform, absolute surface threshold');

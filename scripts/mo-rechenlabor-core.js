@@ -31,5 +31,10 @@
     return {points,lines,peak};
   }
   function xyz(atoms){const symbols={1:'H',6:'C',7:'N',8:'O',9:'F'};return `${atoms.length}\nMO-RechenLabor · Koordinaten in Angstrom\n`+atoms.map(a=>`${symbols[a.z]} ${a.xyz.map(x=>x.toFixed(7)).join(' ')}`).join('\n');}
-  return {validateGraph,orbitalLabel,spectrum,xyz,HARTREE_EV,HC};
+  function bands(states,sigma=.2,threshold=.01){
+    const sorted=states.filter(s=>s.energyEV>0&&s.oscillatorStrength>=0).slice().sort((a,b)=>a.energyEV-b.energyEV),groups=[];
+    sorted.forEach(s=>{const last=groups.at(-1);if(last&&s.energyEV-last.at(-1).energyEV<=1.5*sigma)last.push(s);else groups.push([s]);});
+    return groups.map(states=>{const f=states.reduce((v,s)=>v+s.oscillatorStrength,0);return {states,f,wavelength:HC/(states.reduce((v,s)=>v+s.energyEV*s.oscillatorStrength,0)/Math.max(f,1e-30))};}).filter(g=>g.f>=threshold);
+  }
+  return {validateGraph,orbitalLabel,spectrum,bands,xyz,HARTREE_EV,HC};
 });
