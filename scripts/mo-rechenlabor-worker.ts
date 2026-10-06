@@ -12,6 +12,11 @@ import {computeDipoleIntegrals} from '../vendor/gansu-lite/src/core/integralsDip
 import {computeMullikenCharges} from '../vendor/gansu-lite/src/core/properties';
 import {cisDensityMO,densityAO} from './mo-state-density';
 import {pm3Quantum,pm3Surface,pm3Density} from './mo-pm3';
+import {coulombDensity,espValue,potentialSurface,displacementSummary,GaussianAO} from './mo-charge-visualization';
+import {primitiveNorm} from '../vendor/gansu-lite/src/core/integrals1e';
+import {ANGULAR_MOMENTUMS} from '../vendor/gansu-lite/src/core/constants';
+import {Matrix} from '../vendor/gansu-lite/src/linalg/matrix';
+import {jacobiEigen} from '../vendor/gansu-lite/src/linalg/eigendecomposition';
 
 declare const self:any;
 let OB:any, basis:BasisSet, calculation:any=null, busy=false;
@@ -136,7 +141,7 @@ async function quantum(atoms:any[],refine=false){
   });
   const states=cis.states.map(({amplitudes,...s},i)=>({...s,...properties[i+1],wavelength:s.energyEV>0?1239.841984/s.energyEV:null}));
   if(states.some(s=>s.energy<=0))throw Error('CIS liefert nichtpositive Anregungen: instabile Referenz. Kein belastbares Spektrum.');
-  check();calculation={mol,hf,atoms,densities};
+  check();calculation={mol,hf,atoms,densities,cis};
   return {atoms,n,nocc,electrons:mol.numElectrons,energy:current.energy,iterations:current.iterations,energies:Array.from(hf.orbitalEnergies),groundProperties:properties[0],states,geomStatus,refineHistory,backend:'WASM',method:'RHF/STO-3G + Singulett-CIS',limits:LIMIT};
 }
 async function surface(index:number,threshold=.1){
@@ -171,8 +176,9 @@ async function densitySurface(state:number,mode='density',iso=.02){
   if(!calculation)throw Error('Zuerst eine elektronische Rechnung starten.');
   const {mol,atoms,densities}=calculation;
   if(!Number.isInteger(state)||state< -1||state>=densities.length-1)throw Error('Ungültiger Zustand.');
-  if(!['density','difference'].includes(mode)||!(iso>=.001&&iso<=.1))throw Error('Ungültige Dichteparameter.');
+  if(!['density','difference','esp','displacement'].includes(mode)||!(iso>=.001&&iso<=.1))throw Error('Ungültige Dichteparameter.');
   if(!self.OrbitalSurface)importScripts('orbital-labor-surface.js');
+  if(mode==='esp'||mode==='displacement')return chargeSurface(state,mode,iso);
   const d=densities[state+1],ground=densities[0],n=mol.numBasis,cache=buildShellNormCache(mol.primitiveShells);
   const matrix=new Float64Array(n*n);
   for(let i=0;i<n;i++)for(let j=0;j<n;j++)matrix[i*n+j]=d.get(i,j)-(mode==='difference'?ground.get(i,j):0);
@@ -197,6 +203,29 @@ async function densitySurface(state:number,mode='density',iso=.02){
   }
   return {...result,state,mode,extent};
 }
+function hfAOs():GaussianAO[]{
+  const {mol}=calculation,aos:GaussianAO[]=Array.from({length:mol.numBasis},()=>({center:[],powers:[],exponents:[],coefficients:[]}));
+  for(const s of mol.primitiveShells)ANGULAR_MOMENTUMS[s.shellType].forEach((powers:number[],k:number)=>{
+    const i=s.basisIndex+k,a=aos[i];a.center=[s.coordinate.x,s.coordinate.y,s.coordinate.z];a.powers=powers;a.exponents.push(s.exponent);a.coefficients.push(s.coefficient*primitiveNorm(s.exponent,...powers as [number,number,number])*mol.cgtoNormalizationFactors[i]);
+  });return aos;
+}
+function chargeSurface(state:number,mode:string,iso:number):any{
+  const {mol,hf,atoms,densities,cis}=calculation,aos=hfAOs(),n=mol.numBasis;
+  if(mode==='esp'){
+    progress('surface','Ladungskarte: analytische Coulombintegrale der Zustandsdichte …');
+    const field=coulombDensity(aos,densities[state+1].data);
+    const s=potentialSurface(atoms,p=>espValue(atoms,field.potential,p.map(v=>v*B),B),n>25?29:33);
+    return {...s,state,mode,electronCount:field.electrons,method:'RHF/CIS-Dichtematrix; analytische s/p-Gauß-Coulombintegrale; volle Kernladungen',unit:'Eh/e'};
+  }
+  const holeMO=new Matrix(n,n),electronMO=new Matrix(n,n);
+  if(state>=0){const d=cisDensityMO(cis.states[state].amplitudes,mol.numAlphaSpins,n);for(let i=0;i<n;i++)for(let j=0;j<n;j++){if(i<mol.numAlphaSpins&&j<mol.numAlphaSpins)holeMO.set(i,j,(i===j?2:0)-d.get(i,j));else if(i>=mol.numAlphaSpins&&j>=mol.numAlphaSpins)electronMO.set(i,j,d.get(i,j));}}
+  const hole=densityAO(holeMO,hf.coefficients),electron=densityAO(electronMO,hf.coefficients),cache=buildShellNormCache(mol.primitiveShells),extent=Math.max(...atoms.flatMap((a:any)=>a.xyz.map(Math.abs)))+2.2;
+  const mesh=(matrix:Matrix)=>self.OrbitalSurface.generate({resolution:33,extent,iso},(_:any,x:number,y:number,z:number)=>{const p=evaluateBasisFunctionsScreened(mol.primitiveShells,cache,mol.cgtoNormalizationFactors,n,x*B,y*B,z*B,false).phi;let v=0;for(let i=0;i<n;i++)for(let j=0;j<n;j++)v+=p[i]*matrix.get(i,j)*p[j];return v;});
+  const e=mesh(electron),h=mesh(hole),summary=displacementSummary(coulombDensity(aos,hole.data),coulombDensity(aos,electron.data),B);
+  // A single NTO pair is not imposed: complete particle/hole matrices are used.
+  const eg=jacobiEigen(electronMO),hg=jacobiEigen(holeMO);
+  return {positive:e.positive,negative:h.positive,positiveNormals:new Float32Array(0),negativeNormals:new Float32Array(0),extent,iso,state,mode,displacement:summary,occupationWeights:{electron:Array.from(eg.eigenvalues),hole:Array.from(hg.eigenvalues)},method:'Vollständige CIS-Teilchen-/Lochdichten aus XᵀX / XXᵀ; keine bloße HOMO–LUMO-Zuordnung'};
+}
 self.onmessage=async({data}:any)=>{
   if(busy){self.postMessage({type:'error',id:data.id,message:'Eine Rechnung läuft bereits.'});return;}
   busy=true;
@@ -207,7 +236,7 @@ self.onmessage=async({data}:any)=>{
     else if(data.action==='surface')result=await surface(data.index,data.threshold);
     else if(data.action==='density')result=await densitySurface(data.state,data.mode,data.iso);
     else throw Error('Unbekannter Auftrag.');
-    const transfer=['surface','density'].includes(data.action)?[result.positive.buffer,result.negative.buffer,result.positiveNormals.buffer,result.negativeNormals.buffer]:[];
+    const transfer=['surface','density'].includes(data.action)?[result.positive.buffer,result.negative.buffer,result.positiveNormals.buffer,result.negativeNormals.buffer,...(result.potential?[result.potential.buffer]:[])]:[];
     self.postMessage({type:'result',id:data.id,result},transfer);
   }catch(e:any){self.postMessage({type:'error',id:data.id,message:e?.message||String(e)});}
   finally{busy=false;}

@@ -2,6 +2,7 @@
  * licenses and unchanged sources in vendor/mopac7-wasm/. */
 declare const self:any;
 import {readPM3Density,readPM3Singlets,pm3ActiveSpace,pm3FrameRotation,rotatePM3Vector,rotatePM3Density} from './mo-pm3-density';
+import {coulombDensity,espValue,potentialSurface,displacementSummary,GaussianAO} from './mo-charge-visualization';
 const EV=27.211386245988;
 let current:any=null;
 export async function pm3Quantum(atoms:any[]){
@@ -90,7 +91,8 @@ function mesh(index:number|null,options:any,model:any=null){
 export function pm3Surface(index:number,threshold=.1){if(!current||!Number.isInteger(index)||index<0||index>=current.n)throw Error('Ungültiges PM3-Orbital.');return mesh(index,{threshold});}
 export function pm3Density(state:number,mode='density',iso=.02){
   if(!current||!Number.isInteger(state)||state< -1||(state>=current.densities.length-1&&state!==-1))throw Error('Ungültiger PM3-Zustand.');
-  if(!['density','difference'].includes(mode)||!(iso>=.001&&iso<=.1))throw Error('Ungültige Dichteparameter.');
+  if(!['density','difference','esp','displacement'].includes(mode)||!(iso>=.001&&iso<=.1))throw Error('Ungültige Dichteparameter.');
+  if(mode==='esp'||mode==='displacement')return pm3ChargeSurface(state,mode,iso);
   if(mode==='difference'&&state===-1){const zero=new Float32Array(0);return {positive:zero,negative:zero.slice(),positiveNormals:zero.slice(),negativeNormals:zero.slice(),iso,extent:1,state,mode};}
   let model=null;
   if(current.densities.length){
@@ -101,4 +103,30 @@ export function pm3Density(state:number,mode='density',iso=.02){
     }
   }
   return {...mesh(null,{iso},model),state,mode};
+}
+function pm3AOs():GaussianAO[]{
+  const {basis}=current;return basis.functions.map((f:any)=>{const s=basis.shells[f.shell];return {center:Array.from(basis.centers.slice(f.atomIndex*3,f.atomIndex*3+3)),powers:f.powers,exponents:s.exponents,coefficients:s.coefficients};});
+}
+function modelMatrix(model:any){
+  const n=current.n,matrix=new Float64Array(n*n);for(let k=0;k<model.weights.length;k++)for(let i=0;i<n;i++)for(let j=0;j<n;j++)matrix[i*n+j]+=model.weights[k]*model.coefficients[k*n+i]*model.coefficients[k*n+j];return matrix;
+}
+function zdoModel(matrix:Float64Array,sign=0){
+  const {n,basis}=current,eig=self.MOPAC7.symmetricEigen(matrix,n),weights:number[]=[],vectors:number[]=[];
+  for(let k=0;k<n;k++)if(Math.abs(eig.values[k])>1e-7&&(sign===0||eig.values[k]*sign>0)){weights.push(sign?Math.abs(eig.values[k]):eig.values[k]);for(let i=0;i<n;i++)vectors.push(eig.vectors[i*n+k]);}
+  return {weights,coefficients:self.MOPAC7.deorthogonalizeCoefficients(new Float64Array(vectors),basis)};
+}
+function pm3ChargeSurface(state:number,mode:string,iso:number){
+  if(!self.OrbitalSurface)importScripts('orbital-labor-surface.js');
+  const {n,nocc,atoms,basis,densities,coefficients}=current,aos=pm3AOs(),B=1/basis.bohrPerAngstrom;
+  if(mode==='esp'){
+    self.postMessage({type:'progress',message:'PM3-Ladungskarte: Coulombintegrale der rekonstruierten Zustandsdichte …'});
+    const model=densities.length?zdoModel(densities[state+1]):{weights:Array(nocc).fill(2),coefficients:coefficients.slice(0,n*nocc)},field=coulombDensity(aos,modelMatrix(model));
+    const s=potentialSurface(atoms,p=>espValue(atoms,field.potential,p.map(v=>v*B),B,true),n>40?25:29);
+    return {...s,state,mode,electronCount:field.electrons,method:'PM3'+(densities.length?'-CI':'-SCF')+': analytische Coulombintegrale der S⁻¹ᐟ²-Slater/STO-6G-Rekonstruktion und positive Valenzrümpfe; kein natives MOPAC-ESP',unit:'Eh/e'};
+  }
+  const delta=new Float64Array(n*n);if(state>=0)for(let i=0;i<delta.length;i++)delta[i]=densities[state+1][i]-densities[0][i];
+  // Positive and negative eigenparts of the difference matrix in the native
+  // orthonormal ZDO metric: attachment/detachment, not clipping Δn in space.
+  const electron=zdoModel(delta,1),hole=zdoModel(delta,-1),e=mesh(null,{iso},electron),h=mesh(null,{iso},hole),summary=displacementSummary(coulombDensity(aos,modelMatrix(hole)),coulombDensity(aos,modelMatrix(electron)),B);
+  return {positive:e.positive,negative:h.positive,positiveNormals:e.positiveNormals,negativeNormals:h.positiveNormals,extent:e.extent,iso,state,mode,displacement:summary,occupationWeights:{electron:electron.weights,hole:hole.weights},method:'PM3-CI: positive/negative Eigenanteile von P(Sᵢ) − P(S₀) im ZDO-Metrikraum; S⁻¹ᐟ²-Basisrekonstruktion; keine NTOs oder Elektronenflugbahnen'};
 }

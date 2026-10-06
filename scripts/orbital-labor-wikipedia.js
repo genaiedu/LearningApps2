@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
    Sanitizer reused from the internal chess/PSE reader; OrbitalLabor adaptation. */
+import './wikipedia-math.js';
 export function wikipediaArticle(value) {
   try {
     const url = new URL(value, 'https://de.wikipedia.org/wiki/');
@@ -21,6 +22,10 @@ export function wikipediaResource(value, language='de') {
 export function renderWikipediaArticle(document, html, articleTitle, language='de') {
   const template = document.createElement('template');
   template.innerHTML = String(html || '');
+  for(const el of template.content.querySelectorAll('*'))for(const a of [...el.attributes])if(/^on/i.test(a.name)||a.name==='style'||a.name==='srcset')el.removeAttribute(a.name);
+  window.WikiMath.prepare(template.content);
+  template.content.querySelectorAll('script,style,iframe,object,embed,source,annotation-xml').forEach(el=>el.remove());
+  for(const img of template.content.querySelectorAll('img'))if(!wikipediaResource(img.getAttribute('src'),language))img.remove();
   const body = document.createElement('div'), ids = new Map();
   body.className = 'chess-wiki-article';
   const original = template.content.querySelector('.mw-parser-output') || template.content;
@@ -32,6 +37,7 @@ export function renderWikipediaArticle(document, html, articleTitle, language='d
   const tags = new Set('p div span a img figure figcaption h1 h2 h3 h4 h5 h6 ul ol li dl dt dd table thead tbody tfoot tr th td caption colgroup col b strong i em small sub sup br hr blockquote pre code abbr cite q s u mark'.split(' '));
   const classes = /^(?:thumb|thumbinner|thumbcaption|tright|tleft|infobox|wikitable|gallery|gallerybox|gallerytext|reference|references|mw-heading[\w-]*)$/;
   for (const node of [...body.querySelectorAll('*')]) {
+    if(window.WikiMath.isPrepared(node))continue;
     if (!tags.has(node.localName)) { node.replaceWith(...node.childNodes); continue; }
     const old = Object.fromEntries([...node.attributes].map(attr => [attr.name, attr.value]));
     [...node.attributes].forEach(attr => node.removeAttribute(attr.name));

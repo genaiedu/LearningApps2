@@ -1,0 +1,5 @@
+/* Locally rendered, sanitized Wikipedia MathML. Long formulas scroll in place. */
+.wiki-math{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding:.12em .15em;color:inherit}
+.wiki-math math{font-size:1.05em;color:inherit}
+.wiki-math-block{display:block;margin:.8rem 0;padding:.5rem .25rem;overscroll-behavior-x:contain}
+.wiki-math-block math{min-width:max-content;margin:0}

@@ -17,10 +17,18 @@
     }catch(_){if(epoch===current&&allowed)card.querySelector('.portrait').textContent='Porträt momentan nicht verfügbar. Die Erklärung bleibt nutzbar.';}
   }));}
   function sanitize(html,language){
-    const t=document.createElement('template');t.innerHTML=String(html||'');const body=document.createElement('div');const source=t.content.querySelector('.mw-parser-output')||t.content;body.append(...source.childNodes);
+    const t=document.createElement('template');t.innerHTML=String(html||'');
+    // Clean while still inert. Even detached img nodes can start requests and
+    // retain onerror handlers after their parent was removed by sanitization.
+    for(const el of t.content.querySelectorAll('*'))for(const a of [...el.attributes])if(/^on/i.test(a.name)||a.name==='style'||a.name==='srcset')el.removeAttribute(a.name);
+    window.WikiMath?.prepare(t.content);
+    t.content.querySelectorAll('script,style,iframe,object,embed,source,annotation-xml').forEach(el=>el.remove());
+    for(const img of t.content.querySelectorAll('img'))if(!mediaURL(img.getAttribute('src'),language))img.remove();
+    const body=document.createElement('div');const source=t.content.querySelector('.mw-parser-output')||t.content;body.append(...source.childNodes);
     body.querySelectorAll('script,style,link,meta,base,iframe,object,embed,form,input,button,audio,video,source,svg,canvas,template,noscript,.mw-editsection,.navbox,.metadata,.noprint').forEach(el=>el.remove());
     const tags=new Set('p div span a img figure figcaption h1 h2 h3 h4 h5 h6 ul ol li dl dt dd table thead tbody tfoot tr th td caption b strong i em small sub sup br hr blockquote pre code abbr cite q'.split(' ')),anchors=new Map();
     for(const el of [...body.querySelectorAll('*')]){
+      if(window.WikiMath?.isPrepared(el))continue;
       if(!tags.has(el.localName)){el.replaceWith(...el.childNodes);continue;}const attrs=Object.fromEntries([...el.attributes].map(a=>[a.name,a.value]));[...el.attributes].forEach(a=>el.removeAttribute(a.name));
       if(attrs.id){const id='qm-wiki-anchor-'+anchors.size;anchors.set(attrs.id,id);el.id=id;}
       for(const a of ['colspan','rowspan','width','height'])if(/^\d{1,4}$/.test(attrs[a]||''))el.setAttribute(a,attrs[a]);
@@ -36,7 +44,7 @@
     try{const data=await query(parsed.language+'.wikipedia.org',{action:'parse',page:parsed.title,prop:'text|revid',redirects:'1',disableeditsection:'1'});if(!allowed||epoch!==consentEpoch||current!==articleVersion||!reader.open)return;if(!data.parse?.text)throw Error();const page=data.parse,rendered=sanitize(page.text,parsed.language);$('wiki-title').textContent=page.title;$('wiki-content').replaceChildren(rendered.body);$('wiki-content').scrollTop=0;$('wiki-status').textContent='Wikipedia-Artikel und Artikellinks bleiben in diesem Fenster. Bildseiten öffnen extern.';$('wiki-source').append(document.createTextNode('Wikipedia · Version '+page.revid+' · Darstellung angepasst · '),link('Originalartikel','https://'+parsed.language+'.wikipedia.org/wiki/'+encodeURIComponent(page.title.replace(/ /g,'_'))),document.createTextNode(' · '),link('Autorinnen und Autoren','https://'+parsed.language+'.wikipedia.org/w/index.php?title='+encodeURIComponent(page.title)+'&action=history'),document.createTextNode(' · '),link('Text: CC BY-SA 4.0','https://creativecommons.org/licenses/by-sa/4.0/deed.de'));$('wiki-content').focus();const id=rendered.anchors.get(parsed.fragment);if(id)document.getElementById(id)?.scrollIntoView();
     }catch(_){if(current===articleVersion&&reader.open){$('wiki-status').textContent='Wikipedia ist gerade nicht erreichbar. Die lokalen Modelle funktionieren trotzdem.';const retry=document.createElement('button');retry.textContent='Erneut laden';retry.onclick=()=>article(value);$('wiki-content').append(retry);}}
   }
-  document.addEventListener('click',event=>{const button=event.target.closest('[data-wiki]');if(button){article('https://de.wikipedia.org/wiki/'+encodeURIComponent(button.dataset.wiki.replace(/ /g,'_')));return;}const a=event.target.closest('#wiki-content a[href]');if(a&&wikiURL(a.href)){event.preventDefault();article(a.href);}});
+  document.addEventListener('click',event=>{const button=event.target.closest('[data-wiki]');if(button){article('https://'+(button.dataset.wikiLanguage==='en'?'en':'de')+'.wikipedia.org/wiki/'+encodeURIComponent(button.dataset.wiki.replace(/ /g,'_'))+(button.dataset.wikiFragment?'#'+encodeURIComponent(button.dataset.wikiFragment):''));return;}const a=event.target.closest('#wiki-content a[href]');if(a&&wikiURL(a.href)){event.preventDefault();article(a.href);}});
   $('wiki-close').onclick=()=>reader.close();reader.addEventListener('close',()=>{articleVersion++;$('wiki-content').replaceChildren();opener?.focus({preventScroll:true});});
   function revoke(){allowed=false;epoch++;articleVersion++;controllers.forEach(c=>c.abort());if(reader.open)reader.close();document.querySelectorAll('.portrait').forEach(slot=>{slot.replaceChildren(document.createTextNode('Porträt nicht geladen'));});document.querySelectorAll('.portrait-credit').forEach(el=>el.remove());$('privacy-status').textContent='Zustimmung zurückgenommen. Wikipedia und Wikimedia werden erst nach erneuter Freigabe kontaktiert.';}
   $('wiki-revoke').onclick=revoke;$('wiki-settings').onclick=()=>{dialog.returnValue='';dialog.showModal();};

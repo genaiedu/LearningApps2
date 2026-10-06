@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict'),Module=require('node:module'),path=require('node:path');
+const src=require('esbuild').buildSync({stdin:{contents:`export * from './scripts/mo-charge-visualization';export {computeOneElectronIntegrals,primitiveNorm} from './vendor/gansu-lite/src/core/integrals1e';export {computeDipoleIntegrals} from './vendor/gansu-lite/src/core/integralsDipole';`,resolveDir:path.resolve(__dirname,'..')},bundle:true,platform:'node',format:'cjs',write:false}).outputFiles[0].text;
+const mod=new Module(__filename);mod._compile(src,__filename);const {coulombDensity,espValue,potentialSurface,displacementSummary,primitiveNorm,computeOneElectronIntegrals,computeDipoleIntegrals}=mod.exports;
+const close=(a,b,t=1e-9)=>assert.ok(Math.abs(a-b)<t,`${a} vs ${b}`);
+const s={center:[0,0,0],powers:[0,0,0],exponents:[.7],coefficients:[primitiveNorm(.7,0,0,0)]},field=coulombDensity([s],[1]);close(field.electrons,1);close(field.potential([0,0,0]),2*Math.sqrt(1.4/Math.PI));close(field.potential([100,0,0]),.01);close(espValue([{z:1,xyz:[0,0,0]}],field.potential,[100,0,0],1),0);
+const shells=[{exponent:.8,coefficient:.75,coordinate:{x:.1,y:.2,z:.3},shellType:0,basisIndex:0,atomIndex:0},{exponent:.3,coefficient:.2,coordinate:{x:.1,y:.2,z:.3},shellType:0,basisIndex:0,atomIndex:0},{exponent:.6,coefficient:1,coordinate:{x:-.4,y:.3,z:-.2},shellType:1,basisIndex:1,atomIndex:1}];
+const aos=[[0,0,0],[1,0,0],[0,1,0],[0,0,1]].map((powers,i)=>({center:i?[-.4,.3,-.2]:[.1,.2,.3],powers,exponents:i?[.6]:[.8,.3],coefficients:i?[primitiveNorm(.6,...powers)]:[.75*primitiveNorm(.8,0,0,0),.2*primitiveNorm(.3,0,0,0)]}));
+const d=[1.2,.13,-.18,.09,.13,.6,.04,.07,-.18,.04,.7,-.06,.09,.07,-.06,.5],actual=coulombDensity(aos,d);
+for(const point of [[0,0,0],[1.1,-.7,.4],[4,2,-3]]){
+ const {kinetic,coreHamiltonian}=computeOneElectronIntegrals(shells,[{atomicNumber:1,atomIndex:0,coordinate:{x:point[0],y:point[1],z:point[2]}}],[1,1,1,1],4);
+ let expected=0;for(let i=0;i<4;i++)for(let j=0;j<4;j++)expected+=d[i*4+j]*(kinetic.get(j,i)-coreHamiltonian.get(j,i));close(actual.potential(point),expected,1e-10);
+}
+const one=computeOneElectronIntegrals(shells,[],[1,1,1,1],4),dip=computeDipoleIntegrals(shells,[1,1,1,1],4);let trace=0;for(let i=0;i<4;i++)for(let j=0;j<4;j++)trace+=d[i*4+j]*one.overlap.get(j,i);close(actual.electrons,trace);[dip.Dx,dip.Dy,dip.Dz].forEach((m,k)=>{let value=0;for(let i=0;i<4;i++)for(let j=0;j<4;j++)value+=d[i*4+j]*m.get(j,i);close(actual.moment[k],value);});
+globalThis.OrbitalSurface=require('../scripts/orbital-labor-surface.js');const surf=potentialSurface([{z:1,xyz:[0,0,0]}],p=>p[0],19);assert.ok(surf.positive.length>100);assert.equal(surf.potential.length,surf.positive.length/3);assert.ok(surf.min< -1.1&&surf.max>1.1);assert.equal(surf.negative.length,0);assert.ok(surf.potential.every(Number.isFinite));
+const shift=displacementSummary({centroid:[0,0,0],electrons:1},{centroid:[2,0,0],electrons:1},2);close(shift.distance,1);assert.equal(shift.arrow,true);assert.equal(displacementSummary({centroid:[0,0,0],electrons:1},{centroid:[0,0,0],electrons:1},2).arrow,false);
+console.log('PASS analytic ESP vs independent s/p Coulomb matrices, electron normalization, analytic centroids vs dipole integrals, neutral far field, fixed molecular surface and non-fictitious displacement arrows');
