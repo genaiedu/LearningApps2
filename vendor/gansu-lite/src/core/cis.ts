@@ -225,7 +225,9 @@ export function computeCIS(
       for (let a = 0; a < nvir; a++) {
         const ia = i * nvir + a;
         const c = eigenvectors.get(ia, n);
-        if (Math.abs(c) > 0.1) {
+        // Keep the three genuinely largest contributions even when a state
+        // is spread over many configurations below the old 0.1 cutoff.
+        if (Math.abs(c) > 1e-12) {
           transitions.push({ i, a: a + nocc, coeff: c });
         }
       }

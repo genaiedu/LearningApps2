@@ -7,8 +7,10 @@ BSD-3-Clause, copyright Yasuaki Ito, 2026. See `LICENSE.txt`.
 
 `src/core`, `src/linalg`, and `src/data` originate from this revision.
 Local modification: `core/cis.ts` also returns full normalized CIS
-amplitudes for unrelaxed excited-state densities (no numerical change to
-energies or oscillator strengths). Remaining upstream files are unchanged.
+amplitudes for unrelaxed excited-state densities and consistently selects
+the three largest orbital contributions without the former 0.1 cutoff
+(no numerical change to energies or oscillator strengths). Remaining
+upstream files are unchanged.
 `sto-3g.gbs` is the project's basis file, based on Basis Set
 Exchange data. `wasm/` contains the corresponding upstream scalar and SIMD
 ERI binaries. Original Rust/WASM build sources are available at the linked
