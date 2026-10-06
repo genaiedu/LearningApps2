@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Themen zufällig und ohne doppelte Vergabe auf nummerierte Gruppen verteilen. Gruppenzahl eingeben, auslosen, Ergebnis anzeigen – lokal im Browser.">
+  <title>Themen-Losverteiler · Werkzeuge</title>
+  <link rel="stylesheet" href="styles/themen-los.css">
+  <script src="scripts/themen-los.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="#start"><span aria-hidden="true">🎲</span> Themen-Losverteiler</a><div class="actions"><button id="theme" type="button">Dunkles Farbschema</button><button id="fullscreen" type="button">Vollbild</button></div></header>
+  <main id="start">
+    <div class="intro"><p class="eyebrow">Werkzeuge · Für jede Unterrichtsgruppe</p><h1>Ein Los.<br>Ein Thema.</h1><p class="lead">Gruppenzahl eingeben. Themen auslosen. Jede Gruppe bekommt genau einen Buchstaben – ohne doppelte Vergabe.</p></div>
+    <section class="card" aria-labelledby="setup-title">
+      <h2 id="setup-title">Wie viele Gruppen gibt es?</h2>
+      <p>Nummeriert eure Gruppen von 1 bis zur Gruppenzahl. Kennzeichnet genauso viele Themen mit A, B, C usw. Bei sechs Gruppen werden also die Themen A–F verteilt.</p>
+      <form id="draw-form"><label for="group-count">Gruppenzahl (1–26)<input id="group-count" type="number" min="1" max="26" step="1" value="6" required inputmode="numeric" autocomplete="off"></label><button id="draw" class="primary" type="submit">Themen auslosen</button></form>
+      <p class="note">Die Gruppen stehen vorher fest: Dieses Werkzeug verteilt Themen, nicht Schülerinnen und Schüler.</p>
+    </section>
+    <section class="card result" aria-labelledby="result-title">
+      <div class="result-head"><h2 id="result-title">Die Themenverteilung</h2><button id="clear" type="button" hidden>Losergebnis löschen</button></div>
+      <p id="status" role="status" aria-live="polite">Noch nicht ausgelost.</p>
+      <div id="result"><p class="empty"><span aria-hidden="true">1 → A</span>Hier erscheint eure ausgeloste Zuordnung.</p></div>
+      <p id="storage" class="small">Das Ergebnis wird nur im Browser auf diesem Gerät gespeichert. Keine Namen, kein Konto, keine Übertragung an einen Server.</p>
+      <p class="small">Erneutes Auslosen ersetzt die bisherige Verteilung. Auch dieselbe Zuordnung kann zufällig erneut entstehen.</p>
+    </section>
+    <footer><span>Themen-Losverteiler · Dr. Claus Unterberg</span><nav aria-label="Rechtliche Hinweise"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav></footer>
+  </main>
+</body>
+</html>
