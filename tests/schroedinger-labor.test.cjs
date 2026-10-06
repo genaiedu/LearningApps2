@@ -32,3 +32,12 @@ test('authored scripts parse, advanced derivation starts closed and local assets
   const sandbox={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'scripts/schroedinger-inhalte.js'),'utf8'),sandbox);
   assert.equal(sandbox.window.QMLessons.box.length,12);assert.equal(sandbox.window.QMLessons.hydrogen.length,12);assert.equal(sandbox.window.QMQuiz.length,8);
 });
+test('lesson formulas never expose raw TeX indices or powers in prose',()=>{
+  const sandbox={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'scripts/schroedinger-inhalte.js'),'utf8'),sandbox);
+  for(const steps of Object.values(sandbox.window.QMLessons))for(const step of steps){
+    const prose=step.html.replace(/\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)/g,'').replace(/<[^>]*>/g,'');
+    assert(!/[_^]|[{}]/.test(prose),'Unrendered mathematical notation in '+step.title+': '+prose);
+    assert(!/\\[()[\]]/.test(prose),'Unbalanced math delimiters in '+step.title);
+  }
+  assert(sandbox.window.QMLessons.hydrogen[8].html.includes(String.raw`\(L_{n-l-1}^{2l+1}(\rho)\)`));
+});
