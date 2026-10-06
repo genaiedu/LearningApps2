@@ -1,0 +1,1 @@
+{"version":3,"file":"symmetricEigen.d.ts","sourceRoot":"","sources":["../../src/basis/symmetricEigen.ts"],"names":[],"mappings":"AAEA,mEAAmE;AACnE,MAAM,WAAW,cAAc;IAC7B,kCAAkC;IAClC,MAAM,EAAE,YAAY,CAAC;IACrB,wFAAwF;IACxF,OAAO,EAAE,YAAY,CAAC;CACvB;AAED;;;;;;;;;;;;;GAaG;AACH,wBAAgB,cAAc,CAC5B,MAAM,EAAE,YAAY,EACpB,IAAI,EAAE,MAAM,GACX,cAAc,CA8BhB"}

@@ -11,6 +11,7 @@ import {buildShellNormCache,evaluateBasisFunctionsScreened} from '../vendor/gans
 import {computeDipoleIntegrals} from '../vendor/gansu-lite/src/core/integralsDipole';
 import {computeMullikenCharges} from '../vendor/gansu-lite/src/core/properties';
 import {cisDensityMO,densityAO} from './mo-state-density';
+import {pm3Quantum,pm3Surface,pm3Density} from './mo-pm3';
 
 declare const self:any;
 let OB:any, basis:BasisSet, calculation:any=null, busy=false;
@@ -18,14 +19,15 @@ const LIMIT={atoms:24,heavy:6,basis:36,cis:324,scf:80,time:60000};
 const B=1.8897259886;
 const progress=(stage:string,message:string,extra:any={})=>self.postMessage({type:'progress',stage,message,...extra});
 const tick=()=>new Promise(r=>setTimeout(r,0));
-function validate(atoms:any[],charge=0){
+function validate(atoms:any[],charge=0,pm3=false){
   if(atoms.some(a=>!Array.isArray(a.xyz)||a.xyz.length!==3||a.xyz.some((x:number)=>!Number.isFinite(x))))throw Error('Ungültige Atomkoordinaten.');
-  if(!atoms.length||atoms.length>LIMIT.atoms)throw Error('Maximal 24 Atome einschließlich Wasserstoff.');
-  if(atoms.filter(a=>a.z!==1).length>LIMIT.heavy)throw Error('Maximal sechs Nicht-Wasserstoffatome.');
+  if(!atoms.length||atoms.length>(pm3?80:LIMIT.atoms))throw Error(pm3?'PM3: maximal 80 Atome einschließlich Wasserstoff.':'Maximal 24 Atome einschließlich Wasserstoff.');
+  if(atoms.filter(a=>a.z!==1).length>(pm3?20:LIMIT.heavy))throw Error(pm3?'PM3: maximal 20 Nicht-Wasserstoffatome.':'Maximal sechs Nicht-Wasserstoffatome.');
   if(atoms.some(a=>![1,6,7,8,9].includes(a.z)))throw Error('Unterstützt werden H, C, N, O und F.');
   if(charge!==0)throw Error('Diese Einstiegsversion berechnet nur neutrale Moleküle.');
   const electrons=atoms.reduce((s,a)=>s+a.z,0)-charge;
   if(electrons%2)throw Error('Radikale mit ungerader Elektronenzahl sind hier nicht zugelassen.');
+  if(pm3){const n=atoms.reduce((s,a)=>s+(a.z===1?1:4),0);if(n>100||atoms.filter(a=>a.z===1).length>56)throw Error('PM3: maximal 100 Valenzbasisfunktionen und 56 Wasserstoffatome.');return {electrons,n,occupied:(electrons-2*atoms.filter(a=>a.z!==1).length)/2};}
   const n=atoms.reduce((s,a)=>s+(a.z===1?1:5),0),occupied=electrons/2;
   if(n>LIMIT.basis||occupied*(n-occupied)>LIMIT.cis)throw Error('Die Struktur überschreitet das lokale Rechenlimit (36 Basisfunktionen / 324 CIS-Konfigurationen).');
   if(occupied>=n)throw Error('Die Minimalbasis hat für dieses System keine unbesetzten Orbitale.');
@@ -48,7 +50,7 @@ async function openbabel(){
 }
 function positions(mol:any){return Array.from({length:mol.NumAtoms()},(_,i)=>{const a=mol.GetAtom(i+1);return {z:a.GetAtomicNum(),xyz:[a.GetX(),a.GetY(),a.GetZ()]};});}
 function recenter(atoms:any[]){const c=[0,1,2].map(k=>atoms.reduce((s,a)=>s+a.xyz[k],0)/atoms.length);return atoms.map(a=>({...a,xyz:a.xyz.map((x:number,k:number)=>x-c[k])}));}
-async function prepare(smiles:string){
+async function prepare(smiles:string,pm3=false){
   if(smiles.includes('.'))throw Error('Bitte ein zusammenhängendes Molekül, keine getrennten Fragmente.');
   if(/^(O=O|\[O\]\[O\])$/.test(smiles))throw Error('Der Triplett-Grundzustand von O₂ benötigt eine offene-Schalen-Methode.');
   progress('geometry','Lokaler Geometriekern wird geladen …');
@@ -57,7 +59,7 @@ async function prepare(smiles:string){
     conv.setInFormat('','smi');
     if(!conv.readString(mol,smiles)||!mol.NumAtoms())throw Error('SMILES nicht erkannt.');
     mol.AddHydrogensWithParam(false,false,7.4);
-    validate(positions(mol),mol.GetTotalCharge());
+    validate(positions(mol),mol.GetTotalCharge(),pm3);
     if(Array.from({length:mol.NumAtoms()},(_,i)=>mol.GetAtom(i+1).GetSpinMultiplicity()).some(s=>s>0))throw Error('Radikale und offene Schalen sind in dieser Version nicht unterstützt.');
     progress('geometry','Räumliche Startgeometrie aus SMILES …');
     const gen=ob.OBOp.FindType('Gen3D');
@@ -138,6 +140,7 @@ async function quantum(atoms:any[],refine=false){
   return {atoms,n,nocc,electrons:mol.numElectrons,energy:current.energy,iterations:current.iterations,energies:Array.from(hf.orbitalEnergies),groundProperties:properties[0],states,geomStatus,refineHistory,backend:'WASM',method:'RHF/STO-3G + Singulett-CIS',limits:LIMIT};
 }
 async function surface(index:number,threshold=.1){
+  if(calculation?.method==='PM3')return pm3Surface(index,threshold);
   if(!calculation)throw Error('Zuerst Molekülorbitale berechnen.');
   const {mol,hf,atoms}=calculation;
   if(!Number.isInteger(index)||index<0||index>=mol.numBasis)throw Error('Ungültiges Orbital.');
@@ -164,6 +167,7 @@ async function surface(index:number,threshold=.1){
   return {...result,index,extent};
 }
 async function densitySurface(state:number,mode='density',iso=.02){
+  if(calculation?.method==='PM3')return pm3Density(state,mode,iso);
   if(!calculation)throw Error('Zuerst eine elektronische Rechnung starten.');
   const {mol,atoms,densities}=calculation;
   if(!Number.isInteger(state)||state< -1||state>=densities.length-1)throw Error('Ungültiger Zustand.');
@@ -198,8 +202,8 @@ self.onmessage=async({data}:any)=>{
   busy=true;
   try{
     let result:any;
-    if(data.action==='prepare'){calculation=null;result=await prepare(data.smiles);}
-    else if(data.action==='quantum'){calculation=null;result=await quantum(data.atoms,!!data.refine);}
+    if(data.action==='prepare'){calculation=null;result=await prepare(data.smiles,data.method==='pm3');}
+    else if(data.action==='quantum'){calculation=null;if(data.method==='pm3'){validate(data.atoms,0,true);result=await pm3Quantum(data.atoms);calculation={method:'PM3'};}else result=await quantum(data.atoms,!!data.refine);}
     else if(data.action==='surface')result=await surface(data.index,data.threshold);
     else if(data.action==='density')result=await densitySurface(data.state,data.mode,data.iso);
     else throw Error('Unbekannter Auftrag.');
