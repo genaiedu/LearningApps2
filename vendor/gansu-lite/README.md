@@ -57,3 +57,16 @@ small-screen navigation, themes and absence of unsolicited external calls.
 Browser tests require Playwright and local Google Chrome and start their
 own read-only local HTTP servers. They do not submit molecule data to
 an external calculation service.
+
+`tests/mo-core.test.cjs`: input-size, charge and spin restrictions,
+orbital labels, spectrum units and energy-based sampling, XYZ export.
+
+`tests/mo-production-browser.cjs`: repeat a real water calculation on the
+published GitHub Pages app, check required assets, surfaces and CIS table,
+and verify absence of external requests before Wikipedia consent. Its
+article-reader test intercepts the Wikipedia endpoint with a harmless
+fixture; it does not fetch third-party article contents or pictures.
+
+Test screenshots remain in `/tmp`. To deliberately refresh the published
+recommendation preview, run the UI test with `MO_CAPTURE_PREVIEW=1`; normal
+test runs do not modify repository images.
