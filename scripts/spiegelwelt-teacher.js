@@ -29,7 +29,7 @@
       const bytes = await ProtectedMaterialsCrypto.open(id, records[id], password);
       if (request !== generation || !dialog.open) { bytes.fill(0); return; }
       const url = URL.createObjectURL(new Blob([bytes], {type: 'application/pdf'})); bytes.fill(0);
-      const link = document.createElement('a'); link.href = url; link.download = id + '-2026-10-07-revision-3.pdf';
+      const link = document.createElement('a'); link.href = url; link.download = id + '-2026-10-07-latex.pdf';
       document.body.append(link); link.click(); link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 60000);
       status.textContent = 'PDF freigegeben. Eine heruntergeladene Kopie bleibt lesbar; bitte nicht an Schülerinnen und Schüler weitergeben.';
