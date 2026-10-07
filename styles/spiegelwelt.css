@@ -19,3 +19,26 @@ dialog{background:var(--paper);color:var(--ink);border:1px solid var(--line);bor
 @media(max-width:700px){.story-tracks,.applications-grid{grid-template-columns:1fr}.story-map h2{font-size:32px}.story-tracks strong{font-size:22px}.hand-design{padding:15px}.hand-design h3{font-size:23px}.adventure-guide{padding:22px}.adventure-guide h3{font-size:23px}.adventure-bench{padding:20px 12px}.reagent-shelf{gap:8px}.reagent{width:calc(50% - 8px);padding:12px!important}.reagent strong{font-size:13px}.reagent small{font-size:10px}.vessel-row{gap:10px;flex-wrap:wrap}.vessel-card{min-width:115px}.beaker{width:95px;height:125px}.vessel-label{font-size:8px}.adventure-observation{flex-direction:column;align-items:start;padding:20px}.adventure-log{padding:20px 35px;font-size:14px}.auto-adventure>.model-note{padding:20px}.story-answer{font-size:17px;padding:22px}.applications-grid article{padding:24px}}
 .lab-downloads{margin:28px 0 38px;padding:28px;background:#e6eee8;border:1px solid var(--line);border-radius:18px}.lab-downloads>p{font-size:15px;line-height:1.7}.lab-download-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}.lab-download{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:10px;padding:22px!important;border:1px solid #a4bbb2!important;border-radius:14px!important;background:#fcfcf5!important;color:#244b43!important;text-decoration:none;transition:transform .2s,box-shadow .2s}.lab-download:hover{transform:translateY(-3px);box-shadow:0 10px 24px #244b4318}.lab-download:focus-visible{outline:3px solid #387d70;outline-offset:3px}.lab-download>span{display:grid;place-items:center;width:38px;height:38px;background:#dceae0;border-radius:50%;font-size:25px}.lab-download strong{font-size:18px}.lab-download small{font-size:12px;line-height:1.6;font-weight:400;white-space:normal}@media(max-width:700px){.lab-download-grid{grid-template-columns:1fr}.lab-downloads{padding:20px}}
 @media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+.intro{position:relative;isolation:isolate;overflow:hidden}
+.intro> :not(.nobel-watermark){position:relative;z-index:1}
+.nobel-watermark{position:absolute;z-index:0;pointer-events:none;right:-170px;top:12px;width:610px;height:610px;opacity:.065;transform:rotate(-16deg);filter:sepia(.5)}
+.nobel-watermark img{display:block;width:100%;height:100%;object-fit:contain}
+.opening-story{max-width:850px;margin-top:42px;font-size:20px;line-height:1.8}
+.opening-story h3{margin-top:32px;font-size:30px}
+.opening-invitation{margin:36px 0;padding:30px 34px;border-left:3px solid #ac6930;background:#e9ece2e8;border-radius:0 18px 18px 0}
+.opening-invitation h3{margin-top:0}
+.opening-invitation .eyebrow{font-size:11px}
+.people-intro{max-width:840px;margin:24px 0 45px;font-size:21px}
+.laureate-portrait{margin:0 0 28px}
+.laureate-portrait [data-commons]{height:340px;max-width:420px;background:#142a34;display:grid;place-items:center;padding:18px;color:#d3ded8;font-size:16px}
+.laureate-portrait [data-commons]:has(img){padding:0;display:block;overflow:hidden}
+.laureate-portrait img{display:block;width:100%;height:100%;max-height:340px;object-fit:contain}
+.laureate-portrait figcaption,.portrait-note,.person-source,.media-credit{font-size:13px!important;line-height:1.7!important;max-width:100%!important}
+.soai-research-mark{height:340px;max-width:420px;margin-bottom:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,#315b61,#142a34);color:#e5c681;border-radius:50% 50% 12px 12px}
+.soai-research-mark strong{font-size:150px;line-height:1.3;font-weight:400}
+.soai-research-mark span{font-family:Mono,monospace;font-size:12px;letter-spacing:.06em}
+.research-stories{display:grid;gap:30px;margin-top:38px}
+.research-stories article{padding:38px 44px;background:#fffdf7;border:1px solid var(--line);border-radius:18px}
+.research-stories article>p{max-width:860px}
+.research-stories h3{max-width:800px;margin-bottom:25px;font-size:34px}
+@media(max-width:700px){.nobel-watermark{width:360px;height:360px;right:-145px;top:45px;opacity:.06}.opening-story{font-size:17px}.opening-invitation{padding:22px}.research-stories article{padding:24px}.research-stories h3{font-size:28px}.laureate-portrait [data-commons],.soai-research-mark{height:290px}.people-intro{font-size:18px}}
