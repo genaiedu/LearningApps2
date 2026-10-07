@@ -123,4 +123,19 @@
   function resetImages(){imagesAllowed=false;imageEpoch++;document.querySelectorAll('[data-commons]').forEach(slot=>{slot.replaceChildren(document.createTextNode(slot.dataset.commons==='medal'?'':'Externe Abbildung nicht geladen. Über „Wikipedia-Auswahl“ freigeben.'));});}
   function loadImages(){imagesAllowed=true;const epoch=++imageEpoch;document.querySelectorAll('[data-commons]').forEach(slot=>{const source=commons[slot.dataset.commons],img=document.createElement('img');img.alt=source.alt;img.decoding='async';img.referrerPolicy='no-referrer';img.onload=()=>{if(imagesAllowed&&epoch===imageEpoch)slot.replaceChildren(img);};img.onerror=()=>{if(imagesAllowed&&epoch===imageEpoch)slot.textContent=slot.dataset.commons==='medal'?'':'Abbildung momentan nicht erreichbar. Bildquelle über den Link öffnen; die lokalen Modelle bleiben nutzbar.';};img.src=source.url;});}
   let firstConsent=true;$('consent').addEventListener('close',()=>{$('consent').returnValue==='allow'?loadImages():resetImages();if(firstConsent){firstConsent=false;requestAnimationFrame(()=>$('film-next').focus({preventScroll:true}));}});$('wiki-revoke').addEventListener('click',resetImages);
+  // A passive listener schedules one paint; no continuously running extra loop.
+  const backdropMotion=matchMedia('(prefers-reduced-motion: reduce)');
+  const peopleBackdrop=document.querySelector('.people-section');
+  let backdropFrame=0;
+  function paintBackdrop(){
+    backdropFrame=0;
+    document.body.style.setProperty('--backdrop-scroll',backdropMotion.matches?'0px':`${-scrollY*.2}px`);
+    // Compensate the section's own movement so its pattern also moves at 20%.
+    if(peopleBackdrop){const top=peopleBackdrop.getBoundingClientRect().top+scrollY;peopleBackdrop.style.setProperty('--people-backdrop-scroll',backdropMotion.matches?'0px':`${(scrollY-top)*.8}px`);}
+  }
+  function scheduleBackdrop(){if(!backdropFrame)backdropFrame=requestAnimationFrame(paintBackdrop);}
+  addEventListener('scroll',scheduleBackdrop,{passive:true});
+  addEventListener('resize',scheduleBackdrop,{passive:true});
+  backdropMotion.addEventListener('change',scheduleBackdrop);
+  paintBackdrop();
 })();
