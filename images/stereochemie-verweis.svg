@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450">
+<rect width="700" height="450" fill="#e9efeb"/>
+<defs><radialGradient id="c" cx=".3" cy=".25"><stop stop-color="#79929b"/><stop offset="1" stop-color="#253d46"/></radialGradient></defs>
+<path d="M350 48V402" stroke="#92aaa2" stroke-dasharray="7 9"/>
+<g stroke="#869c99" stroke-width="12" stroke-linecap="round"><path d="M205 230L133 125M205 230L108 299M205 230L278 317M205 230L270 126"/><path d="M495 230L567 125M495 230L592 299M495 230L422 317M495 230L430 126"/></g>
+<g fill="#edaa7c"><circle cx="133" cy="125" r="32"/><circle cx="567" cy="125" r="32"/></g>
+<g fill="#69b4a6"><circle cx="108" cy="299" r="39"/><circle cx="592" cy="299" r="39"/></g>
+<g fill="#c7bde4"><circle cx="278" cy="317" r="29"/><circle cx="422" cy="317" r="29"/></g>
+<g fill="#fffdf7" stroke="#bccbc4" stroke-width="2"><circle cx="270" cy="126" r="24"/><circle cx="430" cy="126" r="24"/></g>
+<g fill="url(#c)"><circle cx="205" cy="230" r="40"/><circle cx="495" cy="230" r="40"/></g>
+<g font-family="sans-serif" font-size="24" fill="#fff" text-anchor="middle"><text x="205" y="238">C</text><text x="495" y="238">C</text></g>
+<g font-family="sans-serif" fill="#27493f" text-anchor="middle"><text x="350" y="32" font-size="15" letter-spacing="3">SPIEGELBILDER ERKUNDEN</text><text x="350" y="425" font-size="18">Gleiche Bindungen · unterschiedliche räumliche Anordnung</text></g>
+</svg>

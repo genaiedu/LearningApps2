@@ -42,6 +42,12 @@ dialog{background:var(--paper);color:var(--ink);border:1px solid var(--line);bor
 .research-stories article{padding:38px 44px;background:#fffdf7;border:1px solid var(--line);border-radius:18px}
 .research-stories article>p{max-width:860px}
 .research-stories h3{max-width:800px;margin-bottom:25px;font-size:34px}
+.recommendations{margin-top:64px}.recommendations>h3{font-size:36px;margin-bottom:30px}
+.app-recommendation{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);margin:28px 0;border:1px solid #c4cfc3;border-radius:18px;overflow:hidden;background:#fffdf6;box-shadow:0 10px 26px #24392f0d;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.app-recommendation:hover{transform:translateY(-3px);box-shadow:0 18px 35px #24392f18;color:var(--ink)}
+.app-recommendation__image{display:flex;flex-direction:column;justify-content:center;background:#e9efeb;padding:22px}.app-recommendation__image img{display:block;width:100%;height:auto;border-radius:8px}.app-recommendation__image>span{font-size:13px;line-height:1.6;margin-top:16px;color:var(--muted)}
+.app-recommendation__content{padding:34px}.app-recommendation__content h3{font-size:32px}.app-recommendation__content p:not(.eyebrow){font-size:17px;line-height:1.75}.recommendation-tags{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}.recommendation-tags span{font-size:12px;padding:6px 10px;background:#eaf0e6;border-radius:20px}.recommendation-action{display:block;color:#316d5c;font-size:17px}
+@media(max-width:800px){.app-recommendation{grid-template-columns:1fr}.app-recommendation__content{padding:24px}.app-recommendation__image img{max-height:320px;object-fit:contain}}
 /* Reuse the materials overview's quiet architectural backdrop, without grain. */
 body{isolation:isolate;background-image:radial-gradient(ellipse at 8% 15%,#779f9a18,transparent 58%),radial-gradient(ellipse at 95% 82%,#b7986218,transparent 62%);background-attachment:fixed}
 body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:#56756f;opacity:.22;-webkit-mask-image:url('../../LearningApps/materialien-hintergrund.svg');mask-image:url('../../LearningApps/materialien-hintergrund.svg');-webkit-mask-size:max(100vw,160vh) auto;mask-size:max(100vw,160vh) auto;-webkit-mask-repeat:repeat-y;mask-repeat:repeat-y;-webkit-mask-position:center calc(50% + var(--backdrop-scroll,0px));mask-position:center calc(50% + var(--backdrop-scroll,0px))}
