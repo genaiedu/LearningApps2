@@ -56,3 +56,10 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;ba
 .people-section::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:#56756f;opacity:.18;-webkit-mask:url('../../LearningApps/materialien-hintergrund.svg') center calc(50% + var(--people-backdrop-scroll,0px)) / 100% auto repeat-y;mask:url('../../LearningApps/materialien-hintergrund.svg') center calc(50% + var(--people-backdrop-scroll,0px)) / 100% auto repeat-y}
 @media print{body{background-image:none}body::before,.people-section::before{display:none}}
 @media(max-width:700px){.nobel-watermark{width:360px;height:360px;right:-145px;top:45px;opacity:.06}.opening-story{font-size:17px}.opening-invitation{padding:22px}.research-stories article{padding:24px}.research-stories h3{font-size:28px}.laureate-portrait [data-commons]{width:min(calc(100% - 22px),260px);height:auto}.soai-research-mark{height:290px}.people-intro{font-size:18px}}
+:root .trek-stage{max-width:760px;margin:24px auto;color:var(--ink,#172c32)}
+.trek-stage svg{display:block;width:100%;height:auto;overflow:visible}
+.trek-lokai,.trek-reflection{transition:transform .6s ease,opacity .6s ease}
+.trek-stage.is-overlaid .trek-bele{transform:translate(330px,158px)}
+.trek-stage.is-overlaid .trek-lokai{transform:translate(330px,158px);opacity:.5}
+.trek-stage.is-reflected .trek-reflection{transform:scaleX(-1)}
+@media(prefers-reduced-motion:reduce){.trek-lokai,.trek-reflection{transition:none}}
