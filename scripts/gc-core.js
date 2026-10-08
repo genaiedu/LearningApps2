@@ -10,6 +10,13 @@
  }
  function fingerprint(input){const s=settings(input);return Object.keys(defaults).map(k=>k+':'+s[k]).join('|');}
  function oven(t,s){return Math.min(s.endTemperature,s.temperature+Math.max(0,t-.8)*s.ramp);}
+ // Illustrative forced-air cooling, not a measured manufacturer curve. Times are minutes.
+ function cooldown(from,target,elapsed=0){
+  if(![from,target,elapsed].every(Number.isFinite)||elapsed<0||from<target)throw Error('Ungültige Abkühlparameter');
+  const drop=from-target,minutes=drop<.05?0:clamp(.75+drop/70,1,4),p=minutes?clamp(elapsed/minutes,0,1):1;
+  const fraction=(Math.exp(-3*p)-Math.exp(-3))/(1-Math.exp(-3));
+  return {temperature:p===1?target:target+drop*fraction,minutes,done:p===1};
+ }
  function holdUp(s){return .36*(s.length/30)/s.flow;}
  function retention(record,input){
   const s=settings(input),tm=holdUp(s),m=record.model,step=.005;let travelled=0;
@@ -83,5 +90,5 @@
   if(!measured){const area=integrate(corrected(run,blank),Math.max(0,t-.08),Math.min(run.settings.runtime,t+.12));return {area:Math.max(0,area),time:t,overlap:false,blank:true};}
   return measured;
  }
- return {defaults,settings,fingerprint,rng,oven,holdUp,retention,peakShape,simulate,interpolate,corrected,integrate,peaks,spectrumAt,eic,cosine,matches,regression,resolution,measureTarget};
+ return {defaults,settings,fingerprint,rng,oven,cooldown,holdUp,retention,peakShape,simulate,interpolate,corrected,integrate,peaks,spectrumAt,eic,cosine,matches,regression,resolution,measureTarget};
 });
