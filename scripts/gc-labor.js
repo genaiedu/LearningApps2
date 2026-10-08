@@ -154,7 +154,7 @@
  function showCoachTarget(){
   if(!guide.active)return;const el=$(guide.plan[guide.index].target);if(!el)return;
   el.closest('details')?.setAttribute('open','');
-  requestAnimationFrame(()=>{if(!guide.active)return;const scroller=$('lab-fullpage').open?$('fullpage-body'):document.scrollingElement,rect=el.getBoundingClientRect(),top=$('lab-fullpage').open?$('fullpage-body').getBoundingClientRect().top+18:24,bottom=window.innerWidth<1200?$('coach-panel').getBoundingClientRect().top-16:window.innerHeight-24,room=Math.max(90,bottom-top),wanted=top+Math.max(0,(room-Math.min(rect.height,room))*.35);scroller?.scrollBy({top:rect.top-wanted,behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
+  requestAnimationFrame(()=>{if(!guide.active)return;const scroller=$('lab-fullpage').open?$('fullpage-body'):document.scrollingElement,rect=el.getBoundingClientRect(),top=$('lab-fullpage').open?$('fullpage-body').getBoundingClientRect().top+18:24,bottom=window.innerWidth<1200?$('coach-panel').getBoundingClientRect().top-16:window.innerHeight-24,room=Math.max(90,bottom-top),wanted=top+Math.max(0,(room-Math.min(rect.height,room))*.1);scroller?.scrollBy({top:rect.top-wanted,behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
  }
  function updateCoach(){
   if(!guide.active)return;
@@ -173,7 +173,7 @@
   $('coach-next').disabled=!done;$('coach-next').textContent=guide.index===guide.plan.length-1?'Führung abschließen':'Weiter';$('coach-back').disabled=guide.index===0;
   $('coach-feedback').textContent=state.running?'Messung läuft im Zeitraffer. Warte auf Messende und Abkühlung.':state.cooling?'Der Ofen kühlt ab. Gleich kannst du weiterarbeiten.':done?'✓ Erledigt – du kannst weitergehen.':step.wait;$('coach-feedback').classList.toggle('done',done);
   $('coach-open').textContent='Messführung · '+(guide.index+1)+'/'+guide.plan.length;
-  if(guide.key!==view){guide.key=view;clearCoachTarget();$('coach-title').textContent=step.title;$('coach-text').textContent=step.text;$('coach-reason').textContent=step.why;$('coach-why').open=false;coachTarget=$(step.target);if(coachTarget){coachDescription=coachTarget.getAttribute('aria-describedby');coachTarget.classList.add('coach-focus');coachTarget.setAttribute('aria-describedby',[coachDescription,'coach-text'].filter(Boolean).join(' '));}}
+  if(guide.key!==view){guide.key=view;clearCoachTarget();$('coach-title').textContent=step.title;$('coach-text').textContent=step.text;$('coach-reason').textContent=step.why;$('coach-why').open=false;$('coach-body').scrollTop=0;coachTarget=$(step.target);if(coachTarget){coachDescription=coachTarget.getAttribute('aria-describedby');coachTarget.classList.add('coach-focus');coachTarget.setAttribute('aria-describedby',[coachDescription,'coach-text'].filter(Boolean).join(' '));}}
   if(moved){guide.folded=false;showCoachTarget();}
  }
  function coach(){
