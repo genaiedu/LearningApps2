@@ -1,0 +1,41 @@
+[
+  {
+    "file": "gc-alcohols.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/GC_of_alcohols.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:GC_of_alcohols.jpg",
+    "title": "Gaschromatogramm eines Alkoholgemisches",
+    "author": "Leiem",
+    "license": "CC BY-SA 4.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "description": "Experimentelles Original: Wasser, Ethanol, Propan-1-ol und Butan-1-ol. Das Original zeigt eine Flächennormierung, nicht automatisch Massenprozente. Detektor und vollständige Methode sind auf der Dateiseite nicht dokumentiert.",
+    "sha256": "71db92612164180ea19bb0ed128325ebc0b65ad3b12680b075d4c3b6ac2c9035",
+    "bytes": 956719,
+    "changed": "Keine inhaltliche Veränderung; Darstellung in der App skaliert."
+  },
+  {
+    "file": "gc-bergamot.png",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/22/Comparison_of_bergamot_oils_using_GC-MS_analysis_with_enantiomeric_column.png",
+    "page": "https://commons.wikimedia.org/wiki/File:Comparison_of_bergamot_oils_using_GC-MS_analysis_with_enantiomeric_column.png",
+    "title": "Bergamottöl: zwei Herstellungswege",
+    "author": "E. Melliou, A. Michaelakis, G. Koliopoulos, A.-L. Skaltsounis und P. Magiatis (2009)",
+    "license": "CC BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "description": "Experimentelle GC-MS-Chromatogramme auf einer chiralen β-DEX-sm-Säule; kaltgepresstes Öl und hydrodestilliertes Öl. DOI: 10.3390/molecules14020839. Die virtuellen Standard-Säulen dieser App sind nicht chiral.",
+    "sha256": "8aef60f39a61cfb5da8d6a7d792bb9266b24dcd14caeebf154b28eb50a97bbb3",
+    "bytes": 19099,
+    "changed": "Keine inhaltliche Veränderung; Darstellung in der App skaliert."
+  },
+  {
+    "file": "gc-original-kf.png",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/Chromatogram_KF.png",
+    "page": "https://commons.wikimedia.org/wiki/File:Chromatogram_KF.png",
+    "title": "Ein reales, komplexes Gaschromatogramm",
+    "author": "Joanna Kośmider",
+    "license": "CC0 1.0 / Public domain",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "description": "Unverändertes Originalchromatogramm. Die vollständige Messmethode und Stoffzuordnungen fehlen auf der Commons-Dateiseite; daher nur für Form- und Quellenkritik, nicht zur quantitativen Referenzkalibrierung.",
+    "sha256": "876a5da8951b0c7a8d9ed6bd8a6cb2f310b1b792d588d8e8f9264260a1483323",
+    "bytes": 96175,
+    "changed": "Keine inhaltliche Veränderung; Darstellung in der App skaliert."
+  }
+]
