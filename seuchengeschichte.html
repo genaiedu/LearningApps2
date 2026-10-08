@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Seuchen · Geschichte als Erfahrung</title>
+  <meta name="description" content="Eine historische Lernreise durch Seuchen, Quellen, Schutzmaßnahmen und gesellschaftliche Folgen – von Athen bis Corona.">
+  <link rel="stylesheet" href="styles/seuchengeschichte.css">
+  <script defer src="scripts/seuchen-data.js"></script>
+  <script defer src="scripts/seuchengeschichte.js"></script>
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<header class="masthead"><a class="wordmark" href="#start">ZEIT<span>·</span>SPUREN</a><nav aria-label="Hauptnavigation"><a href="#faelle">Seuchenfälle</a><a href="#quellen">Quellenwerkstatt</a><a href="#vergleich">Vergleichen</a><a href="#aufgaben">Aufgaben</a></nav><button id="reset-open" class="reset-link" type="button">Lernreise zurücksetzen</button></header>
+<main id="inhalt">
+  <section class="hero" id="start">
+    <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+    <div class="hero-copy"><p class="eyebrow">Eine historische Lernreise · Geschichte</p><h1>Wenn Krankheit<br><em>alles verändert.</em></h1>
+      <p class="hero-lede">Was tun Menschen, wenn eine Krankheit sich ausbreitet und niemand genau weiß, warum? Sechs Seuchengeschichten führen von der belagerten Stadt Athen bis in die Corona-Jahre. Ihre Leitfrage lautet: <strong>Wie verändern Wissen, Möglichkeiten und Ungleichheit den Umgang mit einer Seuche?</strong></p>
+      <p class="hero-note">Wir lesen, was Menschen damals schrieben, gleichen ihre Deutungen mit späterem Wissen ab und fragen, welche Maßnahmen halfen – und für wen.</p>
+      <a class="hero-cta" href="#faelle">Die Fälle entdecken <span>↓</span></a>
+    </div>
+    <div class="hero-art" aria-label="Historische Bildmotive aus verschiedenen Seuchenzeiten"><div class="hero-image hero-image-back" data-image="burial"></div><div class="hero-image hero-image-front" data-image="berlin"></div><div class="hero-caption">Sechs Zeiten. Verschiedene Erreger. Wiederkehrende Fragen.</div></div>
+    <div class="hero-index"><span>430 v. Chr.</span><i></i><span>2020</span></div>
+  </section>
+
+  <section class="opening wrap"><p class="eyebrow">Eine Frage, sechs Situationen</p><h2>Eine Seuche ist nie nur eine Krankheit.</h2><div class="opening-columns"><p>Sie trifft auf eine konkrete Welt: auf dicht bewohnte Städte, Handelswege, Krieg, ungleiche Versorgung und die Vorstellungen einer Zeit. Was Menschen über die Krankheit wissen, beeinflusst ihr Handeln. Ebenso wichtig ist, was ihnen überhaupt möglich ist.</p><p>„Erfolgreich“ ist deshalb keine einfache Ja-Nein-Frage. Eine Maßnahme kann Ansteckungen bremsen, ohne allen Betroffenen gerecht zu werden. Eine Quelle kann eine Regel dokumentieren, ohne zu zeigen, ob sie befolgt wurde. Und ein Ende der Welle beweist noch nicht, wodurch sie endete.</p></div><div class="question-ribbon"><span>Unser roter Faden</span><strong>Wer weiß was – wer kann handeln – und wer trägt die Folgen?</strong></div></section>
+
+  <section class="case-section wrap" id="faelle"><div class="section-head"><div><p class="eyebrow">Das Fallarchiv</p><h2>Sechs Ausbrüche im Vergleich.</h2></div><p>Wähle einen Fall. Jede Akte trennt damaliges Wissen von heutiger Forschung und zeigt, was Quellen über Alltag und Entscheidungen verraten.</p></div>
+    <div class="timeline" id="timeline" aria-label="Zeitleiste der sechs Fälle"></div><div class="case-grid" id="case-grid"></div><article id="case-detail" class="case-detail" aria-live="polite"></article>
+  </section>
+
+  <section class="source-section" id="quellen"><div class="wrap"><div class="section-head light-head"><div><p class="eyebrow">Quellenwerkstatt · lesen statt nur nacherzählen</p><h2>Die Stimmen der Zeit.</h2></div><p>Original und Übertragung stehen nebeneinander. Lies genau: Wer spricht? Was wurde beobachtet? Was wird nur vermutet oder gefordert?</p></div><div class="source-controls"><label for="source-filter">Fall auswählen</label><select id="source-filter"><option value="all">Alle Quellen</option></select><span id="source-count" aria-live="polite"></span></div><div class="source-grid" id="source-grid"></div></div></section>
+
+  <section class="comparison wrap" id="vergleich"><p class="eyebrow">Vergleichslabor · begründen statt gleichsetzen</p><h2>Was kehrt wieder? Was ist neu?</h2><p class="comparison-intro">Vergleiche zwei Fälle anhand derselben Fragen. Die Unterschiede sind Teil des Ergebnisses: Erreger, Wissen, Institutionen und Lebensbedingungen waren nicht gleich.</p><div class="compare-selects"><label>Erster Fall<select id="compare-a"></select></label><span class="compare-mark">↔</span><label>Zweiter Fall<select id="compare-b"></select></label></div><div id="compare-result" class="compare-result"></div><div class="writing-prompt"><label for="compare-note">Dein Vergleich in drei Sätzen</label><textarea id="compare-note" rows="4" placeholder="In beiden Fällen … / Ein wichtiger Unterschied ist … / Die Maßnahme …, weil …"></textarea><p id="note-saved" class="micro" aria-live="polite">Dein Text wird nur auf diesem Gerät gespeichert.</p></div></section>
+
+  <section class="quiz-section" id="aufgaben"><div class="wrap"><div class="section-head light-head"><div><p class="eyebrow">Aufgaben · neue Runde aus dem Aufgabenpool</p><h2>Prüfe deine Deutung.</h2></div><p>Die Aufgaben verlangen mehr als Jahreszahlen: Unterscheide Erregerwissen, Quellenperspektive, Maßnahmenwirkung und gesellschaftliche Folgen.</p></div><div class="quiz-panel"><div class="quiz-top"><span id="quiz-progress">Aufgabe 1</span><span class="score"><b id="score">0</b> Punkte</span><button id="new-round" type="button">Neue Aufgabenrunde ↻</button></div><div id="quiz-card"></div></div><div class="badge-row" id="badges" aria-live="polite"></div></div></section>
+
+  <section class="method wrap"><p class="eyebrow">Historisch urteilen</p><h2>Eine gute Antwort zeigt ihren Weg.</h2><div class="method-grid"><article><span>01</span><h3>Beschreiben</h3><p>Was steht tatsächlich in der Quelle? Markiere Wörter, die Beobachtung, Erklärung, Forderung oder Wertung ausdrücken.</p></article><article><span>02</span><h3>Einordnen</h3><p>Wer verfasste den Text, wann und mit welchem Zweck? Was wusste man damals – und was wissen wir heute?</p></article><article><span>03</span><h3>Abwägen</h3><p>Welche Wirkung ist belegt? Wer profitierte, wer trug Kosten, und welche andere Erklärung ist möglich?</p></article></div><div class="care-note"><strong>Bei Corona gilt:</strong> Du musst keine persönlichen oder familiären Erfahrungen erzählen. Arbeite mit den historischen Dokumenten und Forschungsergebnissen. Kritik und Zustimmung werden an konkreten Belegen geprüft, nicht an persönlichen Zuschreibungen.</div></section>
+
+  <section class="sources-and-rights"><div class="wrap"><p class="eyebrow">Nachweise · Bilder · Lesefenster</p><h2>Weiterlesen und genau hinsehen.</h2><p>Zu jedem Fall sind historische Originale und fachliche Quellen verlinkt. Wikipedia-Artikel und externe Abbildungen werden erst nach deiner Zustimmung geladen. Bei jedem Bild stehen Urheber, Datierung, Lizenz und der Hinweis, was das Bild tatsächlich belegt.</p><div class="wiki-area"><button id="wiki-open" type="button">Wikipedia-Lesefenster öffnen</button><button id="consent-edit" type="button">Bildfreigabe ändern</button><span id="consent-status" role="status">Externe Inhalte sind noch nicht freigegeben.</span></div><div id="image-credits" class="image-credits"></div><p class="fineprint">Die Bilder werden direkt von Wikimedia Commons eingebunden, nicht im App-Projekt gespeichert. Es werden nur Abbildungen mit dokumentierter freier Lizenz verwendet. Eine künstlerische Darstellung oder ein Mikroskopbild ist keine zeitgenössische Fotografie des historischen Ausbruchs.</p></div></section>
+</main>
+<footer class="footer"><span>ZEIT·SPUREN · Geschichte der Seuchen</span><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></footer>
+
+<dialog id="consent-dialog"><form method="dialog"><p class="eyebrow">Externe Inhalte</p><h2>Bilder und Wikipedia laden?</h2><p>Diese Lernseite kann Abbildungen von Wikimedia Commons laden. Das Wikipedia-Lesefenster ruft Artikel erst auf, wenn du es öffnest. Dabei werden insbesondere deine IP-Adresse sowie Browser- und Gerätedaten an Wikimedia übermittelt.</p><p>Du kannst die App auch ohne externe Inhalte nutzen. Die Freigabe lässt sich jederzeit widerrufen.</p><div class="dialog-actions"><button value="no">Ohne Bilder fortfahren</button><button class="primary" value="yes">Zustimmen</button></div></form></dialog>
+<dialog id="wiki-dialog"><div class="wiki-reader"><header><h2 id="wiki-title">Wikipedia</h2><button type="button" data-close="wiki-dialog">Schließen ×</button></header><p id="wiki-status" role="status"></p><article id="wiki-body"></article><a id="wiki-link" target="_blank" rel="noopener">Artikel auf Wikipedia öffnen ↗</a></div></dialog>
+<dialog id="reset-dialog"><form method="dialog"><p class="eyebrow">Neustart</p><h2>Lernreise zurücksetzen?</h2><p>Deine Punkte, Abzeichen und Notizen auf diesem Gerät werden gelöscht. Anschließend kannst du mit einer neuen Aufgabenrunde beginnen.</p><div class="dialog-actions"><button value="no">Abbrechen</button><button class="danger" value="yes">Zurücksetzen</button></div></form></dialog>
+</body></html>
