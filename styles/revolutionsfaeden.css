@@ -10,6 +10,7 @@
 @media(max-width:420px){.image-gallery,.image-pair{grid-template-columns:1fr}.image-gallery img{height:290px}#cast-choices{grid-template-columns:1fr}.brand span{font-size:7px}.hero h1{font-size:48px}.hero-question{font-size:23px}.hero-intro{font-size:16px}.speaker-card{flex-basis:130px}.vote-bar{grid-template-columns:70px 1fr 35px}}
 @media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 /* Dialoge und Formulare passen sich auch auf iPads an. */
+.hero .hero-picture figcaption,.hero .hero-picture figcaption strong{color:#f1e8d0}
 body>footer{display:flex;justify-content:space-between;align-items:center;gap:25px;flex-wrap:wrap;padding:25px clamp(25px,5vw,80px);font-size:12px;background:var(--night);color:#e1dfcf}
 body>footer>div{display:flex;align-items:center;gap:20px;flex-wrap:wrap}body>footer button{font-size:11px;background:transparent;color:#e1dfcf;border-color:#667e7b}
 dialog form{padding:30px}.button-row,.notebook-controls{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.notebook-controls p{flex-basis:100%;font-size:13px;color:var(--muted)}
