@@ -15,7 +15,9 @@
   return Array.from({length:361},(_,i)=>{const a=-Math.PI/2+i/360*Math.PI*12,r=89-i/360*24;return(i?'L':'M')+(340+Math.cos(a)*r).toFixed(2)+' '+(345+Math.sin(a)*r*.73).toFixed(2);}).join(' ');
  }
  function render(host,s,{inside=false,flow=false,running=false,cooling=false}={}){
-  const ms=s.detector==='ms',cutaway=inside||flow,detector=ms?'ms':'fid',selected=host.dataset.selected||'';
+  const ms=s.detector==='ms',cutaway=inside||flow,detector=ms?'ms':'fid',previous=host.dataset.selected||'',selected=['ms','fid'].includes(previous)?detector:previous;
+  host.dataset.selected=selected;
+  if(selected)document.getElementById('device-description').textContent=descriptions[selected];
   const part=(id,label,content)=>`<g data-part="${id}" role="button" tabindex="0" aria-label="${label}" aria-pressed="${selected===id}"><title>${label}</title>${content}</g>`;
   const gasIn='M94 268H126Q137 268 137 257V205Q137 194 148 194H304V223';
   const columnIn='M304 223V264Q304 280 340 280.03';

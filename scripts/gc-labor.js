@@ -16,6 +16,7 @@
   $('time-lapse').dataset.phase=state.cooling?'cooling':state.running?'running':'idle';
   $('time-lapse-title').textContent=state.cooling?'Abkühlung im Zeitraffer':(state.running?'Zeitraffer läuft':'Zeitraffer')+' · '+n(factor,0)+'×';
   $('time-lapse-summary').textContent=state.cooling?'Vereinfachtes Abkühlmodell: '+n(state.coolingMinutes,1)+' Minuten in '+n(state.coolingDuration/1000,1)+' Sekunden. Keine gemessene Gerätekurve.':n(s.runtime,0)+' Minuten Messzeit werden in '+seconds+' Sekunden dargestellt. Die Geräteuhr zeigt die simulierte Messzeit, nicht deine Wartezeit.';
+  $('run-speed-note').textContent=state.cooling?'» Abkühlung im Zeitraffer · '+n(state.coolingMinutes,1)+' min Modellzeit in '+n(state.coolingDuration/1000,1)+' s':'» Zeitraffer · '+n(factor,0)+'× — '+n(s.runtime,0)+' min Messzeit in '+seconds+' s';
   if(!state.running&&!state.cooling)elapsedClock(state.run?s.runtime:0,state.run?state.elapsedMs:0);
  }
  function ovenProgram(s){

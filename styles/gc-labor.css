@@ -75,6 +75,7 @@ math{font-size:1.6rem;padding:15px}
 .time-lapse strong{font-size:.92rem;letter-spacing:.025em}
 .time-lapse p{font-size:.78rem;line-height:1.5;margin:4px 0 8px}
 .time-lapse-clocks{display:flex;gap:8px 20px;flex-wrap:wrap;font:11px/1.4 ui-monospace,monospace}
+.time-lapse-inline{font-size:.88rem;font-weight:600;color:var(--ink);border-left:3px solid var(--copper);padding-left:12px;margin:8px 0}
 .time-lapse[data-phase=running]{border-color:#ad7d3b;box-shadow:inset 3px 0 #ad7d3b}
 .time-lapse[data-phase=cooling]{border-color:#9db9c7;background:#e9f0f4;color:#344f62;box-shadow:inset 3px 0 #5b8aab}
 .time-lapse[data-phase=cooling] .time-lapse-mark{color:#507f9f}

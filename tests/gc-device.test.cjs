@@ -22,6 +22,7 @@ test('component buttons and keyboard activation explain the part and preserve se
  host.elements.find(e=>e.tagName==='button'&&e.dataset.part==='ms').handlers.click();
  assert.ok(description.textContent.startsWith('Massenspektrometer:'));assert.equal(host.dataset.selected,'ms');assert.equal(host.elements.filter(e=>e.attributes['aria-pressed']==='true').length,2);
  render(host,s,{inside:true});assert.equal(host.elements.filter(e=>e.attributes['aria-pressed']==='true').length,2);
+ render(host,{...s,detector:'fid'});assert.equal(host.dataset.selected,'fid');assert.ok(description.textContent.startsWith('Flammenionisationsdetektor:'));assert.equal(host.elements.filter(e=>e.attributes['aria-pressed']==='true').length,2);
  let prevented=false;host.elements.find(e=>e.tagName==='g'&&e.dataset.part==='column').handlers.keydown({key:'Enter',preventDefault(){prevented=true;}});
  assert.ok(prevented);assert.ok(description.textContent.startsWith('Säulenofen:'));assert.equal(host.dataset.selected,'column');
 });
