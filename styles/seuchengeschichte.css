@@ -9,4 +9,42 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 .case-card{min-height:295px;padding:0 24px 23px}.case-card .date{margin-bottom:12px}.case-thumb{display:block;height:132px;margin:0 -24px 17px;background:linear-gradient(135deg,#c5b696,#4d6661);overflow:hidden}.case-thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.76)}@media(max-width:560px){.case-card{min-height:260px}}
 .hero-caption{z-index:3;right:0;bottom:8px;width:min(290px,56%);padding:17px 19px;border-radius:12px;background:var(--night);color:var(--paper);box-shadow:0 18px 38px #142a3040;font:12px/1.55 Mono,monospace;letter-spacing:.025em}
+
+/* Wikimedia Commons gallery and full-page article reader */
+.image-credits{align-items:stretch}
+.credit{margin:0;display:flex;flex-direction:column;gap:10px;padding:12px}
+.gallery-image{display:block;width:100%;min-height:0;padding:0;border:0;border-radius:8px;background:#d8d3c6;overflow:hidden;cursor:zoom-in}
+.gallery-image:hover{background:#d8d3c6}
+.gallery-preview{height:180px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:12px;line-height:1.55}
+.gallery-preview img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.gallery-image:hover img{transform:scale(1.035)}
+.credit figcaption{font-size:12px;line-height:1.55}
+.credit figcaption span{display:inline-block;margin-top:5px;color:var(--muted)}
+.detail-image:focus-visible,.wiki-reader #wiki-body img:focus-visible{outline:3px solid var(--rust);outline-offset:3px}
+#wiki-dialog{width:min(1180px,96vw);max-width:96vw;max-height:94vh;overflow:hidden}
+#wiki-dialog .wiki-reader{height:min(90vh,1000px);max-height:90vh;display:flex;flex-direction:column;gap:10px;padding:clamp(14px,2.5vw,30px)}
+#wiki-dialog .wiki-reader header{flex:0 0 auto;border-bottom:1px solid var(--line);padding-bottom:10px}
+#wiki-dialog #wiki-status{flex:0 0 auto;margin:0;font-size:13px;color:var(--muted)}
+#wiki-dialog #wiki-body{flex:1 1 auto;min-height:0;max-height:none;overflow:auto;padding:4px clamp(4px,2vw,24px) 16px 4px;overscroll-behavior:contain}
+#wiki-dialog #wiki-body p,#wiki-dialog #wiki-body li{font-size:15px;line-height:1.75}
+#wiki-dialog #wiki-body h2,#wiki-dialog #wiki-body h3,#wiki-dialog #wiki-body h4{font-weight:500;line-height:1.25;margin:1.5em 0 .5em}
+#wiki-dialog #wiki-body h2{font-size:25px;border-bottom:1px solid var(--line);padding-bottom:8px}
+#wiki-dialog #wiki-body h3{font-size:20px}
+#wiki-dialog #wiki-body a{color:var(--teal)}
+#wiki-dialog #wiki-body figure{margin:16px 0;padding:10px;background:#eee9dd;border-radius:10px}
+#wiki-dialog #wiki-body img{display:block;max-width:min(100%,680px);max-height:370px;object-fit:contain;margin:8px auto;cursor:zoom-in;border-radius:6px}
+#wiki-dialog #wiki-body figcaption{font-size:12px;line-height:1.5;color:var(--muted)}
+#wiki-dialog #wiki-body table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:13px}
+#wiki-dialog #wiki-body th,#wiki-dialog #wiki-body td{padding:7px;border:1px solid var(--line)}
+#wiki-dialog #wiki-attribution{flex:0 0 auto;margin:0;font-size:11px;line-height:1.5;color:var(--muted)}
+#wiki-dialog .wiki-reader>a{flex:0 0 auto}
+#image-dialog{width:min(1180px,96vw);max-width:96vw;max-height:94vh;overflow:auto}
+.image-viewer{padding:clamp(15px,3vw,30px)}
+.image-viewer header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.image-viewer header .eyebrow{margin-bottom:8px}
+.image-viewer h2{font:clamp(22px,3vw,34px) Lora,Georgia,serif;margin:0}
+#image-viewer-img{display:block;width:100%;max-height:75vh;object-fit:contain;background:#e4e0d6;border-radius:10px;margin:18px auto 10px}
+#image-viewer-note{font-size:13px;line-height:1.6;color:var(--muted)}
+#image-viewer-source{color:var(--teal);font-weight:700}
+@media(max-width:620px){.gallery-preview{height:210px}#wiki-dialog{width:100vw;max-width:100vw;max-height:96vh}#wiki-dialog .wiki-reader{height:94vh;max-height:94vh;padding:12px}#wiki-dialog #wiki-body p,#wiki-dialog #wiki-body li{font-size:14px}.image-viewer header{gap:10px}.image-viewer header button{padding:.5em}}
 .compare-selects select{color:var(--ink);background:#fffdf7;border:1px solid #9f9a88;font-size:16px;font-weight:600;line-height:1.4;min-height:54px}.compare-selects option{color:var(--ink);background:#fffdf7}
