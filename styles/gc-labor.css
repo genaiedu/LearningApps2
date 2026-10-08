@@ -81,7 +81,7 @@ math{font-size:1.6rem;padding:15px}
 .time-lapse[data-phase=cooling] .time-lapse-mark{color:#507f9f}
 body.dark .time-lapse{background:#3b352a;color:#f1e4cf;border-color:#89764f}
 body.dark .time-lapse[data-phase=cooling]{background:#2b3f4d;color:#d6eaf2;border-color:#7198af}
-.device-wrap{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px 4px;min-width:0;overflow:hidden}
+.device-wrap{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px 4px;min-width:0;overflow:hidden;container-type:inline-size}
 .device-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:.8rem}
 .device-toolbar>span{margin-left:auto;font-family:ui-monospace,monospace}
 .check{display:inline-flex!important;flex-direction:row!important;align-items:center;gap:8px!important;margin:0;line-height:1.4}
@@ -97,6 +97,7 @@ body.dark .time-lapse[data-phase=cooling]{background:#2b3f4d;color:#d6eaf2;borde
 .device-parts button>span{flex:0 0 24px;width:24px;height:24px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font:10px ui-monospace,monospace;color:var(--muted)}
 .device-parts button:hover,.device-parts button[aria-pressed=true]{background:var(--accentsoft);border-color:var(--line)}
 .device-parts button[aria-pressed=true]>span{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+@container (max-width:700px){.device-parts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .device-flow-key{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;font-size:.69rem;margin:12px 0;color:var(--muted)}
 .device-flow-key i{display:inline-block;width:17px;height:3px;background:#ae792e}
 .device-flow-key i.ion{background:#23868b;margin-left:10px}
