@@ -194,8 +194,23 @@ td button{padding:5px 8px;font:inherit}
 #fullpage-body{height:calc(100dvh - 72px);overflow:auto;padding:20px;overscroll-behavior:contain}
 #fullpage-body>.gc-module{margin:0;max-width:1900px;margin-inline:auto}
 #fullpage-body #lab-fullscreen{display:none}
-.coach-actions{display:flex;flex-wrap:wrap;gap:9px}
-.coach-focus{outline:4px solid #c1783e!important;outline-offset:5px;box-shadow:0 0 0 12px #dc99512b!important;scroll-margin:90px}
+.gc-workspace{min-width:0;container-name:gcworkspace;container-type:inline-size}
+.gc-workspace[data-guided=true]{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:22px;align-items:start}
+.gc-workspace>.gc-grid{min-width:0;grid-column:1;grid-row:1}
+.gc-guide{grid-column:2;grid-row:1;position:sticky;top:12px;z-index:15;border:1px solid #9cb7b7;border-radius:17px;background:var(--paper);box-shadow:0 9px 30px #18343816;overflow:hidden}
+.gc-guide-grip{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:15px 16px;min-height:60px;border:0;border-radius:0;background:var(--accentsoft);color:var(--ink);text-align:left}
+.gc-guide-grip>span:first-child{display:grid;gap:4px}.gc-guide-grip small{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.gc-guide-grip strong{font-size:.88rem}
+#coach-body{padding:17px;max-height:calc(100dvh - 180px);overflow:auto;overscroll-behavior:contain}
+#coach-body .eyebrow{font-size:.62rem;margin-bottom:8px}#coach-body h3{font-size:1.03rem;line-height:1.3;margin:14px 0 10px}#coach-body p{font-size:.84rem;line-height:1.6;margin:10px 0}
+#coach-body details{margin:14px 0;border-top:1px solid var(--line);padding-top:10px}#coach-body summary{font-size:.76rem;cursor:pointer;min-height:34px;align-content:center;font-weight:600}
+#coach-feedback{padding:10px;border-radius:9px;background:var(--bg);color:var(--muted);font-size:.75rem!important}#coach-feedback.done{color:var(--accent);background:var(--accentsoft)}
+.coach-actions{display:grid;grid-template-columns:1fr 1.2fr;gap:8px;margin-top:14px}.coach-actions button{min-height:44px;padding:10px 7px;font-size:.81rem;white-space:normal}
+.gc-guide-link{display:block;width:100%;min-height:38px;margin-top:6px;padding:7px;border:0;background:transparent;font-size:.73rem;color:var(--muted)}
+#coach-overview{font-size:.75rem;line-height:1.5;padding-left:20px}#coach-overview li{margin:7px 0}
+.coach-focus{outline:3px solid #c1783e!important;outline-offset:5px;box-shadow:0 0 0 9px #dc99512b!important;scroll-margin:100px;border-radius:8px}
+@container gcworkspace (max-width:1050px){.gc-workspace[data-guided=true]>.gc-grid{grid-template-columns:1fr}.gc-workspace[data-guided=true] .gc-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.gc-workspace[data-guided=true] #method-controls{grid-column:2;grid-row:1/3}}
+@media(max-width:1199px){.gc-workspace[data-guided=true]{display:block;padding-bottom:52dvh}.gc-guide{position:fixed;right:14px;bottom:14px;top:auto;width:min(420px,calc(100vw - 28px));max-height:48dvh;box-shadow:0 14px 45px #182d3b35}#coach-body{max-height:calc(48dvh - 70px)}.gc-guide-grip{min-height:56px;padding:11px 16px}}
+@media(max-width:700px){.gc-workspace[data-guided=true] .gc-controls{grid-template-columns:1fr}.gc-workspace[data-guided=true] #method-controls{grid-column:auto;grid-row:auto}.gc-guide{left:8px;right:8px;bottom:8px;width:auto}.gc-guide-grip{min-height:52px}#coach-body{padding:12px 15px}#coach-body h3{font-size:.94rem}#coach-body p{font-size:.8rem}}
 .good{color:#3a8056}
 .error{color:#b3462e}
 .result{padding:15px;background:var(--accentsoft);border-left:3px solid var(--accent);font-size:.9rem}
@@ -273,7 +288,8 @@ body>main{display:block!important;margin:0!important;max-width:none!important;pa
 main>*{display:none!important}
 main>#labor,body>#lab-fullpage[open],#fullpage-body{display:block!important;height:auto!important;overflow:visible!important;padding:0!important;border:0!important}
 .gc-module>*{display:none!important}
-.gc-module>.gc-grid{display:block!important}
+.gc-module>.gc-workspace,.gc-workspace>.gc-grid{display:block!important}
+.gc-guide{display:none!important}
 .gc-grid>.gc-controls{display:none!important}
 .gc-results>*{display:none!important}
 .gc-results>.graph-card{display:block!important}
