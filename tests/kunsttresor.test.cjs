@@ -207,9 +207,36 @@ test('46-second film finishes uncropped, with a large title, local handwriting a
   assert.match(js,/title:'1000 Kunstwerke',text:'Quiz Edition'/);
   assert.match(js,/introAudio\.volume=Math\.max\(0/);
   assert.match(css,/\.intro-slide--full img\{object-fit:contain;transform:none!important;animation:none!important;filter:none\}/);
-  assert.match(css,/Caveat[\s\S]*caveat-v23-latin-700\.woff2/);
+  assert.match(css,/Dancing Script[\s\S]*dancing-script-v29-latin-regular\.woff2/);
   assert.ok(html.includes('id="intro-art-caption"'));
   assert.ok(js.includes('data/kunst-hauptwerke.json'));
+});
+test('the finale reveals the main title before the connected handwritten signature, with local fonts in both apps', () => {
+  const root=path.join(__dirname,'..');
+  const css=fs.readFileSync(path.join(root,'styles/kunsttresor.css'),'utf8');
+  const html=fs.readFileSync(path.join(root,'kunsttresor.html'),'utf8');
+  assert.match(css,/\.intro-dialog\.is-finale \.intro-copy\.is-visible\{animation:none\}/);
+  assert.match(css,/\.intro-dialog\.is-finale \.intro-copy\.is-visible h2\{animation:art-finale-title 2s 2s both\}/);
+  assert.match(css,/\.intro-dialog\.is-finale \.intro-copy\.is-visible>p:last-child\{animation:art-finale-signature 1\.6s 6\.5s both\}/);
+  assert.match(css,/'Dancing Script',cursive[^}]*letter-spacing:normal/);
+  assert.match(html,/<link rel="preload" href="\.\.\/LearningApps\/fonts\/dancing-script-v29-latin-regular\.woff2" as="font"/);
+  assert.match(css,/@media\(prefers-reduced-motion:reduce\)\{[^}]*animation-duration:0s/);
+  assert.ok(css.includes('p:last-child{animation-duration:0s}'));
+  for(const file of ['styles/kunsttresor.css','styles/spiegelwelt.css']){
+    const text=fs.readFileSync(path.join(root,file),'utf8'),faces=[...text.matchAll(/@font-face\{[^}]+\}/g)];
+    assert.ok(faces.length>=4,file);
+    for(const [face] of faces){
+      const source=/src:url\(['"]?([^'"\)]+)/.exec(face)?.[1];
+      assert.ok(source?.startsWith('../../LearningApps/fonts/'),face);
+      const font=fs.readFileSync(path.resolve(root,path.dirname(file),source));
+      assert.equal(font.subarray(0,4).toString(),'wOF2',source);
+    }
+    assert.doesNotMatch(text,/@import|fonts\.googleapis|fonts\.gstatic|use\.typekit/i);
+  }
+  const nobel=fs.readFileSync(path.join(root,'spiegelwelt.html'),'utf8');
+  assert.ok(nobel.includes("fontURL:new URL('../LearningApps/fonts/mathjax-newcm/chtml/woff2'"));
+  assert.ok(nobel.includes("dynamicPrefix:new URL('../LearningApps/fonts/mathjax-newcm/chtml/dynamic'"));
+  assert.ok(nobel.includes("font-src 'self' https://genaiedu.github.io"));
 });
 test('gallery headings display the documented title, without appending artist credits', () => {
   assert.ok(pool.every(work=>typeof work.title==='string' && work.title.trim()));

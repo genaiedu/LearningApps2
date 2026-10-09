@@ -68,8 +68,12 @@ kein objektives Maß künstlerischer Bedeutung.
 Der Vorspann wählt fünf abwechslungsreiche Werke und zuletzt ein Werk aus
 dieser festen Hundert-Auswahl. Die ersten fünf Kapitel dauern je sieben
 Sekunden. Im elfsekündigen Finale bleibt das Bild vollständig und unverzerrt
-sichtbar (`object-fit: contain`), zunächst ohne Haupttitel. Danach erscheinen
-„1000 Kunstwerke“ und „Quiz Edition“ in lokal eingebundener Schreibschrift.
+sichtbar (`object-fit: contain`), zunächst ohne Haupttitel. Ab Sekunde 2 des
+Finales erscheint „1000 Kunstwerke“. Erst ab Sekunde 6,5 blendet darunter
+„Quiz Edition“ in Dancing Script mit verbundenen Buchstaben ein. Die Schrift
+liegt im gemeinsamen lokalen Schriftverzeichnis des LearningApps-Repositories
+und wird vorab geladen; es gibt keine Verbindung zu einem Schriftanbieter.
+Bei reduzierter Bewegung bleiben die Zeitabstände erhalten, ohne Einblendeffekt.
 Die Musik blendet über das Finale aus. Ein erneuter Vorspann vermeidet die
 unmittelbar vorher gezeigten Werke, insbesondere das vorige Schlussbild.
 
