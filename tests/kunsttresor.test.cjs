@@ -269,7 +269,7 @@ test('three entrance artworks vary between visits, with distinct artists and sty
 test('one explicit start click unlocks music before fullscreen, then opens the film above it', async () => {
   const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
   const html=fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
-  const launch=js.slice(js.indexOf('async function launchGallery()'),js.indexOf('function finishIntro('));
+  const launch=js.slice(js.indexOf('async function launchGallery('),js.indexOf('function finishIntro('));
   const events=[],context={
     imagesAllowed:false,state:null,pool:[],introSoundEnabled:false,introAudio:{},keys:{images:'images'},
     close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
@@ -288,6 +288,32 @@ test('one explicit start click unlocks music before fullscreen, then opens the f
   assert.ok(html.includes('id="launch-privacy" hidden'));
   assert.ok(js.includes("imagesAllowed ? 'Vollbild & Musik starten →' : 'Kunstbilder erlauben & starten →'"));
   assert.ok(js.includes('prepareLaunch();'));
+});
+test('the smaller launch button skips the film and music, enters fullscreen and preserves the current round', async () => {
+  const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  const html=fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
+  const css=fs.readFileSync(path.join(__dirname,'../styles/kunsttresor.css'),'utf8');
+  const launch=js.slice(js.indexOf('async function launchGallery('),js.indexOf('function finishIntro('));
+  for(const consent of [false,true])for(const existing of [false,true]){
+    const events=[],saved=existing?{escaped:3,attempts:1,choices:{retained:true}}:null;
+    const context={imagesAllowed:consent,state:saved,pool:[],introAudio:{},keys:{images:'images'},
+      close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
+      core:{newState:()=>{events.push('new');return {escaped:0};}},save:()=>events.push('save'),render:()=>events.push('render'),
+      $:()=>({focus:()=>events.push('focus')}),finishIntro:()=>events.push('stop-film-and-music'),
+      enterFullscreen:async()=>events.push('fullscreen'),toGame:()=>events.push('game'),
+      startIntroAudio:()=>events.push('music'),showIntro:()=>events.push('film')};
+    const vm=require('node:vm');vm.createContext(context);vm.runInContext(launch,context);
+    await context.launchGallery(false);
+    assert.ok(events.includes('stop-film-and-music'));assert.ok(events.includes('fullscreen'));assert.ok(events.includes('game'));
+    assert.ok(events.indexOf('fullscreen')<events.indexOf('game'));
+    assert.ok(!events.includes('music'));assert.ok(!events.includes('film'));
+    assert.equal(events.includes('consent'),!consent);assert.equal(events.includes('new'),!existing);
+    if(existing){assert.equal(context.state,saved);assert.equal(saved.escaped,3);assert.equal(saved.attempts,1);}
+  }
+  assert.ok(html.includes('class="launch-skip" id="launch-skip"'));
+  assert.ok(js.includes("$('launch-skip').onclick = () => launchGallery(false)"));
+  assert.ok(js.includes("'Kunstbilder erlauben · direkt spielen →'"));
+  assert.match(css,/\.launch-dialog \.launch-skip\{[^}]*min-height:44px[^}]*font-size:13px/);
 });
 test('unsupported fullscreen has a reversible browser-filling fallback', async () => {
   const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');

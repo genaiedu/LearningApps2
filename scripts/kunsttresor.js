@@ -64,16 +64,23 @@
   function prepareLaunch() {
     $('launch-privacy').hidden = imagesAllowed;
     $('launch-start').textContent = imagesAllowed ? 'Vollbild & Musik starten →' : 'Kunstbilder erlauben & starten →';
+    $('launch-skip').textContent = imagesAllowed ? 'Ohne Vorspann direkt spielen →' : 'Kunstbilder erlauben · direkt spielen →';
     open('launch-dialog');
   }
-  async function launchGallery() {
+  async function launchGallery(withIntro = true) {
     close('launch-dialog');
     if (!imagesAllowed) { imagesAllowed = true; store.set(keys.images,'yes'); heroImages(); }
-    introSoundEnabled = true;
     if (!state) { state = core.newState(pool); save(); }
     render();
     // Keep the focus inside the fullscreen target when the film dialog closes later.
     $('fullscreen').focus({preventScroll:true});
+    if (withIntro === false) {
+      finishIntro();
+      await enterFullscreen();
+      toGame();
+      return;
+    }
+    introSoundEnabled = true;
     introAudio.volume=.65; introAudio.currentTime=0;
     // Unlock audio and request fullscreen before the first await loses transient activation.
     startIntroAudio();
@@ -450,6 +457,7 @@
   };
   $('image-settings').onclick = () => askForImages(false);
   $('launch-start').onclick = launchGallery;
+  $('launch-skip').onclick = () => launchGallery(false);
   $('launch-read').onclick = () => close('launch-dialog');
   $('intro-replay').onclick = () => { if (!imagesAllowed) { pendingIntro=true; askForImages(false); } else void launchGallery(); };
   $('intro-skip').onclick = () => finishIntro({enterGame:true});

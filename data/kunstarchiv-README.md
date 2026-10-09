@@ -78,6 +78,9 @@ Dieser startet den Vorspann mit eingeschalteter Musik und fordert zugleich
 Browser-Vollbild an; ohne Nutzeraktion werden diese Funktionen von Browsern
 oft blockiert. Ohne bisherige Bildfreigabe benennt derselbe Startknopf diese
 Zustimmung ausdrücklich und erklärt die externe Verbindung davor.
+Ein kleinerer zweiter Startknopf überspringt Film und Musik von Anfang an,
+öffnet direkt das aktuelle Spiel im Vollbild und erhält eine laufende Runde.
+Auch dieser Knopf benennt eine noch fehlende Freigabe externer Kunstbilder.
 Nach Vorspann oder Überspringen öffnet sich direkt der aktuelle Spielraum,
 weiterhin im Vollbild. Ist natives Vollbild nicht verfügbar (etwa in manchen
 iPad-Browsern), bleibt die bisherige browserfüllende Ersatzansicht nutzbar.
