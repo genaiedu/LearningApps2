@@ -1,0 +1,25 @@
+% Typografie-Atelier · DIN A4 · Eingaben sind Text, keine TeX-Befehle.
+% Engine: LuaLaTeX
+\documentclass[11pt,a4paper,ngerman]{scrartcl}
+\usepackage{fontspec}
+% Falls TeX Gyre nicht installiert ist, bleiben die Standardschriften aktiv.
+\IfFontExistsTF{TeX Gyre Pagella}{\setmainfont{TeX Gyre Pagella}}{}
+\IfFontExistsTF{TeX Gyre Heros}{\setsansfont{TeX Gyre Heros}}{}
+\usepackage[ngerman]{babel}
+\usepackage{microtype}
+\setkomafont{disposition}{\normalfont\bfseries}
+\setkomafont{section}{\normalsize\bfseries}
+\setkomafont{title}{\normalfont\LARGE}
+\setkomafont{author}{\normalfont\normalsize}
+\setkomafont{date}{\normalfont\normalsize}
+\usepackage[left=28mm,right=28mm,top=25mm,bottom=30mm]{geometry}
+\title{Ein Raum für Gedanken}
+\author{Beispielname}
+\date{9. Oktober 2026}
+\begin{document}
+\maketitle
+\section*{Darstellung}
+Ein guter Text lädt zum Weiterdenken ein.
+
+Der Satz beginnt mit einer klaren Struktur.
+\end{document}

@@ -1,0 +1,3 @@
+/* Configure the same locally hosted MathJax/New Computer Modern installation
+ * used in our science apps. No CDN font or extension path is used. */
+window.MathJax={loader:{paths:{'mathjax-newcm':new URL('../../LearningApps/fonts/mathjax-newcm',document.currentScript.src).href}},tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']],processEscapes:true},chtml:{fontURL:new URL('../../LearningApps/fonts/mathjax-newcm/chtml/woff2',document.currentScript.src).href,dynamicPrefix:new URL('../../LearningApps/fonts/mathjax-newcm/chtml/dynamic',document.currentScript.src).href},options:{enableEnrichment:false,enableSpeech:false,enableBraille:false,enableExplorer:false,menuOptions:{settings:{enrich:false,speech:false,braille:false,assistiveMml:true}}}};

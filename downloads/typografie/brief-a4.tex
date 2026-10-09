@@ -1,0 +1,24 @@
+% Typografie-Atelier · DIN A4 · Eingaben sind Text, keine TeX-Befehle.
+% Engine: pdfLaTeX
+\documentclass[11pt,a4paper,ngerman]{scrlttr2}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tgpagella}
+\usepackage{tgheros}
+\usepackage[ngerman]{babel}
+\usepackage{microtype}
+\setkomafont{subject}{\normalfont\bfseries}
+\setkomavar{fromname}{Beispielname}
+\setkomavar{date}{9. Oktober 2026}
+\setkomavar{subject}{Ein Raum für Gedanken}
+\begin{document}
+\begin{letter}{Beispielschule\\
+Musterstraße 1\\
+12345 Musterstadt}
+\opening{Sehr geehrte Damen und Herren,}
+Ein guter Text lädt zum Weiterdenken ein. Die Gestaltung ordnet Gedanken, ohne sie zu überlagern.
+
+Schriftwahl, Zeilenlänge und Durchschuss bilden ein System. Ein Preis von 10 € oder 50 \% wird hier als normaler Text behandelt.
+\closing{Mit freundlichen Grüßen}
+\end{letter}
+\end{document}
