@@ -7,6 +7,8 @@ import { createHash } from 'node:crypto';
 const cache = resolve(process.argv[2] || '/private/tmp/kunst-1000-cache');
 mkdirSync(cache, { recursive: true });
 const root = new URL('../', import.meta.url).pathname;
+const archive=JSON.parse(readFileSync(root+'data/kunstarchiv.json','utf8'));
+if(archive.works.length>1000)throw Error('This legacy builder caps the pool at 1000. Use balance-kunstarchiv.mjs to preserve the expanded archive.');
 const checked = '2026-10-09';
 const headers = { 'User-Agent': 'LearningApps-Kunsttresor/2.0 (educational; metadata only)', Accept: 'application/json' };
 const pause = ms => new Promise(done => setTimeout(done, ms));
@@ -124,7 +126,6 @@ function dating(e) {
   const approximate=(e.claims.P571||[]).some(s=>s.qualifiers?.P1480?.length);
   return (approximate?'um ':'') + (years.length===1?years[0]:years[0]+'–'+years.at(-1));
 }
-const archive=JSON.parse(readFileSync(root+'data/kunstarchiv.json','utf8'));
 const media=JSON.parse(readFileSync(root+'data/kunstbilder.json','utf8'));
 const wikipedia=JSON.parse(readFileSync(root+'data/kunst-wikipedia.json','utf8'));
 delete wikipedia.artists[''];

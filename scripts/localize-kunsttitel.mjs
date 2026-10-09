@@ -33,7 +33,7 @@ for (const work of archive.works) {
     else retainedTitles.push(work.id);
   }
 }
-if (Object.keys(titles).length!==1000) throw Error('Expected 1000 titles');
+if (Object.keys(titles).length!==archive.works.length) throw Error('Title count differs from archive size');
 const data={version:1,language:'de',checked:'2026-10-09',
   note:'German Wikipedia/Wikidata titles where available; otherwise individually edited German display translations. Proper names and established non-English titles may remain unchanged. Source titles remain in kunstarchiv.json. Own translations are labelled in the solution, not presented as official museum titles.',
   titleNotes:{'wd-Q19162715':{title:'Mestiza',source:'https://artsandculture.google.com/asset/mestiza-juan-luna-novicio/2gGB0jK-kSj_JA'},'wd-Q18947711':{source:'https://www.museunacional.cat/sites/default/files/inventari_ainaud_1.pdf'}},

@@ -368,7 +368,7 @@
     Tempera:'Temperamalerei', Pastell:'Pastellmalerei', Aquarell:'Aquarell', Radierung:'Radierung',
     'Radierung mit Aquatinta':'Aquatinta', 'Kaltnadelradierung':'Kaltnadelradierung', Lithografie:'Lithografie',
     Holzschnitt:'Holzschnitt', Kupferstich:'Kupferstich', Kreidezeichnung:'Zeichnung (Kunst)',
-    Tuschezeichnung:'Tuschezeichnung', Graphitzeichnung:'Zeichnung (Kunst)',
+    Tuschezeichnung:'Tuschezeichnung', Graphitzeichnung:'Zeichnung (Kunst)', Kohlezeichnung:'Zeichenkohle', Gouache:'Gouache',
     'Fotogravüre':'Heliogravüre', 'Platindruck':'Platindruck', 'Gummidruck':'Gummidruck', 'Silbergelatineabzug':'Gelatineverfahren'
   };
   const styleArticle = {Realismus:'Realismus (Kunst)',Symbolismus:'Symbolismus (Bildende Kunst)'};
@@ -432,7 +432,8 @@
       const links = node('div','wiki-links'); links.append(node('p',null,'Weiterlesen in Wikipedia · Artikel im Fenster'));
       const artistArticle = wikiCatalogue.artists[work.artist];
       if (artistArticle) links.append(wikiButton('Künstler: ' + work.artist,artistArticle.title,artistArticle.language));
-      links.append(wikiButton(work.style,styleArticle[work.style] || work.style),wikiButton(work.technique,techniqueArticle[work.technique] || work.technique));
+      const movementArticle = wikiCatalogue.styles?.[work.style];
+      links.append(wikiButton(work.style,movementArticle?.title || styleArticle[work.style] || work.style,movementArticle?.language || 'de'),wikiButton(work.technique,techniqueArticle[work.technique] || work.technique));
       const workArticle = wikiCatalogue.works[work.id];
       if (workArticle) links.append(wikiButton('Wikipedia zum Werk: ' + core.galleryTitle(work),workArticle.title,workArticle.language));
       const year = work.date.match(/\b(1[3-9]\d{2})\b/)?.[1];
@@ -506,14 +507,14 @@
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
-  Promise.all(['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261009-daubigny-farbe',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })))
+  Promise.all(['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261009-vielfalt',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })))
     .then(([data,media,wiki,landmarks,titles]) => {
       wikiCatalogue = wiki;
       const images = new Map(media.images.map(image => [image.id,image]));
       const translated=new Set(titles.ownTranslations);
       pool = data.works.filter(work => images.has(work.id) && wiki.artists[work.artist] && core.validWork(work)).map(work => ({...work,...images.get(work.id),titleDe:titles.titles[work.id],titleDeTranslated:translated.has(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
       landmarkIds = landmarks.works.map(work=>work.id).filter(id=>pool.some(work=>work.id===id));
-      if(pool.length!==1000 || landmarkIds.length!==100 || pool.some(work=>!work.titleDe)) throw Error('Archiv unvollständig');
+      if(pool.length<1000 || pool.length!==data.works.length || images.size!==pool.length || landmarkIds.length!==100 || pool.some(work=>!work.titleDe)) throw Error('Archiv unvollständig');
       core.room(pool); // Verify that a complete, unique room can actually be generated.
       try {
         const restored = core.restoreUpdated(JSON.parse(store.get(keys.game)),pool,data.replacements);
@@ -528,6 +529,7 @@
       if (!state) store.remove(keys.game);
       $('pool-count').textContent = pool.length;
       $('intro-count').textContent = pool.length;
+      $('archive-count').textContent = pool.length.toLocaleString('de-DE');
       $('intro-replay').disabled=false;
       $('start-game').disabled = $('start-here').disabled = false;
       $('start-game').textContent = state ? 'Spiel fortsetzen →' : 'Galerie betreten →';

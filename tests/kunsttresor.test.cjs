@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const {createHash} = require('node:crypto');
 const core = require('../scripts/kunsttresor-core.js');
 const archive = require('../data/kunstarchiv.json');
 const media = require('../data/kunstbilder.json');
@@ -19,9 +20,44 @@ function answer(state,correct = true) {
   }
   return state;
 }
+test('the expansion preserves the original 1000 records and old saved rounds', () => {
+  const added=new Set(archive.expansion.addedIds), original=archive.works.filter(work=>!added.has(work.id));
+  assert.equal(added.size,archive.expansion.added);
+  assert.equal(original.length,1000);
+  assert.equal(pool.length,1000+added.size);
+  assert.ok(added.size>=400);
+  assert.equal(createHash('sha256').update(JSON.stringify(original)).digest('hex'),archive.expansion.legacyWorksSHA256);
+  const legacyPool=pool.filter(work=>!added.has(work.id));
+  let saved=answer(core.newState(legacyPool,null,seeded(77)),true);
+  saved=core.inspect(saved,legacyPool).state;
+  assert.equal(core.restore(saved,pool).phase,'unlocked');
+  assert.equal(core.restore(saved,pool).escaped,1);
+});
+test('a seeded 10000-room comparison reduces the frequently repeated tempera work', () => {
+  const added=new Set(archive.expansion.addedIds),legacy=pool.filter(work=>!added.has(work.id));
+  function occurrences(works){
+    const random=seeded(61274),seen=new Set();let state=null,count=0;
+    for(let i=0;i<10000;i++){state=core.newState(works,state,random);state.ids.forEach(id=>seen.add(id));if(state.ids.includes('aic-16169'))count++;}
+    return {count,seen:seen.size};
+  }
+  const before=occurrences(legacy),after=occurrences(pool);
+  assert.ok(before.count>200);
+  assert.ok(after.count<before.count/3,JSON.stringify({before,after}));
+  assert.ok(after.count<70,'under 0.7% of rooms, not the previous 3.1%');
+  assert.equal(after.seen,pool.length);
+});
+test('the edition keeps its 1000 title but shows the true expanded archive size', () => {
+  const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  const html=fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
+  assert.ok(js.includes("title:'1000 Kunstwerke',text:'Quiz Edition'"));
+  assert.ok(js.includes("$('archive-count').textContent = pool.length.toLocaleString('de-DE')"));
+  assert.ok(!html.includes('enthält genau 1.000'));
+  assert.ok(!js.includes('pool.length!==1000'));
+  assert.equal(titles.titles['wd-Q18339689'],'Ein Künstlerwappen');
+});
 test('large documented metadata-only archive, public domain images and named artists', () => {
-  assert.equal(pool.length,1000);
-  assert.equal(archive.works.length,1000);
+  assert.ok(pool.length>1000);
+  assert.equal(pool.length,archive.works.length);
   assert.equal(new Set(pool.map(work => work.id)).size,pool.length);
   for (const work of pool) {
     assert.ok(core.validWork(work),work.id);
@@ -55,7 +91,7 @@ test('Daubigny replacement has its own identity, colour image, exact answers and
   assert.equal(work.imageBytes,200868); assert.equal(work.imageMime,'image/jpeg');
   assert.ok(core.canDownload(work));
   assert.ok(!pool.some(work=>work.imageURL.includes('On_the_Bank_of_the_Seine_at_Portejoie')));
-  assert.equal(new Set(pool.map(work=>work.imageOriginalURL)).size,1000);
+  assert.equal(new Set(pool.map(work=>work.imageOriginalURL)).size,pool.length);
 });
 test('replacing a work preserves saved answers, review, attempts and won/lost rounds', () => {
   const previous=archive.replacements[0].previous, chosen=[previous];
@@ -100,7 +136,7 @@ test('replacement date collision creates a unique fair room without erasing prog
   assert.ok(core.restore(terminal,pool));
 });
 test('image download is offered only for individually verified Public Domain / CC0 originals', () => {
-  assert.equal(pool.filter(core.canDownload).length,1000);
+  assert.equal(pool.filter(core.canDownload).length,pool.length);
   for (const work of pool.filter(core.canDownload)) {
     assert.equal(new URL(work.imageOriginalURL).hostname,'upload.wikimedia.org');
     assert.match(work.downloadRightsChecked,/^2026-10-09$/);
@@ -185,8 +221,8 @@ test('gallery headings display the documented title, without appending artist cr
   assert.doesNotMatch(render,/heading\.append\([^\n]*work\.artist/);
   assert.doesNotMatch(render,/Original · Museum/);
 });
-test('all 1000 works have localized display titles, while source titles and saved answers stay intact', () => {
-  assert.equal(Object.keys(titles.titles).length,1000);
+test('every work has a localized display title, while source titles and saved answers stay intact', () => {
+  assert.equal(Object.keys(titles.titles).length,pool.length);
   assert.equal(new Set(titles.ownTranslations).size,titles.ownTranslations.length);
   assert.ok(titles.ownTranslations.length>500);
   for (const work of pool) {
@@ -400,9 +436,11 @@ test('Wikipedia is offered only after a room ends and uses the established full-
   const js = fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
   const html = fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
   assert.ok(js.includes("if (!state || state.phase === 'playing') return;"));
-  assert.ok(js.includes("wikiButton(work.style,styleArticle[work.style] || work.style)"));
+  assert.ok(js.includes('const movementArticle = wikiCatalogue.styles?.[work.style]'));
+  assert.ok(js.includes("movementArticle?.language || 'de'"));
   assert.ok(js.includes("if (workArticle) links.append(wikiButton('Wikipedia zum Werk: ' + core.galleryTitle(work),workArticle.title,workArticle.language))"));
-  assert.equal(Object.keys(wiki.works).length,482);
+  assert.ok(Object.keys(wiki.works).length>482);
+  assert.ok(Object.values(wiki.styles).every(article=>article.title && ['de','en'].includes(article.language)));
   assert.ok(Object.values(wiki.works).every(article=>article.title && ['de','en'].includes(article.language)));
   assert.ok(html.includes('scripts/schroedinger-wikipedia.js'));
   assert.ok(html.includes('id="consent" data-defer-initial'));

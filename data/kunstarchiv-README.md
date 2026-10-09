@@ -1,13 +1,15 @@
 # Kunsttresor: Werkpool und Vorspann
 
-Die App verwendet genau 1000 spielbare Datensätze. Die Bilder werden nicht
+Die Edition heißt weiterhin „1000 Kunstwerke · Quiz Edition“. Ihr gezielt
+erweitertes Archiv verwendet tatsächlich 1438 spielbare Datensätze; die
+Oberfläche zeigt die tatsächliche Größe an. Die Bilder werden nicht
 im Repository gespeichert; der Browser lädt sie nach Zustimmung direkt von
 Wikimedia Commons. Die vier Antwortfelder sind Künstler, Datierung,
 Stilrichtung und Technik. Zu jedem Werk bleibt die Einzelquelle erhalten.
 
 ## Herkunft
 
-- 303 Werke stammen aus den CC0-Metadaten des Art Institute of Chicago.
+- 304 Werke stammen aus den CC0-Metadaten des Art Institute of Chicago.
   Ihre IDs und Antwortfelder bleiben unverändert.
 - Daubignys „On the Bank of the Seine at Portejoie“ (`aic-59004`) wurde
   durch „Sunset on the River Oise“ (`cma-1964.289`, 1866) ersetzt: Die
@@ -50,7 +52,7 @@ umzubenennen.
 `kunstarchiv.json` enthält Werkdaten, `kunstbilder.json` die geprüften
 Bild-URLs und Rechte, `kunst-wikipedia.json` die zugeordneten Artikel.
 `kunst-hauptwerke.json` enthält die vorab ausgewählten 100 Schlussbilder.
-`kunst-titel-de.json` ergänzt die deutschen Anzeigetitel für alle 1000 Werke.
+`kunst-titel-de.json` ergänzt die deutschen Anzeigetitel für alle Werke.
 Zunächst werden vorhandene deutsche Wikipedia-/Wikidata-Titel berücksichtigt;
 fehlende beschreibende Titel wurden einzeln ins Deutsche übertragen. Eigennamen
 und etablierte fremdsprachige Titel bleiben gegebenenfalls erhalten. Eigene
@@ -92,8 +94,47 @@ während die größere Fassung nachlädt. Das Original bleibt für Downloads erh
 
 ## Wartung
 
-`node scripts/expand-kunstarchiv.mjs /private/tmp/kunst-1000-cache` sammelt nur
-JSON-Metadaten. Es respektiert Wartezeiten und zwischengespeicherte Antworten
+Die ursprünglichen 1000 Werkdatensätze bleiben vollständig und unverändert
+erhalten. `expansion` dokumentiert die 438 zusätzlichen IDs und den SHA-256
+der ursprünglichen Werkdaten. Die feste Auswahl der 100 Schlussbilder bleibt
+ebenfalls unverändert. Neue Räume können alle 1438 Werke verwenden.
+
+Die Ergänzungen stammen aus ausdrücklich dokumentierten Werkmaterialien und
+Stilzuordnungen: 222 weitere Temperabilder, 99 Holzschnitte, 46 Aquarelle,
+25 Tuschezeichnungen, 18 Kupferstiche, 9 Pastelle, 7 Graphitzeichnungen,
+6 Gouachen sowie jeweils 2 Kohlezeichnungen, Lithografien und Radierungen.
+Die vollständigen Materialangaben bleiben neben den vereinfachten
+Quizbegriffen sichtbar. Bei Druckgrafiken wird ein dokumentiertes Verfahren
+verwendet, statt die Druckfarbe als Zeichenmedium zu interpretieren.
+Blake-Drucke ohne eindeutige Verfahrensangabe, Klimts Wandmalerei mit
+Kreidegrund sowie ganze Bücher und Portfolios werden nicht als entsprechende
+einzelne Zeichnungen aufgenommen. Monochrome Druckgrafik ist absichtlich
+schwarzweiß und keine entsättigte Fotografie eines farbigen Gemäldes.
+
+Eine reproduzierbare Simulation vergleicht jeweils 10.000 aufeinanderfolgende
+Räume. Sie prüft, dass Giovanni di Paolos Temperabild „Die Enthauptung Johannes
+des Täufers“ deutlich seltener gezogen wird als im alten Pool. Alle neuen
+Werke müssen zudem vollständige Quizangaben, einen Künstlerartikel und eine
+individuell geprüfte Public-Domain-/CC0-Bilddatei besitzen. Zufall bedeutet
+weiterhin nicht, dass alle Werke garantiert erscheinen, bevor eines wiederholt
+wird; die vier unterschiedlichen Antwortwerte begrenzen zulässige Räume.
+
+`node scripts/balance-kunstarchiv.mjs /private/tmp/kunst-balance-cache` sammelt
+nur öffentliche JSON-Metadaten, berücksichtigt Wartezeiten und API-
+Zwischenspeicher und erzeugt einen Prüfbericht und kleine Patchdateien.
+Die Quellen und deutschen Titel müssen vor Einspielen redaktionell geprüft
+werden. Eigene deutsche Übersetzungen stehen zur Wartung zusätzlich in
+`kunst-titel-balance-uebersetzungen.tsv`; sie werden nicht als offizielle
+Museumstitel ausgegeben. Neue Stil-Untergruppen haben nach Möglichkeit
+einen eigenen, auf Deutsch oder Englisch hinterlegten Wikipediaartikel.
+Große Originaldateien über 8 MiB werden nicht automatisch beim Vergrößern
+geladen; ihre geprüfte Vorschau bleibt sichtbar. Der ausdrücklich angeforderte
+Originaldownload ist weiterhin möglich.
+
+Der ältere Builder `expand-kunstarchiv.mjs` ist gegen ein versehentliches
+Zurückschneiden eines bereits erweiterten Archivs auf 1000 Werke gesperrt.
+Er sammelt nur
+JSON-Metadaten. Er respektiert Wartezeiten und zwischengespeicherte Antworten
 und erzeugt einen Prüfbericht sowie vier Patchdateien außerhalb des
 Repositories. Es verändert die Anwendungsdaten nicht automatisch.
 Nach Prüfung werden die Patches eingespielt und
