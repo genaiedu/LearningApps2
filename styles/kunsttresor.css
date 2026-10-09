@@ -33,6 +33,7 @@ dialog{color-scheme:dark;color:var(--paper);background:var(--panel);border:1px s
 .work-heading{display:flex;align-items:flex-start;gap:11px;min-height:78px;padding-bottom:17px}
 .work-heading .work-title{font:400 18px/1.4 var(--serif);color:var(--paper);margin:0;overflow-wrap:anywhere}
 .work-marker{flex:0 0 22px;display:grid;place-items:center;width:22px;height:22px;margin-top:3px;border:1px solid #bca16a77;border-radius:50%;font:10px var(--mono);color:var(--gold)}
+@supports(grid-template-rows:subgrid){.art-card{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0}.work-heading,.artwork-button,.assignments{align-self:start}}
 @media(max-width:700px){.work-heading{min-height:0;padding-bottom:15px}.work-heading .work-title{font-size:20px}}
 .intro-slide--full img{object-fit:contain;transform:none!important;animation:none!important;filter:none}
 .intro-dialog.is-finale .intro-vignette{background:linear-gradient(0deg,#000a 0%,transparent 23%,transparent 77%,#0008 100%)}
