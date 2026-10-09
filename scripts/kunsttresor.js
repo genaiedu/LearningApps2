@@ -193,7 +193,13 @@
     close('result-dialog'); $('solutions').replaceChildren();
     state.ids.forEach((id,index) => {
       const work = workById(id), card = node('article','solution-card');
-      if (imagesAllowed) { const img = node('img'); img.alt = work.title; img.referrerPolicy = 'no-referrer'; img.src = imageURL(work); card.append(img); }
+      if (imagesAllowed) {
+        const imageButton = node('button','solution-image'); imageButton.type = 'button';
+        imageButton.setAttribute('aria-label','Werk ' + 'ABCD'[index] + ' in der Lösung vergrößern');
+        const img = node('img'); img.alt = work.title; img.referrerPolicy = 'no-referrer'; img.src = imageURL(work);
+        imageButton.append(img,node('span',null,'⤢ Bild vergrößern'));
+        imageButton.onclick = () => showImage(work,'ABCD'[index]); card.append(imageButton);
+      }
       card.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,work.title));
       const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); card.append(list);
       card.append(node('p','small','Museumsangabe zur Technik: ' + work.medium + '. Dokumentierter Stil: ' + work.styleOriginal + '.'));
