@@ -8,7 +8,7 @@ const media = require('../data/kunstbilder.json');
 const wiki = require('../data/kunst-wikipedia.json');
 const landmarks = require('../data/kunst-hauptwerke.json');
 const byId = new Map(media.images.map(image => [image.id,image]));
-const pool = archive.works.filter(work => byId.has(work.id) && wiki.artists[work.artist]).map(work=>({...work,...byId.get(work.id)}));
+const pool = archive.works.filter(work => byId.has(work.id) && wiki.artists[work.artist]).map(work=>({...work,...byId.get(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
 function seeded(seed) { return () => { seed = (Math.imul(1664525,seed) + 1013904223) >>> 0; return seed / 4294967296; }; }
 function answer(state,correct = true) {
   for (const field of core.fields) for (const id of state.ids) state = core.choose(state,id,field,'');
@@ -54,6 +54,7 @@ test('1000 random rooms: four unique answers in all four categories', () => {
   for (let i = 0; i < 1000; i++) {
     const room = core.room(pool,[],random);
     assert.equal(room.works.length,4);
+    assert.equal(new Set(room.works.map(w=>w.artistIdentity)).size,4);
     combinations.add(room.works.map(w => w.id).sort().join(','));
     for (const field of core.fields) {
       assert.equal(new Set(room.works.map(work => work[field])).size,4);
@@ -61,6 +62,13 @@ test('1000 random rooms: four unique answers in all four categories', () => {
     }
   }
   assert.ok(combinations.size > 900);
+});
+test('different name forms of the same artist cannot masquerade as two room answers', () => {
+  const legacy=pool.find(w=>w.artist==='Paul Cezanne');
+  const alternative=pool.find(w=>w.artist==='Paul Cézanne');
+  assert.ok(legacy && alternative);
+  assert.equal(legacy.artistIdentity,alternative.artistIdentity);
+  assert.equal(core.compatible([legacy],{...alternative,date:'another date',style:'another style',technique:'another technique'}),false);
 });
 test('100 documented closing masterpieces are playable works with their own Wikipedia article', () => {
   assert.equal(landmarks.works.length,100);

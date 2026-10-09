@@ -26,6 +26,9 @@ Stilrichtung und Technik. Zu jedem Werk bleibt die Einzelquelle erhalten.
 Über den Galerie-Bildern stehen die Werktitel ohne Künstlercredit. Bei
 Titeln, die den Künstler bereits nennen, dokumentiert `galleryTitle` eine
 gekürzte Quizfassung; `title` bewahrt immer die vollständige Quellenfassung.
+Verschiedene Namensformen mit derselben persönlichen Wikipediazuordnung
+gelten bei der Raumwahl als ein Künstler, ohne gespeicherte Antwortwerte
+umzubenennen.
 
 ## Vier Dateien
 

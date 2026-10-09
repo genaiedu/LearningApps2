@@ -456,7 +456,7 @@
     .then(([data,media,wiki,landmarks]) => {
       wikiCatalogue = wiki;
       const images = new Map(media.images.map(image => [image.id,image]));
-      pool = data.works.filter(work => images.has(work.id) && wiki.artists[work.artist] && core.validWork(work)).map(work => ({...work,...images.get(work.id)}));
+      pool = data.works.filter(work => images.has(work.id) && wiki.artists[work.artist] && core.validWork(work)).map(work => ({...work,...images.get(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
       landmarkIds = landmarks.works.map(work=>work.id).filter(id=>pool.some(work=>work.id===id));
       if(pool.length!==1000 || landmarkIds.length!==100) throw Error('Archiv unvollständig');
       core.room(pool); // Verify that a complete, unique room can actually be generated.

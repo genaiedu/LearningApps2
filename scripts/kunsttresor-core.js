@@ -10,7 +10,7 @@
     return result;
   }
   function compatible(works, candidate) {
-    return !works.some(work => work.id === candidate.id || fields.some(field => work[field] === candidate[field]));
+    return !works.some(work => work.id === candidate.id || fields.some(field => work[field] === candidate[field]) || (work.artistIdentity && work.artistIdentity === candidate.artistIdentity));
   }
   function introSelection(pool, landmarkIds, recent = [], random = Math.random) {
     const landmarks = pool.filter(work => landmarkIds.includes(work.id) && !recent.includes(work.id));
