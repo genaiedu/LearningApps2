@@ -6,6 +6,7 @@ const core = require('../scripts/kunsttresor-core.js');
 const archive = require('../data/kunstarchiv.json');
 const media = require('../data/kunstbilder.json');
 const wiki = require('../data/kunst-wikipedia.json');
+const landmarks = require('../data/kunst-hauptwerke.json');
 const byId = new Map(media.images.map(image => [image.id,image]));
 const pool = archive.works.filter(work => byId.has(work.id) && wiki.artists[work.artist]).map(work=>({...work,...byId.get(work.id)}));
 function seeded(seed) { return () => { seed = (Math.imul(1664525,seed) + 1013904223) >>> 0; return seed / 4294967296; }; }
@@ -18,13 +19,19 @@ function answer(state,correct = true) {
   return state;
 }
 test('large documented metadata-only archive, public domain images and named artists', () => {
-  assert.ok(pool.length >= 300);
+  assert.equal(pool.length,1000);
+  assert.equal(archive.works.length,1000);
   assert.equal(new Set(pool.map(work => work.id)).size,pool.length);
   for (const work of pool) {
     assert.ok(core.validWork(work),work.id);
     assert.ok(work.styleTerms.includes(work.styleOriginal),work.id);
     assert.ok(work.artistDeath > 1300 && work.artistDeath <= 1955);
-    assert.equal(new URL(work.source).hostname,'www.artic.edu');
+    assert.ok(['www.artic.edu','www.wikidata.org'].includes(new URL(work.source).hostname));
+    if (work.metadataProvider==='Wikidata') {
+      assert.equal(work.styleSource,'P135 am Werk, nicht vom Künstler abgeleitet');
+      assert.ok(work.materialIds.length>=1);
+      assert.match(work.wikidata,/\/Q\d+$/);
+    }
     assert.equal(work.rights,'CC0 / Public Domain');
     assert.ok(['upload.wikimedia.org','thumb.wikimedia.org'].includes(new URL(work.imageURL).hostname));
     assert.equal(new URL(work.imageSource).hostname,'commons.wikimedia.org');
@@ -33,7 +40,7 @@ test('large documented metadata-only archive, public domain images and named art
   }
 });
 test('image download is offered only for individually verified Public Domain / CC0 originals', () => {
-  assert.ok(pool.filter(core.canDownload).length >= 300);
+  assert.equal(pool.filter(core.canDownload).length,1000);
   for (const work of pool.filter(core.canDownload)) {
     assert.equal(new URL(work.imageOriginalURL).hostname,'upload.wikimedia.org');
     assert.match(work.downloadRightsChecked,/^2026-10-09$/);
@@ -54,6 +61,61 @@ test('1000 random rooms: four unique answers in all four categories', () => {
     }
   }
   assert.ok(combinations.size > 900);
+});
+test('100 documented closing masterpieces are playable works with their own Wikipedia article', () => {
+  assert.equal(landmarks.works.length,100);
+  assert.equal(new Set(landmarks.works.map(w=>w.id)).size,100);
+  for (const featured of landmarks.works) {
+    const work=pool.find(w=>w.id===featured.id);
+    assert.ok(work,featured.id);
+    assert.equal(work.title,featured.title); assert.equal(work.artist,featured.artist);
+    assert.deepEqual(wiki.works[work.id],featured.wikipedia);
+    assert.ok(featured.wikimediaSitelinks>=5);
+    assert.ok(core.canDownload(work));
+  }
+});
+test('material additions and dated ranges are preserved, not flattened into misleading exact years', () => {
+  assert.equal(pool.find(w=>w.id==='wd-Q698487').date,'1907–1908');
+  assert.equal(pool.find(w=>w.id==='wd-Q698487').technique,'Öl und Metallauflage');
+  assert.equal(pool.find(w=>w.id==='wd-Q354396').technique,'Öl und Metallauflage');
+  for (const series of ['Q637414','Q157541','Q59201','Q669994']) assert.ok(!pool.some(w=>w.id==='wd-'+series));
+});
+test('every intro ends with a selected masterpiece, with six distinct images and varied repeat finales', () => {
+  const featured=landmarks.works.map(w=>w.id), endings=new Set(), random=seeded(991);
+  let recent=[];
+  for (let i=0;i<500;i++) {
+    const intro=core.introSelection(pool,featured,recent,random);
+    assert.equal(intro.length,6);
+    assert.equal(new Set(intro.map(w=>w.id)).size,6);
+    assert.ok(featured.includes(intro.at(-1).id));
+    assert.ok(!recent.includes(intro.at(-1).id));
+    endings.add(intro.at(-1).id); recent=intro.map(w=>w.id);
+  }
+  assert.ok(endings.size>=90);
+  assert.throws(()=>core.introSelection(pool,[],[],random));
+});
+test('46-second film finishes uncropped, with a large title, local handwriting and fading soundtrack', () => {
+  const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  const css=fs.readFileSync(path.join(__dirname,'../styles/kunsttresor.css'),'utf8');
+  const html=fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
+  assert.match(js,/introSeconds=46/);
+  assert.match(js,/durations=\[7000,7000,7000,7000,7000,11000\]/);
+  assert.match(js,/title:'1000 Kunstwerke',text:'Quiz Edition'/);
+  assert.match(js,/introAudio\.volume=Math\.max\(0/);
+  assert.match(css,/\.intro-slide--full img\{object-fit:contain;transform:none!important;animation:none!important;filter:none\}/);
+  assert.match(css,/Caveat[\s\S]*caveat-v23-latin-700\.woff2/);
+  assert.ok(html.includes('id="intro-art-caption"'));
+  assert.ok(js.includes('data/kunst-hauptwerke.json'));
+});
+test('gallery headings display the documented title, without appending artist credits', () => {
+  assert.ok(pool.every(work=>typeof work.title==='string' && work.title.trim()));
+  assert.ok(pool.every(work=>!core.galleryTitle(work).toLowerCase().includes(work.artist.toLowerCase())));
+  const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  const render=js.slice(js.indexOf('function render()'),js.indexOf('function nextRoom()'));
+  assert.ok(render.includes("node('h3','work-title',core.galleryTitle(work))"));
+  assert.ok(render.includes('heading.append(marker,title)'));
+  assert.doesNotMatch(render,/heading\.append\([^\n]*work\.artist/);
+  assert.doesNotMatch(render,/Original · Museum/);
 });
 test('recent artworks are avoided when the fresh pool permits a room', () => {
   let state = core.newState(pool,null,seeded(302));

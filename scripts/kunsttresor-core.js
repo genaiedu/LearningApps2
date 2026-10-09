@@ -12,6 +12,18 @@
   function compatible(works, candidate) {
     return !works.some(work => work.id === candidate.id || fields.some(field => work[field] === candidate[field]));
   }
+  function introSelection(pool, landmarkIds, recent = [], random = Math.random) {
+    const landmarks = pool.filter(work => landmarkIds.includes(work.id) && !recent.includes(work.id));
+    const fallback = pool.filter(work => landmarkIds.includes(work.id));
+    const closing = shuffle(landmarks.length ? landmarks : fallback, random)[0];
+    if (!closing) throw new Error('Die Hauptwerk-Auswahl fehlt.');
+    const candidates = shuffle(pool.filter(work => work.id !== closing.id && !recent.includes(work.id)), random), chosen = [];
+    for (const work of candidates) if (chosen.length < 5 && !chosen.some(other => other.artist === work.artist || other.style === work.style)) chosen.push(work);
+    for (const work of candidates) if (chosen.length < 5 && !chosen.includes(work) && !chosen.some(other => other.artist === work.artist)) chosen.push(work);
+    for (const work of candidates) if (chosen.length < 5 && !chosen.includes(work)) chosen.push(work);
+    return [...chosen, closing];
+  }
+  function galleryTitle(work) { return work.galleryTitle || work.title; }
   function validWork(work) {
     return Boolean(work && work.id && work.title && work.imageId && work.source && work.medium && work.styleOriginal && work.publicDomain === true && work.artistDeath <= 1955 && fields.every(field => typeof work[field] === 'string' && work[field].trim()));
   }
@@ -104,7 +116,7 @@
     }
     return {...saved, choices: saved.choices || {}, review};
   }
-  const api = {fields, shuffle, compatible, validWork, canDownload, room, newState, choose, takenBy, review, filled, inspect, restore};
+  const api = {fields, shuffle, compatible, validWork, canDownload, galleryTitle, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

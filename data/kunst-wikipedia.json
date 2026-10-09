@@ -1,1 +1,3004 @@
-{"checked":"2026-10-09","source":"https://www.wikidata.org/","artists":{"Jacques Louis David":{"title":"Jacques-Louis David","language":"de"},"Édouard Manet":{"title":"Édouard Manet","language":"de"},"Nicolas Poussin":{"title":"Nicolas Poussin","language":"de"},"Pierre-Auguste Renoir":{"title":"Pierre-Auguste Renoir","language":"de"},"Georges Seurat":{"title":"Georges Seurat","language":"de"},"Gustave Caillebotte":{"title":"Gustave Caillebotte","language":"de"},"Berthe Morisot":{"title":"Berthe Morisot","language":"de"},"Giovanni di Paolo":{"title":"Giovanni di Paolo","language":"de"},"Claude Monet":{"title":"Claude Monet","language":"de"},"Diego Velázquez":{"title":"Diego Velázquez","language":"de"},"Domenico Theotokópoulos, called El Greco":{"title":"El Greco","language":"de"},"Rembrandt van Rijn":{"title":"Rembrandt van Rijn","language":"de"},"Paul Gauguin":{"title":"Paul Gauguin","language":"de"},"Mary Cassatt":{"title":"Mary Cassatt","language":"de"},"Alfred Sisley":{"title":"Alfred Sisley","language":"de"},"Francisco de Zurbarán":{"title":"Francisco de Zurbarán","language":"de"},"Henri de Toulouse-Lautrec":{"title":"Henri de Toulouse-Lautrec","language":"de"},"Hilaire Germain Edgar Degas":{"title":"Edgar Degas","language":"de"},"Paul Cezanne":{"title":"Paul Cézanne","language":"de"},"Gustave Courbet":{"title":"Gustave Courbet","language":"de"},"Raphaelle Peale":{"title":"Raphaelle Peale","language":"de"},"Henri Fantin-Latour":{"title":"Henri Fantin-Latour","language":"de"},"Bartolomeo Manfredi":{"title":"Bartolomeo Manfredi","language":"de"},"William Merritt Chase":{"title":"William Merritt Chase","language":"de"},"John Singer Sargent":{"title":"John Singer Sargent","language":"de"},"Thomas Eakins":{"title":"Thomas Eakins","language":"de"},"Winslow Homer":{"title":"Winslow Homer","language":"de"},"George Hitchcock":{"title":"George Hitchcock","language":"de"},"Edwaert Collier":{"title":"Evert Collier","language":"de"},"Odilon Redon":{"title":"Odilon Redon","language":"de"},"Sebastiano del Piombo":{"title":"Sebastiano del Piombo","language":"de"},"Frank Duveneck":{"title":"Frank Duveneck","language":"de"},"Akseli Gallen-Kallela":{"title":"Akseli Gallen-Kallela","language":"de"},"James McNeill Whistler":{"title":"James McNeill Whistler","language":"de"},"Vincent van Gogh":{"title":"Vincent van Gogh","language":"de"},"Robert Henri":{"title":"Robert Henri","language":"de"},"Jean Louis Forain":{"title":"Jean-Louis Forain","language":"de"},"Jean Baptiste François Désoria":{"title":"Jean-Baptiste François Desoria","language":"en"},"William Turner Dannat":{"title":"William Turner Dannat","language":"en"},"Marsden Hartley":{"title":"Marsden Hartley","language":"de"},"Fidelia Bridges":{"title":"Fidelia Bridges","language":"de"},"Jusepe de Ribera":{"title":"Jusepe de Ribera","language":"de"},"Frederick Carl Frieseke":{"title":"Frederick Carl Frieseke","language":"de"},"Giulio Cesare Procaccini":{"title":"Giulio Cesare Procaccini","language":"de"},"Camille Pissarro":{"title":"Camille Pissarro","language":"de"},"Georges Lemmen":{"title":"Georges Lemmen","language":"de"},"Jean Baptiste Joseph Wicar":{"title":"Jean-Baptiste Wicar","language":"de"},"Giovanni Battista Piazzetta":{"title":"Giovanni Battista Piazzetta","language":"de"},"Giovanni Battista Tiepolo":{"title":"Giovanni Battista Tiepolo","language":"de"},"Eastman Johnson":{"title":"Eastman Johnson","language":"de"},"Frédéric Bazille":{"title":"Frédéric Bazille","language":"de"},"Cecilia Beaux":{"title":"Cecilia Beaux","language":"de"},"Fra Bartolommeo":{"title":"Fra Bartolommeo","language":"de"},"Paul Signac":{"title":"Paul Signac","language":"de"},"Félix Edouard Vallotton":{"title":"Félix Vallotton","language":"de"},"Paulus Potter":{"title":"Paulus Potter","language":"de"},"Juan Sánchez Cotán":{"title":"Juan Sánchez Cotán","language":"de"},"Claude Lorrain":{"title":"Claude Lorrain","language":"de"},"Édouard Jean Vuillard":{"title":"Édouard Vuillard","language":"de"},"Arthur Wesley Dow":{"title":"Arthur Wesley Dow","language":"de"},"George Cope":{"title":"George Cope","language":"de"},"Henri Edmond Cross":{"title":"Henri Edmond Cross","language":"de"},"Giovanni Baglione":{"title":"Giovanni Baglione","language":"de"},"Fra Angelico":{"title":"Fra Angelico","language":"de"},"Walter Shirlaw":{"title":"Walter Shirlaw","language":"de"},"Edvard Munch":{"title":"Edvard Munch","language":"de"},"George Inness":{"title":"George Inness","language":"de"},"Henry Ossawa Tanner":{"title":"Henry Ossawa Tanner","language":"de"},"Antonio Mancini":{"title":"Antonio Mancini","language":"de"},"Girolamo da Carpi":{"title":"Girolamo da Carpi","language":"de"},"Gustave Loiseau":{"title":"Gustave Loiseau","language":"de"},"John Frederick Peto":{"title":"John Frederick Peto","language":"de"},"Thomas Hicks":{"title":"Thomas Hicks (Maler)","language":"de"},"Carducius Plantagenet Ream":{"title":"C. P. Ream","language":"en"},"Ferdinand Hodler":{"title":"Ferdinand Hodler","language":"de"},"Meindert Hobbema":{"title":"Meindert Hobbema","language":"de"},"Julius Gari Melchers":{"title":"Gari Melchers","language":"de"},"George Peter Alexander Healy":{"title":"George Peter Alexander Healy","language":"de"},"Antonio Vivarini":{"title":"Antonio Vivarini","language":"de"},"Frans Snyders":{"title":"Frans Snyders","language":"de"},"George Wesley Bellows":{"title":"George Wesley Bellows","language":"de"},"William Michael Harnett":{"title":"William Harnett","language":"de"},"Jan van Scorel":{"title":"Jan van Scorel","language":"de"},"Bartolomeo di Giovanni":{"title":"Bartolomeo di Giovanni","language":"en"},"Edward Henry Potthast":{"title":"Edward Henry Potthast","language":"de"},"Alfred Stevens":{"title":"Alfred Stevens","language":"de"},"Eugène Louis Boudin":{"title":"Eugène Boudin","language":"de"},"De Scott Evans":{"title":"De Scott Evans","language":"de"},"Charles Gifford Dyer":{"title":"Charles Gifford Dyer","language":"en"},"John Henry Twachtman":{"title":"John Henry Twachtman","language":"de"},"François Boucher":{"title":"François Boucher","language":"de"},"Hubert Robert":{"title":"Hubert Robert","language":"de"},"William James Glackens":{"title":"William Glackens","language":"de"},"Constant Troyon":{"title":"Constant Troyon","language":"de"},"Guido Reni":{"title":"Guido Reni","language":"de"},"Pontormo, (Jacopo Carrucci)":{"title":"Jacopo da Pontormo","language":"de"},"Childe Hassam":{"title":"Childe Hassam","language":"de"},"Jean-Baptiste Oudry":{"title":"Jean-Baptiste Oudry","language":"de"},"Theodore Robinson":{"title":"Theodore Robinson (Maler)","language":"de"},"Robert William Vonnoh":{"title":"Robert Vonnoh","language":"de"},"Charles Courtney Curran":{"title":"Charles Courtney Curran","language":"de"},"Master of the Morrison Triptych":{"title":"Meister des Morrison-Triptychons","language":"de"},"Johan Barthold Jongkind":{"title":"Johan Barthold Jongkind","language":"de"},"Emil Carlsen":{"title":"Emil Carlsen","language":"de"},"Henry Ward Ranger":{"title":"Henry Ward Ranger","language":"de"},"Albert Pinkham Ryder":{"title":"Albert Pinkham Ryder","language":"de"},"George Gardner Symons":{"title":"George Gardner Symons","language":"de"},"Joaquín Sorolla y Bastida":{"title":"Joaquín Sorolla","language":"de"},"Jean Baptiste Armand Guillaumin":{"title":"Armand Guillaumin","language":"de"},"Eva Gonzalès":{"title":"Eva Gonzalès","language":"de"},"Fernand Lungren":{"title":"Fernand Lungren","language":"en"},"Amedeo Modigliani":{"title":"Amedeo Modigliani","language":"de"},"Eugène Delacroix":{"title":"Eugène Delacroix","language":"de"},"Caspar David Friedrich":{"title":"Caspar David Friedrich","language":"de"},"Piet Mondrian":{"title":"Piet Mondrian","language":"de"},"Charles François Daubigny":{"title":"Charles-François Daubigny","language":"de"},"Jean François Millet":{"title":"Jean-François Millet","language":"de"},"Alberto Pasini":{"title":"Alberto Pasini","language":"en"},"Homer Dodge Martin":{"title":"Homer Dodge Martin","language":"de"},"Narcisse Virgile Diaz de la Peña":{"title":"Narcisso Virgilio Díaz de la Peña","language":"de"},"Samuel Colman":{"title":"Samuel Colman","language":"de"},"Henry Fuseli":{"title":"Johann Heinrich Füssli","language":"de"}},"works":{"aic-88632":{"title":"Portrait of Madame François Buron","language":"en"},"aic-16499":{"title":"Jesus Insulted by the Soldiers","language":"en"},"aic-5848":{"title":"Landscape with Saint John on Patmos","language":"en"},"aic-14655":{"title":"Two Sisters (On the Terrace)","language":"en"},"aic-81533":{"title":"The Races at Longchamp","language":"en"},"aic-27992":{"title":"Ein Sonntagnachmittag auf der Insel La Grande Jatte","language":"de"},"aic-20684":{"title":"Straße in Paris an einem regnerischen Tag","language":"de"},"aic-25812":{"title":"Bullfight – Death of the Bull","language":"en"},"aic-11723":{"title":"Woman at her Toilette","language":"en"},"aic-16169":{"title":"The Beheading of Saint John the Baptist (Giovanni di Paolo)","language":"en"},"aic-16554":{"title":"The Artist's House at Argenteuil","language":"en"},"aic-81539":{"title":"On the Bank of the Seine, Bennecourt","language":"en"},"aic-14591":{"title":"Woman Reading (Manet)","language":"en"},"aic-16571":{"title":"Arrival of the Normandy Train, Gare Saint-Lazare","language":"en"},"aic-14598":{"title":"The Beach at Sainte-Adresse","language":"en"},"aic-21934":{"title":"The Kitchen Maid","language":"en"},"aic-14620":{"title":"The Cliff Walk at Pourville","language":"en"},"aic-87479":{"title":"Assumption of the Virgin (El Greco)","language":"en"},"aic-95998":{"title":"Old Man with a Gold Chain","language":"en"},"aic-60812":{"title":"Merahi metua no Tehamana","language":"en"},"aic-111442":{"title":"The Child's Bath","language":"en"},"aic-16633":{"title":"The Seine at Port-Marly, Piles of Sand","language":"en"},"aic-80084":{"title":"Christ on the Cross (Zurbarán)","language":"en"},"aic-27307":{"title":"Portrait of Madame Pastoret","language":"en"},"aic-61128":{"title":"At the Moulin Rouge","language":"en"},"aic-81555":{"title":"Lunch at the Restaurant Fournaise","language":"en"},"aic-27943":{"title":"Mahana no atua","language":"en"},"aic-14572":{"title":"The Millinery Shop","language":"en"},"aic-111436":{"title":"The Basket of Apples","language":"en"},"aic-110541":{"title":"Der Kristallpalast, London","language":"de"},"aic-27987":{"title":"Jacques and Berthe Lipchitz","language":"en"}}}
+{
+  "checked": "2026-10-09",
+  "source": "https://www.wikidata.org/",
+  "artists": {
+    "Jacques Louis David": {
+      "title": "Jacques-Louis David",
+      "language": "de"
+    },
+    "Édouard Manet": {
+      "title": "Édouard Manet",
+      "language": "de"
+    },
+    "Nicolas Poussin": {
+      "title": "Nicolas Poussin",
+      "language": "de"
+    },
+    "Pierre-Auguste Renoir": {
+      "title": "Pierre-Auguste Renoir",
+      "language": "de"
+    },
+    "Georges Seurat": {
+      "title": "Georges Seurat",
+      "language": "de"
+    },
+    "Gustave Caillebotte": {
+      "title": "Gustave Caillebotte",
+      "language": "de"
+    },
+    "Berthe Morisot": {
+      "title": "Berthe Morisot",
+      "language": "de"
+    },
+    "Giovanni di Paolo": {
+      "title": "Giovanni di Paolo",
+      "language": "de"
+    },
+    "Claude Monet": {
+      "title": "Claude Monet",
+      "language": "de"
+    },
+    "Diego Velázquez": {
+      "title": "Diego Velázquez",
+      "language": "de"
+    },
+    "Domenico Theotokópoulos, called El Greco": {
+      "title": "El Greco",
+      "language": "de"
+    },
+    "Rembrandt van Rijn": {
+      "title": "Rembrandt van Rijn",
+      "language": "de"
+    },
+    "Paul Gauguin": {
+      "title": "Paul Gauguin",
+      "language": "de"
+    },
+    "Mary Cassatt": {
+      "title": "Mary Cassatt",
+      "language": "de"
+    },
+    "Alfred Sisley": {
+      "title": "Alfred Sisley",
+      "language": "de"
+    },
+    "Francisco de Zurbarán": {
+      "title": "Francisco de Zurbarán",
+      "language": "de"
+    },
+    "Henri de Toulouse-Lautrec": {
+      "title": "Henri de Toulouse-Lautrec",
+      "language": "de"
+    },
+    "Hilaire Germain Edgar Degas": {
+      "title": "Edgar Degas",
+      "language": "de"
+    },
+    "Paul Cezanne": {
+      "title": "Paul Cézanne",
+      "language": "de"
+    },
+    "Gustave Courbet": {
+      "title": "Gustave Courbet",
+      "language": "de"
+    },
+    "Raphaelle Peale": {
+      "title": "Raphaelle Peale",
+      "language": "de"
+    },
+    "Henri Fantin-Latour": {
+      "title": "Henri Fantin-Latour",
+      "language": "de"
+    },
+    "Bartolomeo Manfredi": {
+      "title": "Bartolomeo Manfredi",
+      "language": "de"
+    },
+    "William Merritt Chase": {
+      "title": "William Merritt Chase",
+      "language": "de"
+    },
+    "John Singer Sargent": {
+      "title": "John Singer Sargent",
+      "language": "de"
+    },
+    "Thomas Eakins": {
+      "title": "Thomas Eakins",
+      "language": "de"
+    },
+    "Winslow Homer": {
+      "title": "Winslow Homer",
+      "language": "de"
+    },
+    "George Hitchcock": {
+      "title": "George Hitchcock",
+      "language": "de"
+    },
+    "Edwaert Collier": {
+      "title": "Evert Collier",
+      "language": "de"
+    },
+    "Odilon Redon": {
+      "title": "Odilon Redon",
+      "language": "de"
+    },
+    "Sebastiano del Piombo": {
+      "title": "Sebastiano del Piombo",
+      "language": "de"
+    },
+    "Frank Duveneck": {
+      "title": "Frank Duveneck",
+      "language": "de"
+    },
+    "Akseli Gallen-Kallela": {
+      "title": "Akseli Gallen-Kallela",
+      "language": "de"
+    },
+    "James McNeill Whistler": {
+      "title": "James McNeill Whistler",
+      "language": "de"
+    },
+    "Vincent van Gogh": {
+      "title": "Vincent van Gogh",
+      "language": "de"
+    },
+    "Robert Henri": {
+      "title": "Robert Henri",
+      "language": "de"
+    },
+    "Jean Louis Forain": {
+      "title": "Jean-Louis Forain",
+      "language": "de"
+    },
+    "Jean Baptiste François Désoria": {
+      "title": "Jean-Baptiste François Desoria",
+      "language": "en"
+    },
+    "William Turner Dannat": {
+      "title": "William Turner Dannat",
+      "language": "en"
+    },
+    "Marsden Hartley": {
+      "title": "Marsden Hartley",
+      "language": "de"
+    },
+    "Fidelia Bridges": {
+      "title": "Fidelia Bridges",
+      "language": "de"
+    },
+    "Jusepe de Ribera": {
+      "title": "Jusepe de Ribera",
+      "language": "de"
+    },
+    "Frederick Carl Frieseke": {
+      "title": "Frederick Carl Frieseke",
+      "language": "de"
+    },
+    "Giulio Cesare Procaccini": {
+      "title": "Giulio Cesare Procaccini",
+      "language": "de"
+    },
+    "Camille Pissarro": {
+      "title": "Camille Pissarro",
+      "language": "de"
+    },
+    "Georges Lemmen": {
+      "title": "Georges Lemmen",
+      "language": "de"
+    },
+    "Jean Baptiste Joseph Wicar": {
+      "title": "Jean-Baptiste Wicar",
+      "language": "de"
+    },
+    "Giovanni Battista Piazzetta": {
+      "title": "Giovanni Battista Piazzetta",
+      "language": "de"
+    },
+    "Giovanni Battista Tiepolo": {
+      "title": "Giovanni Battista Tiepolo",
+      "language": "de"
+    },
+    "Eastman Johnson": {
+      "title": "Eastman Johnson",
+      "language": "de"
+    },
+    "Frédéric Bazille": {
+      "title": "Frédéric Bazille",
+      "language": "de"
+    },
+    "Cecilia Beaux": {
+      "title": "Cecilia Beaux",
+      "language": "de"
+    },
+    "Fra Bartolommeo": {
+      "title": "Fra Bartolommeo",
+      "language": "de"
+    },
+    "Paul Signac": {
+      "title": "Paul Signac",
+      "language": "de"
+    },
+    "Félix Edouard Vallotton": {
+      "title": "Félix Vallotton",
+      "language": "de"
+    },
+    "Paulus Potter": {
+      "title": "Paulus Potter",
+      "language": "de"
+    },
+    "Juan Sánchez Cotán": {
+      "title": "Juan Sánchez Cotán",
+      "language": "de"
+    },
+    "Claude Lorrain": {
+      "title": "Claude Lorrain",
+      "language": "de"
+    },
+    "Édouard Jean Vuillard": {
+      "title": "Édouard Vuillard",
+      "language": "de"
+    },
+    "Arthur Wesley Dow": {
+      "title": "Arthur Wesley Dow",
+      "language": "de"
+    },
+    "George Cope": {
+      "title": "George Cope",
+      "language": "de"
+    },
+    "Henri Edmond Cross": {
+      "title": "Henri Edmond Cross",
+      "language": "de"
+    },
+    "Giovanni Baglione": {
+      "title": "Giovanni Baglione",
+      "language": "de"
+    },
+    "Fra Angelico": {
+      "title": "Fra Angelico",
+      "language": "de"
+    },
+    "Walter Shirlaw": {
+      "title": "Walter Shirlaw",
+      "language": "de"
+    },
+    "Edvard Munch": {
+      "title": "Edvard Munch",
+      "language": "de"
+    },
+    "George Inness": {
+      "title": "George Inness",
+      "language": "de"
+    },
+    "Henry Ossawa Tanner": {
+      "title": "Henry Ossawa Tanner",
+      "language": "de"
+    },
+    "Antonio Mancini": {
+      "title": "Antonio Mancini",
+      "language": "de"
+    },
+    "Girolamo da Carpi": {
+      "title": "Girolamo da Carpi",
+      "language": "de"
+    },
+    "Gustave Loiseau": {
+      "title": "Gustave Loiseau",
+      "language": "de"
+    },
+    "John Frederick Peto": {
+      "title": "John Frederick Peto",
+      "language": "de"
+    },
+    "Thomas Hicks": {
+      "title": "Thomas Hicks (Maler)",
+      "language": "de"
+    },
+    "Carducius Plantagenet Ream": {
+      "title": "C. P. Ream",
+      "language": "en"
+    },
+    "Ferdinand Hodler": {
+      "title": "Ferdinand Hodler",
+      "language": "de"
+    },
+    "Meindert Hobbema": {
+      "title": "Meindert Hobbema",
+      "language": "de"
+    },
+    "Julius Gari Melchers": {
+      "title": "Gari Melchers",
+      "language": "de"
+    },
+    "George Peter Alexander Healy": {
+      "title": "George Peter Alexander Healy",
+      "language": "de"
+    },
+    "Antonio Vivarini": {
+      "title": "Antonio Vivarini",
+      "language": "de"
+    },
+    "Frans Snyders": {
+      "title": "Frans Snyders",
+      "language": "de"
+    },
+    "George Wesley Bellows": {
+      "title": "George Wesley Bellows",
+      "language": "de"
+    },
+    "William Michael Harnett": {
+      "title": "William Harnett",
+      "language": "de"
+    },
+    "Jan van Scorel": {
+      "title": "Jan van Scorel",
+      "language": "de"
+    },
+    "Bartolomeo di Giovanni": {
+      "title": "Bartolomeo di Giovanni",
+      "language": "en"
+    },
+    "Edward Henry Potthast": {
+      "title": "Edward Henry Potthast",
+      "language": "de"
+    },
+    "Alfred Stevens": {
+      "title": "Alfred Stevens",
+      "language": "de"
+    },
+    "Eugène Louis Boudin": {
+      "title": "Eugène Boudin",
+      "language": "de"
+    },
+    "De Scott Evans": {
+      "title": "De Scott Evans",
+      "language": "de"
+    },
+    "Charles Gifford Dyer": {
+      "title": "Charles Gifford Dyer",
+      "language": "en"
+    },
+    "John Henry Twachtman": {
+      "title": "John Henry Twachtman",
+      "language": "de"
+    },
+    "François Boucher": {
+      "title": "François Boucher",
+      "language": "de"
+    },
+    "Hubert Robert": {
+      "title": "Hubert Robert",
+      "language": "de"
+    },
+    "William James Glackens": {
+      "title": "William Glackens",
+      "language": "de"
+    },
+    "Constant Troyon": {
+      "title": "Constant Troyon",
+      "language": "de"
+    },
+    "Guido Reni": {
+      "title": "Guido Reni",
+      "language": "de"
+    },
+    "Pontormo, (Jacopo Carrucci)": {
+      "title": "Jacopo da Pontormo",
+      "language": "de"
+    },
+    "Childe Hassam": {
+      "title": "Childe Hassam",
+      "language": "de"
+    },
+    "Jean-Baptiste Oudry": {
+      "title": "Jean-Baptiste Oudry",
+      "language": "de"
+    },
+    "Theodore Robinson": {
+      "title": "Theodore Robinson (Maler)",
+      "language": "de"
+    },
+    "Robert William Vonnoh": {
+      "title": "Robert Vonnoh",
+      "language": "de"
+    },
+    "Charles Courtney Curran": {
+      "title": "Charles Courtney Curran",
+      "language": "de"
+    },
+    "Master of the Morrison Triptych": {
+      "title": "Meister des Morrison-Triptychons",
+      "language": "de"
+    },
+    "Johan Barthold Jongkind": {
+      "title": "Johan Barthold Jongkind",
+      "language": "de"
+    },
+    "Emil Carlsen": {
+      "title": "Emil Carlsen",
+      "language": "de"
+    },
+    "Henry Ward Ranger": {
+      "title": "Henry Ward Ranger",
+      "language": "de"
+    },
+    "Albert Pinkham Ryder": {
+      "title": "Albert Pinkham Ryder",
+      "language": "de"
+    },
+    "George Gardner Symons": {
+      "title": "George Gardner Symons",
+      "language": "de"
+    },
+    "Joaquín Sorolla y Bastida": {
+      "title": "Joaquín Sorolla",
+      "language": "de"
+    },
+    "Jean Baptiste Armand Guillaumin": {
+      "title": "Armand Guillaumin",
+      "language": "de"
+    },
+    "Eva Gonzalès": {
+      "title": "Eva Gonzalès",
+      "language": "de"
+    },
+    "Fernand Lungren": {
+      "title": "Fernand Lungren",
+      "language": "en"
+    },
+    "Amedeo Modigliani": {
+      "title": "Amedeo Modigliani",
+      "language": "de"
+    },
+    "Eugène Delacroix": {
+      "title": "Eugène Delacroix",
+      "language": "de"
+    },
+    "Caspar David Friedrich": {
+      "title": "Caspar David Friedrich",
+      "language": "de"
+    },
+    "Piet Mondrian": {
+      "title": "Piet Mondrian",
+      "language": "de"
+    },
+    "Charles François Daubigny": {
+      "title": "Charles-François Daubigny",
+      "language": "de"
+    },
+    "Jean François Millet": {
+      "title": "Jean-François Millet",
+      "language": "de"
+    },
+    "Alberto Pasini": {
+      "title": "Alberto Pasini",
+      "language": "en"
+    },
+    "Homer Dodge Martin": {
+      "title": "Homer Dodge Martin",
+      "language": "de"
+    },
+    "Narcisse Virgile Diaz de la Peña": {
+      "title": "Narcisso Virgilio Díaz de la Peña",
+      "language": "de"
+    },
+    "Samuel Colman": {
+      "title": "Samuel Colman",
+      "language": "de"
+    },
+    "Henry Fuseli": {
+      "title": "Johann Heinrich Füssli",
+      "language": "de"
+    },
+    "Hans Holbein der Jüngere": {
+      "title": "Hans Holbein der Jüngere",
+      "language": "de"
+    },
+    "Andrea Mantegna": {
+      "title": "Andrea Mantegna",
+      "language": "de"
+    },
+    "Jean-Honoré Fragonard": {
+      "title": "Jean-Honoré Fragonard",
+      "language": "de"
+    },
+    "Jacques-Louis David": {
+      "title": "Jacques-Louis David",
+      "language": "de"
+    },
+    "Juan Gris": {
+      "title": "Juan Gris",
+      "language": "de"
+    },
+    "Henri Matisse": {
+      "title": "Henri Matisse",
+      "language": "de"
+    },
+    "Gustav Klimt": {
+      "title": "Gustav Klimt",
+      "language": "de"
+    },
+    "John Everett Millais": {
+      "title": "John Everett Millais",
+      "language": "de"
+    },
+    "Paolo Veronese": {
+      "title": "Paolo Veronese",
+      "language": "de"
+    },
+    "Martin Schongauer": {
+      "title": "Martin Schongauer",
+      "language": "de"
+    },
+    "Théodore Géricault": {
+      "title": "Théodore Géricault",
+      "language": "de"
+    },
+    "Hugo Simberg": {
+      "title": "Hugo Simberg",
+      "language": "de"
+    },
+    "Bohumil Kubišta": {
+      "title": "Bohumil Kubišta",
+      "language": "de"
+    },
+    "Frederic Leighton": {
+      "title": "Frederic Leighton, 1. Baron Leighton",
+      "language": "de"
+    },
+    "El Greco": {
+      "title": "El Greco",
+      "language": "de"
+    },
+    "Vittore Carpaccio": {
+      "title": "Vittore Carpaccio",
+      "language": "de"
+    },
+    "Jan Vermeer": {
+      "title": "Jan Vermeer",
+      "language": "de"
+    },
+    "Jean-Auguste-Dominique Ingres": {
+      "title": "Jean-Auguste-Dominique Ingres",
+      "language": "de"
+    },
+    "Francisco de Goya": {
+      "title": "Francisco de Goya",
+      "language": "de"
+    },
+    "Edgar Degas": {
+      "title": "Edgar Degas",
+      "language": "de"
+    },
+    "John William Waterhouse": {
+      "title": "John William Waterhouse",
+      "language": "de"
+    },
+    "Hieronymus Bosch": {
+      "title": "Hieronymus Bosch",
+      "language": "de"
+    },
+    "Michelangelo Merisi da Caravaggio": {
+      "title": "Michelangelo Merisi da Caravaggio",
+      "language": "de"
+    },
+    "Anne Vallayer-Coster": {
+      "title": "Anne Vallayer-Coster",
+      "language": "de"
+    },
+    "William Turner": {
+      "title": "William Turner",
+      "language": "de"
+    },
+    "George Frederic Watts": {
+      "title": "George Frederic Watts",
+      "language": "de"
+    },
+    "Wassily Kandinsky": {
+      "title": "Wassily Kandinsky",
+      "language": "de"
+    },
+    "Albert Gleizes": {
+      "title": "Albert Gleizes",
+      "language": "de"
+    },
+    "Janis Rozentāls": {
+      "title": "Janis Rozentāls",
+      "language": "de"
+    },
+    "Alessandro Moretto": {
+      "title": "Alessandro Moretto",
+      "language": "de"
+    },
+    "Thomas Gainsborough": {
+      "title": "Thomas Gainsborough",
+      "language": "de"
+    },
+    "Arnold Böcklin": {
+      "title": "Arnold Böcklin",
+      "language": "de"
+    },
+    "Franz Marc": {
+      "title": "Franz Marc",
+      "language": "de"
+    },
+    "Ilmari Aalto": {
+      "title": "Ilmari Aalto",
+      "language": "en"
+    },
+    "Ramon Casas": {
+      "title": "Ramón Casas Carbó",
+      "language": "de"
+    },
+    "Jacopo Tintoretto": {
+      "title": "Jacopo Tintoretto",
+      "language": "de"
+    },
+    "Filippo Lippi": {
+      "title": "Filippo Lippi",
+      "language": "de"
+    },
+    "Antoine Watteau": {
+      "title": "Antoine Watteau",
+      "language": "de"
+    },
+    "Kasimir Sewerinowitsch Malewitsch": {
+      "title": "Kasimir Sewerinowitsch Malewitsch",
+      "language": "de"
+    },
+    "Antonio da Correggio": {
+      "title": "Antonio da Correggio",
+      "language": "de"
+    },
+    "Alejo Fernández": {
+      "title": "Alejo Fernández",
+      "language": "en"
+    },
+    "Peter Paul Rubens": {
+      "title": "Peter Paul Rubens",
+      "language": "de"
+    },
+    "Louis-Michel van Loo": {
+      "title": "Louis-Michel van Loo",
+      "language": "de"
+    },
+    "John Constable": {
+      "title": "John Constable",
+      "language": "de"
+    },
+    "Jacek Malczewski": {
+      "title": "Jacek Malczewski",
+      "language": "de"
+    },
+    "Ercole de’ Roberti": {
+      "title": "Ercole de’ Roberti",
+      "language": "de"
+    },
+    "Max Beckmann": {
+      "title": "Max Beckmann",
+      "language": "de"
+    },
+    "William Holman Hunt": {
+      "title": "William Holman Hunt",
+      "language": "de"
+    },
+    "Meister von Meßkirch": {
+      "title": "Meister von Meßkirch",
+      "language": "de"
+    },
+    "Gustave Moreau": {
+      "title": "Gustave Moreau",
+      "language": "de"
+    },
+    "Egon Schiele": {
+      "title": "Egon Schiele",
+      "language": "de"
+    },
+    "Roger de La Fresnaye": {
+      "title": "Roger de La Fresnaye",
+      "language": "de"
+    },
+    "Edward Burne-Jones": {
+      "title": "Edward Burne-Jones",
+      "language": "de"
+    },
+    "Tizian": {
+      "title": "Tizian",
+      "language": "de"
+    },
+    "Jean Siméon Chardin": {
+      "title": "Jean Siméon Chardin",
+      "language": "de"
+    },
+    "James Tissot": {
+      "title": "James Tissot",
+      "language": "de"
+    },
+    "Giovanni Segantini": {
+      "title": "Giovanni Segantini",
+      "language": "de"
+    },
+    "Dante Gabriel Rossetti": {
+      "title": "Dante Gabriel Rossetti",
+      "language": "de"
+    },
+    "Joseph Wright of Derby": {
+      "title": "Joseph Wright of Derby",
+      "language": "de"
+    },
+    "Ernst Ludwig Kirchner": {
+      "title": "Ernst Ludwig Kirchner",
+      "language": "de"
+    },
+    "Johann Heinrich Füssli": {
+      "title": "Johann Heinrich Füssli",
+      "language": "de"
+    },
+    "Antanas Samuolis": {
+      "title": "Antanas Samuolis",
+      "language": "en"
+    },
+    "Fernand Léger": {
+      "title": "Fernand Léger",
+      "language": "de"
+    },
+    "André Derain": {
+      "title": "André Derain",
+      "language": "de"
+    },
+    "Bartolomé Bermejo": {
+      "title": "Bartolomé Bermejo",
+      "language": "de"
+    },
+    "Albert Marquet": {
+      "title": "Albert Marquet",
+      "language": "de"
+    },
+    "Alphonse Mucha": {
+      "title": "Alfons Mucha",
+      "language": "de"
+    },
+    "Domenico Ghirlandaio": {
+      "title": "Domenico Ghirlandaio",
+      "language": "de"
+    },
+    "Paul Cézanne": {
+      "title": "Paul Cézanne",
+      "language": "de"
+    },
+    "Pierre Puvis de Chavannes": {
+      "title": "Pierre Puvis de Chavannes",
+      "language": "de"
+    },
+    "Lluïsa Vidal": {
+      "title": "Lluïsa Vidal",
+      "language": "de"
+    },
+    "Lawrence Alma-Tadema": {
+      "title": "Lawrence Alma-Tadema",
+      "language": "de"
+    },
+    "Rodolfo Amoedo": {
+      "title": "Rodolfo Amoedo",
+      "language": "de"
+    },
+    "Nils von Dardel": {
+      "title": "Nils von Dardel",
+      "language": "de"
+    },
+    "Agnolo Bronzino": {
+      "title": "Agnolo Bronzino",
+      "language": "de"
+    },
+    "William Hogarth": {
+      "title": "William Hogarth",
+      "language": "de"
+    },
+    "Joaquín Sorolla": {
+      "title": "Joaquín Sorolla",
+      "language": "de"
+    },
+    "Félicien Rops": {
+      "title": "Félicien Rops",
+      "language": "de"
+    },
+    "Henri Martin": {
+      "title": "Henri Martin (Maler)",
+      "language": "de"
+    },
+    "John Collier": {
+      "title": "John Collier (Maler)",
+      "language": "de"
+    },
+    "Frans Hals": {
+      "title": "Frans Hals",
+      "language": "de"
+    },
+    "Christoffer Wilhelm Eckersberg": {
+      "title": "Christoffer Wilhelm Eckersberg",
+      "language": "de"
+    },
+    "Richard Gerstl": {
+      "title": "Richard Gerstl",
+      "language": "de"
+    },
+    "Santiago Rusiñol": {
+      "title": "Santiago Rusiñol",
+      "language": "de"
+    },
+    "Benjamin West": {
+      "title": "Benjamin West",
+      "language": "de"
+    },
+    "Albert Chmielowski": {
+      "title": "Albert Chmielowski",
+      "language": "de"
+    },
+    "Arthur Hughes": {
+      "title": "Arthur Hughes (Maler)",
+      "language": "de"
+    },
+    "Baldomer Gili i Roig": {
+      "title": "Baldomer Gili i Roig",
+      "language": "en"
+    },
+    "Otto Mueller": {
+      "title": "Otto Mueller",
+      "language": "de"
+    },
+    "Robert Delaunay": {
+      "title": "Robert Delaunay",
+      "language": "de"
+    },
+    "Joan Brull": {
+      "title": "Joan Brull",
+      "language": "de"
+    },
+    "Antonio Rotta": {
+      "title": "Antonio Rotta (Maler)",
+      "language": "de"
+    },
+    "Antonio Fabrés": {
+      "title": "Antonio Fabrés",
+      "language": "en"
+    },
+    "Jean Broc": {
+      "title": "Jean Broc",
+      "language": "de"
+    },
+    "Yorozu Tetsugorō": {
+      "title": "Yorozu Tetsugorō",
+      "language": "de"
+    },
+    "Rosa Bonheur": {
+      "title": "Rosa Bonheur",
+      "language": "de"
+    },
+    "Julio Romero de Torres": {
+      "title": "Julio Romero de Torres",
+      "language": "de"
+    },
+    "Alonso Sánchez Coello": {
+      "title": "Alonso Sánchez Coello",
+      "language": "de"
+    },
+    "Anthonis van Dyck": {
+      "title": "Anthonis van Dyck",
+      "language": "de"
+    },
+    "Ferdynand Ruszczyc": {
+      "title": "Ferdynand Ruszczyc",
+      "language": "de"
+    },
+    "Bartolomé Esteban Murillo": {
+      "title": "Bartolomé Esteban Murillo",
+      "language": "de"
+    },
+    "Aleksander Gierymski": {
+      "title": "Aleksander Gierymski",
+      "language": "de"
+    },
+    "August Macke": {
+      "title": "August Macke",
+      "language": "de"
+    },
+    "Léon Bakst": {
+      "title": "Léon Bakst",
+      "language": "de"
+    },
+    "Kajetan Stefanowicz": {
+      "title": "Kajetan Stefanowicz",
+      "language": "de"
+    },
+    "Enric Serra Auqué": {
+      "title": "Enric Serra Auqué",
+      "language": "en"
+    },
+    "Jan Toorop": {
+      "title": "Jan Toorop",
+      "language": "de"
+    },
+    "Juan Luna": {
+      "title": "Juan Luna",
+      "language": "de"
+    },
+    "François Gérard": {
+      "title": "François Gérard",
+      "language": "de"
+    },
+    "Émile Claus": {
+      "title": "Emile Claus",
+      "language": "de"
+    },
+    "Raoul Dufy": {
+      "title": "Raoul Dufy",
+      "language": "de"
+    },
+    "Peder Balke": {
+      "title": "Peder Balke",
+      "language": "de"
+    },
+    "Henri Manguin": {
+      "title": "Henri Manguin",
+      "language": "de"
+    },
+    "Francisco Gimeno Arasa": {
+      "title": "Francesc Gimeno i Arasa",
+      "language": "en"
+    },
+    "Johan Christian Dahl": {
+      "title": "Johan Christian Clausen Dahl",
+      "language": "de"
+    },
+    "Marie-Guillemine Benoist": {
+      "title": "Marie-Guillemine Benoist",
+      "language": "de"
+    },
+    "Anne Louis Girodet-Trioson": {
+      "title": "Anne-Louis Girodet-Trioson",
+      "language": "de"
+    },
+    "Joseph Kutter": {
+      "title": "Joseph Kutter",
+      "language": "de"
+    },
+    "Giulio Aristide Sartorio": {
+      "title": "Giulio Aristide Sartorio",
+      "language": "de"
+    },
+    "Henry Holiday": {
+      "title": "Henry Holiday",
+      "language": "en"
+    },
+    "Sofonisba Anguissola": {
+      "title": "Sofonisba Anguissola",
+      "language": "de"
+    },
+    "Jean-Marc Nattier": {
+      "title": "Jean-Marc Nattier",
+      "language": "de"
+    },
+    "Léon Frédéric": {
+      "title": "Léon Frédéric",
+      "language": "de"
+    },
+    "Pierre Narcisse Guérin": {
+      "title": "Pierre Narcisse Guérin",
+      "language": "de"
+    },
+    "John Martin": {
+      "title": "John Martin (Maler)",
+      "language": "de"
+    },
+    "Berthold Woltze": {
+      "title": "Berthold Woltze",
+      "language": "de"
+    },
+    "James Ensor": {
+      "title": "James Ensor",
+      "language": "de"
+    },
+    "Carlos de Haes": {
+      "title": "Carlos de Haes",
+      "language": "de"
+    },
+    "Lars Hertervig": {
+      "title": "Lars Hertervig",
+      "language": "de"
+    },
+    "Ignacio Zuloaga": {
+      "title": "Ignacio Zuloaga",
+      "language": "de"
+    },
+    "Francesc Masriera Manovens": {
+      "title": "Francesc Masriera",
+      "language": "de"
+    },
+    "Gustave Boulanger": {
+      "title": "Gustave Boulanger",
+      "language": "de"
+    },
+    "Theodor Aman": {
+      "title": "Theodor Aman",
+      "language": "de"
+    },
+    "Apcar Baltazar": {
+      "title": "Apcar Baltazar",
+      "language": "de"
+    },
+    "Pierre Bonnard": {
+      "title": "Pierre Bonnard",
+      "language": "de"
+    },
+    "Roman Ribera": {
+      "title": "Romà Ribera",
+      "language": "en"
+    },
+    "Juan Carreño de Miranda": {
+      "title": "Juan Carreño de Miranda",
+      "language": "de"
+    },
+    "Jean-Baptiste Marie Pierre": {
+      "title": "Jean-Baptiste-Marie Pierre",
+      "language": "de"
+    },
+    "Eduardo Dalbono": {
+      "title": "Edoardo Dalbono",
+      "language": "de"
+    },
+    "Ilja Jefimowitsch Repin": {
+      "title": "Ilja Jefimowitsch Repin",
+      "language": "de"
+    },
+    "Adrià Gual": {
+      "title": "Adrià Gual",
+      "language": "en"
+    },
+    "Parmigianino": {
+      "title": "Parmigianino",
+      "language": "de"
+    },
+    "Yves Tanguy": {
+      "title": "Yves Tanguy",
+      "language": "de"
+    },
+    "Paul Klee": {
+      "title": "Paul Klee",
+      "language": "de"
+    },
+    "Franz von Stuck": {
+      "title": "Franz von Stuck",
+      "language": "de"
+    }
+  },
+  "works": {
+    "aic-88632": {
+      "title": "Portrait of Madame François Buron",
+      "language": "en"
+    },
+    "aic-16499": {
+      "title": "Jesus Insulted by the Soldiers",
+      "language": "en"
+    },
+    "aic-5848": {
+      "title": "Landscape with Saint John on Patmos",
+      "language": "en"
+    },
+    "aic-14655": {
+      "title": "Two Sisters (On the Terrace)",
+      "language": "en"
+    },
+    "aic-81533": {
+      "title": "The Races at Longchamp",
+      "language": "en"
+    },
+    "aic-27992": {
+      "title": "Ein Sonntagnachmittag auf der Insel La Grande Jatte",
+      "language": "de"
+    },
+    "aic-20684": {
+      "title": "Straße in Paris an einem regnerischen Tag",
+      "language": "de"
+    },
+    "aic-25812": {
+      "title": "Bullfight – Death of the Bull",
+      "language": "en"
+    },
+    "aic-11723": {
+      "title": "Woman at her Toilette",
+      "language": "en"
+    },
+    "aic-16169": {
+      "title": "The Beheading of Saint John the Baptist (Giovanni di Paolo)",
+      "language": "en"
+    },
+    "aic-16554": {
+      "title": "The Artist's House at Argenteuil",
+      "language": "en"
+    },
+    "aic-81539": {
+      "title": "On the Bank of the Seine, Bennecourt",
+      "language": "en"
+    },
+    "aic-14591": {
+      "title": "Woman Reading (Manet)",
+      "language": "en"
+    },
+    "aic-16571": {
+      "title": "Arrival of the Normandy Train, Gare Saint-Lazare",
+      "language": "en"
+    },
+    "aic-14598": {
+      "title": "The Beach at Sainte-Adresse",
+      "language": "en"
+    },
+    "aic-21934": {
+      "title": "The Kitchen Maid",
+      "language": "en"
+    },
+    "aic-14620": {
+      "title": "The Cliff Walk at Pourville",
+      "language": "en"
+    },
+    "aic-87479": {
+      "title": "Assumption of the Virgin (El Greco)",
+      "language": "en"
+    },
+    "aic-95998": {
+      "title": "Old Man with a Gold Chain",
+      "language": "en"
+    },
+    "aic-60812": {
+      "title": "Merahi metua no Tehamana",
+      "language": "en"
+    },
+    "aic-111442": {
+      "title": "The Child's Bath",
+      "language": "en"
+    },
+    "aic-16633": {
+      "title": "The Seine at Port-Marly, Piles of Sand",
+      "language": "en"
+    },
+    "aic-80084": {
+      "title": "Christ on the Cross (Zurbarán)",
+      "language": "en"
+    },
+    "aic-27307": {
+      "title": "Portrait of Madame Pastoret",
+      "language": "en"
+    },
+    "aic-61128": {
+      "title": "At the Moulin Rouge",
+      "language": "en"
+    },
+    "aic-81555": {
+      "title": "Lunch at the Restaurant Fournaise",
+      "language": "en"
+    },
+    "aic-27943": {
+      "title": "Mahana no atua",
+      "language": "en"
+    },
+    "aic-14572": {
+      "title": "The Millinery Shop",
+      "language": "en"
+    },
+    "aic-111436": {
+      "title": "The Basket of Apples",
+      "language": "en"
+    },
+    "aic-110541": {
+      "title": "Der Kristallpalast, London",
+      "language": "de"
+    },
+    "aic-27987": {
+      "title": "Jacques and Berthe Lipchitz",
+      "language": "en"
+    },
+    "wd-Q1212937": {
+      "title": "Die Gesandten",
+      "language": "de"
+    },
+    "wd-Q2066739": {
+      "title": "San-Zeno-Altar",
+      "language": "de"
+    },
+    "wd-Q208758": {
+      "title": "Las Meninas",
+      "language": "de"
+    },
+    "wd-Q2629559": {
+      "title": "Die Schaukel (Fragonard)",
+      "language": "de"
+    },
+    "wd-Q476458": {
+      "title": "Der Schwur der Horatier",
+      "language": "de"
+    },
+    "wd-Q29530": {
+      "title": "Die Freiheit führt das Volk",
+      "language": "de"
+    },
+    "wd-Q4808368": {
+      "title": "Femme nue couchée",
+      "language": "en"
+    },
+    "wd-Q328523": {
+      "title": "Impression, Sonnenaufgang",
+      "language": "de"
+    },
+    "wd-Q45585": {
+      "title": "Sternennacht",
+      "language": "de"
+    },
+    "wd-Q500951": {
+      "title": "The Yellow Christ",
+      "language": "en"
+    },
+    "wd-Q1683743": {
+      "title": "Vampir (Munch)",
+      "language": "de"
+    },
+    "wd-Q6461080": {
+      "title": "The Anisette Bottle",
+      "language": "en"
+    },
+    "wd-Q1437492": {
+      "title": "Frau mit Hut",
+      "language": "de"
+    },
+    "wd-Q698487": {
+      "title": "Der Kuss (Klimt)",
+      "language": "de"
+    },
+    "wd-Q97190375": {
+      "title": "At 4 O'Clock in the Summer, Hope",
+      "language": "en"
+    },
+    "wd-Q1065493": {
+      "title": "Ophelia (Millais)",
+      "language": "de"
+    },
+    "wd-Q185255": {
+      "title": "Die Hochzeit zu Kana",
+      "language": "de"
+    },
+    "wd-Q648068": {
+      "title": "Madonna of the Rose Bower (Schongauer)",
+      "language": "en"
+    },
+    "wd-Q1133420": {
+      "title": "Die Übergabe von Breda",
+      "language": "de"
+    },
+    "wd-Q2629423": {
+      "title": "Die Leserin (Fragonard)",
+      "language": "de"
+    },
+    "wd-Q1314013": {
+      "title": "The Intervention of the Sabine Women",
+      "language": "en"
+    },
+    "wd-Q212616": {
+      "title": "Das Floß der Medusa",
+      "language": "de"
+    },
+    "wd-Q4987244": {
+      "title": "Bulb Fields",
+      "language": "en"
+    },
+    "wd-Q1167907": {
+      "title": "Das Frühstück der Ruderer",
+      "language": "de"
+    },
+    "wd-Q154469": {
+      "title": "Die Kartoffelesser",
+      "language": "de"
+    },
+    "wd-Q471289": {
+      "title": "Der verwundete Engel",
+      "language": "de"
+    },
+    "wd-Q18891111": {
+      "title": "Der Kuss (Munch)",
+      "language": "de"
+    },
+    "wd-Q22976966": {
+      "title": "Saint Sebastian (Kubišta)",
+      "language": "en"
+    },
+    "wd-Q2538580": {
+      "title": "Le bonheur de vivre",
+      "language": "en"
+    },
+    "wd-Q354396": {
+      "title": "Adele Bloch-Bauer I",
+      "language": "de"
+    },
+    "wd-Q19883963": {
+      "title": "Mama, Papa is Wounded!",
+      "language": "en"
+    },
+    "wd-Q846213": {
+      "title": "Flaming June",
+      "language": "en"
+    },
+    "wd-Q94802": {
+      "title": "Begräbnis des Grafen von Orgaz",
+      "language": "de"
+    },
+    "wd-Q544315": {
+      "title": "Der Astronom",
+      "language": "de"
+    },
+    "wd-Q3556817": {
+      "title": "Diana Bathing (Boucher)",
+      "language": "en"
+    },
+    "wd-Q1282840": {
+      "title": "Napoleon I on His Imperial Throne",
+      "language": "en"
+    },
+    "wd-Q1091086": {
+      "title": "Die Erschießung der Aufständischen",
+      "language": "de"
+    },
+    "wd-Q48651005": {
+      "title": "Self-Portrait with a Black Dog",
+      "language": "en"
+    },
+    "wd-Q1239950": {
+      "title": "L'Absinthe",
+      "language": "en"
+    },
+    "wd-Q2282256": {
+      "title": "Irises (painting)",
+      "language": "en"
+    },
+    "wd-Q1445107": {
+      "title": "Danaë (Klimt)",
+      "language": "de"
+    },
+    "wd-Q18208623": {
+      "title": "Angst (Munch)",
+      "language": "de"
+    },
+    "wd-Q60497141": {
+      "title": "Senecio (Paul Klee)",
+      "language": "de"
+    },
+    "wd-Q921429": {
+      "title": "The Dessert: Harmony in Red (The Red Room)",
+      "language": "en"
+    },
+    "wd-Q17001535": {
+      "title": "Tod und Leben",
+      "language": "de"
+    },
+    "wd-Q2445726": {
+      "title": "The Lady of Shalott (Waterhouse)",
+      "language": "en"
+    },
+    "wd-Q883994": {
+      "title": "Blick auf Toledo",
+      "language": "de"
+    },
+    "wd-Q2727560": {
+      "title": "Die Enthauptung Johannes des Täufers (Caravaggio)",
+      "language": "de"
+    },
+    "wd-Q21260816": {
+      "title": "Portrait of a Violinist",
+      "language": "en"
+    },
+    "wd-Q3137278": {
+      "title": "Portrait of Madame Moitessier",
+      "language": "en"
+    },
+    "wd-Q152867": {
+      "title": "Die nackte Maja",
+      "language": "de"
+    },
+    "wd-Q12901580": {
+      "title": "After Dinner at Ornans",
+      "language": "en"
+    },
+    "wd-Q2339059": {
+      "title": "Rain, Steam and Speed – The Great Western Railway",
+      "language": "de"
+    },
+    "wd-Q634122": {
+      "title": "Wheatfield with Crows",
+      "language": "en"
+    },
+    "wd-Q27157216": {
+      "title": "After the Deluge (painting)",
+      "language": "en"
+    },
+    "wd-Q2990634": {
+      "title": "Composition VII",
+      "language": "en"
+    },
+    "wd-Q19882566": {
+      "title": "Portrait of an Army Doctor",
+      "language": "en"
+    },
+    "wd-Q2902188": {
+      "title": "The Green Stripe",
+      "language": "en"
+    },
+    "wd-Q22043968": {
+      "title": "Princess with a Monkey",
+      "language": "en"
+    },
+    "wd-Q5332757": {
+      "title": "Echo und Narziss (Waterhouse)",
+      "language": "de"
+    },
+    "wd-Q951105": {
+      "title": "Das Gastmahl im Hause des Levi",
+      "language": "de"
+    },
+    "wd-Q1110146": {
+      "title": "Adoration of the Shepherds with Saints Nazarius and Celsus",
+      "language": "en"
+    },
+    "wd-Q318947": {
+      "title": "Abendmahl in Emmaus (Caravaggio)",
+      "language": "de"
+    },
+    "wd-Q3228069": {
+      "title": "The Bolt (Fragonard)",
+      "language": "en"
+    },
+    "wd-Q835286": {
+      "title": "Mars Being Disarmed by Venus",
+      "language": "en"
+    },
+    "wd-Q604761": {
+      "title": "The Blue Boy",
+      "language": "de"
+    },
+    "wd-Q15290965": {
+      "title": "Im Boot",
+      "language": "de"
+    },
+    "wd-Q2395218": {
+      "title": "Woman with a Parasol – Madame Monet and Her Son",
+      "language": "en"
+    },
+    "wd-Q1025704": {
+      "title": "Caféterrasse am Abend",
+      "language": "de"
+    },
+    "wd-Q1523789": {
+      "title": "Selbstbildnis mit fiedelndem Tod",
+      "language": "de"
+    },
+    "wd-Q1197647": {
+      "title": "Der Turm der blauen Pferde",
+      "language": "de"
+    },
+    "wd-Q3745698": {
+      "title": "Offenes Fenster in Collioure",
+      "language": "de"
+    },
+    "wd-Q4889277": {
+      "title": "Ramon Casas and Pere Romeu on a Tandem",
+      "language": "en"
+    },
+    "wd-Q39537": {
+      "title": "Circe Offering the Cup to Ulysses",
+      "language": "en"
+    },
+    "wd-Q2472983": {
+      "title": "Last Supper (Tintoretto)",
+      "language": "en"
+    },
+    "wd-Q2338417": {
+      "title": "Martyrium des Hl. Matthäus",
+      "language": "de"
+    },
+    "wd-Q3387944": {
+      "title": "Gilles (Gemälde)",
+      "language": "de"
+    },
+    "wd-Q2619037": {
+      "title": "Portrait of Madame Récamier",
+      "language": "en"
+    },
+    "wd-Q1133821": {
+      "title": "Der Tod des Sardanapal",
+      "language": "de"
+    },
+    "wd-Q5047026": {
+      "title": "Cart with Black Ox",
+      "language": "en"
+    },
+    "wd-Q432253": {
+      "title": "Die Terrasse von Sainte-Adresse",
+      "language": "de"
+    },
+    "wd-Q1464531": {
+      "title": "Sternennacht über der Rhone",
+      "language": "de"
+    },
+    "wd-Q8874171": {
+      "title": "Hope (Watts)",
+      "language": "en"
+    },
+    "wd-Q3793374": {
+      "title": "The Blue Rider (Kandinsky)",
+      "language": "en"
+    },
+    "wd-Q1999166": {
+      "title": "Music (Matisse)",
+      "language": "en"
+    },
+    "wd-Q477764": {
+      "title": "The Blind Girl",
+      "language": "de"
+    },
+    "wd-Q700834": {
+      "title": "Jupiter und Io",
+      "language": "de"
+    },
+    "wd-Q2653851": {
+      "title": "The Elevation of the Cross (Rubens)",
+      "language": "en"
+    },
+    "wd-Q3204999": {
+      "title": "The Family of Philip V (1743)",
+      "language": "en"
+    },
+    "wd-Q2985455": {
+      "title": "Portrait of Monsieur Bertin",
+      "language": "en"
+    },
+    "wd-Q2366825": {
+      "title": "The Hay Wain",
+      "language": "de"
+    },
+    "wd-Q19833792": {
+      "title": "Congregation Leaving the Reformed Church in Nuenen",
+      "language": "en"
+    },
+    "wd-Q2734892": {
+      "title": "Women in the Garden",
+      "language": "en"
+    },
+    "wd-Q1213917": {
+      "title": "Die Kirche von Auvers",
+      "language": "de"
+    },
+    "wd-Q9285794": {
+      "title": "Hamlet polski. Portret Aleksandra Wielopolskiego",
+      "language": "de"
+    },
+    "wd-Q18889374": {
+      "title": "Asche (Munch)",
+      "language": "de"
+    },
+    "wd-Q882584": {
+      "title": "Blauer Akt (Erinnerung an Biskra)",
+      "language": "de"
+    },
+    "wd-Q960157": {
+      "title": "Christ in the House of His Parents",
+      "language": "en"
+    },
+    "wd-Q1220013": {
+      "title": "Die Öffnung des fünften Siegels",
+      "language": "de"
+    },
+    "wd-Q663133": {
+      "title": "The Cardsharps",
+      "language": "en"
+    },
+    "wd-Q974414": {
+      "title": "Blind Man's Bluff (Fragonard, 1750)",
+      "language": "en"
+    },
+    "wd-Q3498655": {
+      "title": "Venus Anadyomene (Ingres)",
+      "language": "en"
+    },
+    "wd-Q920030": {
+      "title": "Die Familie Karls IV.",
+      "language": "de"
+    },
+    "wd-Q12900371": {
+      "title": "The Hunt Breakfast (Courbet)",
+      "language": "en"
+    },
+    "wd-Q1766454": {
+      "title": "Die Parkettschleifer",
+      "language": "de"
+    },
+    "wd-Q890678": {
+      "title": "Woher kommen wir? Wer sind wir? Wohin gehen wir?",
+      "language": "de"
+    },
+    "wd-Q3793426": {
+      "title": "The Cyclops (Redon)",
+      "language": "en"
+    },
+    "wd-Q7754055": {
+      "title": "Die Nacht (Gemälde)",
+      "language": "de"
+    },
+    "wd-Q17009394": {
+      "title": "Man on a Balcony",
+      "language": "en"
+    },
+    "wd-Q6455615": {
+      "title": "The Red Studio",
+      "language": "en"
+    },
+    "wd-Q5811810": {
+      "title": "Garrote vil (Garrotte)",
+      "language": "en"
+    },
+    "wd-Q1757920": {
+      "title": "The Light of the World (Hunt)",
+      "language": "en"
+    },
+    "wd-Q6402081": {
+      "title": "Edelmann mit der Hand auf der Brust",
+      "language": "de"
+    },
+    "wd-Q655705": {
+      "title": "The Musicians (Caravaggio)",
+      "language": "en"
+    },
+    "wd-Q3211033": {
+      "title": "The Birth of Venus (Boucher)",
+      "language": "en"
+    },
+    "wd-Q2088930": {
+      "title": "The Milkmaid of Bordeaux",
+      "language": "en"
+    },
+    "wd-Q194137": {
+      "title": "Das Eismeer",
+      "language": "de"
+    },
+    "wd-Q5047027": {
+      "title": "Cart with Red and White Ox",
+      "language": "en"
+    },
+    "wd-Q4429116": {
+      "title": "The Magpie (Monet)",
+      "language": "en"
+    },
+    "wd-Q930535": {
+      "title": "Tahitian Women on the Beach",
+      "language": "en"
+    },
+    "wd-Q3818663": {
+      "title": "Die Erscheinung (Fogg Art Museum)",
+      "language": "de"
+    },
+    "wd-Q2438357": {
+      "title": "Tod und Mädchen",
+      "language": "de"
+    },
+    "wd-Q7447987": {
+      "title": "Self-Portrait in a Striped T-shirt",
+      "language": "en"
+    },
+    "wd-Q4188993": {
+      "title": "The Beguiling of Merlin",
+      "language": "en"
+    },
+    "wd-Q180632": {
+      "title": "Papst Paul III. und seine Enkel",
+      "language": "de"
+    },
+    "wd-Q2273517": {
+      "title": "Conversion on the Way to Damascus",
+      "language": "en"
+    },
+    "wd-Q3212142": {
+      "title": "The Ray (Chardin)",
+      "language": "en"
+    },
+    "wd-Q2533791": {
+      "title": "Die Liktoren bringen Brutus die Leichen seiner Söhne",
+      "language": "de"
+    },
+    "wd-Q2354251": {
+      "title": "Die Dantebarke",
+      "language": "de"
+    },
+    "wd-Q7763918": {
+      "title": "The Shop Girl (Tissot)",
+      "language": "en"
+    },
+    "wd-Q1659469": {
+      "title": "Im Sommer",
+      "language": "de"
+    },
+    "wd-Q1118295": {
+      "title": "Van Gogh's Chair",
+      "language": "en"
+    },
+    "wd-Q749201": {
+      "title": "Die bösen Mütter",
+      "language": "de"
+    },
+    "wd-Q1169290": {
+      "title": "Das Kind und der Tod",
+      "language": "de"
+    },
+    "wd-Q16987384": {
+      "title": "The Young Sailor II",
+      "language": "en"
+    },
+    "wd-Q2712679": {
+      "title": "Beata Beatrix",
+      "language": "en"
+    },
+    "wd-Q2255224": {
+      "title": "Laocoön (El Greco)",
+      "language": "en"
+    },
+    "wd-Q2627034": {
+      "title": "Die heilige Katharina von Alexandrien (Caravaggio)",
+      "language": "de"
+    },
+    "wd-Q12841555": {
+      "title": "Madame de Pompadour (Boucher)",
+      "language": "de"
+    },
+    "wd-Q5818528": {
+      "title": "Oedipus and the Sphinx (Ingres)",
+      "language": "en"
+    },
+    "wd-Q1167796": {
+      "title": "Das Experiment mit dem Vogel in der Luftpumpe",
+      "language": "de"
+    },
+    "wd-Q829572": {
+      "title": "Camille im grünen Kleid",
+      "language": "de"
+    },
+    "wd-Q2783729": {
+      "title": "Lise mit dem Sonnenschirm",
+      "language": "de"
+    },
+    "wd-Q609572": {
+      "title": "Spirit of the Dead Watching",
+      "language": "en"
+    },
+    "wd-Q22953800": {
+      "title": "Luzifer (Stuck)",
+      "language": "de"
+    },
+    "wd-Q14856959": {
+      "title": "Weiblicher Halbakt mit Hut",
+      "language": "de"
+    },
+    "wd-Q19922091": {
+      "title": "Violin and Playing Cards on a Table",
+      "language": "en"
+    },
+    "wd-Q977777": {
+      "title": "Proserpine (Rossetti)",
+      "language": "en"
+    },
+    "wd-Q2273890": {
+      "title": "Sklavenwunder",
+      "language": "de"
+    },
+    "wd-Q2713203": {
+      "title": "Madonna dei Pellegrini",
+      "language": "de"
+    },
+    "wd-Q3227830": {
+      "title": "The Triumph of Venus",
+      "language": "en"
+    },
+    "wd-Q3202169": {
+      "title": "The Apotheosis of Homer (Ingres)",
+      "language": "en"
+    },
+    "wd-Q2317837": {
+      "title": "The Nightmare",
+      "language": "en"
+    },
+    "wd-Q4828222": {
+      "title": "Avenue of Poplars in Autumn",
+      "language": "en"
+    },
+    "wd-Q2899286": {
+      "title": "Berthe Morisot mit Veilchenstrauß",
+      "language": "de"
+    },
+    "wd-Q4233325": {
+      "title": "Tree Roots",
+      "language": "en"
+    },
+    "wd-Q21771325": {
+      "title": "The White Apple Tree",
+      "language": "en"
+    },
+    "wd-Q20816594": {
+      "title": "The City (Léger)",
+      "language": "en"
+    },
+    "wd-Q8240370": {
+      "title": "Bal du Moulin de la Galette (Casas)",
+      "language": "en"
+    },
+    "wd-Q4148585": {
+      "title": "Autumn Leaves (painting)",
+      "language": "en"
+    },
+    "wd-Q2393412": {
+      "title": "Vulkan überrascht Venus und Mars",
+      "language": "de"
+    },
+    "wd-Q2732274": {
+      "title": "Reuige Magdalena (Caravaggio)",
+      "language": "de"
+    },
+    "wd-Q766011": {
+      "title": "Das Ladenschild des Kunsthändlers Gersaint",
+      "language": "de"
+    },
+    "wd-Q3208369": {
+      "title": "Andromache Mourning Hector",
+      "language": "en"
+    },
+    "wd-Q257580": {
+      "title": "The Fighting Temeraire",
+      "language": "de"
+    },
+    "wd-Q681876": {
+      "title": "Woman in the Garden",
+      "language": "en"
+    },
+    "wd-Q4110564": {
+      "title": "Beach at Scheveningen in Stormy Weather",
+      "language": "en"
+    },
+    "wd-Q6314660": {
+      "title": "Jupiter and Semele",
+      "language": "en"
+    },
+    "wd-Q24953623": {
+      "title": "Self-Portrait as a Soldier",
+      "language": "en"
+    },
+    "wd-Q5121363": {
+      "title": "Circe Invidiosa",
+      "language": "en"
+    },
+    "wd-Q2274267": {
+      "title": "The Origin of the Milky Way",
+      "language": "en"
+    },
+    "wd-Q698228": {
+      "title": "Rosenkranzmadonna (Caravaggio)",
+      "language": "de"
+    },
+    "wd-Q12900239": {
+      "title": "Hercules and Omphale (Boucher)",
+      "language": "en"
+    },
+    "wd-Q3210841": {
+      "title": "The Death of Seneca",
+      "language": "en"
+    },
+    "wd-Q1787143": {
+      "title": "Kreidefelsen auf Rügen",
+      "language": "de"
+    },
+    "wd-Q5435846": {
+      "title": "Farmhouses Among Trees",
+      "language": "en"
+    },
+    "wd-Q1167912": {
+      "title": "Das Frühstück im Grünen (Monet)",
+      "language": "de"
+    },
+    "wd-Q3824214": {
+      "title": "Lady in Blue (Cézanne)",
+      "language": "en"
+    },
+    "wd-Q9171012": {
+      "title": "The Poor Fisherman",
+      "language": "en"
+    },
+    "wd-Q2972870": {
+      "title": "Fünf Frauen auf der Straße",
+      "language": "de"
+    },
+    "wd-Q16986937": {
+      "title": "Le Chemin, Paysage à Meudon",
+      "language": "en"
+    },
+    "wd-Q7190121": {
+      "title": "The Piano Lesson (Matisse)",
+      "language": "en"
+    },
+    "wd-Q7401211": {
+      "title": "Saint Eulalia (Waterhouse painting)",
+      "language": "en"
+    },
+    "wd-Q3978277": {
+      "title": "Susanna im Bade (Tintoretto)",
+      "language": "de"
+    },
+    "wd-Q510799": {
+      "title": "Saint Jerome Writing (Caravaggio, Valletta)",
+      "language": "en"
+    },
+    "wd-Q3796075": {
+      "title": "The Setting of the Sun",
+      "language": "en"
+    },
+    "wd-Q16020875": {
+      "title": "The Ambassadors of Agamemnon in the tent of Achilles",
+      "language": "en"
+    },
+    "wd-Q276174": {
+      "title": "The Roses of Heliogabalus",
+      "language": "en"
+    },
+    "wd-Q42571834": {
+      "title": "Más Notícias",
+      "language": "en"
+    },
+    "wd-Q3212360": {
+      "title": "The Pink Dress",
+      "language": "en"
+    },
+    "wd-Q10468599": {
+      "title": "The Dying Dandy",
+      "language": "en"
+    },
+    "wd-Q20083819": {
+      "title": "Sleep (Puvis de Chavannes)",
+      "language": "en"
+    },
+    "wd-Q19917690": {
+      "title": "Portrait of a German Officer",
+      "language": "en"
+    },
+    "wd-Q7113408": {
+      "title": "Over My Dead Body (Casas)",
+      "language": "en"
+    },
+    "wd-Q7715071": {
+      "title": "The Awakening Conscience",
+      "language": "en"
+    },
+    "wd-Q493792": {
+      "title": "Andrea Doria als Neptun",
+      "language": "de"
+    },
+    "wd-Q2626595": {
+      "title": "Sieben Werke der Barmherzigkeit (Caravaggio)",
+      "language": "de"
+    },
+    "wd-Q4164272": {
+      "title": "The Shrimp Girl",
+      "language": "en"
+    },
+    "wd-Q24011": {
+      "title": "Mademoiselle Caroline Rivière",
+      "language": "en"
+    },
+    "wd-Q1214313": {
+      "title": "Die Lebensstufen",
+      "language": "de"
+    },
+    "wd-Q6485466": {
+      "title": "Lane in Autumn",
+      "language": "en"
+    },
+    "wd-Q3823474": {
+      "title": "La Promenade (Renoir)",
+      "language": "en"
+    },
+    "wd-Q7289817": {
+      "title": "Ramon Casas and Pere Romeu in an Automobile",
+      "language": "en"
+    },
+    "wd-Q822535": {
+      "title": "Isabella (Millais painting)",
+      "language": "en"
+    },
+    "wd-Q6119366": {
+      "title": "Sankt Martin und der Bettler (El Greco)",
+      "language": "de"
+    },
+    "wd-Q2627810": {
+      "title": "The Waterseller of Seville",
+      "language": "en"
+    },
+    "wd-Q1713754": {
+      "title": "Jupiter und Antiope (Watteau)",
+      "language": "de"
+    },
+    "wd-Q613928": {
+      "title": "Portrait of Antoine and Marie-Anne Lavoisier",
+      "language": "en"
+    },
+    "wd-Q2528477": {
+      "title": "Witches' Sabbath (The Great He-Goat)",
+      "language": "en"
+    },
+    "wd-Q2855146": {
+      "title": "Portrait of Professor Benjamin H. Rand",
+      "language": "en"
+    },
+    "wd-Q941549": {
+      "title": "La Grenouillère (Monet)",
+      "language": "en"
+    },
+    "wd-Q3399378": {
+      "title": "Portrait of Adèle Besson",
+      "language": "en"
+    },
+    "wd-Q17582538": {
+      "title": "Man Between Vice and Virtue",
+      "language": "en"
+    },
+    "wd-Q4016290": {
+      "title": "Fuchs (Franz Marc, 1911)",
+      "language": "de"
+    },
+    "wd-Q60329141": {
+      "title": "The Breakfast",
+      "language": "en"
+    },
+    "wd-Q17300273": {
+      "title": "Lady Godiva (painting)",
+      "language": "en"
+    },
+    "wd-Q1988152": {
+      "title": "Venus and Adonis (Veronese, Madrid)",
+      "language": "en"
+    },
+    "wd-Q965124": {
+      "title": "Laughing Cavalier",
+      "language": "en"
+    },
+    "wd-Q3220656": {
+      "title": "The Buffet (Chardin)",
+      "language": "en"
+    },
+    "wd-Q6644913": {
+      "title": "A Nude Woman Doing Her Hair Before a Mirror",
+      "language": "en"
+    },
+    "wd-Q3181999": {
+      "title": "Griechenland auf den Ruinen von Mesolongi",
+      "language": "de"
+    },
+    "wd-Q6485129": {
+      "title": "Landscape with a Church at Twilight",
+      "language": "en"
+    },
+    "wd-Q734082": {
+      "title": "Regatta at Sainte-Adresse (Monet)",
+      "language": "en"
+    },
+    "wd-Q22087247": {
+      "title": "The Punishment of Lust",
+      "language": "en"
+    },
+    "wd-Q19883652": {
+      "title": "Die Straße (Kirchner)",
+      "language": "de"
+    },
+    "wd-Q4281369": {
+      "title": "Mariana (Millais)",
+      "language": "en"
+    },
+    "wd-Q1114913": {
+      "title": "Adoration of the Shepherds (El Greco, Madrid)",
+      "language": "en"
+    },
+    "wd-Q2270955": {
+      "title": "David and Goliath (Caravaggio)",
+      "language": "en"
+    },
+    "wd-Q3548343": {
+      "title": "Pastoral with a Couple near a Fountain",
+      "language": "en"
+    },
+    "wd-Q941416": {
+      "title": "Jupiter and Thetis",
+      "language": "en"
+    },
+    "wd-Q2413468": {
+      "title": "Der Koloss",
+      "language": "de"
+    },
+    "wd-Q7930704": {
+      "title": "Village at Sunset",
+      "language": "en"
+    },
+    "wd-Q10322900": {
+      "title": "La Japonaise (painting)",
+      "language": "en"
+    },
+    "wd-Q30068812": {
+      "title": "Im Spiel der Wellen (Gemälde)",
+      "language": "de"
+    },
+    "wd-Q20980856": {
+      "title": "Schönberg Family",
+      "language": "en"
+    },
+    "wd-Q7733565": {
+      "title": "The Favourites of the Emperor Honorius",
+      "language": "en"
+    },
+    "wd-Q3937806": {
+      "title": "Finding of the Body of Saint Mark",
+      "language": "en"
+    },
+    "wd-Q389198": {
+      "title": "Three Musicians (Velázquez)",
+      "language": "en"
+    },
+    "wd-Q23011437": {
+      "title": "Fishing (Boucher)",
+      "language": "en"
+    },
+    "wd-Q956541": {
+      "title": "The Death of General Wolfe",
+      "language": "en"
+    },
+    "wd-Q507120": {
+      "title": "Gebirgslandschaft mit Regenbogen",
+      "language": "de"
+    },
+    "wd-Q7973322": {
+      "title": "Water Mill at Kollen Near Nuenen",
+      "language": "en"
+    },
+    "wd-Q2270805": {
+      "title": "Der Knabe mit der roten Weste",
+      "language": "de"
+    },
+    "wd-Q5468794": {
+      "title": "Forest (painting)",
+      "language": "en"
+    },
+    "wd-Q1523473": {
+      "title": "April Love (painting)",
+      "language": "en"
+    },
+    "wd-Q924655": {
+      "title": "Die Bergung des Leichnams des heiligen Markus",
+      "language": "de"
+    },
+    "wd-Q2264914": {
+      "title": "Infanta Margarita Teresa in a Blue Dress",
+      "language": "en"
+    },
+    "wd-Q2886017": {
+      "title": "The Raised Chemise",
+      "language": "en"
+    },
+    "wd-Q17189258": {
+      "title": "Portrait of Comtesse d'Haussonville",
+      "language": "en"
+    },
+    "wd-Q1585399": {
+      "title": "Porträt der Doña Isabel de Porcel",
+      "language": "de"
+    },
+    "wd-Q5466451": {
+      "title": "Footbridge across a Ditch",
+      "language": "en"
+    },
+    "wd-Q3454959": {
+      "title": "Regatta at Argenteuil",
+      "language": "en"
+    },
+    "wd-Q922648": {
+      "title": "The Town Hall at Auvers",
+      "language": "en"
+    },
+    "wd-Q15855872": {
+      "title": "Zwei weibliche Halbakte",
+      "language": "de"
+    },
+    "wd-Q28541252": {
+      "title": "The Pool of London (painting)",
+      "language": "en"
+    },
+    "wd-Q18689510": {
+      "title": "Our English Coasts",
+      "language": "en"
+    },
+    "wd-Q949323": {
+      "title": "Portrait of Fray Hortensio Félix Paravacino",
+      "language": "en"
+    },
+    "wd-Q1195238": {
+      "title": "Der Liebesgarten",
+      "language": "de"
+    },
+    "wd-Q3190681": {
+      "title": "Jeroboam Sacrificing to Idols",
+      "language": "en"
+    },
+    "wd-Q18010742": {
+      "title": "Odalisque with Slave",
+      "language": "en"
+    },
+    "wd-Q219344": {
+      "title": "Das Sklavenschiff",
+      "language": "de"
+    },
+    "wd-Q3794124": {
+      "title": "The Artist's Garden at Giverny",
+      "language": "en"
+    },
+    "wd-Q5676845": {
+      "title": "Harvest Threshing",
+      "language": "en"
+    },
+    "wd-Q2425901": {
+      "title": "Ecce Ancilla Domini!",
+      "language": "en"
+    },
+    "wd-Q2920183": {
+      "title": "Annunciation (church of San Salvador)",
+      "language": "en"
+    },
+    "wd-Q1211651": {
+      "title": "Die Blendung Simsons",
+      "language": "de"
+    },
+    "wd-Q3232204": {
+      "title": "The New Model",
+      "language": "en"
+    },
+    "wd-Q2698149": {
+      "title": "Belisarius Begging for Alms",
+      "language": "en"
+    },
+    "wd-Q884782": {
+      "title": "Tetschener Altar",
+      "language": "de"
+    },
+    "wd-Q6485125": {
+      "title": "Landscape with Pollard Willows",
+      "language": "en"
+    },
+    "wd-Q3821820": {
+      "title": "The Ballet Class (Degas, Musée d'Orsay)",
+      "language": "en"
+    },
+    "wd-Q18879691": {
+      "title": "Verzweiflung (Munch)",
+      "language": "de"
+    },
+    "wd-Q61652622": {
+      "title": "Le Faubourg de Collioure",
+      "language": "en"
+    },
+    "wd-Q326887": {
+      "title": "The Black Brunswicker",
+      "language": "de"
+    },
+    "wd-Q490312": {
+      "title": "Die Kreuzigung (Tintoretto)",
+      "language": "de"
+    },
+    "wd-Q1679544": {
+      "title": "Jakobssegen (Rembrandt)",
+      "language": "de"
+    },
+    "wd-Q38197": {
+      "title": "Scipio Africanus Freeing Massiva",
+      "language": "en"
+    },
+    "wd-Q2717601": {
+      "title": "The Death of Hyacinthos",
+      "language": "en"
+    },
+    "wd-Q1198515": {
+      "title": "Dorflandschaft bei Morgenbeleuchtung",
+      "language": "de"
+    },
+    "wd-Q6803438": {
+      "title": "Meadows near Rijswijk and the Schenkweg",
+      "language": "en"
+    },
+    "wd-Q1245431": {
+      "title": "Das Frühstück im Atelier",
+      "language": "de"
+    },
+    "wd-Q23934499": {
+      "title": "A Romance (Rusiñol)",
+      "language": "en"
+    },
+    "wd-Q3402890": {
+      "title": "The Scapegoat (painting)",
+      "language": "en"
+    },
+    "wd-Q5781032": {
+      "title": "Concert of Angels",
+      "language": "en"
+    },
+    "wd-Q2734111": {
+      "title": "Porträt von Maffeo Barberini",
+      "language": "de"
+    },
+    "wd-Q3201883": {
+      "title": "Love and Psyche (David)",
+      "language": "en"
+    },
+    "wd-Q3055367": {
+      "title": "Entry of the Crusaders in Constantinople",
+      "language": "en"
+    },
+    "wd-Q118435736": {
+      "title": "King of the Forest",
+      "language": "en"
+    },
+    "wd-Q3842349": {
+      "title": "Miss La La at the Cirque Fernando",
+      "language": "en"
+    },
+    "wd-Q9397534": {
+      "title": "The King's Wife (painting)",
+      "language": "en"
+    },
+    "wd-Q3222561": {
+      "title": "Departure (Beckmann)",
+      "language": "en"
+    },
+    "wd-Q470541": {
+      "title": "The Vale of Rest",
+      "language": "en"
+    },
+    "wd-Q5966323": {
+      "title": "Coronation of the Virgin (El Greco, Illescas)",
+      "language": "en"
+    },
+    "wd-Q2734679": {
+      "title": "Martha and Mary Magdalene (Caravaggio)",
+      "language": "en"
+    },
+    "wd-Q5849818": {
+      "title": "Summer (Goya)",
+      "language": "en"
+    },
+    "wd-Q3207608": {
+      "title": "The Anger of Achilles",
+      "language": "en"
+    },
+    "wd-Q1197913": {
+      "title": "Der Watzmann (Gemälde)",
+      "language": "de"
+    },
+    "wd-Q4528214": {
+      "title": "Study of a Nude",
+      "language": "en"
+    },
+    "wd-Q822541": {
+      "title": "The Order of Release, 1746",
+      "language": "en"
+    },
+    "wd-Q5966425": {
+      "title": "Dame im Pelzmantel",
+      "language": "de"
+    },
+    "wd-Q3614563": {
+      "title": "Cupid and Psyche (van Dyck)",
+      "language": "en"
+    },
+    "wd-Q5967115": {
+      "title": "The Music Lesson (Fragonard)",
+      "language": "en"
+    },
+    "wd-Q3210835": {
+      "title": "The Death of Leonardo da Vinci",
+      "language": "en"
+    },
+    "wd-Q1451490": {
+      "title": "Frau am Fenster",
+      "language": "de"
+    },
+    "wd-Q4657634": {
+      "title": "Allee bei Arles",
+      "language": "de"
+    },
+    "wd-Q949567": {
+      "title": "The Shadow of Death",
+      "language": "en"
+    },
+    "wd-Q617629": {
+      "title": "Resurrection (El Greco)",
+      "language": "en"
+    },
+    "wd-Q3918296": {
+      "title": "Our Lady of the Rosary (Murillo, Madrid)",
+      "language": "en"
+    },
+    "wd-Q15973749": {
+      "title": "The Laundress (Chardin)",
+      "language": "en"
+    },
+    "wd-Q3439636": {
+      "title": "Roger befreit Angelika",
+      "language": "de"
+    },
+    "wd-Q959628": {
+      "title": "Asmodea",
+      "language": "en"
+    },
+    "wd-Q15130000": {
+      "title": "Woman with a Pearl Necklace in a Loge",
+      "language": "en"
+    },
+    "wd-Q5651584": {
+      "title": "Ulysses and the Sirens (Waterhouse)",
+      "language": "en"
+    },
+    "wd-Q1237250": {
+      "title": "Allegory of the Battle of Lepanto",
+      "language": "en"
+    },
+    "wd-Q1433194": {
+      "title": "Christi Geburt mit den Heiligen Laurentius und Franziskus",
+      "language": "de"
+    },
+    "wd-Q3230728": {
+      "title": "The Attributes of Music, the Arts and the Sciences",
+      "language": "en"
+    },
+    "wd-Q783563": {
+      "title": "The Illness of Antiochus",
+      "language": "en"
+    },
+    "wd-Q1545495": {
+      "title": "Greifswalder Hafen",
+      "language": "de"
+    },
+    "wd-Q3713947": {
+      "title": "Female Nude (Renoir, 1876)",
+      "language": "en"
+    },
+    "wd-Q18357854": {
+      "title": "Vahine no te vi",
+      "language": "en"
+    },
+    "wd-Q8563481": {
+      "title": "Five Bathing Women at a Lake",
+      "language": "en"
+    },
+    "wd-Q6163843": {
+      "title": "Jason and Medea (painting)",
+      "language": "en"
+    },
+    "wd-Q16038642": {
+      "title": "Mystic Marriage of Saint Catherine (Veronese, 1575)",
+      "language": "en"
+    },
+    "wd-Q24118": {
+      "title": "The Clubfoot",
+      "language": "en"
+    },
+    "wd-Q5968321": {
+      "title": "The Threshing Floor",
+      "language": "en"
+    },
+    "wd-Q2749266": {
+      "title": "Equestrian Portrait of Count Stanislas Potocki",
+      "language": "en"
+    },
+    "wd-Q1423223": {
+      "title": "Mondaufgang am Meer",
+      "language": "de"
+    },
+    "wd-Q3929306": {
+      "title": "The Overture to Tannhäuser",
+      "language": "en"
+    },
+    "wd-Q6411359": {
+      "title": "King Cophetua and the Beggar Maid (painting)",
+      "language": "en"
+    },
+    "wd-Q1984131": {
+      "title": "Saint George and the Dragon (Tintoretto)",
+      "language": "en"
+    },
+    "wd-Q2456003": {
+      "title": "The Immaculate Conception of Los Venerables",
+      "language": "en"
+    },
+    "wd-Q8703547": {
+      "title": "The Visit to the Nursery",
+      "language": "en"
+    },
+    "wd-Q2984817": {
+      "title": "Minerva Fighting Mars",
+      "language": "en"
+    },
+    "wd-Q16038731": {
+      "title": "Snow Storm: Steam-Boat off a Harbour's Mouth",
+      "language": "en"
+    },
+    "wd-Q3947218": {
+      "title": "San Giorgio Maggiore at Dusk",
+      "language": "en"
+    },
+    "wd-Q7739744": {
+      "title": "The Hireling Shepherd",
+      "language": "en"
+    },
+    "wd-Q3937561": {
+      "title": "Portrait of Giulio Clovio",
+      "language": "en"
+    },
+    "wd-Q626791": {
+      "title": "Heiliger Hieronymus in Meditation (Caravaggio)",
+      "language": "de"
+    },
+    "wd-Q15934578": {
+      "title": "Vulcan Presenting Venus with Arms for Aeneas (Boucher)",
+      "language": "en"
+    },
+    "wd-Q8777422": {
+      "title": "Cupid and Psyche (Gérard)",
+      "language": "en"
+    },
+    "wd-Q1652361": {
+      "title": "Hünengrab im Schnee",
+      "language": "de"
+    },
+    "wd-Q398126": {
+      "title": "Salisbury Cathedral from the Meadows",
+      "language": "en"
+    },
+    "wd-Q16275077": {
+      "title": "The Beloved (Rossetti)",
+      "language": "en"
+    },
+    "wd-Q5712837": {
+      "title": "Self-Portrait (El Greco)",
+      "language": "en"
+    },
+    "wd-Q2273901": {
+      "title": "Joseph's Tunic",
+      "language": "en"
+    },
+    "wd-Q19911765": {
+      "title": "Allegory of the Planets and Continents",
+      "language": "en"
+    },
+    "wd-Q3210859": {
+      "title": "The Death of Young Bara",
+      "language": "en"
+    },
+    "wd-Q18589150": {
+      "title": "Wivenhoe Park (painting)",
+      "language": "en"
+    },
+    "wd-Q2070487": {
+      "title": "Beach in Pourville",
+      "language": "en"
+    },
+    "wd-Q106472143": {
+      "title": "The White River",
+      "language": "en"
+    },
+    "wd-Q18208719": {
+      "title": "Cymon and Iphigenia (Leighton painting)",
+      "language": "en"
+    },
+    "wd-Q5965524": {
+      "title": "The Virgin of Charity (El Greco)",
+      "language": "en"
+    },
+    "wd-Q3937482": {
+      "title": "Karl I. mit M. de St. Antoine",
+      "language": "de"
+    },
+    "wd-Q3473161": {
+      "title": "Sappho and Phaon",
+      "language": "en"
+    },
+    "wd-Q22443298": {
+      "title": "Stetind in Fog",
+      "language": "en"
+    },
+    "wd-Q278722": {
+      "title": "Pont Boieldieu in Rouen, Rainy Weather",
+      "language": "en"
+    },
+    "wd-Q18685536": {
+      "title": "The Bath of Psyche",
+      "language": "en"
+    },
+    "wd-Q5965719": {
+      "title": "Annunciation (El Greco, Illescas)",
+      "language": "en"
+    },
+    "wd-Q3937485": {
+      "title": "Karl I. auf der Jagd",
+      "language": "de"
+    },
+    "wd-Q20184253": {
+      "title": "Alexander the Great and Campaspe in the Studio of Apelles",
+      "language": "en"
+    },
+    "wd-Q3937421": {
+      "title": "The Duke and Duchess of Osuna and their Children",
+      "language": "en"
+    },
+    "wd-Q6799225": {
+      "title": "View from Stalheim",
+      "language": "en"
+    },
+    "wd-Q3089617": {
+      "title": "Frédéric Bazille at his Easel",
+      "language": "en"
+    },
+    "wd-Q287169": {
+      "title": "A Huguenot, on St. Bartholomew's Day",
+      "language": "en"
+    },
+    "wd-Q5996597": {
+      "title": "Il Paradiso",
+      "language": "en"
+    },
+    "wd-Q1117094": {
+      "title": "The Crowning with Thorns (Caravaggio, Vienna)",
+      "language": "en"
+    },
+    "wd-Q9401827": {
+      "title": "The Burial of Atala",
+      "language": "en"
+    },
+    "wd-Q3231771": {
+      "title": "The Poppy Field near Argenteuil",
+      "language": "en"
+    },
+    "wd-Q4198276": {
+      "title": "Isabella and the Pot of Basil",
+      "language": "en"
+    },
+    "wd-Q9026835": {
+      "title": "Penitent Magdalene (El Greco)",
+      "language": "en"
+    },
+    "wd-Q3687201": {
+      "title": "Consequences of War",
+      "language": "en"
+    },
+    "wd-Q14753025": {
+      "title": "Portrait of Madame Ingres",
+      "language": "en"
+    },
+    "wd-Q3349704": {
+      "title": "The Charging Chasseur",
+      "language": "en"
+    },
+    "wd-Q5966403": {
+      "title": "The Cradle (Morisot)",
+      "language": "en"
+    },
+    "wd-Q5015478": {
+      "title": "Veronica Veronese",
+      "language": "en"
+    },
+    "wd-Q961661": {
+      "title": "Allegory of Virtue and Vice (Veronese)",
+      "language": "en"
+    },
+    "wd-Q4009226": {
+      "title": "A View of Het Steen in the Early Morning",
+      "language": "en"
+    },
+    "wd-Q3201862": {
+      "title": "Cupid Disarmed (Watteau)",
+      "language": "en"
+    },
+    "wd-Q15918248": {
+      "title": "The Vow of Louis XIII",
+      "language": "en"
+    },
+    "wd-Q4003071": {
+      "title": "Ulysses Deriding Polyphemus",
+      "language": "en"
+    },
+    "wd-Q7581196": {
+      "title": "Springtime (Claude Monet)",
+      "language": "en"
+    },
+    "wd-Q7063305": {
+      "title": "Notre-Dame, une fin d'après-midi",
+      "language": "en"
+    },
+    "wd-Q5221207": {
+      "title": "Dante and Beatrice (painting)",
+      "language": "en"
+    },
+    "wd-Q1103170": {
+      "title": "Lucretia (Veronese)",
+      "language": "en"
+    },
+    "wd-Q5792618": {
+      "title": "The Birth of the Virgin (Murillo)",
+      "language": "en"
+    },
+    "wd-Q3212992": {
+      "title": "The Surprise (Watteau)",
+      "language": "en"
+    },
+    "wd-Q15918393": {
+      "title": "La Belle Zélie",
+      "language": "en"
+    },
+    "wd-Q14942039": {
+      "title": "Summer's Day",
+      "language": "en"
+    },
+    "wd-Q6059617": {
+      "title": "Pandora (painting)",
+      "language": "en"
+    },
+    "wd-Q21204021": {
+      "title": "Portrait of the Artist's Family (Sofonisba Anguissola)",
+      "language": "en"
+    },
+    "wd-Q11694421": {
+      "title": "The Good Shepherd (Murillo)",
+      "language": "en"
+    },
+    "wd-Q3794586": {
+      "title": "The Martyrdom of Saint Bartholomew (Tiepolo)",
+      "language": "en"
+    },
+    "wd-Q15992468": {
+      "title": "Romulus' Victory Over Acron",
+      "language": "en"
+    },
+    "wd-Q6494773": {
+      "title": "Last Words of the Emperor Marcus Aurelius",
+      "language": "en"
+    },
+    "wd-Q2860945": {
+      "title": "Argenteuil (Manet)",
+      "language": "en"
+    },
+    "wd-Q632603": {
+      "title": "Dante's Dream",
+      "language": "en"
+    },
+    "wd-Q3720171": {
+      "title": "Saint Sebastian (El Greco, 1576–1579)",
+      "language": "en"
+    },
+    "wd-Q15943274": {
+      "title": "Saint Elizabeth of Portugal (Zurbarán)",
+      "language": "en"
+    },
+    "wd-Q16649045": {
+      "title": "Portrait of Madame Duvaucey",
+      "language": "en"
+    },
+    "wd-Q6929863": {
+      "title": "Mrs. Richard Brinsley Sheridan (painting)",
+      "language": "en"
+    },
+    "wd-Q2912117": {
+      "title": "The Tub",
+      "language": "en"
+    },
+    "wd-Q7749405": {
+      "title": "The Magic Circle (Waterhouse paintings)",
+      "language": "en"
+    },
+    "wd-Q5966793": {
+      "title": "The Fable (El Greco)",
+      "language": "en"
+    },
+    "wd-Q20017050": {
+      "title": "Pietà (Ribera, Madrid)",
+      "language": "en"
+    },
+    "wd-Q23499671": {
+      "title": "Aurora and Cephalus (Guérin)",
+      "language": "en"
+    },
+    "wd-Q7732151": {
+      "title": "The Great Day of His Wrath",
+      "language": "en"
+    },
+    "wd-Q3203711": {
+      "title": "The Dead Man (Manet)",
+      "language": "en"
+    },
+    "wd-Q9248672": {
+      "title": "The Girlhood of Mary Virgin",
+      "language": "en"
+    },
+    "wd-Q6106748": {
+      "title": "Portrait of Antonio de Covarrubias",
+      "language": "en"
+    },
+    "wd-Q2270778": {
+      "title": "The Denial of Saint Peter (Caravaggio)",
+      "language": "en"
+    },
+    "wd-Q7727786": {
+      "title": "The Country Dance",
+      "language": "en"
+    },
+    "wd-Q3231954": {
+      "title": "Die letzten Momente des Michel Lepeletier",
+      "language": "de"
+    },
+    "wd-Q1587929": {
+      "title": "Morgen im Riesengebirge",
+      "language": "de"
+    },
+    "wd-Q3828409": {
+      "title": "Le Pont-Neuf (Renoir)",
+      "language": "en"
+    },
+    "wd-Q1175910": {
+      "title": "The Rescue (painting)",
+      "language": "en"
+    },
+    "wd-Q6461660": {
+      "title": "Nativity (El Greco)",
+      "language": "en"
+    },
+    "wd-Q2275353": {
+      "title": "Saint Francis in Prayer (Caravaggio)",
+      "language": "en"
+    },
+    "wd-Q7848304": {
+      "title": "Time Unveiling Truth (Tiepolo)",
+      "language": "en"
+    },
+    "wd-Q3399448": {
+      "title": "Portrait of Madame Marie-Louise Trudaine",
+      "language": "en"
+    },
+    "wd-Q21204853": {
+      "title": "Old Pine Trees",
+      "language": "en"
+    },
+    "wd-Q472037": {
+      "title": "By the Seashore",
+      "language": "en"
+    },
+    "wd-Q18685555": {
+      "title": "Perseus and Andromeda (Leighton)",
+      "language": "en"
+    },
+    "wd-Q7733345": {
+      "title": "The Family of Darius Before Alexander",
+      "language": "en"
+    },
+    "wd-Q2395137": {
+      "title": "Portrait of a Courtesan (Caravaggio)",
+      "language": "en"
+    },
+    "wd-Q3399505": {
+      "title": "Portrait of Alphonse Leroy",
+      "language": "en"
+    },
+    "wd-Q219271": {
+      "title": "Light and Colour (Goethe's Theory) – The Morning after the Deluge – Moses Writing the Book of Genesis",
+      "language": "en"
+    },
+    "wd-Q4931530": {
+      "title": "Boating on the River Epte",
+      "language": "en"
+    },
+    "wd-Q24055777": {
+      "title": "Venus Verticordia (Rossetti)",
+      "language": "en"
+    },
+    "wd-Q9068409": {
+      "title": "Portrait of Procurator Jacopo Soranzo",
+      "language": "en"
+    },
+    "wd-Q2843410": {
+      "title": "The Arrival of Marie de Medici at Marseille",
+      "language": "en"
+    },
+    "wd-Q743491": {
+      "title": "Der Sklavenmarkt",
+      "language": "de"
+    },
+    "wd-Q232084": {
+      "title": "Zwei Männer am Meer",
+      "language": "de"
+    },
+    "wd-Q266435": {
+      "title": "Peace Concluded",
+      "language": "en"
+    },
+    "wd-Q18573258": {
+      "title": "Self Portrait (Tintoretto)",
+      "language": "en"
+    },
+    "wd-Q5659824": {
+      "title": "The Young Beggar",
+      "language": "en"
+    },
+    "wd-Q15617821": {
+      "title": "Portrait of Philibert Rivière",
+      "language": "en"
+    },
+    "wd-Q10315096": {
+      "title": "The Seine at Asnières",
+      "language": "en"
+    },
+    "wd-Q26990816": {
+      "title": "Roman Widow (Rossetti)",
+      "language": "en"
+    },
+    "wd-Q11800904": {
+      "title": "The Deliverance of Arsinoe",
+      "language": "en"
+    },
+    "wd-Q15992454": {
+      "title": "The Dauphin's Entry Into Paris",
+      "language": "en"
+    },
+    "wd-Q3825991": {
+      "title": "Self-Portrait at an Easel",
+      "language": "en"
+    },
+    "wd-Q18683364": {
+      "title": "The Grands Boulevards",
+      "language": "en"
+    },
+    "wd-Q4164441": {
+      "title": "The Long Engagement",
+      "language": "en"
+    },
+    "wd-Q15074981": {
+      "title": "The Feast in the House of Simon the Pharisee (Veronese, Milan)",
+      "language": "en"
+    },
+    "wd-Q3038404": {
+      "title": "Doña Antonia de Ipeñarrieta y Galdós and Her Son Don Luis",
+      "language": "en"
+    },
+    "wd-Q17304998": {
+      "title": "Pygmalion and Galatea (Girodet)",
+      "language": "en"
+    },
+    "wd-Q5664591": {
+      "title": "Allegory of Industry",
+      "language": "en"
+    },
+    "wd-Q4197021": {
+      "title": "Gather Ye Rosebuds While Ye May (Waterhouse painting 1909)",
+      "language": "en"
+    },
+    "wd-Q3689725": {
+      "title": "The Conversion of Saint Paul (Parmigianino)",
+      "language": "en"
+    },
+    "wd-Q3630756": {
+      "title": "Self-Portrait with a Sunflower",
+      "language": "en"
+    },
+    "wd-Q11753188": {
+      "title": "Der Sommer (Gemälde)",
+      "language": "de"
+    }
+  }
+}

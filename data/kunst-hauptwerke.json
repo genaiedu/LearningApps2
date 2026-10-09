@@ -1,0 +1,1107 @@
+{
+  "version": 1,
+  "checked": "2026-10-09",
+  "selection": "100 bekannte Hauptwerke mit eigenem Wikipediaartikel und breiter Wikimedia-Rezeption; ausgewählt und auf die vier Quizangaben und eine gemeinfreie Commons-Bildfassung geprüft.",
+  "works": [
+    {
+      "id": "wd-Q45585",
+      "title": "Sternennacht",
+      "artist": "Vincent van Gogh",
+      "source": "https://www.wikidata.org/wiki/Q45585",
+      "wikipedia": {
+        "title": "Sternennacht",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 76
+    },
+    {
+      "id": "wd-Q29530",
+      "title": "Die Freiheit führt das Volk",
+      "artist": "Eugène Delacroix",
+      "source": "https://www.wikidata.org/wiki/Q29530",
+      "wikipedia": {
+        "title": "Die Freiheit führt das Volk",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 67
+    },
+    {
+      "id": "wd-Q208758",
+      "title": "Las Meninas",
+      "artist": "Diego Velázquez",
+      "source": "https://www.wikidata.org/wiki/Q208758",
+      "wikipedia": {
+        "title": "Las Meninas",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 57
+    },
+    {
+      "id": "wd-Q154469",
+      "title": "Die Kartoffelesser",
+      "artist": "Vincent van Gogh",
+      "source": "https://www.wikidata.org/wiki/Q154469",
+      "wikipedia": {
+        "title": "Die Kartoffelesser",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 53
+    },
+    {
+      "id": "wd-Q328523",
+      "title": "Impression, Sonnenaufgang",
+      "artist": "Claude Monet",
+      "source": "https://www.wikidata.org/wiki/Q328523",
+      "wikipedia": {
+        "title": "Impression, Sonnenaufgang",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 52
+    },
+    {
+      "id": "wd-Q698487",
+      "title": "Der Kuss",
+      "artist": "Gustav Klimt",
+      "source": "https://www.wikidata.org/wiki/Q698487",
+      "wikipedia": {
+        "title": "Der Kuss (Klimt)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 51
+    },
+    {
+      "id": "wd-Q212616",
+      "title": "Das Floß der Medusa",
+      "artist": "Théodore Géricault",
+      "source": "https://www.wikidata.org/wiki/Q212616",
+      "wikipedia": {
+        "title": "Das Floß der Medusa",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 47
+    },
+    {
+      "id": "wd-Q1091086",
+      "title": "Die Erschießung der Aufständischen",
+      "artist": "Francisco de Goya",
+      "source": "https://www.wikidata.org/wiki/Q1091086",
+      "wikipedia": {
+        "title": "Die Erschießung der Aufständischen",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 45
+    },
+    {
+      "id": "wd-Q152867",
+      "title": "Die nackte Maja",
+      "artist": "Francisco de Goya",
+      "source": "https://www.wikidata.org/wiki/Q152867",
+      "wikipedia": {
+        "title": "Die nackte Maja",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 45
+    },
+    {
+      "id": "wd-Q2282256",
+      "title": "Schwertlilien",
+      "artist": "Vincent van Gogh",
+      "source": "https://www.wikidata.org/wiki/Q2282256",
+      "wikipedia": {
+        "title": "Irises (painting)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 43
+    },
+    {
+      "id": "wd-Q634122",
+      "title": "Krähen über Weizenfeld",
+      "artist": "Vincent van Gogh",
+      "source": "https://www.wikidata.org/wiki/Q634122",
+      "wikipedia": {
+        "title": "Wheatfield with Crows",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 43
+    },
+    {
+      "id": "wd-Q476458",
+      "title": "Der Schwur der Horatier",
+      "artist": "Jacques-Louis David",
+      "source": "https://www.wikidata.org/wiki/Q476458",
+      "wikipedia": {
+        "title": "Der Schwur der Horatier",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 42
+    },
+    {
+      "id": "wd-Q1025704",
+      "title": "Caféterrasse am Abend",
+      "artist": "Vincent van Gogh",
+      "source": "https://www.wikidata.org/wiki/Q1025704",
+      "wikipedia": {
+        "title": "Caféterrasse am Abend",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 40
+    },
+    {
+      "id": "wd-Q1133420",
+      "title": "Die Übergabe von Breda",
+      "artist": "Diego Velázquez",
+      "source": "https://www.wikidata.org/wiki/Q1133420",
+      "wikipedia": {
+        "title": "Die Übergabe von Breda",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 38
+    },
+    {
+      "id": "wd-Q604761",
+      "title": "Knabe in Blau",
+      "artist": "Thomas Gainsborough",
+      "source": "https://www.wikidata.org/wiki/Q604761",
+      "wikipedia": {
+        "title": "The Blue Boy",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 38
+    },
+    {
+      "id": "wd-Q1464531",
+      "title": "Sternennacht über der Rhone",
+      "artist": "Vincent van Gogh",
+      "source": "https://www.wikidata.org/wiki/Q1464531",
+      "wikipedia": {
+        "title": "Sternennacht über der Rhone",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 38
+    },
+    {
+      "id": "wd-Q1213917",
+      "title": "Die Kirche von Auvers",
+      "artist": "Vincent van Gogh",
+      "source": "https://www.wikidata.org/wiki/Q1213917",
+      "wikipedia": {
+        "title": "Die Kirche von Auvers",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 37
+    },
+    {
+      "id": "wd-Q354396",
+      "title": "Adele Bloch-Bauer I",
+      "artist": "Gustav Klimt",
+      "source": "https://www.wikidata.org/wiki/Q354396",
+      "wikipedia": {
+        "title": "Adele Bloch-Bauer I",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 35
+    },
+    {
+      "id": "wd-Q1212937",
+      "title": "Die Gesandten",
+      "artist": "Hans Holbein der Jüngere",
+      "source": "https://www.wikidata.org/wiki/Q1212937",
+      "wikipedia": {
+        "title": "Die Gesandten",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 34
+    },
+    {
+      "id": "wd-Q2629559",
+      "title": "Die Schaukel",
+      "artist": "Jean-Honoré Fragonard",
+      "source": "https://www.wikidata.org/wiki/Q2629559",
+      "wikipedia": {
+        "title": "Die Schaukel (Fragonard)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 34
+    },
+    {
+      "id": "wd-Q1065493",
+      "title": "Ophelia",
+      "artist": "John Everett Millais",
+      "source": "https://www.wikidata.org/wiki/Q1065493",
+      "wikipedia": {
+        "title": "Ophelia (Millais)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 33
+    },
+    {
+      "id": "wd-Q544315",
+      "title": "Der Astronom",
+      "artist": "Jan Vermeer",
+      "source": "https://www.wikidata.org/wiki/Q544315",
+      "wikipedia": {
+        "title": "Der Astronom",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 33
+    },
+    {
+      "id": "wd-Q890678",
+      "title": "Woher kommen wir? Wer sind wir? Wohin gehen wir?",
+      "artist": "Paul Gauguin",
+      "source": "https://www.wikidata.org/wiki/Q890678",
+      "wikipedia": {
+        "title": "Woher kommen wir? Wer sind wir? Wohin gehen wir?",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 33
+    },
+    {
+      "id": "wd-Q500951",
+      "title": "Der gelbe Christus",
+      "artist": "Paul Gauguin",
+      "source": "https://www.wikidata.org/wiki/Q500951",
+      "wikipedia": {
+        "title": "The Yellow Christ",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 32
+    },
+    {
+      "id": "wd-Q185255",
+      "title": "Die Hochzeit zu Kana",
+      "artist": "Paolo Veronese",
+      "source": "https://www.wikidata.org/wiki/Q185255",
+      "wikipedia": {
+        "title": "Die Hochzeit zu Kana",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 31
+    },
+    {
+      "id": "wd-Q1167907",
+      "title": "Das Frühstück der Ruderer",
+      "artist": "Pierre-Auguste Renoir",
+      "source": "https://www.wikidata.org/wiki/Q1167907",
+      "wikipedia": {
+        "title": "Das Frühstück der Ruderer",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 30
+    },
+    {
+      "id": "wd-Q471289",
+      "title": "Der verwundete Engel",
+      "artist": "Hugo Simberg",
+      "source": "https://www.wikidata.org/wiki/Q471289",
+      "wikipedia": {
+        "title": "Der verwundete Engel",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 30
+    },
+    {
+      "id": "wd-Q1239950",
+      "title": "Der Absinth",
+      "artist": "Edgar Degas",
+      "source": "https://www.wikidata.org/wiki/Q1239950",
+      "wikipedia": {
+        "title": "L'Absinthe",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 30
+    },
+    {
+      "id": "wd-Q2727560",
+      "title": "Die Enthauptung Johannes des Täufers",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q2727560",
+      "wikipedia": {
+        "title": "Die Enthauptung Johannes des Täufers (Caravaggio)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 30
+    },
+    {
+      "id": "wd-Q1133821",
+      "title": "Der Tod des Sardanapal",
+      "artist": "Eugène Delacroix",
+      "source": "https://www.wikidata.org/wiki/Q1133821",
+      "wikipedia": {
+        "title": "Der Tod des Sardanapal",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 30
+    },
+    {
+      "id": "wd-Q2366825",
+      "title": "The Hay Wain",
+      "artist": "John Constable",
+      "source": "https://www.wikidata.org/wiki/Q2366825",
+      "wikipedia": {
+        "title": "The Hay Wain",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 30
+    },
+    {
+      "id": "wd-Q920030",
+      "title": "Die Familie Karls IV.",
+      "artist": "Francisco de Goya",
+      "source": "https://www.wikidata.org/wiki/Q920030",
+      "wikipedia": {
+        "title": "Die Familie Karls IV.",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 30
+    },
+    {
+      "id": "wd-Q2629423",
+      "title": "Lesende Frau",
+      "artist": "Jean-Honoré Fragonard",
+      "source": "https://www.wikidata.org/wiki/Q2629423",
+      "wikipedia": {
+        "title": "Die Leserin (Fragonard)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 29
+    },
+    {
+      "id": "wd-Q94802",
+      "title": "Begräbnis des Grafen von Orgaz",
+      "artist": "El Greco",
+      "source": "https://www.wikidata.org/wiki/Q94802",
+      "wikipedia": {
+        "title": "Begräbnis des Grafen von Orgaz",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 29
+    },
+    {
+      "id": "wd-Q318947",
+      "title": "Abendmahl in Emmaus",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q318947",
+      "wikipedia": {
+        "title": "Abendmahl in Emmaus (Caravaggio)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 29
+    },
+    {
+      "id": "wd-Q883994",
+      "title": "Ansicht von Toledo",
+      "artist": "El Greco",
+      "source": "https://www.wikidata.org/wiki/Q883994",
+      "wikipedia": {
+        "title": "Blick auf Toledo",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 28
+    },
+    {
+      "id": "wd-Q194137",
+      "title": "Das Eismeer",
+      "artist": "Caspar David Friedrich",
+      "source": "https://www.wikidata.org/wiki/Q194137",
+      "wikipedia": {
+        "title": "Das Eismeer",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 27
+    },
+    {
+      "id": "wd-Q2354251",
+      "title": "Die Dantebarke",
+      "artist": "Eugène Delacroix",
+      "source": "https://www.wikidata.org/wiki/Q2354251",
+      "wikipedia": {
+        "title": "Die Dantebarke",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 27
+    },
+    {
+      "id": "wd-Q2339059",
+      "title": "Rain, Steam and Speed – The Great Western Railway",
+      "artist": "William Turner",
+      "source": "https://www.wikidata.org/wiki/Q2339059",
+      "wikipedia": {
+        "title": "Rain, Steam and Speed – The Great Western Railway",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 26
+    },
+    {
+      "id": "wd-Q1167796",
+      "title": "Das Experiment mit dem Vogel in der Luftpumpe",
+      "artist": "Joseph Wright of Derby",
+      "source": "https://www.wikidata.org/wiki/Q1167796",
+      "wikipedia": {
+        "title": "Das Experiment mit dem Vogel in der Luftpumpe",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 26
+    },
+    {
+      "id": "wd-Q846213",
+      "title": "Flaming June",
+      "artist": "Frederic Leighton",
+      "source": "https://www.wikidata.org/wiki/Q846213",
+      "wikipedia": {
+        "title": "Flaming June",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 24
+    },
+    {
+      "id": "wd-Q1445107",
+      "title": "Danaë",
+      "artist": "Gustav Klimt",
+      "source": "https://www.wikidata.org/wiki/Q1445107",
+      "wikipedia": {
+        "title": "Danaë (Klimt)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 24
+    },
+    {
+      "id": "wd-Q2395218",
+      "title": "Frau mit Sonnenschirm – Camille Monet und Sohn Jean auf dem Hügel",
+      "artist": "Claude Monet",
+      "source": "https://www.wikidata.org/wiki/Q2395218",
+      "wikipedia": {
+        "title": "Woman with a Parasol – Madame Monet and Her Son",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 24
+    },
+    {
+      "id": "wd-Q2338417",
+      "title": "Martyrium des Hl. Matthäus",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q2338417",
+      "wikipedia": {
+        "title": "Martyrium des Hl. Matthäus",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 24
+    },
+    {
+      "id": "wd-Q432253",
+      "title": "Garten in Sainte-Adresse",
+      "artist": "Claude Monet",
+      "source": "https://www.wikidata.org/wiki/Q432253",
+      "wikipedia": {
+        "title": "Die Terrasse von Sainte-Adresse",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 24
+    },
+    {
+      "id": "wd-Q2653851",
+      "title": "Die Aufrichtung des Kreuzes",
+      "artist": "Peter Paul Rubens",
+      "source": "https://www.wikidata.org/wiki/Q2653851",
+      "wikipedia": {
+        "title": "The Elevation of the Cross (Rubens)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 24
+    },
+    {
+      "id": "wd-Q663133",
+      "title": "Die Falschspieler",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q663133",
+      "wikipedia": {
+        "title": "The Cardsharps",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 24
+    },
+    {
+      "id": "wd-Q1314013",
+      "title": "The Intervention of the Sabine Women",
+      "artist": "Jacques-Louis David",
+      "source": "https://www.wikidata.org/wiki/Q1314013",
+      "wikipedia": {
+        "title": "The Intervention of the Sabine Women",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 23
+    },
+    {
+      "id": "wd-Q951105",
+      "title": "Das Gastmahl im Hause des Levi",
+      "artist": "Paolo Veronese",
+      "source": "https://www.wikidata.org/wiki/Q951105",
+      "wikipedia": {
+        "title": "Das Gastmahl im Hause des Levi",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 23
+    },
+    {
+      "id": "wd-Q2734892",
+      "title": "Frauen im Garten",
+      "artist": "Claude Monet",
+      "source": "https://www.wikidata.org/wiki/Q2734892",
+      "wikipedia": {
+        "title": "Women in the Garden",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 23
+    },
+    {
+      "id": "wd-Q930535",
+      "title": "Frauen aus Tahiti",
+      "artist": "Paul Gauguin",
+      "source": "https://www.wikidata.org/wiki/Q930535",
+      "wikipedia": {
+        "title": "Tahitian Women on the Beach",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 23
+    },
+    {
+      "id": "wd-Q2317837",
+      "title": "Nachtmahr",
+      "artist": "Johann Heinrich Füssli",
+      "source": "https://www.wikidata.org/wiki/Q2317837",
+      "wikipedia": {
+        "title": "The Nightmare",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 23
+    },
+    {
+      "id": "wd-Q257580",
+      "title": "The Fighting Temeraire",
+      "artist": "William Turner",
+      "source": "https://www.wikidata.org/wiki/Q257580",
+      "wikipedia": {
+        "title": "The Fighting Temeraire",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 23
+    },
+    {
+      "id": "wd-Q2472983",
+      "title": "Das letzte Abendmahl",
+      "artist": "Jacopo Tintoretto",
+      "source": "https://www.wikidata.org/wiki/Q2472983",
+      "wikipedia": {
+        "title": "Last Supper (Tintoretto)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 22
+    },
+    {
+      "id": "wd-Q655705",
+      "title": "Die Musiker",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q655705",
+      "wikipedia": {
+        "title": "The Musicians (Caravaggio)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 22
+    },
+    {
+      "id": "wd-Q1787143",
+      "title": "Kreidefelsen auf Rügen",
+      "artist": "Caspar David Friedrich",
+      "source": "https://www.wikidata.org/wiki/Q1787143",
+      "wikipedia": {
+        "title": "Kreidefelsen auf Rügen",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 22
+    },
+    {
+      "id": "wd-Q2445726",
+      "title": "The Lady of Shalott",
+      "artist": "John William Waterhouse",
+      "source": "https://www.wikidata.org/wiki/Q2445726",
+      "wikipedia": {
+        "title": "The Lady of Shalott (Waterhouse)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 21
+    },
+    {
+      "id": "wd-Q5332757",
+      "title": "Echo und Narcissus",
+      "artist": "John William Waterhouse",
+      "source": "https://www.wikidata.org/wiki/Q5332757",
+      "wikipedia": {
+        "title": "Echo und Narziss (Waterhouse)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 21
+    },
+    {
+      "id": "wd-Q700834",
+      "title": "Jupiter und Io",
+      "artist": "Antonio da Correggio",
+      "source": "https://www.wikidata.org/wiki/Q700834",
+      "wikipedia": {
+        "title": "Jupiter und Io",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 21
+    },
+    {
+      "id": "wd-Q2273517",
+      "title": "Bekehrung Saulus",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q2273517",
+      "wikipedia": {
+        "title": "Conversion on the Way to Damascus",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 21
+    },
+    {
+      "id": "wd-Q276174",
+      "title": "De rozen van Heliogabalus",
+      "artist": "Lawrence Alma-Tadema",
+      "source": "https://www.wikidata.org/wiki/Q276174",
+      "wikipedia": {
+        "title": "The Roses of Heliogabalus",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 21
+    },
+    {
+      "id": "wd-Q1282840",
+      "title": "Napoleon I auf seinem kaiserlichen Thron",
+      "artist": "Jean-Auguste-Dominique Ingres",
+      "source": "https://www.wikidata.org/wiki/Q1282840",
+      "wikipedia": {
+        "title": "Napoleon I on His Imperial Throne",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 20
+    },
+    {
+      "id": "wd-Q39537",
+      "title": "Kirke reicht Odysseus den Trinkbecher",
+      "artist": "John William Waterhouse",
+      "source": "https://www.wikidata.org/wiki/Q39537",
+      "wikipedia": {
+        "title": "Circe Offering the Cup to Ulysses",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 20
+    },
+    {
+      "id": "wd-Q477764",
+      "title": "Die junge Blinde",
+      "artist": "John Everett Millais",
+      "source": "https://www.wikidata.org/wiki/Q477764",
+      "wikipedia": {
+        "title": "The Blind Girl",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 20
+    },
+    {
+      "id": "wd-Q1220013",
+      "title": "Die Öffnung des fünften Siegels",
+      "artist": "El Greco",
+      "source": "https://www.wikidata.org/wiki/Q1220013",
+      "wikipedia": {
+        "title": "Die Öffnung des fünften Siegels",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 20
+    },
+    {
+      "id": "wd-Q2627034",
+      "title": "Heilige Katharina von Alexandrien",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q2627034",
+      "wikipedia": {
+        "title": "Die heilige Katharina von Alexandrien (Caravaggio)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 20
+    },
+    {
+      "id": "wd-Q2713203",
+      "title": "Madonna dei Pellegrini",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q2713203",
+      "wikipedia": {
+        "title": "Madonna dei Pellegrini",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 20
+    },
+    {
+      "id": "wd-Q2732274",
+      "title": "Reuige Magdalena",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q2732274",
+      "wikipedia": {
+        "title": "Reuige Magdalena (Caravaggio)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 20
+    },
+    {
+      "id": "wd-Q698228",
+      "title": "Rosenkranzmadonna",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q698228",
+      "wikipedia": {
+        "title": "Rosenkranzmadonna (Caravaggio)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 20
+    },
+    {
+      "id": "wd-Q960157",
+      "title": "Christus im Hause seiner Eltern",
+      "artist": "John Everett Millais",
+      "source": "https://www.wikidata.org/wiki/Q960157",
+      "wikipedia": {
+        "title": "Christ in the House of His Parents",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 19
+    },
+    {
+      "id": "wd-Q1766454",
+      "title": "Die Parkettschleifer",
+      "artist": "Gustave Caillebotte",
+      "source": "https://www.wikidata.org/wiki/Q1766454",
+      "wikipedia": {
+        "title": "Die Parkettschleifer",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 19
+    },
+    {
+      "id": "wd-Q6402081",
+      "title": "Bildnis eines Edelmanns mit der Hand auf der Brust",
+      "artist": "El Greco",
+      "source": "https://www.wikidata.org/wiki/Q6402081",
+      "wikipedia": {
+        "title": "Edelmann mit der Hand auf der Brust",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 19
+    },
+    {
+      "id": "wd-Q4429116",
+      "title": "Die Elster",
+      "artist": "Claude Monet",
+      "source": "https://www.wikidata.org/wiki/Q4429116",
+      "wikipedia": {
+        "title": "The Magpie (Monet)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 19
+    },
+    {
+      "id": "wd-Q1118295",
+      "title": "Vincents Stuhl mit Pfeife",
+      "artist": "Vincent van Gogh",
+      "source": "https://www.wikidata.org/wiki/Q1118295",
+      "wikipedia": {
+        "title": "Van Gogh's Chair",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 19
+    },
+    {
+      "id": "wd-Q510799",
+      "title": "Hl. Hieronymus",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q510799",
+      "wikipedia": {
+        "title": "Saint Jerome Writing (Caravaggio, Valletta)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 19
+    },
+    {
+      "id": "wd-Q1214313",
+      "title": "Lebensstufen",
+      "artist": "Caspar David Friedrich",
+      "source": "https://www.wikidata.org/wiki/Q1214313",
+      "wikipedia": {
+        "title": "Die Lebensstufen",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 19
+    },
+    {
+      "id": "wd-Q1683743",
+      "title": "Vampir",
+      "artist": "Edvard Munch",
+      "source": "https://www.wikidata.org/wiki/Q1683743",
+      "wikipedia": {
+        "title": "Vampir (Munch)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q3556817",
+      "title": "»Diana im Bade - Diana nach dem Bade«",
+      "artist": "François Boucher",
+      "source": "https://www.wikidata.org/wiki/Q3556817",
+      "wikipedia": {
+        "title": "Diana Bathing (Boucher)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q3137278",
+      "title": "Madame Moitessier",
+      "artist": "Jean-Auguste-Dominique Ingres",
+      "source": "https://www.wikidata.org/wiki/Q3137278",
+      "wikipedia": {
+        "title": "Portrait of Madame Moitessier",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q27157216",
+      "title": "After the Deluge",
+      "artist": "George Frederic Watts",
+      "source": "https://www.wikidata.org/wiki/Q27157216",
+      "wikipedia": {
+        "title": "After the Deluge (painting)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q1757920",
+      "title": "The Light of the World",
+      "artist": "William Holman Hunt",
+      "source": "https://www.wikidata.org/wiki/Q1757920",
+      "wikipedia": {
+        "title": "The Light of the World (Hunt)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q4188993",
+      "title": "The Beguiling of Merlin",
+      "artist": "Edward Burne-Jones",
+      "source": "https://www.wikidata.org/wiki/Q4188993",
+      "wikipedia": {
+        "title": "The Beguiling of Merlin",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q1659469",
+      "title": "Im Sommer",
+      "artist": "Pierre-Auguste Renoir",
+      "source": "https://www.wikidata.org/wiki/Q1659469",
+      "wikipedia": {
+        "title": "Im Sommer",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q2783729",
+      "title": "Lise mit dem Sonnenschirm",
+      "artist": "Pierre-Auguste Renoir",
+      "source": "https://www.wikidata.org/wiki/Q2783729",
+      "wikipedia": {
+        "title": "Lise mit dem Sonnenschirm",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q609572",
+      "title": "Manaò tupapaú",
+      "artist": "Paul Gauguin",
+      "source": "https://www.wikidata.org/wiki/Q609572",
+      "wikipedia": {
+        "title": "Spirit of the Dead Watching",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q2899286",
+      "title": "Berthe Morisot mit Veilchenstrauß",
+      "artist": "Édouard Manet",
+      "source": "https://www.wikidata.org/wiki/Q2899286",
+      "wikipedia": {
+        "title": "Berthe Morisot mit Veilchenstrauß",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q681876",
+      "title": "Frau im Garten",
+      "artist": "Claude Monet",
+      "source": "https://www.wikidata.org/wiki/Q681876",
+      "wikipedia": {
+        "title": "Woman in the Garden",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q2626595",
+      "title": "Die sieben Werke der Barmherzigkeit",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "source": "https://www.wikidata.org/wiki/Q2626595",
+      "wikipedia": {
+        "title": "Sieben Werke der Barmherzigkeit (Caravaggio)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q2627810",
+      "title": "Wasserverkäufer von Sevilla",
+      "artist": "Diego Velázquez",
+      "source": "https://www.wikidata.org/wiki/Q2627810",
+      "wikipedia": {
+        "title": "The Waterseller of Seville",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q2528477",
+      "title": "Hexensabbat",
+      "artist": "Francisco de Goya",
+      "source": "https://www.wikidata.org/wiki/Q2528477",
+      "wikipedia": {
+        "title": "Witches' Sabbath (The Great He-Goat)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q3181999",
+      "title": "Griechenland auf den Ruinen von Mesolongi",
+      "artist": "Eugène Delacroix",
+      "source": "https://www.wikidata.org/wiki/Q3181999",
+      "wikipedia": {
+        "title": "Griechenland auf den Ruinen von Mesolongi",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 18
+    },
+    {
+      "id": "wd-Q1437492",
+      "title": "Frau mit Hut",
+      "artist": "Henri Matisse",
+      "source": "https://www.wikidata.org/wiki/Q1437492",
+      "wikipedia": {
+        "title": "Frau mit Hut",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 17
+    },
+    {
+      "id": "wd-Q835286",
+      "title": "Mars Venus entwaffnet",
+      "artist": "Jacques-Louis David",
+      "source": "https://www.wikidata.org/wiki/Q835286",
+      "wikipedia": {
+        "title": "Mars Being Disarmed by Venus",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 17
+    },
+    {
+      "id": "wd-Q180632",
+      "title": "Papst Paul III. und seine Nepoten",
+      "artist": "Tizian",
+      "source": "https://www.wikidata.org/wiki/Q180632",
+      "wikipedia": {
+        "title": "Papst Paul III. und seine Enkel",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 17
+    },
+    {
+      "id": "wd-Q2712679",
+      "title": "Beata Beatrix",
+      "artist": "Dante Gabriel Rossetti",
+      "source": "https://www.wikidata.org/wiki/Q2712679",
+      "wikipedia": {
+        "title": "Beata Beatrix",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 17
+    },
+    {
+      "id": "wd-Q2255224",
+      "title": "Laokoon",
+      "artist": "El Greco",
+      "source": "https://www.wikidata.org/wiki/Q2255224",
+      "wikipedia": {
+        "title": "Laocoön (El Greco)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 17
+    },
+    {
+      "id": "wd-Q977777",
+      "title": "Proserpine",
+      "artist": "Dante Gabriel Rossetti",
+      "source": "https://www.wikidata.org/wiki/Q977777",
+      "wikipedia": {
+        "title": "Proserpine (Rossetti)",
+        "language": "en"
+      },
+      "wikimediaSitelinks": 17
+    },
+    {
+      "id": "wd-Q2273890",
+      "title": "Der heilige Markus befreit den gefesselten Sklaven",
+      "artist": "Jacopo Tintoretto",
+      "source": "https://www.wikidata.org/wiki/Q2273890",
+      "wikipedia": {
+        "title": "Sklavenwunder",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 17
+    },
+    {
+      "id": "wd-Q2393412",
+      "title": "Vulkan überrascht Venus und Mars",
+      "artist": "Jacopo Tintoretto",
+      "source": "https://www.wikidata.org/wiki/Q2393412",
+      "wikipedia": {
+        "title": "Vulkan überrascht Venus und Mars",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 17
+    },
+    {
+      "id": "wd-Q1167912",
+      "title": "Das Frühstück im Grünen",
+      "artist": "Claude Monet",
+      "source": "https://www.wikidata.org/wiki/Q1167912",
+      "wikipedia": {
+        "title": "Das Frühstück im Grünen (Monet)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 17
+    }
+  ]
+}

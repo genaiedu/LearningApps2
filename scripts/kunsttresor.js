@@ -8,14 +8,14 @@
     set(key,value) { try { localStorage.setItem(key,value); } catch { /* Private browsers may deny storage. */ } },
     remove(key) { try { localStorage.removeItem(key); } catch { /* The round still works in memory. */ } }
   };
-  let pool = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = Math.max(0, Number(store.get(keys.best)) || 0);
+  let pool = [], landmarkIds = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = Math.max(0, Number(store.get(keys.best)) || 0);
   let imagesAllowed = store.get(keys.images) === 'yes', pendingStart = false, imageEpoch = 0;
   let ready = new Set(), failed = new Set(), zoom = 100;
   const imageTimers = new Set();
   let introTimer = null, pendingIntro = false, previousIntro = [], introEpoch = 0;
   const introAudio = new Audio('../LearningApps/assets/kunst-der-fuge/fuge-orchester-suno.mp3');
   introAudio.preload='metadata'; introAudio.volume=.65;
-  const introSeconds=30; // Short excerpt of the existing Suno orchestral interpretation.
+  const introSeconds=46; // Five 7-second chapters followed by an 11-second full-artwork finale.
   let introFadeTimer=null;
   function startIntroAudio() {
     introAudio.play().then(()=>{ $('intro-sound').textContent='♫ Ton ausschalten'; $('intro-sound').setAttribute('aria-pressed','true'); })
@@ -55,58 +55,72 @@
   function askForImages(start) {
     pendingStart = start; open('consent-dialog');
   }
-  function seenIntro() { try { return sessionStorage.getItem('kunsttresor-intro-v1') === 'seen'; } catch { return false; } }
+  function seenIntro() { try { return sessionStorage.getItem('kunsttresor-intro-1000-v2') === 'seen'; } catch { return false; } }
   function finishIntro() {
     introEpoch++; clearTimeout(introTimer); introTimer=null;
     clearInterval(introFadeTimer); introFadeTimer=null;
     introAudio.pause(); introAudio.currentTime=0;
-    close('intro-dialog'); $('intro-slides').replaceChildren(); $('intro-dialog').classList.remove('is-running');
-    try { sessionStorage.setItem('kunsttresor-intro-v1','seen'); } catch { /* No persistent tracking is required. */ }
+    close('intro-dialog'); $('intro-slides').replaceChildren(); $('intro-dialog').classList.remove('is-running','is-finale');
+    try { sessionStorage.setItem('kunsttresor-intro-1000-v2','seen'); } catch { /* No persistent tracking is required. */ }
   }
   function showIntro() {
     if (!pool.length) return;
     if (!imagesAllowed) { pendingIntro=true; askForImages(false); return; }
     finishIntro();
     introAudio.volume=.65;
-    const candidates=core.shuffle(pool.filter(work=>!previousIntro.includes(work.id))), chosen=[];
-    // Prefer visibly varied artists and styles, but keep every selection random.
-    for (const work of candidates) if (chosen.length<5 && !chosen.some(other=>other.artist===work.artist || other.style===work.style)) chosen.push(work);
-    for (const work of candidates) if (chosen.length<5 && !chosen.includes(work) && !chosen.some(other=>other.artist===work.artist)) chosen.push(work);
-    for (const work of candidates) if (chosen.length<5 && !chosen.includes(work)) chosen.push(work);
+    const chosen=core.introSelection(pool,landmarkIds,previousIntro);
     previousIntro=chosen.map(work=>work.id);
     const chapters=[
       {title:pool.length+' Werke. Unzählige Spuren.',text:'Ein Raum wird still. Farben bleiben. In dieser Galerie warten '+pool.length+' echte Kunstwerke auf deinen Blick – und hinter jeder Tür eine neue Auswahl.'},
       {title:'Vier Bilder. Vier Fragen.',text:'Wann entstand das Werk? Welcher Stil? Von wem? Wie gemacht? Ordne Zeit, Stil, Künstler und Technik zu. Jede Antwort passt genau einmal.'},
       {title:'Sehen heißt näher kommen.',text:'Ein Pinselstrich. Eine Linie. Ein unscheinbares Detail. Vergrößere jedes Bild und verschiebe den Ausschnitt mit Maus oder Finger.'},
       {title:'Zwei Versuche. Eine Entscheidung.',text:'Fülle alle 16 Felder und prüfe das Schloss. Nach dem ersten Fehlversuch siehst du genau, welche Zuordnungen falsch waren. Du darfst einmal nachbessern.'},
-      {title:'Wie weit trägt dein Blick?',text:'Alles richtig öffnet die nächste Tür. Ein zweiter Fehlversuch beendet die Runde. Nach der Auflösung kannst du weiterlesen – und freigegebene Bilder herunterladen.'}
+      {title:'Wie weit trägt dein Blick?',text:'Alles richtig öffnet die nächste Tür. Ein zweiter Fehlversuch beendet die Runde. Nach der Auflösung kannst du weiterlesen – und freigegebene Bilder herunterladen.'},
+      {title:'1000 Kunstwerke',text:'Quiz Edition'}
     ];
     chosen.forEach((work,index)=>{
-      const slide=node('div','intro-slide'), image=node('img'); slide.dataset.id=work.id;
+      const finale=index===chosen.length-1;
+      const slide=node('div',finale?'intro-slide intro-slide--full':'intro-slide'), image=node('img'); slide.dataset.id=work.id;
+      slide.style.setProperty('--chapter-duration',(finale?11000:7000)+'ms');
       const closeUp=index===1 || index===3, start=closeUp?1.65+Math.random()*.35:1.08+Math.random()*.12;
       slide.style.setProperty('--scale-start',start); slide.style.setProperty('--scale-end',start+.12+Math.random()*.16);
       slide.style.setProperty('--pan-x-start',(Math.random()*10-5)+'%'); slide.style.setProperty('--pan-x-end',(Math.random()*10-5)+'%');
       slide.style.setProperty('--pan-y-start',(Math.random()*8-4)+'%'); slide.style.setProperty('--pan-y-end',(Math.random()*8-4)+'%');
       image.alt=''; image.referrerPolicy='no-referrer'; image.src=work.imageLargeURL||imageURL(work); slide.append(image); $('intro-slides').append(slide);
+      if (finale) {
+        const alternatives=core.shuffle(pool.filter(other=>landmarkIds.includes(other.id) && !chosen.some(selected=>selected.id===other.id)));
+        image.onerror=()=>{
+          if(epoch!==introEpoch) return;
+          const replacement=alternatives.shift();
+          if (!replacement) return;
+          slide.dataset.id=replacement.id; chosen[index]=replacement;
+          previousIntro[index]=replacement.id;
+          image.src=replacement.imageLargeURL||imageURL(replacement);
+          if ($('intro-dialog').classList.contains('is-finale')) $('intro-art-caption').textContent=replacement.title+' · '+replacement.artist;
+        };
+      }
     });
     const slides=[...$('intro-slides').children], epoch=++introEpoch;
-    const chapterMs=introSeconds*1000/chapters.length;
-    $('intro-dialog').style.setProperty('--chapter-duration',chapterMs+'ms');
+    const durations=[7000,7000,7000,7000,7000,11000];
     $('intro-progress-bar').style.width='0%';
     let index=0;
     function frame() {
       if (epoch!==introEpoch) return;
+      const finale=index===slides.length-1, chapterMs=durations[index];
+      $('intro-dialog').style.setProperty('--chapter-duration',chapterMs+'ms');
+      $('intro-dialog').classList.toggle('is-finale',finale);
       slides.forEach((slide,i)=>{
         // Keep the pan running while this slide fades out; only opacity follows is-active.
         if (i===index) slide.classList.add('is-started');
         slide.classList.toggle('is-active',i===index);
       });
       $('intro-copy').classList.remove('is-visible');
-      $('intro-chapter').textContent='Die Galerie der verschlossenen Türen · '+String(index+1).padStart(2,'0')+' / 05';
+      $('intro-chapter').textContent='Die Galerie der verschlossenen Türen · '+String(index+1).padStart(2,'0')+' / 06';
       $('intro-heading').textContent=chapters[index].title; $('intro-text').textContent=chapters[index].text;
       void $('intro-copy').offsetWidth; $('intro-copy').classList.add('is-visible');
-      $('intro-progress-bar').style.width=(index+1)/chapters.length*100+'%';
-      if (index===slides.length-1) {
+      $('intro-progress-bar').style.width=durations.slice(0,index+1).reduce((a,b)=>a+b,0)/(introSeconds*1000)*100+'%';
+      $('intro-art-caption').textContent=finale ? chosen[index].title+' · '+chosen[index].artist : '';
+      if (finale) {
         const fadeStart=performance.now();
         introFadeTimer=setInterval(()=>{ introAudio.volume=Math.max(0,.65*(1-(performance.now()-fadeStart)/chapterMs)); },80);
       }
@@ -180,7 +194,7 @@
     }
   }
   function loadWorkImage(work, button, epoch) {
-    const img = node('img'); img.alt = 'Kunstwerk ' + button.dataset.letter + ' · zu untersuchende Museumsabbildung';
+    const img = node('img'); img.alt = core.galleryTitle(work) + ' · zu untersuchende Kunstabbildung';
     img.referrerPolicy = 'no-referrer'; img.decoding = 'async';
     let finished = false;
     const finish = ok => {
@@ -207,9 +221,12 @@
     state.ids.forEach((id,index) => {
       const work = workById(id), letter = 'ABCD'[index];
       const card = node('article','art-card'); card.dataset.id = id;
-      const heading = node('div','work-number'); heading.append(node('b',null,'WERK ' + letter),node('span',null,'Original · Museum'));
+      const heading = node('div','work-heading');
+      const marker=node('span','work-marker',letter); marker.setAttribute('aria-label','Werk '+letter);
+      const title=node('h3','work-title',core.galleryTitle(work)); title.id='work-title-'+letter;
+      heading.append(marker,title);
       const picture = node('button','artwork-button'); picture.type = 'button'; picture.dataset.letter = letter;
-      picture.disabled = true; picture.setAttribute('aria-label','Werk ' + letter + ' vergrößern');
+      picture.disabled = true; picture.setAttribute('aria-label',core.galleryTitle(work) + ' vergrößern');
       picture.append(node('div','image-loading','Museumsbild wird geladen …'),node('span',null,'⤢ Bild vergrößern'));
       picture.addEventListener('click',() => showImage(work,letter));
       const assignments = node('div','assignments');
@@ -263,7 +280,7 @@
   function showImage(work,letter) {
     if (!imagesAllowed) return;
     $('image-title').textContent = 'Vergrößerte Kunstansicht';
-    $('zoom-image').alt = 'Vergrößerte Ansicht von Werk ' + letter;
+    $('zoom-image').alt = 'Vergrößerte Ansicht: ' + core.galleryTitle(work);
     $('zoom-image').onload = setZoom;
     $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = work.imageLargeURL || imageURL(work);
     zoom = 100; open('image-dialog');
@@ -303,7 +320,7 @@
   ['pointerup','pointercancel','lostpointercapture'].forEach(type => $('zoom-view').addEventListener(type,stopPan));
   $('image-dialog').addEventListener('close',stopPan);
   const techniqueArticle = {
-    'Öl auf Leinwand':'Ölmalerei', 'Öl auf Holz':'Tafelmalerei', 'Öl auf Papier / Karton':'Ölmalerei',
+    'Öl auf Leinwand':'Ölmalerei', 'Öl auf Holz':'Tafelmalerei', 'Öl auf Papier / Karton':'Ölmalerei', 'Öl und Metallauflage':'Blattgold',
     Tempera:'Temperamalerei', Pastell:'Pastellmalerei', Aquarell:'Aquarell', Radierung:'Radierung',
     'Radierung mit Aquatinta':'Aquatinta', 'Kaltnadelradierung':'Kaltnadelradierung', Lithografie:'Lithografie',
     Holzschnitt:'Holzschnitt', Kupferstich:'Kupferstich', Kreidezeichnung:'Zeichnung (Kunst)',
@@ -352,8 +369,12 @@
       }
       card.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,work.title));
       const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); card.append(list);
-      card.append(node('p','small','Museumsangabe zur Technik: ' + work.medium + '. Dokumentierter Stil: ' + work.styleOriginal + '.'));
-      const source = node('a','small','Originalwerk & Museumsdaten ↗'); source.href = work.source; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.referrerPolicy = 'no-referrer'; card.append(source);
+      card.append(node('p','small','Quellenangabe zur Technik: ' + work.medium + '. Dokumentierter Stil: ' + work.styleOriginal + '.'));
+      const source = node('a','small',work.metadataProvider==='Wikidata'?'Werkdatensatz & Nachweise ↗':'Originalwerk & Museumsdaten ↗'); source.href = work.source; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.referrerPolicy = 'no-referrer'; card.append(source);
+      if (work.catalogueSource) {
+        const catalogue=node('a','small','Weiterführender Werknachweis ↗');
+        catalogue.href=work.catalogueSource; catalogue.target='_blank'; catalogue.rel='noopener noreferrer'; catalogue.referrerPolicy='no-referrer'; card.append(catalogue);
+      }
       const imageSource = node('a','small',' · Commons-Bildquelle & Rechte ↗'); imageSource.href = work.imageSource; imageSource.target = '_blank'; imageSource.rel = 'noopener noreferrer'; imageSource.referrerPolicy = 'no-referrer'; card.append(imageSource);
       card.append(node('p','small','Bild: ' + work.imageCredit + ' · ' + work.imageLicense + '.'));
       if (core.canDownload(work)) {
@@ -431,11 +452,13 @@
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
-  Promise.all(['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json'].map(url => fetch(url+'?v=20261009-6',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })))
-    .then(([data,media,wiki]) => {
+  Promise.all(['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json'].map(url => fetch(url+'?v=20261009-1000',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })))
+    .then(([data,media,wiki,landmarks]) => {
       wikiCatalogue = wiki;
       const images = new Map(media.images.map(image => [image.id,image]));
       pool = data.works.filter(work => images.has(work.id) && wiki.artists[work.artist] && core.validWork(work)).map(work => ({...work,...images.get(work.id)}));
+      landmarkIds = landmarks.works.map(work=>work.id).filter(id=>pool.some(work=>work.id===id));
+      if(pool.length!==1000 || landmarkIds.length!==100) throw Error('Archiv unvollständig');
       core.room(pool); // Verify that a complete, unique room can actually be generated.
       try { state = core.restore(JSON.parse(store.get(keys.game)),pool); } catch { state = null; }
       if (!state) store.remove(keys.game);
