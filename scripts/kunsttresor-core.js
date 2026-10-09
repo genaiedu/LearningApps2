@@ -15,6 +15,10 @@
   function validWork(work) {
     return Boolean(work && work.id && work.title && work.imageId && work.source && work.medium && work.styleOriginal && work.publicDomain === true && work.artistDeath <= 1955 && fields.every(field => typeof work[field] === 'string' && work[field].trim()));
   }
+  function canDownload(work) {
+    if (!work?.imageDownloadAllowed || !/public domain|cc0|cc-zero/i.test(work.imageLicense || '')) return false;
+    try { const url=new URL(work.imageOriginalURL); return url.protocol==='https:' && url.hostname==='upload.wikimedia.org'; } catch { return false; }
+  }
   function room(pool, recent = [], random = Math.random) {
     const eligible = pool.filter(validWork);
     function find(candidates) {
@@ -49,12 +53,21 @@
   }
   function choose(state, workId, field, value) {
     if (state.phase !== 'playing' || !state.ids.includes(workId) || !fields.includes(field) || (value && !state.options[field].includes(value))) return state;
+    if (takenBy(state,workId,field,value)) return state;
     const choices = Object.fromEntries(Object.entries(state.choices).map(([id, selection]) => [id, {...selection}]));
-    for (const id of state.ids) {
-      if (id !== workId && value && choices[id]?.[field] === value) choices[id][field] = '';
-    }
     choices[workId] = {...choices[workId], [field]: value};
     return {...state, choices};
+  }
+  function takenBy(state, workId, field, value) {
+    return value ? state.ids.find(id => id !== workId && state.choices[id]?.[field] === value) || null : null;
+  }
+  function review(state, pool) {
+    if (!state.review?.choices || state.attempts < 1) return [];
+    const byId = new Map(pool.map(work => [work.id,work]));
+    return state.ids.flatMap(id => fields.map(field => {
+      const value = state.review.choices[id]?.[field];
+      return {id,field,value,correct:value === byId.get(id)?.[field],changed:value !== (state.choices[id]?.[field] || '')};
+    }));
   }
   function filled(state) { return state.ids.reduce((sum,id) => sum + fields.filter(field => Boolean(state.choices?.[id]?.[field])).length, 0); }
   function inspect(state, pool) {
@@ -64,7 +77,8 @@
     const correct = state.ids.reduce((sum, id) => sum + fields.filter(field => state.choices[id][field] === byId.get(id)?.[field]).length, 0);
     const attempts = state.attempts + 1;
     const unlocked = correct === 16;
-    return {checked: true, correct, state: {...state, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === 2 ? 'lost' : 'playing'}};
+    const review = {choices:Object.fromEntries(state.ids.map(id => [id,{...state.choices[id]}]))};
+    return {checked: true, correct, state: {...state, review, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === 2 ? 'lost' : 'playing'}};
   }
   function restore(saved, pool) {
     if (!saved || saved.version !== 1 || !['playing','unlocked','lost'].includes(saved.phase) || !Number.isInteger(saved.escaped) || saved.escaped < 0 || !Number.isInteger(saved.attempts) || saved.attempts < 0 || saved.attempts > 2 || !Array.isArray(saved.ids) || saved.ids.length !== 4 || !Array.isArray(saved.recent) || (saved.choices && (typeof saved.choices !== 'object' || Array.isArray(saved.choices)))) return null;
@@ -79,9 +93,18 @@
     }
     if ((saved.phase === 'playing' && saved.attempts > 1) || (saved.phase === 'lost' && saved.attempts !== 2)) return null;
     if (saved.phase === 'unlocked' && (saved.attempts < 1 || saved.escaped < 1 || filled(saved) !== 16 || works.some(work => fields.some(field => saved.choices[work.id][field] !== work[field])))) return null;
-    return {...saved, choices: saved.choices || {}};
+    let review = null;
+    if (saved.attempts > 0) {
+      // Older saved rounds did not retain a review snapshot. Their current
+      // complete assignment can still be marked without resetting an attempt.
+      const choices = saved.review?.choices || saved.choices;
+      const complete = saved.ids.every(id => fields.every(field => saved.options[field].includes(choices?.[id]?.[field])));
+      const unique = fields.every(field => new Set(saved.ids.map(id => choices?.[id]?.[field])).size === 4);
+      if (complete && unique) review = {choices:Object.fromEntries(saved.ids.map(id => [id,{...choices[id]}]))};
+    }
+    return {...saved, choices: saved.choices || {}, review};
   }
-  const api = {fields, shuffle, compatible, validWork, room, newState, choose, filled, inspect, restore};
+  const api = {fields, shuffle, compatible, validWork, canDownload, room, newState, choose, takenBy, review, filled, inspect, restore};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

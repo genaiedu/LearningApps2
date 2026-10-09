@@ -10,6 +10,7 @@ const byId = new Map(media.images.map(image => [image.id,image]));
 const pool = archive.works.filter(work => byId.has(work.id) && wiki.artists[work.artist]).map(work=>({...work,...byId.get(work.id)}));
 function seeded(seed) { return () => { seed = (Math.imul(1664525,seed) + 1013904223) >>> 0; return seed / 4294967296; }; }
 function answer(state,correct = true) {
+  for (const field of core.fields) for (const id of state.ids) state = core.choose(state,id,field,'');
   for (const field of core.fields) for (let i = 0; i < 4; i++) {
     const id = state.ids[i], work = pool.find(w => w.id === state.ids[correct ? i : (i + 1) % 4]);
     state = core.choose(state,id,field,work[field]);
@@ -17,7 +18,7 @@ function answer(state,correct = true) {
   return state;
 }
 test('large documented metadata-only archive, public domain images and named artists', () => {
-  assert.ok(pool.length >= 200);
+  assert.ok(pool.length >= 300);
   assert.equal(new Set(pool.map(work => work.id)).size,pool.length);
   for (const work of pool) {
     assert.ok(core.validWork(work),work.id);
@@ -30,6 +31,16 @@ test('large documented metadata-only archive, public domain images and named art
     assert.match(work.imageLicense,/public domain|cc0/i);
     assert.ok(wiki.artists[work.artist]);
   }
+});
+test('image download is offered only for individually verified Public Domain / CC0 originals', () => {
+  assert.ok(pool.filter(core.canDownload).length >= 300);
+  for (const work of pool.filter(core.canDownload)) {
+    assert.equal(new URL(work.imageOriginalURL).hostname,'upload.wikimedia.org');
+    assert.match(work.downloadRightsChecked,/^2026-10-09$/);
+    assert.ok(work.imageBytes > 0); assert.ok(work.imageMime.startsWith('image/'));
+  }
+  const free=pool.find(core.canDownload);
+  for (const invalid of [{...free,imageDownloadAllowed:false},{...free,imageLicense:'CC BY-SA 4.0'},{...free,imageOriginalURL:'https://example.org/image.jpg'},{...free,imageOriginalURL:'http://upload.wikimedia.org/image.jpg'},{...free,imageOriginalURL:null}]) assert.equal(core.canDownload(invalid),false);
 });
 test('1000 random rooms: four unique answers in all four categories', () => {
   const random = seeded(420), combinations = new Set();
@@ -78,12 +89,44 @@ test('perfect assignment unlocks exactly once; new room resets only its own atte
   next = core.inspect(answer(next),pool).state;
   assert.equal(next.escaped,2); assert.equal(next.attempts,2); assert.equal(next.phase,'unlocked');
 });
-test('each answer is assigned at most once within its category', () => {
+test('taken answers are blocked, never silently erase another assignment, and are released by clearing', () => {
   let state = core.newState(pool,null,seeded(30)); const value = state.options.artist[0];
   state = core.choose(state,state.ids[0],'artist',value);
+  assert.equal(core.takenBy(state,state.ids[1],'artist',value),state.ids[0]);
+  assert.equal(core.takenBy(state,state.ids[0],'artist',value),null);
+  const taken = state;
   state = core.choose(state,state.ids[1],'artist',value);
-  assert.equal(state.choices[state.ids[0]].artist,''); assert.equal(state.choices[state.ids[1]].artist,value);
+  assert.equal(state,taken); assert.equal(state.choices[state.ids[0]].artist,value);
+  assert.equal(state.choices[state.ids[1]]?.artist,undefined);
   assert.equal(core.filled(state),1);
+  state = core.choose(state,state.ids[0],'artist','');
+  assert.equal(core.takenBy(state,state.ids[1],'artist',value),null);
+  state = core.choose(state,state.ids[1],'artist',value);
+  assert.equal(state.choices[state.ids[1]].artist,value);
+});
+test('first failed check retains exact feedback, but changed choices are not evaluated early', () => {
+  let state = answer(core.newState(pool,null,seeded(94)));
+  const [a,b] = state.ids, first = state.choices[a].date, second = state.choices[b].date;
+  state = core.choose(state,a,'date',''); state = core.choose(state,b,'date','');
+  state = core.choose(state,a,'date',second); state = core.choose(state,b,'date',first);
+  assert.deepEqual(core.review(state,pool),[]);
+  const checked = core.inspect(state,pool); state = checked.state;
+  assert.equal(checked.correct,14); assert.equal(state.phase,'playing');
+  const review = core.review(state,pool);
+  assert.equal(review.length,16); assert.equal(review.filter(result=>!result.correct).length,2);
+  assert.ok(review.every(result=>!result.changed));
+  const snapshot = JSON.stringify(state.review);
+  state = core.choose(state,a,'date',''); state = core.choose(state,b,'date','');
+  state = core.choose(state,a,'date',first); state = core.choose(state,b,'date',second);
+  assert.equal(JSON.stringify(state.review),snapshot);
+  assert.equal(core.review(state,pool).filter(result=>result.changed).length,2);
+  assert.equal(core.review(state,pool).filter(result=>!result.correct).length,2);
+  const restored = core.restore(JSON.parse(JSON.stringify(state)),pool);
+  assert.equal(restored.attempts,1); assert.deepEqual(restored.review,state.review);
+  assert.equal(core.review(restored,pool).filter(result=>result.changed).length,2);
+  const won = core.inspect(state,pool).state;
+  assert.equal(won.phase,'unlocked'); assert.ok(core.review(won,pool).every(result=>result.correct && !result.changed));
+  assert.deepEqual(core.review(core.newState(pool,won,seeded(95)),pool),[]);
 });
 test('saved game restores attempts and terminal state; corrupt storage fails safely', () => {
   const initial = core.newState(pool,null,seeded(31));
@@ -103,4 +146,13 @@ test('Wikipedia is offered only after a room ends and uses the established full-
   assert.ok(html.includes('id="consent" data-defer-initial'));
   assert.doesNotMatch(html,/https:\/\/fonts\.(googleapis|gstatic)/);
   assert.doesNotMatch(html,/href="[^"]*materialien\.html/);
+  assert.ok(html.indexOf('So funktioniert dein Rundgang') < html.indexOf('id="start-game"'));
+  assert.ok(html.includes('id="review-summary"'));
+  assert.ok(js.includes('option.disabled = Boolean(owner)'));
+  assert.ok(html.includes('id="intro-skip"'));
+  assert.ok(html.includes('id="intro-count"'));
+  assert.ok(js.includes('previousIntro=chosen.map(work=>work.id)'));
+  assert.ok(js.includes("view.setPointerCapture(event.pointerId)"));
+  assert.ok(js.includes('work.imageLargeURL || imageURL(work)'));
+  assert.ok(js.includes('if (core.canDownload(work))'));
 });

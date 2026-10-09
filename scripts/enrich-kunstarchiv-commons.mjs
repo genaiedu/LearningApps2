@@ -1,14 +1,22 @@
 // Match the museum's stable artwork identifier to Wikidata and Commons.
 // Only JSON metadata is fetched. Images are never downloaded or stored.
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync} from 'node:fs';
 const file = new URL('../data/kunstarchiv.json',import.meta.url).pathname;
 const old = readFileSync(file,'utf8'), archive = JSON.parse(old);
-const ids = archive.works.map(work => '"'+work.id.slice(4)+'"').join(' ');
-const query = `SELECT ?id ?item ?image WHERE { VALUES ?id { ${ids} } ?item wdt:P4610 ?id; wdt:P18 ?image. }`;
-const url = new URL('https://query.wikidata.org/sparql'); url.search = new URLSearchParams({query,format:'json'});
-const response = await fetch(url,{headers:{Accept:'application/sparql-results+json','User-Agent':'LearningApps-Kunsttresor/1.0 (educational, metadata-only)'}});
-if (!response.ok) throw Error('Wikidata HTTP '+response.status);
-const rows = (await response.json()).results.bindings;
+const outputFile = new URL('../data/kunstbilder.json',import.meta.url).pathname;
+const previous = existsSync(outputFile) ? readFileSync(outputFile,'utf8') : null;
+const oldImages = previous ? JSON.parse(previous).images : [];
+const oldIds = new Set(oldImages.map(image=>image.id));
+const candidates = archive.works.filter(work=>!oldIds.has(work.id)), rows = [];
+for (let offset=0;offset<candidates.length;offset+=150) {
+ const ids = candidates.slice(offset,offset+150).map(work => '"'+work.id.slice(4)+'"').join(' ');
+ const query = `SELECT ?id ?item ?image WHERE { VALUES ?id { ${ids} } ?item wdt:P4610 ?id; wdt:P18 ?image. }`;
+ const url = new URL('https://query.wikidata.org/sparql'); url.search = new URLSearchParams({query,format:'json'});
+ const response = await fetch(url,{headers:{Accept:'application/sparql-results+json','User-Agent':'LearningApps-Kunsttresor/1.0 (educational, metadata-only)'}});
+ if (!response.ok) throw Error('Wikidata HTTP '+response.status);
+ rows.push(...(await response.json()).results.bindings);
+ await new Promise(resolve=>setTimeout(resolve,1050));
+}
 const matches = new Map();
 for (const row of rows) {
   const title = 'File:'+decodeURIComponent(row.image.value.split('/').at(-1)).replace(/_/g,' ');
@@ -33,13 +41,15 @@ for(let offset=0;offset<titles.length;offset+=40) {
     info.set(page.title,{imageURL:imageURL.href,imageSource:image.descriptionurl,imageLicense:license,imageCredit:plain(meta?.Artist?.value)||'Reproduktion des historischen Kunstwerks',imageLicenseURL:meta?.LicenseUrl?.value||'https://commons.wikimedia.org/wiki/Commons:Reuse_of_PD-Art_photographs'});
   }
   console.error('Commons metadata:',offset+Math.min(40,titles.length-offset));
+  await new Promise(resolve=>setTimeout(resolve,1050));
 }
-const images = archive.works.flatMap(work => {
+const additions = candidates.flatMap(work => {
   const match = matches.get(work.id.slice(4));
   const image = match && info.get(match.title);
   return image ? [{id:work.id,...image,wikidata:match.wikidata}] : [];
 });
+const images = [...oldImages,...additions];
 if(images.length<150) throw Error('Too few verified Commons images: '+images.length);
-console.error('Verified Commons pool:',images.length);
+console.error('Verified Commons pool:',images.length,'; additions:',additions.length);
 const content = JSON.stringify({checked:'2026-10-09',matching:'Wikidata ARTIC artwork ID (P4610) and Commons image (P18); verified Public Domain / CC0 image metadata.',images});
-console.log('*** Begin Patch\n*** Add File: '+new URL('../data/kunstbilder.json',import.meta.url).pathname+'\n+'+content+'\n*** End Patch');
+console.log('*** Begin Patch\n*** '+(previous?'Update':'Add')+' File: '+outputFile+'\n'+(previous?'@@\n'+previous.trimEnd().split('\n').map(line=>'-'+line).join('\n')+'\n':'')+'+'+content+'\n*** End Patch');
