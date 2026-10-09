@@ -452,7 +452,7 @@ test('Wikipedia is offered only after a room ends and uses the established full-
   assert.ok(html.includes('id="intro-skip"'));
   assert.ok(html.includes('id="intro-count"'));
   assert.ok(js.includes('previousIntro=chosen.map(work=>work.id)'));
-  assert.ok(js.includes("view.setPointerCapture(event.pointerId)"));
+  assert.ok(html.includes('scripts/kunsttresor-zoom.js'));
   assert.ok(js.includes('work.imageLargeURL || imageURL(work)'));
   assert.ok(js.includes('if (core.canDownload(work))'));
 });

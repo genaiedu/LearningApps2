@@ -92,6 +92,15 @@ Raum bleiben dagegen wirkungslos. Für „Nursing Madonna“ wird im Spiel eine
 geprüfte 960px-Vorschau verwendet; beim Vergrößern bleibt sie sichtbar,
 während die größere Fassung nachlädt. Das Original bleibt für Downloads erhalten.
 
+In der bildschirmfüllenden Bildansicht vergrößert und verkleinert eine
+Zwei-Finger-Geste das Bild stufenlos zwischen 100 und 300 Prozent. Das Detail
+unter dem Mittelpunkt der Finger bleibt nach Möglichkeit an dieser Position.
+Mit einem Finger oder der Maus lässt sich der vergrößerte Ausschnitt verschieben;
+nach dem Anheben eines Fingers geht die Geste ohne Sprung ins Verschieben über.
+Abgebrochene Gesten und das Schließen setzen die Kontaktpunkte zurück.
+Plus/Minus, Scrollen und Tastatur bleiben nutzbar. `touch-action: none` gilt nur
+für die Bildfläche; das normale Zoomen der Webseite wird nicht global gesperrt.
+
 ## Wartung
 
 Die ursprünglichen 1000 Werkdatensätze bleiben vollständig und unverändert

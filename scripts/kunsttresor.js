@@ -10,7 +10,7 @@
   };
   let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = Math.max(0, Number(store.get(keys.best)) || 0);
   let imagesAllowed = store.get(keys.images) === 'yes', pendingStart = false, imageEpoch = 0;
-  let ready = new Set(), failed = new Set(), zoom = 100, zoomEpoch = 0, zoomLoad = null;
+  let ready = new Set(), failed = new Set(), zoomEpoch = 0, zoomLoad = null;
   const imageTimers = new Set();
   let introTimer = null, pendingIntro = false, previousIntro = [], introEpoch = 0, introSoundEnabled = true;
   const introAudio = new Audio('../LearningApps/assets/kunst-der-fuge/fuge-orchester-suno.mp3');
@@ -315,10 +315,9 @@
     const epoch = zoomEpoch;
     $('image-title').textContent = 'Vergrößerte Kunstansicht';
     $('zoom-image').alt = 'Vergrößerte Ansicht: ' + core.galleryTitle(work);
-    $('zoom-image').onload = setZoom;
+    $('zoom-image').onload = () => imageViewer.layout();
     $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = imageURL(work);
-    zoom = 100; open('image-dialog');
-    $('zoom-view').scrollTop = $('zoom-view').scrollLeft = 0; setZoom(false);
+    open('image-dialog'); imageViewer.reset();
     const large = work.imageLargeURL || imageURL(work);
     if (large !== imageURL(work)) {
       zoomLoad = new Image(); zoomLoad.referrerPolicy = 'no-referrer';
@@ -330,39 +329,10 @@
     zoomEpoch++;
     if (zoomLoad) { zoomLoad.onload = null; zoomLoad.removeAttribute('src'); zoomLoad = null; }
   }
-  function setZoom(keepCenter = true) {
-    $('zoom-label').textContent = zoom + ' %'; $('zoom-out').disabled = zoom <= 100; $('zoom-in').disabled = zoom >= 300;
-    const view = $('zoom-view'), image = $('zoom-image'), stage = $('zoom-stage');
-    const previousWidth = image.clientWidth, previousHeight = image.clientHeight;
-    const centerX = keepCenter && previousWidth ? (view.scrollLeft + view.clientWidth / 2 - Math.max(0,(stage.clientWidth - previousWidth) / 2)) / previousWidth : .5;
-    const centerY = keepCenter && previousHeight ? (view.scrollTop + view.clientHeight / 2 - Math.max(0,(stage.clientHeight - previousHeight) / 2)) / previousHeight : .5;
-    view.classList.toggle('is-zoomed',zoom > 100);
-    if (image.naturalWidth && image.naturalHeight && view.clientWidth && view.clientHeight) {
-      const fit = Math.min(view.clientWidth / image.naturalWidth,view.clientHeight / image.naturalHeight);
-      const width = image.naturalWidth * fit * zoom / 100, height = image.naturalHeight * fit * zoom / 100;
-      const stageWidth = Math.max(width,view.clientWidth), stageHeight = Math.max(height,view.clientHeight);
-      image.style.width = width + 'px'; image.style.height = height + 'px';
-      stage.style.width = stageWidth + 'px'; stage.style.height = stageHeight + 'px';
-      view.scrollLeft = Math.max(0,(stageWidth-width)/2 + centerX*width - view.clientWidth/2);
-      view.scrollTop = Math.max(0,(stageHeight-height)/2 + centerY*height - view.clientHeight/2);
-    } else { image.style.width = '100%'; image.style.height = '100%'; stage.style.width = '100%'; stage.style.height = '100%'; }
-  }
-  window.addEventListener('resize',() => { if ($('image-dialog').open) setZoom(); });
-  let pan = null;
-  $('zoom-view').addEventListener('pointerdown',event => {
-    if (zoom <= 100 || (event.pointerType === 'mouse' && event.button !== 0)) return;
-    const view = $('zoom-view');
-    pan = {pointer:event.pointerId,x:event.clientX,y:event.clientY,left:view.scrollLeft,top:view.scrollTop};
-    view.setPointerCapture(event.pointerId); view.classList.add('is-panning'); event.preventDefault();
-  });
-  $('zoom-view').addEventListener('pointermove',event => {
-    if (!pan || pan.pointer !== event.pointerId) return;
-    $('zoom-view').scrollLeft = pan.left + pan.x - event.clientX;
-    $('zoom-view').scrollTop = pan.top + pan.y - event.clientY;
-  });
-  const stopPan = () => { pan = null; $('zoom-view').classList.remove('is-panning'); };
-  ['pointerup','pointercancel','lostpointercapture'].forEach(type => $('zoom-view').addEventListener(type,stopPan));
-  $('image-dialog').addEventListener('close',() => { stopPan(); cancelZoomLoad(); });
+  const imageViewer = window.KunstTresorZoom.create({view:$('zoom-view'),image:$('zoom-image'),stage:$('zoom-stage'),label:$('zoom-label'),zoomIn:$('zoom-in'),zoomOut:$('zoom-out')});
+  window.addEventListener('resize',() => { if ($('image-dialog').open) imageViewer.layout(); });
+  window.addEventListener('blur',() => imageViewer.cancel());
+  $('image-dialog').addEventListener('close',() => { imageViewer.cancel(); cancelZoomLoad(); });
   const techniqueArticle = {
     'Öl auf Leinwand':'Ölmalerei', 'Öl auf Holz':'Tafelmalerei', 'Öl auf Papier / Karton':'Ölmalerei', 'Öl und Metallauflage':'Blattgold',
     Tempera:'Temperamalerei', Pastell:'Pastellmalerei', Aquarell:'Aquarell', Radierung:'Radierung',
@@ -496,8 +466,6 @@
   $('restart-top').onclick = $('restart-game').onclick = () => { $('clear-best').checked = false; open('restart-dialog'); };
   $('restart-confirm').onclick = () => { if ($('clear-best').checked) { best = 0; store.remove(keys.best); } close('restart-dialog'); newRound(); };
   $('fullscreen').onclick = fullscreen;
-  $('zoom-out').onclick = () => { zoom = Math.max(100,zoom - 25); setZoom(); };
-  $('zoom-in').onclick = () => { zoom = Math.min(300,zoom + 25); setZoom(); };
   $('retry-images').onclick = render;
   $('replace-room').onclick = () => {
     if (!failed.size || !state || state.phase !== 'playing') return;
