@@ -129,7 +129,7 @@ const media=JSON.parse(readFileSync(root+'data/kunstbilder.json','utf8'));
 const wikipedia=JSON.parse(readFileSync(root+'data/kunst-wikipedia.json','utf8'));
 delete wikipedia.artists[''];
 const existingMedia=new Map(media.images.map(i=>[i.id,i]));
-const oldPlayable=archive.works.filter(w=>w.id.startsWith('aic-') && existingMedia.has(w.id) && wikipedia.artists[w.artist]);
+const oldPlayable=archive.works.filter(w=>(w.id.startsWith('aic-') || w.metadataProvider==='Cleveland Museum of Art') && existingMedia.has(w.id) && wikipedia.artists[w.artist]);
 const oldItems=new Set(media.images.filter(i=>i.id.startsWith('aic-')).map(i=>i.wikidata?.split('/').at(-1)).filter(Boolean));
 // Preserve source titles; quiz headings may omit artist names that would reveal an answer.
 const galleryTitles={
@@ -252,8 +252,8 @@ for(const w of additions){ wikipedia.artists[w.artist]=w.artistArticle;if(w.work
 const featured=additions.filter(w=>w.workArticle && w.importance>=5).sort((a,b)=>b.importance-a.importance).slice(0,100);
 if(featured.length!==100)throw Error('Only '+featured.length+' documented landmark works');
 const output={
-  'kunstarchiv.json':{...archive,version:2,source:['https://api.artic.edu/docs/','https://www.wikidata.org/'],
-    selection:'1.000 eindeutig zugeordnete Werke mit Datierung, am Werk dokumentierter Stilrichtung und Technik. Bildrechte einzeln auf Commons geprüft. Frühere spielbare Datensätze und IDs bleiben erhalten.',works:finalWorks},
+  'kunstarchiv.json':{...archive,version:2,source:[...new Set([...(archive.source||[]),'https://api.artic.edu/docs/','https://www.wikidata.org/'])],
+    selection:archive.selection,works:finalWorks},
   'kunstbilder.json':{checked,matching:'Art Institute IDs and Wikidata artwork identities; individually verified Commons originals and public-domain licenses.',images:finalMedia},
   'kunst-wikipedia.json':{...wikipedia,checked},
   'kunst-hauptwerke.json':{version:1,checked,selection:'100 bekannte Hauptwerke mit eigenem Wikipediaartikel und breiter Wikimedia-Rezeption; ausgewählt und auf die vier Quizangaben und eine gemeinfreie Commons-Bildfassung geprüft.',works:featured.map(w=>({id:w.id,title:w.title,artist:w.artist,source:w.source,wikipedia:w.workArticle,wikimediaSitelinks:w.importance}))}

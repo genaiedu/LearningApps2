@@ -1,6 +1,6 @@
 {
   "checked": "2026-10-09",
-  "matching": "Art Institute IDs and Wikidata artwork identities; individually verified Commons originals and public-domain licenses.",
+  "matching": "Art Institute IDs, Cleveland Museum accession numbers and Wikidata artwork identities; individually verified Commons originals and public-domain licenses.",
   "images": [
     {
       "id": "aic-87479",
@@ -4443,17 +4443,19 @@
       "downloadRightsChecked": "2026-10-09"
     },
     {
-      "id": "aic-59004",
-      "imageURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Charles_Fran%C3%A7ois_Daubigny_-_On_the_Bank_of_the_Seine_at_Portejoie_-_1979.1281_-_Art_Institute_of_Chicago.jpg/960px-Charles_Fran%C3%A7ois_Daubigny_-_On_the_Bank_of_the_Seine_at_Portejoie_-_1979.1281_-_Art_Institute_of_Chicago.jpg",
-      "imageSource": "https://commons.wikimedia.org/wiki/File:Charles_Fran%C3%A7ois_Daubigny_-_On_the_Bank_of_the_Seine_at_Portejoie_-_1979.1281_-_Art_Institute_of_Chicago.jpg",
+      "id": "cma-1964.289",
+      "imageURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Charles-Fran%C3%A7ois_Daubigny_-_Coucher_de_soleil_sur_l%27Oise_%281866%29.jpg/960px-Charles-Fran%C3%A7ois_Daubigny_-_Coucher_de_soleil_sur_l%27Oise_%281866%29.jpg",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:Charles-Fran%C3%A7ois_Daubigny_-_Coucher_de_soleil_sur_l%27Oise_(1866).jpg",
       "imageLicense": "Public domain",
       "imageCredit": "Charles-François Daubigny",
       "imageLicenseURL": "https://commons.wikimedia.org/wiki/Commons:Reuse_of_PD-Art_photographs",
-      "wikidata": "http://www.wikidata.org/entity/Q20261191",
-      "imageLargeURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Charles_Fran%C3%A7ois_Daubigny_-_On_the_Bank_of_the_Seine_at_Portejoie_-_1979.1281_-_Art_Institute_of_Chicago.jpg/1920px-Charles_Fran%C3%A7ois_Daubigny_-_On_the_Bank_of_the_Seine_at_Portejoie_-_1979.1281_-_Art_Institute_of_Chicago.jpg",
-      "imageOriginalURL": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Charles_Fran%C3%A7ois_Daubigny_-_On_the_Bank_of_the_Seine_at_Portejoie_-_1979.1281_-_Art_Institute_of_Chicago.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "wikidata": "https://www.wikidata.org/wiki/Q60469189",
+      "imageLargeURL": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Charles-Fran%C3%A7ois_Daubigny_-_Coucher_de_soleil_sur_l%27Oise_%281866%29.jpg",
+      "imageOriginalURL": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Charles-Fran%C3%A7ois_Daubigny_-_Coucher_de_soleil_sur_l%27Oise_%281866%29.jpg",
+      "imageWidth": 1536,
+      "imageHeight": 874,
       "imageMime": "image/jpeg",
-      "imageBytes": 1990764,
+      "imageBytes": 200868,
       "imageDownloadAllowed": true,
       "downloadRightsChecked": "2026-10-09"
     },

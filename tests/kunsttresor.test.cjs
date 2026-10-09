@@ -27,7 +27,7 @@ test('large documented metadata-only archive, public domain images and named art
     assert.ok(core.validWork(work),work.id);
     assert.ok(work.styleTerms.includes(work.styleOriginal),work.id);
     assert.ok(work.artistDeath > 1300 && work.artistDeath <= 1955);
-    assert.ok(['www.artic.edu','www.wikidata.org'].includes(new URL(work.source).hostname));
+    assert.ok(['www.artic.edu','www.wikidata.org','www.clevelandart.org'].includes(new URL(work.source).hostname));
     if (work.metadataProvider==='Wikidata') {
       assert.equal(work.styleSource,'P135 am Werk, nicht vom Künstler abgeleitet');
       assert.ok(work.materialIds.length>=1);
@@ -39,6 +39,65 @@ test('large documented metadata-only archive, public domain images and named art
     assert.match(work.imageLicense,/public domain|cc0/i);
     assert.ok(wiki.artists[work.artist]);
   }
+});
+test('Daubigny replacement has its own identity, colour image, exact answers and sources', () => {
+  assert.equal(pool.some(work=>work.id==='aic-59004'),false);
+  const work=pool.find(work=>work.id==='cma-1964.289');
+  assert.equal(work.title,'Sunset on the River Oise');
+  assert.equal(work.titleDe,'Sonnenuntergang an der Oise');
+  assert.equal(work.date,'1866'); assert.equal(work.technique,'Öl auf Holz');
+  assert.equal(work.medium,'Oil on wood panel');
+  assert.equal(work.source,'https://www.clevelandart.org/art/1964.289');
+  assert.equal(work.wikidata,'https://www.wikidata.org/wiki/Q60469189');
+  assert.match(work.styleSource,/Redaktionelle Einordnung/);
+  assert.ok(decodeURIComponent(work.imageSource).includes("Coucher_de_soleil_sur_l'Oise_(1866).jpg"));
+  assert.equal(work.imageWidth,1536); assert.equal(work.imageHeight,874);
+  assert.equal(work.imageBytes,200868); assert.equal(work.imageMime,'image/jpeg');
+  assert.ok(core.canDownload(work));
+  assert.ok(!pool.some(work=>work.imageURL.includes('On_the_Bank_of_the_Seine_at_Portejoie')));
+  assert.equal(new Set(pool.map(work=>work.imageOriginalURL)).size,1000);
+});
+test('replacing a work preserves saved answers, review, attempts and won/lost rounds', () => {
+  const previous=archive.replacements[0].previous, chosen=[previous];
+  for (const work of pool) if (chosen.length<4 && work.date!=='1866' && core.compatible(chosen,work)) chosen.push(work);
+  const oldPool=[...pool,previous];
+  const fresh=core.newState(chosen,null,seeded(9)); fresh.escaped=3;
+  const assigned={...fresh,choices:Object.fromEntries(chosen.map(work=>[work.id,Object.fromEntries(core.fields.map(field=>[field,work[field]]))]))};
+  const wrong=JSON.parse(JSON.stringify(assigned));
+  [wrong.choices[chosen[0].id].artist,wrong.choices[chosen[1].id].artist]=[wrong.choices[chosen[1].id].artist,wrong.choices[chosen[0].id].artist];
+  const first=core.inspect(wrong,oldPool).state;
+  for (const saved of [fresh,first,core.inspect(first,oldPool).state,core.inspect(assigned,oldPool).state]) {
+    const before=JSON.stringify(saved), result=core.restoreUpdated(saved,pool,archive.replacements);
+    assert.equal(result.updated,true); assert.equal(result.newRoom,false);
+    assert.equal(result.state.phase,saved.phase); assert.equal(result.state.attempts,saved.attempts);
+    assert.equal(result.state.escaped,saved.escaped);
+    assert.ok(result.state.ids.includes('cma-1964.289')); assert.ok(!result.state.ids.includes(previous.id));
+    assert.ok(result.state.options.date.includes('1866')); assert.ok(!result.state.options.date.includes('ca. 1865'));
+    assert.ok(core.restore(result.state,pool));
+    if (saved.review) assert.equal(result.state.review.choices['cma-1964.289'].date,'1866');
+    assert.equal(JSON.stringify(saved),before,'migration must not mutate its input');
+  }
+  const current=core.newState(pool,null,seeded(11));
+  assert.equal(core.restoreUpdated(current,pool,archive.replacements).updated,false);
+  assert.equal(core.restoreUpdated({...first,escaped:-1},pool,archive.replacements).state,null);
+  assert.equal(core.restoreUpdated({...first,ids:[previous.id,'unknown',chosen[2].id,chosen[3].id]},pool,archive.replacements).state,null);
+});
+test('replacement date collision creates a unique fair room without erasing progress or reviving a loss', () => {
+  const previous=archive.replacements[0].previous, chosen=[previous,pool.find(work=>work.date==='1866' && core.compatible([previous],work))];
+  assert.ok(chosen[1]);
+  for (const work of pool) if (chosen.length<4 && core.compatible(chosen,work)) chosen.push(work);
+  const saved=core.newState(chosen,null,seeded(13)); saved.escaped=7;
+  const choices=Object.fromEntries(chosen.map(work=>[work.id,Object.fromEntries(core.fields.map(field=>[field,work[field]]))]));
+  [choices[chosen[0].id].artist,choices[chosen[1].id].artist]=[choices[chosen[1].id].artist,choices[chosen[0].id].artist];
+  const first=core.inspect({...saved,choices},[...pool,previous]).state;
+  const result=core.restoreUpdated(first,pool,archive.replacements);
+  assert.equal(result.newRoom,true); assert.equal(result.state.escaped,7); assert.equal(result.state.attempts,0);
+  assert.ok(core.restore(result.state,pool)); assert.equal(core.filled(result.state),0);
+  for (const field of core.fields) assert.equal(new Set(result.state.options[field]).size,4);
+  const lost=core.inspect(first,[...pool,previous]).state;
+  const terminal=core.restoreUpdated(lost,pool,archive.replacements).state;
+  assert.equal(terminal.phase,'lost'); assert.equal(terminal.attempts,2); assert.equal(terminal.escaped,7);
+  assert.ok(core.restore(terminal,pool));
 });
 test('image download is offered only for individually verified Public Domain / CC0 originals', () => {
   assert.equal(pool.filter(core.canDownload).length,1000);
@@ -307,6 +366,26 @@ test('first failed check retains exact feedback, but changed choices are not eva
   const won = core.inspect(state,pool).state;
   assert.equal(won.phase,'unlocked'); assert.ok(core.review(won,pool).every(result=>result.correct && !result.changed));
   assert.deepEqual(core.review(core.newState(pool,won,seeded(95)),pool),[]);
+});
+test('personal highscore persists through a loss and automatic new round', () => {
+  const vm=require('node:vm'), js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  const values=new Map([['best','5']]);
+  const context={state:core.newState(pool,null,seeded(50)),pool,best:5,core,imagesAllowed:true,
+    keys:{game:'game',best:'best'},store:{set:(key,value)=>values.set(key,value)},
+    $:()=>({hidden:false}),render:()=>{},toGame:()=>{}};
+  context.state.escaped=3;
+  vm.createContext(context);
+  vm.runInContext(js.slice(js.indexOf('function save()'),js.indexOf('function open('))+js.slice(js.indexOf('function newRound()'),js.indexOf('function update()')),context);
+  context.state=core.inspect(answer(context.state,false),pool).state;
+  context.state=core.inspect(context.state,pool).state;
+  assert.equal(context.state.phase,'lost');
+  vm.runInContext('save(); newRound();',context);
+  assert.equal(context.state.escaped,0); assert.equal(context.state.attempts,0);
+  assert.equal(context.best,5); assert.equal(values.get('best'),'5');
+  assert.equal(JSON.parse(values.get('game')).escaped,0);
+  // A genuinely better round raises, never lowers, the persistent record.
+  context.state.escaped=6; vm.runInContext('save(); newRound();',context);
+  assert.equal(context.best,6); assert.equal(values.get('best'),'6');
 });
 test('saved game restores attempts and terminal state; corrupt storage fails safely', () => {
   const initial = core.newState(pool,null,seeded(31));

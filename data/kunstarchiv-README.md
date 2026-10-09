@@ -7,9 +7,24 @@ Stilrichtung und Technik. Zu jedem Werk bleibt die Einzelquelle erhalten.
 
 ## Herkunft
 
-- Die bisherigen 304 spielbaren Werke stammen aus den CC0-Metadaten des
-  Art Institute of Chicago. Ihre IDs und Antwortfelder bleiben unverändert,
-  damit vorhandene Spielstände weiter funktionieren.
+- 303 Werke stammen aus den CC0-Metadaten des Art Institute of Chicago.
+  Ihre IDs und Antwortfelder bleiben unverändert.
+- Daubignys „On the Bank of the Seine at Portejoie“ (`aic-59004`) wurde
+  durch „Sunset on the River Oise“ (`cma-1964.289`, 1866) ersetzt: Die
+  Museumsquelle des bisherigen Werks bietet nur eine Schwarzweißaufnahme.
+  Das Ersatzwerk ist ein anderes Gemälde, keine kolorierte Reproduktion.
+  Titel, Datierung, Holzträger, Sammlung und Inventarnummer sind im
+  [Cleveland Museum of Art](https://www.clevelandart.org/art/1964.289)
+  dokumentiert; die konkrete JPEG-Farbaufnahme auf Commons ist gemeinfrei.
+  „Sonnenuntergang an der Oise“ ist eine eigene deutsche Titelübersetzung.
+  Die Einordnung dieser Landschaft als Schule von Barbizon ist redaktionell
+  und wird in der Auflösung als solche bezeichnet; Wikidata hat hier kein P135.
+  Die alten Werkangaben unter `replacements` dienen ausschließlich der
+  Spielstandübernahme und werden nicht zufällig gezogen. Zuordnungen und
+  verbrauchte Versuche bleiben bei einer eindeutigen Übernahme erhalten.
+  Sollte „1866“ mit einer anderen Antwort kollidieren, wird ein neuer,
+  eindeutiger Raum erzeugt; bereits geöffnete Türen und der Rekord bleiben
+  erhalten. Neue Fragen verbrauchen keinen Versuch. Verlorene Runden bleiben verloren.
 - Weitere Werke stammen aus Wikidata. `P135` dokumentiert den Stil am Werk,
   `P170` den Künstler, `P571` die Datierung und `P186` die Materialien.
   Stilrichtungen werden nicht pauschal vom Künstler abgeleitet.
@@ -85,6 +100,13 @@ Nach Prüfung werden die Patches eingespielt und
 `node --test tests/kunsttresor.test.cjs` ausgeführt. Zusätzlich den Vorspann,
 ein zufälliges Spielzimmer und die vergrößerte Bildansicht im Browser testen.
 Keine Bilddateien herunterladen oder veröffentlichen.
+
+Der persönliche Highscore wird getrennt vom laufenden Spiel gespeichert.
+Ein verlorener Raum, „Neue Runde beginnen“ und der normale Neustart setzen
+nur den Rundgang zurück, niemals den Rekord. Er wird nur erhöht oder auf
+ausdrücklichen Wunsch mit der separaten Option „Bestmarke löschen“ gelöscht.
+Der Speicher ist geräte- und browsergebunden; das Löschen der Browserdaten
+kann ihn ebenfalls entfernen.
 
 `node scripts/localize-kunsttitel.mjs /private/tmp/kunst-1000-cache` erstellt
 eine separate Titel-Patchdatei. Bestehende eigene Übersetzungen werden bewahrt;

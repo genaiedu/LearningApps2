@@ -164,6 +164,7 @@
     save(); render(); toGame(); void enterFullscreen();
   }
   function newRound() {
+    $('archive-update').hidden = true;
     const previous = state;
     state = core.newState(pool, previous);
     state.escaped = 0;
@@ -413,7 +414,7 @@
       card.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,core.galleryTitle(work)));
       if (core.galleryTitle(work)!==work.title) card.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
       const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); card.append(list);
-      card.append(node('p','small','Quellenangabe zur Technik: ' + work.medium + '. Dokumentierter Stil: ' + work.styleOriginal + '.'));
+      card.append(node('p','small','Quellenangabe zur Technik: ' + work.medium + '. ' + (work.metadataProvider==='Cleveland Museum of Art' ? 'Stilzuordnung: ' + work.styleSource : 'Dokumentierter Stil: ' + work.styleOriginal) + '.'));
       const source = node('a','small',work.metadataProvider==='Wikidata'?'Werkdatensatz & Nachweise ↗':'Originalwerk & Museumsdaten ↗'); source.href = work.source; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.referrerPolicy = 'no-referrer'; card.append(source);
       if (work.catalogueSource) {
         const catalogue=node('a','small','Weiterführender Werknachweis ↗');
@@ -505,7 +506,7 @@
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
-  Promise.all(['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261009-titel-de',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })))
+  Promise.all(['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261009-daubigny-farbe',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })))
     .then(([data,media,wiki,landmarks,titles]) => {
       wikiCatalogue = wiki;
       const images = new Map(media.images.map(image => [image.id,image]));
@@ -514,7 +515,16 @@
       landmarkIds = landmarks.works.map(work=>work.id).filter(id=>pool.some(work=>work.id===id));
       if(pool.length!==1000 || landmarkIds.length!==100 || pool.some(work=>!work.titleDe)) throw Error('Archiv unvollständig');
       core.room(pool); // Verify that a complete, unique room can actually be generated.
-      try { state = core.restore(JSON.parse(store.get(keys.game)),pool); } catch { state = null; }
+      try {
+        const restored = core.restoreUpdated(JSON.parse(store.get(keys.game)),pool,data.replacements);
+        state = restored.state;
+        if (restored.updated) {
+          save(); $('archive-update').hidden=false;
+          $('archive-update').textContent=restored.newRoom
+            ? 'Das Schwarzweißwerk wurde ersetzt. Damit alle Antworten weiterhin eindeutig sind, wurde dieser Raum neu zusammengestellt. Bereits geöffnete Türen und dein Rekord bleiben erhalten; neue Fragen kosten keinen Prüfversuch. Eine beendete Runde bleibt beendet.'
+            : 'Das Schwarzweißwerk wurde durch „Sonnenuntergang an der Oise“ (1866) ersetzt. Deine bisherigen Zuordnungen, Prüfversuche und geöffneten Türen bleiben erhalten; die Jahresauswahl wurde passend aktualisiert.';
+        }
+      } catch { state = null; }
       if (!state) store.remove(keys.game);
       $('pool-count').textContent = pool.length;
       $('intro-count').textContent = pool.length;

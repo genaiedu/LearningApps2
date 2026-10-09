@@ -125,7 +125,32 @@
     }
     return {...saved, choices: saved.choices || {}, review};
   }
-  const api = {fields, shuffle, compatible, validWork, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore};
+  function restoreUpdated(saved, pool, replacements = []) {
+    const current = restore(saved,pool);
+    if (current) return {state:current,updated:false,newRoom:false};
+    const applicable = replacements.filter(entry => saved?.ids?.includes(entry.previous?.id) && pool.some(work => work.id === entry.id));
+    if (!applicable.length) return {state:null,updated:false,newRoom:false};
+    // Validate the old round against its actual historical answers before migrating it.
+    const original = restore(saved,[...pool,...applicable.map(entry=>entry.previous)]);
+    if (!original) return {state:null,updated:false,newRoom:false};
+    const idOf = id => applicable.find(entry=>entry.previous.id===id)?.id || id;
+    const valueOf = (field,value) => {
+      const replacement = applicable.find(entry=>entry.previous[field]===value);
+      return replacement ? pool.find(work=>work.id===replacement.id)[field] : value;
+    };
+    const selections = choices => Object.fromEntries(Object.entries(choices || {}).map(([id,selection]) => [idOf(id),Object.fromEntries(Object.entries(selection).map(([field,value])=>[field,valueOf(field,value)]))]));
+    const migrated = {...original,ids:original.ids.map(idOf),recent:original.recent.map(idOf),
+      options:Object.fromEntries(fields.map(field=>[field,original.options[field].map(value=>valueOf(field,value))])),
+      choices:selections(original.choices),review:original.review ? {choices:selections(original.review.choices)} : null};
+    const restored = restore(migrated,pool);
+    if (restored) return {state:restored,updated:true,newRoom:false};
+    // A new date might duplicate a neighbour's answer. Use a fair, unique replacement
+    // room instead: retain escaped rooms, and do not charge attempts for new questions.
+    const next = newState(pool,original);
+    if (original.phase === 'lost') { next.phase='lost'; next.attempts=2; }
+    return {state:next,updated:true,newRoom:true};
+  }
+  const api = {fields, shuffle, compatible, validWork, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

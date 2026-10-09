@@ -3,10 +3,31 @@
   "checked": "2026-10-09",
   "source": [
     "https://api.artic.edu/docs/",
-    "https://www.wikidata.org/"
+    "https://www.wikidata.org/",
+    "https://www.clevelandart.org/art/1964.289"
   ],
   "license": "https://creativecommons.org/publicdomain/zero/1.0/",
-  "selection": "1.000 eindeutig zugeordnete Werke mit Datierung, am Werk dokumentierter Stilrichtung und Technik. Bildrechte einzeln auf Commons geprüft. Frühere spielbare Datensätze und IDs bleiben erhalten.",
+  "selection": "1.000 eindeutig zugeordnete Werke mit Datierung, Stilrichtung und Technik. Bildrechte einzeln auf Commons geprüft. Redaktionelle Ersatzwerke sind mit ihrer Quelle und Einordnung gekennzeichnet; ersetzte Datensätze werden ausschließlich zur Übernahme älterer Spielstände aufbewahrt.",
+  "replacements": [
+    {
+      "id": "cma-1964.289",
+      "reason": "Für das bisherige Gemälde ist in der Museumsquelle nur eine Schwarzweiß-Reproduktion verfügbar. Ersatz durch ein anderes, farbig dokumentiertes Werk desselben Künstlers.",
+      "previous": {
+        "id": "aic-59004",
+        "title": "On the Bank of the Seine at Portejoie",
+        "artist": "Charles François Daubigny",
+        "artistDeath": 1878,
+        "date": "ca. 1865",
+        "style": "Schule von Barbizon",
+        "technique": "Öl auf Holz",
+        "medium": "Oil on panel",
+        "styleOriginal": "Barbizon School",
+        "imageId": "70d375a0-25bd-7fe1-c586-0e8919aaf395",
+        "source": "https://www.artic.edu/artworks/59004",
+        "publicDomain": true
+      }
+    }
+  ],
   "works": [
     {
       "id": "aic-87479",
@@ -6029,23 +6050,25 @@
       "publicDomain": true
     },
     {
-      "id": "aic-59004",
-      "title": "On the Bank of the Seine at Portejoie",
+      "id": "cma-1964.289",
+      "title": "Sunset on the River Oise",
       "artist": "Charles François Daubigny",
       "artistDeath": 1878,
-      "date": "ca. 1865",
+      "date": "1866",
       "style": "Schule von Barbizon",
       "technique": "Öl auf Holz",
-      "medium": "Oil on panel",
+      "medium": "Oil on wood panel",
       "styleOriginal": "Barbizon School",
       "styleTerms": [
-        "Barbizon School",
-        "19th century",
-        "nineteenth century"
+        "Barbizon School"
       ],
-      "imageId": "70d375a0-25bd-7fe1-c586-0e8919aaf395",
-      "source": "https://www.artic.edu/artworks/59004",
-      "museum": "Art Institute of Chicago",
+      "imageId": "Q60469189",
+      "source": "https://www.clevelandart.org/art/1964.289",
+      "museum": "Cleveland Museum of Art",
+      "metadataProvider": "Cleveland Museum of Art",
+      "wikidata": "https://www.wikidata.org/wiki/Q60469189",
+      "styleSource": "Redaktionelle Einordnung dieser Landschaft in die Schule von Barbizon; keine vom Museum angegebene Stilklassifikation",
+      "styleReference": "https://de.wikipedia.org/wiki/Charles-Fran%C3%A7ois_Daubigny",
       "rights": "CC0 / Public Domain",
       "publicDomain": true
     },
