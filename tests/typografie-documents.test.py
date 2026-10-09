@@ -28,6 +28,34 @@ class Links(HTMLParser):
             elif v and not v.startswith(('https:','http:','mailto:','data:')):self.paths.append(v)
 
 class Templates(unittest.TestCase):
+    def test_all_desktop_downloads_and_collection(self):
+        data=json.loads((ROOT/'data'/'typografie-fonts.json').read_text())
+        self.assertEqual(len(data['families']),24)
+        html=(ROOT/'typografie-atelier.html').read_text()
+        with ZipFile(ROOT/data['desktopCollection']) as collection:
+            self.assertIsNone(collection.testzip())
+            self.assertIn('LIES-MICH.txt',collection.namelist())
+            for font in data['families']:
+                with self.subTest(font=font['name']), ZipFile(ROOT/font['desktop']) as z:
+                    self.assertIsNone(z.testzip())
+                    self.assertIn(font['desktop'],html)
+                    prefix=font['id']+'/'
+                    self.assertIn('SIL OPEN FONT LICENSE',z.read(prefix+'OFL.txt').decode())
+                    instructions=z.read(prefix+'INSTALLATION.txt').decode()
+                    self.assertIn('Mac:',instructions)
+                    self.assertIn('Windows:',instructions)
+                    ttf=[n for n in z.namelist() if n.endswith('.ttf')]
+                    self.assertTrue(ttf)
+                    self.assertFalse(any(n.endswith('.woff2') for n in z.namelist()))
+                    for name in z.namelist():
+                        self.assertEqual(collection.read(name),z.read(name))
+                        if name.endswith(('.ttf','.otf')):
+                            self.assertEqual((ROOT/'fonts'/'typografie'/name).read_bytes(),z.read(name))
+                            self.assertIn(z.read(name)[:4],[b'\x00\x01\x00\x00',b'OTTO'])
+                    for original in font.get('desktopFiles',[]):
+                        self.assertEqual(sha256((ROOT/original['path']).read_bytes()).hexdigest(),original['sha256'])
+            self.assertEqual(len({n.split('/')[0] for n in collection.namelist() if '/' in n}),24)
+
     def test_goudy_desktop_package(self):
         data=json.loads((ROOT/'data'/'typografie-fonts.json').read_text())
         font=next(f for f in data['families'] if f['id']=='goudybookletter1911')

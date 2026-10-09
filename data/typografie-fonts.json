@@ -381,7 +381,100 @@
         }
       ],
       "features": [],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/poppins/Poppins-Thin.ttf",
+          "sha256": "6d8e5d9d29140cc93e321745fa1243c67889e6bc3639ec34db64f3da7a496352",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ThinItalic.ttf",
+          "sha256": "46df80ac970f5e84829b868d283878b4d97e289c7b1245541d8bbf66b5d670a8",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraLight.ttf",
+          "sha256": "55c03314cc754e26f741f97890e5e9cbe3b3278fe3abcecfecafd60111b2643d",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraLightItalic.ttf",
+          "sha256": "7171a17e4cda8f6ded78a7a931f9b7f38987057f3ffd1fe07a71528ad0f01e49",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Light.ttf",
+          "sha256": "650ba57fa99d12ec40c31ccfb680be656be4497fbe14164617d67e32ffe9cd46",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-LightItalic.ttf",
+          "sha256": "b8f9c5be59723fadf8e5447fa1245c2c53b60a3464a24d6ece9ee3c283d8917b",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Regular.ttf",
+          "sha256": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Italic.ttf",
+          "sha256": "4fa76ae75b40f926420514044722cb97f32186cafd3b38263cc34dad7174d46d",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Medium.ttf",
+          "sha256": "90373e7d838d32468438fc3e152dca0bdb12edcab99ea639f158790b1ba1fd05",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-MediumItalic.ttf",
+          "sha256": "765addf6c7c11ec3c54325cacd68cabd05df8e4b6455302d812a9b9bafd1c614",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-SemiBold.ttf",
+          "sha256": "d3bf1bdaf0550e83da9ac0b1d1d9fe6db086835a83aa28578e609a394b9a0286",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-SemiBoldItalic.ttf",
+          "sha256": "16bb118aa232c9a13fa238027d24d7854dd1a1d9cbaf99b17fec4388d56b432c",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Bold.ttf",
+          "sha256": "983676516167748b74de6f4771fb384c664fd913acb8b471122ecacf5da5ea6c",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-BoldItalic.ttf",
+          "sha256": "3572ac8116a0ac7317d342262b29937bcbaf94d8f03f90df6fe666fa7e2fb43a",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraBold.ttf",
+          "sha256": "f2ab17c1a63a0ecc12c2461848fc8a469395e3cd2d641803e889c643d9f958e1",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraBoldItalic.ttf",
+          "sha256": "dc00a2eb988373e9f4e99bf8ff76c6315ee21d36b341cbbff024e4c18cc7ac03",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Black.ttf",
+          "sha256": "d82aaaf98a9283f9a8edd24e51173337d8eaf09e25cd3d98831f8ec8461748a1",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-BlackItalic.ttf",
+          "sha256": "f4852ca89c29f69d800e14f097ed4d1f0a0cc454e9f77d73bfd6db1f71c287a0",
+          "axes": {}
+        }
+      ],
+      "desktop": "fonts/typografie/poppins/poppins-desktop.zip"
     },
     {
       "name": "Outfit",
@@ -536,7 +629,20 @@
         "rvrn",
         "tnum"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/outfit/Outfit[wght].ttf",
+          "sha256": "fc7287273e66929776e2ba54f144fe699080bec29f61bf649d70d871468aeade",
+          "axes": {
+            "wght": [
+              100.0,
+              900.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/outfit/outfit-desktop.zip"
     },
     {
       "name": "Bangers",
@@ -562,7 +668,15 @@
         "frac",
         "locl"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/bangers/Bangers-Regular.ttf",
+          "sha256": "4160a7311de9342674cce9160cde9fcbb30f48190397d86ff1b70b455af65824",
+          "axes": {}
+        }
+      ],
+      "desktop": "fonts/typografie/bangers/bangers-desktop.zip"
     },
     {
       "name": "Zilla Slab",
@@ -599,7 +713,60 @@
         "pnum",
         "tnum"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Light.ttf",
+          "sha256": "4c3dfcd4a5bb71ee28b6c2ec8e8bfec720f619bc00e12a13a88f0f233af7f851",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-LightItalic.ttf",
+          "sha256": "899c8f381f7b82a78fd5ac458405b6c212ad25bc11447f235aa097f3faf34b9e",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Regular.ttf",
+          "sha256": "41a4626844da9216b031308d4423045c765fe4231d99862d85d7d74509d37703",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Italic.ttf",
+          "sha256": "ff0cd7a2f0db59d017d51b4ed9003f58bf21ae218ab2a965aa3bc1dd894c152b",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Medium.ttf",
+          "sha256": "d344b0f60cd5fb2d34c4168d2811ba684163e5665e20cccbcfb6ac822d84a500",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-MediumItalic.ttf",
+          "sha256": "de6be2985329891035a3b3863a325a82a918a2018650c3b43fa5c4ae14815f58",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-SemiBold.ttf",
+          "sha256": "aafcb295b88d520357db1ecf9a1c3167055e87e9ddf5f63e560cbd139ec2805e",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-SemiBoldItalic.ttf",
+          "sha256": "23815b73da57186d64adc71cdab4cd2bbd9be21f71efdce60d9676638f070e2f",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Bold.ttf",
+          "sha256": "4ec3a04a4eef37074b42ef542e4d874e13646668cfe65256e0bf100441cf8719",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-BoldItalic.ttf",
+          "sha256": "7951036c92de71e3c88ea01abe031d5bdaddf4639022a3e1cb92322f2e88d2cf",
+          "axes": {}
+        }
+      ],
+      "desktop": "fonts/typografie/zillaslab/zillaslab-desktop.zip"
     },
     {
       "name": "Lora",
@@ -686,7 +853,30 @@
         "pnum",
         "tnum"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/lora/Lora[wght].ttf",
+          "sha256": "822a6621ccbe8d97d20ac88c1c41f5615c9c2c202eaa75f272cd452aac6475a7",
+          "axes": {
+            "wght": [
+              400.0,
+              700.0
+            ]
+          }
+        },
+        {
+          "path": "fonts/typografie/lora/Lora-Italic[wght].ttf",
+          "sha256": "22d8d8854b53807aa664ca34f2031a9ed57a1d0dea296b8b96cdd3aad937a2b3",
+          "axes": {
+            "wght": [
+              400.0,
+              700.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/lora/lora-desktop.zip"
     },
     {
       "name": "Montserrat",
@@ -724,7 +914,30 @@
         "rvrn",
         "tnum"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/montserrat/Montserrat[wght].ttf",
+          "sha256": "0f7b311b2f3279e4eef9b2f968bcdbab6e28f4daeb1f049f4f278a902bcd82f7",
+          "axes": {
+            "wght": [
+              100.0,
+              900.0
+            ]
+          }
+        },
+        {
+          "path": "fonts/typografie/montserrat/Montserrat-Italic[wght].ttf",
+          "sha256": "51607f316bc020e59f03cbf51543eecffbea501c0b31d73e5b82927c5cca442c",
+          "axes": {
+            "wght": [
+              100.0,
+              900.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/montserrat/montserrat-desktop.zip"
     },
     {
       "name": "DM Mono",
@@ -802,7 +1015,40 @@
         "frac",
         "locl"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/dmmono/DMMono-Light.ttf",
+          "sha256": "c7b3645dc8d28237317b4d017bc47b9ff09a7660758122dacb694a5a82552c24",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/dmmono/DMMono-LightItalic.ttf",
+          "sha256": "90216192555d56cd40857250bbd6d0e8130ddbd015992d584225d7f390849544",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/dmmono/DMMono-Regular.ttf",
+          "sha256": "55b4c98f123daebb3ed27947ba47b2af00554fc6284d639a540bcef5e6258ad2",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/dmmono/DMMono-Italic.ttf",
+          "sha256": "32b5bad9cbce64eac6d05c8abbeb619317f7e4cb354e1c33db761adbfaae1b16",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/dmmono/DMMono-Medium.ttf",
+          "sha256": "fd327daf461db87b44a87def475d251bf03b997f7c07d9680592d75dbbfaad0b",
+          "axes": {}
+        },
+        {
+          "path": "fonts/typografie/dmmono/DMMono-MediumItalic.ttf",
+          "sha256": "a3b2211bb9cf5c4fc1a0b487553e673a737c2270c59b86bf1e0b48c77e587aa2",
+          "axes": {}
+        }
+      ],
+      "desktop": "fonts/typografie/dmmono/dmmono-desktop.zip"
     },
     {
       "name": "Oswald",
@@ -835,7 +1081,20 @@
         "liga",
         "locl"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/oswald/Oswald[wght].ttf",
+          "sha256": "5b38c246e255a12f5712d640d56bcced0472466fc68983d2d0410ec0457c2817",
+          "axes": {
+            "wght": [
+              200.0,
+              700.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/oswald/oswald-desktop.zip"
     },
     {
       "name": "Righteous",
@@ -857,7 +1116,15 @@
       ],
       "uses": [],
       "features": [],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/righteous/Righteous-Regular.ttf",
+          "sha256": "2ffb3fe5c27d7e6571210b800448c4e234e651b46c6b4426c1bb567e5341348a",
+          "axes": {}
+        }
+      ],
+      "desktop": "fonts/typografie/righteous/righteous-desktop.zip"
     },
     {
       "name": "Bebas Neue",
@@ -887,7 +1154,15 @@
         "pnum",
         "tnum"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/bebasneue/BebasNeue-Regular.ttf",
+          "sha256": "08e4623805102d819f58601e46e345648846075e363b2ceb23313c2d1c83ec73",
+          "axes": {}
+        }
+      ],
+      "desktop": "fonts/typografie/bebasneue/bebasneue-desktop.zip"
     },
     {
       "name": "Dancing Script",
@@ -998,7 +1273,20 @@
         "liga",
         "locl"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/dancingscript/DancingScript[wght].ttf",
+          "sha256": "21808625578fe8d8cd10cb684be546dca077b27cd03a53a2f1ec11dc743c924c",
+          "axes": {
+            "wght": [
+              400.0,
+              700.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/dancingscript/dancingscript-desktop.zip"
     },
     {
       "name": "DM Sans",
@@ -1088,7 +1376,38 @@
         "locl",
         "numr"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/dmsans/DMSans[opsz,wght].ttf",
+          "sha256": "8cd08d97e89c24d0aa92edd2f0f4c8ee6195eee9b7c9f154865a58b02f0c1c0d",
+          "axes": {
+            "opsz": [
+              9.0,
+              40.0
+            ],
+            "wght": [
+              100.0,
+              1000.0
+            ]
+          }
+        },
+        {
+          "path": "fonts/typografie/dmsans/DMSans-Italic[opsz,wght].ttf",
+          "sha256": "22259c0cc8237221b80f44c76ba8d36e6bce3cda72779f5b2773643d499720ae",
+          "axes": {
+            "opsz": [
+              9.0,
+              40.0
+            ],
+            "wght": [
+              100.0,
+              1000.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/dmsans/dmsans-desktop.zip"
     },
     {
       "name": "Plus Jakarta Sans",
@@ -1126,7 +1445,30 @@
         "pnum",
         "tnum"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/plusjakartasans/PlusJakartaSans[wght].ttf",
+          "sha256": "89b3fb38aa0d275d7a731d0d817a4f1622b316b4d7fbdedcf02ee9099ff68bc8",
+          "axes": {
+            "wght": [
+              200.0,
+              800.0
+            ]
+          }
+        },
+        {
+          "path": "fonts/typografie/plusjakartasans/PlusJakartaSans-Italic[wght].ttf",
+          "sha256": "9529eb888668b6a3c6dd75b6341a2fc5263fb6c9e788822e6117c29dd9e8b115",
+          "axes": {
+            "wght": [
+              200.0,
+              800.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/plusjakartasans/plusjakartasans-desktop.zip"
     },
     {
       "name": "Forum",
@@ -1148,7 +1490,15 @@
       ],
       "uses": [],
       "features": [],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/forum/Forum-Regular.ttf",
+          "sha256": "5c9fbe9c4ce76d0269f5088d921d57e58082fd9c28433eacb6de95baf938adf8",
+          "axes": {}
+        }
+      ],
+      "desktop": "fonts/typografie/forum/forum-desktop.zip"
     },
     {
       "name": "Caveat",
@@ -1224,7 +1574,20 @@
         "liga",
         "locl"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/caveat/Caveat[wght].ttf",
+          "sha256": "0bdb6b660482d31531b3945849fba5916b3ef8695da7024a9e6b9ee3c4157988",
+          "axes": {
+            "wght": [
+              400.0,
+              700.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/caveat/caveat-desktop.zip"
     },
     {
       "name": "Nunito",
@@ -1260,7 +1623,30 @@
         "locl",
         "numr"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/nunito/Nunito[wght].ttf",
+          "sha256": "bb55a5ca5c2042335b3991af27c4d0705d0ef41cac6164ac737fd8f2a1e85207",
+          "axes": {
+            "wght": [
+              200.0,
+              1000.0
+            ]
+          }
+        },
+        {
+          "path": "fonts/typografie/nunito/Nunito-Italic[wght].ttf",
+          "sha256": "b520cc871868b0acfca1beda875df7f4a44ebce914f8a89f83977fc9c09529c8",
+          "axes": {
+            "wght": [
+              200.0,
+              1000.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/nunito/nunito-desktop.zip"
     },
     {
       "name": "Inter",
@@ -1720,7 +2106,38 @@
         "pnum",
         "tnum"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/inter/Inter[opsz,wght].ttf",
+          "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+          "axes": {
+            "opsz": [
+              14.0,
+              32.0
+            ],
+            "wght": [
+              100.0,
+              900.0
+            ]
+          }
+        },
+        {
+          "path": "fonts/typografie/inter/Inter-Italic[opsz,wght].ttf",
+          "sha256": "acd98e64795781b2058f07b18475e0ecee2a0fe2b42a49e2f9e37d0d6bf66ce6",
+          "axes": {
+            "opsz": [
+              14.0,
+              32.0
+            ],
+            "wght": [
+              100.0,
+              900.0
+            ]
+          }
+        }
+      ],
+      "desktop": "fonts/typografie/inter/inter-desktop.zip"
     },
     {
       "name": "Archivo Black",
@@ -1746,7 +2163,15 @@
         "liga",
         "locl"
       ],
-      "new": false
+      "new": false,
+      "desktopFiles": [
+        {
+          "path": "fonts/typografie/archivoblack/ArchivoBlack-Regular.ttf",
+          "sha256": "dd9a89a019b4849f66ab75455fe7bdf931311042cbb0f0f97acc061539703180",
+          "axes": {}
+        }
+      ],
+      "desktop": "fonts/typografie/archivoblack/archivoblack-desktop.zip"
     },
     {
       "name": "Cardo",
@@ -2151,5 +2576,6 @@
   ],
   "existingFamilies": 18,
   "existingFiles": 46,
-  "method": "Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs."
+  "method": "Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.",
+  "desktopCollection": "fonts/typografie/alle-schriftfamilien-desktop.zip"
 }

@@ -88,7 +88,12 @@
   }
   on(['book-font','book-paragraphs','book-headings','book-caps','caps-spacing','foot-size','foot-gap','folio-position'],updateBook);
   $('book-reset').onclick=()=>{Object.entries({'book-font':'EB Garamond','book-paragraphs':'indent','book-headings':'restrained','caps-spacing':6,'foot-size':14,'foot-gap':20,'folio-position':'outer'}).forEach(([id,v])=>$(id).value=v);$('book-caps').checked=true;updateBook();};updateBook();
-  $('ligature-toggle').onchange=()=>$('ligature-proof').style.fontVariantLigatures=$('ligature-toggle').checked?'common-ligatures':'none';
+  function updateLigatures(){
+    const enabled=$('ligature-toggle').checked;
+    ['ligature-pairs','ligature-proof'].forEach(id=>$(id).classList.toggle('ligatures-off',!enabled));
+    $('ligature-status').textContent=enabled?'Probe mit Ligaturen':'Probe ohne Ligaturen';
+  }
+  $('ligature-toggle').onchange=updateLigatures;updateLigatures();
   $('kerning-toggle').onchange=()=>$('kerning-proof').style.fontKerning=$('kerning-toggle').checked?'normal':'none';
 
   const palettes={paper:['#202823','#f5f1e8'],night:['#f4ead5','#18251f'],sage:['#263e31','#e6ecdf'],blue:['#18364c','#e8eff4'],bad:['#b2b7a6','#e6e9df']};

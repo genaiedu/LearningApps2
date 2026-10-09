@@ -26,4 +26,21 @@ dialog{padding:35px;border:1px solid var(--line);border-radius:10px;color:var(--
 .download-actions a{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--line);border-radius:4px;text-decoration:none;font-size:15px;min-height:44px;background:var(--paper);color:var(--ink)}
 .download-actions a:hover{border-color:var(--red);color:var(--red)}
 .classification-sample.goudy{font-family:"Goudy Bookletter 1911",Georgia,serif;font-weight:400;font-style:normal;font-synthesis:none}
+/* Keep feature rules after font shorthands, which otherwise reset variants.
+   Static Cardo is used for visibly reliable ligature/numeral shaping in WebKit. */
+.ligature-comparison{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px;border-block:1px solid var(--line);padding:20px 0}
+.ligature-comparison>div{min-width:0}.ligature-comparison>div+div{border-left:1px solid var(--line);padding-left:20px}
+.feature-caption{display:block;font:13px/1.5 var(--sans);color:var(--muted);margin-bottom:10px}
+.feature-panel .ligature-proof,.feature-panel .ligature-typesample{font-family:Cardo,Georgia,serif;font-style:normal;font-weight:400;font-variant-ligatures:common-ligatures;font-feature-settings:"liga" 1,"clig" 1,"dlig" 0,"hlig" 0;letter-spacing:normal;text-rendering:optimizeLegibility}
+.feature-panel .ligature-proof{font-size:clamp(32px,4.5vw,56px);line-height:1.3}
+.feature-panel .ligature-typesample{font-size:clamp(32px,4vw,50px);line-height:1.4;margin:0;white-space:nowrap}
+.feature-panel .ligatures-off{font-variant-ligatures:none;font-feature-settings:"liga" 0,"clig" 0,"dlig" 0,"hlig" 0}
+.figure-proof{margin-top:25px}.figure-proof .feature-caption:not(:first-child){margin-top:25px}
+.figure-proof .oldstyle{font-family:Cardo,Georgia,serif;font-variant-numeric:oldstyle-nums proportional-nums;font-feature-settings:"onum" 1,"pnum" 1}
+.figure-proof .lining,.figure-proof .tabular{font-family:Cardo,Georgia,serif;font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"onum" 0,"pnum" 0;letter-spacing:normal}
+.figure-proof .figure-line{font-size:clamp(32px,4vw,46px);line-height:1.8;overflow:hidden;margin:0 0 8px}
+.figure-run{white-space:nowrap}.baseline-anchor{display:inline-block;position:relative;vertical-align:baseline;width:0;height:0}
+.baseline-anchor:before{content:"";position:absolute;right:0;top:0;width:100vw;border-top:1px dashed var(--red);opacity:.7;pointer-events:none}
+.figure-proof small{display:block;line-height:1.55}.figure-proof .tabular{margin-bottom:8px}
+@media(max-width:450px){.ligature-comparison{gap:12px}.ligature-comparison>div+div{padding-left:12px}.feature-caption{font-size:12px}}
 @media(max-width:760px){.download-grid>article{padding:22px}}
