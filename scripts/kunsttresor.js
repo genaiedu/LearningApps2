@@ -1,25 +1,26 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id), core = window.KunstTresor;
-  const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', images:'kunsttresor-images-v1'};
+  const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', images:'kunsttresor-images-v1', hero:'kunsttresor-hero-v1'};
   const labels = {date:'Entstehungszeit', style:'Stilrichtung', artist:'Künstler', technique:'Technik'};
   const store = {
     get(key) { try { return localStorage.getItem(key); } catch { return null; } },
     set(key,value) { try { localStorage.setItem(key,value); } catch { /* Private browsers may deny storage. */ } },
     remove(key) { try { localStorage.removeItem(key); } catch { /* The round still works in memory. */ } }
   };
-  let pool = [], landmarkIds = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = Math.max(0, Number(store.get(keys.best)) || 0);
+  let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = Math.max(0, Number(store.get(keys.best)) || 0);
   let imagesAllowed = store.get(keys.images) === 'yes', pendingStart = false, imageEpoch = 0;
-  let ready = new Set(), failed = new Set(), zoom = 100;
+  let ready = new Set(), failed = new Set(), zoom = 100, zoomEpoch = 0, zoomLoad = null;
   const imageTimers = new Set();
-  let introTimer = null, pendingIntro = false, previousIntro = [], introEpoch = 0;
+  let introTimer = null, pendingIntro = false, previousIntro = [], introEpoch = 0, introSoundEnabled = true;
   const introAudio = new Audio('../LearningApps/assets/kunst-der-fuge/fuge-orchester-suno.mp3');
   introAudio.preload='metadata'; introAudio.volume=.65;
   const introSeconds=46; // Five 7-second chapters followed by an 11-second full-artwork finale.
   let introFadeTimer=null;
   function startIntroAudio() {
-    introAudio.play().then(()=>{ $('intro-sound').textContent='♫ Ton ausschalten'; $('intro-sound').setAttribute('aria-pressed','true'); })
-      .catch(()=>{ $('intro-sound').textContent='♫ Ton einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); });
+    if (!introSoundEnabled) return;
+    introAudio.play().then(()=>{ $('intro-sound').textContent='♫ Musik ausschalten'; $('intro-sound').setAttribute('aria-pressed','true'); })
+      .catch(()=>{ $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); });
   }
   const imageURL = work => work.imageURL;
   const workById = id => pool.find(work => work.id === id);
@@ -45,28 +46,55 @@
   }
   function heroImages() {
     if (!imagesAllowed || !pool.length) return;
-    const featured = [pool.find(work => work.id === 'aic-28560'), pool.find(work => work.id === 'aic-20684'), pool.find(work => work.technique === 'Aquarell')].filter(Boolean);
+    if (!heroWorks.length) {
+      let recent = [];
+      try { const saved=JSON.parse(store.get(keys.hero)); if (Array.isArray(saved)) recent=saved; } catch { /* No previous selection. */ }
+      heroWorks=core.heroSelection(pool,recent);
+      store.set(keys.hero,JSON.stringify(heroWorks.map(work=>work.id)));
+    }
     [...document.querySelectorAll('.mini-frame')].forEach((slot,index) => {
       if (slot.querySelector('img')) return;
       const img = node('img'); img.alt = ''; img.referrerPolicy = 'no-referrer'; img.decoding = 'async';
-      img.src = imageURL(featured[index] || pool[index]); slot.append(img);
+      img.src = imageURL(heroWorks[index]); slot.append(img);
     });
   }
   function askForImages(start) {
     pendingStart = start; open('consent-dialog');
   }
-  function seenIntro() { try { return sessionStorage.getItem('kunsttresor-intro-1000-v2') === 'seen'; } catch { return false; } }
-  function finishIntro() {
+  function prepareLaunch() {
+    $('launch-privacy').hidden = imagesAllowed;
+    $('launch-start').textContent = imagesAllowed ? 'Vollbild & Musik starten →' : 'Kunstbilder erlauben & starten →';
+    open('launch-dialog');
+  }
+  async function launchGallery() {
+    close('launch-dialog');
+    if (!imagesAllowed) { imagesAllowed = true; store.set(keys.images,'yes'); heroImages(); }
+    introSoundEnabled = true;
+    if (!state) { state = core.newState(pool); save(); }
+    render();
+    // Keep the focus inside the fullscreen target when the film dialog closes later.
+    $('fullscreen').focus({preventScroll:true});
+    introAudio.volume=.65; introAudio.currentTime=0;
+    // Unlock audio and request fullscreen before the first await loses transient activation.
+    startIntroAudio();
+    await enterFullscreen();
+    // The film must be added to the browser's top layer AFTER fullscreen, not below it.
+    showIntro({audioPrimed:true});
+  }
+  function finishIntro({enterGame = false, keepAudio = false} = {}) {
     introEpoch++; clearTimeout(introTimer); introTimer=null;
     clearInterval(introFadeTimer); introFadeTimer=null;
-    introAudio.pause(); introAudio.currentTime=0;
+    if (!keepAudio) { introAudio.pause(); introAudio.currentTime=0; }
     close('intro-dialog'); $('intro-slides').replaceChildren(); $('intro-dialog').classList.remove('is-running','is-finale');
-    try { sessionStorage.setItem('kunsttresor-intro-1000-v2','seen'); } catch { /* No persistent tracking is required. */ }
+    if (enterGame && imagesAllowed && pool.length) {
+      if (!state) { state = core.newState(pool); save(); render(); }
+      toGame();
+    }
   }
-  function showIntro() {
+  function showIntro({audioPrimed = false} = {}) {
     if (!pool.length) return;
     if (!imagesAllowed) { pendingIntro=true; askForImages(false); return; }
-    finishIntro();
+    finishIntro({keepAudio:audioPrimed});
     introAudio.volume=.65;
     const chosen=core.introSelection(pool,landmarkIds,previousIntro);
     previousIntro=chosen.map(work=>work.id);
@@ -96,7 +124,7 @@
           slide.dataset.id=replacement.id; chosen[index]=replacement;
           previousIntro[index]=replacement.id;
           image.src=replacement.imageLargeURL||imageURL(replacement);
-          if ($('intro-dialog').classList.contains('is-finale')) $('intro-art-caption').textContent=replacement.title+' · '+replacement.artist;
+          if ($('intro-dialog').classList.contains('is-finale')) $('intro-art-caption').textContent=core.galleryTitle(replacement)+' · '+replacement.artist;
         };
       }
     });
@@ -119,20 +147,21 @@
       $('intro-heading').textContent=chapters[index].title; $('intro-text').textContent=chapters[index].text;
       void $('intro-copy').offsetWidth; $('intro-copy').classList.add('is-visible');
       $('intro-progress-bar').style.width=durations.slice(0,index+1).reduce((a,b)=>a+b,0)/(introSeconds*1000)*100+'%';
-      $('intro-art-caption').textContent=finale ? chosen[index].title+' · '+chosen[index].artist : '';
+      $('intro-art-caption').textContent=finale ? core.galleryTitle(chosen[index])+' · '+chosen[index].artist : '';
       if (finale) {
         const fadeStart=performance.now();
         introFadeTimer=setInterval(()=>{ introAudio.volume=Math.max(0,.65*(1-(performance.now()-fadeStart)/chapterMs)); },80);
       }
-      introTimer=setTimeout(()=>{ index++; index<slides.length?frame():finishIntro(); },chapterMs);
+      introTimer=setTimeout(()=>{ index++; index<slides.length?frame():finishIntro({enterGame:true}); },chapterMs);
     }
-    open('intro-dialog'); $('intro-dialog').classList.add('is-running'); frame(); startIntroAudio();
+    open('intro-dialog'); $('intro-dialog').classList.add('is-running'); frame();
+    if (!audioPrimed) startIntroAudio();
   }
   function start() {
     if (!pool.length) return;
     if (!imagesAllowed) { askForImages(true); return; }
     if (!state) state = core.newState(pool);
-    save(); render(); toGame();
+    save(); render(); toGame(); void enterFullscreen();
   }
   function newRound() {
     const previous = state;
@@ -196,16 +225,18 @@
   function loadWorkImage(work, button, epoch) {
     const img = node('img'); img.alt = core.galleryTitle(work) + ' · zu untersuchende Kunstabbildung';
     img.referrerPolicy = 'no-referrer'; img.decoding = 'async';
-    let finished = false;
-    const finish = ok => {
-      if (finished) return; finished = true; clearTimeout(timer); imageTimers.delete(timer);
+    let loaded = false;
+    const finish = (ok,slow = false) => {
+      if (loaded) return;
+      clearTimeout(timer); imageTimers.delete(timer);
       if (epoch !== imageEpoch || !imagesAllowed) return;
       button.querySelector('.image-loading')?.remove();
-      if (ok) { ready.add(work.id); failed.delete(work.id); button.disabled = false; }
-      else { failed.add(work.id); button.append(node('div','image-loading','Bild nicht erreichbar')); button.disabled = true; }
+      if (ok) { loaded = true; ready.add(work.id); failed.delete(work.id); button.disabled = false; }
+      else { failed.add(work.id); button.append(node('div','image-loading',slow ? 'Bild lädt ungewöhnlich lange …' : 'Bild nicht erreichbar')); button.disabled = true; }
       update();
     };
-    const timer = setTimeout(() => finish(false), 30000); imageTimers.add(timer);
+    // A timeout is feedback, not a permanent veto: a later successful onload recovers.
+    const timer = setTimeout(() => finish(false,true), 30000); imageTimers.add(timer);
     img.onload = () => finish(img.naturalWidth > 0); img.onerror = () => finish(false);
     button.append(img); img.src = imageURL(work);
   }
@@ -279,12 +310,24 @@
   }
   function showImage(work,letter) {
     if (!imagesAllowed) return;
+    cancelZoomLoad();
+    const epoch = zoomEpoch;
     $('image-title').textContent = 'Vergrößerte Kunstansicht';
     $('zoom-image').alt = 'Vergrößerte Ansicht: ' + core.galleryTitle(work);
     $('zoom-image').onload = setZoom;
-    $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = work.imageLargeURL || imageURL(work);
+    $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = imageURL(work);
     zoom = 100; open('image-dialog');
     $('zoom-view').scrollTop = $('zoom-view').scrollLeft = 0; setZoom(false);
+    const large = work.imageLargeURL || imageURL(work);
+    if (large !== imageURL(work)) {
+      zoomLoad = new Image(); zoomLoad.referrerPolicy = 'no-referrer';
+      zoomLoad.onload = () => { if (epoch === zoomEpoch && $('image-dialog').open && imagesAllowed) $('zoom-image').src = large; };
+      zoomLoad.src = large;
+    }
+  }
+  function cancelZoomLoad() {
+    zoomEpoch++;
+    if (zoomLoad) { zoomLoad.onload = null; zoomLoad.removeAttribute('src'); zoomLoad = null; }
   }
   function setZoom(keepCenter = true) {
     $('zoom-label').textContent = zoom + ' %'; $('zoom-out').disabled = zoom <= 100; $('zoom-in').disabled = zoom >= 300;
@@ -318,7 +361,7 @@
   });
   const stopPan = () => { pan = null; $('zoom-view').classList.remove('is-panning'); };
   ['pointerup','pointercancel','lostpointercapture'].forEach(type => $('zoom-view').addEventListener(type,stopPan));
-  $('image-dialog').addEventListener('close',stopPan);
+  $('image-dialog').addEventListener('close',() => { stopPan(); cancelZoomLoad(); });
   const techniqueArticle = {
     'Öl auf Leinwand':'Ölmalerei', 'Öl auf Holz':'Tafelmalerei', 'Öl auf Papier / Karton':'Ölmalerei', 'Öl und Metallauflage':'Blattgold',
     Tempera:'Temperamalerei', Pastell:'Pastellmalerei', Aquarell:'Aquarell', Radierung:'Radierung',
@@ -347,7 +390,7 @@
       const blob = await response.blob(), url = URL.createObjectURL(blob);
       const link = node('a'); link.href = url;
       const extension = new URL(work.imageOriginalURL).pathname.match(/\.([a-z0-9]{2,6})$/i)?.[1] || 'jpg';
-      link.download = work.title.replace(/[\\/<>:"|?*]/g,'-').slice(0,120) + '.' + extension;
+      link.download = core.galleryTitle(work).replace(/[\\/<>:"|?*]/g,'-').slice(0,120) + '.' + extension;
       document.body.append(link); link.click(); link.remove(); setTimeout(()=>URL.revokeObjectURL(url),60000);
       status.textContent = 'Download angefordert. Auf dem iPad lässt sich eine geöffnete Bilddatei über „Teilen“ oder „In Dateien sichern“ speichern.';
     } catch {
@@ -363,11 +406,12 @@
       if (imagesAllowed) {
         const imageButton = node('button','solution-image'); imageButton.type = 'button';
         imageButton.setAttribute('aria-label','Werk ' + 'ABCD'[index] + ' in der Lösung vergrößern');
-        const img = node('img'); img.alt = work.title; img.referrerPolicy = 'no-referrer'; img.src = imageURL(work);
+        const img = node('img'); img.alt = core.galleryTitle(work); img.referrerPolicy = 'no-referrer'; img.src = imageURL(work);
         imageButton.append(img,node('span',null,'⤢ Bild vergrößern'));
         imageButton.onclick = () => showImage(work,'ABCD'[index]); card.append(imageButton);
       }
-      card.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,work.title));
+      card.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,core.galleryTitle(work)));
+      if (core.galleryTitle(work)!==work.title) card.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
       const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); card.append(list);
       card.append(node('p','small','Quellenangabe zur Technik: ' + work.medium + '. Dokumentierter Stil: ' + work.styleOriginal + '.'));
       const source = node('a','small',work.metadataProvider==='Wikidata'?'Werkdatensatz & Nachweise ↗':'Originalwerk & Museumsdaten ↗'); source.href = work.source; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.referrerPolicy = 'no-referrer'; card.append(source);
@@ -389,7 +433,7 @@
       if (artistArticle) links.append(wikiButton('Künstler: ' + work.artist,artistArticle.title,artistArticle.language));
       links.append(wikiButton(work.style,styleArticle[work.style] || work.style),wikiButton(work.technique,techniqueArticle[work.technique] || work.technique));
       const workArticle = wikiCatalogue.works[work.id];
-      if (workArticle) links.append(wikiButton('Über das Werk',workArticle.title,workArticle.language));
+      if (workArticle) links.append(wikiButton('Wikipedia zum Werk: ' + core.galleryTitle(work),workArticle.title,workArticle.language));
       const year = work.date.match(/\b(1[3-9]\d{2})\b/)?.[1];
       if (year) links.append(wikiButton('Zeitkontext: ' + year,year));
       links.append(node('p','small','Artikel nach Möglichkeit auf Deutsch; sonst Englisch. Zeitkontext: Jahresartikel, kein Beleg für die Datierung des Werks.'));
@@ -402,12 +446,19 @@
     $('fullscreen').innerHTML = active ? '⤢ <span>Vollbild verlassen</span>' : '⛶ <span>Vollbild</span>';
     $('fullscreen').setAttribute('aria-label',active ? 'Vollbild verlassen' : 'Spiel im Vollbild öffnen');
   }
+  async function enterFullscreen() {
+    if (document.fullscreenElement === $('spiel') || $('spiel').classList.contains('fullscreen-fallback')) return;
+    try {
+      if (!$('spiel').requestFullscreen) throw Error();
+      await $('spiel').requestFullscreen();
+    }
+    catch { $('spiel').classList.add('fullscreen-fallback'); document.body.classList.add('has-fullscreen'); }
+    fullscreenLabel();
+  }
   async function fullscreen() {
     if (document.fullscreenElement) { await document.exitFullscreen(); return; }
     if ($('spiel').classList.contains('fullscreen-fallback')) { $('spiel').classList.remove('fullscreen-fallback'); document.body.classList.remove('has-fullscreen'); fullscreenLabel(); return; }
-    try { if (!$('spiel').requestFullscreen) throw Error(); await $('spiel').requestFullscreen(); }
-    catch { $('spiel').classList.add('fullscreen-fallback'); document.body.classList.add('has-fullscreen'); }
-    fullscreenLabel();
+    await enterFullscreen();
   }
   document.addEventListener('fullscreenchange',fullscreenLabel);
   document.addEventListener('keydown',event => {
@@ -418,7 +469,7 @@
   $('consent-yes').onclick = () => {
     imagesAllowed = true; store.set(keys.images,'yes'); close('consent-dialog'); heroImages();
     if (pendingStart) { pendingStart = false; start(); } else if (state) render();
-    if (pendingIntro) { pendingIntro=false; showIntro(); }
+    if (pendingIntro) { pendingIntro=false; void launchGallery(); }
   };
   $('consent-no').onclick = () => {
     imagesAllowed = false; store.remove(keys.images); pendingStart = false; close('consent-dialog');
@@ -426,13 +477,15 @@
     stopImages(); render();
   };
   $('image-settings').onclick = () => askForImages(false);
-  $('intro-replay').onclick = showIntro;
-  $('intro-skip').onclick = finishIntro;
+  $('launch-start').onclick = launchGallery;
+  $('launch-read').onclick = () => close('launch-dialog');
+  $('intro-replay').onclick = () => { if (!imagesAllowed) { pendingIntro=true; askForImages(false); } else void launchGallery(); };
+  $('intro-skip').onclick = () => finishIntro({enterGame:true});
   $('intro-sound').onclick = () => {
-    if (introAudio.paused) startIntroAudio();
-    else { introAudio.pause(); $('intro-sound').textContent='♫ Ton einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); }
+    if (introAudio.paused) { introSoundEnabled = true; startIntroAudio(); }
+    else { introSoundEnabled = false; introAudio.pause(); $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); }
   };
-  $('intro-dialog').addEventListener('cancel',finishIntro);
+  $('intro-dialog').addEventListener('cancel',() => finishIntro({enterGame:true}));
   document.addEventListener('visibilitychange',() => { if (document.hidden && $('intro-dialog').open) finishIntro(); });
   $('check').onclick = inspect; $('next-room').onclick = nextRoom;
   $('show-solution').onclick = $('result-solution').onclick = solutions;
@@ -452,13 +505,14 @@
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
-  Promise.all(['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json'].map(url => fetch(url+'?v=20261009-1000',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })))
-    .then(([data,media,wiki,landmarks]) => {
+  Promise.all(['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261009-titel-de',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })))
+    .then(([data,media,wiki,landmarks,titles]) => {
       wikiCatalogue = wiki;
       const images = new Map(media.images.map(image => [image.id,image]));
-      pool = data.works.filter(work => images.has(work.id) && wiki.artists[work.artist] && core.validWork(work)).map(work => ({...work,...images.get(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
+      const translated=new Set(titles.ownTranslations);
+      pool = data.works.filter(work => images.has(work.id) && wiki.artists[work.artist] && core.validWork(work)).map(work => ({...work,...images.get(work.id),titleDe:titles.titles[work.id],titleDeTranslated:translated.has(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
       landmarkIds = landmarks.works.map(work=>work.id).filter(id=>pool.some(work=>work.id===id));
-      if(pool.length!==1000 || landmarkIds.length!==100) throw Error('Archiv unvollständig');
+      if(pool.length!==1000 || landmarkIds.length!==100 || pool.some(work=>!work.titleDe)) throw Error('Archiv unvollständig');
       core.room(pool); // Verify that a complete, unique room can actually be generated.
       try { state = core.restore(JSON.parse(store.get(keys.game)),pool); } catch { state = null; }
       if (!state) store.remove(keys.game);
@@ -470,7 +524,7 @@
       $('start-here').textContent = state ? 'Spiel fortsetzen →' : 'Galerie betreten →';
       $('best').textContent = number(best); heroImages();
       if (state && imagesAllowed) render();
-      if (!seenIntro()) showIntro();
+      prepareLaunch();
     }).catch(() => {
       $('start-game').textContent = $('start-here').textContent = 'Archiv nicht erreichbar';
       $('waiting').querySelector('p').textContent = 'Das lokale Werkarchiv konnte nicht geladen werden. Bitte lade die veröffentlichte Seite erneut. Eine direkt als Datei geöffnete Kopie benötigt einen Webserver.';

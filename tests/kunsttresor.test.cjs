@@ -7,8 +7,9 @@ const archive = require('../data/kunstarchiv.json');
 const media = require('../data/kunstbilder.json');
 const wiki = require('../data/kunst-wikipedia.json');
 const landmarks = require('../data/kunst-hauptwerke.json');
+const titles = require('../data/kunst-titel-de.json');
 const byId = new Map(media.images.map(image => [image.id,image]));
-const pool = archive.works.filter(work => byId.has(work.id) && wiki.artists[work.artist]).map(work=>({...work,...byId.get(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
+const pool = archive.works.filter(work => byId.has(work.id) && wiki.artists[work.artist]).map(work=>({...work,...byId.get(work.id),titleDe:titles.titles[work.id],titleDeTranslated:titles.ownTranslations.includes(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
 function seeded(seed) { return () => { seed = (Math.imul(1664525,seed) + 1013904223) >>> 0; return seed / 4294967296; }; }
 function answer(state,correct = true) {
   for (const field of core.fields) for (const id of state.ids) state = core.choose(state,id,field,'');
@@ -125,6 +126,115 @@ test('gallery headings display the documented title, without appending artist cr
   assert.doesNotMatch(render,/heading\.append\([^\n]*work\.artist/);
   assert.doesNotMatch(render,/Original · Museum/);
 });
+test('all 1000 works have localized display titles, while source titles and saved answers stay intact', () => {
+  assert.equal(Object.keys(titles.titles).length,1000);
+  assert.equal(new Set(titles.ownTranslations).size,titles.ownTranslations.length);
+  assert.ok(titles.ownTranslations.length>500);
+  for (const work of pool) {
+    assert.ok(work.titleDe.trim(),work.id);
+    const original=archive.works.find(x=>x.id===work.id);
+    assert.equal(work.title,original.title);
+    for (const field of core.fields) assert.equal(work[field],original[field]);
+    if (work.titleDeTranslated) assert.notEqual(work.titleDe,work.title);
+    assert.equal(core.galleryTitle(work),work.titleDe);
+  }
+  for (const [id,title] of [['wd-Q61903346','Stillende Madonna'],['wd-Q3793426','Der Zyklop'],['wd-Q127651776','Tod eines Ulanen'],['aic-21937','Anbetung der Könige'],['wd-Q29117166','Versöhnung'],['wd-Q17304998','Pygmalion und Galatea']]) assert.equal(core.galleryTitle(pool.find(x=>x.id===id)),title);
+  assert.equal(core.galleryTitle({title:'Original'}),'Original');
+  assert.equal(core.galleryTitle({title:'Original',galleryTitle:'Quiztitel'}),'Quiztitel');
+  const previous=core.newState(pool,null,seeded(34));
+  const restored=core.restore(previous,pool.map(({titleDe,titleDeTranslated,...work})=>work));
+  assert.deepEqual(restored,{...previous,review:null});
+});
+test('own translations are disclosed only in the solution and article targets are not translated', () => {
+  const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  assert.ok(js.includes("Originaltitel der Werkquelle: "));
+  assert.ok(js.includes("Eigene deutsche Übersetzung; kein offizieller Museumstitel."));
+  assert.match(js,/chosen\[index\]\)\+' · '\+chosen\[index\]\.artist/);
+  assert.ok(js.includes("workArticle.title,workArticle.language"));
+  const render=js.slice(js.indexOf('function render()'),js.indexOf('function nextRoom()'));
+  assert.doesNotMatch(render,/titleDeTranslated|Originaltitel/);
+});
+test('three entrance artworks vary between visits, with distinct artists and styles', () => {
+  const random=seeded(212), combinations=new Set();
+  let recent=[];
+  for(let i=0;i<100;i++) {
+    const chosen=core.heroSelection(pool,recent,random);
+    assert.equal(chosen.length,3);
+    assert.equal(new Set(chosen.map(w=>w.id)).size,3);
+    assert.equal(new Set(chosen.map(w=>w.artistIdentity)).size,3);
+    assert.equal(new Set(chosen.map(w=>w.style)).size,3);
+    assert.ok(chosen.every(w=>!recent.includes(w.id)));
+    combinations.add(chosen.map(w=>w.id).sort().join(',')); recent=chosen.map(w=>w.id);
+  }
+  assert.equal(combinations.size,100);
+  const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  assert.ok(js.includes('heroWorks=core.heroSelection(pool,recent)'));
+  assert.doesNotMatch(js,/id === 'aic-28560'|id === 'aic-20684'/);
+});
+test('one explicit start click unlocks music before fullscreen, then opens the film above it', async () => {
+  const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  const html=fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
+  const launch=js.slice(js.indexOf('async function launchGallery()'),js.indexOf('function finishIntro('));
+  const events=[],context={
+    imagesAllowed:false,state:null,pool:[],introSoundEnabled:false,introAudio:{},keys:{images:'images'},
+    close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
+    core:{newState:()=>({})},save:()=>{},render:()=>{},$:()=>({focus:()=>events.push('focus')}),
+    startIntroAudio:()=>events.push('music'),enterFullscreen:async()=>events.push('fullscreen'),
+    showIntro:options=>{events.push('film');assert.equal(options.audioPrimed,true);}
+  };
+  const vm=require('node:vm'); vm.createContext(context); vm.runInContext(launch,context);
+  const started=context.launchGallery();
+  assert.ok(events.indexOf('music')<events.indexOf('fullscreen'));
+  assert.ok(!events.includes('film'));
+  await started;
+  assert.ok(events.indexOf('fullscreen')<events.indexOf('film'));
+  assert.equal(context.introSoundEnabled,true);
+  assert.equal(context.imagesAllowed,true);
+  assert.ok(html.includes('id="launch-privacy" hidden'));
+  assert.ok(js.includes("imagesAllowed ? 'Vollbild & Musik starten →' : 'Kunstbilder erlauben & starten →'"));
+  assert.ok(js.includes('prepareLaunch();'));
+});
+test('unsupported fullscreen has a reversible browser-filling fallback', async () => {
+  const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  const implementation=js.slice(js.indexOf('async function enterFullscreen()'),js.indexOf("document.addEventListener('fullscreenchange'"));
+  for(const unsupported of [true,false]) {
+    const gameClasses=new Set(),bodyClasses=new Set(),document={fullscreenElement:null},game={classList:{contains:n=>gameClasses.has(n),add:n=>gameClasses.add(n),remove:n=>gameClasses.delete(n)}};
+    if(!unsupported) game.requestFullscreen=async()=>{document.fullscreenElement=game;};
+    document.body={classList:{add:n=>bodyClasses.add(n),remove:n=>bodyClasses.delete(n)}};
+    document.exitFullscreen=async()=>{document.fullscreenElement=null;};
+    const context={document,$:()=>game,fullscreenLabel:()=>{}};
+    const vm=require('node:vm'); vm.createContext(context); vm.runInContext(implementation,context);
+    await context.enterFullscreen();
+    assert.equal(gameClasses.has('fullscreen-fallback'),unsupported);
+    assert.equal(document.fullscreenElement===game,!unsupported);
+    await context.fullscreen();
+    assert.equal(document.fullscreenElement,null); assert.equal(gameClasses.size,0); assert.equal(bodyClasses.size,0);
+  }
+});
+test('a successful image load after the warning recovers, but stale rooms do not', () => {
+  const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  const implementation=js.slice(js.indexOf('function loadWorkImage('),js.indexOf('function render()'));
+  const vm=require('node:vm');
+  for(const stale of [false,true]) {
+    let timeout,loading=null;
+    const image={naturalWidth:0},button={disabled:true,querySelector:()=>loading,append:e=>{if(e!==image)loading=e;}};
+    const context={imageEpoch:5,imagesAllowed:true,imageTimers:new Set(),ready:new Set(),failed:new Set(),core,
+      node:tag=>tag==='img'?image:{remove:()=>{loading=null;}},update:()=>{},imageURL:w=>w.imageURL,
+      setTimeout:fn=>{timeout=fn;return 17;},clearTimeout:()=>{}};
+    vm.createContext(context);vm.runInContext(implementation,context);
+    context.loadWorkImage(pool[0],button,5); timeout();
+    assert.equal(button.disabled,true);assert.ok(context.failed.has(pool[0].id));
+    if(stale)context.imageEpoch++;
+    image.naturalWidth=960;image.onload();
+    assert.equal(button.disabled,stale);assert.equal(context.ready.has(pool[0].id),!stale);
+    if(!stale){assert.equal(context.failed.size,0);assert.equal(loading,null);image.onerror();assert.equal(button.disabled,false);}
+  }
+  const madonna=pool.find(w=>w.title==='Nursing Madonna');
+  assert.match(madonna.imageURL,/\/960px-/);
+  assert.notEqual(madonna.imageURL,madonna.imageLargeURL);
+  assert.ok(js.includes("$('zoom-image').src = imageURL(work)"));
+  assert.ok(js.includes("epoch === zoomEpoch && $('image-dialog').open && imagesAllowed"));
+});
 test('recent artworks are avoided when the fresh pool permits a room', () => {
   let state = core.newState(pool,null,seeded(302));
   for (let i = 0; i < 30; i++) {
@@ -212,6 +322,9 @@ test('Wikipedia is offered only after a room ends and uses the established full-
   const html = fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
   assert.ok(js.includes("if (!state || state.phase === 'playing') return;"));
   assert.ok(js.includes("wikiButton(work.style,styleArticle[work.style] || work.style)"));
+  assert.ok(js.includes("if (workArticle) links.append(wikiButton('Wikipedia zum Werk: ' + core.galleryTitle(work),workArticle.title,workArticle.language))"));
+  assert.equal(Object.keys(wiki.works).length,482);
+  assert.ok(Object.values(wiki.works).every(article=>article.title && ['de','en'].includes(article.language)));
   assert.ok(html.includes('scripts/schroedinger-wikipedia.js'));
   assert.ok(html.includes('id="consent" data-defer-initial'));
   assert.doesNotMatch(html,/https:\/\/fonts\.(googleapis|gstatic)/);

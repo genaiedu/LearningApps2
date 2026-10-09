@@ -23,7 +23,16 @@
     for (const work of candidates) if (chosen.length < 5 && !chosen.includes(work)) chosen.push(work);
     return [...chosen, closing];
   }
-  function galleryTitle(work) { return work.galleryTitle || work.title; }
+  function galleryTitle(work) { return work.titleDe || work.galleryTitle || work.title; }
+  function heroSelection(pool, recent = [], random = Math.random) {
+    const fresh = pool.filter(work => !recent.includes(work.id));
+    const candidates = shuffle(fresh.length >= 3 ? fresh : pool,random), selected = [];
+    const sameArtist = (a,b) => (a.artistIdentity || a.artist) === (b.artistIdentity || b.artist);
+    for (const work of candidates) if (selected.length < 3 && !selected.some(other => sameArtist(other,work) || other.style === work.style)) selected.push(work);
+    for (const work of candidates) if (selected.length < 3 && !selected.includes(work) && !selected.some(other => sameArtist(other,work))) selected.push(work);
+    for (const work of candidates) if (selected.length < 3 && !selected.includes(work)) selected.push(work);
+    return selected;
+  }
   function validWork(work) {
     return Boolean(work && work.id && work.title && work.imageId && work.source && work.medium && work.styleOriginal && work.publicDomain === true && work.artistDeath <= 1955 && fields.every(field => typeof work[field] === 'string' && work[field].trim()));
   }
@@ -116,7 +125,7 @@
     }
     return {...saved, choices: saved.choices || {}, review};
   }
-  const api = {fields, shuffle, compatible, validWork, canDownload, galleryTitle, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore};
+  const api = {fields, shuffle, compatible, validWork, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

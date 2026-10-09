@@ -208,7 +208,13 @@ for (let i=0;i<titles.length;i+=30) {
     const original=new URL(img.url),large=new URL(img.thumburl||img.url);
     if (original.protocol!=='https:' || original.hostname!=='upload.wikimedia.org' || !['upload.wikimedia.org','thumb.wikimedia.org'].includes(large.hostname)) continue;
     large.search='';
-    const image={imageURL:large.href,imageLargeURL:large.href,imageOriginalURL:original.href,imageSource:img.descriptionurl,
+    // This 4.3 MB painting has a browser-verified 960px preview (a supported Wikimedia size).
+    let preview=large.href;
+    if (decodeURIComponent(original.pathname.split('/').at(-1))==='Bartolomé_Bermejo,_Mare_de_Déu_de_la_Llet,_Museu_de_Belles_Arts_de_València.jpg') {
+      const smaller=new URL(original.href); smaller.search='';
+      smaller.pathname=original.pathname.replace('/commons/','/commons/thumb/')+'/960px-'+original.pathname.split('/').at(-1); preview=smaller.href;
+    }
+    const image={imageURL:preview,imageLargeURL:large.href,imageOriginalURL:original.href,imageSource:img.descriptionurl,
       imageLicense:license,imageCredit:plain(meta?.Artist?.value),imageLicenseURL:meta?.LicenseUrl?.value||'https://commons.wikimedia.org/wiki/Commons:Reuse_of_PD-Art_photographs',
       imageWidth:img.width,imageHeight:img.height,imageMime:img.mime,imageBytes:img.size,imageDownloadAllowed:true,downloadRightsChecked:checked};
     info.set(page.title,image);

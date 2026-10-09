@@ -30,11 +30,19 @@ Verschiedene Namensformen mit derselben persönlichen Wikipediazuordnung
 gelten bei der Raumwahl als ein Künstler, ohne gespeicherte Antwortwerte
 umzubenennen.
 
-## Vier Dateien
+## Fünf Dateien
 
 `kunstarchiv.json` enthält Werkdaten, `kunstbilder.json` die geprüften
 Bild-URLs und Rechte, `kunst-wikipedia.json` die zugeordneten Artikel.
 `kunst-hauptwerke.json` enthält die vorab ausgewählten 100 Schlussbilder.
+`kunst-titel-de.json` ergänzt die deutschen Anzeigetitel für alle 1000 Werke.
+Zunächst werden vorhandene deutsche Wikipedia-/Wikidata-Titel berücksichtigt;
+fehlende beschreibende Titel wurden einzeln ins Deutsche übertragen. Eigennamen
+und etablierte fremdsprachige Titel bleiben gegebenenfalls erhalten. Eigene
+Übersetzungen werden in der Auflösung ausdrücklich als solche bezeichnet,
+nicht als offizielle Museumstitel. Dort bleibt auch der Originaltitel sichtbar.
+Die Galerie, Vergrößerung und Schlussbild-Beschriftung nutzen dieselbe deutsche
+Fassung; Wikipedia-Artikelziele und gespeicherte Antworten bleiben unverändert.
 Diese Werke haben einen eigenen Wikipediaartikel und breite dokumentierte
 Wikimedia-Rezeption. Die Auswahl wird vor Veröffentlichung anhand ihrer
 Titel und Künstler überprüft; Wikimedia-Verknüpfungen sind eine Auswahlhilfe,
@@ -48,6 +56,25 @@ sichtbar (`object-fit: contain`), zunächst ohne Haupttitel. Danach erscheinen
 Die Musik blendet über das Finale aus. Ein erneuter Vorspann vermeidet die
 unmittelbar vorher gezeigten Werke, insbesondere das vorige Schlussbild.
 
+Beim Öffnen wartet eine bildschirmfüllende Startseite auf einen Klick.
+Dieser startet den Vorspann mit eingeschalteter Musik und fordert zugleich
+Browser-Vollbild an; ohne Nutzeraktion werden diese Funktionen von Browsern
+oft blockiert. Ohne bisherige Bildfreigabe benennt derselbe Startknopf diese
+Zustimmung ausdrücklich und erklärt die externe Verbindung davor.
+Nach Vorspann oder Überspringen öffnet sich direkt der aktuelle Spielraum,
+weiterhin im Vollbild. Ist natives Vollbild nicht verfügbar (etwa in manchen
+iPad-Browsern), bleibt die bisherige browserfüllende Ersatzansicht nutzbar.
+Die Musik endet mit dem Vorspann; sie spielt nicht während des Rätselns weiter.
+Auch die drei Bilder im Eingangsbereich werden bei jedem Öffnen neu gezogen:
+drei verschiedene Werke, nach Möglichkeit mit unterschiedlichen Künstlern
+und Stilrichtungen. Die unmittelbar vorige Dreierauswahl wird vermieden;
+während eines Rundgangs wechseln diese Bilder nicht bei jeder Eingabe.
+Die 30-Sekunden-Ladewarnung sperrt ein später erfolgreich geladenes Bild
+nicht dauerhaft. Alte Bildanforderungen aus einem inzwischen verlassenen
+Raum bleiben dagegen wirkungslos. Für „Nursing Madonna“ wird im Spiel eine
+geprüfte 960px-Vorschau verwendet; beim Vergrößern bleibt sie sichtbar,
+während die größere Fassung nachlädt. Das Original bleibt für Downloads erhalten.
+
 ## Wartung
 
 `node scripts/expand-kunstarchiv.mjs /private/tmp/kunst-1000-cache` sammelt nur
@@ -58,6 +85,10 @@ Nach Prüfung werden die Patches eingespielt und
 `node --test tests/kunsttresor.test.cjs` ausgeführt. Zusätzlich den Vorspann,
 ein zufälliges Spielzimmer und die vergrößerte Bildansicht im Browser testen.
 Keine Bilddateien herunterladen oder veröffentlichen.
+
+`node scripts/localize-kunsttitel.mjs /private/tmp/kunst-1000-cache` erstellt
+eine separate Titel-Patchdatei. Bestehende eigene Übersetzungen werden bewahrt;
+neue fehlende Titel müssen vor Veröffentlichung redaktionell ergänzt werden.
 
 Primärquellen: [Museums-API](https://api.artic.edu/docs/),
 [Wikidata](https://www.wikidata.org/),
