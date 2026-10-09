@@ -5,6 +5,7 @@ from xml.etree import ElementTree as ET
 from html.parser import HTMLParser
 from uuid import UUID
 from hashlib import sha256
+import json
 import posixpath
 import unittest
 
@@ -27,6 +28,20 @@ class Links(HTMLParser):
             elif v and not v.startswith(('https:','http:','mailto:','data:')):self.paths.append(v)
 
 class Templates(unittest.TestCase):
+    def test_goudy_desktop_package(self):
+        data=json.loads((ROOT/'data'/'typografie-fonts.json').read_text())
+        font=next(f for f in data['families'] if f['id']=='goudybookletter1911')
+        folder=ROOT/'fonts'/'typografie'/'goudybookletter1911'
+        original=(folder/'GoudyBookletter1911.ttf').read_bytes()
+        self.assertEqual(sha256(original).hexdigest(),font['files'][0]['sha256'])
+        with ZipFile(ROOT/font['desktop']) as z:
+            self.assertEqual(z.testzip(),None)
+            self.assertEqual(z.read('goudybookletter1911/GoudyBookletter1911.ttf'),original)
+            self.assertIn('SIL OPEN FONT LICENSE',z.read('goudybookletter1911/OFL.txt').decode())
+            instructions=z.read('goudybookletter1911/INSTALLATION.txt').decode()
+            for wording in ['Mac:','Windows:','Regular-Schnitt','keine eigenen Bold- oder Italic-Schnitte']:
+                self.assertIn(wording,instructions)
+
     def test_all_eight(self):
         for base in NAMES:
             for modern in [False,True]:

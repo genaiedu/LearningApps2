@@ -2120,6 +2120,33 @@
       ],
       "desktop": "fonts/typografie/librebaskerville/librebaskerville-desktop.zip",
       "new": true
+    },
+    {
+      "name": "Goudy Bookletter 1911",
+      "id": "goudybookletter1911",
+      "group": "serif",
+      "classification": "Venezianisch geprägte Renaissance-Antiqua",
+      "advice": "Nach Frederic Goudys Kennerley Oldstyle: schräge e-Querlinie, geringer Strichkontrast und schräg betonte Rundungen. Eine moderne Interpretation, keine originale Jenson-Drucktype. Ein echter Regular-Schnitt; kein mitgelieferter Bold oder Italic.",
+      "designer": "Barry Schwartz",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/goudybookletter1911",
+      "licensePath": "fonts/typografie/goudybookletter1911/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/goudybookletter1911/GoudyBookletter1911.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "62d219942d2e4a3a8473c116254966d308820ae1729e2fac3730e66c073a5548"
+        }
+      ],
+      "uses": [],
+      "features": [
+        "aalt",
+        "ss01"
+      ],
+      "desktop": "fonts/typografie/goudybookletter1911/goudybookletter1911-desktop.zip",
+      "new": true
     }
   ],
   "existingFamilies": 18,

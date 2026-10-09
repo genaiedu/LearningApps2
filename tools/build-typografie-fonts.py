@@ -7,7 +7,7 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 from concurrent.futures import ThreadPoolExecutor
 from fontTools.ttLib import TTFont
-import hashlib, json, re, zipfile
+import argparse, hashlib, json, re, zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SIBLING = ROOT.parent / 'LearningApps'
@@ -36,9 +36,10 @@ FAMILIES = [
     ('Libre Bodoni','librebodoni','serif','Klassizistische Antiqua / Didone','Starker Strichkontrast und feine Serifen. Große Grade betonen die Eleganz; kleine Grade auf schwachen Displays testen.'),
     ('Source Sans 3','sourcesans3','sans','Humanistische Sans','Offene Formen und humanistischer Rhythmus. Für Erklärtexte, Navigation und Tabellen.'),
     ('Libre Baskerville','librebaskerville','serif','Barocke Antiqua / Transitional','Baskerville-inspirierte Interpretation für Bildschirmtext. Mehr Strichkontrast und aufrechtere Formen als viele Renaissance-Antiqua-Schriften.'),
+    ('Goudy Bookletter 1911','goudybookletter1911','serif','Venezianisch geprägte Renaissance-Antiqua','Nach Frederic Goudys Kennerley Oldstyle: schräge e-Querlinie, geringer Strichkontrast und schräg betonte Rundungen. Eine moderne Interpretation, keine originale Jenson-Drucktype. Ein echter Regular-Schnitt; kein mitgelieferter Bold oder Italic.'),
 ]
 SLUGS = {'Zilla Slab':'zilla-slab','DM Mono':'dm-mono','Bebas Neue':'bebas-neue','Dancing Script':'dancing-script','DM Sans':'dm-sans','Plus Jakarta Sans':'plus-jakarta-sans','Archivo Black':'archivo-black'}
-NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville'}
+NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville','goudybookletter1911'}
 RAW = 'https://raw.githubusercontent.com/google/fonts/main/ofl/'
 
 def get(url):
@@ -71,6 +72,8 @@ def build_family(row):
             entry['files'].append(dict(path='fonts/typografie/'+directory+'/'+out,weight=weight,style='italic' if italic else 'normal',axes=axes,sha256=hashlib.sha256(content).hexdigest()))
         desktop_files=files+['OFL.txt','METADATA.pb']
         extra_note=''
+        if directory=='goudybookletter1911':
+            extra_note='Goudy Bookletter 1911 enthält einen echten Regular-Schnitt (400), keine eigenen Bold- oder Italic-Schnitte. Nicht künstlich fett oder kursiv als weitere Original-Schnitte ausgeben.\nGestaltung: Barry Schwartz, nach Frederic Goudys Kennerley Oldstyle.\n'
         if directory=='sourcesans3':
             # The Google Fonts family is also published by its original maintainer.
             # Full static OTFs avoid variable-font compatibility issues in Word.
@@ -100,17 +103,28 @@ def build_family(row):
         entry['new']=False
     return entry
 
-def main():
+def main(selected=None):
     DEST.mkdir(parents=True,exist_ok=True)
+    rows=[row for row in FAMILIES if selected is None or row[1] in selected]
+    if selected and set(selected)-{row[1] for row in rows}:
+        raise ValueError('Unknown font family')
+    catalogue_path=ROOT/'data'/'typografie-fonts.json'
+    previous=json.loads(catalogue_path.read_text()) if selected else None
     with ThreadPoolExecutor(max_workers=5) as pool:
-        entries=list(pool.map(build_family,FAMILIES))
+        updated=list(pool.map(build_family,rows))
+    if previous:
+        by_id={entry['id']:entry for entry in previous['families']}
+        by_id.update({entry['id']:entry for entry in updated})
+        entries=[by_id[row[1]] for row in FAMILIES]
+    else:
+        entries=updated
     # Report direct source references, not an assertion about rendered glyphs.
     for repo in [SIBLING,ROOT]:
         for path in sorted(repo.rglob('*')):
             if path.suffix not in {'.html','.css'} or any(p in {'tmp','vendor','node_modules','.git','fonts'} for p in path.parts): continue
             if 'typografie' in path.name: continue
             text=path.read_text(errors='replace')
-            for entry in entries:
+            for entry in updated:
                 if any(Path(f['path']).name in text for f in entry['files']):
                     rel=str(path.relative_to(repo))
                     entry['uses'].append(dict(repo=repo.name,path=rel,url='https://genaiedu.github.io/'+repo.name+'/'+rel))
@@ -125,4 +139,7 @@ def main():
     (ROOT/'styles'/'typografie-fonts.css').write_text('\n'.join(css)+'\n')
     print(f"Catalogue: {len(entries)} families, {out['existingFamilies']} existing / {out['existingFiles']} existing WOFF2 files, {len(NEW)} new licensed desktop packages.")
 
-if __name__=='__main__': main()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family',action='append',help='Update only this family; preserve all other existing font assets and metadata.')
+    main(parser.parse_args().family)
