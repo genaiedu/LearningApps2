@@ -168,13 +168,23 @@
     if (!imagesAllowed) return;
     $('image-title').textContent = 'Werk ' + letter;
     $('zoom-image').alt = 'Vergrößerte Ansicht von Werk ' + letter;
+    $('zoom-image').onload = setZoom;
     $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = imageURL(work);
-    zoom = 100; setZoom(); open('image-dialog');
+    zoom = 100; open('image-dialog');
+    $('zoom-view').scrollTop = $('zoom-view').scrollLeft = 0; setZoom();
   }
   function setZoom() {
     $('zoom-label').textContent = zoom + ' %'; $('zoom-out').disabled = zoom <= 100; $('zoom-in').disabled = zoom >= 300;
-    $('zoom-view').classList.toggle('is-zoomed',zoom > 100); $('zoom-image').style.width = zoom + '%';
+    const view = $('zoom-view'), image = $('zoom-image');
+    view.classList.toggle('is-zoomed',zoom > 100);
+    if (image.naturalWidth && image.naturalHeight && view.clientWidth && view.clientHeight) {
+      const fit = Math.min(view.clientWidth / image.naturalWidth,view.clientHeight / image.naturalHeight);
+      image.style.width = image.naturalWidth * fit * zoom / 100 + 'px';
+      image.style.height = image.naturalHeight * fit * zoom / 100 + 'px';
+      image.style.marginInline = 'auto';
+    } else { image.style.width = '100%'; image.style.height = '100%'; }
   }
+  window.addEventListener('resize',() => { if ($('image-dialog').open) setZoom(); });
   const techniqueArticle = {
     'Öl auf Leinwand':'Ölmalerei', 'Öl auf Holz':'Tafelmalerei', 'Öl auf Papier / Karton':'Ölmalerei',
     Tempera:'Temperamalerei', Pastell:'Pastellmalerei', Aquarell:'Aquarell', Radierung:'Radierung',
