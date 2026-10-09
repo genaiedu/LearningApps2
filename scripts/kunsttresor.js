@@ -96,7 +96,11 @@
     let index=0;
     function frame() {
       if (epoch!==introEpoch) return;
-      slides.forEach((slide,i)=>slide.classList.toggle('is-active',i===index));
+      slides.forEach((slide,i)=>{
+        // Keep the pan running while this slide fades out; only opacity follows is-active.
+        if (i===index) slide.classList.add('is-started');
+        slide.classList.toggle('is-active',i===index);
+      });
       $('intro-copy').classList.remove('is-visible');
       $('intro-chapter').textContent='Die Galerie der verschlossenen Türen · '+String(index+1).padStart(2,'0')+' / 05';
       $('intro-heading').textContent=chapters[index].title; $('intro-text').textContent=chapters[index].text;

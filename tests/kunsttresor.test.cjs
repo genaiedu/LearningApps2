@@ -156,3 +156,29 @@ test('Wikipedia is offered only after a room ends and uses the established full-
   assert.ok(js.includes('work.imageLargeURL || imageURL(work)'));
   assert.ok(js.includes('if (core.canDownload(work))'));
 });
+
+test('the outgoing intro image keeps its pan animation during the crossfade', () => {
+  const js = fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
+  const css = fs.readFileSync(path.join(__dirname,'../styles/kunsttresor.css'),'utf8');
+  const update = js.match(/slides\.forEach\(\(slide,i\)=>\{[\s\S]*?\n      \}\);/)[0];
+  const slides = Array.from({length:5}, () => {
+    const classes = new Set();
+    return {classes,classList:{add:name=>classes.add(name),toggle:(name,on)=>on?classes.add(name):classes.delete(name)}};
+  });
+  const vm = require('node:vm');
+  const context = {slides,index:0};
+  vm.runInNewContext(update,context);
+  assert.ok(slides[0].classes.has('is-started'));
+  assert.ok(slides[0].classes.has('is-active'));
+  for (context.index=1;context.index<5;context.index++) {
+    vm.runInNewContext(update,context);
+    assert.ok(slides[context.index-1].classes.has('is-started'), 'outgoing motion persists');
+    assert.ok(!slides[context.index-1].classes.has('is-active'), 'only outgoing opacity changes');
+    assert.ok(slides[context.index].classes.has('is-started'));
+    assert.ok(slides[context.index].classes.has('is-active'));
+    assert.equal(slides.filter(s=>s.classes.has('is-active')).length,1);
+  }
+  assert.doesNotMatch(css,/\.intro-slide\.is-active img/);
+  assert.match(css,/\.intro-slide\.is-started img\{animation:art-film-pan calc\(var\(--chapter-duration,6s\) \+ var\(--crossfade-duration,1\.5s\)\) ease-in-out both\}/);
+  assert.match(css,/transition:opacity var\(--crossfade-duration,1\.5s\) ease/);
+});
