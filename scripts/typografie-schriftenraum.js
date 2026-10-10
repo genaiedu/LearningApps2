@@ -5,22 +5,22 @@
   const NS='http://www.w3.org/2000/svg';
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
   const svg=(tag,attrs)=>{const n=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,v));return n;};
-  let yaw=-.64,pitch=-.4,layer='all',selected='serif-static-low',outlines=null,request=0;
-  const initialAnchor=['#strichkontrast','#strichabschluesse','#schriftenraum'].includes(location.hash)?location.hash.slice(1):null;
+  const initialRotation=()=>C.multiply(C.axisAngle([1,0,0],-.3),C.axisAngle([0,1,0],-.48));
+  let rotation=initialRotation(),flat=false,layer='all',selected='serif-static-low',outlines=null,request=0;
+  const initialAnchor=['#strichkontrast','#strichabschluesse','#schriftenraum','#font-space-stage'].includes(location.hash)?location.hash.slice(1):null;
   let userMoved=false;
   if(initialAnchor)['pointerdown','wheel','keydown','touchstart'].forEach(type=>addEventListener(type,()=>{userMoved=true;},{once:true,passive:true}));
-  const nodes=new Map(),rows=new Map(),edges=[];
+  const nodes=new Map(),planes=new Map(),downloads=new Map(),rows=new Map();
   C.cells.forEach(c=>{
+    const plane=el('article','space-face');plane.dataset.cell=c.id;plane.classList.toggle('space-face-down',!c.contrast);
     const button=el('button','space-node');button.type='button';button.dataset.cell=c.id;
-    button.append(el('span','space-word'),el('span','space-name'),el('span','space-terminal'));
-    button.addEventListener('click',()=>{selected=c.id;renderSelection();renderDetail();focusDetail();});
-    $('font-space-nodes').append(button);nodes.set(c.id,button);
+    const copy=el('span','space-face-copy');copy.append(el('span','space-word'),el('span','space-name'),el('span','space-terminal'));
+    const border=svg('svg',{viewBox:'0 0 100 100',preserveAspectRatio:'none',class:'space-face-border','aria-hidden':'true'});
+    border.append(svg('polygon',{points:c.contrast?'50,0 100,100 0,100':'0,0 100,0 50,100'}));button.append(border,copy);
+    button.addEventListener('click',()=>{if(performance.now()<suppressClickUntil)return;selected=c.id;renderSelection();renderDetail();focusDetail();});
+    const download=el('a','space-flat-download');plane.append(button,download);
+    $('font-space-solid').append(plane);nodes.set(c.id,button);planes.set(c.id,plane);downloads.set(c.id,download);
   });
-  C.cells.forEach((a,i)=>C.cells.slice(i+1).forEach(b=>{
-    if(!C.adjacent(a,b))return;
-    const axis=a.serif!==b.serif?'serif':a.contrast!==b.contrast?'contrast':'dynamic';
-    const line=svg('line',{class:'space-edge space-edge-'+axis});$('font-space-wire').append(line);edges.push({a,b,line});
-  }));
   C.fields.forEach(f=>{
     const c=C.cells.find(c=>c.id===f.cell),s=f.specimen&&C.specimens[f.specimen];
     const row=el('article','space-field');row.dataset.field=f.cell+'-'+f.layer;
@@ -30,14 +30,29 @@
     else{button.append(el('span','space-open-label','Offenes Feld'),el('span','',C.empty));}
     button.setAttribute('aria-label',f.label+(s?' · '+s.name:' · '+C.empty));
     button.addEventListener('click',()=>{selected=c.id;setLayer(f.layer);focusDetail();});
-    row.append(button);$('font-space-fields').append(row);rows.set(row.dataset.field,row);
+    row.append(button);
+    if(s){const download=el('a','space-field-download');window.TypoFontLinks.link(download,s.name);row.append(download);}
+    $('font-space-fields').append(row);rows.set(row.dataset.field,row);
   });
   function position(){
-    stage.setAttribute('aria-label',matchMedia('(max-width: 600px)').matches?'Acht Schriftformfelder. Tab führt zu den Vergleichsproben.':'Drehbarer Schriftenwürfel. Pfeiltasten drehen, Tab führt zu den acht Vergleichsproben.');
-    const w=stage.clientWidth,h=stage.clientHeight,scale=Math.min(w*.265,h*.275);
-    const points=new Map(C.cells.map(c=>{const p=C.project(c,yaw,pitch);return[c.id,{x:w/2+p.x*scale,y:h/2+p.y*scale,z:p.z}];}));
-    nodes.forEach((n,id)=>{const p=points.get(id);n.style.left=p.x+'px';n.style.top=p.y+'px';n.style.zIndex=String(Math.round((p.z+3)*10));});
-    edges.forEach(({a,b,line})=>{const p=points.get(a.id),q=points.get(b.id);Object.entries({x1:p.x,y1:p.y,x2:q.x,y2:q.y}).forEach(([k,v])=>line.setAttribute(k,v));});
+    if(flat){nodes.forEach(n=>{n.tabIndex=0;n.removeAttribute('aria-hidden');});return;}
+    const radius=Math.min(stage.clientWidth*.45,stage.clientHeight*.385),distance=radius*6;
+    stage.style.perspective=distance+'px';
+    stage.style.setProperty('--face-word-size',Math.max(26,radius*.20)+'px');
+    stage.style.setProperty('--face-name-size',Math.max(12,radius*.063)+'px');
+    stage.style.setProperty('--face-note-size',Math.max(10,radius*.045)+'px');
+    $('font-space-solid').style.transform='matrix3d('+C.rotationMatrix(rotation).join(',')+')';
+    C.cells.forEach(c=>{
+      const f=C.faceFrame(c,radius),plane=planes.get(c.id),node=nodes.get(c.id);
+      plane.style.width=f.width+'px';plane.style.height=f.height+'px';
+      plane.style.transform='matrix3d('+[...f.u,0,...f.v,0,...f.normal,0,...f.origin,1].join(',')+')';
+      const normal=C.rotatePoint(f.normal,rotation),center=C.rotatePoint(f.center,rotation);
+      const front=normal[2]*distance-C.dot(normal,center)>0;
+      plane.classList.toggle('space-face-back',!front);
+      node.tabIndex=front?0:-1;node.setAttribute('aria-hidden',String(!front));
+      const light=.5+.5*C.dot(normal,[-.35,-.4,.846]);
+      plane.style.setProperty('--face-alpha',String(front?.22+light*.22:.1));
+    });
   }
   function renderSelection(){
     C.cells.forEach(c=>{
@@ -48,6 +63,7 @@
       n.querySelector('.space-terminal').textContent=s?(layer==='all'?'Gesamtform':'Detail: '+s.glyph):'Feld untersuchen';
       n.setAttribute('aria-label',C.labels(c).join(' · ')+(layer==='all'?'':layer==='quer'?' · quer geschnitten':' · schräg geschnitten')+' · '+(s?s.name:C.empty));
       n.title=n.getAttribute('aria-label');
+      const download=downloads.get(c.id);download.hidden=!s;if(s)window.TypoFontLinks.link(download,s.name);
     });
     rows.forEach((row,key)=>row.classList.toggle('space-field-selected',key===selected+'-'+layer));
     document.querySelectorAll('[data-space-layer]').forEach(n=>n.setAttribute('aria-pressed',String(n.dataset.spaceLayer===layer)));
@@ -95,7 +111,7 @@
     const source=$('space-font-source'),license=$('space-font-license'),download=$('space-font-download');
     source.href=family?family.fontProject:'https://github.com/google/fonts';
     license.href=family?family.licensePath:'#schrift-downloads';license.textContent=family?family.license:'Lizenz';
-    download.href='fonts/typografie/'+fontId+'/'+fontId+'-desktop.zip';
+    window.TypoFontLinks.link(download,s.name);
   }
   $('space-glyph').addEventListener('change',renderGlyph);
   function focusDetail(){
@@ -103,14 +119,28 @@
     $('space-detail-heading').focus({preventScroll:true});
   }
   $('space-podkova-link').addEventListener('click',()=>{selected='serif-static-low';setLayer('schraeg');focusDetail();});
-  function rotate(dx,dy){yaw=C.normalize(yaw+dx);pitch=Math.max(-1.05,Math.min(1.05,pitch+dy));position();}
-  document.querySelectorAll('[data-space-rotate]').forEach(n=>n.addEventListener('click',()=>{const [x,y]=n.dataset.spaceRotate.split(',').map(Number);rotate(x,y);}));
-  $('space-reset').addEventListener('click',()=>{yaw=-.64;pitch=-.4;position();});
-  stage.addEventListener('keydown',e=>{if(e.target!==stage)return;const moves={ArrowLeft:[-.16,0],ArrowRight:[.16,0],ArrowUp:[0,-.12],ArrowDown:[0,.12]};if(moves[e.key]){e.preventDefault();rotate(...moves[e.key]);}});
-  let drag=null;
-  stage.addEventListener('pointerdown',e=>{if(e.target.closest('button')||e.button!==0||matchMedia('(max-width: 600px)').matches)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY};stage.setPointerCapture(e.pointerId);stage.classList.add('space-dragging');});
-  stage.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;rotate((e.clientX-drag.x)*.006,(e.clientY-drag.y)*.006);drag.x=e.clientX;drag.y=e.clientY;});
-  const endDrag=e=>{if(!drag||e.pointerId!==drag.id)return;drag=null;stage.classList.remove('space-dragging');if(stage.hasPointerCapture(e.pointerId))stage.releasePointerCapture(e.pointerId);};
+  $('space-reset').addEventListener('click',()=>{rotation=initialRotation();position();});
+  $('space-flat-toggle').addEventListener('click',()=>{
+    flat=!flat;stage.classList.toggle('space-flat',flat);
+    $('space-flat-toggle').setAttribute('aria-pressed',String(flat));
+    $('space-flat-toggle').textContent=flat?'Zum Oktaeder':'Flache Ansicht';
+    stage.setAttribute('aria-label',flat?'Acht Schriftproben mit Google-Fonts-Links.':'Frei drehbarer Schriftenoktaeder. Zum Drehen ziehen oder wischen; eine Fläche anklicken für die Originalkonturen.');
+    position();
+  });
+  let drag=null,suppressClickUntil=0;
+  const ball=(x,y)=>{const r=stage.getBoundingClientRect();return C.trackball(x-r.left-r.width/2,y-r.top-r.height*.48,Math.min(r.width,r.height)*.46);};
+  stage.addEventListener('pointerdown',e=>{
+    if(flat||drag||e.button!==0)return;
+    drag={id:e.pointerId,x:e.clientX,y:e.clientY,start:ball(e.clientX,e.clientY),rotation:[...rotation],moved:false};
+  });
+  stage.addEventListener('pointermove',e=>{
+    if(!drag||e.pointerId!==drag.id)return;
+    if(!drag.moved&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<5)return;
+    if(!drag.moved){drag.moved=true;stage.setPointerCapture(e.pointerId);stage.classList.add('space-dragging');}
+    rotation=C.multiply(C.turnBetween(drag.start,ball(e.clientX,e.clientY)),drag.rotation);
+    cancelAnimationFrame(request);request=requestAnimationFrame(position);
+  });
+  const endDrag=e=>{if(!drag||e.pointerId!==drag.id)return;if(drag.moved)suppressClickUntil=performance.now()+250;drag=null;stage.classList.remove('space-dragging');if(stage.hasPointerCapture(e.pointerId))stage.releasePointerCapture(e.pointerId);};
   ['pointerup','pointercancel','lostpointercapture'].forEach(type=>stage.addEventListener(type,endDrag));
   const resize=()=>{cancelAnimationFrame(request);request=requestAnimationFrame(position);};
   new ResizeObserver(resize).observe(stage);

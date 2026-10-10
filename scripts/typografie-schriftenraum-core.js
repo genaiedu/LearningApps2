@@ -30,13 +30,47 @@
   const labels=c=>[c.serif?'Serif':'Sans Serif',c.dynamic?'dynamisch':'eher statisch',c.contrast?'deutlicher Kontrast':'geringer Kontrast'];
   const combination=(c,layer)=>labels(c).concat(layer==='quer'?'quer geschnitten':'schräg geschnitten').join(' · ');
   const fields=cells.flatMap(c=>['quer','schraeg'].map(layer=>({cell:c.id,layer,specimen:c[layer],label:combination(c,layer)})));
-  function project(c,yaw,pitch){
-    const x=c.serif?1:-1,y=c.contrast?-1:1,z=c.dynamic?1:-1;
-    const a=x*Math.cos(yaw)+z*Math.sin(yaw),b=-x*Math.sin(yaw)+z*Math.cos(yaw);
-    return {x:a,y:y*Math.cos(pitch)-b*Math.sin(pitch),z:y*Math.sin(pitch)+b*Math.cos(pitch)};
+  const dot=(a,b)=>a.reduce((s,n,i)=>s+n*b[i],0);
+  const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  const unit=a=>{const d=Math.hypot(...a);return a.map(n=>n/d);};
+  // The octahedron is the dual of the old cube: one face for each of the
+  // eight binary combinations. Each face is an actual equilateral plane.
+  function faceFrame(c,radius=1){
+    const sx=c.serif?1:-1,sy=c.contrast?-1:1,sz=c.dynamic?1:-1;
+    const apex=[0,sy*radius,0],x=[sx*radius,0,0],z=[0,0,sz*radius];
+    const normal=unit([sx,sy,sz]);
+    let left=x,right=z;
+    let u=unit(right.map((n,i)=>n-left[i]));
+    let v=unit(left.map((n,i)=>sy<0?(n+right[i])/2-apex[i]:apex[i]-(n+right[i])/2));
+    if(dot(cross(u,v),normal)<0){[left,right]=[right,left];u=u.map(n=>-n);}
+    const width=Math.SQRT2*radius,height=Math.sqrt(1.5)*radius;
+    return {vertices:[apex,left,right],normal,u,v,width,height,down:sy>0,
+      origin:apex.map((n,i)=>n-u[i]*width/2-(sy>0?v[i]*height:0)),
+      center:[sx*radius/3,sy*radius/3,sz*radius/3]};
   }
-  const adjacent=(a,b)=>['serif','dynamic','contrast'].filter(k=>a[k]!==b[k]).length===1;
-  const normalize=n=>((n+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI;
-  const api={empty,specimens,cells,fields,labels,combination,project,adjacent,normalize};
+  const quaternion=q=>unit(q);
+  function multiply(a,b){
+    const [x,y,z,w]=a,[i,j,k,v]=b;
+    return quaternion([w*i+x*v+y*k-z*j,w*j-x*k+y*v+z*i,w*k+x*j-y*i+z*v,w*v-x*i-y*j-z*k]);
+  }
+  function axisAngle(axis,angle){const u=unit(axis),s=Math.sin(angle/2);return [...u.map(n=>n*s),Math.cos(angle/2)];}
+  function turnBetween(a,b){
+    const d=Math.max(-1,Math.min(1,dot(a,b)));
+    if(d<-.999999){const axis=cross(a,Math.abs(a[0])<.8?[1,0,0]:[0,1,0]);return axisAngle(axis,Math.PI);}
+    return quaternion([...cross(a,b),1+d]);
+  }
+  function rotatePoint(p,q){
+    const t=cross(q.slice(0,3),p).map(n=>2*n),u=cross(q.slice(0,3),t);
+    return p.map((n,i)=>n+q[3]*t[i]+u[i]);
+  }
+  function trackball(x,y,radius){
+    const a=x/radius,b=y/radius,d=a*a+b*b;
+    return d>1?unit([a,b,0]):[a,b,Math.sqrt(1-d)];
+  }
+  function rotationMatrix(q){
+    const u=rotatePoint([1,0,0],q),v=rotatePoint([0,1,0],q),n=rotatePoint([0,0,1],q);
+    return [...u,0,...v,0,...n,0,0,0,0,1];
+  }
+  const api={empty,specimens,cells,fields,labels,combination,faceFrame,dot,cross,multiply,axisAngle,turnBetween,rotatePoint,trackball,rotationMatrix};
   if(typeof module==='object'&&module.exports)module.exports=api;else root.Schriftenraum=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

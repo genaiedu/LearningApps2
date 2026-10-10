@@ -9,7 +9,7 @@ test('canon preserves proportions, margins sum to paper size',()=>{const c=C.can
 test('shuffle no duplicates, no mutation',()=>{const a=[1,2,3,4],b=C.shuffle(a,()=>0);assert.deepEqual(a,[1,2,3,4]);assert.deepEqual([...b].sort(),a);assert.notDeepEqual(a,b);});
 test('use existing font weights, not fake cuts',()=>{assert.equal(C.fontWeight({files:[{style:'normal',weight:400},{style:'normal',weight:700}]},500),400);assert.equal(C.fontWeight({files:[{style:'normal',weight:[200,900]}]},612),612);});
 test('catalogue local paths resolve and fonts are documented',()=>{const root=path.resolve(__dirname,'..'),data=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-fonts.json')));assert.equal(data.families.length,30);assert.equal(data.existingFamilies,18);for(const f of data.families){assert.ok(f.designer);assert.ok(f.files.length);for(const file of f.files)assert.ok(fs.existsSync(path.resolve(root,file.path)),file.path);assert.ok(fs.existsSync(path.resolve(root,f.licensePath)));if(f.desktop)assert.ok(fs.existsSync(path.resolve(root,f.desktop)));}});
-test('Venetian specimen uses the actual local Goudy font and offers its desktop package',()=>{const root=path.resolve(__dirname,'..'),data=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-fonts.json'))),font=data.families.find(f=>f.id==='goudybookletter1911');assert.equal(font.name,'Goudy Bookletter 1911');assert.equal(font.files.length,1);assert.equal(font.files[0].weight,400);assert.equal(font.files[0].style,'normal');assert.ok(font.desktop.endsWith('goudybookletter1911-desktop.zip'));const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-fonts.css'),'utf8');assert.ok(html.includes('classification-sample goudy'));assert.ok(!html.includes('axis-drawing'));assert.ok(html.includes(font.desktop));assert.ok(css.includes('font-family:"Goudy Bookletter 1911";src:url("../fonts/typografie/goudybookletter1911/'));assert.ok(!/https?:\/\//.test(css));});
+test('Venetian specimen uses the actual local Goudy font and links its official Google Fonts page',()=>{const root=path.resolve(__dirname,'..'),data=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-fonts.json'))),font=data.families.find(f=>f.id==='goudybookletter1911');assert.equal(font.name,'Goudy Bookletter 1911');assert.equal(font.files.length,1);assert.equal(font.files[0].weight,400);assert.equal(font.files[0].style,'normal');assert.ok(font.desktop.endsWith('goudybookletter1911-desktop.zip'));const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-fonts.css'),'utf8');assert.ok(html.includes('classification-sample goudy'));assert.ok(!html.includes('axis-drawing'));assert.ok(html.includes('https://fonts.google.com/specimen/Goudy+Bookletter+1911'));assert.ok(css.includes('font-family:"Goudy Bookletter 1911";src:url("../fonts/typografie/goudybookletter1911/'));assert.ok(!/https?:\/\//.test(css));});
 test('ligature control initializes and updates both real-text samples',()=>{
   const source=fs.readFileSync(path.resolve(__dirname,'../scripts/typografie-atelier.js'),'utf8');
   const code=source.slice(source.indexOf('  function updateLigatures(){'),source.indexOf("  $('kerning-toggle')"));
@@ -66,7 +66,7 @@ test('independent signs are distinguished from optional OpenType ligatures',()=>
 test('anatomy leads into overshoot and history; comments and variable cuts stay with their topics',()=>{
   const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-atelier.css'),'utf8');
   const headings=[...html.matchAll(/<h3 class="subchapter" id="([^"]+)"/g)].map(m=>m[1]);
-  assert.deepEqual(headings.slice(0,10),['overshoot','schriftgeschichte','sans-formen','buchstaben-varianten','strichkontrast','strichabschluesse','schriftenraum','schrift-aufgabe','auszeichnung','optische-groesse']);
+  assert.deepEqual(headings.slice(0,11),['overshoot','schriftgeschichte','sans-formen','buchstaben-varianten','strichkontrast','strichabschluesse','schriftenraum','schrift-aufgabe','schriftwahl-pruefen','auszeichnung','optische-groesse']);
   const at=id=>html.indexOf('id="'+id+'"');
   const comment=html.indexOf('class="author-essay author-comment letterform-statement"');
   assert.ok(at('buchstaben-varianten')<comment&&comment<at('schrift-aufgabe'));
@@ -107,11 +107,21 @@ test('optical controls isolate shape and weight from display size and extra trac
     elements['optical-reset'].onclick();assert.equal(elements['optical-weight'].value,400);assert.equal(elements['optical-size'].value,max);
   }
 });
-test('Word guidance distinguishes syllables from word parts and links all desktop downloads',()=>{
+test('Word guidance distinguishes syllables from word parts and links all official Google font pages',()=>{
   const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),data=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-fonts.json')));
   for(const phrase of ['id="word-ligaturen"','Format → Schriftart … → Erweitert','Nur Standard','Strg + D','Auf|lage','Af-fe','Ligaturen → Keine','Nein, darauf kannst du dich nicht verlassen.'])assert.ok(html.includes(phrase),phrase);
-  assert.ok(html.includes(data.desktopCollection));
-  for(const font of data.families){assert.ok(font.desktop);assert.ok(html.includes(font.desktop));}
+  assert.ok(!html.includes('href="'+data.desktopCollection+'"'));
+  for(const font of data.families){assert.ok(font.desktop);assert.ok(html.includes('https://fonts.google.com/specimen/'+font.name.split(' ').join('+')));}
+});
+test('font choice checklist is linked in context with real local ambiguity specimens',()=>{
+  const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8');
+  assert.ok(html.includes('https://fonts.google.com/knowledge/choosing_type/a_checklist_for_choosing_type?preview.script=Latn'));
+  assert.ok(html.includes('Elliot Jay Stocks'));assert.ok(html.includes('keine Übersetzung des Artikels'));
+  assert.ok(html.indexOf('id="schrift-aufgabe"')<html.indexOf('id="schriftwahl-pruefen"'));
+  assert.ok(html.indexOf('id="schriftwahl-pruefen"')<html.indexOf('id="auszeichnung"'));
+  for(const cls of ['poppins font-choice-signs','source-sans font-choice-signs'])assert.ok(html.includes(cls));
+  for(const phrase of ['Ersatzschrift','tatsächlich geladenen Datei','I l 1 · O 0'])assert.ok(html.includes(phrase));
+  const introduction=html.indexOf('https://fonts.google.com/knowledge/introducing_type?preview.script=Latn');assert.ok(introduction>html.indexOf('id="teil-zeichen"')&&introduction<html.indexOf('id="schriftformen"'));
 });
 
 test('three parts keep characters, print and screen in a continuous reading order',()=>{

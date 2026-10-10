@@ -4,7 +4,7 @@
   const node=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
   const on=(ids,fn,event='input')=>ids.forEach(id=>$(id).addEventListener(event,fn));
   const dec=(value,digits=2)=>Number(value).toLocaleString('de-DE',{minimumFractionDigits:digits,maximumFractionDigits:digits});
-  const fonts=new Map();let catalogue,artAllowed=false,artEpoch=0,artImage=null;
+  const fonts=new Map();let catalogue,fontAudits=new Map(),artAllowed=false,artEpoch=0,artImage=null;
   const initialHash=location.hash;let initialAnchorCancelled=false;
   for(const event of ['wheel','touchstart','pointerdown','keydown'])addEventListener(event,()=>{initialAnchorCancelled=true;},{once:true,passive:true});
   addEventListener('hashchange',()=>{initialAnchorCancelled=true;},{once:true});
@@ -56,7 +56,9 @@
   $('optical-reset').onclick=()=>updateOptical(true);updateOptical(true);
 
   async function loadFonts(){
-    try{const r=await fetch('data/typografie-fonts.json',{credentials:'omit'});if(!r.ok)throw Error();catalogue=await r.json();catalogue.families.forEach(f=>fonts.set(f.name,f));$('catalog-count').textContent=fonts.size;$('hero-count').textContent=fonts.size;renderFonts();updateBook();}
+    try{const r=await fetch('data/typografie-fonts.json',{credentials:'omit'});if(!r.ok)throw Error();catalogue=await r.json();catalogue.families.forEach(f=>fonts.set(f.name,f));$('catalog-count').textContent=fonts.size;$('hero-count').textContent=fonts.size;renderFonts();updateBook();
+      try{const audit=await fetch('data/typografie-fontaudit.json?v=20261010',{credentials:'omit'});if(!audit.ok)throw Error();const data=await audit.json();fontAudits=new Map(data.families.map(f=>[f.id,f]));renderFonts();}catch(_){/* The catalogue remains usable; each disclosure states missing audit data. */}
+    }
     catch(_){$('catalog-status').textContent='Das Schriftverzeichnis konnte nicht geladen werden. Die übrigen Werkstätten und Downloads bleiben nutzbar.';const retry=node('button',null,'Verzeichnis erneut laden');retry.onclick=()=>{retry.remove();loadFonts();};$('catalog-status').after(retry);}
   }
   const groupLabels={serif:'Serif / Antiqua',sans:'Sans Serif',script:'Hand- und Schreibschrift',display:'Display / Schmuck',mono:'Monospace'};
@@ -77,10 +79,10 @@
       if(f.new)card.append(node('span','new-tag','Für das Atelier ergänzt'));
       const info=node('details'),summary=node('summary',null,'Dateien, Gestalter & Verwendung');info.append(summary,node('p',null,'Gestaltung: '+f.designer+'. Lizenz: '+f.license+'.'));
       const links=node('p');const licence=node('a',null,'Lokaler Lizenztext');licence.href=f.licensePath;const source=node('a',null,'Offizielles Fontprojekt ↗');source.href=f.source;source.target='_blank';source.rel='noopener noreferrer';links.append(licence,document.createTextNode(' · '),source);info.append(links);
-      for(const file of f.files){const a=node('a','font-file',file.path.split('/').pop()+' · '+(file.axes&&Object.keys(file.axes).length?'variabel '+Object.keys(file.axes).join(', '):'statischer Schnitt'));a.href=file.path;a.download='';info.append(a);}
+      for(const file of f.files){const description=node('span','font-file',file.path.split('/').pop()+' · '+(file.axes&&Object.keys(file.axes).length?'variabel '+Object.keys(file.axes).join(', '):'statischer Schnitt'));info.append(description);}
       if(f.features?.length)info.append(node('p','small','OpenType-Tags im vorhandenen Bestand: '+f.features.join(', ')+'. Tags allein garantieren nicht jede Kombination für jedes Zeichen.'));
-      if(f.desktop){const a=node('a',null,'Desktop-Paket · Original-TTF'+(f.desktopStatic?' / OTF':'')+' + Lizenz ↓');a.href=f.desktop;a.download='';const p=node('p');p.append(a);info.append(p);}
-      if(f.desktopStatic){const p=node('p','small','Zusätzliche statische Desktop-Schnitte: ');const a=node('a',null,'Originalprojekt der Schriftgestalter ↗');a.href=f.desktopStatic.source;a.target='_blank';a.rel='noopener noreferrer';p.append(a);info.append(p);}
+      const download=node('a','font-google-download');window.TypoFontLinks.link(download,f.name);card.append(download);
+      window.TypoFontAudit.attach(card,f,fontAudits.get(f.id));
       const usage=node('p','small',f.uses.length?'Direkte Dateireferenzen in '+f.uses.length+' HTML-/CSS-Dateien. Kein Laufzeit-Nachweis.':'Für dieses Atelier ergänzt; nicht im vorherigen Bestand referenziert.');info.append(usage);
       const ul=node('ul');f.uses.slice(0,8).forEach(use=>{const li=node('li'),a=node('a',null,use.repo+'/'+use.path);a.href=use.url;a.target='_blank';a.rel='noopener noreferrer';li.append(a);ul.append(li);});if(f.uses.length>8)ul.append(node('li',null,'Weitere '+(f.uses.length-8)+' Referenzen im vollständigen Bestandsdatensatz.'));info.append(ul);
       if(f.uses.length>8){const a=node('a',null,'Vollständigen Bestandsdatensatz ansehen');a.href='data/typografie-fonts.json';info.append(a);}

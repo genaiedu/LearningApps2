@@ -29,7 +29,7 @@ class Links(HTMLParser):
             elif v and not v.startswith(('https:','http:','mailto:','data:')):self.paths.append(v)
 
 class Templates(unittest.TestCase):
-    def test_all_desktop_downloads_and_collection(self):
+    def test_archived_originals_preserved_but_downloads_link_to_google(self):
         data=json.loads((ROOT/'data'/'typografie-fonts.json').read_text())
         self.assertEqual(len(data['families']),30)
         html=(ROOT/'typografie-atelier.html').read_text()
@@ -39,7 +39,8 @@ class Templates(unittest.TestCase):
             for font in data['families']:
                 with self.subTest(font=font['name']), ZipFile(ROOT/font['desktop']) as z:
                     self.assertIsNone(z.testzip())
-                    self.assertIn(font['desktop'],html)
+                    self.assertNotIn('href="'+font['desktop']+'"',html)
+                    self.assertIn('https://fonts.google.com/specimen/'+font['name'].replace(' ','+'),html)
                     prefix=font['id']+'/'
                     license_name=Path(font['licensePath']).name
                     self.assertIn('Apache License' if font['id']=='robotoslab' else 'SIL OPEN FONT LICENSE',z.read(prefix+license_name).decode())

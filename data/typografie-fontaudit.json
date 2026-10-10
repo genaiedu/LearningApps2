@@ -1,0 +1,2183 @@
+{
+  "checked": "2026-10-10",
+  "requiredGerman": "ÄÖÜäöüß",
+  "optionalCharacters": "ẞ€„“–",
+  "scope": "Tatsächliche lokale Webdateien des Schriftarchivs, nicht alle bei Google erhältlichen Schnitte. cmap-Zeichenzuordnung, OS/2, fvar und OpenType-Tags; kein automatischer Lesbarkeits- oder Lizenzrechtsentscheid.",
+  "families": [
+    {
+      "id": "poppins",
+      "name": "Poppins",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/poppins-v24-latin-600.woff2",
+          "sha256": "f4e80d9dfd374d02989b87a27b5ed4cb78fbb177c27f1478e9a8b0afb7513149",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            600,
+            600
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/poppins-v24-latin-700.woff2",
+          "sha256": "9338e65fc077355c7a87ae0d64cc101e23b9bf8ad78ae65f0f319c857311b526",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/poppins-v24-latin-800.woff2",
+          "sha256": "60bf0aba6526436f3930c58c12047687fbb6bff4dd180cce4613458ed3439ea2",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            800,
+            800
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/poppins-v24-latin-900.woff2",
+          "sha256": "17ea10196a490a8d3b8da162c7d4af9c301c5229f70af90dad6fa33eb951d83f",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            900,
+            900
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/poppins-v24-latin-regular.woff2",
+          "sha256": "7d93459d86585bfcdbb7e0376056226adb25821ee54b96236fe2123e9560929f",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "outfit",
+      "name": "Outfit",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/outfit-v15-latin-500.woff2",
+          "sha256": "fc9bff941def6d924a71632bd8a93190528872eae6414844f3c367ff948d92fd",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            500,
+            500
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "mark",
+            "mkmk",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/outfit-v15-latin-600.woff2",
+          "sha256": "8cfe15c2c6de6ef8efff3eedbd52a383ac9ef23d6c23f6cd9f9b838f5f37dc36",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            600,
+            600
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "mark",
+            "mkmk",
+            "pnum",
+            "rvrn",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/outfit-v15-latin-700.woff2",
+          "sha256": "5d5e3734089a74707292ce8a3e186def34cd63e33879f9ac3689a8d8da9d0706",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "mark",
+            "mkmk",
+            "pnum",
+            "rvrn",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/outfit-v15-latin-800.woff2",
+          "sha256": "eabf8cb2c01d0345e2eb19a49d04e8f8d0d520b74959b173d5ea6c2dcb95e4cd",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            800,
+            800
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "mark",
+            "mkmk",
+            "pnum",
+            "rvrn",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/outfit-v15-latin-900.woff2",
+          "sha256": "090bdae2e8f2fdc962732c8f918d57c5501737c6826be989bcd770860ec19f85",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            900,
+            900
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "mark",
+            "mkmk",
+            "pnum",
+            "rvrn",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/outfit-v15-latin-regular.woff2",
+          "sha256": "71f028fd2349990b3f8aa643abe767e82e0f596be407ae66f0004ff164121bdb",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "mark",
+            "mkmk",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "bangers",
+      "name": "Bangers",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/bangers-v25-latin-regular.woff2",
+          "sha256": "04f54ff42ea2b8fc50b4259c29c60b1e05e606b769c2fb541c98624346c9767c",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "zillaslab",
+      "name": "Zilla Slab",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/zilla-slab-v12-latin-700.woff2",
+          "sha256": "896b6ebb8cd10aca90bdff88a5a1b648cbc0d50751740bd5a6d012007aef9ebe",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/zilla-slab-v12-latin-regular.woff2",
+          "sha256": "ab2607313bc04e82a53aca235853a0b83463e99b3ae88b17cc963e371f8fe91c",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "lora",
+      "name": "Lora",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/lora-v37-latin-700.woff2",
+          "sha256": "c05fd5289492ed310ed882259b944ca5287e76e572a65d92d3941f9f44f0342a",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/lora-v37-latin-regular.woff2",
+          "sha256": "ac079950fd9885261c0f73d9e87233f31b5427333ce0eb20e26c119458493c40",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "montserrat",
+      "name": "Montserrat",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/montserrat-v31-latin-900.woff2",
+          "sha256": "5b6958520638bb8609f9eacb17c4d189563efeae96d5da49f7c2043988697205",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            900,
+            900
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "pnum",
+            "rvrn",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/montserrat-v31-latin-regular.woff2",
+          "sha256": "e66bcd2761ab6924b25ce70dafe10e57a39193c4fea1516730bd9cb5240af6c8",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "dmmono",
+      "name": "DM Mono",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/dm-mono-v16-latin-500.woff2",
+          "sha256": "9964608a849396bd00c4bfd7034afe03486469dcf20b4f6b8cbdfdd310369951",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            500,
+            500
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/dm-mono-v16-latin-regular.woff2",
+          "sha256": "e1896b13b2b1bb112fac2f9571bd6c40e118746e77a4511edbf43fbb41bf3e1e",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "oswald",
+      "name": "Oswald",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/oswald-v57-latin-700.woff2",
+          "sha256": "aae665c75af89ea7cb7d8ccc8b0911ea72267442ebcd84f6e3efa041ad3b3c16",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/oswald-v57-latin-regular.woff2",
+          "sha256": "e902b779e43944c300cf8ae5e4a1affa68cb8a823fd263dd2f479c4cdfbd213c",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "righteous",
+      "name": "Righteous",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/righteous-v18-latin-regular.woff2",
+          "sha256": "17055c538efddf7a754a98bb7db3d15405316dfb4645c287421ed3e7f8769144",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [],
+          "kernTable": true
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "bebasneue",
+      "name": "Bebas Neue",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/bebas-neue-v16-latin-regular.woff2",
+          "sha256": "a7c90c89240c134f7fdd33d40c000ec90b79d675ea53e8cc5a6d423c073de412",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "dancingscript",
+      "name": "Dancing Script",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/dancing-script-v29-latin-600.woff2",
+          "sha256": "c5fbb04a373ebe7195b8ef4feb2cf10632e72fb56158bdacc72095d4fa217b34",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            600,
+            600
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "fina",
+            "frac",
+            "init",
+            "kern",
+            "liga",
+            "locl",
+            "mark"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/dancing-script-v29-latin-700.woff2",
+          "sha256": "06b326d772e3a68977c10711110f5f38255a007f3775795efbcd3862313b2d22",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "fina",
+            "frac",
+            "init",
+            "kern",
+            "liga",
+            "locl",
+            "mark"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/dancing-script-v29-latin-regular.woff2",
+          "sha256": "570e4265bbcb453353ce2fdf63d179332d8daa92691d567547b8a383f3b46c3b",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "fina",
+            "frac",
+            "init",
+            "kern",
+            "liga",
+            "locl",
+            "mark"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "dmsans",
+      "name": "DM Sans",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/dm-sans-v17-latin-300.woff2",
+          "sha256": "80f13c410ec41f210a5553e7f420f8a51f459180019274df0b3faea314916f90",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            300,
+            300
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/dm-sans-v17-latin-500.woff2",
+          "sha256": "19bf1984956517c35c2bd35b6cdedac12a21d6fcd3596c614ecdfb88b648909d",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            500,
+            500
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/dm-sans-v17-latin-600.woff2",
+          "sha256": "6bb2b2645ba5eeaecf56322c543fa3a75b87b927977b9c03b1dabc4205089120",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            600,
+            600
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/dm-sans-v17-latin-700.woff2",
+          "sha256": "35c5efa0e5daa52ee5c6500f5be354bf751fb65c4e49e1d6806c6eb5883e8fe9",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/dm-sans-v17-latin-regular.woff2",
+          "sha256": "4ab51eb2cd7305d177187908d6397474d4520663f6c6e572feb0a64f4fa80006",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [
+        {
+          "path": "fonts/typografie/dmsans/DMSans[opsz,wght].ttf",
+          "sha256": "8cd08d97e89c24d0aa92edd2f0f4c8ee6195eee9b7c9f154865a58b02f0c1c0d",
+          "axes": {
+            "opsz": [
+              9,
+              40
+            ],
+            "wght": [
+              100,
+              1000
+            ]
+          }
+        }
+      ],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "plusjakartasans",
+      "name": "Plus Jakarta Sans",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/plus-jakarta-sans-v12-latin-800.woff2",
+          "sha256": "5f301a8ef9c266c8b596e6793d3cc826daeff9849c5af035f5386439137955ad",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            800,
+            800
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/plus-jakarta-sans-v12-latin-regular.woff2",
+          "sha256": "221a4135d06a4b33abbd535e9a0da4e565d19545ddd9267c4e678a916d54d9b6",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "forum",
+      "name": "Forum",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/forum-v19-latin-regular.woff2",
+          "sha256": "21eb0ef1c5f416bd7837e9bcf5c0ba1b026a9d56e5aed213871957ff442cae1d",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "kern"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "caveat",
+      "name": "Caveat",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/caveat-v23-latin-500.woff2",
+          "sha256": "edbfb1a768829d4e85127cd327e59faaec9701cb043e96430938f1f66acf009f",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            500,
+            500
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/caveat-v23-latin-600.woff2",
+          "sha256": "d51e2283010e661d9f3dafdc9ff4b82b2ebcb2f7aa43ca48a105f5f68d46cc32",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            600,
+            600
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/caveat-v23-latin-700.woff2",
+          "sha256": "15f9638095ad5ec9816f93d66805ca1a87e71dc5a76b596bfce1c78d4704c405",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/caveat-v23-latin-regular.woff2",
+          "sha256": "d0b7b931b8980049327e8f8f9ac264617c8200b8422d62e886473d3d9527bad3",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "nunito",
+      "name": "Nunito",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/nunito-v32-latin-700.woff2",
+          "sha256": "fa89300b9bbb3bd0f60d6991aa055965d98e2ccca27bf8688fe0c39cdc796846",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/nunito-v32-latin-regular.woff2",
+          "sha256": "a5906e15ceb68f73d3b2c2076b4057c3f6ed401186d56283b45ce12944ca0735",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "inter",
+      "name": "Inter",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/inter-v20-latin-500.woff2",
+          "sha256": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            500,
+            500
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/inter-v20-latin-600.woff2",
+          "sha256": "f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            600,
+            600
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/inter-v20-latin-700.woff2",
+          "sha256": "6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/inter-v20-latin-regular.woff2",
+          "sha256": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "calt",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "pnum",
+            "tnum"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [
+        {
+          "path": "fonts/typografie/inter/Inter[opsz,wght].ttf",
+          "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+          "axes": {
+            "opsz": [
+              14,
+              32
+            ],
+            "wght": [
+              100,
+              900
+            ]
+          }
+        }
+      ],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "archivoblack",
+      "name": "Archivo Black",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/archivo-black-v23-latin-regular.woff2",
+          "sha256": "25f33e61cf995abd6be62931cf03bf427286259177b43618cc410ee0157cfd30",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "frac",
+            "kern",
+            "liga",
+            "locl"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "cardo",
+      "name": "Cardo",
+      "files": [
+        {
+          "path": "fonts/typografie/cardo/Cardo-Regular.woff2",
+          "sha256": "737bdb34ce6cf40e2fab4c1c1535ec61e7fd5dedccf9bb812c3bd1adbdbb9c78",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "dlig",
+            "hist",
+            "hlig",
+            "kern",
+            "liga",
+            "mark",
+            "onum",
+            "pnum",
+            "salt",
+            "smcp",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "ss08",
+            "ss09",
+            "ss10",
+            "ss11",
+            "ss12",
+            "ss13",
+            "ss15",
+            "subs",
+            "sups"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/cardo/Cardo-Italic.woff2",
+          "sha256": "9d4195747ff3e4f1971ea4f00532f3ce46ddefd35b9e8e5066d1d793c624a7ac",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "dlig",
+            "hist",
+            "hlig",
+            "kern",
+            "liga",
+            "onum",
+            "pnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/cardo/Cardo-Bold.woff2",
+          "sha256": "19e5184a9afc93ea2897b5e2425b95a9fa5ff729faf0e7e0e1b33812a72ba324",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "kern"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": true,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "ebgaramond",
+      "name": "EB Garamond",
+      "files": [
+        {
+          "path": "fonts/typografie/ebgaramond/EBGaramond[wght].woff2",
+          "sha256": "2d8b500a66a0dfd85d002f6d0d418f6e58b82c99a6e6b39676de1f005d7c5c22",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            400,
+            800
+          ],
+          "italic": false,
+          "axes": {
+            "wght": [
+              400,
+              800
+            ]
+          },
+          "features": [
+            "aalt",
+            "c2pc",
+            "c2sc",
+            "case",
+            "dlig",
+            "dnom",
+            "frac",
+            "hist",
+            "hlig",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "mark",
+            "numr",
+            "onum",
+            "ordn",
+            "pcap",
+            "pnum",
+            "rlig",
+            "sinf",
+            "smcp",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "subs",
+            "sups",
+            "swsh",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/ebgaramond/EBGaramond-Italic[wght].woff2",
+          "sha256": "37e785381b3a5d86c67bd6c68de31c793667cf9a1804167f41a8ca286fcb1c99",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            400,
+            800
+          ],
+          "italic": true,
+          "axes": {
+            "wght": [
+              400,
+              800
+            ]
+          },
+          "features": [
+            "aalt",
+            "c2pc",
+            "c2sc",
+            "case",
+            "dlig",
+            "dnom",
+            "fina",
+            "frac",
+            "hist",
+            "hlig",
+            "init",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "onum",
+            "ordn",
+            "pcap",
+            "pnum",
+            "rlig",
+            "sinf",
+            "smcp",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "subs",
+            "sups",
+            "swsh",
+            "tnum"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": true,
+        "boldItalic": true
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "",
+      "licensePresent": true
+    },
+    {
+      "id": "librebodoni",
+      "name": "Libre Bodoni",
+      "files": [
+        {
+          "path": "fonts/typografie/librebodoni/LibreBodoni[wght].woff2",
+          "sha256": "7a66c1136b0075edfff0f863407a0493fae83e62efdd12200b129dc4c4fc86c7",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            700
+          ],
+          "italic": false,
+          "axes": {
+            "wght": [
+              400,
+              700
+            ]
+          },
+          "features": [
+            "aalt",
+            "case",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "ordn",
+            "sinf",
+            "subs",
+            "sups"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/librebodoni/LibreBodoni-Italic[wght].woff2",
+          "sha256": "f45cc8880de6b7367203ccf6aa72624953dd7dbaf00621df07b762d3fc0f9313",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            700
+          ],
+          "italic": true,
+          "axes": {
+            "wght": [
+              400,
+              700
+            ]
+          },
+          "features": [
+            "aalt",
+            "case",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "ordn",
+            "sinf",
+            "subs",
+            "sups"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": true,
+        "boldItalic": true
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "sourcesans3",
+      "name": "Source Sans 3",
+      "files": [
+        {
+          "path": "fonts/typografie/sourcesans3/SourceSans3[wght].woff2",
+          "sha256": "36fcee7aaf0d14f3f6a9e0ec085f1bb01b1029ad1f1f294819d2e299a1518ad1",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            200,
+            900
+          ],
+          "italic": false,
+          "axes": {
+            "wght": [
+              200,
+              900
+            ]
+          },
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "ccmp",
+            "cv01",
+            "cv02",
+            "cv03",
+            "cv04",
+            "cv05",
+            "cv06",
+            "cv07",
+            "cv08",
+            "cv09",
+            "cv10",
+            "cv11",
+            "cv12",
+            "cv13",
+            "cv14",
+            "cv15",
+            "cv16",
+            "cv17",
+            "cv18",
+            "cv19",
+            "dlig",
+            "dnom",
+            "frac",
+            "hlig",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "onum",
+            "ordn",
+            "pnum",
+            "salt",
+            "sinf",
+            "size",
+            "smcp",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "ss08",
+            "ss09",
+            "ss10",
+            "subs",
+            "sups",
+            "titl",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/sourcesans3/SourceSans3-Italic[wght].woff2",
+          "sha256": "a4e17fe85a976fa109bde55fc7a72778348e7dcb61f6e470750711e12e5c79e2",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            200,
+            900
+          ],
+          "italic": true,
+          "axes": {
+            "wght": [
+              200,
+              900
+            ]
+          },
+          "features": [
+            "aalt",
+            "case",
+            "ccmp",
+            "cv01",
+            "cv02",
+            "cv03",
+            "cv04",
+            "cv05",
+            "cv06",
+            "cv07",
+            "cv08",
+            "cv09",
+            "cv10",
+            "cv11",
+            "cv12",
+            "cv13",
+            "cv14",
+            "cv15",
+            "cv16",
+            "cv17",
+            "cv18",
+            "cv19",
+            "dlig",
+            "dnom",
+            "frac",
+            "hlig",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "onum",
+            "ordn",
+            "pnum",
+            "salt",
+            "sinf",
+            "size",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "ss08",
+            "ss09",
+            "ss10",
+            "subs",
+            "sups",
+            "titl",
+            "zero"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": true,
+        "boldItalic": true
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "",
+      "licensePresent": true
+    },
+    {
+      "id": "librebaskerville",
+      "name": "Libre Baskerville",
+      "files": [
+        {
+          "path": "fonts/typografie/librebaskerville/LibreBaskerville[wght].woff2",
+          "sha256": "57dde61a82f6a37a464b26012ce1f1686032139aa55b805b66a0384c1694f2eb",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            400,
+            700
+          ],
+          "italic": false,
+          "axes": {
+            "wght": [
+              400,
+              700
+            ]
+          },
+          "features": [
+            "aalt",
+            "case",
+            "ccmp",
+            "dlig",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "ordn",
+            "sinf",
+            "subs",
+            "sups"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/librebaskerville/LibreBaskerville-Italic[wght].woff2",
+          "sha256": "73f76e8a19c4fbbaabbdd216c1d5681c131b4addde4572b17b9b6829ff978863",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            400,
+            700
+          ],
+          "italic": true,
+          "axes": {
+            "wght": [
+              400,
+              700
+            ]
+          },
+          "features": [
+            "aalt",
+            "case",
+            "ccmp",
+            "dlig",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "ordn",
+            "sinf",
+            "ss01",
+            "subs",
+            "sups"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": true,
+        "boldItalic": true
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "",
+      "licensePresent": true
+    },
+    {
+      "id": "goudybookletter1911",
+      "name": "Goudy Bookletter 1911",
+      "files": [
+        {
+          "path": "fonts/typografie/goudybookletter1911/GoudyBookletter1911.woff2",
+          "sha256": "c8926393201371598bbfe25d226fdf4340729a73443e88542f54ffaf257ff692",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "kern",
+            "ss01"
+          ],
+          "kernTable": true
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "breeserif",
+      "name": "Bree Serif",
+      "files": [
+        {
+          "path": "fonts/typografie/breeserif/BreeSerif-Regular.woff2",
+          "sha256": "092f1fed0dcbc9fcfa1abdc9bf3307a352769d1f2a0950d65abe82ae468578dc",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "kern"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "robotoslab",
+      "name": "Roboto Slab",
+      "files": [
+        {
+          "path": "fonts/typografie/robotoslab/RobotoSlab[wght].woff2",
+          "sha256": "38fc902a7570a6a3c37f94228a1d1b71a3a5697a360f147c19303d71a1ee863c",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            100,
+            900
+          ],
+          "italic": false,
+          "axes": {
+            "wght": [
+              100,
+              900
+            ]
+          },
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "ccmp",
+            "dlig",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "mark",
+            "mkmk",
+            "ordn",
+            "smcp",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "sups"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "",
+      "licensePresent": true
+    },
+    {
+      "id": "belleza",
+      "name": "Belleza",
+      "files": [
+        {
+          "path": "fonts/typografie/belleza/Belleza-Regular.woff2",
+          "sha256": "eca3f781f90526370fb490272dfb0887869324d4d96e2d3d6a748ace61b8d13f",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "case",
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "ordn",
+            "sups"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "limelight",
+      "name": "Limelight",
+      "files": [
+        {
+          "path": "fonts/typografie/limelight/Limelight-Regular.woff2",
+          "sha256": "18d267cc63566c63262019abd35f4e95bdf98025cea3927d1b255a960fc6d5fb",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "podkova",
+      "name": "Podkova",
+      "files": [
+        {
+          "path": "fonts/typografie/podkova/Podkova[wght].woff2",
+          "sha256": "9b6de7b71468b0c6e878a664d16d530997b3cb5b627eadfea8ef86b5c7133471",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "weight": [
+            400,
+            800
+          ],
+          "italic": false,
+          "axes": {
+            "wght": [
+              400,
+              800
+            ]
+          },
+          "features": [
+            "aalt",
+            "case",
+            "ccmp",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "ordn",
+            "rvrn",
+            "sinf",
+            "subs",
+            "sups"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "",
+      "licensePresent": true
+    },
+    {
+      "id": "abel",
+      "name": "Abel",
+      "files": [
+        {
+          "path": "fonts/typografie/abel/Abel-Regular.woff2",
+          "sha256": "cd2b54d574a4cf3ff926c656520045a0073759fcfecf68b12ae0b0047f4d7f29",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [],
+          "kernTable": true
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    }
+  ]
+}
