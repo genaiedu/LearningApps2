@@ -1,0 +1,29 @@
+/* All decoration is clipped to this laboratory, never to the reading page. */
+.background-lab{display:grid;grid-template-columns:270px minmax(0,1fr);gap:36px;margin:35px 0;align-items:start}
+.background-lab>div{min-width:0}.background-lab .controls{position:static;display:block}
+.bg-proof-column{position:sticky;top:110px}
+.background-lab .controls label{font-size:16px}.background-lab .controls select{width:100%;min-width:0}
+.background-lab .controls label.check{display:flex;align-items:start;gap:12px;font-size:15px}.background-lab .controls input[type=checkbox]{flex:0 0 auto;width:18px;height:18px;margin-top:5px}
+.bg-choices{display:flex;flex-wrap:wrap;gap:10px;margin:25px 0}.bg-choices button{font-size:16px}
+.bg-preview-shell{padding:12px;background:#dddcd4;border:1px solid var(--line);min-width:0}
+.bg-scroll{position:relative;height:640px;max-height:calc(100dvh - 290px);min-height:360px;max-width:100%;margin:auto;overflow:auto;overflow-x:hidden;scroll-behavior:auto;scrollbar-gutter:stable;isolation:isolate}
+.bg-scroll:focus-visible{outline:3px solid var(--accent,#a83424);outline-offset:3px}
+.bg-document{--bg-paper:#eee9df;--bg-ink:#202823;position:relative;overflow:hidden;background:var(--bg-paper);color:var(--bg-ink);min-height:1700px;padding:50px clamp(22px,5vw,65px) 100px;isolation:isolate}
+.bg-symbol{position:absolute;z-index:0;line-height:1;white-space:nowrap;font-synthesis:none;pointer-events:none;user-select:none;will-change:transform}
+.bg-symbol[hidden]{display:none}.bg-copy{position:relative;z-index:1;max-width:54ch;margin:auto}
+.bg-copy>header{padding-block:20px 50px;border-bottom:1px solid currentColor;margin-bottom:50px}.bg-copy>header>span{font:12px/1.5 var(--mono,monospace);letter-spacing:.1em}
+.bg-copy h3{font:400 clamp(37px,4vw,57px)/1.13 Cardo,serif;margin:23px 0 30px}
+.bg-copy h4{font:600 22px/1.25 "Source Sans 3",sans-serif;margin:0 0 20px}
+.bg-copy p{font:400 19px/1.75 "Source Sans 3",sans-serif;margin:0 0 23px}
+.bg-copy article{margin-bottom:64px}.bg-copy .bg-chapter-number{display:block;font:12px/1.5 var(--mono,monospace);margin-bottom:18px;letter-spacing:.05em}
+.bg-copy .bg-end{padding-top:25px;border-top:1px solid currentColor;font-size:16px}
+.bg-shielded .bg-copy{background:var(--bg-paper);padding:25px;box-shadow:0 0 0 12px var(--bg-paper)}
+.bg-progress-track{height:3px;background:#b3b9b0;margin-top:12px;overflow:hidden}.bg-progress-track>i{display:block;height:100%;background:#a83424;width:0}
+.bg-scroll-tools{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:18px}.bg-scroll-tools button{font-size:15px}.bg-scroll-tools>span{font:12px/1.5 var(--mono,monospace)}
+.bg-report{padding:25px;border-left:3px solid #76876c;background:#e5e9df;margin-top:24px}.bg-report p{font-size:16px;margin:0 0 10px;overflow-wrap:anywhere}.bg-report p:last-child{margin:0}.bg-report[data-state=warning]{border-color:#a83424;background:#f1e2d9}
+.background-tasks{margin:35px 0;border-top:1px solid var(--line);padding-top:25px}.background-tasks li{margin-block:12px;max-width:78ch}
+@media(max-width:900px){.background-lab{grid-template-columns:220px minmax(0,1fr);gap:22px}}
+@media(max-width:760px){.background-lab{grid-template-columns:1fr}.bg-proof-column{position:static}.bg-scroll{max-height:72dvh}.background-lab .controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}.background-lab .controls button,.background-lab .controls .small{grid-column:1/-1}.bg-document{padding-inline:28px}.bg-copy h3{font-size:44px}}
+@media(max-width:450px){.background-lab .controls{grid-template-columns:1fr}.bg-preview-shell{padding:6px}.bg-document{padding-inline:20px}.bg-copy p{font-size:18px}.bg-copy h3{font-size:37px}.bg-shielded .bg-copy{padding:15px;box-shadow:0 0 0 7px var(--bg-paper)}.bg-report{padding:20px}.bg-scroll{min-height:360px}.bg-scroll-tools>span{flex-basis:100%}}
+@media(prefers-reduced-motion:reduce){.bg-symbol{will-change:auto}}
+@media print{.bg-choices,.bg-scroll-tools,.bg-progress-track{display:none}.background-lab{display:block}.bg-proof-column{position:static}.bg-scroll{height:auto;max-height:none;overflow:visible}.bg-document{min-height:0}.bg-copy article{margin-bottom:25pt}.bg-symbol{transform:translate(-50%,-50%)!important;will-change:auto}.bg-preview-shell{padding:0;border:0}.bg-report{break-inside:avoid}}
