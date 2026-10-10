@@ -1,0 +1,22 @@
+/* Three live studies, framed by an open, angular construction instead of an arch. */
+.editorial-scene.hero-morph-scene{aspect-ratio:560/590;background:transparent;border-radius:0;box-shadow:none;overflow:visible}
+html[data-palette] .editorial-scene.hero-morph-scene{background:transparent}
+.hero-morph-scene:before{inset:10% 4% 9% 14%;border:1px solid var(--line);border-radius:0;transform:skewY(-8deg);background:linear-gradient(90deg,transparent 49.8%,var(--line) 50%,transparent 50.2%);opacity:.55;z-index:-1}
+.hero-morph-scene:after{left:0;right:0;bottom:1%;background:var(--line);transform:none}
+.hero-morph-scene>svg{display:block;width:100%;height:auto;overflow:visible}
+.hero-morph-scene .hero-board{stroke:#c9c8ba;stroke-width:1;fill:#fffcf5}
+.hero-morph-scene .hero-character-board{fill:#efe7db}
+.hero-morph-scene .hero-board-index{font:10px "Source Sans 3",sans-serif;letter-spacing:1.2px;fill:#56635b}
+.hero-morph-scene .hero-board-caption{font:11px "Source Sans 3",sans-serif;fill:#56635b}
+.hero-morph-scene .hero-outline{fill:#a83424;fill-rule:evenodd}
+.hero-morph-scene .hero-baseline{stroke:#a83424;stroke-width:.8;opacity:.5}
+.hero-morph-scene [data-hero-word]{font:12.8px "Source Sans 3",sans-serif;fill:#202823}
+.hero-morph-scene .hero-satz-heading{font:400 31px Cardo,serif;fill:#202823}
+.hero-morph-scene .hero-color-title{font:600 45px "Source Sans 3",sans-serif;letter-spacing:-1.5px}
+.hero-morph-scene .hero-construction{stroke:var(--muted);stroke-width:1;fill:none;opacity:.7}
+.hero-example-proof .hero-morph-scene{max-width:560px;align-self:center}
+.hero-example-proof .hero-morph-scene:before{border-radius:0}
+.hero-morph-note{max-width:78ch;font:15px/1.6 var(--sans);margin:22px 0}
+@media(max-width:760px){.editorial-scene.hero-morph-scene{max-width:470px;margin-top:8px}.editorial-copy .editorial-title{font-size:clamp(62px,13vw,84px)}}
+@container hero-example (max-width:650px){.hero-example-proof .hero-morph-scene{max-width:390px}.hero-example-proof .hero-morph-scene:before{border-radius:0}}
+@media print{.editorial-scene.hero-morph-scene{display:none}}
