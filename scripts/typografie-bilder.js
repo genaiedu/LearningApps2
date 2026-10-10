@@ -23,7 +23,7 @@
   }
   for(const id of ['image-width','image-fit','image-position'])$(id).addEventListener('change',crop);
   $('image-reset').addEventListener('click',()=>{$('image-width').value='1000';$('image-fit').value='contain';$('image-position').value='center';crop();});crop();
-  const heroNotes={new:'Der neue Auftakt: Die drei Blätter machen die drei Teile sichtbar. Auf schmalen Flächen steht das Motiv unter der Einleitung. Die Bewegung ist nur Dekoration.',previous:'Der bisherige Auftakt: Der Buchstabe selbst ist das grafische Motiv. Das Raster und die große Schriftprobe geben dem Text einen typografischen Kontext.',image:'Die bildbetonte Variante: Ein Bild schafft Atmosphäre, eine deckende Fläche sichert den Kontrast. Bei einem schmalen Format verändert sich der Bildausschnitt.'};
+  const heroNotes={new:'Komposition aus drei Blättern: Die Motive machen die drei Teile sichtbar. Auf schmalen Flächen stehen sie unter der Einleitung. Die Bewegung ist nur Dekoration.',previous:'Schrift als Motiv: Der Buchstabe selbst ist die grafische Form. Das Raster und die große Schriftprobe geben dem Text einen typografischen Kontext.',image:'Bild und Lesefläche: Ein Bild schafft Atmosphäre, eine deckende Fläche sichert den Kontrast. Bei einem schmalen Format verändert sich der Bildausschnitt.'};
   function hero(){
     const kind=$('hero-study').value,proof=$('hero-example-proof');
     proof.style.width=G.crop({width:$('hero-width').value}).width+'px';
@@ -33,7 +33,7 @@
       fragment=$('start').cloneNode(true);
       const heading=fragment.querySelector('h1'),replacement=document.createElement('h3');
       replacement.className=heading.className;replacement.innerHTML=heading.innerHTML;heading.replaceWith(replacement);
-      fragment.removeAttribute('id');fragment.removeAttribute('aria-labelledby');fragment.setAttribute('aria-label','Der neue Hero als Gestaltungsbeispiel');
+      fragment.removeAttribute('id');fragment.removeAttribute('aria-labelledby');fragment.setAttribute('aria-label','Komposition aus drei Blättern als Hero-Beispiel');
       for(const n of fragment.querySelectorAll('[id]'))n.removeAttribute('id');
     }
     proof.replaceChildren(fragment);
