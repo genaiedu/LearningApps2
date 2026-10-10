@@ -51,7 +51,7 @@ test('letter forms, emphasis and font roles remain inside the characters part',(
   for(const phrase of ['einstöckige a','zweistöckige a','Für das g folgt daraus erst recht keine pauschale Rangliste.','Formprinzip allein','Nonverbal','Dateitechnik','Cardo Regular','Cardo Italic','Cardo Bold','Farbe kann zusätzliche Bedeutungen tragen'])assert.ok(html.includes(phrase),phrase);
   assert.ok(css.includes('.emphasis-comparison strong{font-weight:700}'));
   const statements=[...html.matchAll(/<aside class="author-essay author-comment[^\"]*"[\s\S]*?<\/aside>/g)].map(m=>m[0]);
-  assert.equal(statements.length,3);
+  assert.equal(statements.length,11);
   for(const statement of statements){assert.equal((statement.match(/aria-hidden="true">„<\/span>/g)||[]).length,1);assert.ok(!/Claus|Unterberg|Autorenkommentar|“|”/.test(statement));}
   assert.ok(html.includes('Geometrische Fonts für Fließtext zu verwenden ist genauso peinlich wie ein Text voller Rechtschreibfehler.'));
   assert.ok(html.includes('Kursiv und fett sind nicht einfach ästhetische Entscheidungen.'));
@@ -130,7 +130,7 @@ test('three parts keep characters, print and screen in a continuous reading orde
   assert.deepEqual(parts.map(p=>p[1]),['zeichen','papier','bildschirm']);
   assert.deepEqual([...parts[0][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['schriftformen','details','lucide','mathematiksatz','beginn','lokal','katalog','schrift-downloads']);
   assert.deepEqual([...parts[1][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['tschichold','haltung','satzlabor','buchsatz','word','richtung','druckfarbe','komposition','bild-und-text','seitenstudien','latex','texatelier']);
-  assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['webtext','bildschirmformate','webrichtung','farbe','hintergrund','weblayout','webgrafik','herobereiche','bewegte-grafik','webwerkstatt','webstudien']);
+  assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['webtext','bildschirmformate','webrichtung','farbe','hintergrund','weblayout','webgrafik','herobereiche','bewegte-grafik','interaktiv','webwerkstatt','webstudien']);
   assert.equal((html.match(/data-part-link=/g)||[]).length,3);
   const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length);
   for(const [,hash] of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(hash),hash);

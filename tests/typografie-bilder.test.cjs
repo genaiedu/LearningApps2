@@ -19,7 +19,7 @@ test('the new hero preserves unique live IDs and the former hero remains a real 
   assert.ok(ui.includes("fragment.removeAttribute('id')"));assert.ok(ui.includes("querySelectorAll('[id]')"));assert.ok(ui.includes('heading.replaceWith(replacement)'));
 });
 test('new controls are resettable, named and connected; images and captions remain real content',()=>{
-  for(const id of ['image-width','image-fit','image-position','image-reset','hero-study','hero-width','image-motion-toggle','image-study-close']){assert.ok(html.includes('id="'+id+'"'));assert.ok(ui.includes("$('"+id+"')"));}
+  for(const id of ['image-width','image-fit','image-position','image-reset','hero-study','hero-width','image-study-close']){assert.ok(html.includes('id="'+id+'"'));assert.ok(ui.includes("$('"+id+"')"));}
   assert.ok(html.includes('srcset'));assert.ok(html.includes('object-position'));assert.ok(html.includes('alt=""'));
   assert.ok(html.includes('Bildnachweis'));assert.ok(html.includes('Beschnittzugabe'));assert.ok(html.includes('300 ppi'));
   for(const source of ['Responsive_images','decision-tree','pause-stop-hide','prefers-reduced-motion','printers-marks-bleeds'])assert.ok(html.includes(source));
@@ -27,7 +27,8 @@ test('new controls are resettable, named and connected; images and captions rema
 });
 test('motion starts stopped, respects reduced motion and master pause, and retains static explanation',()=>{
   assert.ok(html.includes('id="animation-canvas" data-moving="false"'));assert.ok(html.includes('<desc id="motion-graphic-desc">'));
-  assert.ok(ui.includes('moving=requested&&!reduced.matches&&!globallyPaused'));assert.ok(ui.includes("addEventListener('typography-motion-change',motion)"));assert.ok(css.includes('@media(prefers-reduced-motion:reduce)'));
+  const kinetic=fs.readFileSync(path.join(root,'scripts/typografie-bewegung.js'),'utf8');
+  assert.ok(kinetic.includes('moving=M.running(s)'));assert.ok(kinetic.includes("addEventListener('typography-motion-change'"));assert.ok(css.includes('@media(prefers-reduced-motion:reduce)'));
   assert.ok(html.includes('Pause, Stop, Hide (A)'));assert.ok(html.includes('Animation from Interactions (AAA)'));
 });
 test('six offline documents contain local fonts, licenses, embedded vector artwork and no network assets',()=>{

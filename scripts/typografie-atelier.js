@@ -14,8 +14,8 @@
   // Decoration never controls the reading experience or forces movement.
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');let paused=reduced.matches,heroIndex=0;
   const heroFamilies=['EB Garamond','Source Sans 3','Libre Bodoni','Dancing Script','Libre Baskerville'];
-  function motion(){document.body.classList.toggle('motion-paused',paused);$('motion-toggle').setAttribute('aria-pressed',String(paused));$('motion-toggle').querySelector('span').textContent=paused?'Animation fortsetzen':'Animation pausieren';dispatchEvent(new Event('typography-motion-change'));}
-  $('motion-toggle').onclick=()=>{paused=!paused;motion();};reduced.addEventListener('change',e=>{paused=e.matches;motion();});motion();
+  function motion(){document.body.classList.toggle('motion-paused',paused);for(const button of document.querySelectorAll('#motion-toggle,[data-page-motion]')){button.setAttribute('aria-pressed',String(paused));button.querySelector('span').textContent=paused?'Animation fortsetzen':'Animation pausieren';}dispatchEvent(new Event('typography-motion-change'));}
+  for(const button of document.querySelectorAll('#motion-toggle,[data-page-motion]'))button.addEventListener('click',()=>{paused=!paused;motion();});reduced.addEventListener('change',e=>{paused=e.matches;motion();});motion();
   setInterval(()=>{if(paused||document.hidden)return;heroIndex=(heroIndex+1)%heroFamilies.length;const name=heroFamilies[heroIndex];for(const glyph of document.querySelectorAll('[data-hero-letter]'))glyph.style.fontFamily='"'+name+'"';for(const label of document.querySelectorAll('[data-hero-font]'))label.textContent=name;},6000);
   let scheduled=false;
   function scrollProgress(){const total=document.documentElement.scrollHeight-innerHeight;$('reading-progress').style.width=(total>0?scrollY/total*100:0)+'%';updatePartNavigation();scheduled=false;}

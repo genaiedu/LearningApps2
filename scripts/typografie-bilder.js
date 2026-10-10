@@ -43,15 +43,4 @@
     window.lucide?.createIcons({attrs:{'aria-hidden':'true','focusable':'false'}});
   }
   $('hero-study').addEventListener('change',hero);$('hero-width').addEventListener('change',hero);hero();
-  const reduced=matchMedia('(prefers-reduced-motion: reduce)');let requested=false;
-  function motion(){
-    const globallyPaused=document.body.classList.contains('motion-paused'),moving=requested&&!reduced.matches&&!globallyPaused;
-    $('animation-canvas').dataset.moving=String(moving);
-    $('image-motion-toggle').disabled=reduced.matches;
-    $('image-motion-toggle').setAttribute('aria-pressed',String(requested&&!reduced.matches));
-    $('image-motion-toggle').textContent=requested?'Beispielanimation anhalten':'Beispielanimation starten';
-    $('image-motion-status').textContent=reduced.matches?'Bewegung reduzieren ist im System eingeschaltet. Das Beispiel bleibt als Standbild erhalten.':globallyPaused?'Der globale Animationsschalter oben pausiert auch dieses Beispiel.':moving?'Der Punkt bewegt sich. Alle Stationen bleiben unabhängig davon lesbar.':'Das Beispiel ist angehalten.';
-  }
-  $('image-motion-toggle').addEventListener('click',()=>{requested=!requested;motion();});
-  addEventListener('typography-motion-change',motion);reduced.addEventListener('change',()=>{if(reduced.matches)requested=false;motion();});motion();
 })();
