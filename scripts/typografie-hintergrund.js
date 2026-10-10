@@ -37,7 +37,7 @@
   for(const key of names)$('bg-'+key).addEventListener('input',update);
   for(const id of ['bg-shield','bg-visible'])$(id).addEventListener('change',update);
   scroll.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(position);},{passive:true});
-  const presets={center:{...B.defaults},edge:{...B.defaults,x:5,size:230,strength:10},depth:{...B.defaults,theme:'night',tone:'lighter',x:94,size:250,mode:'parallax',speed:.3}};
+  const presets={center:{...B.defaults},edge:{...B.defaults,x:5,size:230,strength:10},right:{...B.defaults,x:95,size:230,strength:10},depth:{...B.defaults,theme:'night',tone:'lighter',x:94,size:250,mode:'parallax',speed:.3}};
   document.querySelectorAll('[data-bg-preset]').forEach(button=>button.addEventListener('click',()=>{write(presets[button.dataset.bgPreset]||B.defaults);scroll.scrollTop=0;update();}));
   $('bg-reset').addEventListener('click',()=>{write(B.defaults);scroll.scrollTop=0;update();});
   $('bg-top').addEventListener('click',()=>scroll.scrollTo({top:0,behavior:'instant'}));

@@ -16,6 +16,7 @@
     addEventListener('message',event=>{
       if(event.source!==parent||event.origin!==origin||event.data?.type!=='typography-format-config')return;
       const s=F.settings(event.data);
+      if(event.data.appearance&&window.TypoAppearance?.apply)window.TypoAppearance.apply(event.data.appearance,false);
       if(typeof event.data.paused==='boolean'&&event.data.paused!==parentPaused){
         parentPaused=event.data.paused;
         const button=$('motion-toggle');if(button&&document.body.classList.contains('motion-paused')!==parentPaused)button.click();
@@ -29,7 +30,7 @@
   if(!$('format-stage'))return;
   const stage=$('format-stage'),frame=$('format-frame'),shell=$('format-device');
   let current=F.settings(),started=false,ready=false,reported=null;
-  function config(jump=false){if(ready)frame.contentWindow.postMessage({type:'typography-format-config',...current,jump,paused:document.body.classList.contains('motion-paused')},targetOrigin);}
+  function config(jump=false){if(ready)frame.contentWindow.postMessage({type:'typography-format-config',...current,jump,paused:document.body.classList.contains('motion-paused'),appearance:window.TypoAppearance?.current?.()},targetOrigin);}
   function sizing(){
     const d=F.dimensions(current),factor=F.scale(current,Math.max(1,stage.clientWidth-48),Math.max(1,stage.clientHeight-48));
     frame.style.width=d.width+'px';frame.style.height=d.height+'px';frame.style.transform='scale('+factor+')';
@@ -73,5 +74,6 @@
   $('format-jump').addEventListener('click',()=>config(true));
   $('format-reset').addEventListener('click',()=>{update(F.settings(),true);stage.scrollTo({left:0,top:0,behavior:'instant'});});
   addEventListener('typography-motion-change',()=>config());
+  addEventListener('typography-appearance-change',()=>config());
   new ResizeObserver(sizing).observe(stage);update();
 })();

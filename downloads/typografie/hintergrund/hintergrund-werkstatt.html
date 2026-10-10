@@ -36,13 +36,14 @@
   <h2>Ein Zeichen wird Raum.<br><em>Der Text bleibt vorn.</em></h2>
   <p class="lead">Ein übergroßes &amp;, ein A oder ein Fragezeichen muss nicht als Wort gelesen werden. Nur wenig heller oder dunkler als seine Umgebung, kann es dem Hintergrund eine Form geben. Beim Scrollen erhält diese zweite Ebene sogar eine eigene Geschwindigkeit – eine Möglichkeit, die das gedruckte Blatt nicht hat.</p>
   <div class="web-principles"><article><h3>Zentral</h3><p>Ein großes Zeichen in der Mitte hält den Bereich zusammen. Seine Kontur liegt möglicherweise direkt hinter mehreren Zeilen. Je deutlicher sie hervortritt, desto eher konkurriert sie mit dem Text davor.</p></article><article><h3>Seitlich</h3><p>Am Rand wirkt dasselbe Zeichen eher wie eine Begleitung. Die Mitte bleibt ruhiger. Links und rechts sind keine neutralen Orte: Eine Form kann den Blick in den Text führen oder aus ihm herausziehen.</p></article><article><h3>Angeschnitten</h3><p>Noch größer und weit nach außen versetzt, verliert das Zeichen seinen vollständigen Umriss. Es wird eher Fläche, Bogen oder Rhythmus. Der Anschnitt kann einen großzügigen Raum andeuten, der über das Fenster hinausreicht.</p></article></div>
+
   <h3 class="subchapter">Nicht lauter. Nur ein wenig anders hell.</h3>
   <p>Wie bei den Farbbeispielen zuvor entscheidet der Helligkeitsabstand über die Sichtbarkeit. Hier hat er jedoch eine andere Aufgabe: <strong>Das Hintergrundzeichen soll gerade nicht so lesbar sein wie der eigentliche Text.</strong> Eine geringe Aufhellung oder Abdunklung macht seine Form wahrnehmbar, ohne eine zweite Überschrift daraus zu machen. Auf einem dunklen Grund kann eine leise hellere Form wirken, auf einem hellen Grund eine leise dunklere. Das ist kein Gesetz: Vergleiche beide Richtungen selbst.</p>
   <p>Aufhellen bis Weiß und Abdunkeln bis Schwarz haben nicht denselben Spielraum. Ein schon sehr heller Grund lässt sich nur noch wenig aufhellen. Die Werkstatt mischt deshalb die Grundfarbe mit einem wählbaren Anteil Weiß beziehungsweise Schwarz. „8 %“ bezeichnet diesen <strong>Mischanteil</strong>, nicht eine Zunahme der Leuchtdichte um acht Prozent. Der Farbwert und der tatsächliche Kontrast werden daneben angezeigt.</p>
   <h3 class="subchapter">Zwei Ebenen. Zwei Geschwindigkeiten.</h3>
   <p>Scrollen Zeichen und Text gleich schnell, bleibt ihr Verhältnis zueinander unverändert: Sie gehören zu derselben Fläche. Bewegt sich das Hintergrundzeichen langsamer, zieht der Text an ihm vorbei. Diese relative Bewegung erzeugt einen <strong>Parallaxeffekt</strong> und kann eine räumliche Tiefe nahelegen. Bei 30 % legt das Zeichen nur 30 Pixel zurück, während der Text um 100 Pixel weiterzieht. Bei 0 % bleibt die Hintergrundform im sichtbaren Fenster stehen. 100 % ist wieder normales Mitscrollen.</p>
   <p>Die Vorschau hat einen eigenen Scrollbereich. Scrolle <strong>innerhalb der Beispielseite</strong> mit Rad, Trackpad oder Finger; nach dem Fokussieren auch mit den Pfeiltasten. „Weiter scrollen“ bietet denselben Vergleich per Knopfdruck. Es läuft nichts automatisch. Alle Inhalte bleiben auch ohne Parallaxe vollständig lesbar.</p>
-  <div class="bg-choices" aria-label="Hintergrundbeispiele"><button type="button" data-bg-preset="center">Zentral &amp; leise</button><button type="button" data-bg-preset="edge">Links &amp; angeschnitten</button><button type="button" data-bg-preset="depth">Nacht &amp; Tiefe</button></div>
+  <div class="bg-choices" aria-label="Hintergrundbeispiele"><button type="button" data-bg-preset="center">Zentral &amp; leise</button><button type="button" data-bg-preset="edge">Links &amp; angeschnitten</button><button type="button" data-bg-preset="right">Rechts &amp; angeschnitten</button><button type="button" data-bg-preset="depth">Nacht &amp; Tiefe</button></div>
   <div class="background-lab">
     <div class="controls">
       <label>Hintergrundzeichen<select id="bg-glyph"><option value="&amp;">&amp; · Verbindung</option><option value="A">A · Buchstabe</option><option value="g">g · Rundung und Unterlänge</option><option value="?">? · Frage</option><option value="§">§ · Ordnung</option><option value="R">R · Bogen und Diagonale</option></select></label>
@@ -83,7 +84,7 @@
   <p>Parallaxe kann ablenken und bei manchen Menschen Schwindel oder Übelkeit auslösen. Deshalb respektiert diese Werkstatt die Systemeinstellung <code>prefers-reduced-motion</code> und die Animationspause am Seitenkopf. Ohne zusätzliche Bewegung bleiben Position, Größe, Anschnitt und Farbe weiterhin veränderbar. Die Dekoration ist für assistive Technik ausgeblendet und nimmt keine Berührungen oder Klicks entgegen.</p>
   <div class="background-tasks"><h4>Drei Entscheidungen begründen.</h4><ol><li><strong>Ein leiser Hintergrund:</strong> Wähle ein Zeichen, einen Ort und einen geringen Mischanteil. Begründe, warum es im Hintergrund bleibt. Vergleiche heller und dunkler auf demselben Grund.</li><li><strong>Ein Anschnitt, zwei Formate:</strong> Setze die Form weit an den Rand und vergrößere sie. Prüfe die breite und die Handyansicht. Welche Kontur muss für die beabsichtigte Wirkung erhalten bleiben?</li><li><strong>Tiefe oder Unruhe:</strong> Vergleiche 100 %, 60 %, 30 % und 0 % Scrollgeschwindigkeit an derselben Textstelle. Wann unterstützt die Bewegung den Auftritt, wann kostet sie Aufmerksamkeit? Warum sollte ein langer Lesetext eventuell darauf verzichten?</li></ol></div>
   <p class="source-note">Weiterführend: <a href="https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html" target="_blank" rel="noopener noreferrer">W3C: Animation from Interactions (AAA)</a> erläutert Parallaxe und abschaltbare Zusatzbewegung. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion" target="_blank" rel="noopener noreferrer">MDN: prefers-reduced-motion</a> beschreibt die Systemeinstellung. Diese Quellen begründen den Bewegungsschutz, nicht eine allgemeine Empfehlung für dekorative Hintergründe.</p>
-  </main><footer><details class="offline-licenses"><summary>Die drei eingebetteten Fontlizenzen · SIL OFL 1.1</summary><h2>Source Sans 3</h2><pre>Copyright 2010-2020 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe in the United States and/or other countries.
+</main><footer><details class="offline-licenses"><summary>Die drei eingebetteten Fontlizenzen · SIL OFL 1.1</summary><h2>Source Sans 3</h2><pre>Copyright 2010-2020 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe in the United States and/or other countries.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 
@@ -103,7 +104,7 @@ with others.
 
 The OFL allows the licensed fonts to be used, studied, modified and
 redistributed freely as long as they are not sold by themselves. The
-fonts, including any derivative works, can be bundled, embedded, 
+fonts, including any derivative works, can be bundled, embedded,
 redistributed and/or sold with any software provided that any reserved
 names are not used by derivative works. The fonts and derivatives,
 however, cannot be released under any other type of license. The
@@ -196,7 +197,7 @@ with others.
 
 The OFL allows the licensed fonts to be used, studied, modified and
 redistributed freely as long as they are not sold by themselves. The
-fonts, including any derivative works, can be bundled, embedded, 
+fonts, including any derivative works, can be bundled, embedded,
 redistributed and/or sold with any software provided that any reserved
 names are not used by derivative works. The fonts and derivatives,
 however, cannot be released under any other type of license. The
@@ -289,7 +290,7 @@ with others.
 
 The OFL allows the licensed fonts to be used, studied, modified and
 redistributed freely as long as they are not sold by themselves. The
-fonts, including any derivative works, can be bundled, embedded, 
+fonts, including any derivative works, can be bundled, embedded,
 redistributed and/or sold with any software provided that any reserved
 names are not used by derivative works. The fonts and derivatives,
 however, cannot be released under any other type of license. The
@@ -459,7 +460,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   for(const key of names)$('bg-'+key).addEventListener('input',update);
   for(const id of ['bg-shield','bg-visible'])$(id).addEventListener('change',update);
   scroll.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(position);},{passive:true});
-  const presets={center:{...B.defaults},edge:{...B.defaults,x:5,size:230,strength:10},depth:{...B.defaults,theme:'night',tone:'lighter',x:94,size:250,mode:'parallax',speed:.3}};
+  const presets={center:{...B.defaults},edge:{...B.defaults,x:5,size:230,strength:10},right:{...B.defaults,x:95,size:230,strength:10},depth:{...B.defaults,theme:'night',tone:'lighter',x:94,size:250,mode:'parallax',speed:.3}};
   document.querySelectorAll('[data-bg-preset]').forEach(button=>button.addEventListener('click',()=>{write(presets[button.dataset.bgPreset]||B.defaults);scroll.scrollTop=0;update();}));
   $('bg-reset').addEventListener('click',()=>{write(B.defaults);scroll.scrollTop=0;update();});
   $('bg-top').addEventListener('click',()=>scroll.scrollTo({top:0,behavior:'instant'}));
