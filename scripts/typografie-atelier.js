@@ -144,10 +144,46 @@
   $('art-load').onclick=loadArt;$('art-remove').onclick=()=>{artAllowed=false;artEpoch++;if(artImage)artImage.removeAttribute('src');$('art-background').replaceChildren();$('art-credit').textContent='Bildfreigabe zurückgenommen.';$('art-remove').hidden=true;$('art-load').disabled=false;$('art-load').textContent='Ein Kunstbild aus unserem Archiv laden';};
   function updateIcons(){const size=$('icon-size').value,stroke=+$('icon-stroke').value/100,color=$('icon-color').value;$('icon-size-value').textContent=size+' px';$('icon-stroke-value').textContent=dec(stroke);document.querySelectorAll('#icon-gallery svg,.icon-adjustable svg').forEach(s=>{s.style.width=size+'px';s.style.height=size+'px';s.style.strokeWidth=stroke;s.style.color=color;});$('icon-text-lab').style.fontFamily='"'+$('icon-font').value+'"';}
   on(['icon-size','icon-stroke','icon-color','icon-font'],updateIcons);updateIcons();
-  const mathExamples={fraction:['x_{1,2}=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}','Zähler und Nenner stehen übereinander; die Wurzel umfasst den gesamten Ausdruck.'],integral:['\\int_0^1 x^2\\,\\mathrm{d}x=\\frac{1}{3}','Grenzen gehören zum Integral. Hier steht das Differential d bewusst aufrecht.'],units:['v=3{,}2\\,\\mathrm{m\\,s^{-1}},\\qquad \\sin(\\alpha)=\\frac{a}{c}','Variable v und Winkel α sind kursiv; Einheit und Funktionsname sin stehen aufrecht.'],matrix:['A=\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}','Die Klammern passen zur zweizeiligen Matrix. Ein normaler Klammerbuchstabe reicht dafür nicht.']};
+  const mathExamples=window.TypoMathPairs.examples;
+  const mathFrames=[...document.querySelectorAll('[data-math-font]')],mathPairStates=new Map();
+  const mathTargetOrigin=location.protocol==='file:'?'*':location.origin;
+  function updateMathPairs(){
+    const C=window.TypoMathPairs,body=$('math-pair-body').value;
+    for(const frame of mathFrames){
+      const font=frame.dataset.mathFont,settings=C.settings({font,body,example:$('math-example').value});
+      $('math-pair-label-'+font).textContent='Fließtext: '+C.bodies[settings.body].name+' · '+(C.bodies[settings.body].group==='serif'?'mit Serifen':'ohne Serifen');
+      $('math-pair-note-'+font).textContent=C.advice(font,settings.body);
+      mathPairStates.set(font,'loading');
+      frame.contentWindow?.postMessage({type:'typografie-math-settings',...settings},mathTargetOrigin);
+    }
+    $('math-pair-status').textContent='Die Vergleichsproben laden die ausgewählte Formel und Leseschrift lokal.';
+  }
+  addEventListener('message',event=>{
+    if(event.origin!==location.origin)return;
+    const frame=mathFrames.find(f=>f.contentWindow===event.source);
+    if(!frame||event.data?.font!==frame.dataset.mathFont)return;
+    const {type}=event.data;
+    if(type==='typografie-math-height'&&Number.isFinite(event.data.height))frame.style.height=Math.max(160,Math.min(1600,event.data.height))+'px';
+    if(type==='typografie-math-ready'){
+      const settings=window.TypoMathPairs.settings({font:frame.dataset.mathFont,body:$('math-pair-body').value,example:$('math-example').value});
+      frame.contentWindow.postMessage({type:'typografie-math-settings',...settings},mathTargetOrigin);
+    }
+    if(type==='typografie-math-rendered'){
+      const wanted=window.TypoMathPairs.settings({font:frame.dataset.mathFont,body:$('math-pair-body').value,example:$('math-example').value});
+      if(event.data.body!==wanted.body||event.data.example!==wanted.example)return;
+      mathPairStates.set(frame.dataset.mathFont,'ready');
+    }
+    if(type==='typografie-math-error')mathPairStates.set(frame.dataset.mathFont,'error');
+    if(type==='typografie-math-rendered'||type==='typografie-math-error'){
+      const ready=[...mathPairStates.values()].filter(s=>s==='ready').length;
+      $('math-pair-status').textContent=ready===4?'Alle vier Formelstile und ihre Leseschriften sind lokal geladen. Gleicher Ausdruck, unterschiedliche Schriftbilder.':ready+' von 4 lokalen Formelproben bereit.'+([...mathPairStates.values()].includes('error')?' Eine Probe konnte nicht gesetzt werden; dort bleibt der TeX-Ausdruck lesbar.':' Weitere Proben laden in Sichtweite.');
+    }
+  });
+  $('math-pair-body').onchange=updateMathPairs;updateMathPairs();
   let mathQueue=Promise.resolve(),mathEpoch=0;
   function updateMath(){const epoch=++mathEpoch,example=mathExamples[$('math-example').value];mathQueue=mathQueue.then(async()=>{try{if(!window.MathJax?.startup?.promise)throw Error();await window.MathJax.startup.promise;if(epoch!==mathEpoch)return;window.MathJax.typesetClear?.([$('math-demo')]);$('math-demo').textContent='\\['+example[0]+'\\]';$('math-code').textContent=example[0];$('math-description').textContent=example[1];await window.MathJax.typesetPromise([$('math-demo')]);if(epoch===mathEpoch)$('math-status').textContent='MathJax und mathematische Schriftdateien werden lokal geladen.';}catch(_){$('math-status').textContent='Formelsatz gerade nicht verfügbar. Der TeX-Code bleibt lesbar.';}});}
-  $('math-example').onchange=updateMath;updateMath();
+  $('math-example').onchange=()=>{$('math-pair-example').value=$('math-example').value;updateMathPairs();updateMath();};
+  $('math-pair-example').onchange=()=>{$('math-example').value=$('math-pair-example').value;updateMathPairs();updateMath();};updateMath();
 
   const examples={bericht:{title:'Wie Schrift das Lesen verändert',body:'Dieser Kurzbericht untersucht, wie Schriftgröße, Zeilenlänge und Abstand zusammenwirken. Verglichen werden zwei Satzproben mit identischem Text.\n\nDie schmalere Probe erleichtert den Rücksprung in die nächste Zeile. Eine größere x-Höhe lässt die Buchstaben bei gleichem Schriftgrad kräftiger erscheinen.\n\nDie Beobachtungen sind ein Ausgangspunkt. Vor einer Veröffentlichung werden unterschiedliche Bildschirmgrößen und der tatsächliche Druck geprüft.'},brief:{title:'Einladung zu einem Gestaltungsworkshop',body:'wir möchten gemeinsam untersuchen, wie Schriftwahl und Seitenaufteilung die Verständlichkeit eines Textes beeinflussen.\n\nFür den Workshop bringen alle Teilnehmenden einen kurzen eigenen Text mit. An derselben Textprobe vergleichen wir unterschiedliche Gestaltungsentscheidungen.\n\nBitte teilen Sie uns mit, ob Sie teilnehmen können.'},einladung:{title:'Ein Abend für gute Gedanken',body:'Wir laden herzlich zu einem gemeinsamen Abend ein. Mit kleinen Gestaltungsproben entdecken wir, wie Form und Inhalt zusammenwirken.\n\nBitte geben Sie uns bis eine Woche vorher Bescheid, ob Sie dabei sind. Wir freuen uns auf das Gespräch.'},protokoll:{title:'Gestaltungsgruppe · Sitzung',body:'Die Gruppe vereinbart, den Text zunächst linksbündig zu setzen und den Titel auf eine klare Hierarchie zu beschränken.\n\nDie Schriftgröße wird auf zwei Bildschirmgrößen überprüft. Für die Zahlenübersicht werden Tabellenziffern verwendet.\n\nNächster Schritt: Eine Person prüft die mobile Ansicht, eine andere die Druckvorschau. Ergebnisse werden in der nächsten Sitzung verglichen.'}};
   function fields(){return Object.fromEntries(new FormData($('tex-form')));}

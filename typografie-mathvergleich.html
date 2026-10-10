@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'">
+  <title>Formel- und Textschrift · Vergleichsprobe</title>
+  <link rel="stylesheet" href="styles/typografie-fonts.css?v=20261010-mathpaarungen">
+  <link rel="stylesheet" href="styles/typografie-mathvergleich.css?v=20261010-mathpaarungen">
+  <script src="scripts/typografie-mathpairs.js?v=20261010-mathpaarungen"></script>
+  <script src="scripts/typografie-mathvergleich.js?v=20261010-mathpaarungen"></script>
+  <script defer src="../LearningApps/fonts/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <main id="math-pair-sample" aria-busy="true">
+    <p>Im Fließtext steht eine kurze Rechnung wie <span id="pair-inline">\(x^2\)</span>. Für einen längeren Ausdruck bekommt die Mathematik eine eigene Zeile:</p>
+    <div id="pair-display" class="pair-display">\[x_{1,2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\]</div>
+    <p>Text und Formel sollen zusammen eine gut lesbare Seite ergeben. Keines von beiden muss dem anderen seine Form aufzwingen.</p>
+  </main>
+  <p id="pair-status" role="status">Lokale Formelschrift wird geladen …</p>
+</body>
+</html>

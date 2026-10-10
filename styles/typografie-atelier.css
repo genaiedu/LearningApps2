@@ -152,5 +152,21 @@ dialog{padding:35px;border:1px solid var(--line);border-radius:10px;color:var(--
 @media(max-width:900px){.character-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:550px){.role-cards{grid-template-columns:1fr}.role-cards article{padding:22px}.role-text{font-size:18px}.character-grid{gap:16px}.character-grid article>p:last-child{font-size:16px}.character-grid .character-pair{font-size:70px}.origin-model{font-size:34px}.origin-glyph{font-size:95px}.origin-specimens{gap:0 16px}.emphasis-comparison p{font-size:21px}.feature-panel .ligature-typesample{font-size:32px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Formula families stay isolated, while the surrounding reading examples share one size. */
+.math-pair-controls{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:35px;padding:25px 0;margin:20px 0 30px;border-block:1px solid var(--line)}
+.math-pair-controls label{margin:0}.math-pair-controls label+label{margin-top:20px}.math-pair-controls p{font-size:17px}.math-pair-controls p.small{font-size:14px}
+.math-pair-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:start}
+.math-pair-card{min-width:0;background:var(--white);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.math-pair-card header{padding:24px 26px 18px;border-bottom:1px solid var(--line)}
+.math-pair-card header>span{font:11px/1.5 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--red)}
+.math-pair-card h4{font:600 27px/1.25 var(--sans);margin:12px 0 8px}
+.math-pair-card header p{font:15px/1.5 var(--sans);color:var(--muted);margin:0}
+.math-pair-card iframe{display:block;width:100%;height:330px;border:0;background:var(--white)}
+.math-pair-advice{font:16px/1.55 var(--sans);padding:20px 26px 24px;border-top:1px solid var(--line);color:var(--muted);margin:0}
+#math-pair-status{margin:20px 0 0}.math-pair-reasoning{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin:45px 0}
+.math-pair-reasoning h4{margin-bottom:20px}
+@media(max-width:760px){.math-pair-controls,.math-pair-grid,.math-pair-reasoning{grid-template-columns:1fr;gap:25px}.math-pair-card header{padding:22px 22px 18px}.math-pair-card h4{font-size:25px}.math-pair-advice{padding:20px 22px}.math-pair-controls{gap:12px}.math-pair-reasoning{margin-block:32px}}
+@media print{.math-pair-controls,#math-pair-status{display:none}.math-pair-card{break-inside:avoid}.math-pair-grid{grid-template-columns:1fr 1fr;gap:15pt}.math-pair-advice{font-size:10pt}.math-pair-reasoning{gap:25pt}}
 .feature-panel .ligature-typesample,.feature-panel .ligature-proof{font-language-override:"ENG"}
 @media print{.part-opening{break-before:page;padding:25pt 0}.part-opening:first-child{break-before:auto}.part-contents{display:none}.part-heading{display:block}.part-emblem{display:none}.part-numeral{font-size:40pt;margin-bottom:15pt;display:block}.part-intro{margin-left:0}.part-heading h2{font-size:30pt}.margin-conversation{grid-template-columns:1fr 2fr}.author-comment{font-size:12pt}.author-comment .comment-opening{font-size:72pt;top:-50pt}.print-comparison{grid-template-columns:1fr 1fr;break-inside:avoid}.study-sheet{min-height:0;font-size:10pt;box-shadow:none}.icon-text-lab{display:block}}
