@@ -17,7 +17,8 @@ html[data-palette] .primary:hover{background:var(--button-hover);border-color:va
 html[data-palette] .editorial-hero{background:var(--hero-bg)}
 html[data-palette] .editorial-scene{background:var(--dark)}
 html[data-palette] :is(.archive-section,.color-section){background:var(--surface)}
-html[data-palette] :is(.controls,.note,pre,#wiki-status){background:var(--surface)}
+/* Keep IDs outside :is(): their specificity must not override the paired code colors. */
+html[data-palette] :is(.controls,.note,pre),html[data-palette] #wiki-status{background:var(--surface)}
 html[data-palette] .author-comment{background:var(--quote-bg);color:var(--ink)}
 html[data-palette] .author-comment .comment-opening{color:var(--quote-mark)}
 html[data-palette] :is(.part-emblem,.part-numeral){color:var(--quote-mark)}

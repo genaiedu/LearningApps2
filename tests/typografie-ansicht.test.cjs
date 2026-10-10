@@ -55,6 +55,17 @@ test('appearance control opens an accessible selection dialog rather than blindl
   assert.ok(!ui.includes("theme:current.theme==='dark'?'light':'dark'"));
   assert.ok(css.includes('max-height:calc(100dvh - 32px)'));assert.ok(css.includes('@media(max-width:480px)'));
 });
+test('generic reading surfaces do not outrank the paired code foreground and background',()=>{
+  const general=css.match(/html\[data-palette\] :is\(([^)]*\bpre\b[^)]*)\)/)?.[1];
+  assert.ok(general);assert.ok(!general.includes('#'),'An ID in :is() would boost every generic code background');
+  assert.ok(css.includes('html[data-palette] #wiki-status{background:var(--surface)}'));
+  assert.ok(css.includes('html[data-palette] .code-card pre{background:var(--dark);color:var(--cream)}'));
+  assert.ok(css.includes('html[data-palette] .tex-results pre{background:var(--white);color:var(--ink)}'));
+  for(const p of A.palettes)for(const mode of ['light','dark']){
+    assert.ok(C.contrast(p[mode].cream,p[mode].dark)>=4.5,p.id+' '+mode+' lesson code');
+    assert.ok(C.contrast(p[mode].ink,p[mode].white)>=4.5,p.id+' '+mode+' generated code');
+  }
+});
 test('device previews inherit validated theme and glyph settings from the same-origin parent',()=>{
   const formats=read('scripts/typografie-formate.js');
   assert.ok(formats.includes('event.source!==parent||event.origin!==origin'));
