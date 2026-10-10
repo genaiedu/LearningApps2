@@ -130,7 +130,7 @@ test('three parts keep characters, print and screen in a continuous reading orde
   assert.deepEqual(parts.map(p=>p[1]),['zeichen','papier','bildschirm']);
   assert.deepEqual([...parts[0][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['schriftformen','details','lucide','mathematiksatz','beginn','lokal','katalog','schrift-downloads']);
   assert.deepEqual([...parts[1][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['tschichold','haltung','satzlabor','buchsatz','richtung','druckfarbe','komposition','seitenstudien','word','latex','texatelier']);
-  assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['farbe']);
+  assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['webtext','webrichtung','farbe','weblayout','webwerkstatt','webstudien']);
   assert.equal((html.match(/data-part-link=/g)||[]).length,3);
   const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length);
   for(const [,hash] of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(hash),hash);
