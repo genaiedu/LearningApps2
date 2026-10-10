@@ -118,14 +118,13 @@
       cuts.sort((a,b)=>a.style.localeCompare(b.style)||a.weight-b.weight);
       cuts.forEach(c=>{const option=node('option',null,c.weight+(c.style==='italic'?' · echte Kursive':''));option.value=c.key;option.selected=c.weight===400&&c.style==='normal';select.append(option);});
       select.onchange=()=>{const cut=cuts.find(c=>c.key===select.value);sample.style.fontWeight=cut.weight;sample.style.fontStyle=cut.style;};label.append(select);card.append(label,node('p','font-advice',f.advice));
-      if(f.new)card.append(node('span','new-tag','Für das Atelier ergänzt'));
       const info=node('details'),summary=node('summary',null,'Dateien, Gestalter & Verwendung');info.append(summary,node('p',null,'Gestaltung: '+f.designer+'. Lizenz: '+f.license+'.'));
       const links=node('p');const licence=node('a',null,'Lokaler Lizenztext');licence.href=f.licensePath;const source=node('a',null,'Offizielles Fontprojekt ↗');source.href=f.source;source.target='_blank';source.rel='noopener noreferrer';links.append(licence,document.createTextNode(' · '),source);info.append(links);
       for(const file of f.files){const description=node('span','font-file',file.path.split('/').pop()+' · '+(file.axes&&Object.keys(file.axes).length?'variabel '+Object.keys(file.axes).join(', '):'statischer Schnitt'));info.append(description);}
       if(f.features?.length)info.append(node('p','small','OpenType-Tags im vorhandenen Bestand: '+f.features.join(', ')+'. Tags allein garantieren nicht jede Kombination für jedes Zeichen.'));
       const download=node('a','font-google-download');window.TypoFontLinks.link(download,f.name);card.append(download);
       window.TypoFontAudit.attach(card,f,fontAudits.get(f.id));
-      const usage=node('p','small',f.uses.length?'Direkte Dateireferenzen in '+f.uses.length+' HTML-/CSS-Dateien. Kein Laufzeit-Nachweis.':'Für dieses Atelier ergänzt; nicht im vorherigen Bestand referenziert.');info.append(usage);
+      if(f.uses.length)info.append(node('p','small','Direkte Dateireferenzen in '+f.uses.length+' HTML-/CSS-Dateien. Kein Laufzeit-Nachweis.'));
       const ul=node('ul');f.uses.slice(0,8).forEach(use=>{const li=node('li'),a=node('a',null,use.repo+'/'+use.path);a.href=use.url;a.target='_blank';a.rel='noopener noreferrer';li.append(a);ul.append(li);});if(f.uses.length>8)ul.append(node('li',null,'Weitere '+(f.uses.length-8)+' Referenzen im vollständigen Bestandsdatensatz.'));info.append(ul);
       if(f.uses.length>8){const a=node('a',null,'Vollständigen Bestandsdatensatz ansehen');a.href='data/typografie-fonts.json';info.append(a);}
       card.append(info);$('font-grid').append(card);

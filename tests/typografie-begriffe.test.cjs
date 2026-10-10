@@ -2,6 +2,15 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const read=file=>fs.readFileSync(path.resolve(__dirname,'..',file),'utf8');
 const html=read('typografie-atelier.html'),script=read('scripts/typografie-atelier.js');
 
+test('font catalogue omits author-facing addition notices',()=>{
+  const catalogue=script.slice(script.indexOf('  function renderFonts(){'),script.indexOf("  on(['font-search','font-group']"));
+  assert.ok(!catalogue.includes('Für das Atelier ergänzt'));
+  assert.ok(!catalogue.includes('Für dieses Atelier ergänzt'));
+  assert.ok(!catalogue.includes('new-tag'));
+  assert.ok(catalogue.includes('window.TypoFontLinks.link(download,f.name)'));
+  assert.ok(catalogue.includes('window.TypoFontAudit.attach(card,f,fontAudits.get(f.id))'));
+});
+
 test('Sans comparison initializes named fonts and covers every pair of the four positions',()=>{
   const code=script.slice(script.indexOf('  const sansStyles='),script.indexOf('  const glossaryEntries='));
   const ids=['sans-pair','sans-sample-a','sans-sample-b','sans-label-a','sans-label-b','sans-download-a','sans-download-b','sans-comparison-note'];
