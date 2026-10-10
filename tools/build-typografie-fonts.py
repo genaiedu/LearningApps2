@@ -158,7 +158,11 @@ def build_family(row):
             (folder/'static'/'LICENSE.txt').write_bytes(get(upstream+'LICENSE.md'))
             desktop_files += ['static/'+f for f in static_names+['LICENSE.txt']]
             entry['desktopStatic']={'source':'https://github.com/adobe-fonts/source-sans/tree/release/OTF','files':['fonts/typografie/sourcesans3/static/'+f for f in static_names],'licensePath':'fonts/typografie/sourcesans3/static/LICENSE.txt'}
-            extra_note='Zusätzlich: vollständige statische Original-OTFs von Adobe, dem ursprünglichen freien Source-Sans-Projekt (kein Adobe-Abo erforderlich). Für die modernen Wordvorlagen verwendet. Quelle: '+entry['desktopStatic']['source']+'\nDie statischen und variablen Fassungen nicht gleichzeitig installieren. Für Word bei Kompatibilitätsproblemen die Dateien im Unterordner static verwenden. Lizenz: static/LICENSE.txt.\n'
+            ttf_names=[f.replace('.otf','.ttf') for f in static_names]
+            for filename in ttf_names:
+                (folder/'static'/filename).write_bytes(get(upstream+'TTF/'+filename))
+            entry['documentStatic']={'source':'https://github.com/adobe-fonts/source-sans/tree/release/TTF','files':['fonts/typografie/sourcesans3/static/'+f for f in ttf_names],'licensePath':'fonts/typografie/sourcesans3/static/LICENSE.txt'}
+            extra_note='Zusätzlich: vollständige statische Original-OTFs von Adobe, dem ursprünglichen freien Source-Sans-Projekt (kein Adobe-Abo erforderlich). Quelle: '+entry['desktopStatic']['source']+'\nDie modernen Wordvorlagen betten die statischen TrueType-Originale derselben Familie ein, damit auch Onlinebetrachter ohne CFF-Unterstützung die Schrift verwenden können. Die statischen und variablen Fassungen nicht gleichzeitig installieren. Für Word bei Kompatibilitätsproblemen die Dateien im Unterordner static verwenden. Lizenz: static/LICENSE.txt.\n'
         write_desktop_package(entry,folder,desktop_files,extra_note)
         entry['new']=True
     else:

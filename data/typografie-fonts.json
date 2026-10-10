@@ -2483,6 +2483,16 @@
         ],
         "licensePath": "fonts/typografie/sourcesans3/static/LICENSE.txt"
       },
+      "documentStatic": {
+        "source": "https://github.com/adobe-fonts/source-sans/tree/release/TTF",
+        "files": [
+          "fonts/typografie/sourcesans3/static/SourceSans3-Regular.ttf",
+          "fonts/typografie/sourcesans3/static/SourceSans3-Bold.ttf",
+          "fonts/typografie/sourcesans3/static/SourceSans3-It.ttf",
+          "fonts/typografie/sourcesans3/static/SourceSans3-BoldIt.ttf"
+        ],
+        "licensePath": "fonts/typografie/sourcesans3/static/LICENSE.txt"
+      },
       "desktop": "fonts/typografie/sourcesans3/sourcesans3-desktop.zip",
       "new": true
     },

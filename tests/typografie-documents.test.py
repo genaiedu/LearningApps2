@@ -80,8 +80,8 @@ class Templates(unittest.TestCase):
                 with self.subTest(document=name), ZipFile(ROOT/'downloads'/'typografie'/(name+'.docx')) as z:
                     family='Source Sans 3' if modern else 'Cardo'
                     folder=ROOT/'fonts'/'typografie'/('sourcesans3/static' if modern else 'cardo')
-                    files={'Regular':'SourceSans3-Regular.otf','Bold':'SourceSans3-Bold.otf',
-                           'Italic':'SourceSans3-It.otf','BoldItalic':'SourceSans3-BoldIt.otf'} if modern else {
+                    files={'Regular':'SourceSans3-Regular.ttf','Bold':'SourceSans3-Bold.ttf',
+                           'Italic':'SourceSans3-It.ttf','BoldItalic':'SourceSans3-BoldIt.ttf'} if modern else {
                            'Regular':'Cardo-Regular.ttf','Bold':'Cardo-Bold.ttf','Italic':'Cardo-Italic.ttf'}
                     table=ET.fromstring(z.read('word/fontTable.xml'))
                     font=next(f for f in table.findall('w:font',NS) if f.get(W+'name')==family)
@@ -94,6 +94,12 @@ class Templates(unittest.TestCase):
                         key=UUID(e.get(W+'fontKey').strip('{}')).bytes[::-1]
                         for i in range(32):data[i]^=key[i%16]
                         self.assertEqual(sha256(data).digest(),sha256((folder/original).read_bytes()).digest())
+                        if modern:
+                            # Browser compatibility: static TrueType contours, not CFF or VF.
+                            from struct import unpack_from
+                            tags={bytes(data[12+i*16:16+i*16]) for i in range(unpack_from('>H',data,4)[0])}
+                            self.assertEqual(data[:4],b'\x00\x01\x00\x00')
+                            self.assertIn(b'glyf',tags);self.assertNotIn(b'CFF ',tags);self.assertNotIn(b'fvar',tags)
                     settings=ET.fromstring(z.read('word/settings.xml'))
                     self.assertEqual(len(settings.findall('w:embedTrueTypeFonts',NS)),1)
                     license_path='customXml/'+family.lower().replace(' ','')+'-license.xml'
@@ -119,5 +125,33 @@ class Templates(unittest.TestCase):
         for base in NAMES:
             for suffix in ['','-modern']:
                 self.assertIn('downloads/typografie/'+base+suffix+'.docx',p.paths)
+
+    def test_browser_previews_match_the_exact_documents_and_every_page_exists(self):
+        from struct import unpack
+        documents=json.loads((ROOT/'data/typografie-document-previews.json').read_text())['documents']
+        self.assertEqual(set(documents),{base+suffix for base in NAMES for suffix in ['', '-modern']})
+        hashes=set()
+        for name,entry in documents.items():
+            with self.subTest(document=name):
+                source=ROOT/entry['download']
+                self.assertEqual(entry['download'],'downloads/typografie/'+name+'.docx')
+                self.assertEqual(entry['sourceSha256'],sha256(source.read_bytes()).hexdigest())
+                self.assertTrue(entry['text']);self.assertTrue(entry['pages'])
+                with ZipFile(source) as z:
+                    body=ET.fromstring(z.read('word/document.xml')).find('w:body',NS)
+                    paragraphs=[]
+                    for paragraph in body.findall('w:p',NS):
+                        text=''.join(e.text or '' if e.tag==W+'t' else '\n' if e.tag==W+'br' else '\t' if e.tag==W+'tab' else '' for e in paragraph.iter())
+                        if text.strip():paragraphs.append(text)
+                    self.assertEqual(entry['text'],paragraphs)
+                for index,page in enumerate(entry['pages'],1):
+                    self.assertEqual(page['src'],f'downloads/typografie/vorschau/{name}-{index}.png')
+                    data=(ROOT/page['src']).read_bytes()
+                    self.assertEqual(data[:8],b'\x89PNG\r\n\x1a\n')
+                    self.assertEqual(unpack('>II',data[16:24]),(page['width'],page['height']))
+                    self.assertGreater(page['width'],1400)
+                    self.assertAlmostEqual(page['width']/page['height'],210/297,delta=.002)
+                    self.assertEqual(page['sha256'],sha256(data).hexdigest());hashes.add(page['sha256'])
+        self.assertEqual(len(hashes),8)
 
 if __name__=='__main__':unittest.main()

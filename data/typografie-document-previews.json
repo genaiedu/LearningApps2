@@ -1,0 +1,229 @@
+{
+  "description": "Unveränderte Satzansichten aus den angebotenen Worddateien. Lokale Seitengrafiken, keine externe Dokumentkonvertierung.",
+  "documents": {
+    "brief-a4": {
+      "title": "Sachlicher Brief",
+      "variant": "Klassisch",
+      "download": "downloads/typografie/brief-a4.docx",
+      "sourceSha256": "f0da1a5151170f69dfd9faaf3c194b89623aa155f218ceff0b74a7ca89a82b9b",
+      "text": [
+        "[Vorname Nachname] · [Straße und Hausnummer] · [Postleitzahl Ort]",
+        "[Name der Empfängerin / des Empfängers]\n[Organisation]\n[Straße und Hausnummer]\n[Postleitzahl Ort]",
+        "[Ort], [Datum]",
+        "[Aussagekräftiger Betreff]",
+        "Sehr geehrte [Anrede und Name],",
+        "[Nennen Sie im ersten Absatz den Anlass und Ihr Anliegen. Die lesende Person soll sofort erkennen, worum es geht.]",
+        "[Begründen Sie Ihr Anliegen im zweiten Absatz. Ordnen Sie Informationen so, dass ein Gedanke auf den nächsten aufbaut. Verwenden Sie kurze, sachliche Sätze.]",
+        "[Formulieren Sie zum Schluss den gewünschten nächsten Schritt und gegebenenfalls einen Termin. Lassen Sie Raum für eine freundliche Antwort.]",
+        "Mit freundlichen Grüßen",
+        "[Unterschrift]\n[Vorname Nachname]",
+        "[Anlagen, falls vorhanden]"
+      ],
+      "pages": [
+        {
+          "src": "downloads/typografie/vorschau/brief-a4-1.png",
+          "width": 1489,
+          "height": 2105,
+          "sha256": "e54233bd689f220dc4cf009bd15a2d6801dcbeceaa3f9ec8f0e03de4a5941e7b"
+        }
+      ]
+    },
+    "brief-a4-modern": {
+      "title": "Sachlicher Brief",
+      "variant": "Modern",
+      "download": "downloads/typografie/brief-a4-modern.docx",
+      "sourceSha256": "e33b271073c99188e5c9203a241b03f7b6df6ee769a31f9e95ff756709677c86",
+      "text": [
+        "[Vorname Nachname] · [Straße und Hausnummer] · [Postleitzahl Ort]",
+        "[Name der Empfängerin / des Empfängers]\n[Organisation]\n[Straße und Hausnummer]\n[Postleitzahl Ort]",
+        "[Ort], [Datum]",
+        "[Aussagekräftiger Betreff]",
+        "Sehr geehrte [Anrede und Name],",
+        "[Nennen Sie im ersten Absatz den Anlass und Ihr Anliegen. Die lesende Person soll sofort erkennen, worum es geht.]",
+        "[Begründen Sie Ihr Anliegen im zweiten Absatz. Ordnen Sie Informationen so, dass ein Gedanke auf den nächsten aufbaut. Verwenden Sie kurze, sachliche Sätze.]",
+        "[Formulieren Sie zum Schluss den gewünschten nächsten Schritt und gegebenenfalls einen Termin. Lassen Sie Raum für eine freundliche Antwort.]",
+        "Mit freundlichen Grüßen",
+        "[Unterschrift]\n[Vorname Nachname]",
+        "[Anlagen, falls vorhanden]"
+      ],
+      "pages": [
+        {
+          "src": "downloads/typografie/vorschau/brief-a4-modern-1.png",
+          "width": 1489,
+          "height": 2105,
+          "sha256": "f61708b8389e3c2db3e2cd1dcd2cc48c4896ec59a0cf76e16f0e0420bfdbc863"
+        }
+      ]
+    },
+    "kurzbericht-a4": {
+      "title": "Kurzbericht",
+      "variant": "Klassisch",
+      "download": "downloads/typografie/kurzbericht-a4.docx",
+      "sourceSha256": "dfca57ac9d9cdc3d622f3fb709abcaa0c5c15c50a686bd3a80cbb7ca8d8c971c",
+      "text": [
+        "[Titel des Kurzberichts]",
+        "[Name] · [Kurs / Organisation] · [Datum]",
+        "Fragestellung",
+        "[Welche Frage soll der Bericht beantworten? Formulieren Sie Gegenstand, Anlass und Ziel in zwei bis vier Sätzen. Die Überschriften dieser Vorlage sind echte Formatvorlagen, keine manuell fett gesetzten Absätze.]",
+        "Vorgehen",
+        "[Beschreiben Sie, welche Materialien, Beobachtungen oder Quellen Sie verwendet haben. Trennen Sie eigene Feststellungen von Informationen anderer Personen. Fügen Sie Quellenbelege dort ein, wo sie die Aussage stützen.]",
+        "Ergebnisse",
+        "[Stellen Sie die wichtigsten Ergebnisse in nachvollziehbarer Reihenfolge dar. Beginnen Sie pro Absatz einen neuen Gedanken. Ein kurzer Bericht braucht nicht mehrere Schriftfamilien: Eine Leseschrift und eine klar abgestufte Überschriftenstruktur reichen häufig aus.]",
+        "Einordnung und Ausblick",
+        "[Beantworten Sie die Ausgangsfrage. Nennen Sie Grenzen Ihrer Untersuchung und einen sinnvollen nächsten Schritt. Prüfen Sie vor der Weitergabe, ob alle Platzhalter ersetzt sind.]",
+        "Quellen",
+        "[Autor/in oder Institution: Titel, Jahr; bei Internetquellen URL und Abrufdatum. Verwenden Sie für alle Einträge dasselbe Schema.]"
+      ],
+      "pages": [
+        {
+          "src": "downloads/typografie/vorschau/kurzbericht-a4-1.png",
+          "width": 1489,
+          "height": 2105,
+          "sha256": "01aedae6a9d2d71a8a19671826d201cadc1638ee6cf0ba0cbee88e69c3dca791"
+        }
+      ]
+    },
+    "kurzbericht-a4-modern": {
+      "title": "Kurzbericht",
+      "variant": "Modern",
+      "download": "downloads/typografie/kurzbericht-a4-modern.docx",
+      "sourceSha256": "e6f5e19564d752389425a96016bbb5c6459300e4e852a3ca22440baaf5ae8703",
+      "text": [
+        "[Titel des Kurzberichts]",
+        "[Name] · [Kurs / Organisation] · [Datum]",
+        "Fragestellung",
+        "[Welche Frage soll der Bericht beantworten? Formulieren Sie Gegenstand, Anlass und Ziel in zwei bis vier Sätzen. Die Überschriften dieser Vorlage sind echte Formatvorlagen, keine manuell fett gesetzten Absätze.]",
+        "Vorgehen",
+        "[Beschreiben Sie, welche Materialien, Beobachtungen oder Quellen Sie verwendet haben. Trennen Sie eigene Feststellungen von Informationen anderer Personen. Fügen Sie Quellenbelege dort ein, wo sie die Aussage stützen.]",
+        "Ergebnisse",
+        "[Stellen Sie die wichtigsten Ergebnisse in nachvollziehbarer Reihenfolge dar. Beginnen Sie pro Absatz einen neuen Gedanken. Ein kurzer Bericht braucht nicht mehrere Schriftfamilien: Eine Leseschrift und eine klar abgestufte Überschriftenstruktur reichen häufig aus.]",
+        "Einordnung und Ausblick",
+        "[Beantworten Sie die Ausgangsfrage. Nennen Sie Grenzen Ihrer Untersuchung und einen sinnvollen nächsten Schritt. Prüfen Sie vor der Weitergabe, ob alle Platzhalter ersetzt sind.]",
+        "Quellen",
+        "[Autor/in oder Institution: Titel, Jahr; bei Internetquellen URL und Abrufdatum. Verwenden Sie für alle Einträge dasselbe Schema.]"
+      ],
+      "pages": [
+        {
+          "src": "downloads/typografie/vorschau/kurzbericht-a4-modern-1.png",
+          "width": 1489,
+          "height": 2105,
+          "sha256": "44937a1275cd31feb1894c9cb43d4cdfb86bc24c28a10aab54c0901635361128"
+        }
+      ]
+    },
+    "einladung-a4": {
+      "title": "Einladung",
+      "variant": "Klassisch",
+      "download": "downloads/typografie/einladung-a4.docx",
+      "sourceSha256": "c290cdcac0b804fcfb87783a8a499424e40632dd55967f92112e44a2b9d2d457",
+      "text": [
+        "Einladung",
+        "[Ein besonderer Anlass]",
+        "[Tag und Datum] · [Uhrzeit]",
+        "[Veranstaltungsort und Adresse]",
+        "Liebe [Name / Gäste],",
+        "[Sprechen Sie Ihre Gäste persönlich an. Beschreiben Sie in einem kurzen Absatz, worauf sie sich freuen dürfen und warum Sie diesen Anlass gemeinsam feiern möchten.]",
+        "[Ergänzen Sie die wichtigsten praktischen Hinweise: Ablauf, Anreise, Zugänglichkeit oder Dinge, die mitgebracht werden sollen. Zentrieren Sie nicht jeden längeren Absatz; linksbündiger Text lässt sich leichter verfolgen.]",
+        "[Bitte um Rückmeldung bis Datum]",
+        "[Kontakt für die Rückmeldung]",
+        "Wir freuen uns auf Sie / euch!",
+        "[Name der einladenden Person]"
+      ],
+      "pages": [
+        {
+          "src": "downloads/typografie/vorschau/einladung-a4-1.png",
+          "width": 1489,
+          "height": 2105,
+          "sha256": "f43a3fffaf4565bdfd2686bad6dbce5008b6c3f88ee11ae12325f491fd317e95"
+        }
+      ]
+    },
+    "einladung-a4-modern": {
+      "title": "Einladung",
+      "variant": "Modern",
+      "download": "downloads/typografie/einladung-a4-modern.docx",
+      "sourceSha256": "923e700330a5312694cd9b162f044b73eff90064143ccce6232bd7e83e3c3a1c",
+      "text": [
+        "Einladung",
+        "[Ein besonderer Anlass]",
+        "[Tag und Datum] · [Uhrzeit]",
+        "[Veranstaltungsort und Adresse]",
+        "Liebe [Name / Gäste],",
+        "[Sprechen Sie Ihre Gäste persönlich an. Beschreiben Sie in einem kurzen Absatz, worauf sie sich freuen dürfen und warum Sie diesen Anlass gemeinsam feiern möchten.]",
+        "[Ergänzen Sie die wichtigsten praktischen Hinweise: Ablauf, Anreise, Zugänglichkeit oder Dinge, die mitgebracht werden sollen. Zentrieren Sie nicht jeden längeren Absatz; linksbündiger Text lässt sich leichter verfolgen.]",
+        "[Bitte um Rückmeldung bis Datum]",
+        "[Kontakt für die Rückmeldung]",
+        "Wir freuen uns auf Sie / euch!",
+        "[Name der einladenden Person]"
+      ],
+      "pages": [
+        {
+          "src": "downloads/typografie/vorschau/einladung-a4-modern-1.png",
+          "width": 1489,
+          "height": 2105,
+          "sha256": "b29411fe440a4f3a87d8e8a6c8066007d447a64929e059f7d64a26f4bb1c9a2b"
+        }
+      ]
+    },
+    "ergebnisprotokoll-a4": {
+      "title": "Ergebnisprotokoll",
+      "variant": "Klassisch",
+      "download": "downloads/typografie/ergebnisprotokoll-a4.docx",
+      "sourceSha256": "122ea9eeec220256aaccc129783cb721112bb107d1d43b0a733561a1dd9810bd",
+      "text": [
+        "[Sitzung / Projektgruppe]",
+        "Ergebnisprotokoll",
+        "Datum und Zeit: [Angaben]\nOrt: [Angabe]\nTeilnehmende: [Namen]\nProtokoll: [Name]",
+        "1. Anlass und Tagesordnung",
+        "[Nennen Sie den Anlass und die behandelten Themen. Dieses Ergebnisprotokoll hält Beschlüsse fest; es ist keine wörtliche Mitschrift.]",
+        "2. Ergebnisse und Beschlüsse",
+        "[Thema 1]",
+        "[Ergebnis oder Beschluss, gegebenenfalls mit Begründung und abweichenden Positionen.]",
+        "[Thema 2]",
+        "[Ergebnis oder Beschluss. Machen Sie kenntlich, wenn eine Frage noch offen ist.]",
+        "3. Nächste Schritte",
+        "Aufgabe: [konkrete Tätigkeit]\nVerantwortlich: [Name]\nTermin: [Datum]",
+        "4. Nächster Termin",
+        "[Datum, Uhrzeit und Ort; erforderliche Vorbereitung]"
+      ],
+      "pages": [
+        {
+          "src": "downloads/typografie/vorschau/ergebnisprotokoll-a4-1.png",
+          "width": 1489,
+          "height": 2105,
+          "sha256": "b6e8566a92163b0dd65fb37b2c428304c7141b353f3735ed0b17507d2e97ed45"
+        }
+      ]
+    },
+    "ergebnisprotokoll-a4-modern": {
+      "title": "Ergebnisprotokoll",
+      "variant": "Modern",
+      "download": "downloads/typografie/ergebnisprotokoll-a4-modern.docx",
+      "sourceSha256": "bd4af8671f746ccb653edd69a32e662cf1b2ee9c67b71e33010fb0eb46f35cec",
+      "text": [
+        "[Sitzung / Projektgruppe]",
+        "Ergebnisprotokoll",
+        "Datum und Zeit: [Angaben]\nOrt: [Angabe]\nTeilnehmende: [Namen]\nProtokoll: [Name]",
+        "1. Anlass und Tagesordnung",
+        "[Nennen Sie den Anlass und die behandelten Themen. Dieses Ergebnisprotokoll hält Beschlüsse fest; es ist keine wörtliche Mitschrift.]",
+        "2. Ergebnisse und Beschlüsse",
+        "[Thema 1]",
+        "[Ergebnis oder Beschluss, gegebenenfalls mit Begründung und abweichenden Positionen.]",
+        "[Thema 2]",
+        "[Ergebnis oder Beschluss. Machen Sie kenntlich, wenn eine Frage noch offen ist.]",
+        "3. Nächste Schritte",
+        "Aufgabe: [konkrete Tätigkeit]\nVerantwortlich: [Name]\nTermin: [Datum]",
+        "4. Nächster Termin",
+        "[Datum, Uhrzeit und Ort; erforderliche Vorbereitung]"
+      ],
+      "pages": [
+        {
+          "src": "downloads/typografie/vorschau/ergebnisprotokoll-a4-modern-1.png",
+          "width": 1489,
+          "height": 2105,
+          "sha256": "5e334befd7fdbba163bebe702e1b7f0783ae72b25c6453d4102bc113fa7f2fd4"
+        }
+      ]
+    }
+  }
+}

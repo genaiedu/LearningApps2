@@ -14,6 +14,7 @@ from lxml import etree
 from uuid import uuid5, NAMESPACE_URL
 from hashlib import sha256
 from struct import unpack_from
+import sys
 
 DEST=Path(__file__).resolve().parents[1]/'downloads'/'typografie'
 DEST.mkdir(parents=True,exist_ok=True)
@@ -142,7 +143,8 @@ def modernize(d):
     for rid,rel in list(d.part.rels.items()):
         if not rel.is_external and str(rel.target_part.partname)=='/customXml/cardo-license.xml':d.part.drop_rel(rid)
     static=FONT.parent/'sourcesans3'/'static'
-    embed_fonts(d,family,static,[('Regular','SourceSans3-Regular.otf'),('Bold','SourceSans3-Bold.otf'),('Italic','SourceSans3-It.otf'),('BoldItalic','SourceSans3-BoldIt.otf')],'LICENSE.txt')
+    # Real static TrueType originals work in viewers that mishandle CFF OTF embeds.
+    embed_fonts(d,family,static,[('Regular','SourceSans3-Regular.ttf'),('Bold','SourceSans3-Bold.ttf'),('Italic','SourceSans3-It.ttf'),('BoldItalic','SourceSans3-BoldIt.ttf')],'LICENSE.txt')
     d.core_properties.title+=' · moderne Variante'
     d.core_properties.subject='Moderne A4-Vorlage; Source Sans 3 vollständig eingebettet; ein Schriftgrad im Lesetext.'
     d.core_properties.comments='Eigene moderne Gebrauchstypografie: humanistische Sans, linksbündiger Satz, Absatzabstände. Größerer Titel nur im abgesetzten Kopfbereich. Source Sans 3 unter SIL OFL 1.1; vollständiger Lizenztext im Dokumentpaket.'
@@ -151,6 +153,13 @@ def save(d,name):
     d.save(DEST/(name+'.docx'));print(name+'.docx')
     modern=Document(DEST/(name+'.docx'));modernize(modern)
     modern.save(DEST/(name+'-modern.docx'));print(name+'-modern.docx')
+
+if '--modern-only' in sys.argv:
+    # Leave the already verified classic files byte-for-byte unchanged.
+    for name in ['brief-a4','kurzbericht-a4','einladung-a4','ergebnisprotokoll-a4']:
+        modern=Document(DEST/(name+'.docx'));modernize(modern)
+        modern.save(DEST/(name+'-modern.docx'));print(name+'-modern.docx')
+    raise SystemExit
 
 d=base('Sachlicher Brief · A4')
 d.styles['Normal'].paragraph_format.first_line_indent=Mm(0)
