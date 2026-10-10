@@ -5,7 +5,7 @@ Run with FontTools + Brotli; save generated JSON via the project's file workflow
 """
 from pathlib import Path
 from hashlib import sha256
-import json
+import argparse, json
 from fontTools.ttLib import TTFont
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,6 +13,9 @@ GERMAN = 'ÄÖÜäöüß'
 OPTIONAL = 'ẞ€„“–'
 OPTICAL = {'inter':'fonts/typografie/inter/Inter[opsz,wght].ttf',
            'dmsans':'fonts/typografie/dmsans/DMSans[opsz,wght].ttf'}
+
+def axis_bounds(axis):
+    return [int(value) if float(value).is_integer() else float(value) for value in (axis.minValue, axis.maxValue)]
 
 def inspect_family(family):
     records = []
@@ -22,7 +25,7 @@ def inspect_family(family):
             cmap = font.getBestCmap() or {}
             def missing(chars):
                 return ''.join(c for c in chars if not cmap.get(ord(c)) or cmap.get(ord(c)) == '.notdef')
-            axes = {a.axisTag: [a.minValue, a.maxValue] for a in font['fvar'].axes} if 'fvar' in font else {}
+            axes = {a.axisTag: axis_bounds(a) for a in font['fvar'].axes} if 'fvar' in font else {}
             tags = set()
             for table in ('GSUB', 'GPOS'):
                 if table in font and font[table].table.FeatureList:
@@ -41,7 +44,7 @@ def inspect_family(family):
         path = ROOT / relative
         with TTFont(path) as font:
             optical.append({'path':relative,'sha256':sha256(path.read_bytes()).hexdigest(),
-                            'axes':{a.axisTag:[a.minValue,a.maxValue] for a in font['fvar'].axes}})
+                            'axes':{a.axisTag:axis_bounds(a) for a in font['fvar'].axes}})
     return {'id': family['id'], 'name': family['name'], 'files': records, 'cuts': cuts, 'opticalFiles':optical,
             'germanMissing': ''.join(c for c in GERMAN if any(c in r['germanMissing'] for r in records)),
             'optionalMissing': ''.join(c for c in OPTIONAL if any(c in r['optionalMissing'] for r in records)),
@@ -54,4 +57,12 @@ def build():
             'families':[inspect_family(f) for f in catalogue['families']]}
 
 if __name__ == '__main__':
-    print(json.dumps(build(), ensure_ascii=False, indent=2))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', action='store_true', help='Regenerate data/typografie-fontaudit.json from local files.')
+    args = parser.parse_args()
+    report = json.dumps(build(), ensure_ascii=False, indent=2) + '\n'
+    if args.output:
+        (ROOT / 'data/typografie-fontaudit.json').write_text(report)
+        print('Updated local font audit.')
+    else:
+        print(report, end='')

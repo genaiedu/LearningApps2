@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'..'),A=require('../scripts/typografie-fontaudit.js'),catalogue=require('../data/typografie-fonts.json'),audit=require('../data/typografie-fontaudit.json');
-test('all 30 font audits refer to unchanged real local font files',()=>{
- assert.equal(audit.families.length,30);assert.equal(audit.families.reduce((n,f)=>n+f.files.length,0),64);
+test('all 31 font audits refer to unchanged real local font files',()=>{
+ assert.equal(audit.families.length,31);assert.equal(audit.families.reduce((n,f)=>n+f.files.length,0),82);
  for(const f of catalogue.families){const a=audit.families.find(a=>a.id===f.id);assert.equal(a.name,f.name);assert.deepEqual(a.files.map(x=>x.path),f.files.map(x=>x.path));
   for(const file of [...a.files,...a.opticalFiles])assert.equal(file.sha256,crypto.createHash('sha256').update(fs.readFileSync(path.resolve(root,file.path))).digest('hex'));
  }
@@ -13,6 +13,18 @@ test('missing German glyphs create a warning; coverage never stands for readabil
  const changed=A.checks(f,{...a,germanMissing:'äß'}).flatMap(x=>x.items).find(c=>c.label==='Deutsche Basiszeichen');
  assert.equal(changed.state,'warning');assert.ok(changed.text.includes('äß'));
  const source=fs.readFileSync(path.join(root,'scripts/typografie-fontaudit.js'),'utf8');assert.ok(source.includes("if(warn)card.append"));
+});
+test('Fira Sans has all 18 real static cuts with German characters and local sources',()=>{
+ const f=catalogue.families.find(f=>f.id==='firasans'),a=audit.families.find(f=>f.id==='firasans');
+ assert.equal(f.name,'Fira Sans');assert.equal(f.group,'sans');assert.equal(f.files.length,18);
+ assert.equal(a.germanMissing,'');assert.equal(a.optionalMissing,'');assert.ok(Object.values(a.cuts).every(Boolean));
+ for(const style of ['normal','italic'])assert.deepEqual(f.files.filter(x=>x.style===style).map(x=>x.weight).sort((a,b)=>a-b),[100,200,300,400,500,600,700,800,900]);
+ for(const file of f.files){assert.ok(file.path.startsWith('fonts/typografie/firasans/'));assert.deepEqual(file.axes,{});}
+ const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-fonts.css'),'utf8');
+ assert.equal((css.match(/font-family:"Fira Sans"/g)||[]).length,18);assert.ok(!/https?:\/\//.test(css));
+ assert.ok(html.includes('Fira Sans · Regular / 400'));assert.ok(html.includes('unten offene Schleife'));
+ assert.ok(html.includes('https://fonts.google.com/specimen/Fira+Sans?preview.script=Latn'));
+ for(const id of ['anatomy-font','overshoot-font','body-font','heading-font'])assert.ok(html.match(new RegExp('id="'+id+'"[\\s\\S]*?<\/select>'))[0].includes('<option>Fira Sans</option>'));
 });
 test('available cuts, optional capital sharp S, and optical files are not conflated',()=>{
  const pop=audit.families.find(f=>f.id==='poppins');assert.equal(pop.germanMissing,'');assert.ok(pop.optionalMissing.includes('ẞ'));assert.equal(pop.cuts.italic,false);

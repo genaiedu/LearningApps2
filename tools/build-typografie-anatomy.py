@@ -12,7 +12,7 @@ from fontTools.pens.svgPathPen import SVGPathPen
 
 ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATED = {'ebgaramond','goudybookletter1911','cardo','librebaskerville',
-               'librebodoni','sourcesans3','inter','lora','poppins'}
+               'librebodoni','sourcesans3','inter','lora','poppins','firasans'}
 CHARACTERS = 'abgpxHoO'
 
 def extract(entry):

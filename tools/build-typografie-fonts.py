@@ -43,10 +43,11 @@ FAMILIES = [
     ('Limelight','limelight','display','Kontrastreiche Art-déco-Sans','Geometrische Displayformen mit extremem Strichkontrast. Für mittlere und große Grade, nicht für lange kleine Lesetexte.'),
     ('Podkova','podkova','serif','Kontrastarme Slab Serif','Annähernd gleichmäßige Strichstärken und kantige Formen. Den schrägen oberen Stammabschluss zeigt das kleine t, nicht die gemeinsame Probe Form.'),
     ('Abel','abel','sans','Schmale, kontrastarme Sans','Flachseitige, schmale Formen mit einzelnen schrägen Abschlüssen. Nur Regular; Details immer am einzelnen Buchstaben prüfen.'),
+    ('Fira Sans','firasans','sans','Humanistische Sans','Offene, differenzierte Formen für Erklärtexte und Orientierung. Das aufrechte zweistöckige g besitzt eine offene untere Schleife. Neun Strichstärken mit jeweils echter Kursive; feine Schnitte nur in ausreichend großen Graden einsetzen.'),
 ]
 SLUGS = {'Zilla Slab':'zilla-slab','DM Mono':'dm-mono','Bebas Neue':'bebas-neue','Dancing Script':'dancing-script','DM Sans':'dm-sans','Plus Jakarta Sans':'plus-jakarta-sans','Archivo Black':'archivo-black'}
 NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville','goudybookletter1911',
-       'breeserif','robotoslab','belleza','limelight','podkova','abel'}
+       'breeserif','robotoslab','belleza','limelight','podkova','abel','firasans'}
 RAW = 'https://raw.githubusercontent.com/google/fonts/main/ofl/'
 
 def font_upstream(directory):
@@ -131,6 +132,10 @@ def build_family(row):
     designer = re.search(r'^designer: "([^"]+)"',metadata,re.M).group(1)
     entry = dict(name=name,id=directory,group=group,classification=classification,advice=advice,designer=designer,license='Apache 2.0' if branch=='apache' else 'SIL OFL 1.1',source='https://github.com/google/fonts/tree/main/'+branch+'/'+directory,licensePath='fonts/typografie/'+directory+'/'+license_file,files=[],uses=[])
     if directory in NEW:
+        # Google Fonts defines the web/CSS weight. Some unmodified originals
+        # (e.g. Fira Sans Thin / ExtraLight) keep historical OS/2 values 250/275.
+        # Preserve the files; map them to Google's public CSS values 100/200.
+        upstream_weights = {filename:int(weight) for weight,filename in re.findall(r'weight:\s*(\d+)\s+filename: "([^"]+)"',metadata)}
         files = list(dict.fromkeys(re.findall(r'filename: "([^"]+\.ttf)"',metadata)))
         for filename in files:
             content = get(base+filename.replace('[','%5B').replace(']','%5D'))
@@ -139,7 +144,7 @@ def build_family(row):
             entry['features']=sorted(set(entry.get('features',[]))|({r.FeatureTag for r in font['GSUB'].table.FeatureList.FeatureRecord} if 'GSUB' in font else set()))
             italic = bool(font['head'].macStyle & 2) or 'Italic' in filename
             axes = {a.axisTag:[a.minValue,a.maxValue] for a in font['fvar'].axes} if 'fvar' in font else {}
-            weight = axes.get('wght',font['OS/2'].usWeightClass)
+            weight = axes.get('wght',upstream_weights.get(filename,font['OS/2'].usWeightClass))
             out = filename.removesuffix('.ttf')+'.woff2'
             font.flavor='woff2'; font.save(folder/out)
             entry['files'].append(dict(path='fonts/typografie/'+directory+'/'+out,weight=weight,style='italic' if italic else 'normal',axes=axes,sha256=hashlib.sha256(content).hexdigest()))

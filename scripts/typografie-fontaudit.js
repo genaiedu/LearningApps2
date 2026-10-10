@@ -33,7 +33,8 @@
     belleza:[['Source Sans 3','Kontrastreicher Titel und robuster Begleittext'],['EB Garamond','Eleganter Sans-Titel über einem literarischen Text']],
     limelight:[['Source Sans 3','Art-déco-Titel und ruhiger Lesetext'],['Inter','Kurzer Displayakzent und sachliche Informationen']],
     podkova:[['Source Sans 3','Kantiger Slab-Titel und offene Erklärung'],['Inter','Markanter Slab-Akzent und zurückhaltende Beschriftung']],
-    abel:[['EB Garamond','Schmaler Sans-Titel und ruhiger Antiqua-Lesetext'],['Source Sans 3','Schmale Kurzbeschriftung, normalbreiter Erklärtext']]
+    abel:[['EB Garamond','Schmaler Sans-Titel und ruhiger Antiqua-Lesetext'],['Source Sans 3','Schmale Kurzbeschriftung, normalbreiter Erklärtext']],
+    firasans:[['EB Garamond','Fira Sans für Orientierung, Garamond für literarische Passagen'],['Libre Baskerville','Humanistische Sans für Hinweise neben einem ruhigen Antiqua-Lesetext']]
   };
   function checks(font,audit){
     const total=audit.files.length, present=Object.keys(labels).filter(k=>audit.cuts[k]),missing=Object.keys(labels).filter(k=>!audit.cuts[k]);

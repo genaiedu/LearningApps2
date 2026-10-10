@@ -54,8 +54,8 @@
   $('optical-reset').onclick=()=>updateOptical(true);updateOptical(true);
 
   async function loadFonts(){
-    try{const r=await fetch('data/typografie-fonts.json',{credentials:'omit'});if(!r.ok)throw Error();catalogue=await r.json();catalogue.families.forEach(f=>fonts.set(f.name,f));$('catalog-count').textContent=fonts.size;$('hero-count').textContent=fonts.size;renderFonts();updateBook();
-      try{const audit=await fetch('data/typografie-fontaudit.json?v=20261010',{credentials:'omit'});if(!audit.ok)throw Error();const data=await audit.json();fontAudits=new Map(data.families.map(f=>[f.id,f]));renderFonts();}catch(_){/* The catalogue remains usable; each disclosure states missing audit data. */}
+    try{const r=await fetch('data/typografie-fonts.json?v=20261010-fira',{credentials:'omit'});if(!r.ok)throw Error();catalogue=await r.json();catalogue.families.forEach(f=>fonts.set(f.name,f));$('catalog-count').textContent=fonts.size;$('hero-count').textContent=fonts.size;renderFonts();updateBook();
+      try{const audit=await fetch('data/typografie-fontaudit.json?v=20261010-fira',{credentials:'omit'});if(!audit.ok)throw Error();const data=await audit.json();fontAudits=new Map(data.families.map(f=>[f.id,f]));renderFonts();}catch(_){/* The catalogue remains usable; each disclosure states missing audit data. */}
     }
     catch(_){$('catalog-status').textContent='Das Schriftverzeichnis konnte nicht geladen werden. Die übrigen Werkstätten und Downloads bleiben nutzbar.';const retry=node('button',null,'Verzeichnis erneut laden');retry.onclick=()=>{retry.remove();loadFonts();};$('catalog-status').after(retry);}
   }

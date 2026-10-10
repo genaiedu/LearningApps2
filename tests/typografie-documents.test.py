@@ -31,7 +31,7 @@ class Links(HTMLParser):
 class Templates(unittest.TestCase):
     def test_archived_originals_preserved_but_downloads_link_to_google(self):
         data=json.loads((ROOT/'data'/'typografie-fonts.json').read_text())
-        self.assertEqual(len(data['families']),30)
+        self.assertEqual(len(data['families']),31)
         html=(ROOT/'typografie-atelier.html').read_text()
         with ZipFile(ROOT/data['desktopCollection']) as collection:
             self.assertIsNone(collection.testzip())
@@ -57,7 +57,7 @@ class Templates(unittest.TestCase):
                             self.assertIn(z.read(name)[:4],[b'\x00\x01\x00\x00',b'OTTO'])
                     for original in font.get('desktopFiles',[]):
                         self.assertEqual(sha256((ROOT/original['path']).read_bytes()).hexdigest(),original['sha256'])
-            self.assertEqual(len({n.split('/')[0] for n in collection.namelist() if '/' in n}),30)
+            self.assertEqual(len({n.split('/')[0] for n in collection.namelist() if '/' in n}),31)
 
     def test_goudy_desktop_package(self):
         data=json.loads((ROOT/'data'/'typografie-fonts.json').read_text())

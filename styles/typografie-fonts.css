@@ -62,6 +62,24 @@
 @font-face{font-family:"Limelight";src:url("../fonts/typografie/limelight/Limelight-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:"Podkova";src:url("../fonts/typografie/podkova/Podkova[wght].woff2") format("woff2");font-weight:400 800;font-style:normal;font-display:swap;}
 @font-face{font-family:"Abel";src:url("../fonts/typografie/abel/Abel-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-Thin.woff2") format("woff2");font-weight:100;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-ThinItalic.woff2") format("woff2");font-weight:100;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-ExtraLight.woff2") format("woff2");font-weight:200;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-ExtraLightItalic.woff2") format("woff2");font-weight:200;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-Light.woff2") format("woff2");font-weight:300;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-LightItalic.woff2") format("woff2");font-weight:300;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-Medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-MediumItalic.woff2") format("woff2");font-weight:500;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-SemiBold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-SemiBoldItalic.woff2") format("woff2");font-weight:600;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-Bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-BoldItalic.woff2") format("woff2");font-weight:700;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-ExtraBold.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-ExtraBoldItalic.woff2") format("woff2");font-weight:800;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-Black.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("../fonts/typografie/firasans/FiraSans-BlackItalic.woff2") format("woff2");font-weight:900;font-style:italic;font-display:swap;}
 /* Dedicated study aliases reuse existing complete desktop fonts; no additional catalogue families. */
 @font-face{font-family:"Inter Optical Study";src:url("../fonts/typografie/inter/Inter[opsz,wght].ttf") format("truetype");font-weight:100 900;font-style:normal;font-display:swap;}
 @font-face{font-family:"DM Sans Optical Study";src:url("../fonts/typografie/dmsans/DMSans[opsz,wght].ttf") format("truetype");font-weight:100 1000;font-style:normal;font-display:swap;}

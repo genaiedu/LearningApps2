@@ -2,8 +2,8 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const A=require('../scripts/typografie-anatomy.js');
 const root=path.resolve(__dirname,'..'),data=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-anatomy.json')));
 const illustrated=data.families.filter(f=>f.glyphs.x.path);
-test('all 30 measurements refer to the exact existing local webfonts',()=>{
-  assert.equal(data.families.length,30);assert.equal(illustrated.length,9);
+test('all 31 measurements refer to the exact existing local webfonts',()=>{
+  assert.equal(data.families.length,31);assert.equal(illustrated.length,10);
   for(const f of data.families){
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.resolve(root,f.source))).digest('hex'),f.sha256);
     assert.equal(f.license,f.id==='robotoslab'?'Apache 2.0':'SIL OFL 1.1');assert.ok(fs.existsSync(path.resolve(root,f.licensePath)));
@@ -23,7 +23,7 @@ test('baseline is always zero and guides follow actual glyph outlines, not perce
   const css=fs.readFileSync(path.join(root,'styles/typografie-atelier.css'),'utf8'),js=fs.readFileSync(path.join(root,'scripts/typografie-atelier.js'),'utf8');
   assert.ok(!css.includes('.anatomy-word{'));assert.ok(!js.includes("$('anatomy-font').onchange"));
 });
-test('all nine demonstrated fonts really contain the stated round-form overshoots',()=>{
+test('all ten demonstrated fonts really contain the stated round-form overshoots',()=>{
   for(const f of illustrated)for(const [flat,round] of [['H','O'],['x','o']]){
     const v=A.overshoot(f,flat,round);assert.ok(v.top>0,f.name);assert.ok(v.belowBaseline>0,f.name);
     assert.equal(v.top,f.glyphs[round].bounds[3]-f.glyphs[flat].bounds[3]);
