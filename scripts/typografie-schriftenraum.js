@@ -5,22 +5,11 @@
   const NS='http://www.w3.org/2000/svg';
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
   const svg=(tag,attrs)=>{const n=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,v));return n;};
-  const initialRotation=()=>C.multiply(C.axisAngle([1,0,0],-.3),C.axisAngle([0,1,0],-.48));
-  let rotation=initialRotation(),flat=false,layer='all',selected='serif-static-low',outlines=null,request=0;
+  let view=C.defaultView(),selected=null,outlines=null;
   const initialAnchor=['#strichkontrast','#strichabschluesse','#schriftenraum','#font-space-stage'].includes(location.hash)?location.hash.slice(1):null;
   let userMoved=false;
   if(initialAnchor)['pointerdown','wheel','keydown','touchstart'].forEach(type=>addEventListener(type,()=>{userMoved=true;},{once:true,passive:true}));
-  const nodes=new Map(),planes=new Map(),downloads=new Map(),rows=new Map();
-  C.cells.forEach(c=>{
-    const plane=el('article','space-face');plane.dataset.cell=c.id;plane.classList.toggle('space-face-down',!c.contrast);
-    const button=el('button','space-node');button.type='button';button.dataset.cell=c.id;
-    const copy=el('span','space-face-copy');copy.append(el('span','space-word'),el('span','space-name'),el('span','space-terminal'));
-    const border=svg('svg',{viewBox:'0 0 100 100',preserveAspectRatio:'none',class:'space-face-border','aria-hidden':'true'});
-    border.append(svg('polygon',{points:c.contrast?'50,0 100,100 0,100':'0,0 100,0 50,100'}));button.append(border,copy);
-    button.addEventListener('click',()=>{if(performance.now()<suppressClickUntil)return;selected=c.id;renderSelection();renderDetail();focusDetail();});
-    const download=el('a','space-flat-download');plane.append(button,download);
-    $('font-space-solid').append(plane);nodes.set(c.id,button);planes.set(c.id,plane);downloads.set(c.id,download);
-  });
+  const rows=new Map();
   C.fields.forEach(f=>{
     const c=C.cells.find(c=>c.id===f.cell),s=f.specimen&&C.specimens[f.specimen];
     const row=el('article','space-field');row.dataset.field=f.cell+'-'+f.layer;
@@ -29,48 +18,70 @@
     if(s){const word=el('span','space-field-word','Form');word.style.fontFamily='"'+s.name+'"';button.append(word,el('span','',s.name+' · Detail: '+s.glyph));}
     else{button.append(el('span','space-open-label','Offenes Feld'),el('span','',C.empty));}
     button.setAttribute('aria-label',f.label+(s?' · '+s.name:' · '+C.empty));
-    button.addEventListener('click',()=>{selected=c.id;setLayer(f.layer);focusDetail();});
+    button.addEventListener('click',()=>showField(c.id,f.layer));
     row.append(button);
     if(s){const download=el('a','space-field-download');window.TypoFontLinks.link(download,s.name);row.append(download);}
     $('font-space-fields').append(row);rows.set(row.dataset.field,row);
   });
-  function position(){
-    if(flat){nodes.forEach(n=>{n.tabIndex=0;n.removeAttribute('aria-hidden');});return;}
-    const radius=Math.min(stage.clientWidth*.45,stage.clientHeight*.385),distance=radius*6;
-    stage.style.perspective=distance+'px';
-    stage.style.setProperty('--face-word-size',Math.max(26,radius*.20)+'px');
-    stage.style.setProperty('--face-name-size',Math.max(12,radius*.063)+'px');
-    stage.style.setProperty('--face-note-size',Math.max(10,radius*.045)+'px');
-    $('font-space-solid').style.transform='matrix3d('+C.rotationMatrix(rotation).join(',')+')';
-    C.cells.forEach(c=>{
-      const f=C.faceFrame(c,radius),plane=planes.get(c.id),node=nodes.get(c.id);
-      plane.style.width=f.width+'px';plane.style.height=f.height+'px';
-      plane.style.transform='matrix3d('+[...f.u,0,...f.v,0,...f.normal,0,...f.origin,1].join(',')+')';
-      const normal=C.rotatePoint(f.normal,rotation),center=C.rotatePoint(f.center,rotation);
-      const front=normal[2]*distance-C.dot(normal,center)>0;
-      plane.classList.toggle('space-face-back',!front);
-      node.tabIndex=front?0:-1;node.setAttribute('aria-hidden',String(!front));
-      const light=.5+.5*C.dot(normal,[-.35,-.4,.846]);
-      plane.style.setProperty('--face-alpha',String(front?.22+light*.22:.1));
+  function renderFixed(){
+    const target=$('space-fixed');target.replaceChildren();
+    Object.entries(C.dimensions).filter(([key])=>key!==view.x&&key!==view.y).forEach(([key,d])=>{
+      const label=el('label','',d.name),select=el('select');select.id='space-fixed-'+key;select.dataset.spaceFixed=key;
+      const options=key==='terminal'?['all','quer','schraeg']:['false','true'];
+      options.forEach(value=>{const option=el('option','',value==='all'?'Gesamtform · keine Abschlussauswahl':d.ends[value==='true'||value==='schraeg'?1:0]);option.value=value;select.append(option);});
+      select.value=String(view.fixed[key]);
+      select.addEventListener('change',()=>{view.fixed[key]=key==='terminal'?select.value:select.value==='true';clearDetail();renderPlot();});
+      label.append(select);target.append(label);
     });
+  }
+  function clearDetail(){selected=null;$('font-space-detail').hidden=true;}
+  function renderPlot(){
+    const x=C.dimensions[view.x],y=C.dimensions[view.y],entries=C.quadrants(view),target=$('space-quadrants');
+    $('space-x').value=view.x;$('space-y').value=view.y;
+    $('space-x-name').textContent='x · '+x.name;$('space-y-name').textContent='y · '+y.name;
+    $('space-x-low').textContent=x.ends[0];$('space-x-high').textContent=x.ends[1];
+    $('space-y-low').textContent=y.ends[0];$('space-y-high').textContent=y.ends[1];
+    stage.setAttribute('aria-label','Vierfeldervergleich: x = '+x.name+', y = '+y.name+'. Konstant: '+C.fixedLabels(view).join(' · '));
+    target.replaceChildren();
+    entries.forEach(entry=>{
+      const s=entry.specimen,card=el('article','space-quadrant');card.dataset.field=entry.id;card.classList.toggle('space-quadrant-empty',!s);
+      card.append(el('p','space-quadrant-label',entry.label));
+      const button=el('button','space-quadrant-button');button.type='button';button.dataset.field=entry.id;
+      button.setAttribute('aria-pressed',String(selected===entry.id));button.setAttribute('aria-controls','font-space-detail');
+      button.setAttribute('aria-label',entry.label+' · '+(s?s.name+' · Schrift unter der Lupe':C.empty));
+      if(s){
+        const sample=el('span','space-quadrant-sample'),word=el('span','space-word','Form'),letters=el('span','space-letters','a g e t');
+        sample.style.fontFamily='"'+s.name+'"';sample.append(word,letters);
+        button.append(sample,el('span','space-name',s.name),el('span','space-terminal',entry.layer==='all'?'Gesamtform · unter der Lupe ↗':'Belegte Kante: '+s.glyph+' · Lupe ↗'));
+      }else button.append(el('span','space-open-label','Offenes Feld'),el('span','space-quadrant-empty-note',C.empty));
+      button.addEventListener('click',()=>{selected=entry.id;renderSelection();$('font-space-detail').hidden=false;renderDetail();focusDetail();});
+      card.append(button);
+      if(s){const download=el('a','space-quadrant-download');window.TypoFontLinks.link(download,s.name,'Google Fonts · Download ↗');card.append(download);}
+      target.append(card);
+    });
+    renderSelection();
+    const count=entries.filter(e=>e.specimen).length;
+    const open=4-count;
+    $('font-space-status').textContent='Vier Felder · '+count+(count===1?' belegtes Beispiel':' belegte Beispiele')+(open?' · '+open+(open===1?' offenes Feld':' offene Felder'):'')+'. Konstant: '+C.fixedLabels(view).join(' · ')+'.';
   }
   function renderSelection(){
-    C.cells.forEach(c=>{
-      const n=nodes.get(c.id),key=layer==='all'?c.base:c[layer],s=key&&C.specimens[key];
-      n.classList.toggle('space-node-empty',!s);n.setAttribute('aria-pressed',String(c.id===selected));
-      const word=n.querySelector('.space-word');word.textContent=s?'Form':'Offen';word.style.fontFamily=s?'"'+s.name+'"':'var(--sans)';
-      n.querySelector('.space-name').textContent=s?s.name:'Kein belegtes Beispiel';
-      n.querySelector('.space-terminal').textContent=s?(layer==='all'?'Gesamtform':'Detail: '+s.glyph):'Feld untersuchen';
-      n.setAttribute('aria-label',C.labels(c).join(' · ')+(layer==='all'?'':layer==='quer'?' · quer geschnitten':' · schräg geschnitten')+' · '+(s?s.name:C.empty));
-      n.title=n.getAttribute('aria-label');
-      const download=downloads.get(c.id);download.hidden=!s;if(s)window.TypoFontLinks.link(download,s.name);
-    });
-    rows.forEach((row,key)=>row.classList.toggle('space-field-selected',key===selected+'-'+layer));
-    document.querySelectorAll('[data-space-layer]').forEach(n=>n.setAttribute('aria-pressed',String(n.dataset.spaceLayer===layer)));
-    $('font-space-status').textContent=layer==='all'?'Acht Formfelder. Wähle eine Schrift, um sie genauer zu betrachten.':(layer==='quer'?'Quer':'Schräg')+' geschnitten: Die Zuordnung bezieht sich ausschließlich auf die benannte Einzelkante. Offene Felder bleiben auswählbar.';
+    document.querySelectorAll('.space-quadrant-button').forEach(n=>n.setAttribute('aria-pressed',String(n.dataset.field===selected)));
+    rows.forEach((row,key)=>row.classList.toggle('space-field-selected',key===selected));
   }
-  function setLayer(next){layer=next;renderSelection();renderDetail();}
-  document.querySelectorAll('[data-space-layer]').forEach(n=>n.addEventListener('click',()=>setLayer(n.dataset.spaceLayer)));
+  for(const axis of ['x','y'])$('space-'+axis).addEventListener('change',()=>{view=C.changeAxis(view,axis,$('space-'+axis).value);clearDetail();renderFixed();renderPlot();});
+  function selection(){
+    const field=selected&&C.fields.find(f=>f.cell+'-'+f.layer===selected);
+    const entry=C.quadrants(view).find(e=>e.id===selected);
+    if(entry)return entry;
+    if(!field)return null;
+    const cell=C.cells.find(c=>c.id===field.cell),key=field.specimen;
+    return {cell,layer:field.layer,key,specimen:key?C.specimens[key]:null};
+  }
+  function showField(cellId,layer){
+    const cell=C.cells.find(c=>c.id===cellId);
+    view=C.defaultView();view.fixed.contrast=cell.contrast;view.fixed.terminal=layer;
+    selected=cellId+'-'+layer;renderFixed();renderPlot();$('font-space-detail').hidden=false;renderDetail();focusDetail();
+  }
   function drawOutline(target,family,character,edge,zoom=false){
     target.replaceChildren();const g=family.glyphs[character];if(!g)return;
     const [x0,y0,x1,y1]=g.bounds,width=x1-x0,height=y1-y0,pad=Math.max(width,height)*.12;
@@ -87,7 +98,7 @@
     }
   }
   function renderGlyph(){
-    const c=C.cells.find(c=>c.id===selected),key=layer==='all'?c.base:c[layer],s=key&&C.specimens[key];
+    const entry=selection();if(!entry)return;const {key,specimen:s}=entry;
     if(!s)return;
     const character=$('space-glyph').value,family=outlines&&outlines.find(f=>f.id===(s.fontId||key)),edge=character===s.glyph?s.edge:null;
     $('space-outline-loading').hidden=Boolean(family);$('space-outline-wrap').hidden=!family;
@@ -98,7 +109,7 @@
     $('space-edge-key').hidden=!edge;
   }
   function renderDetail(){
-    const c=C.cells.find(c=>c.id===selected),key=layer==='all'?c.base:c[layer],s=key&&C.specimens[key];
+    const entry=selection();if(!entry)return;const {cell:c,layer,key,specimen:s}=entry;
     $('space-detail-kicker').textContent=C.labels(c).join(' · ')+(layer==='all'?'':' · '+(layer==='quer'?'quer':'schräg'));
     $('space-detail-heading').textContent=s?s.name:'Ein offenes Feld';
     $('space-cell-description').textContent=c.comment;
@@ -118,33 +129,9 @@
     $('font-space-detail').scrollIntoView({block:'start',behavior:'instant'});
     $('space-detail-heading').focus({preventScroll:true});
   }
-  $('space-podkova-link').addEventListener('click',()=>{selected='serif-static-low';setLayer('schraeg');focusDetail();});
-  $('space-reset').addEventListener('click',()=>{rotation=initialRotation();position();});
-  $('space-flat-toggle').addEventListener('click',()=>{
-    flat=!flat;stage.classList.toggle('space-flat',flat);
-    $('space-flat-toggle').setAttribute('aria-pressed',String(flat));
-    $('space-flat-toggle').textContent=flat?'Zum Oktaeder':'Flache Ansicht';
-    stage.setAttribute('aria-label',flat?'Acht Schriftproben mit Google-Fonts-Links.':'Frei drehbarer Schriftenoktaeder. Zum Drehen ziehen oder wischen; eine Fläche anklicken für die Originalkonturen.');
-    position();
-  });
-  let drag=null,suppressClickUntil=0;
-  const ball=(x,y)=>{const r=stage.getBoundingClientRect();return C.trackball(x-r.left-r.width/2,y-r.top-r.height*.48,Math.min(r.width,r.height)*.46);};
-  stage.addEventListener('pointerdown',e=>{
-    if(flat||drag||e.button!==0)return;
-    drag={id:e.pointerId,x:e.clientX,y:e.clientY,start:ball(e.clientX,e.clientY),rotation:[...rotation],moved:false};
-  });
-  stage.addEventListener('pointermove',e=>{
-    if(!drag||e.pointerId!==drag.id)return;
-    if(!drag.moved&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<5)return;
-    if(!drag.moved){drag.moved=true;stage.setPointerCapture(e.pointerId);stage.classList.add('space-dragging');}
-    rotation=C.multiply(C.turnBetween(drag.start,ball(e.clientX,e.clientY)),drag.rotation);
-    cancelAnimationFrame(request);request=requestAnimationFrame(position);
-  });
-  const endDrag=e=>{if(!drag||e.pointerId!==drag.id)return;if(drag.moved)suppressClickUntil=performance.now()+250;drag=null;stage.classList.remove('space-dragging');if(stage.hasPointerCapture(e.pointerId))stage.releasePointerCapture(e.pointerId);};
-  ['pointerup','pointercancel','lostpointercapture'].forEach(type=>stage.addEventListener(type,endDrag));
-  const resize=()=>{cancelAnimationFrame(request);request=requestAnimationFrame(position);};
-  new ResizeObserver(resize).observe(stage);
-  renderSelection();renderDetail();position();
+  $('space-podkova-link').addEventListener('click',()=>showField('serif-static-low','schraeg'));
+  $('space-reset').addEventListener('click',()=>{view=C.defaultView();clearDetail();renderFixed();renderPlot();});
+  renderFixed();renderPlot();
   fetch('data/typografie-schriftenraum.json',{credentials:'omit'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json();}).then(data=>{
     outlines=data.families;renderDetail();
     const pod=outlines.find(f=>f.id==='podkova'),rob=outlines.find(f=>f.id==='robotoslab');

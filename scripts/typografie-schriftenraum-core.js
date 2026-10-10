@@ -30,47 +30,45 @@
   const labels=c=>[c.serif?'Serif':'Sans Serif',c.dynamic?'dynamisch':'eher statisch',c.contrast?'deutlicher Kontrast':'geringer Kontrast'];
   const combination=(c,layer)=>labels(c).concat(layer==='quer'?'quer geschnitten':'schräg geschnitten').join(' · ');
   const fields=cells.flatMap(c=>['quer','schraeg'].map(layer=>({cell:c.id,layer,specimen:c[layer],label:combination(c,layer)})));
-  const dot=(a,b)=>a.reduce((s,n,i)=>s+n*b[i],0);
-  const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
-  const unit=a=>{const d=Math.hypot(...a);return a.map(n=>n/d);};
-  // The octahedron is the dual of the old cube: one face for each of the
-  // eight binary combinations. Each face is an actual equilateral plane.
-  function faceFrame(c,radius=1){
-    const sx=c.serif?1:-1,sy=c.contrast?-1:1,sz=c.dynamic?1:-1;
-    const apex=[0,sy*radius,0],x=[sx*radius,0,0],z=[0,0,sz*radius];
-    const normal=unit([sx,sy,sz]);
-    let left=x,right=z;
-    let u=unit(right.map((n,i)=>n-left[i]));
-    let v=unit(left.map((n,i)=>sy<0?(n+right[i])/2-apex[i]:apex[i]-(n+right[i])/2));
-    if(dot(cross(u,v),normal)<0){[left,right]=[right,left];u=u.map(n=>-n);}
-    const width=Math.SQRT2*radius,height=Math.sqrt(1.5)*radius;
-    return {vertices:[apex,left,right],normal,u,v,width,height,down:sy>0,
-      origin:apex.map((n,i)=>n-u[i]*width/2-(sy>0?v[i]*height:0)),
-      center:[sx*radius/3,sy*radius/3,sz*radius/3]};
+  const dimensions={
+    serif:{name:'Serifen',ends:['Sans Serif','Serif']},
+    dynamic:{name:'Formprinzip',ends:['eher statisch','dynamisch']},
+    contrast:{name:'Strichkontrast',ends:['geringer Kontrast','deutlicher Kontrast']},
+    terminal:{name:'Strichabschluss',ends:['quer geschnitten','schräg geschnitten']}
+  };
+  const defaultView=()=>({x:'serif',y:'dynamic',fixed:{serif:false,dynamic:false,contrast:false,terminal:'all'}});
+  function normalizeView(value){
+    const source=value&&typeof value==='object'?value:{},fixed=source.fixed||{};
+    const x=Object.hasOwn(dimensions,source.x)?source.x:'serif';
+    const y=Object.hasOwn(dimensions,source.y)&&source.y!==x?source.y:Object.keys(dimensions).find(key=>key!==x);
+    return {x,y,fixed:{serif:fixed.serif===true,dynamic:fixed.dynamic===true,contrast:fixed.contrast===true,
+      terminal:['quer','schraeg'].includes(fixed.terminal)?fixed.terminal:'all'}};
   }
-  const quaternion=q=>unit(q);
-  function multiply(a,b){
-    const [x,y,z,w]=a,[i,j,k,v]=b;
-    return quaternion([w*i+x*v+y*k-z*j,w*j-x*k+y*v+z*i,w*k+x*j-y*i+z*v,w*v-x*i-y*j-z*k]);
+  // Selecting the occupied dimension swaps axes, instead of duplicating an axis.
+  function changeAxis(value,axis,next){
+    const view=normalizeView(value);if(!['x','y'].includes(axis)||!Object.hasOwn(dimensions,next))return view;
+    const other=axis==='x'?'y':'x',previous=view[axis];
+    if(view[other]===next)view[other]=previous;
+    view[axis]=next;return view;
   }
-  function axisAngle(axis,angle){const u=unit(axis),s=Math.sin(angle/2);return [...u.map(n=>n*s),Math.cos(angle/2)];}
-  function turnBetween(a,b){
-    const d=Math.max(-1,Math.min(1,dot(a,b)));
-    if(d<-.999999){const axis=cross(a,Math.abs(a[0])<.8?[1,0,0]:[0,1,0]);return axisAngle(axis,Math.PI);}
-    return quaternion([...cross(a,b),1+d]);
+  const fixedLabels=value=>{
+    const view=normalizeView(value);
+    return Object.keys(dimensions).filter(key=>key!==view.x&&key!==view.y).map(key=>key==='terminal'
+      ?(view.fixed.terminal==='all'?'Strichabschluss: Gesamtform':dimensions.terminal.ends[view.fixed.terminal==='schraeg'?1:0])
+      :dimensions[key].ends[view.fixed[key]?1:0]);
+  };
+  function quadrants(value){
+    const view=normalizeView(value);
+    // Reading order: upper left, upper right, lower left, lower right.
+    return [[false,true],[true,true],[false,false],[true,false]].map(([x,y])=>{
+      const values={...view.fixed};
+      for(const [axis,bit] of [[view.x,x],[view.y,y]])values[axis]=axis==='terminal'?(bit?'schraeg':'quer'):bit;
+      const cell=cells.find(c=>c.serif===values.serif&&c.dynamic===values.dynamic&&c.contrast===values.contrast);
+      const layer=values.terminal,key=layer==='all'?cell.base:cell[layer];
+      return {id:cell.id+'-'+layer,cell,layer,key,specimen:key?specimens[key]:null,x,y,
+        label:dimensions[view.x].ends[x?1:0]+' · '+dimensions[view.y].ends[y?1:0]};
+    });
   }
-  function rotatePoint(p,q){
-    const t=cross(q.slice(0,3),p).map(n=>2*n),u=cross(q.slice(0,3),t);
-    return p.map((n,i)=>n+q[3]*t[i]+u[i]);
-  }
-  function trackball(x,y,radius){
-    const a=x/radius,b=y/radius,d=a*a+b*b;
-    return d>1?unit([a,b,0]):[a,b,Math.sqrt(1-d)];
-  }
-  function rotationMatrix(q){
-    const u=rotatePoint([1,0,0],q),v=rotatePoint([0,1,0],q),n=rotatePoint([0,0,1],q);
-    return [...u,0,...v,0,...n,0,0,0,0,1];
-  }
-  const api={empty,specimens,cells,fields,labels,combination,faceFrame,dot,cross,multiply,axisAngle,turnBetween,rotatePoint,trackball,rotationMatrix};
+  const api={empty,specimens,cells,fields,labels,combination,dimensions,defaultView,normalizeView,changeAxis,fixedLabels,quadrants};
   if(typeof module==='object'&&module.exports)module.exports=api;else root.Schriftenraum=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
