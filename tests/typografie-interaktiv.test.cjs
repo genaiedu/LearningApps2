@@ -4,20 +4,20 @@ const M=require('../scripts/typografie-bewegung-core.js'),root=path.resolve(__di
 const read=name=>fs.readFileSync(path.join(root,name),'utf8'),html=read('typografie-atelier.html'),ui=read('scripts/typografie-bewegung.js');
 test('every margin voice shares the right-aligned constrained format',()=>{
   const css=read('styles/typografie-atelier.css');
-  assert.equal((html.match(/<aside class="author-essay author-comment/g)||[]).length,12);
+  assert.equal((html.match(/<aside class="author-essay author-comment/g)||[]).length,13);
   assert.match(css,/\.author-comment\{[^}]*width:min\(100%,850px\);margin:35px 0 30px auto;/);
   assert.match(css,/\.margin-conversation\{[^}]*grid-template-columns:minmax\(0,1fr\) minmax\(0,850px\)/);
   assert.match(css,/\.margin-conversation>\.author-comment\{justify-self:end;margin:0\}/);
   assert.ok(css.includes('@media(max-width:1200px){.margin-conversation{grid-template-columns:1fr}'));
   assert.ok(!/\.(letterform|emphasis)-statement\{/.test(css),'Topic classes must not maintain separate comment layouts');
 });
-test('nine approved margin voices appear once, in the intended chapters, without attribution',()=>{
-  const places={fraktur:'gebrochene-schriften',modern:'word',plakat:'richtung',proportion:'komposition',bild:'bild-und-text',format:'bildschirmformate',hintergrund:'hintergrund',hero:'herobereiche',bewegung:'bewegte-grafik'};
-  assert.equal((html.match(/data-randstimme=/g)||[]).length,9);
+test('approved margin voices appear once, in the intended chapters, without attribution',()=>{
+  const places={fraktur:'gebrochene-schriften',gedankenstrich:'details',modern:'word',plakat:'richtung',proportion:'komposition',bild:'bild-und-text',format:'bildschirmformate',hintergrund:'hintergrund',hero:'herobereiche',bewegung:'bewegte-grafik'};
+  assert.equal((html.match(/data-randstimme=/g)||[]).length,Object.keys(places).length);
   for(const [name,id]of Object.entries(places)){
     const tail=html.slice(html.indexOf('id="'+id+'"'));
     const chapter=tail.slice(0,tail.indexOf('<section class="chapter'));
-    const voice=chapter.match(new RegExp('<aside class="author-essay author-comment" data-randstimme="'+name+'"[\\s\\S]*?</aside>'))[0];
+    const voice=chapter.match(new RegExp('<aside class="author-essay author-comment"[^>]*data-randstimme="'+name+'"[\\s\\S]*?</aside>'))[0];
     assert.equal((voice.match(/aria-hidden="true">„<\/span>/g)||[]).length,1);
     assert.ok(!/Claus|Unterberg|Autorenkommentar|Meinung|“|”/.test(voice));
   }

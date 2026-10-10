@@ -51,7 +51,7 @@ test('letter forms, emphasis and font roles remain inside the characters part',(
   for(const phrase of ['einstöckige a','zweistöckige a','Für das g folgt daraus erst recht keine pauschale Rangliste.','Formprinzip allein','Nonverbal','Dateitechnik','Cardo Regular','Cardo Italic','Cardo Bold','Farbe kann zusätzliche Bedeutungen tragen'])assert.ok(html.includes(phrase),phrase);
   assert.ok(css.includes('.emphasis-comparison strong{font-weight:700}'));
   const statements=[...html.matchAll(/<aside class="author-essay author-comment[^\"]*"[\s\S]*?<\/aside>/g)].map(m=>m[0]);
-  assert.equal(statements.length,12);
+  assert.equal(statements.length,13);
   for(const statement of statements){assert.equal((statement.match(/aria-hidden="true">„<\/span>/g)||[]).length,1);assert.ok(!/Claus|Unterberg|Autorenkommentar|“|”/.test(statement));}
   assert.ok(html.includes('Geometrische Fonts für Fließtext zu verwenden ist genauso peinlich wie ein Text voller Rechtschreibfehler.'));
   assert.ok(html.includes('Kursiv und fett sind nicht einfach ästhetische Entscheidungen.'));
