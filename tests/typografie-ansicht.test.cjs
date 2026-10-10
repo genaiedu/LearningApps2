@@ -10,7 +10,7 @@ test('twenty chapter-specific local glyphs alternate cropped left and right',()=
   assert.ok(css.includes('left:var(--page-glyph-x,5%)'));assert.ok(css.includes('left:var(--page-glyph-x,95%)'));assert.ok(css.includes('overflow:hidden'));assert.ok(css.includes('pointer-events:none'));
 });
 test('appearance accepts only known settings and never needs storage or external files',()=>{
-  const positionDefaults={glyphPosition:'alternating',glyphInset:5,glyphHeight:34,sansFont:'sourcesans3',serifFont:'original'};
+  const positionDefaults={glyphPosition:'alternating',glyphInset:5,glyphHeight:34,sansFont:'firasans',serifFont:'original'};
   assert.deepEqual(A.settings(),{palette:'atelier',theme:'light',glyphs:true,...positionDefaults});assert.deepEqual(A.settings({palette:'slate',theme:'dark',glyphs:false}),{palette:'slate',theme:'dark',glyphs:false,...positionDefaults});
   assert.deepEqual(A.settings({palette:'url(evil)',theme:'url(evil)',glyphs:'false'}),A.settings());
   assert.deepEqual(A.settings(null),A.settings());assert.deepEqual(A.settings({palette:'constructor'}),A.settings());
@@ -30,7 +30,7 @@ test('reading fonts are independently selectable, validated and locally availabl
     assert.equal(settings.palette,'plum');assert.equal(settings.theme,'dark');
   }
   for(const bad of ['constructor','url(https://example.org/font)',null,{},[],true,23]){
-    assert.equal(A.settings({sansFont:bad}).sansFont,'sourcesans3');
+    assert.equal(A.settings({sansFont:bad}).sansFont,'firasans');
     assert.equal(A.settings({serifFont:bad}).serifFont,'original');
     assert.deepEqual(A.fontPair({sansFont:bad,serifFont:bad}),A.fontPair());
   }
@@ -52,6 +52,21 @@ test('reading fonts are independently selectable, validated and locally availabl
   assert.ok(css.includes('.author-comment h3'));
   const editorialSelector=css.match(/:is\(([^}]*?)\)\{font-family:var\(--editorial-serif/)?.[1];
   assert.ok(editorialSelector);assert.ok(!/\.cardo\b|\.ligature-proof\b|\.figure-proof\b|\.font-sample\b/.test(editorialSelector),'Named comparison samples keep their fonts');
+});
+test('Fira Sans is the initial reading font with explicit prose shaping and protected numeric specimens',()=>{
+  assert.equal(A.fontPair().sans.name,'Fira Sans');
+  assert.equal(A.fontPair().serif.name,'EB Garamond / Cardo');
+  assert.ok(read('styles/typografie-atelier.css').includes('--sans:"Fira Sans",Arial,sans-serif'));
+  assert.ok(html.includes('<body class="prose-typography">'));
+  assert.ok(html.includes('<option value="firasans">Fira Sans · Standard</option>'));
+  assert.ok(css.includes('font-variant-ligatures:common-ligatures'));
+  assert.ok(css.includes('font-variant-numeric:oldstyle-nums proportional-nums'));
+  assert.ok(css.includes('output,code,pre'));
+  assert.ok(css.includes('.figure-line,.origin-model,.origin-glyph'));
+  const audit=JSON.parse(read('data/typografie-fontaudit.json'));
+  for(const family of ['firasans','ebgaramond'])for(const file of audit.families.find(f=>f.id===family).files){
+    for(const feature of ['liga','onum','lnum','pnum','tnum'])assert.ok(file.features.includes(feature),file.path+' '+feature);
+  }
 });
 test('global glyph positions are bounded, mirror correctly and retain the chapter default',()=>{
   assert.deepEqual(A.positions.map(p=>p.id),['alternating','left','right','center']);assert.ok(Object.isFrozen(A.positions));

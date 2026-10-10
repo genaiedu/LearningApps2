@@ -48,6 +48,13 @@ html[data-palette] .editorial-sheet.paper{color:#202823}
 html[data-palette] .golden-diagram>div:first-child{color:#fffaf0}
 html[data-palette] .image-hero a:hover{color:#fffaf0}
 
+/* Explicit prose defaults also survive component font shorthands. Named glyph
+   specimens and intentional on/off/lining comparisons retain their own settings. */
+body.prose-typography{font-variant-ligatures:common-ligatures; font-variant-numeric:oldstyle-nums proportional-nums;font-kerning:normal}
+body.prose-typography main :is(p,li,figcaption):not(:where(.font-sample,.classification-sample,.character-pair,.ligature-proof,.ligature-typesample,.kerning-proof,.figure-line,.origin-model,.origin-glyph,.caps-proof,.script-proof)){
+  font-variant-ligatures:common-ligatures;font-variant-numeric:oldstyle-nums proportional-nums
+}
+body.prose-typography :is(button,input,select,textarea,output,code,pre,.feature-caption,.proof-label,.eyebrow,.section-label,.hero-meta,.appearance-font-sample){font-variant-numeric:lining-nums tabular-nums}
 /* Native dialog supplies keyboard focus containment and Escape-to-close. */
 #appearance-dialog{width:min(650px,calc(100% - 32px));max-width:none;max-height:calc(100dvh - 32px);padding:30px;border:1px solid var(--line);border-radius:12px;background:var(--white);color:var(--ink);box-shadow:0 24px 100px #0005;overflow:auto}
 #appearance-dialog::backdrop{background:#10191480;backdrop-filter:blur(3px)}

@@ -6,7 +6,7 @@
   <title>Typografie-Atelier · Ein interaktives Studienbuch über Schrift, Satz und Gestaltung</title>
   <link rel="preload" href="fonts/typografie/ebgaramond/EBGaramond[wght].woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles/typografie-fonts.css?v=20261010-fira">
-  <link rel="stylesheet" href="styles/typografie-atelier.css?v=20261010-fira">
+  <link rel="stylesheet" href="styles/typografie-atelier.css?v=20261011-prosa">
   <link rel="stylesheet" href="styles/typografie-schriftenraum.css?v=20261010-koordinaten">
   <link rel="stylesheet" href="styles/typografie-seite.css?v=20261010-aufrechte-diagonale">
   <link rel="stylesheet" href="styles/typografie-web-studies.css?v=20261010-aufrechte-diagonale">
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/typografie-formate.css?v=20261010-geraete">
   <link rel="stylesheet" href="styles/wikipedia-math.css">
   <link rel="stylesheet" href="styles/typografie-palettes.css?v=20261010-akzentfarben">
-  <link rel="stylesheet" href="styles/typografie-ansicht.css?v=20261010-leseschriften">
+  <link rel="stylesheet" href="styles/typografie-ansicht.css?v=20261011-prosa">
   <script defer src="../LearningApps/fonts/lucide.min.js"></script>
   <script src="scripts/typografie-math.js"></script>
   <script defer src="../LearningApps/fonts/tex-mml-chtml.js"></script>
@@ -41,7 +41,7 @@
   <script defer src="scripts/typografie-bewegung.js?v=20261010-lebendiges-studienbuch"></script>
   <script defer src="scripts/typografie-hintergrund-core.js?v=20261010-hintergrund"></script>
   <script defer src="scripts/typografie-hintergrund.js?v=20261010-randzeichen"></script>
-  <script defer src="scripts/typografie-ansicht-core.js?v=20261010-leseschriften"></script>
+  <script defer src="scripts/typografie-ansicht-core.js?v=20261011-prosa"></script>
   <script defer src="scripts/typografie-ansicht.js?v=20261010-leseschriften"></script>
   <script defer src="scripts/typografie-hero-core.js?v=20261010-morph-v3"></script>
   <script defer src="scripts/typografie-hero.js?v=20261010-morph-v3"></script>
@@ -50,7 +50,7 @@
   <script defer src="scripts/wikipedia-math.js"></script>
   <script defer src="scripts/schroedinger-wikipedia.js"></script>
 </head>
-<body>
+<body class="prose-typography">
 <a class="skip" href="#teil-zeichen">Zum Inhalt</a>
 <div class="reading-progress" aria-hidden="true"><i id="reading-progress"></i></div>
 <header class="masthead"><a class="brand" href="#start"><span aria-hidden="true">T<span class="brand-dot">.</span></span> TYPOGRAFIE<span>ATELIER</span></a><span class="masthead-note">Schrift sehen. Satz verstehen.</span><div class="appearance-tools" role="group" aria-label="Darstellung der Seite"><button id="theme-toggle" class="quiet" type="button" aria-haspopup="dialog" aria-controls="appearance-dialog" aria-expanded="false" title="Farbschema und Randzeichen wählen"><i data-lucide="palette" aria-hidden="true"></i><span>Darstellung</span></button><button id="page-glyph-toggle" class="quiet" type="button" aria-pressed="true" title="Dekorative Randzeichen ein- oder ausblenden"><i data-lucide="type" aria-hidden="true"></i><span>Randzeichen</span></button><button id="motion-toggle" class="quiet" type="button" aria-pressed="false" title="Zusätzliche Bewegung pausieren oder fortsetzen"><i data-lucide="pause" aria-hidden="true"></i><span>Animation pausieren</span></button></div></header>
@@ -948,7 +948,7 @@ Schriftwahl, Zeilenlänge und Abstand bilden ein System. Was für einen Buchtite
   <p id="appearance-help">Wähle die Leseschriften, positioniere die Randzeichen und vergleiche Farbschemata. Änderungen wirken sofort auf die Seite und ihre Gerätevorschau.</p>
   <fieldset class="appearance-position appearance-fonts"><legend>Schriften der Lesefläche</legend>
     <div class="appearance-font-grid">
-      <div><label for="appearance-sans">Serifenlose Schrift<select id="appearance-sans"><option value="sourcesans3">Source Sans 3 · bisher</option><option value="firasans">Fira Sans</option></select></label><p class="appearance-font-sample appearance-font-sans">Form für Gedanken.</p><span id="appearance-sans-name" class="small">Source Sans 3</span><button type="button" id="appearance-sans-reset">Sans Serif zurücksetzen ↺</button></div>
+      <div><label for="appearance-sans">Serifenlose Schrift<select id="appearance-sans"><option value="firasans">Fira Sans · Standard</option><option value="sourcesans3">Source Sans 3</option></select></label><p class="appearance-font-sample appearance-font-sans">Form für Gedanken.</p><span id="appearance-sans-name" class="small">Fira Sans</span><button type="button" id="appearance-sans-reset">Sans Serif zurücksetzen ↺</button></div>
       <div><label for="appearance-serif">Serifenschrift<select id="appearance-serif"><option value="original">EB Garamond / Cardo · bisher</option><option value="librebaskerville">Libre Baskerville</option></select></label><p class="appearance-font-sample appearance-font-serif">Form für Gedanken.</p><span id="appearance-serif-name" class="small">EB Garamond / Cardo</span><button type="button" id="appearance-serif-reset">Serifenschrift zurücksetzen ↺</button></div>
     </div>
     <p class="small">Beide Schriften sind unabhängig wählbar und lokal eingebunden. Lesetext, Navigation, allgemeine Überschriften und Randstimmen folgen deiner Wahl. Benannte Schriftproben, mathematische Schriften und feste Dokumentstudien behalten ihre jeweiligen Fonts; Papier- und Farbstudien behalten ihre eigenen Farben. Die Auswahl gilt bis zum Neuladen.</p>
