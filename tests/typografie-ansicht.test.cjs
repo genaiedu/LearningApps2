@@ -67,6 +67,20 @@ test('all eight versions maintain reading contrast on every reading surface and 
   assert.ok(css.includes('html[data-palette] :is(.poster'));assert.ok(css.includes('@media print{html[data-palette][data-theme]'));
   assert.ok(!/filter:\s*invert/.test(css));
 });
+test('reading accents have a distinct hue rather than disappearing into the base palette',()=>{
+  function hue(hex){
+    const [r,g,b]=hex.slice(1).match(/../g).map(v=>parseInt(v,16)/255),high=Math.max(r,g,b),low=Math.min(r,g,b),delta=high-low;
+    return {angle:delta===0?0:((high===r?(g-b)/delta:high===g?(b-r)/delta+2:(r-g)/delta+4)*60+360)%360,saturation:high===0?0:delta/high};
+  }
+  const difference=(a,b)=>Math.min(Math.abs(a-b),360-Math.abs(a-b));
+  for(const p of A.palettes.filter(p=>p.id!=='atelier'))for(const mode of ['light','dark']){
+    const t=p[mode],accent=hue(t.red),base=hue(t.ink);
+    assert.ok(accent.saturation>=.3,p.id+' '+mode+' uses a visibly colored accent');
+    if(p.id!=='graphite')assert.ok(difference(accent.angle,base.angle)>=120,p.id+' '+mode+' separates base and accent hues');
+    assert.equal(t['button-bg'],t.red,p.id+' '+mode+' applies the same accent to primary actions');
+  }
+  assert.equal(A.palettes.find(p=>p.id==='atelier').light.red,'#a83424');
+});
 test('appearance control opens an accessible selection dialog rather than blindly toggling darkness',()=>{
   for(const id of ['appearance-dialog','appearance-title','appearance-help','appearance-choices','appearance-current','appearance-close'])assert.ok(html.includes('id="'+id+'"'));
   assert.ok(html.includes('aria-haspopup="dialog" aria-controls="appearance-dialog" aria-expanded="false"'));
