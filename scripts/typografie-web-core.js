@@ -23,7 +23,7 @@
   function markup(id,options={}){
     const study=find(id),s=settings(options),mode=study.mode,infoID=String(options.uid||'wt').replace(/[^a-zA-Z0-9_-]/g,'')+'-info';
     let heading='<h2>Form gibt<br>Gedanken Raum.</h2>';
-    if(mode==='shear'||mode==='rotate')heading='<div class="wt-title-zone"><h2 class="wt-'+mode+'">Haltung.</h2><i class="wt-baseline" aria-hidden="true"></i></div>';
+    if(mode==='shear'||mode==='rotate')heading='<div class="wt-title-zone"><h2 class="wt-'+mode+'"><span class="wt-baseline-anchor" aria-hidden="true"></span>Haltung.</h2></div>';
     if(mode==='banner')heading='<h2>Mehr ist nicht<br>immer besser.</h2>';
     let body=passage;
     if(mode==='banner')body='<div class="wt-banner-zone"><p>Alles wird größer. Jeder Satz bekommt eine Farbe. Jede Zeile wird fett. Alles ruft gleichzeitig. Mehr ist immer besser. Wer übersehen wird, muss nur noch lauter werden.</p><div class="wt-banner">Lauter ist nicht klarer.</div></div><details class="wt-transcript"><summary>Den überdeckten Text vollständig lesen</summary><p>Alles wird größer. Jeder Satz bekommt eine Farbe. Jede Zeile wird fett. Alles ruft gleichzeitig. Mehr ist immer besser. Wer übersehen wird, muss nur noch lauter werden.</p></details>';
