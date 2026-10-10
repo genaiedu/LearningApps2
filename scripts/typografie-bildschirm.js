@@ -8,7 +8,7 @@
     const s=W.find(choice.value),options={size:$('web-size').value,leading:$('web-leading').value,measure:$('web-measure').value,angle:$('web-angle').value,space:$('web-spacing').checked,uid:'web-live'};
     $('web-study-proof').innerHTML=W.markup(s.id,options);$('web-study-proof').style.width=$('web-width').value+'px';
     for(const [id,value,suffix] of [['web-size-value',options.size,' px'],['web-leading-value',Number(options.leading).toFixed(2).replace('.',','),''],['web-measure-value',options.measure,' ch'],['web-angle-value',options.angle,'°']])$(id).textContent=value+suffix;
-    $('web-angle').disabled=!['shear','rotate'].includes(s.mode);
+    $('web-angle').disabled=!['shear','rotate','upright'].includes(s.mode);
     $('web-study-caption').textContent=s.note;$('web-study-download').href=base+s.id+'.html';
     $('web-study-download').download=s.id+'.html';updateWidth();
   }
