@@ -1,6 +1,27 @@
 /* Page studies are intentionally distinct from the calm explanatory text. */
 .page-chapter>p:not(.lead):not(.small):not(.source-note){max-width:83ch}
 .page-editorial h3,.page-editorial h4{font-size:25px;line-height:1.3}
+/* Keep the explanatory columns and the shared measurement note separate. */
+.page-color-reading{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(32px,5vw,64px);margin-block:50px 0;scroll-margin-top:100px}
+.page-color-reading article{min-width:0;border-top:1px solid var(--line);padding-top:24px}
+.page-color-reading h4{font:600 clamp(23px,2vw,27px)/1.3 var(--sans);min-block-size:2.6em;margin-bottom:22px;max-width:30ch;text-wrap:balance;hyphens:auto;overflow-wrap:break-word}
+.page-color-reading p{max-width:59ch;line-height:1.65;overflow-wrap:break-word}
+.page-color-standard{margin-top:42px;padding:clamp(24px,3vw,38px);border:1px solid var(--line);background:var(--white);font-family:var(--sans);scroll-margin-top:100px}
+.page-color-standard header{margin-bottom:26px}.page-color-standard .eyebrow{margin-bottom:10px}
+.page-color-standard h4{font:600 clamp(23px,2.4vw,30px)/1.3 var(--sans);max-width:34ch;text-wrap:balance;hyphens:auto;overflow-wrap:break-word}
+.page-color-standard-body{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:start}
+.page-color-standard-copy{min-width:0}.page-color-standard-copy p{max-width:61ch;line-height:1.65;overflow-wrap:break-word}
+.page-color-thresholds{min-width:0;margin:0;padding-left:28px;border-left:1px solid var(--line)}
+.page-color-thresholds>div+div{border-top:1px solid var(--line);margin-top:22px;padding-top:22px}
+.page-color-thresholds dt{font-size:17px;font-weight:600;line-height:1.4;margin-bottom:8px}
+.page-color-thresholds dd{margin:0;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.page-color-thresholds strong{font:600 36px/1.1 var(--sans);font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
+.page-color-thresholds dd span{font-size:15px;line-height:1.45;color:var(--muted)}
+.page-color-standard-sources{border-top:1px solid var(--line);padding-top:20px;margin-top:28px}
+.page-color-standard-sources .source-note{max-width:88ch;margin:0;overflow-wrap:break-word}.page-color-standard-sources .source-note+.source-note{margin-top:12px}
+@media(max-width:900px){.page-color-reading,.page-color-standard-body{grid-template-columns:1fr}.page-color-reading{gap:32px;margin-top:38px}.page-color-reading h4{min-block-size:0;max-width:34ch;margin-bottom:18px}.page-color-reading p,.page-color-standard-copy p{max-width:65ch}.page-color-thresholds{padding-left:0;padding-top:24px;border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}.page-color-thresholds>div+div{margin:0;padding:0;border-top:0}.page-color-standard-sources{margin-top:24px}}
+@media(max-width:450px){.page-color-standard{padding:22px 20px}.page-color-thresholds{grid-template-columns:1fr;gap:22px}.page-color-thresholds>div+div{padding-top:22px;border-top:1px solid var(--line)}}
+@media print{.page-color-reading{display:block}.page-color-reading article+article{margin-top:20pt}.page-color-reading h4{min-block-size:0}.page-color-standard{background:none;padding:16pt;margin-top:20pt}.page-color-standard h4{break-after:avoid}.page-color-thresholds>div{break-inside:avoid}}
 .page-pair{display:grid;grid-template-columns:1fr 1fr;gap:42px;margin:35px 0 45px}
 .page-live{margin:0;min-width:0}.page-live figcaption{font-size:17px;line-height:1.55;margin-top:22px;color:var(--muted)}
 .page-live figcaption h4{font:600 20px/1.3 var(--sans);color:var(--ink);margin-bottom:12px}

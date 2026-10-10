@@ -47,3 +47,17 @@ test('the page chapter documents sources and resettable semantic controls',()=>{
   for(const id of ['page-direction-reset','page-color-reset','page-composition-reset','page-study-dialog','page-grayscale','page-composition-guides'])assert.ok(h.includes('id="'+id+'"'));
   assert.ok(j.includes('ratio>=4.5'));assert.ok(!/Math\.round\(ratio|localStorage|fetch\(/.test(j));
 });
+test('color explanations and shared thresholds have distinct responsive reading areas',()=>{
+  const root=path.resolve(__dirname,'..'),h=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-seite.css'),'utf8');
+  const reading=h.slice(h.indexOf('id="farbkontrast-lesen"'),h.indexOf('id="kontrast-massstab"'));
+  assert.equal((reading.match(/<article /g)||[]).length,2);
+  assert.ok(!reading.includes('Die Messung in dieser Werkstatt'));
+  const note=h.slice(h.indexOf('id="kontrast-massstab"'),h.indexOf('<section class="chapter wrap page-chapter" id="komposition"'));
+  assert.equal((note.match(/<dt>/g)||[]).length,2);
+  for(const text of ['4,5:1','3:1','18 pt','14 pt fett','ungerundeten Wert','keine Drucknorm','keine vollständige Barrierefreiheitsprüfung','contrast-minimum.html','use-of-color.html'])assert.ok(note.includes(text),text);
+  assert.ok(!note.includes('author-comment'));
+  assert.ok(css.includes('.page-color-reading{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))'));
+  assert.ok(css.includes('@media(max-width:900px){.page-color-reading,.page-color-standard-body{grid-template-columns:1fr}'));
+  assert.ok(css.includes('@media(max-width:450px)'));
+  assert.ok(!/(?:^|[;{])(?:position:absolute|height:)/.test(css.slice(css.indexOf('/* Keep the explanatory'),css.indexOf('.page-pair{'))));
+});
