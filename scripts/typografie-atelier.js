@@ -5,6 +5,9 @@
   const on=(ids,fn,event='input')=>ids.forEach(id=>$(id).addEventListener(event,fn));
   const dec=(value,digits=2)=>Number(value).toLocaleString('de-DE',{minimumFractionDigits:digits,maximumFractionDigits:digits});
   const fonts=new Map();let catalogue,artAllowed=false,artEpoch=0,artImage=null;
+  const initialHash=location.hash;let initialAnchorCancelled=false;
+  for(const event of ['wheel','touchstart','pointerdown','keydown'])addEventListener(event,()=>{initialAnchorCancelled=true;},{once:true,passive:true});
+  addEventListener('hashchange',()=>{initialAnchorCancelled=true;},{once:true});
   function icons(){window.lucide?.createIcons({attrs:{'aria-hidden':'true','focusable':'false'}});}
   icons();
 
@@ -15,11 +18,18 @@
   $('motion-toggle').onclick=()=>{paused=!paused;motion();};reduced.addEventListener('change',e=>{paused=e.matches;motion();});motion();
   setInterval(()=>{if(paused||document.hidden)return;heroIndex=(heroIndex+1)%heroFamilies.length;const name=heroFamilies[heroIndex];$('hero-letter').style.fontFamily='"'+name+'"';$('hero-font').textContent=name;},6000);
   let scheduled=false;
-  function scrollProgress(){const total=document.documentElement.scrollHeight-innerHeight;$('reading-progress').style.width=(total>0?scrollY/total*100:0)+'%';scheduled=false;}
-  addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(scrollProgress);}},{passive:true});scrollProgress();
+  function scrollProgress(){const total=document.documentElement.scrollHeight-innerHeight;$('reading-progress').style.width=(total>0?scrollY/total*100:0)+'%';updatePartNavigation();scheduled=false;}
+  addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(scrollProgress);}},{passive:true});
   const navLinks=[...document.querySelectorAll('.chapter-nav a')];
-  const navObserver=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting)navLinks.forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id));},{rootMargin:'-15% 0px -70% 0px'});
-  navLinks.forEach(a=>navObserver.observe(document.querySelector(a.hash)));
+  const partRegions=[...document.querySelectorAll('.atelier-part')];
+  function updatePartNavigation(){
+    let active=partRegions[0];
+    for(const part of partRegions)if(part.getBoundingClientRect().top<=140)active=part;
+    for(const link of navLinks){const selected=link.dataset.partLink===active?.dataset.part;link.classList.toggle('active',selected);if(selected)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');}
+  }
+  addEventListener('resize',scrollProgress,{passive:true});
+  if(window.ResizeObserver)new ResizeObserver(scrollProgress).observe(document.body);
+  scrollProgress();
 
   function connection(remote){$('connection-diagram').classList.toggle('remote',remote);$('connection-local').setAttribute('aria-pressed',String(!remote));$('connection-remote').setAttribute('aria-pressed',String(remote));$('connection-explanation').textContent=remote?'Die Webseite lädt zusätzliche Schriftdateien beim Fontdienst. Dorthin gelangen IP-Adresse und technische Verbindungsdaten.':'HTML und Schriftdateien kommen vom eigenen Webangebot. Keine zusätzliche Fontverbindung zu Google.';}
   $('connection-local').onclick=()=>connection(false);$('connection-remote').onclick=()=>connection(true);
@@ -59,7 +69,7 @@
       card.append(info);$('font-grid').append(card);
     }
   }
-  on(['font-search','font-group'],renderFonts);$('specimen-input').oninput=()=>document.querySelectorAll('.font-sample').forEach(p=>p.textContent=$('specimen-input').value||'Lesen heißt weiterdenken.');loadFonts();
+  on(['font-search','font-group'],renderFonts);$('specimen-input').oninput=()=>document.querySelectorAll('.font-sample').forEach(p=>p.textContent=$('specimen-input').value||'Lesen heißt weiterdenken.');const fontsReady=loadFonts();
 
   const originalProof=[...$('text-proof').querySelectorAll('p')].map(p=>p.textContent);
   const breaks={'Weiterdenken':'Wei\u00adter\u00adden\u00adken','Aufmerksamkeit':'Auf\u00admerk\u00adsam\u00adkeit','Verantwortung':'Ver\u00adant\u00adwor\u00adtung','Gestaltung':'Ge\u00adstal\u00adtung','Zusammenspiel':'Zu\u00adsam\u00admen\u00adspiel','Zeilenabstand':'Zei\u00adlen\u00adab\u00adstand','Wortabständen':'Wort\u00adab\u00adstän\u00adden','Absatzanfängen':'Ab\u00adsatz\u00adan\u00adfän\u00adgen','Entscheidungen':'Ent\u00adschei\u00addun\u00adgen'};
@@ -110,8 +120,8 @@
     finally{if(epoch===artEpoch){$('art-load').disabled=false;$('art-load').textContent='Anderes Kunstbild auswählen';}}
   }
   $('art-load').onclick=loadArt;$('art-remove').onclick=()=>{artAllowed=false;artEpoch++;if(artImage)artImage.removeAttribute('src');$('art-background').replaceChildren();$('art-credit').textContent='Bildfreigabe zurückgenommen.';$('art-remove').hidden=true;$('art-load').disabled=false;$('art-load').textContent='Ein Kunstbild aus unserem Archiv laden';};
-  function updateIcons(){const size=$('icon-size').value,stroke=+$('icon-stroke').value/100;$('icon-size-value').textContent=size+' px';$('icon-stroke-value').textContent=dec(stroke);$('icon-gallery').querySelectorAll('svg').forEach(s=>{s.style.width=size+'px';s.style.height=size+'px';s.style.strokeWidth=stroke;});}
-  on(['icon-size','icon-stroke'],updateIcons);updateIcons();
+  function updateIcons(){const size=$('icon-size').value,stroke=+$('icon-stroke').value/100,color=$('icon-color').value;$('icon-size-value').textContent=size+' px';$('icon-stroke-value').textContent=dec(stroke);document.querySelectorAll('#icon-gallery svg,.icon-adjustable svg').forEach(s=>{s.style.width=size+'px';s.style.height=size+'px';s.style.strokeWidth=stroke;s.style.color=color;});$('icon-text-lab').style.fontFamily='"'+$('icon-font').value+'"';}
+  on(['icon-size','icon-stroke','icon-color','icon-font'],updateIcons);updateIcons();
   const mathExamples={fraction:['x_{1,2}=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}','Zähler und Nenner stehen übereinander; die Wurzel umfasst den gesamten Ausdruck.'],integral:['\\int_0^1 x^2\\,\\mathrm{d}x=\\frac{1}{3}','Grenzen gehören zum Integral. Hier steht das Differential d bewusst aufrecht.'],units:['v=3{,}2\\,\\mathrm{m\\,s^{-1}},\\qquad \\sin(\\alpha)=\\frac{a}{c}','Variable v und Winkel α sind kursiv; Einheit und Funktionsname sin stehen aufrecht.'],matrix:['A=\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}','Die Klammern passen zur zweizeiligen Matrix. Ein normaler Klammerbuchstabe reicht dafür nicht.']};
   let mathQueue=Promise.resolve(),mathEpoch=0;
   function updateMath(){const epoch=++mathEpoch,example=mathExamples[$('math-example').value];mathQueue=mathQueue.then(async()=>{try{if(!window.MathJax?.startup?.promise)throw Error();await window.MathJax.startup.promise;if(epoch!==mathEpoch)return;window.MathJax.typesetClear?.([$('math-demo')]);$('math-demo').textContent='\\['+example[0]+'\\]';$('math-code').textContent=example[0];$('math-description').textContent=example[1];await window.MathJax.typesetPromise([$('math-demo')]);if(epoch===mathEpoch)$('math-status').textContent='MathJax und mathematische Schriftdateien werden lokal geladen.';}catch(_){$('math-status').textContent='Formelsatz gerade nicht verfügbar. Der TeX-Code bleibt lesbar.';}});}
@@ -155,4 +165,12 @@
   function startQuiz(){round=C.shuffle(questions).slice(0,6);questionIndex=0;score=0;showQuestion();}
   function showQuestion(){answered=false;$('quiz-next').hidden=true;$('quiz-feedback').textContent='';$('quiz-progress').textContent='Fall '+(questionIndex+1)+' von 6 · '+score+' begründet richtig';const q=round[questionIndex];$('quiz-question').textContent=q[0];$('quiz-options').replaceChildren();C.shuffle(q[1].map((text,i)=>({text,right:i===0}))).forEach(option=>{const button=node('button',null,option.text);button.onclick=()=>{if(answered)return;answered=true;if(option.right)score++;$('quiz-options').querySelectorAll('button').forEach(b=>b.disabled=true);button.classList.add(option.right?'correct':'incorrect');button.textContent=(option.right?'✓ ':'✕ ')+option.text;$('quiz-feedback').textContent=(option.right?'Richtig. ':'Hier passt: '+q[1][0]+' ')+q[2];$('quiz-next').hidden=false;$('quiz-next').textContent=questionIndex<5?'Zum nächsten Fall →':'Runde abschließen →';};$('quiz-options').append(button);});}
   $('quiz-reset').onclick=startQuiz;$('quiz-next').onclick=()=>{if(!answered)return;if(questionIndex<5){questionIndex++;showQuestion();}else{$('quiz-progress').textContent='Runde abgeschlossen';$('quiz-question').textContent=score+' von 6 Entscheidungen richtig begründet.';$('quiz-options').replaceChildren();$('quiz-feedback').textContent='Entscheidend sind die Gründe. Probiere passende Gegenbeispiele in den Werkstätten aus oder beginne eine neue Runde.';$('quiz-next').hidden=true;}};startQuiz();
+  // The font archive grows after loading. Keep an initial chapter link on target,
+  // but never take the reader back after they have interacted or navigated.
+  Promise.allSettled([fontsReady,mathQueue]).then(()=>document.fonts?.ready).then(()=>{
+    requestAnimationFrame(()=>{
+      if(initialHash&&!initialAnchorCancelled&&location.hash===initialHash){let target;try{target=document.getElementById(decodeURIComponent(initialHash.slice(1)));}catch(_){}target?.scrollIntoView({block:'start',behavior:'instant'});}
+      scrollProgress();
+    });
+  });
 })();

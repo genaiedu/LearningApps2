@@ -42,3 +42,48 @@ test('Word guidance distinguishes syllables from word parts and links all deskto
   assert.ok(html.includes(data.desktopCollection));
   for(const font of data.families){assert.ok(font.desktop);assert.ok(html.includes(font.desktop));}
 });
+
+test('three parts keep characters, print and screen in a continuous reading order',()=>{
+  const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8');
+  const parts=[...html.matchAll(/<div class="atelier-part" data-part="([^"]+)">([\s\S]*?)(?=<div class="atelier-part"|<section class="chapter wrap" id="entscheidungen")/g)];
+  assert.deepEqual(parts.map(p=>p[1]),['zeichen','papier','bildschirm']);
+  assert.deepEqual([...parts[0][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['schriftformen','details','lucide','mathematiksatz','beginn','lokal','katalog','schrift-downloads']);
+  assert.deepEqual([...parts[1][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['tschichold','haltung','satzlabor','buchsatz','word','latex','texatelier']);
+  assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['farbe']);
+  assert.equal((html.match(/data-part-link=/g)||[]).length,3);
+  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length);
+  for(const [,hash] of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(hash),hash);
+});
+
+test('approved margin voice is anonymous, serif, with one lowered opening quote',()=>{
+  const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.resolve(__dirname,'../styles/typografie-atelier.css'),'utf8');
+  const comment=html.match(/<aside class="author-essay author-comment"[\s\S]*?<\/aside>/)[0];
+  assert.ok(html.includes('class="margin-conversation"'));
+  assert.equal((comment.match(/class="comment-opening"/g)||[]).length,1);
+  assert.ok(comment.includes('aria-hidden="true">„</span>'));
+  assert.ok(!/Claus|Unterberg|Meinung|Autorenkommentar|comment-signature|“|”/.test(comment));
+  assert.ok(css.includes('font:400 22px/1.48 Cardo,Georgia,serif'));
+  assert.ok(css.includes('left:10px;top:-68px;font:400 136px/1 Cardo'));
+});
+
+test('part navigation stays active deep inside a part and has one current location',()=>{
+  const source=fs.readFileSync(path.resolve(__dirname,'../scripts/typografie-atelier.js'),'utf8');
+  const code=source.slice(source.indexOf('  function updatePartNavigation(){'),source.indexOf("  addEventListener('resize'"));
+  const regions=['zeichen','papier','bildschirm'].map((part,i)=>({dataset:{part},top:[-1200,2000,6000][i],getBoundingClientRect(){return {top:this.top};}}));
+  const links=regions.map(r=>({dataset:{partLink:r.dataset.part},active:false,current:null,classList:{toggle(name,force){links.find(l=>l.classList===this).active=force;}},setAttribute(n,v){this.current=v;},removeAttribute(){this.current=null;}}));
+  const context={partRegions:regions,navLinks:links};vm.runInNewContext(code,context);
+  for(const [expected,positions] of [[0,[-200,2000,6000]],[1,[-9000,-600,3000]],[2,[-15000,-9000,-300]]]){
+    positions.forEach((v,i)=>regions[i].top=v);context.updatePartNavigation();
+    assert.equal(links.filter(l=>l.active).length,1);
+    links.forEach((l,i)=>{assert.equal(l.active,i===expected);assert.equal(l.current,i===expected?'location':null);});
+  }
+});
+
+test('Lucide comparison shows emoji, integrated and emphasized variants and adjustable appearance',()=>{
+  const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8'),source=fs.readFileSync(path.resolve(__dirname,'../scripts/typografie-atelier.js'),'utf8');
+  for(const id of ['icon-color','icon-font','icon-text-lab'])assert.ok(html.includes('id="'+id+'"'));
+  for(const cls of ['emoji-example','icon-adjustable','icon-emphasis'])assert.ok(html.includes(cls));
+  assert.ok(html.includes('SVG-Symbolen allgemein'));
+  assert.ok(source.includes("on(['icon-size','icon-stroke','icon-color','icon-font'],updateIcons)"));
+  assert.ok(source.includes('s.style.color=color'));
+});
