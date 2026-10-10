@@ -129,11 +129,30 @@ test('three parts keep characters, print and screen in a continuous reading orde
   const parts=[...html.matchAll(/<div class="atelier-part" data-part="([^"]+)">([\s\S]*?)(?=<div class="atelier-part"|<section class="chapter wrap" id="entscheidungen")/g)];
   assert.deepEqual(parts.map(p=>p[1]),['zeichen','papier','bildschirm']);
   assert.deepEqual([...parts[0][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['schriftformen','details','lucide','mathematiksatz','beginn','lokal','katalog','schrift-downloads']);
-  assert.deepEqual([...parts[1][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['tschichold','haltung','satzlabor','buchsatz','richtung','druckfarbe','komposition','seitenstudien','word','latex','texatelier']);
+  assert.deepEqual([...parts[1][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['tschichold','haltung','satzlabor','buchsatz','word','richtung','druckfarbe','komposition','seitenstudien','latex','texatelier']);
   assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['webtext','webrichtung','farbe','weblayout','webwerkstatt','webstudien']);
   assert.equal((html.match(/data-part-link=/g)||[]).length,3);
   const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length);
   for(const [,hash] of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(hash),hash);
+});
+
+test('Word templates conclude the continuous Tschichold section and match the part navigation',()=>{
+  const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8');
+  const paper=html.match(/<div class="atelier-part" data-part="papier">([\s\S]*?)(?=<div class="atelier-part" data-part="bildschirm">)/)[1];
+  const sections=[...paper.matchAll(/<section[^>]*id="([^"]+)"[^>]*>\s*(?:<div class="wrap">\s*)?<div class="section-label">II\.(\d+)/g)];
+  const navigation=paper.match(/<nav class="part-contents"[\s\S]*?<\/nav>/)[0];
+  const links=[...navigation.matchAll(/href="#([^"]+)">II\.(\d+)/g)];
+  assert.deepEqual(links.map(m=>[m[1],m[2]]),sections.map(m=>[m[1],m[2]]));
+  assert.deepEqual(sections.map(m=>Number(m[2])),Array.from({length:11},(_,i)=>i+1));
+  assert.match(paper,/<\/section>\s*<section class="chapter wrap" id="word">/);
+  const word=paper.match(/<section class="chapter wrap" id="word">([\s\S]*?)<\/section>/)[1];
+  assert.ok(paper.indexOf('id="buchsatz"')<paper.indexOf('id="word"'));
+  assert.ok(paper.indexOf('id="word"')<paper.indexOf('id="richtung"'));
+  assert.ok(word.includes('Tschicholds Sorgfalt in der Praxis'));
+  assert.ok(word.includes('kein vermeintliches Tschichold-Zitat'));
+  const downloads=[...word.matchAll(/href="(downloads\/typografie\/[^\"]+\.docx)"/g)].map(m=>m[1]);
+  assert.equal(downloads.length,8);assert.equal(new Set(downloads).size,8);
+  for(const file of downloads)assert.ok(fs.existsSync(path.resolve(__dirname,'..',file)),file);
 });
 
 test('approved margin voice is anonymous, serif, with one lowered opening quote',()=>{
