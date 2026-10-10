@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-10",
+  "checked": "2026-10-11",
   "method": "Konturen aus lokalen WOFF2-Dateien; Regular / Gewicht 400, weitere variable Achsen auf Standardwert. Grundlinie = Fontkoordinate 0; Höhenmarken = Konturgrenzen der jeweils genannten Zeichen. Keine Fontdatei verändert.",
   "families": [
     {
@@ -2757,6 +2757,267 @@
           ],
           "advance": 692,
           "path": "M637 344Q637 232 600.5 152.0Q564 72 498.5 30.0Q433 -12 346 -12Q259 -12 193.5 29.0Q128 70 91.5 150.0Q55 230 55 343Q55 454 91.5 535.0Q128 616 194.0 658.5Q260 701 346 701Q433 701 498.5 659.5Q564 618 600.5 538.0Q637 458 637 344ZM156 343Q156 200 206.5 133.0Q257 66 346 66Q536 66 536 344Q536 623 346 623Q256 623 206.0 555.0Q156 487 156 343Z"
+        }
+      }
+    },
+    {
+      "id": "unifrakturmaguntia",
+      "name": "UnifrakturMaguntia",
+      "source": "fonts/typografie/unifrakturmaguntia/UnifrakturMaguntia-Book.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/unifrakturmaguntia/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/unifrakturmaguntia",
+      "copyright": "Copyright (c) 2010 j. 'mach' wust with Reserved Font Name UnifrakturMaguntia.\nCopyright (c) 2009 Peter Wiegel.\n\nThis Font Software is licensed under the SIL Open Font License, Version 1.1.",
+      "sha256": "95f6781ae12058ffb3fef128470c95ac7e542c52bdde15bea6b8f6f082bb650c",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            52.7869822485207,
+            -46.5,
+            897.377358490566,
+            1037.0166666666667
+          ],
+          "advance": 943
+        },
+        "b": {
+          "bounds": [
+            50.56603773584906,
+            -49.5,
+            866.520325203252,
+            1411.05
+          ],
+          "advance": 910
+        },
+        "g": {
+          "bounds": [
+            56.20740740740741,
+            -410.4340659340659,
+            851.6798336798337,
+            1047.0166666666667
+          ],
+          "advance": 952
+        },
+        "p": {
+          "bounds": [
+            7,
+            -406.51724137931035,
+            880.4306569343066,
+            1212.2372881355932
+          ],
+          "advance": 923
+        },
+        "x": {
+          "bounds": [
+            66.82978723404256,
+            -384.57101449275365,
+            764.2727272727273,
+            1065.3673469387754
+          ],
+          "advance": 807
+        },
+        "H": {
+          "bounds": [
+            30.964285714285715,
+            -275.3333333333333,
+            1452.8852459016393,
+            1468.1614906832299
+          ],
+          "advance": 1503
+        },
+        "o": {
+          "bounds": [
+            -0.5135135135135158,
+            -30.5,
+            797.2405063291139,
+            1047.5714285714287
+          ],
+          "advance": 847
+        },
+        "O": {
+          "bounds": [
+            50.49090909090909,
+            -19.605714285714285,
+            1467.792531120332,
+            1467.1
+          ],
+          "advance": 1544
+        }
+      }
+    },
+    {
+      "id": "pirataone",
+      "name": "Pirata One",
+      "source": "fonts/typografie/pirataone/PirataOne-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/pirataone/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/pirataone",
+      "copyright": "Copyright (c) 2012, Rodrigo Fuenzalida, Nicolas Massi (www.taip.com.ar / abc.taip.com.ar), with Reserved Font Name 'Pirata'",
+      "sha256": "78f535909ef8e58d4c87d4f7dfa5ac923c441f0c44609428bd6d2162fe468915",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            30,
+            0,
+            409,
+            570
+          ],
+          "advance": 410
+        },
+        "b": {
+          "bounds": [
+            10,
+            0.0,
+            381,
+            769
+          ],
+          "advance": 430
+        },
+        "g": {
+          "bounds": [
+            50,
+            -180,
+            381,
+            570.0
+          ],
+          "advance": 431
+        },
+        "p": {
+          "bounds": [
+            2,
+            -178,
+            381,
+            569
+          ],
+          "advance": 430
+        },
+        "x": {
+          "bounds": [
+            12,
+            0,
+            440,
+            571
+          ],
+          "advance": 436
+        },
+        "H": {
+          "bounds": [
+            -10,
+            -32,
+            440,
+            771
+          ],
+          "advance": 430
+        },
+        "o": {
+          "bounds": [
+            50,
+            0.0,
+            381,
+            570.0
+          ],
+          "advance": 431
+        },
+        "O": {
+          "bounds": [
+            50,
+            0.0,
+            381,
+            770.0
+          ],
+          "advance": 431
+        }
+      }
+    },
+    {
+      "id": "texturina",
+      "name": "Texturina",
+      "source": "fonts/typografie/texturina/Texturina[opsz,wght].woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/texturina/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/texturina",
+      "copyright": "Copyright 2020 The Texturina Project Authors (https://github.com/Omnibus-Type/Texturina)",
+      "sha256": "81cd90f1f54ec83d6c45c15bd1362a02921cd73b5033c837bfbab649d1354902",
+      "unitsPerEm": 1000,
+      "axes": {
+        "wght": 400,
+        "opsz": 12.0
+      },
+      "glyphs": {
+        "a": {
+          "bounds": [
+            56.500244140625,
+            -4,
+            513.044677734375,
+            500
+          ],
+          "advance": 536.81787109375
+        },
+        "b": {
+          "bounds": [
+            11.09130859375,
+            0,
+            517.36279296875,
+            800
+          ],
+          "advance": 571.408447265625
+        },
+        "g": {
+          "bounds": [
+            33,
+            -200,
+            506.499267578125,
+            547.318115234375
+          ],
+          "advance": 512.09033203125
+        },
+        "p": {
+          "bounds": [
+            25.591552734375,
+            -200,
+            517.590576171875,
+            500
+          ],
+          "advance": 570.0908203125
+        },
+        "x": {
+          "bounds": [
+            21.7275390625,
+            0,
+            493.4541015625,
+            500
+          ],
+          "advance": 515.408935546875
+        },
+        "H": {
+          "bounds": [
+            52.772705078125,
+            0,
+            750.951904296875,
+            704
+          ],
+          "advance": 803.497314453125
+        },
+        "o": {
+          "bounds": [
+            54.045654296875,
+            0,
+            482.135986328125,
+            500
+          ],
+          "advance": 536.181640625
+        },
+        "O": {
+          "bounds": [
+            66.408935546875,
+            0,
+            677.54345703125,
+            720
+          ],
+          "advance": 743.952392578125
         }
       }
     }

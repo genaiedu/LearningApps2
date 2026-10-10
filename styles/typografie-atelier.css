@@ -204,6 +204,29 @@ dialog{padding:35px;border:1px solid var(--line);border-radius:10px;color:var(--
 .glossary-index{display:flex;flex-wrap:wrap;gap:12px 26px;padding:17px 0;border-block:1px solid var(--line);margin:22px 0 40px}
 .glossary-index a{font-weight:600;color:var(--red)}
 .glossary-group{margin-bottom:50px;scroll-margin-top:110px}.glossary-group h3{font-size:25px;color:var(--red);margin-bottom:20px}
+.blackletter-introduction{margin-bottom:25px}
+.blackletter-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin:35px 0 28px}
+.blackletter-grid>article{min-width:0;padding:26px 24px;border:1px solid var(--line);background:var(--white);display:flex;flex-direction:column;align-items:start}
+.blackletter-grid h4{margin-top:12px;font-size:23px;overflow-wrap:anywhere}
+.blackletter-grid>article>p:not(.blackletter-glyphs):not(.blackletter-phrase){font-size:17px}
+.blackletter-grid>article>a{margin-top:auto;padding-top:12px}
+.blackletter-glyphs{font-size:110px;line-height:1.2;margin:12px 0 16px}
+.blackletter-phrase{font-size:36px;line-height:1.35;margin:0 0 24px}
+.blackletter-fraktur{font-family:'UnifrakturMaguntia',serif}.blackletter-pirata{font-family:'Pirata One',serif}.blackletter-texturina{font-family:'Texturina',serif;font-optical-sizing:auto}
+.blackletter-fraktur,.blackletter-pirata,.blackletter-texturina{font-weight:400;font-style:normal;font-synthesis:none;font-variant-ligatures:common-ligatures;font-variant-numeric:normal;font-feature-settings:'liga' 1,'clig' 1;letter-spacing:0}
+.blackletter-origin-note{margin:35px 0;border-left:3px solid var(--red)}
+.blackletter-origin-note .two-col{align-items:start}
+.blackletter-origin-probes>div{padding:15px 0;border-bottom:1px solid var(--line)}
+.blackletter-origin-probes>div p{font-size:72px;line-height:1.2;margin:5px 0 10px}
+.blackletter-antiqua{font:400 72px/1.2 'EB Garamond',serif;font-synthesis:none}
+.blackletter-s-study{margin:45px 0 35px;align-items:start;scroll-margin-top:110px}
+.blackletter-s-study figure{margin:0;min-width:0}.blackletter-s-study figcaption{font-size:16px;font-weight:500}
+.blackletter-s-letters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0 30px}
+.blackletter-s-letters>div{text-align:center}.blackletter-s-letters span{display:block;font-size:110px;line-height:1.2}.blackletter-s-letters small{font-size:15px}
+.blackletter-s-words{font-size:42px;line-height:1.5;margin:0 0 20px}
+@media(max-width:1000px){.blackletter-grid{grid-template-columns:1fr;gap:22px}.blackletter-grid>article{padding:26px;display:block}.blackletter-grid h4{overflow-wrap:normal}.blackletter-glyphs{font-size:100px}.blackletter-grid>article>p:not(.blackletter-glyphs):not(.blackletter-phrase){max-width:65ch}}
+@media(max-width:760px){.blackletter-s-study{grid-template-columns:1fr}.blackletter-grid>article{padding:22px}.blackletter-s-letters span{font-size:86px}.blackletter-s-words{font-size:34px}.blackletter-phrase{font-size:32px}}
+@media print{.blackletter-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10pt}.blackletter-grid>article{padding:8pt;break-inside:avoid}.blackletter-grid h4{font-size:12pt}.blackletter-glyphs{font-size:50pt}.blackletter-phrase{font-size:18pt}.blackletter-grid>article>p:not(.blackletter-glyphs):not(.blackletter-phrase){font-size:9pt}.blackletter-s-study{grid-template-columns:1fr 1fr;break-inside:avoid}}
 .glossary-list{margin:0}.glossary-list>div{display:grid;grid-template-columns:minmax(180px,.32fr) minmax(0,1fr);gap:30px;padding:19px 0;border-top:1px solid var(--line);scroll-margin-top:110px}
 .glossary-list dt{font-weight:600;line-height:1.4}.glossary-list dd{margin:0;max-width:760px;line-height:1.6}
 .glossary-list dd a{white-space:normal}.glossary-back{display:inline-block;margin-top:20px;font-weight:550}

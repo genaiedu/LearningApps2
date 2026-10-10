@@ -93,7 +93,7 @@
   }
   async function init(){
     try{
-      const response=await fetch('data/typografie-anatomy.json?v=20261010-fira',{credentials:'omit'});
+      const response=await fetch('data/typografie-anatomy.json?v=20261011-gebrochene-schriften',{credentials:'omit'});
       if(!response.ok)throw Error('metrics unavailable');
       families=(await response.json()).families;
       $('anatomy-font').addEventListener('change',updateAnatomy);

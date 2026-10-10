@@ -34,7 +34,10 @@
     limelight:[['Source Sans 3','Art-déco-Titel und ruhiger Lesetext'],['Inter','Kurzer Displayakzent und sachliche Informationen']],
     podkova:[['Source Sans 3','Kantiger Slab-Titel und offene Erklärung'],['Inter','Markanter Slab-Akzent und zurückhaltende Beschriftung']],
     abel:[['EB Garamond','Schmaler Sans-Titel und ruhiger Antiqua-Lesetext'],['Source Sans 3','Schmale Kurzbeschriftung, normalbreiter Erklärtext']],
-    firasans:[['EB Garamond','Fira Sans für Orientierung, Garamond für literarische Passagen'],['Libre Baskerville','Humanistische Sans für Hinweise neben einem ruhigen Antiqua-Lesetext']]
+    firasans:[['EB Garamond','Fira Sans für Orientierung, Garamond für literarische Passagen'],['Libre Baskerville','Humanistische Sans für Hinweise neben einem ruhigen Antiqua-Lesetext']],
+    unifrakturmaguntia:[['Fira Sans','Historisch geprägter Frakturtitel, vertraute Sans für Erläuterungen'],['EB Garamond','Kurzer Frakturakzent, Antiqua für längere Lesepassagen']],
+    pirataone:[['Fira Sans','Markanter Texturatitel, klare Sans für sachliche Informationen'],['Source Sans 3','Kurzer gebrochener Titel, humanistische Sans für den Begleittext']],
+    texturina:[['Fira Sans','Charaktervolle Mischform für Titel, ruhige Sans für den Lesetext'],['Inter','Texturina für erzählende Akzente, Inter für Daten und Navigation']]
   };
   function checks(font,audit){
     const total=audit.files.length, present=Object.keys(labels).filter(k=>audit.cuts[k]),missing=Object.keys(labels).filter(k=>!audit.cuts[k]);
@@ -50,6 +53,7 @@
       {heading:'2 · Wie vollständig ist der Entwurf hier?',items:[
         {state:audit.germanMissing?'warning':'pass',label:'Deutsche Basiszeichen',text:audit.germanMissing?'Warnung: Nicht in allen eingebundenen Dateien vorhanden: '+audit.germanMissing+'.':'Ä Ö Ü ä ö ü ß in allen '+total+' Archiv-Webdatei(en) nachgewiesen.'},
         {state:audit.optionalMissing?'partial':'pass',label:'Weitere deutsche Textzeichen',text:audit.optionalMissing?'Nicht durchgehend abgedeckt: '+audit.optionalMissing+'. Das große ẞ ist ein anderer Codepunkt als ß; andere Sprachen und Fachzeichen bitte gesondert prüfen.':'ẞ, €, deutsche Anführungszeichen und Gedankenstrich in allen Archivdateien vorhanden. Andere Sprachen und Fachzeichen bitte gesondert prüfen.'},
+        ...(font.group==='blackletter'?[{state:audit.files.every(r=>r.longSPresent)?'pass':'partial',label:'Langes ſ für historischen Satz',text:audit.files.every(r=>r.longSPresent)?'U+017F in allen lokalen Dateien vorhanden. Die richtige Verwendung nach Wortstruktur muss trotzdem geprüft werden.':'Das lange ſ fehlt in mindestens einer lokalen Datei. Für historischen Fraktursatz ungeeignet; keine Ersatzschrift als echte Schriftprobe ausgeben. Moderne Texte mit rundem s bleiben möglich.'}]:[]),
         {state:missing.length?'partial':'pass',label:'Basisschnitte',text:'Vorhanden: '+present.map(k=>labels[k]).join(', ')+'.'+(missing.length?' Nicht eingebunden: '+missing.map(k=>labels[k]).join(', ')+'. Kein Urteil über das vollständige Google-Fonts-Angebot.':' Alle vier Grundauszeichnungen sind echt verfügbar.')},
         {state:alternatives?'pass':'absent',label:'Alternative Zeichenformen',text:alternatives?alternatives+' von '+total+' Dateien enthalten passende OpenType-Tags. Verfügbarkeit am konkreten Zeichen prüfen.':'Keine entsprechenden OpenType-Tags im geprüften Bestand nachgewiesen.'},
         {state:ligatures?'pass':'absent',label:'Standardligaturen',text:ligatures?ligatures+' von '+total+' Dateien mit liga oder clig. Welche Paare sich verbinden, hängt auch von Sprache und Schnitt ab.':'Keine liga-/clig-Funktion in den geprüften Dateien nachgewiesen.'},

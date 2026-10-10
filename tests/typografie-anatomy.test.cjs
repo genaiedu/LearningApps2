@@ -2,8 +2,8 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const A=require('../scripts/typografie-anatomy.js');
 const root=path.resolve(__dirname,'..'),data=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-anatomy.json')));
 const illustrated=data.families.filter(f=>f.glyphs.x.path);
-test('all 31 measurements refer to the exact existing local webfonts',()=>{
-  assert.equal(data.families.length,31);assert.equal(illustrated.length,10);
+test('all 34 measurements refer to the exact existing local webfonts',()=>{
+  assert.equal(data.families.length,34);assert.equal(illustrated.length,10);
   for(const f of data.families){
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.resolve(root,f.source))).digest('hex'),f.sha256);
     assert.equal(f.license,f.id==='robotoslab'?'Apache 2.0':'SIL OFL 1.1');assert.ok(fs.existsSync(path.resolve(root,f.licensePath)));

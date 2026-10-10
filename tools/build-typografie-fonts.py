@@ -44,10 +44,14 @@ FAMILIES = [
     ('Podkova','podkova','serif','Kontrastarme Slab Serif','Annähernd gleichmäßige Strichstärken und kantige Formen. Den schrägen oberen Stammabschluss zeigt das kleine t, nicht die gemeinsame Probe Form.'),
     ('Abel','abel','sans','Schmale, kontrastarme Sans','Flachseitige, schmale Formen mit einzelnen schrägen Abschlüssen. Nur Regular; Details immer am einzelnen Buchstaben prüfen.'),
     ('Fira Sans','firasans','sans','Humanistische Sans','Offene, differenzierte Formen für Erklärtexte und Orientierung. Das aufrechte zweistöckige g besitzt eine offene untere Schleife. Neun Strichstärken mit jeweils echter Kursive; feine Schnitte nur in ausreichend großen Graden einsetzen.'),
+    ('UnifrakturMaguntia','unifrakturmaguntia','blackletter','Fraktur nach Mainzer Vorbild','Gebrochene Rundungen und historische Buchstabenformen. Für bewusst gewählte kurze Texte; langes ſ und rundes s nach Wortstruktur unterscheiden. Nur ein echter Regular-Schnitt.'),
+    ('Pirata One','pirataone','blackletter','Vereinfachte Textura / Display','Für Bildschirme vereinfachte Textura mit schmalen, kantigen Formen. Für markante Titel und kurze Passagen; keine historische Fraktur und kein neutraler Lesefont.'),
+    ('Texturina','texturina','blackletter','Zeitgenössische Mischform mit gebrochenen Zügen','Verbindet gebrochene und weichere Rundungen. Variable Gewichte und echte Kursive; trotz des Namens keine reine historische Textura. Lesbarkeit in der konkreten Textgröße prüfen.'),
 ]
 SLUGS = {'Zilla Slab':'zilla-slab','DM Mono':'dm-mono','Bebas Neue':'bebas-neue','Dancing Script':'dancing-script','DM Sans':'dm-sans','Plus Jakarta Sans':'plus-jakarta-sans','Archivo Black':'archivo-black'}
 NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville','goudybookletter1911',
-       'breeserif','robotoslab','belleza','limelight','podkova','abel','firasans'}
+       'breeserif','robotoslab','belleza','limelight','podkova','abel','firasans',
+       'unifrakturmaguntia','pirataone','texturina'}
 RAW = 'https://raw.githubusercontent.com/google/fonts/main/ofl/'
 
 def font_upstream(directory):
@@ -207,7 +211,7 @@ def main(selected=None):
                 if any(Path(f['path']).name in text for f in entry['files']):
                     rel=str(path.relative_to(repo))
                     entry['uses'].append(dict(repo=repo.name,path=rel,url='https://genaiedu.github.io/'+repo.name+'/'+rel))
-    out={'checked':'2026-10-10','families':entries,'existingFamilies':sum(not e['new'] for e in entries),'existingFiles':sum(len(e['files']) for e in entries if not e['new']),'method':'Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.'}
+    out={'checked':'2026-10-11','families':entries,'existingFamilies':sum(not e['new'] for e in entries),'existingFiles':sum(len(e['files']) for e in entries if not e['new']),'method':'Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.'}
     (ROOT/'data'/'typografie-fonts.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
     css=[]
     for e in entries:
