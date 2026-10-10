@@ -1,0 +1,2150 @@
+{
+  "checked": "2026-10-10",
+  "method": "Konturen aus lokalen WOFF2-Dateien; Regular / Gewicht 400, weitere variable Achsen auf Standardwert. Grundlinie = Fontkoordinate 0; Höhenmarken = Konturgrenzen der jeweils genannten Zeichen. Keine Fontdatei verändert.",
+  "families": [
+    {
+      "id": "poppins",
+      "name": "Poppins",
+      "source": "../LearningApps/fonts/poppins-v24-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/poppins/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/poppins",
+      "copyright": "Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)",
+      "sha256": "7d93459d86585bfcdbb7e0376056226adb25821ee54b96236fe2123e9560929f",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            43,
+            -9,
+            599,
+            557
+          ],
+          "advance": 676,
+          "path": "M303 557Q375 557 428.0 526.0Q481 495 507 448V548H599V0H507V102Q480 54 426.5 22.5Q373 -9 302 -9Q229 -9 170.0 27.0Q111 63 77.0 128.0Q43 193 43 276Q43 360 77.0 423.5Q111 487 170.5 522.0Q230 557 303 557ZM321 478Q270 478 228.0 454.0Q186 430 161.0 384.0Q136 338 136 276Q136 213 161.0 166.5Q186 120 228.0 95.5Q270 71 321 71Q372 71 414.5 95.5Q457 120 482.0 166.5Q507 213 507 275Q507 337 482.0 383.0Q457 429 414.5 453.5Q372 478 321 478Z"
+        },
+        "b": {
+          "bounds": [
+            77,
+            -9,
+            633,
+            740
+          ],
+          "advance": 676,
+          "path": "M373 557Q447 557 506.0 522.0Q565 487 599.0 423.5Q633 360 633 276Q633 193 599.0 128.0Q565 63 505.5 27.0Q446 -9 373 -9Q302 -9 248.5 22.0Q195 53 168 101V0H77V740H168V446Q196 495 250.0 526.0Q304 557 373 557ZM354 478Q304 478 261.5 453.5Q219 429 193.5 382.5Q168 336 168 275Q168 213 193.5 166.5Q219 120 261.5 95.5Q304 71 354 71Q405 71 447.5 95.5Q490 120 515.0 166.5Q540 213 540 276Q540 338 515.0 384.0Q490 430 447.5 454.0Q405 478 354 478Z"
+        },
+        "g": {
+          "bounds": [
+            43,
+            -270,
+            599,
+            557
+          ],
+          "advance": 676,
+          "path": "M507 448V548H599V-12Q599 -87 567.0 -145.5Q535 -204 475.5 -237.0Q416 -270 337 -270Q229 -270 157.0 -219.0Q85 -168 72 -80H162Q177 -130 224.0 -160.5Q271 -191 337 -191Q412 -191 459.5 -144.0Q507 -97 507 -12V103Q480 55 427.0 23.0Q374 -9 303 -9Q230 -9 170.5 27.0Q111 63 77.0 128.0Q43 193 43 276Q43 360 77.0 423.5Q111 487 170.5 522.0Q230 557 303 557Q374 557 427.5 526.0Q481 495 507 448ZM321 478Q270 478 228.0 454.0Q186 430 161.0 384.0Q136 338 136 276Q136 213 161.0 166.5Q186 120 228.0 95.5Q270 71 321 71Q372 71 414.5 95.5Q457 120 482.0 166.5Q507 213 507 275Q507 337 482.0 383.0Q457 429 414.5 453.5Q372 478 321 478Z"
+        },
+        "p": {
+          "bounds": [
+            77,
+            -260,
+            633,
+            557
+          ],
+          "advance": 676,
+          "path": "M373 557Q446 557 505.5 522.0Q565 487 599.0 423.5Q633 360 633 276Q633 193 599.0 128.0Q565 63 505.5 27.0Q446 -9 373 -9Q303 -9 249.5 22.5Q196 54 168 101V-260H77V548H168V447Q195 494 248.5 525.5Q302 557 373 557ZM354 478Q304 478 261.5 453.5Q219 429 193.5 382.5Q168 336 168 275Q168 213 193.5 166.5Q219 120 261.5 95.5Q304 71 354 71Q405 71 447.5 95.5Q490 120 515.0 166.5Q540 213 540 276Q540 338 515.0 384.0Q490 430 447.5 454.0Q405 478 354 478Z"
+        },
+        "x": {
+          "bounds": [
+            13,
+            0,
+            466,
+            548
+          ],
+          "advance": 479,
+          "path": "M363 0 233 204 108 0H13L190 272L13 548H116L246 345L370 548H465L289 277L466 0Z"
+        },
+        "H": {
+          "bounds": [
+            77,
+            0,
+            614,
+            697
+          ],
+          "advance": 692,
+          "path": "M614 697V0H523V316H168V0H77V697H168V391H523V697Z"
+        },
+        "o": {
+          "bounds": [
+            43,
+            -9,
+            597,
+            557
+          ],
+          "advance": 640,
+          "path": "M43 275Q43 359 79.5 423.5Q116 488 179.0 522.5Q242 557 320 557Q398 557 461.0 522.5Q524 488 560.5 424.0Q597 360 597 275Q597 190 559.5 125.5Q522 61 458.0 26.0Q394 -9 316 -9Q239 -9 176.5 26.0Q114 61 78.5 125.5Q43 190 43 275ZM504 275Q504 341 478.0 387.0Q452 433 410.0 455.5Q368 478 319 478Q269 478 227.5 455.5Q186 433 161.0 387.0Q136 341 136 275Q136 208 160.5 162.0Q185 116 226.0 93.5Q267 71 316 71Q365 71 408.0 94.0Q451 117 477.5 163.0Q504 209 504 275Z"
+        },
+        "O": {
+          "bounds": [
+            43,
+            -7,
+            743,
+            705
+          ],
+          "advance": 786,
+          "path": "M43 349Q43 451 89.5 532.5Q136 614 216.0 659.5Q296 705 393 705Q491 705 571.0 659.5Q651 614 697.0 533.0Q743 452 743 349Q743 246 697.0 165.0Q651 84 571.0 38.5Q491 -7 393 -7Q296 -7 216.0 38.5Q136 84 89.5 165.5Q43 247 43 349ZM650 349Q650 433 616.5 495.5Q583 558 525.0 592.0Q467 626 393 626Q319 626 261.0 592.0Q203 558 169.5 495.5Q136 433 136 349Q136 266 169.5 203.0Q203 140 261.5 106.0Q320 72 393 72Q466 72 524.5 106.0Q583 140 616.5 203.0Q650 266 650 349Z"
+        }
+      }
+    },
+    {
+      "id": "outfit",
+      "name": "Outfit",
+      "source": "../LearningApps/fonts/outfit-v15-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/outfit/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/outfit",
+      "copyright": "Copyright 2021 The Outfit Project Authors (https://github.com/Outfitio/Outfit-Fonts)",
+      "sha256": "71f028fd2349990b3f8aa643abe767e82e0f596be407ae66f0004ff164121bdb",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            36,
+            -10,
+            517,
+            485
+          ],
+          "advance": 582
+        },
+        "b": {
+          "bounds": [
+            66,
+            -10,
+            546,
+            714
+          ],
+          "advance": 582
+        },
+        "g": {
+          "bounds": [
+            35,
+            -209,
+            513,
+            485
+          ],
+          "advance": 579
+        },
+        "p": {
+          "bounds": [
+            66,
+            -199,
+            546,
+            485
+          ],
+          "advance": 582
+        },
+        "x": {
+          "bounds": [
+            17,
+            0,
+            487,
+            475
+          ],
+          "advance": 504
+        },
+        "H": {
+          "bounds": [
+            82,
+            0,
+            624,
+            694
+          ],
+          "advance": 706
+        },
+        "o": {
+          "bounds": [
+            35,
+            -10,
+            531,
+            485
+          ],
+          "advance": 566
+        },
+        "O": {
+          "bounds": [
+            47,
+            -10,
+            747,
+            704
+          ],
+          "advance": 794
+        }
+      }
+    },
+    {
+      "id": "bangers",
+      "name": "Bangers",
+      "source": "../LearningApps/fonts/bangers-v25-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/bangers/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/bangers",
+      "copyright": "Copyright 2010 The Bangers Project Authors (https://github.com/googlefonts/bangers)",
+      "sha256": "04f54ff42ea2b8fc50b4259c29c60b1e05e606b769c2fb541c98624346c9767c",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            -21,
+            2,
+            464,
+            741
+          ],
+          "advance": 433
+        },
+        "b": {
+          "bounds": [
+            -1,
+            -4,
+            512,
+            740
+          ],
+          "advance": 428
+        },
+        "g": {
+          "bounds": [
+            42,
+            -24,
+            568,
+            748
+          ],
+          "advance": 499
+        },
+        "p": {
+          "bounds": [
+            -3,
+            -1,
+            468,
+            738
+          ],
+          "advance": 379
+        },
+        "x": {
+          "bounds": [
+            -36,
+            -10,
+            521,
+            729
+          ],
+          "advance": 411
+        },
+        "H": {
+          "bounds": [
+            9,
+            -2,
+            547,
+            740
+          ],
+          "advance": 442
+        },
+        "o": {
+          "bounds": [
+            31,
+            -4,
+            560,
+            748
+          ],
+          "advance": 493
+        },
+        "O": {
+          "bounds": [
+            31,
+            -4,
+            560,
+            748
+          ],
+          "advance": 493
+        }
+      }
+    },
+    {
+      "id": "zillaslab",
+      "name": "Zilla Slab",
+      "source": "../LearningApps/fonts/zilla-slab-v12-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/zillaslab/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/zillaslab",
+      "copyright": "Copyright 2017, The Mozilla Foundation",
+      "sha256": "ab2607313bc04e82a53aca235853a0b83463e99b3ae88b17cc963e371f8fe91c",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            40,
+            -10,
+            466,
+            454
+          ],
+          "advance": 483
+        },
+        "b": {
+          "bounds": [
+            -1,
+            -10,
+            496,
+            688
+          ],
+          "advance": 534
+        },
+        "g": {
+          "bounds": [
+            38,
+            -223,
+            531,
+            454
+          ],
+          "advance": 548
+        },
+        "p": {
+          "bounds": [
+            12,
+            -213,
+            512,
+            454
+          ],
+          "advance": 550
+        },
+        "x": {
+          "bounds": [
+            19,
+            0,
+            498,
+            445
+          ],
+          "advance": 514
+        },
+        "H": {
+          "bounds": [
+            42,
+            0,
+            713,
+            650
+          ],
+          "advance": 755
+        },
+        "o": {
+          "bounds": [
+            37,
+            -10,
+            476,
+            455
+          ],
+          "advance": 513
+        },
+        "O": {
+          "bounds": [
+            39,
+            -10,
+            690,
+            660
+          ],
+          "advance": 729
+        }
+      }
+    },
+    {
+      "id": "lora",
+      "name": "Lora",
+      "source": "../LearningApps/fonts/lora-v37-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/lora/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/lora",
+      "copyright": "Copyright 2011 The Lora Project Authors (https://github.com/cyrealtype/Lora-Cyrillic), with Reserved Font Name \"Lora\".",
+      "sha256": "ac079950fd9885261c0f73d9e87233f31b5427333ce0eb20e26c119458493c40",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            34,
+            -16,
+            491,
+            516
+          ],
+          "advance": 516,
+          "path": "M348 0Q345 17 344.0 30.0Q343 43 341 57Q307 23 267.5 3.5Q228 -16 184 -16Q108 -16 71.0 18.5Q34 53 34 103Q34 149 62.5 182.5Q91 216 136.5 237.5Q182 259 235.5 269.5Q289 280 339 279V341Q339 376 333.0 407.0Q327 438 307.0 458.0Q287 478 243 479Q214 480 183.5 468.0Q153 456 139 427Q147 419 149.5 408.5Q152 398 152 389Q152 377 142.0 361.5Q132 346 107 347Q86 347 75.0 361.5Q64 376 64 396Q64 430 89.5 457.0Q115 484 160.0 500.0Q205 516 262 516Q346 516 386.0 471.5Q426 427 425 331Q425 294 425.0 256.5Q425 219 424.5 181.5Q424 144 424 106Q424 90 423.0 74.0Q422 58 420 38Q438 39 455.5 40.0Q473 41 491 42V0ZM339 245Q305 244 267.5 236.5Q230 229 198.5 214.0Q167 199 147.5 174.5Q128 150 129 115Q131 78 153.5 59.5Q176 41 207 41Q248 41 278.5 56.5Q309 72 339 100Q338 111 338.0 124.0Q338 137 338 151Q338 156 338.5 183.0Q339 210 339 245Z"
+        },
+        "b": {
+          "bounds": [
+            8,
+            -16,
+            540,
+            755
+          ],
+          "advance": 582,
+          "path": "M76 625Q76 641 76.5 655.5Q77 670 79 690Q61 689 43.5 688.0Q26 687 8 686V728Q52 728 76.5 732.0Q101 736 113.5 742.0Q126 748 133 755H162V457Q190 485 228.5 500.5Q267 516 313 516Q377 516 428.5 485.0Q480 454 510.0 397.0Q540 340 540 262Q540 177 503.0 114.5Q466 52 407.0 18.0Q348 -16 280 -16Q246 -16 205.5 -3.5Q165 9 133 45L109 0H74ZM162 157Q162 104 179.0 75.5Q196 47 223.0 36.0Q250 25 280 25Q328 25 363.0 52.0Q398 79 417.5 126.5Q437 174 437 237Q437 305 420.0 356.5Q403 408 369.0 437.5Q335 467 283 467Q250 467 217.5 451.5Q185 436 162 410Z"
+        },
+        "g": {
+          "bounds": [
+            35,
+            -271,
+            569,
+            576
+          ],
+          "advance": 553,
+          "path": "M285 -271Q195 -271 140.0 -251.0Q85 -231 60.0 -200.0Q35 -169 35 -136Q35 -105 49.5 -81.5Q64 -58 85.5 -41.0Q107 -24 127 -16Q95 -5 76.5 13.5Q58 32 58 63Q58 98 86.0 128.5Q114 159 158 166Q112 188 84.5 227.0Q57 266 57 318Q57 378 88.0 422.5Q119 467 167.5 491.5Q216 516 268 516Q301 516 334.0 506.5Q367 497 395 479Q405 507 423.5 529.0Q442 551 466.0 563.5Q490 576 516 576Q542 576 555.5 562.5Q569 549 569 526Q569 519 565.0 509.0Q561 499 551.5 492.0Q542 485 526 485Q509 485 498.0 495.0Q487 505 484 520Q459 516 445.0 496.5Q431 477 426 454Q450 432 464.5 401.0Q479 370 479 335Q479 279 449.5 235.0Q420 191 372.0 166.5Q324 142 268 142Q249 142 235.0 144.5Q221 147 201 147Q164 147 141.0 129.0Q118 111 125 86Q133 62 174.0 55.5Q215 49 284 46Q361 43 416.0 28.0Q471 13 500.5 -18.5Q530 -50 530 -104Q530 -144 508.5 -175.5Q487 -207 451.5 -228.0Q416 -249 372.5 -260.0Q329 -271 285 -271ZM284 -232Q370 -232 418.0 -200.0Q466 -168 466 -125Q466 -88 441.0 -68.5Q416 -49 373.0 -41.5Q330 -34 274 -33Q247 -32 221.0 -30.5Q195 -29 171 -25Q144 -43 129.0 -69.0Q114 -95 114 -124Q114 -173 160.5 -202.5Q207 -232 284 -232ZM271 178Q308 178 332.5 196.0Q357 214 369.5 245.0Q382 276 382 315Q382 359 369.0 397.0Q356 435 330.5 458.0Q305 481 266 481Q212 481 182.5 440.5Q153 400 153 340Q153 292 167.0 255.5Q181 219 207.5 198.5Q234 178 271 178Z"
+        },
+        "p": {
+          "bounds": [
+            29,
+            -255,
+            555,
+            516
+          ],
+          "advance": 597,
+          "path": "M35 -255V-225Q66 -225 78.0 -209.5Q90 -194 92.0 -166.5Q94 -139 94 -103L96 380Q96 396 96.5 412.0Q97 428 100 445Q82 444 64.5 443.0Q47 442 29 441V483Q73 483 95.5 487.0Q118 491 128.5 497.0Q139 503 146 510H176Q177 500 178.0 486.5Q179 473 180 456Q210 483 251.5 499.5Q293 516 335 516Q393 516 443.0 486.0Q493 456 524.0 400.5Q555 345 555 268Q555 183 519.5 119.0Q484 55 426.0 19.5Q368 -16 300 -16Q265 -16 235.5 -7.5Q206 1 180 17V-149Q180 -169 179.5 -184.5Q179 -200 176 -217Q192 -216 207.5 -215.5Q223 -215 239 -214V-255ZM298 24Q346 24 380.5 53.5Q415 83 433.5 134.5Q452 186 452 252Q452 306 436.5 355.5Q421 405 387.5 436.0Q354 467 299 467Q265 467 233.5 450.5Q202 434 181 411Q181 407 181.5 399.5Q182 392 182.0 373.5Q182 355 182.0 318.5Q182 282 181.5 220.0Q181 158 181 63Q206 44 235.5 34.0Q265 24 298 24Z"
+        },
+        "x": {
+          "bounds": [
+            22,
+            0,
+            519,
+            500
+          ],
+          "advance": 530,
+          "path": "M24 0V30Q55 38 73.0 56.5Q91 75 119 111L219 241Q205 260 185.0 286.5Q165 313 147.5 337.5Q130 362 120 374Q96 406 85.0 427.0Q74 448 69 461L22 459V500H228V470Q183 469 177.5 449.5Q172 430 209 379L267 300L358 410Q373 428 383.0 440.5Q393 453 403 463L334 459V500H498V470Q471 462 452.0 449.5Q433 437 414.5 416.5Q396 396 369 363L292 271L430 100Q441 85 452.0 71.0Q463 57 474 38L519 41V0H326V30Q350 30 360.5 41.5Q371 53 350 79L245 209L161 94Q146 74 138.0 64.0Q130 54 115 38L192 41V0Z"
+        },
+        "H": {
+          "bounds": [
+            55,
+            0,
+            725,
+            700
+          ],
+          "advance": 780,
+          "path": "M55 0V33Q93 35 107.0 50.5Q121 66 122.5 93.5Q124 121 124 156V588Q124 608 125.0 626.5Q126 645 127 660Q109 659 91.0 658.0Q73 657 55 656V700H280V667Q243 666 228.5 650.0Q214 634 212.5 607.0Q211 580 211 544V378H569V588Q569 608 570.0 626.5Q571 645 572 660Q554 659 536.0 658.0Q518 657 500 656V700H725V667Q688 666 673.5 650.0Q659 634 657.5 607.0Q656 580 656 544V119Q656 92 655.5 72.5Q655 53 653 40Q671 41 689.0 42.0Q707 43 725 44V0H500V33Q538 35 552.0 50.5Q566 66 567.5 93.5Q569 121 569 156V338L211 334V119Q211 92 210.5 72.5Q210 53 208 40Q226 41 244.0 42.0Q262 43 280 44V0Z"
+        },
+        "o": {
+          "bounds": [
+            41,
+            -16,
+            544,
+            516
+          ],
+          "advance": 585,
+          "path": "M292 -16Q222 -16 165.0 16.5Q108 49 74.5 106.5Q41 164 41 238Q41 317 74.0 380.0Q107 443 164.0 479.5Q221 516 292 516Q362 516 419.0 482.5Q476 449 510.0 392.0Q544 335 544 262Q544 185 510.5 121.5Q477 58 420.0 21.0Q363 -16 292 -16ZM300 24Q353 24 384.0 54.0Q415 84 428.5 132.0Q442 180 442 233Q442 278 433.5 321.5Q425 365 407.0 400.5Q389 436 360.5 457.0Q332 478 292 478Q240 478 207.0 448.0Q174 418 158.5 370.0Q143 322 143 267Q143 205 160.0 149.5Q177 94 212.0 59.0Q247 24 300 24Z"
+        },
+        "O": {
+          "bounds": [
+            46,
+            -16,
+            750,
+            716
+          ],
+          "advance": 794,
+          "path": "M402 -16Q307 -16 239.0 16.0Q171 48 128.5 101.5Q86 155 66.0 220.0Q46 285 46 350Q46 413 67.0 477.5Q88 542 131.5 596.0Q175 650 240.5 683.0Q306 716 394 716Q486 716 553.0 683.0Q620 650 663.5 595.5Q707 541 728.5 477.0Q750 413 750 350Q750 288 729.0 223.5Q708 159 664.5 104.5Q621 50 556.0 17.0Q491 -16 402 -16ZM404 25Q466 25 512.0 51.5Q558 78 588.5 122.5Q619 167 634.5 221.5Q650 276 650 331Q650 393 633.0 454.0Q616 515 583.0 565.0Q550 615 501.5 645.5Q453 676 391 676Q329 676 282.5 649.0Q236 622 205.5 577.5Q175 533 159.5 478.5Q144 424 144 368Q144 313 159.5 253.0Q175 193 207.0 141.0Q239 89 288.0 57.0Q337 25 404 25Z"
+        }
+      }
+    },
+    {
+      "id": "montserrat",
+      "name": "Montserrat",
+      "source": "../LearningApps/fonts/montserrat-v31-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/montserrat/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/montserrat",
+      "copyright": "Copyright 2011 The Montserrat Project Authors (https://github.com/JulietaUla/Montserrat)",
+      "sha256": "e66bcd2761ab6924b25ce70dafe10e57a39193c4fea1516730bd9cb5240af6c8",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            55,
+            -5,
+            496,
+            530
+          ],
+          "advance": 590
+        },
+        "b": {
+          "bounds": [
+            99,
+            -5,
+            632,
+            742
+          ],
+          "advance": 678
+        },
+        "g": {
+          "bounds": [
+            46,
+            -199,
+            586,
+            530
+          ],
+          "advance": 685
+        },
+        "p": {
+          "bounds": [
+            99,
+            -194,
+            632,
+            530
+          ],
+          "advance": 678
+        },
+        "x": {
+          "bounds": [
+            19,
+            0,
+            515,
+            525
+          ],
+          "advance": 534
+        },
+        "H": {
+          "bounds": [
+            114,
+            0,
+            699,
+            700
+          ],
+          "advance": 813
+        },
+        "o": {
+          "bounds": [
+            46,
+            -5,
+            581,
+            530
+          ],
+          "advance": 627
+        },
+        "O": {
+          "bounds": [
+            52,
+            -6,
+            787,
+            706
+          ],
+          "advance": 839
+        }
+      }
+    },
+    {
+      "id": "dmmono",
+      "name": "DM Mono",
+      "source": "../LearningApps/fonts/dm-mono-v16-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/dmmono/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/dmmono",
+      "copyright": "Copyright 2020 The DM Mono Project Authors (https://www.github.com/googlefonts/dm-mono)",
+      "sha256": "e1896b13b2b1bb112fac2f9571bd6c40e118746e77a4511edbf43fbb41bf3e1e",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            83,
+            -12,
+            507,
+            508
+          ],
+          "advance": 600
+        },
+        "b": {
+          "bounds": [
+            78,
+            -12,
+            535,
+            720
+          ],
+          "advance": 600
+        },
+        "g": {
+          "bounds": [
+            62,
+            -232,
+            551,
+            508
+          ],
+          "advance": 600
+        },
+        "p": {
+          "bounds": [
+            78,
+            -220,
+            535,
+            508
+          ],
+          "advance": 600
+        },
+        "x": {
+          "bounds": [
+            69,
+            0,
+            531,
+            496
+          ],
+          "advance": 600
+        },
+        "H": {
+          "bounds": [
+            47,
+            0,
+            554,
+            700
+          ],
+          "advance": 600
+        },
+        "o": {
+          "bounds": [
+            60,
+            -12,
+            540,
+            508
+          ],
+          "advance": 600
+        },
+        "O": {
+          "bounds": [
+            28,
+            -12,
+            572,
+            712
+          ],
+          "advance": 600
+        }
+      }
+    },
+    {
+      "id": "oswald",
+      "name": "Oswald",
+      "source": "../LearningApps/fonts/oswald-v57-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/oswald/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/oswald",
+      "copyright": "Copyright 2016 The Oswald Project Authors (https://github.com/googlefonts/OswaldFont)",
+      "sha256": "e902b779e43944c300cf8ae5e4a1affa68cb8a823fd263dd2f479c4cdfbd213c",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            25,
+            -8,
+            370,
+            586
+          ],
+          "advance": 409
+        },
+        "b": {
+          "bounds": [
+            56,
+            -8,
+            404,
+            810
+          ],
+          "advance": 447
+        },
+        "g": {
+          "bounds": [
+            20,
+            -181,
+            453,
+            591
+          ],
+          "advance": 441
+        },
+        "p": {
+          "bounds": [
+            54,
+            -190,
+            403,
+            586
+          ],
+          "advance": 446
+        },
+        "x": {
+          "bounds": [
+            9,
+            0,
+            381,
+            578
+          ],
+          "advance": 389
+        },
+        "H": {
+          "bounds": [
+            63,
+            0,
+            497,
+            810
+          ],
+          "advance": 561
+        },
+        "o": {
+          "bounds": [
+            44,
+            -8,
+            381,
+            586
+          ],
+          "advance": 425
+        },
+        "O": {
+          "bounds": [
+            48,
+            -9,
+            491,
+            817
+          ],
+          "advance": 539
+        }
+      }
+    },
+    {
+      "id": "righteous",
+      "name": "Righteous",
+      "source": "../LearningApps/fonts/righteous-v18-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/righteous/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/righteous",
+      "copyright": "Copyright (c) 2011 by Brian J. Bonislawsky DBA Astigmatic (AOETI) (astigma@astigmatic.com), with Reserved\rFont Name \"Righteous\"",
+      "sha256": "17055c538efddf7a754a98bb7db3d15405316dfb4645c287421ed3e7f8769144",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            47,
+            -20,
+            1141,
+            1112
+          ],
+          "advance": 1245
+        },
+        "b": {
+          "bounds": [
+            82,
+            -20,
+            1176,
+            1497
+          ],
+          "advance": 1223
+        },
+        "g": {
+          "bounds": [
+            47,
+            -410,
+            1141,
+            1112
+          ],
+          "advance": 1245
+        },
+        "p": {
+          "bounds": [
+            104,
+            -408,
+            1200,
+            1110
+          ],
+          "advance": 1247
+        },
+        "x": {
+          "bounds": [
+            -6,
+            0,
+            1090,
+            1077
+          ],
+          "advance": 1083
+        },
+        "H": {
+          "bounds": [
+            133,
+            0,
+            1280,
+            1434
+          ],
+          "advance": 1413
+        },
+        "o": {
+          "bounds": [
+            45,
+            -20,
+            1139,
+            1112
+          ],
+          "advance": 1186
+        },
+        "O": {
+          "bounds": [
+            55,
+            -31,
+            1538,
+            1452
+          ],
+          "advance": 1593
+        }
+      }
+    },
+    {
+      "id": "bebasneue",
+      "name": "Bebas Neue",
+      "source": "../LearningApps/fonts/bebas-neue-v16-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/bebasneue/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/bebasneue",
+      "copyright": "Copyright 2019 The Bebas Neue Project Authors (https://github.com/dharmatype/Bebas-Neue)",
+      "sha256": "a7c90c89240c134f7fdd33d40c000ec90b79d675ea53e8cc5a6d423c073de412",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            12,
+            0,
+            389,
+            700
+          ],
+          "advance": 401
+        },
+        "b": {
+          "bounds": [
+            41,
+            0,
+            381,
+            700
+          ],
+          "advance": 404
+        },
+        "g": {
+          "bounds": [
+            33,
+            -10,
+            361,
+            710
+          ],
+          "advance": 391
+        },
+        "p": {
+          "bounds": [
+            41,
+            0,
+            367,
+            700
+          ],
+          "advance": 386
+        },
+        "x": {
+          "bounds": [
+            11,
+            0,
+            395,
+            700
+          ],
+          "advance": 406
+        },
+        "H": {
+          "bounds": [
+            41,
+            0,
+            379,
+            700
+          ],
+          "advance": 420
+        },
+        "o": {
+          "bounds": [
+            33,
+            -10,
+            367,
+            710
+          ],
+          "advance": 400
+        },
+        "O": {
+          "bounds": [
+            33,
+            -10,
+            367,
+            710
+          ],
+          "advance": 400
+        }
+      }
+    },
+    {
+      "id": "dancingscript",
+      "name": "Dancing Script",
+      "source": "../LearningApps/fonts/dancing-script-v29-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/dancingscript/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/dancingscript",
+      "copyright": "Copyright 2016 The Dancing Script Project Authors (https://github.com/googlefonts/DancingScript), with Reserved Font Name \"Dancing Script\".",
+      "sha256": "570e4265bbcb453353ce2fdf63d179332d8daa92691d567547b8a383f3b46c3b",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            -26,
+            -47,
+            466,
+            343
+          ],
+          "advance": 436
+        },
+        "b": {
+          "bounds": [
+            -10,
+            -73,
+            427,
+            714
+          ],
+          "advance": 394
+        },
+        "g": {
+          "bounds": [
+            -20,
+            -280,
+            420,
+            347
+          ],
+          "advance": 389
+        },
+        "p": {
+          "bounds": [
+            -94,
+            -280,
+            360,
+            373
+          ],
+          "advance": 391
+        },
+        "x": {
+          "bounds": [
+            10,
+            -59,
+            448,
+            332
+          ],
+          "advance": 418
+        },
+        "H": {
+          "bounds": [
+            55,
+            -87,
+            632,
+            720
+          ],
+          "advance": 617
+        },
+        "o": {
+          "bounds": [
+            -10,
+            -32,
+            396,
+            352
+          ],
+          "advance": 365
+        },
+        "O": {
+          "bounds": [
+            21,
+            -87,
+            602,
+            719
+          ],
+          "advance": 623
+        }
+      }
+    },
+    {
+      "id": "dmsans",
+      "name": "DM Sans",
+      "source": "../LearningApps/fonts/dm-sans-v17-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/dmsans/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/dmsans",
+      "copyright": "Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)",
+      "sha256": "4ab51eb2cd7305d177187908d6397474d4520663f6c6e572feb0a64f4fa80006",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            51,
+            -12,
+            484,
+            516
+          ],
+          "advance": 544
+        },
+        "b": {
+          "bounds": [
+            70,
+            -12,
+            578,
+            720
+          ],
+          "advance": 626
+        },
+        "g": {
+          "bounds": [
+            38,
+            -232,
+            531,
+            516
+          ],
+          "advance": 558
+        },
+        "p": {
+          "bounds": [
+            70,
+            -220,
+            578,
+            516
+          ],
+          "advance": 626
+        },
+        "x": {
+          "bounds": [
+            20,
+            0,
+            476,
+            504
+          ],
+          "advance": 496
+        },
+        "H": {
+          "bounds": [
+            75,
+            0,
+            606,
+            700
+          ],
+          "advance": 681
+        },
+        "o": {
+          "bounds": [
+            49,
+            -12,
+            545,
+            516
+          ],
+          "advance": 593
+        },
+        "O": {
+          "bounds": [
+            48,
+            -12,
+            727,
+            712
+          ],
+          "advance": 774
+        }
+      }
+    },
+    {
+      "id": "plusjakartasans",
+      "name": "Plus Jakarta Sans",
+      "source": "../LearningApps/fonts/plus-jakarta-sans-v12-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/plusjakartasans/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/plusjakartasans",
+      "copyright": "Copyright 2020 The Plus Jakarta Sans Project Authors (https://github.com/tokotype/PlusJakartaSans)",
+      "sha256": "221a4135d06a4b33abbd535e9a0da4e565d19545ddd9267c4e678a916d54d9b6",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            55,
+            -12,
+            495,
+            548
+          ],
+          "advance": 572
+        },
+        "b": {
+          "bounds": [
+            77,
+            -12,
+            612,
+            757
+          ],
+          "advance": 667
+        },
+        "g": {
+          "bounds": [
+            55,
+            -220,
+            585,
+            548
+          ],
+          "advance": 662
+        },
+        "p": {
+          "bounds": [
+            77,
+            -200,
+            612,
+            548
+          ],
+          "advance": 667
+        },
+        "x": {
+          "bounds": [
+            11,
+            0,
+            476,
+            536
+          ],
+          "advance": 487
+        },
+        "H": {
+          "bounds": [
+            88,
+            0,
+            648,
+            745
+          ],
+          "advance": 736
+        },
+        "o": {
+          "bounds": [
+            55,
+            -12,
+            600,
+            548
+          ],
+          "advance": 655
+        },
+        "O": {
+          "bounds": [
+            66,
+            -12,
+            812,
+            757
+          ],
+          "advance": 878
+        }
+      }
+    },
+    {
+      "id": "forum",
+      "name": "Forum",
+      "source": "../LearningApps/fonts/forum-v19-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/forum/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/forum",
+      "copyright": "Copyright (c) 2011, Denis Masharov <denis.masharov@gmail.com>. This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL",
+      "sha256": "21eb0ef1c5f416bd7837e9bcf5c0ba1b026a9d56e5aed213871957ff442cae1d",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            36,
+            -7,
+            406,
+            427
+          ],
+          "advance": 457
+        },
+        "b": {
+          "bounds": [
+            44,
+            -7,
+            470,
+            664
+          ],
+          "advance": 514
+        },
+        "g": {
+          "bounds": [
+            37,
+            -224,
+            452,
+            427
+          ],
+          "advance": 495
+        },
+        "p": {
+          "bounds": [
+            46,
+            -210,
+            470,
+            427
+          ],
+          "advance": 515
+        },
+        "x": {
+          "bounds": [
+            11,
+            0,
+            449,
+            420
+          ],
+          "advance": 466
+        },
+        "H": {
+          "bounds": [
+            57,
+            0,
+            584,
+            660
+          ],
+          "advance": 622
+        },
+        "o": {
+          "bounds": [
+            37,
+            -7,
+            479,
+            427
+          ],
+          "advance": 523
+        },
+        "O": {
+          "bounds": [
+            37,
+            -10,
+            718,
+            670
+          ],
+          "advance": 761
+        }
+      }
+    },
+    {
+      "id": "caveat",
+      "name": "Caveat",
+      "source": "../LearningApps/fonts/caveat-v23-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/caveat/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/caveat",
+      "copyright": "Copyright 2014 The Caveat Project Authors (https://github.com/googlefonts/caveat)",
+      "sha256": "d0b7b931b8980049327e8f8f9ac264617c8200b8422d62e886473d3d9527bad3",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            83.72727272727273,
+            25.591397849462368,
+            497,
+            384.5625
+          ],
+          "advance": 437
+        },
+        "b": {
+          "bounds": [
+            120.8,
+            17,
+            479.3076923076923,
+            652.4
+          ],
+          "advance": 435
+        },
+        "g": {
+          "bounds": [
+            68.75,
+            -195.7450980392157,
+            391.7647058823529,
+            388.84615384615387
+          ],
+          "advance": 355
+        },
+        "p": {
+          "bounds": [
+            35.45454545454545,
+            -224.52631578947367,
+            415,
+            424.14285714285717
+          ],
+          "advance": 378
+        },
+        "x": {
+          "bounds": [
+            56,
+            3,
+            407,
+            355.0952380952381
+          ],
+          "advance": 343
+        },
+        "H": {
+          "bounds": [
+            81.54545454545455,
+            -83,
+            713.52,
+            700.5294117647059
+          ],
+          "advance": 563
+        },
+        "o": {
+          "bounds": [
+            96.42857142857143,
+            15,
+            395.85714285714283,
+            377.0
+          ],
+          "advance": 353
+        },
+        "O": {
+          "bounds": [
+            115.11111111111111,
+            -41.55172413793103,
+            587.7647058823529,
+            665.0833333333334
+          ],
+          "advance": 496
+        }
+      }
+    },
+    {
+      "id": "nunito",
+      "name": "Nunito",
+      "source": "../LearningApps/fonts/nunito-v32-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/nunito/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/nunito",
+      "copyright": "Copyright 2014 The Nunito Project Authors (https://github.com/googlefonts/nunito)",
+      "sha256": "a5906e15ceb68f73d3b2c2076b4057c3f6ed401186d56283b45ce12944ca0735",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            54,
+            -9,
+            456,
+            495
+          ],
+          "advance": 530
+        },
+        "b": {
+          "bounds": [
+            76,
+            -9,
+            537,
+            712
+          ],
+          "advance": 583
+        },
+        "g": {
+          "bounds": [
+            46,
+            -189,
+            510,
+            495
+          ],
+          "advance": 586
+        },
+        "p": {
+          "bounds": [
+            76,
+            -187,
+            537,
+            495
+          ],
+          "advance": 583
+        },
+        "x": {
+          "bounds": [
+            44.48148148148148,
+            -6,
+            481.52,
+            493
+          ],
+          "advance": 525
+        },
+        "H": {
+          "bounds": [
+            87,
+            -7,
+            674,
+            712
+          ],
+          "advance": 761
+        },
+        "o": {
+          "bounds": [
+            46,
+            -9,
+            510,
+            495
+          ],
+          "advance": 556
+        },
+        "O": {
+          "bounds": [
+            61,
+            -9,
+            707,
+            714
+          ],
+          "advance": 767
+        }
+      }
+    },
+    {
+      "id": "inter",
+      "name": "Inter",
+      "source": "../LearningApps/fonts/inter-v20-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/inter/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/inter",
+      "copyright": "Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)",
+      "sha256": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            90,
+            -26,
+            992,
+            1132
+          ],
+          "advance": 1150,
+          "path": "M471 -26Q365 -26 278.5 14.0Q192 54 141.0 131.0Q90 208 90 318Q90 414 128.0 474.0Q166 534 229.5 568.5Q293 603 370.0 620.0Q447 637 525 647Q625 660 688.0 667.0Q751 674 781.5 691.0Q812 708 812 749V755Q812 825 786.0 873.5Q760 922 708.0 948.0Q656 974 578 974Q498 974 441.0 949.0Q384 924 348.5 886.5Q313 849 295 810L122 867Q165 969 238.0 1026.5Q311 1084 399.0 1108.0Q487 1132 573 1132Q629 1132 700.5 1118.5Q772 1105 838.5 1065.0Q905 1025 948.5 946.5Q992 868 992 737V0H815V152H803Q784 113 742.0 71.5Q700 30 633.0 2.0Q566 -26 471 -26ZM502 133Q602 133 671.0 172.0Q740 211 776.0 273.5Q812 336 812 404V559Q801 546 764.0 535.5Q727 525 679.5 517.0Q632 509 587.5 503.5Q543 498 517 495Q452 487 395.5 467.5Q339 448 305.0 410.5Q271 373 271 309Q271 251 301.0 212.0Q331 173 383.0 153.0Q435 133 502 133Z"
+        },
+        "b": {
+          "bounds": [
+            158,
+            -24,
+            1150,
+            1490
+          ],
+          "advance": 1254,
+          "path": "M677 -24Q571 -24 506.0 12.5Q441 49 406.0 95.5Q371 142 352 173H332V0H158V1490H338V939H352Q371 969 405.0 1014.5Q439 1060 503.0 1096.0Q567 1132 676 1132Q816 1132 922.5 1062.0Q1029 992 1089.5 862.5Q1150 733 1150 556Q1150 378 1090.0 248.0Q1030 118 923.5 47.0Q817 -24 677 -24ZM650 137Q755 137 825.5 193.5Q896 250 931.5 345.5Q967 441 967 558Q967 674 932.0 767.5Q897 861 826.5 916.0Q756 971 650 971Q547 971 477.0 919.0Q407 867 371.5 774.5Q336 682 336 558Q336 434 372.0 339.0Q408 244 478.5 190.5Q549 137 650 137Z"
+        },
+        "g": {
+          "bounds": [
+            104,
+            -442,
+            1098,
+            1132
+          ],
+          "advance": 1256,
+          "path": "M611 -442Q487 -442 396.5 -410.5Q306 -379 246.0 -327.0Q186 -275 151 -214L297 -120Q321 -152 356.5 -191.0Q392 -230 452.5 -257.5Q513 -285 611 -285Q745 -285 831.5 -221.0Q918 -157 918 -19V205H901Q882 173 847.5 129.0Q813 85 748.5 51.5Q684 18 576 18Q442 18 335.0 81.5Q228 145 166.0 267.0Q104 389 104 564Q104 737 165.0 864.5Q226 992 333.5 1062.0Q441 1132 580 1132Q688 1132 752.5 1096.5Q817 1061 852.0 1015.0Q887 969 906 939H923V1118H1098V-29Q1098 -173 1033.0 -264.5Q968 -356 857.5 -399.0Q747 -442 611 -442ZM606 178Q708 178 778.0 224.5Q848 271 884.0 358.5Q920 446 920 568Q920 687 884.5 777.5Q849 868 779.0 919.5Q709 971 606 971Q500 971 429.0 916.5Q358 862 322.5 771.0Q287 680 287 568Q287 453 323.0 365.0Q359 277 430.0 227.5Q501 178 606 178Z"
+        },
+        "p": {
+          "bounds": [
+            158,
+            -418,
+            1150,
+            1132
+          ],
+          "advance": 1254,
+          "path": "M158 -418V1118H332V939H352Q371 969 405.0 1014.5Q439 1060 503.0 1096.0Q567 1132 676 1132Q816 1132 922.5 1062.0Q1029 992 1089.5 862.5Q1150 733 1150 556Q1150 378 1090.0 248.0Q1030 118 923.5 47.0Q817 -24 677 -24Q571 -24 506.0 12.5Q441 49 406.0 95.5Q371 142 352 173H338V-418ZM650 137Q755 137 825.5 193.5Q896 250 931.5 345.5Q967 441 967 558Q967 674 932.0 767.5Q897 861 826.5 916.0Q756 971 650 971Q547 971 477.0 919.0Q407 867 371.5 774.5Q336 682 336 558Q336 434 372.0 339.0Q408 244 478.5 190.5Q549 137 650 137Z"
+        },
+        "x": {
+          "bounds": [
+            65,
+            0,
+            1053,
+            1118
+          ],
+          "advance": 1118,
+          "path": "M65 0 506 643 505 505 88 1118H298L437 901Q491 817 530.5 744.0Q570 671 612 603H518Q561 671 596.5 744.0Q632 817 687 901L829 1118H1035L616 497V630L1053 0H844L680 251Q627 333 588.5 403.5Q550 474 509 539H604Q563 474 528.0 403.5Q493 333 439 251L273 0Z"
+        },
+        "H": {
+          "bounds": [
+            180,
+            0,
+            1342,
+            1490
+          ],
+          "advance": 1522,
+          "path": "M180 0V1490H370V846H1152V1490H1342V0H1152V678H370V0Z"
+        },
+        "o": {
+          "bounds": [
+            104,
+            -24,
+            1124,
+            1132
+          ],
+          "advance": 1228,
+          "path": "M613 -24Q461 -24 346.5 48.0Q232 120 168.0 250.0Q104 380 104 552Q104 727 168.0 857.5Q232 988 346.5 1060.0Q461 1132 613 1132Q766 1132 881.0 1060.0Q996 988 1060.0 857.5Q1124 727 1124 552Q1124 380 1060.0 250.0Q996 120 881.0 48.0Q766 -24 613 -24ZM613 137Q726 137 799.0 195.0Q872 253 907.0 347.5Q942 442 942 552Q942 663 907.0 758.5Q872 854 799.0 912.5Q726 971 613 971Q501 971 429.0 912.5Q357 854 322.0 759.0Q287 664 287 552Q287 442 322.0 347.5Q357 253 429.0 195.0Q501 137 613 137Z"
+        },
+        "O": {
+          "bounds": [
+            122,
+            -20,
+            1444,
+            1510
+          ],
+          "advance": 1566,
+          "path": "M784 -20Q593 -20 443.5 72.5Q294 165 208.0 336.5Q122 508 122 744Q122 981 208.0 1152.5Q294 1324 443.5 1417.0Q593 1510 784 1510Q975 1510 1124.0 1417.0Q1273 1324 1358.5 1152.5Q1444 981 1444 744Q1444 508 1358.5 336.5Q1273 165 1124.0 72.5Q975 -20 784 -20ZM784 156Q917 156 1024.5 223.5Q1132 291 1195.5 422.5Q1259 554 1259 744Q1259 936 1195.5 1067.5Q1132 1199 1024.5 1266.5Q917 1334 784 1334Q650 1334 542.0 1266.0Q434 1198 370.5 1066.5Q307 935 307 744Q307 554 370.5 423.0Q434 292 542.0 224.0Q650 156 784 156Z"
+        }
+      }
+    },
+    {
+      "id": "archivoblack",
+      "name": "Archivo Black",
+      "source": "../LearningApps/fonts/archivo-black-v23-latin-regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/archivoblack/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/archivoblack",
+      "copyright": "Copyright 2017 The Archivo Black Project Authors (https://github.com/Omnibus-Type/ArchivoBlack)",
+      "sha256": "25f33e61cf995abd6be62931cf03bf427286259177b43618cc410ee0157cfd30",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            30,
+            -12,
+            662,
+            540
+          ],
+          "advance": 667
+        },
+        "b": {
+          "bounds": [
+            61,
+            -12,
+            631,
+            725
+          ],
+          "advance": 667
+        },
+        "g": {
+          "bounds": [
+            5,
+            -210,
+            654,
+            627
+          ],
+          "advance": 667
+        },
+        "p": {
+          "bounds": [
+            61,
+            -197,
+            631,
+            540
+          ],
+          "advance": 667
+        },
+        "x": {
+          "bounds": [
+            4,
+            0,
+            662,
+            528
+          ],
+          "advance": 667
+        },
+        "H": {
+          "bounds": [
+            74,
+            0,
+            759,
+            688
+          ],
+          "advance": 833
+        },
+        "o": {
+          "bounds": [
+            36,
+            -12,
+            631,
+            540
+          ],
+          "advance": 667
+        },
+        "O": {
+          "bounds": [
+            45,
+            -12,
+            788,
+            700
+          ],
+          "advance": 833
+        }
+      }
+    },
+    {
+      "id": "cardo",
+      "name": "Cardo",
+      "source": "fonts/typografie/cardo/Cardo-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/cardo/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/cardo",
+      "copyright": "Copyright (c) 2002-2011, David J. Perry (hospes02@scholarsfonts.net)",
+      "sha256": "737bdb34ce6cf40e2fab4c1c1535ec61e7fd5dedccf9bb812c3bd1adbdbb9c78",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            70,
+            -27,
+            860.0,
+            927.0
+          ],
+          "advance": 885,
+          "path": "M840 83Q690 -27 637 -27Q573 -27 533 106Q530 116 528 115Q404 22 372 3Q290 -44 207.5 -12.0Q125 20 88 94Q70 132 70 175Q70 260 133.0 310.0Q196 360 373 406Q433 422 480.0 447.0Q527 472 529.5 479.0Q532 486 532 492V684Q532 797 444 843Q415 858 374.5 858.0Q334 858 292.5 826.0Q251 794 251 735L256 696Q250 684 184.0 656.0Q118 628 108 626Q92 626 92.0 664.5Q92 703 115.0 750.0Q138 797 180 836Q278 927 404.0 927.0Q530 927 609.0 857.5Q688 788 688 692V165Q688 139 712.5 123.5Q737 108 769.0 108.0Q801 108 822.5 124.5Q844 141 852.0 141.0Q860 141 860.0 119.5Q860 98 840 83ZM532 199V402Q532 413 527.0 413.0Q522 413 520 412L288 304Q252 278 239.5 260.0Q227 242 227.0 194.0Q227 146 264.0 110.5Q301 75 348.5 75.0Q396 75 464.0 115.5Q532 156 532 199Z"
+        },
+        "b": {
+          "bounds": [
+            12.0,
+            -27,
+            989.0,
+            1645
+          ],
+          "advance": 1099,
+          "path": "M314 837Q314 806 328.5 806.0Q343 806 456 871Q588 927 657.0 927.0Q726 927 789.0 887.0Q852 847 896 782Q989 648 989.0 457.0Q989 266 856.5 119.5Q724 -27 507 -27Q366 -27 247 7Q212 17 187.5 23.0Q163 29 160.5 35.5Q158 42 158 51V1399Q158 1441 112 1457Q92 1464 69.0 1468.5Q46 1473 32.5 1477.0Q19 1481 15.5 1484.5Q12 1488 12.0 1499.5Q12 1511 27 1519L282 1639Q294 1645 297 1645Q314 1645 314 1621ZM526 805Q437 805 326 741Q314 734 314 717V244Q324 153 393.0 102.0Q462 51 544 51Q688 51 766.5 165.0Q845 279 845.0 425.0Q845 571 765.0 688.0Q685 805 526 805Z"
+        },
+        "g": {
+          "bounds": [
+            70,
+            -639,
+            1140.0,
+            929.0
+          ],
+          "advance": 1148,
+          "path": "M819 831Q819 831 1087 843Q1110 843 1117.0 838.0Q1124 833 1132.0 803.5Q1140 774 1140.0 748.0Q1140 722 1135.0 718.0Q1130 714 1115 714H893Q899 703 906.0 691.0Q913 679 924.0 651.0Q935 623 935.0 564.5Q935 506 906.5 442.5Q878 379 823 330Q701 220 507 220Q456 220 395 239Q380 223 355.0 209.5Q330 196 306 182Q246 148 246 114Q246 29 528.0 27.0Q810 25 898.5 8.5Q987 -8 1036 -57Q1113 -134 1113 -233Q1113 -318 1040 -408Q913 -567 652 -620Q559 -639 455 -639Q266 -639 168.0 -570.5Q70 -502 70 -405Q70 -352 95.0 -317.5Q120 -283 158.5 -252.5Q197 -222 243.0 -188.5Q289 -155 331 -103Q235 -95 166.5 -42.0Q98 11 98.0 62.0Q98 113 125.0 137.5Q152 162 191.0 179.5Q230 197 273.0 212.0Q316 227 348 251Q236 295 175.0 372.5Q114 450 114 542Q114 713 238.5 821.0Q363 929 539.0 929.0Q715 929 819 831ZM328 -488Q436 -568 588.0 -568.0Q740 -568 863.5 -479.5Q987 -391 987.0 -285.5Q987 -180 885 -144Q837 -128 638.0 -124.0Q439 -120 380 -113Q354 -143 326.5 -166.0Q299 -189 275.5 -212.0Q252 -235 237.0 -261.0Q222 -287 222.0 -326.5Q222 -366 250.5 -409.5Q279 -453 328 -488ZM514 883Q364 883 302 742Q278 688 278 618Q278 475 337 380Q409 266 526.0 266.0Q643 266 707.0 345.0Q771 424 771.0 565.0Q771 706 700.5 794.5Q630 883 514 883Z"
+        },
+        "p": {
+          "bounds": [
+            12,
+            -620,
+            980.0,
+            977
+          ],
+          "advance": 1090,
+          "path": "M823 105Q685 -27 513 -27Q451 -27 344 -4Q327 -4 325.5 -16.0Q324 -28 323 -41V-468Q323 -543 410 -568Q448 -578 481.0 -582.5Q514 -587 523.5 -591.0Q533 -595 533.0 -606.5Q533 -618 523 -620H22Q12 -618 12 -606Q12 -588 59 -582Q167 -566 167 -468V731Q167 773 121 789Q101 796 78.0 800.5Q55 805 41.5 809.0Q28 813 24.5 816.5Q21 820 21.0 831.5Q21 843 36 851L291 973Q299 977 307 977Q323 977 323 953V826Q323 815 334.5 815.0Q346 815 390 844Q517 926 654 926Q750 926 830 848Q935 746 970 564Q980 512 980.0 453.5Q980 395 961 330Q923 201 823 105ZM537 822Q401 822 323 744V182Q323 132 340 117Q384 79 475 58Q655 17 755 144Q826 235 826 364Q826 615 713 740Q645 816 537 822Z"
+        },
+        "x": {
+          "bounds": [
+            17,
+            0,
+            992.0,
+            900
+          ],
+          "advance": 1017,
+          "path": "M921 900Q929 900 929.0 884.0Q929 868 921 864Q844 843 798 794Q781 776 761 752L568 520Q564 513 564 507Q564 495 651.0 389.5Q738 284 891 91Q902 77 935.0 63.0Q968 49 980.0 40.5Q992 32 992.0 18.0Q992 4 980 0H586Q576 0 576.0 16.0Q576 32 592.5 34.5Q609 37 630 40Q683 48 683 82Q683 105 658 133L486 349Q478 360 473.5 366.0Q469 372 456.0 372.0Q443 372 435.5 361.5Q428 351 420 343L263 154Q242 130 242.0 98.0Q242 66 283.5 47.5Q325 29 357 29Q364 29 364 14Q364 0 357 0H36Q20 0 20 18Q20 32 75.5 58.0Q131 84 143 98L420 431Q419 433 416.5 436.0Q414 439 405.0 450.0Q396 461 377.0 484.5Q358 508 276.5 608.5Q195 709 105 821Q93 834 55.0 850.5Q17 867 17 880Q19 900 41 900H413Q421 900 420.5 887.5Q420 875 405.0 871.5Q390 868 372 862Q324 848 324 813Q324 790 333 781L488 589Q496 580 504.5 569.5Q513 559 519.5 559.0Q526 559 534 569L681 740Q706 769 706.0 798.0Q706 827 690.0 838.5Q674 850 654.5 855.5Q635 861 619.0 866.0Q603 871 603.0 885.5Q603 900 614 900Z"
+        },
+        "H": {
+          "bounds": [
+            60,
+            0,
+            1652,
+            1410
+          ],
+          "advance": 1712,
+          "path": "M1457 181Q1457 46 1644 40Q1652 40 1652 32V8Q1652 0 1644 0H1008Q1000 0 1000 8V32Q1000 40 1050.0 40.0Q1100 40 1164 62Q1262 94 1262 170V647Q1262 657 1259.0 660.0Q1256 663 1246 663H458Q448 663 445.0 660.0Q442 657 442 647V160Q442 40 619 40Q627 40 627 32V8Q627 0 620 0H68Q60 0 60 8V32Q60 40 80 40Q247 40 247 183V1250Q247 1367 108 1374Q87 1375 87 1383V1402Q87 1410 94 1410H596Q604 1410 604 1402V1383Q604 1377 585 1377Q442 1377 442 1236V774Q442 764 445.0 761.0Q448 758 458 758H1246Q1256 758 1259.0 761.0Q1262 764 1262 774V1252Q1260 1261 1259.5 1268.5Q1259 1276 1256 1292Q1249 1326 1185.0 1347.5Q1121 1369 1040 1375Q1032 1375 1032 1383V1402Q1032 1410 1039 1410H1616Q1624 1410 1624 1402V1383Q1624 1377 1605 1377Q1457 1377 1457 1236Z"
+        },
+        "o": {
+          "bounds": [
+            75.0,
+            -27.0,
+            1032.0,
+            929.0
+          ],
+          "advance": 1107,
+          "path": "M75.0 449.5Q75 646 214.5 787.5Q354 929 549.0 929.0Q744 929 888.0 791.5Q1032 654 1032.0 452.0Q1032 250 895.5 111.5Q759 -27 553.0 -27.0Q347 -27 211.0 113.0Q75 253 75.0 449.5ZM324 192Q422 27 591 27Q722 27 791.5 132.0Q861 237 861.0 390.0Q861 543 763.5 704.0Q666 865 501 865Q380 865 310.5 760.5Q241 656 241.0 495.5Q241 335 324 192Z"
+        },
+        "O": {
+          "bounds": [
+            110,
+            -27,
+            1660.0,
+            1452.0
+          ],
+          "advance": 1770,
+          "path": "M909 -27Q745 -27 596 26Q392 100 268 245Q110 430 110 714Q110 919 215.0 1087.5Q320 1256 505.5 1354.0Q691 1452 904.5 1452.0Q1118 1452 1287.0 1357.0Q1456 1262 1558.0 1096.0Q1660 930 1660.0 736.5Q1660 543 1559.0 368.5Q1458 194 1282 86Q1195 33 1092.0 3.0Q989 -27 909 -27ZM921 47Q1177 47 1320 243Q1449 420 1449.0 695.0Q1449 970 1291 1169Q1214 1266 1102.5 1324.5Q991 1383 877.5 1383.0Q764 1383 691.5 1358.0Q619 1333 560.0 1289.5Q501 1246 456.0 1186.0Q411 1126 381 1056Q320 912 320.0 746.0Q320 580 393.5 416.5Q467 253 604.0 150.0Q741 47 921 47Z"
+        }
+      }
+    },
+    {
+      "id": "ebgaramond",
+      "name": "EB Garamond",
+      "source": "fonts/typografie/ebgaramond/EBGaramond[wght].woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/ebgaramond/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/ebgaramond",
+      "copyright": "Copyright 2017 The EB Garamond Project Authors (https://github.com/octaviopardo/EBGaramond12)",
+      "sha256": "2d8b500a66a0dfd85d002f6d0d418f6e58b82c99a6e6b39676de1f005d7c5c22",
+      "unitsPerEm": 1000,
+      "axes": {
+        "wght": 400
+      },
+      "glyphs": {
+        "a": {
+          "bounds": [
+            37,
+            -14,
+            398,
+            414
+          ],
+          "advance": 399.0,
+          "path": "M117 -14Q99 -14 80.5 0.0Q62 14 49.5 34.0Q37 54 37 72Q37 104 54.0 122.0Q71 140 108 155L210 197Q230 205 233.5 211.0Q237 217 238 237L240 301Q241 327 225.5 346.0Q210 365 181 365Q166 365 151.0 360.0Q136 355 126 347Q120 343 118.0 335.0Q116 327 116 318Q116 314 116.5 309.0Q117 304 117 300Q117 295 104.5 286.5Q92 278 76.5 271.5Q61 265 51 265Q46 265 43.0 267.5Q40 270 40 274Q40 290 50.5 308.5Q61 327 80 343Q103 364 130.0 380.0Q157 396 183.0 405.0Q209 414 229 414Q265 414 288.5 388.5Q312 363 311 325L306 85Q305 64 315.5 51.0Q326 38 342 38Q367 38 379 49Q384 54 387 54Q392 54 395.0 51.0Q398 48 398 43Q398 32 387 21Q371 5 352.5 -4.5Q334 -14 318 -14Q272 -14 245 38H242Q209 11 179.0 -1.5Q149 -14 117 -14ZM164 34Q184 34 198.0 40.5Q212 47 223 58Q228 63 231.5 71.5Q235 80 236 99L238 148Q239 159 237.0 164.0Q235 169 229 169Q227 169 222.0 168.0Q217 167 209 164Q156 145 135.5 124.5Q115 104 115 87Q115 61 130.5 47.5Q146 34 164 34Z"
+        },
+        "b": {
+          "bounds": [
+            16,
+            -14,
+            480,
+            705
+          ],
+          "advance": 515.0,
+          "path": "M259 -14Q237 -14 215.0 -10.0Q193 -6 173 -1Q151 5 134.5 10.0Q118 15 113 15Q107 15 101.5 11.0Q96 7 91 2Q86 -3 82 -3Q78 -3 73.0 0.5Q68 4 68 9Q68 18 71.5 40.0Q75 62 75 81V566Q75 592 62.0 611.0Q49 630 29 639Q25 641 20.5 644.5Q16 648 16 654Q16 659 20.0 661.0Q24 663 28 664Q41 667 63.5 675.0Q86 683 106.0 691.0Q126 699 133 702Q139 705 142 705Q144 705 146.0 703.0Q148 701 148 698Q148 694 146.5 664.5Q145 635 145 593V388Q145 369 147.0 362.5Q149 356 154 355Q185 381 226.0 397.5Q267 414 300 414Q351 414 391.5 388.0Q432 362 456.0 317.5Q480 273 480 217Q480 149 452.0 96.5Q424 44 374.5 15.0Q325 -14 259 -14ZM282 17Q320 17 347.5 40.5Q375 64 390.0 104.5Q405 145 405 195Q405 234 390.5 275.0Q376 316 345.5 344.0Q315 372 267 372Q227 372 197.0 359.0Q167 346 145 326V132Q145 97 164.5 71.0Q184 45 215.5 31.0Q247 17 282 17Z"
+        },
+        "g": {
+          "bounds": [
+            11,
+            -290,
+            441,
+            416
+          ],
+          "advance": 435.0,
+          "path": "M195 -290Q110 -290 60.5 -257.5Q11 -225 11 -170Q11 -144 19.0 -126.0Q27 -108 44 -95Q58 -83 81.5 -64.5Q105 -46 130 -26L172 -28Q124 -59 105.0 -87.0Q86 -115 86 -155Q86 -195 121.5 -222.5Q157 -250 209 -250Q268 -250 304 -223Q329 -204 343.0 -173.5Q357 -143 357 -109Q357 -87 341.5 -72.5Q326 -58 293.0 -49.0Q260 -40 207 -37Q113 -30 76.5 -12.0Q40 6 40 44Q40 54 45.5 62.5Q51 71 63 81Q86 99 97.0 107.5Q108 116 113.5 122.0Q119 128 124 137L158 120Q136 112 121.0 98.5Q106 85 106 74Q106 60 121.0 49.5Q136 39 165.0 33.0Q194 27 236 24Q328 19 373.0 -6.0Q418 -31 418 -77Q418 -116 398.5 -153.5Q379 -191 347.0 -222.0Q315 -253 275.5 -271.5Q236 -290 195 -290ZM207 141Q245 141 270.0 179.5Q295 218 295 275Q295 304 281.5 329.5Q268 355 246.5 370.5Q225 386 200 386Q177 386 156.5 369.5Q136 353 123.5 327.0Q111 301 111 270Q111 235 124.0 205.5Q137 176 159.0 158.5Q181 141 207 141ZM201 106Q160 106 123.0 127.0Q86 148 62.5 182.5Q39 217 39 258Q39 305 63.5 340.5Q88 376 128.0 396.0Q168 416 213 416Q242 416 263.5 408.5Q285 401 306 395Q330 388 344.0 386.5Q358 385 373 385Q385 385 403.0 386.5Q421 388 428 388Q441 388 441 373Q441 364 431 354Q426 349 423 349H396Q369 349 366 341Q365 337 363.5 329.5Q362 322 361.0 313.0Q360 304 360 295Q360 244 338.0 201.0Q316 158 280.0 132.0Q244 106 201 106Z"
+        },
+        "p": {
+          "bounds": [
+            19,
+            -285,
+            484,
+            426
+          ],
+          "advance": 519.0,
+          "path": "M40 -285Q35 -285 27.0 -283.5Q19 -282 19 -276Q19 -268 26.5 -264.5Q34 -261 42 -258Q57 -253 71.0 -246.5Q85 -240 85 -220V287Q85 295 80.5 311.0Q76 327 66.0 342.0Q56 357 39 360Q35 361 33.0 365.0Q31 369 31 373Q31 378 33.0 381.0Q35 384 38 385Q76 394 103.0 404.5Q130 415 154 425Q155 425 155.0 425.5Q155 426 156 426Q158 426 160.0 423.0Q162 420 162 417Q162 408 159.5 388.5Q157 369 157 357Q157 349 158 348Q168 358 194.5 373.5Q221 389 255.0 401.5Q289 414 320 414Q372 414 408.5 386.5Q445 359 464.5 315.5Q484 272 484 225Q484 180 467.0 137.5Q450 95 419.0 61.0Q388 27 347.0 6.5Q306 -14 259 -14Q245 -14 225.5 -9.5Q206 -5 187.5 2.0Q169 9 159 18Q158 18 157.0 6.5Q156 -5 155.5 -17.5Q155 -30 155 -33V-220Q155 -233 165.5 -240.5Q176 -248 189.5 -251.5Q203 -255 213 -258Q221 -261 228.5 -264.5Q236 -268 236 -276Q236 -282 228.0 -283.5Q220 -285 214 -285Q185 -285 165.5 -282.5Q146 -280 120 -280Q103 -280 92.5 -281.0Q82 -282 71.0 -283.5Q60 -285 40 -285ZM274 17Q289 17 310.5 26.0Q332 35 353.5 55.0Q375 75 389.5 109.0Q404 143 404 193Q404 251 389.0 286.0Q374 321 352.0 339.0Q330 357 307.0 363.0Q284 369 268 369Q244 369 218.5 359.0Q193 349 175.5 336.5Q158 324 158 317Q158 295 157.5 272.5Q157 250 156.5 229.0Q156 208 155.5 191.5Q155 175 155 166Q155 126 173.5 92.0Q192 58 219.5 37.5Q247 17 274 17Z"
+        },
+        "x": {
+          "bounds": [
+            10,
+            -4,
+            425,
+            405
+          ],
+          "advance": 430.0,
+          "path": "M30 -4Q24 -4 17.0 -2.5Q10 -1 10 5Q10 13 17.5 17.0Q25 21 33 23Q48 28 63.5 39.5Q79 51 100 80L177 187Q184 195 183.5 199.5Q183 204 179 210L97 335Q85 355 75.5 364.0Q66 373 51 377Q43 379 35.5 383.0Q28 387 28 395Q28 403 37.5 403.5Q47 404 51 404Q71 404 78.5 403.0Q86 402 96.0 401.0Q106 400 130 400Q148 400 156.0 401.0Q164 402 181 402Q185 402 194.5 401.5Q204 401 204 393Q204 387 198.5 384.0Q193 381 186 379Q179 377 172.0 373.5Q165 370 165 362Q165 357 168.5 348.5Q172 340 178 330L224 261Q228 254 233 261L284 338Q288 343 290.0 349.0Q292 355 292 360Q292 372 279 376Q271 379 263.5 383.0Q256 387 256 394Q256 402 265.5 402.5Q275 403 279 403Q287 403 302.0 401.5Q317 400 329 400Q357 400 368.0 402.5Q379 405 392 405Q398 405 405.0 403.5Q412 402 412 396Q412 389 404.5 385.0Q397 381 389 378Q374 374 353.0 362.5Q332 351 318 331L255 236Q254 234 253.5 230.5Q253 227 256 223L353 65Q365 46 376.0 37.0Q387 28 402 23Q410 21 417.5 17.0Q425 13 425 5Q425 -1 418.0 -2.5Q411 -4 405 -4Q385 -4 376.0 -3.0Q367 -2 356.5 -1.0Q346 0 321 0Q303 0 284.0 -1.0Q265 -2 248 -2Q225 -2 225 8Q225 17 231.5 21.0Q238 25 250 28Q261 31 269.5 36.5Q278 42 278 52Q278 56 276.5 60.5Q275 65 272 70L213 166Q210 169 207 166L141 67Q140 65 138.0 59.5Q136 54 136 48Q136 41 139.5 34.5Q143 28 150 26Q158 23 165.5 19.5Q173 16 173 8Q173 1 163.5 0.0Q154 -1 150 -1Q142 -1 125.5 0.0Q109 1 97 1Q69 1 56.5 -1.5Q44 -4 30 -4Z"
+        },
+        "H": {
+          "bounds": [
+            37,
+            -5,
+            770,
+            653
+          ],
+          "advance": 810.0,
+          "path": "M66 -5Q53 -5 45.0 -1.5Q37 2 37 8Q37 18 69 24Q107 31 118.5 47.0Q130 63 130 99V551Q130 586 122.5 600.5Q115 615 77 622Q44 628 44 640Q44 646 51.0 649.5Q58 653 73 653Q100 653 115.0 652.0Q130 651 143.0 650.5Q156 650 176 650Q197 650 210.5 650.5Q224 651 239.5 652.0Q255 653 282 653Q311 653 311 640Q311 633 303.0 629.0Q295 625 278 622Q241 615 225.5 597.5Q210 580 210 551V354Q210 348 215.0 346.5Q220 345 224 345H595Q602 345 602 357V552Q602 579 588.0 597.0Q574 615 536 622Q519 625 511.0 629.0Q503 633 503 640Q503 653 532 653Q559 653 576.5 652.0Q594 651 610.0 650.5Q626 650 648 650Q666 650 676.0 650.5Q686 651 699.0 652.0Q712 653 739 653Q753 653 760.5 649.5Q768 646 768 640Q768 628 735 622Q698 615 690.0 598.0Q682 581 682 552V100Q682 63 691.5 47.0Q701 31 738 24Q770 18 770 8Q770 2 762.0 -1.5Q754 -5 741 -5Q714 -5 699.0 -3.5Q684 -2 671.0 -1.0Q658 0 637 0Q616 0 602.5 -1.0Q589 -2 573.0 -3.5Q557 -5 530 -5Q517 -5 509.0 -1.5Q501 2 501 8Q501 15 508.5 18.0Q516 21 533 24Q565 30 583.5 47.5Q602 65 602 97V292Q602 297 602.0 302.0Q602 307 597 307H215Q210 307 210 296V106Q210 75 233.0 52.5Q256 30 290 24Q307 21 314.5 18.0Q322 15 322 8Q322 2 314.0 -1.5Q306 -5 293 -5Q266 -5 248.5 -3.5Q231 -2 215.0 -1.0Q199 0 176 0Q155 0 140.5 -1.0Q126 -2 109.5 -3.5Q93 -5 66 -5Z"
+        },
+        "o": {
+          "bounds": [
+            35,
+            -14,
+            460,
+            414
+          ],
+          "advance": 495.0,
+          "path": "M234 -14Q178 -14 133.0 12.0Q88 38 61.5 83.5Q35 129 35 187Q35 229 51.5 269.0Q68 309 98.0 342.0Q128 375 168.0 394.5Q208 414 254 414Q312 414 358.5 386.0Q405 358 432.5 312.5Q460 267 460 213Q460 155 434.5 103.0Q409 51 359.0 18.5Q309 -14 234 -14ZM255 16Q289 16 316.0 29.0Q343 42 358 71Q370 94 374.0 127.0Q378 160 378 189Q378 237 360.5 281.5Q343 326 311.5 354.5Q280 383 237 383Q210 383 188.5 374.5Q167 366 149 343Q129 318 123.0 282.0Q117 246 117 210Q117 161 135.0 116.5Q153 72 184.0 44.0Q215 16 255 16Z"
+        },
+        "O": {
+          "bounds": [
+            45,
+            -14,
+            718,
+            664
+          ],
+          "advance": 763.0,
+          "path": "M377 -14Q311 -14 251.0 9.5Q191 33 145.0 76.5Q99 120 72.0 180.5Q45 241 45 315Q45 383 67.0 445.5Q89 508 132.0 557.0Q175 606 239.0 635.0Q303 664 386 664Q452 664 512.0 640.5Q572 617 618.0 573.5Q664 530 691.0 469.5Q718 409 718 335Q718 268 696.0 205.0Q674 142 631.0 93.0Q588 44 524.0 15.0Q460 -14 377 -14ZM392 26Q469 26 520.0 58.5Q571 91 596.5 149.5Q622 208 622 286Q622 355 606.0 416.0Q590 477 558.5 523.5Q527 570 480.0 596.0Q433 622 370 622Q295 622 244.0 590.0Q193 558 167.0 500.5Q141 443 141 365Q141 295 156.5 234.0Q172 173 203.5 126.0Q235 79 282.0 52.5Q329 26 392 26Z"
+        }
+      }
+    },
+    {
+      "id": "librebodoni",
+      "name": "Libre Bodoni",
+      "source": "fonts/typografie/librebodoni/LibreBodoni[wght].woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/librebodoni/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/librebodoni",
+      "copyright": "Copyright 2012 The Libre Bodoni Project Authors (https://github.com/googlefonts/Libre-Bodoni/)",
+      "sha256": "7a66c1136b0075edfff0f863407a0493fae83e62efdd12200b129dc4c4fc86c7",
+      "unitsPerEm": 1000,
+      "axes": {
+        "wght": 400
+      },
+      "glyphs": {
+        "a": {
+          "bounds": [
+            41,
+            -12,
+            505,
+            462
+          ],
+          "advance": 506.0,
+          "path": "M163 -12Q109 -12 75.0 19.0Q41 50 41 100Q41 148 73.5 182.0Q106 216 166.0 234.5Q226 253 308 253V375Q308 401 288.0 416.0Q268 431 233 431Q203 431 184.0 421.0Q165 411 165 395Q165 385 172.0 377.0Q179 369 179 352Q179 331 163.5 317.5Q148 304 124 304Q100 304 86.0 318.5Q72 333 72 355Q72 385 96.0 409.5Q120 434 161.0 448.0Q202 462 253 462Q326 462 372.0 433.5Q418 405 418 359V55Q418 45 424.5 38.5Q431 32 440 32Q449 32 461.0 41.5Q473 51 491 71L505 55Q458 -12 400 -12Q365 -12 342.5 7.5Q320 27 312 62H308Q289 30 248.0 9.0Q207 -12 163 -12ZM223 43Q261 43 284.5 71.5Q308 100 308 146V227Q233 227 195.0 199.5Q157 172 157 119Q157 83 174.5 63.0Q192 43 223 43Z"
+        },
+        "b": {
+          "bounds": [
+            4,
+            -12,
+            524,
+            754
+          ],
+          "advance": 570.0,
+          "path": "M330 -12Q284 -12 249.0 8.0Q214 28 197 58H173L193 210Q193 113 229.0 67.5Q265 22 319 22Q347 22 364.0 38.0Q381 54 388.5 98.0Q396 142 396 224Q396 307 388.0 351.0Q380 395 363.0 411.5Q346 428 318 428Q264 428 228.5 383.0Q193 338 193 240L173 392H197Q214 422 249.5 442.0Q285 462 331 462Q381 462 425.0 432.5Q469 403 496.5 349.5Q524 296 524 225Q524 154 496.5 100.5Q469 47 424.5 17.5Q380 -12 330 -12ZM4 0V25H193V0ZM83 15V738H193V15ZM4 729V754H193V729Z"
+        },
+        "g": {
+          "bounds": [
+            43,
+            -326,
+            504,
+            462
+          ],
+          "advance": 518.0,
+          "path": "M240 -326Q184 -326 139.0 -307.0Q94 -288 68.5 -255.0Q43 -222 43 -181Q43 -144 63.5 -113.0Q84 -82 120 -63V-59Q83 -43 65.0 -15.5Q47 12 47 52Q47 102 75.5 131.0Q104 160 156 165Q119 187 95.0 223.5Q71 260 71 301Q71 343 95.0 379.5Q119 416 158.0 439.0Q197 462 242 462Q280 462 313.5 445.5Q347 429 371 402Q382 429 403.0 445.5Q424 462 450 462Q474 462 489.0 448.5Q504 435 504 414Q504 395 493.0 383.5Q482 372 463 372Q445 372 438.5 381.5Q432 391 427.5 400.0Q423 409 411 409Q403 409 398.5 401.5Q394 394 392 375Q403 358 408.5 339.5Q414 321 414 301Q414 260 390.0 223.0Q366 186 326.5 163.5Q287 141 242 141H179Q139 141 113.0 125.0Q87 109 87 82Q87 63 102.0 51.5Q117 40 142 40H349Q392 40 419.0 26.5Q446 13 459.0 -16.0Q472 -45 472 -90Q472 -161 443.0 -214.0Q414 -267 362.0 -296.5Q310 -326 240 -326ZM249 -296Q297 -296 338.5 -273.0Q380 -250 405.5 -212.5Q431 -175 431 -132Q431 -99 415.0 -80.5Q399 -62 370 -62H159Q141 -75 128.0 -107.5Q115 -140 115 -172Q115 -226 153.0 -261.0Q191 -296 249 -296ZM241 168Q269 168 284.0 179.5Q299 191 305.0 220.0Q311 249 311 300Q311 351 305.0 379.0Q299 407 284.0 418.5Q269 430 241 430Q214 430 199.5 419.0Q185 408 179.5 380.0Q174 352 174 300Q174 248 179.5 219.5Q185 191 199.5 179.5Q214 168 241 168Z"
+        },
+        "p": {
+          "bounds": [
+            9,
+            -314,
+            529,
+            462
+          ],
+          "advance": 578.0,
+          "path": "M335 -12Q289 -12 254.0 8.0Q219 28 202 58H178L198 210Q198 113 234.0 67.5Q270 22 324 22Q352 22 369.0 38.0Q386 54 393.5 98.0Q401 142 401 224Q401 307 393.0 351.0Q385 395 368.0 411.5Q351 428 323 428Q269 428 233.5 383.0Q198 338 198 240L178 392H202Q219 422 254.5 442.0Q290 462 336 462Q386 462 430.0 432.5Q474 403 501.5 349.5Q529 296 529 225Q529 154 501.5 100.5Q474 47 429.5 17.5Q385 -12 335 -12ZM19 -314V-289H298V-314ZM88 -299V434H198V-299ZM9 425V450H198V425Z"
+        },
+        "x": {
+          "bounds": [
+            -11,
+            0,
+            522,
+            450
+          ],
+          "advance": 506.0,
+          "path": "M340 15 33 440H166L477 15ZM-9 0V25H189V0ZM67 18 217 226 235 202 103 18ZM274 0V25H522V0ZM-11 425V450H237V425ZM269 228 248 249 380 432H416ZM309 425V450H497V425Z"
+        },
+        "H": {
+          "bounds": [
+            13,
+            0,
+            789,
+            754
+          ],
+          "advance": 801.0,
+          "path": "M13 0V25H123V729H13V754H367V729H257V400H545V729H435V754H789V729H679V25H789V0H435V25H545V375H257V25H367V0Z"
+        },
+        "o": {
+          "bounds": [
+            46,
+            -12,
+            516,
+            462
+          ],
+          "advance": 562.0,
+          "path": "M281 -12Q232 -12 189.5 8.0Q147 28 114.5 61.5Q82 95 64.0 137.5Q46 180 46 225Q46 270 64.0 312.5Q82 355 114.5 388.5Q147 422 189.5 442.0Q232 462 281 462Q330 462 372.5 442.0Q415 422 447.5 388.5Q480 355 498.0 312.5Q516 270 516 225Q516 180 498.0 137.5Q480 95 447.5 61.5Q415 28 372.5 8.0Q330 -12 281 -12ZM281 18Q319 18 342.0 35.0Q365 52 375.5 96.5Q386 141 386 225Q386 309 375.5 354.0Q365 399 342.0 415.5Q319 432 281 432Q243 432 220.0 415.5Q197 399 186.5 354.0Q176 309 176 225Q176 141 186.5 96.5Q197 52 220.0 35.0Q243 18 281 18Z"
+        },
+        "O": {
+          "bounds": [
+            44,
+            -12,
+            738,
+            766
+          ],
+          "advance": 782.0,
+          "path": "M391 -12Q318 -12 255.0 19.0Q192 50 144.5 104.5Q97 159 70.5 229.0Q44 299 44 377Q44 455 70.5 525.0Q97 595 144.5 649.5Q192 704 255.0 735.0Q318 766 391 766Q464 766 527.0 735.0Q590 704 637.5 649.5Q685 595 711.5 525.0Q738 455 738 377Q738 299 711.5 229.0Q685 159 637.5 104.5Q590 50 527.0 19.0Q464 -12 391 -12ZM391 18Q442 18 477.5 34.5Q513 51 535.5 91.0Q558 131 568.0 201.0Q578 271 578 378Q578 485 568.0 555.0Q558 625 535.5 664.5Q513 704 477.5 720.0Q442 736 391 736Q340 736 304.5 720.0Q269 704 246.5 664.0Q224 624 214.0 554.0Q204 484 204 377Q204 270 214.0 200.0Q224 130 246.5 90.0Q269 50 304.5 34.0Q340 18 391 18Z"
+        }
+      }
+    },
+    {
+      "id": "sourcesans3",
+      "name": "Source Sans 3",
+      "source": "fonts/typografie/sourcesans3/SourceSans3[wght].woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/sourcesans3/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/sourcesans3",
+      "copyright": "© 2023 Adobe (http://www.adobe.com/), with Reserved Font Name ‘Source’",
+      "sha256": "36fcee7aaf0d14f3f6a9e0ec085f1bb01b1029ad1f1f294819d2e299a1518ad1",
+      "unitsPerEm": 1000,
+      "axes": {
+        "wght": 400
+      },
+      "glyphs": {
+        "a": {
+          "bounds": [
+            51.413260194776385,
+            -12,
+            432.8269122032507,
+            497.97340124770767
+          ],
+          "advance": 504.4001567254792,
+          "path": "M194.31996865490416 -12Q153.63993730980832 -12 121.21992947353436 4.260023508821876Q88.79992163726041 20.52004701764375 70.1065909160184 51.47340124770764Q51.413260194776385 82.42675547777154 51.413260194776385 126.20007836273959Q51.413260194776385 208.0400940352875 123.42655957092256 250.15343259280348Q195.43985894706873 292.26677115031947 350.69313481439303 309.0400940352875Q350.4664576993611 339.4533542300639 341.9664576993611 367.02659875229233Q333.4664576993611 394.5998432745208 311.4531583232149 411.73978058432914Q289.4398589470687 428.87971789413746 249.86661442484026 428.87971789413746Q208.06669278757985 428.87971789413746 171.05339341143366 413.3664185179913Q134.0400940352875 397.8531191418451 104.90670846012777 379.0131034692972L72.95990596471249 435.3600626901917Q95.31996865490416 450.4267554777715 125.0 464.9267554777715Q154.68003134509584 479.4267554777715 189.9067084601278 488.7000783627396Q225.13338557515974 497.97340124770767 264.1333855751597 497.97340124770767Q323.2000783627396 497.97340124770767 360.41345610162534 473.28007052646564Q397.6268338405111 448.5867398052236 415.2268730218809 403.60003918136977Q432.8269122032507 358.613338557516 432.8269122032507 297.73322884968053V0H364.5065517346486L358.0531975045847 57.86661442484028H354.8265203895528Q319.6665360621007 29.09329153987222 279.76657524347047 8.54664576993611Q239.86661442484026 -12 194.31996865490416 -12ZM217.17347961044723 56.48034479605418Q252.5867398052236 56.48034479605418 284.07999216372605 72.26696705716842Q315.5732445222285 88.05358931828265 350.69313481439303 118.85351095554306V249.91981192942498Q269 240.37316615948887 221.30011754410938 224.47320534085867Q173.60023508821877 208.57324452222846 153.04028994213647 185.62663793366215Q132.48034479605417 162.68003134509584 132.48034479605417 131.4934482653514Q132.48034479605417 91.21357364573473 157.31361282710452 73.84695922089446Q182.14688085815487 56.48034479605418 217.17347961044723 56.48034479605418Z"
+        },
+        "b": {
+          "bounds": [
+            82.01644990389914,
+            -12,
+            507.34331330457496,
+            712.4323078289837
+          ],
+          "advance": 553.4555027377957,
+          "path": "M296.8152659462698 -12Q263.18325410669354 -12 227.07517714944763 4.5Q190.9671001922017 21 158.17502915474395 50.20792896254224H155.43905283389654L147.75917122965947 0H82.01644990389914V712.4323078289837H164.2707686840655V517.5676921710163L161.53479236321806 430.3994080211853Q195.1189344381336 459.45550273779565 234.387070593261 478.7756211335586Q273.65520674838837 498.0957395293215 314.2393488233039 498.0957395293215Q377.0314198607616 498.0957395293215 420.08340210139716 467.543757288686Q463.13538434203275 436.99177504805044 485.2393488233039 381.43979280741485Q507.34331330457496 325.8878105667793 507.34331330457496 250.78384608550817Q507.34331330457496 167.94390528338965 477.6593192243631 109.15594672190667Q447.97532514415127 50.36798816042371 400.1593192243631 19.183994080211853Q352.34331330457496 -12 296.8152659462698 -12ZM282.6237868876267 57.21467396745514Q322.84816575406813 57.21467396745514 354.38443806432286 80.27488116004028Q385.9207103745776 103.3350883526254 404.1368642890694 146.50337250245644Q422.35301820356125 189.67165665228748 422.35301820356125 249.67988160423707Q422.35301820356125 303.32011839576296 409.2969234869509 343.67239662580585Q396.24082877034056 384.02467485584873 368.1005919788147 406.4528702088576Q339.9603551872888 428.8810655618664 294.2079289625422 428.8810655618664Q263.83171585016896 428.8810655618664 231.39940802118534 412.34890572758644Q198.9671001922017 395.81674589330646 164.2707686840655 362.54449726220435V107.75917122965947Q196.3350883526254 80.22289891940471 227.6873665826683 68.71878644342993Q259.0396448127112 57.21467396745514 282.6237868876267 57.21467396745514Z"
+        },
+        "g": {
+          "bounds": [
+            45.16828414983104,
+            -223.6963315081362,
+            492.0792896254224,
+            498.0957395293215
+          ],
+          "advance": 504.2872185879646,
+          "path": "M246.32011839576293 -223.6963315081362Q186.79207103745776 -223.6963315081362 141.32011839576293 -208.35227823004288Q95.8481657540681 -193.0082249519496 70.50822495194957 -164.1121894332207Q45.16828414983104 -135.21615391449183 45.16828414983104 -93.37621311237328Q45.16828414983104 -61.744201272796985 64.11630190919547 -33.504112475974786Q83.06431966855992 -5.2640236791525865 116.43230782898362 16.528047358305173V20.528047358305173Q98.06431966855992 32.63201183957629 85.51233742792436 52.18399408021185Q72.9603551872888 71.73597632084741 72.9603551872888 100.20792896254224Q72.9603551872888 130.6320118395763 90.35639070601768 154.05198224063557Q107.75242622474656 177.47195264169483 126.43230782898362 190.41585792508448V194.41585792508448Q102.59236702686509 213.67988160423707 83.04038478622954 247.81189344381335Q63.48840254559397 281.94390528338965 63.48840254559397 324.94390528338965Q63.48840254559397 378.0957395293215 88.61630190919547 417.0157099303808Q113.74420127279699 455.9356803314401 155.16005919788145 477.0157099303808Q196.57591712296593 498.0957395293215 245.8878105667793 498.0957395293215Q266.255798727203 498.0957395293215 283.9117454491097 494.7797336095334Q301.56769217101635 491.46372768974527 314.511597454406 486.0957395293215H484.0792896254224V422.76887612864573H382.7988160423707V418.76887612864573Q400.5430173151677 402.97680509118794 412.2071889890239 378.9685801392384Q423.87136066288014 354.9603551872888 423.87136066288014 322Q423.87136066288014 270.32011839576296 400.0314198607616 232.74008879682222Q376.1914790586431 195.16005919788148 335.8795856148297 174.68399408021185Q295.56769217101635 154.20792896254224 245.8878105667793 154.20792896254224Q228.19970401059265 154.20792896254224 209.32760337419415 158.55198224063557Q190.45550273779568 162.8960355187289 173.45550273779568 170.68810655618665Q160.76739618160903 159.8960355187289 151.63127186605794 146.81189344381335Q142.49514755050689 133.72775136889783 142.49514755050689 113.24757377525344Q142.49514755050689 90.29544353991422 160.89118306923575 75.39529554521054Q179.28721858796465 60.49514755050688 227.66343170033792 60.49514755050688H322.255798727203Q407.4076329731349 60.49514755050688 449.7434612992787 32.8392008286002Q492.0792896254224 5.183254106693518 492.0792896254224 -55.60059197881467Q492.0792896254224 -100.75242622474656 461.9513902618209 -138.90837294665323Q431.8234908982194 -177.06431966855993 376.61967441165194 -200.38032558834806Q321.4158579250845 -223.6963315081362 246.32011839576293 -223.6963315081362ZM245.8878105667793 209.43905283389654Q273.89603551872887 209.43905283389654 297.2722486311021 223.5751771494476Q320.6484617434754 237.71130146499868 334.91659789860284 263.6394968180075Q349.1847340537302 289.56769217101635 349.1847340537302 324.94390528338965Q349.1847340537302 378.9042604706785 319.0164499038992 408.67650910178065Q288.84816575406813 438.44875773288277 245.8878105667793 438.44875773288277Q202.9274553794905 438.44875773288277 172.75917122965947 408.67650910178065Q142.59088707982843 378.9042604706785 142.59088707982843 324.94390528338965Q142.59088707982843 289.56769217101635 156.8590232349558 263.6394968180075Q171.12715939008316 237.71130146499868 194.50337250245644 223.5751771494476Q217.87958561482972 209.43905283389654 245.8878105667793 209.43905283389654ZM257.8878105667793 -166.9932549950871Q304.2161539144918 -166.9932549950871 338.54038478622954 -152.96109516080713Q372.86461565796725 -138.92893532652718 392.18473405373015 -116.10470445478946Q411.5048524494931 -93.28047358305173 411.5048524494931 -67.90426047067845Q411.5048524494931 -34 386.4207103745776 -20.783846085508188Q361.3365682996621 -7.567692171016372 313.53627231025473 -7.567692171016372H229.66343170033792Q216.09573952932155 -7.567692171016372 199.64772176995712 -5.751686251228225Q183.19970401059265 -3.9356803314400786 166.51159745440603 -0.3036684918637853Q140.4472777858461 -18.783846085508188 128.67914163071873 -39.7400887968222Q116.91100547559135 -60.69633150813621 116.91100547559135 -81.8085209413569Q116.91100547559135 -120.97680509118794 154.52319490881206 -143.98503004313753Q192.13538434203275 -166.9932549950871 257.8878105667793 -166.9932549950871Z"
+        },
+        "p": {
+          "bounds": [
+            82.01644990389914,
+            -205.0725446205095,
+            507.34331330457496,
+            498.0957395293215
+          ],
+          "advance": 554.7195264169483,
+          "path": "M82.01644990389914 -205.0725446205095V486.0957395293215H149.9671001922017L156.91100547559137 429.9835500961008H159.64698179643878Q192.70307651304913 457.87958561482975 232.6271593900832 477.98766257207564Q272.55124226711723 498.0957395293215 314.6073369837276 498.0957395293215Q377.3994080211853 498.0957395293215 420.267396181609 467.543757288686Q463.13538434203275 436.99177504805044 485.2393488233039 381.255798727203Q507.34331330457496 325.5198224063556 507.34331330457496 250.41585792508448Q507.34331330457496 167.57591712296593 477.6593192243631 108.97195264169483Q447.97532514415127 50.36798816042371 400.1593192243631 19.183994080211853Q352.34331330457496 -12 296.8152659462698 -12Q263.9192304275409 -12 229.73112387135427 2.8960355187288798Q195.54301731516765 17.79207103745776 162.06283972152323 44.32011839576293L164.2707686840655 -40.52804735830517V-205.0725446205095ZM282.6237868876267 57.21467396745514Q322.84816575406813 57.21467396745514 354.38443806432286 80.27488116004028Q385.9207103745776 103.3350883526254 404.1368642890694 146.50337250245644Q422.35301820356125 189.67165665228748 422.35301820356125 249.67988160423707Q422.35301820356125 303.32011839576296 409.2969234869509 343.67239662580585Q396.24082877034056 384.02467485584873 368.1005919788147 406.4528702088576Q339.9603551872888 428.8810655618664 294.2079289625422 428.8810655618664Q263.83171585016896 428.8810655618664 232.03141986076162 412.34890572758644Q200.2311238713543 395.81674589330646 164.2707686840655 362.54449726220435V107.75917122965947Q197.599112031778 80.22289891940471 228.3193784222446 68.71878644342993Q259.0396448127112 57.21467396745514 282.6237868876267 57.21467396745514Z"
+        },
+        "x": {
+          "bounds": [
+            14,
+            0,
+            432.4622477427086,
+            486.0957395293215
+          ],
+          "advance": 446.4622477427086,
+          "path": "M14 0 172.8481657540681 253.67988160423707 25.79207103745776 486.0957395293215H114.99029510101376L180.06283972152323 379.43905283389654Q191.32686340067585 359.7030765130491 203.53890483919287 339.2831061119898Q215.7509462777099 318.8631357109306 227.64698179643878 298.4951475505069H231.64698179643878Q243.07106467347282 318.8631357109306 253.91511795156612 339.2831061119898Q264.75917122965944 359.7030765130491 275.55124226711723 379.43905283389654L334.94390528338965 486.0957395293215H420.6701767052508L273.61408198864046 245.05609471661035L432.4622477427086 0H343.2640236791526L271.6634317003379 112.97680509118794Q259.3994080211853 135.24082877034053 245.87136066288014 157.24082877034053Q232.343313304575 179.24082877034053 218.81526594626982 200.24082877034053H214.81526594626982Q202.39118306923575 179.24082877034053 190.23112387135427 157.4248228505524Q178.07106467347282 135.60881693076425 165.64698179643878 112.97680509118794L99.72627142186117 0Z"
+        },
+        "H": {
+          "bounds": [
+            89.57324452222846,
+            0,
+            562.2135736457348,
+            656.3199686549042
+          ],
+          "advance": 651.7868181679632,
+          "path": "M89.57324452222846 0V656.3199686549042H173.09368335357016V381.3334639378993H478.69313481439303V656.3199686549042H562.2135736457348V0H478.69313481439303V308.5597492392333H173.09368335357016V0Z"
+        },
+        "o": {
+          "bounds": [
+            45.90426047067845,
+            -12,
+            496.3994080211853,
+            498.0957395293215
+          ],
+          "advance": 542.3036684918637,
+          "path": "M271.15183424593187 -12Q211.57591712296593 -12 160.13201183957628 18.05198224063556Q108.68810655618664 48.10396448127112 77.29618351343254 105.0239348823304Q45.90426047067845 161.94390528338965 45.90426047067845 242.41585792508448Q45.90426047067845 323.5198224063556 77.29618351343254 380.755798727203Q108.68810655618664 437.99177504805044 160.13201183957628 468.043757288686Q211.57591712296593 498.0957395293215 271.15183424593187 498.0957395293215Q330.7277513688978 498.0957395293215 381.8556507324993 468.043757288686Q432.9835500961008 437.99177504805044 464.69147905864304 380.755798727203Q496.3994080211853 323.5198224063556 496.3994080211853 242.41585792508448Q496.3994080211853 161.94390528338965 464.69147905864304 105.0239348823304Q432.9835500961008 48.10396448127112 381.8556507324993 18.05198224063556Q330.7277513688978 -12 271.15183424593187 -12ZM271.15183424593187 56.47869764660773Q312.9521302353392 56.47869764660773 344.75242622474656 79.69485156109954Q376.5527222141539 102.91100547559135 393.98091756716275 144.81526594626982Q411.4091129201716 186.71952641694827 411.4091129201716 242.41585792508448Q411.4091129201716 298.1121894332207 393.98091756716275 340.33245582368727Q376.5527222141539 382.5527222141539 344.75242622474656 406.0848820484339Q312.9521302353392 429.6170418827138 271.15183424593187 429.6170418827138Q229.35153825652455 429.6170418827138 197.86724818690539 406.0848820484339Q166.3829581172862 382.5527222141539 148.6387568444892 340.33245582368727Q130.8945555716922 298.1121894332207 130.8945555716922 242.41585792508448Q130.8945555716922 186.71952641694827 148.6387568444892 144.81526594626982Q166.3829581172862 102.91100547559135 197.86724818690539 79.69485156109954Q229.35153825652455 56.47869764660773 271.15183424593187 56.47869764660773Z"
+        },
+        "O": {
+          "bounds": [
+            51.70663009738819,
+            -12,
+            612.853510955543,
+            668.3199686549042
+          ],
+          "advance": 663.9468024954153,
+          "path": "M331.97340124770767 -12Q249.68003134509584 -12 186.42000783627395 29.886661442484026Q123.15998432745208 71.77332288496805 87.43330721242013 148.6599843274521Q51.70663009738819 225.5466457699361 51.70663009738819 330.7733228849681Q51.70663009738819 436 87.43330721242013 511.57999216372605Q123.15998432745208 587.1599843274521 186.42000783627395 627.7399764911781Q249.68003134509584 668.3199686549042 331.97340124770767 668.3199686549042Q414.8801097078354 668.3199686549042 478.1401332166573 627.7399764911781Q541.4001567254792 587.1599843274521 577.1268338405112 511.57999216372605Q612.853510955543 436 612.853510955543 330.7733228849681Q612.853510955543 225.5466457699361 577.1268338405112 148.6599843274521Q541.4001567254792 71.77332288496805 478.1401332166573 29.886661442484026Q414.8801097078354 -12 331.97340124770767 -12ZM331.97340124770767 61.547037583634044Q390.9333072124201 61.547037583634044 434.23322884968053 94.72032128723231Q477.53315048694094 127.89360499083057 501.8197727480552 188.580188070575Q526.1063950091694 249.26677115031944 526.1063950091694 330.7733228849681Q526.1063950091694 412.27987461961663 501.8197727480552 471.3531191418451Q477.53315048694094 530.4263636640736 434.23322884968053 562.5996473676719Q390.9333072124201 594.7729310712701 331.97340124770767 594.7729310712701Q273.6268338405111 594.7729310712701 230.02024292449272 562.5996473676719Q186.41365200847432 530.4263636640736 162.1270297473601 471.3531191418451Q137.84040748624585 412.27987461961663 137.84040748624585 330.7733228849681Q137.84040748624585 249.26677115031944 162.1270297473601 188.580188070575Q186.41365200847432 127.89360499083057 230.02024292449272 94.72032128723231Q273.6268338405111 61.547037583634044 331.97340124770767 61.547037583634044Z"
+        }
+      }
+    },
+    {
+      "id": "librebaskerville",
+      "name": "Libre Baskerville",
+      "source": "fonts/typografie/librebaskerville/LibreBaskerville[wght].woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/librebaskerville/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/librebaskerville",
+      "copyright": "Copyright 2012 The Libre Baskerville Project Authors (https://github.com/impallari/Libre-Baskerville)",
+      "sha256": "57dde61a82f6a37a464b26012ce1f1686032139aa55b805b66a0384c1694f2eb",
+      "unitsPerEm": 1000,
+      "axes": {
+        "wght": 400
+      },
+      "glyphs": {
+        "a": {
+          "bounds": [
+            43,
+            -10,
+            555,
+            540
+          ],
+          "advance": 554.0,
+          "path": "M444 -10Q401 -10 379.0 18.0Q357 46 357 97H352Q325 48 279.0 19.5Q233 -9 177 -9Q136 -9 106.0 6.0Q76 21 59.5 47.5Q43 74 43 110Q43 157 78.0 196.5Q113 236 205 276L349 339V380Q349 443 323.5 472.5Q298 502 243 502Q211 502 196.5 489.0Q182 476 169 437Q158 409 147.5 399.0Q137 389 117 389Q93 389 80.0 402.0Q67 415 67 439Q67 487 118.0 513.5Q169 540 263 540Q364 540 405.5 505.0Q447 470 447 384V160Q447 98 459.0 72.0Q471 46 497 46Q507 46 520.5 50.5Q534 55 541 68L555 44Q543 21 511.0 5.5Q479 -10 444 -10ZM222 51Q258 51 287.0 73.5Q316 96 332.5 134.0Q349 172 349 217V296Q273 267 228.0 239.0Q183 211 163.5 183.5Q144 156 144 127Q144 93 166.0 72.0Q188 51 222 51Z"
+        },
+        "b": {
+          "bounds": [
+            -1,
+            -11,
+            606,
+            830
+          ],
+          "advance": 654.0,
+          "path": "M348 -11Q292 -11 242.0 10.0Q192 31 160 67L113 0H91V604Q91 705 78 733Q74 743 67.5 748.0Q61 753 46.0 757.0Q31 761 -1 765V790L187 830V459H191Q223 501 262.0 520.5Q301 540 351 540Q423 540 481.0 503.5Q539 467 572.5 405.0Q606 343 606 265Q606 187 572.0 124.5Q538 62 479.5 25.5Q421 -11 348 -11ZM337 37Q384 37 419.0 65.0Q454 93 473.5 144.0Q493 195 493 262Q493 330 472.5 382.0Q452 434 416.0 463.5Q380 493 333 493Q293 493 260.5 473.5Q228 454 211 419Q189 375 189 298V209Q189 159 208.0 120.0Q227 81 260.5 59.0Q294 37 337 37Z"
+        },
+        "g": {
+          "bounds": [
+            32,
+            -260,
+            609,
+            540
+          ],
+          "advance": 599.0,
+          "path": "M288 -260Q171 -260 101.5 -221.0Q32 -182 32 -118Q32 -77 58.5 -48.5Q85 -20 123 -20Q138 -20 153.5 -25.0Q169 -30 182 -41Q155 -47 138.0 -70.5Q121 -94 121 -123Q121 -168 165.5 -192.0Q210 -216 290 -216Q459 -216 459 -112Q459 -71 434.5 -44.5Q410 -18 368 -13L189 9Q135 16 105.0 39.5Q75 63 75 102Q75 140 103.0 167.0Q131 194 177 201V205Q133 223 103.5 267.5Q74 312 74 366Q74 416 99.5 455.0Q125 494 170.0 517.0Q215 540 272 540Q315 540 354.0 526.5Q393 513 421 487Q453 516 479.5 528.0Q506 540 531 540Q565 540 587.0 523.5Q609 507 609 481Q609 463 598.0 452.5Q587 442 568 442Q550 442 540.0 450.0Q530 458 520.0 465.5Q510 473 493 473Q470 473 445 456Q458 437 463.5 414.5Q469 392 469 364Q469 306 449.0 270.0Q429 234 397.0 214.5Q365 195 328.0 186.0Q291 177 257 173Q226 170 201.5 167.0Q177 164 162.5 157.0Q148 150 148 132Q148 114 164.5 107.0Q181 100 216 96L385 77Q457 69 500.0 24.0Q543 -21 543 -89Q543 -170 477.0 -215.0Q411 -260 288 -260ZM274 215Q316 215 339.5 253.5Q363 292 363 360Q363 428 339.5 465.5Q316 503 273 503Q230 503 204.5 464.5Q179 426 179 361Q179 295 205.0 255.0Q231 215 274 215Z"
+        },
+        "p": {
+          "bounds": [
+            18,
+            -250,
+            630,
+            540
+          ],
+          "advance": 679.0,
+          "path": "M20 -250V-215Q60 -213 80.5 -204.0Q101 -195 108.5 -170.0Q116 -145 116 -97V277Q116 335 114.5 372.5Q113 410 109 423Q105 447 86.5 455.5Q68 464 18 464V498L210 536V458H214Q246 496 283.0 518.0Q320 540 369 540Q445 540 503.5 504.5Q562 469 596.0 406.5Q630 344 630 264Q630 183 595.5 121.0Q561 59 502.0 24.5Q443 -10 368 -10Q322 -10 284.5 5.5Q247 21 218 56H214V-90Q214 -143 222.0 -169.0Q230 -195 254.5 -204.0Q279 -213 328 -215V-250ZM363 39Q431 39 474.0 97.5Q517 156 517 260Q517 329 497.0 381.5Q477 434 441.0 463.0Q405 492 357 492Q321 492 290.5 475.5Q260 459 240 429Q227 409 220.5 381.5Q214 354 214 310V232Q214 178 219.5 152.0Q225 126 241 106Q264 75 296.5 57.0Q329 39 363 39Z"
+        },
+        "x": {
+          "bounds": [
+            10,
+            0,
+            598,
+            530
+          ],
+          "advance": 609.0,
+          "path": "M324 324 392 412Q404 427 410.0 440.0Q416 453 416 463Q416 479 401.0 487.0Q386 495 357 495V530H576V495Q552 495 533.5 488.0Q515 481 496.5 463.5Q478 446 454 415L351 284L484 109Q515 69 541.5 52.0Q568 35 598 35V0H332V35Q368 35 382.0 40.5Q396 46 396 62Q396 69 387.5 83.0Q379 97 359 122L289 212L204 104Q199 98 195.5 92.0Q192 86 190.5 80.0Q189 74 189 68Q189 54 201.0 44.5Q213 35 239 35V0H10V35Q41 35 63.5 42.5Q86 50 108.0 70.0Q130 90 159 126L261 251L128 440Q106 472 86.5 483.5Q67 495 38 495V530H284V495Q233 495 233 471Q233 456 252 429Z"
+        },
+        "H": {
+          "bounds": [
+            45,
+            0,
+            879,
+            770
+          ],
+          "advance": 925.0,
+          "path": "M45 0V38Q92 40 115.5 48.5Q139 57 147.0 81.0Q155 105 155 152V618Q155 665 148.0 688.5Q141 712 119.5 721.0Q98 730 55 732V770H359V732Q316 731 295.0 721.5Q274 712 267.0 687.0Q260 662 260 611V419H665V618Q665 665 658.0 688.5Q651 712 629.5 721.0Q608 730 565 732V770H869V732Q826 731 805.0 721.5Q784 712 777.0 687.0Q770 662 770 611V159Q770 108 777.5 82.5Q785 57 808.5 48.5Q832 40 879 38V0H555V38Q602 40 625.5 48.5Q649 57 657.0 81.0Q665 105 665 152V369H260V159Q260 108 267.5 82.5Q275 57 298.5 48.5Q322 40 369 38V0Z"
+        },
+        "o": {
+          "bounds": [
+            48,
+            -10,
+            606,
+            540
+          ],
+          "advance": 654.0,
+          "path": "M325 540Q382 540 433.0 520.0Q484 500 522.5 463.5Q561 427 583.5 377.5Q606 328 606 269Q606 208 583.5 157.0Q561 106 522.5 68.5Q484 31 433.0 10.5Q382 -10 325 -10Q269 -10 219.0 10.5Q169 31 130.5 68.5Q92 106 70.0 157.0Q48 208 48 269Q48 348 86.0 409.0Q124 470 187.0 505.0Q250 540 325 540ZM325 492Q276 492 239.0 464.0Q202 436 181.5 385.5Q161 335 161 268Q161 165 205.5 103.0Q250 41 325 41Q402 41 447.5 103.0Q493 165 493 268Q493 335 472.0 385.0Q451 435 413.5 463.5Q376 492 325 492Z"
+        },
+        "O": {
+          "bounds": [
+            57,
+            -10,
+            889,
+            780
+          ],
+          "advance": 946.0,
+          "path": "M473 780Q561 780 636.5 749.5Q712 719 768.5 664.5Q825 610 857.0 537.0Q889 464 889 379Q889 298 857.0 227.0Q825 156 768.0 103.0Q711 50 635.5 20.0Q560 -10 473 -10Q386 -10 310.5 20.0Q235 50 178.0 103.0Q121 156 89.0 227.0Q57 298 57 379Q57 464 89.0 537.0Q121 610 177.5 664.5Q234 719 309.5 749.5Q385 780 473 780ZM473 45Q561 45 625.0 85.5Q689 126 724.0 200.5Q759 275 759 376Q759 483 724.0 561.5Q689 640 625.0 682.5Q561 725 473 725Q385 725 321.0 682.5Q257 640 222.0 561.5Q187 483 187 376Q187 275 222.0 200.5Q257 126 321.0 85.5Q385 45 473 45Z"
+        }
+      }
+    },
+    {
+      "id": "goudybookletter1911",
+      "name": "Goudy Bookletter 1911",
+      "source": "fonts/typografie/goudybookletter1911/GoudyBookletter1911.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/goudybookletter1911/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/goudybookletter1911",
+      "copyright": "Copyright (c) 2010, Barry Schwartz (crudfactory.com)",
+      "sha256": "c8926393201371598bbfe25d226fdf4340729a73443e88542f54ffaf257ff692",
+      "unitsPerEm": 1024,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            30,
+            -20,
+            427,
+            444
+          ],
+          "advance": 433,
+          "path": "M30 353Q30 383 78.5 413.5Q127 444 187 444Q206 444 226.0 440.0Q246 436 271.5 426.0Q297 416 314.5 391.5Q332 367 336 332Q338 308 338 295V93Q338 75 345.0 64.0Q352 53 359.0 50.5Q366 48 373 48Q387 48 395.0 56.5Q403 65 407.5 73.5Q412 82 418 82Q427 82 427 69Q427 45 405.0 16.5Q383 -12 348 -12Q335 -12 323.0 -8.0Q311 -4 303.0 2.5Q295 9 288.5 15.0Q282 21 278 26L275 30Q274 30 274.0 30.5Q274 31 273 31Q271 31 270.0 29.0Q269 27 263.0 21.0Q257 15 246 8Q201 -20 151 -20Q99 -20 66.5 13.0Q34 46 34 94V95Q34 153 77 186Q92 198 116.0 207.5Q140 217 163.5 222.0Q187 227 208.0 230.5Q229 234 243 235L257 236Q265 238 265 250V287Q265 340 241 369Q216 396 181 396Q127 396 93 328Q84 316 71 316Q55 316 42.5 326.0Q30 336 30 353ZM175 36Q198 36 218.5 46.0Q239 56 247.0 64.0Q255 72 260 78Q266 86 266 101V126V168Q266 187 264.5 192.5Q263 198 256 198Q231 198 193.5 190.0Q156 182 134 161Q110 141 110 105Q110 67 131 49Q145 36 175 36Z"
+        },
+        "b": {
+          "bounds": [
+            4,
+            -22,
+            488,
+            730
+          ],
+          "advance": 497,
+          "path": "M145 404Q145 398 150 398Q152 398 169.0 408.5Q186 419 218.5 429.5Q251 440 289 440Q379 440 433.5 377.5Q488 315 488 214Q488 175 479.0 138.5Q470 102 437.5 61.5Q405 21 352 1Q298 -19 238 -19Q211 -19 181.0 -9.5Q151 0 138 0Q120 0 106.0 -11.0Q92 -22 87 -22Q71 -22 71 9Q71 69 72.5 308.5Q74 548 74 608Q74 622 61 631Q54 635 47.0 639.5Q40 644 35.5 646.5Q31 649 26.0 652.0Q21 655 18.5 657.0Q16 659 13.0 661.0Q10 663 8.5 664.0Q7 665 6.0 666.5Q5 668 4.5 669.5Q4 671 4 672Q4 680 17 685Q130 730 134 730Q148 728 148 710Q148 676 146.5 546.0Q145 416 145 404ZM424 197Q424 280 373.0 333.0Q322 386 253 386Q217 386 179.5 369.0Q142 352 142 336V74Q142 73 141.5 70.5Q141 68 141 67Q141 48 156 42Q204 23 250 23Q328 23 376.0 71.5Q424 120 424 197Z"
+        },
+        "g": {
+          "bounds": [
+            23,
+            -240,
+            441,
+            463.0
+          ],
+          "advance": 450,
+          "path": "M191 409Q152 409 127.0 377.5Q102 346 102 296Q102 237 132.0 194.0Q162 151 208 151Q249 151 274.0 183.5Q299 216 299 264Q299 321 268.5 365.0Q238 409 191 409ZM85 -90Q85 -135 132.5 -163.0Q180 -191 252 -191Q323 -191 352.5 -168.5Q382 -146 382 -117Q382 -75 341 -56Q320 -45 292.0 -41.5Q264 -38 213.5 -36.5Q163 -35 125 -31H122Q115 -31 104 -42Q85 -61 85 -90ZM23 284Q23 349 70.5 396.0Q118 443 188 443Q231 443 271.5 425.0Q312 407 317 407Q349 407 371 439Q386 463 400.0 463.0Q414 463 426.5 449.5Q439 436 439 421Q439 403 423.5 390.0Q408 377 387.5 368.5Q367 360 366 359Q361 354 361 351Q361 349 364.0 341.0Q367 333 370.0 318.5Q373 304 373 287Q373 216 323.5 165.5Q274 115 203 115Q183 115 165.0 119.5Q147 124 143 124Q129 124 113.0 106.5Q97 89 97 72Q97 45 140.5 36.0Q184 27 251.5 25.0Q319 23 348 14Q394 1 417.5 -30.5Q441 -62 441 -99Q441 -122 431.0 -145.0Q421 -168 398.5 -190.0Q376 -212 332.0 -226.0Q288 -240 228 -240Q117 -240 72.5 -199.5Q28 -159 28 -111Q28 -101 30.0 -91.5Q32 -82 35.0 -74.5Q38 -67 41.5 -60.5Q45 -54 49.5 -48.5Q54 -43 58.5 -39.0Q63 -35 67.0 -32.0Q71 -29 74.0 -26.5Q77 -24 79 -23L81 -22Q83 -20 83 -17Q83 -16 73.5 -10.0Q64 -4 54.5 10.0Q45 24 45 44Q45 93 102 139L103 140Q104 141 104 143Q104 147 95.0 152.0Q86 157 70.5 171.5Q55 186 42 209Q23 243 23 284Z"
+        },
+        "p": {
+          "bounds": [
+            13,
+            -233,
+            486,
+            452
+          ],
+          "advance": 505,
+          "path": "M256 28Q321 28 369.5 77.0Q418 126 418 200Q418 273 369.5 327.0Q321 381 259 381Q221 381 191 359Q162 339 162 296V76Q162 56 188 44Q220 28 256 28ZM293 441Q377 441 431.5 376.0Q486 311 486 220Q486 119 418.0 56.0Q350 -7 243 -7Q233 -7 223.0 -6.5Q213 -6 205.0 -5.0Q197 -4 191.0 -3.0Q185 -2 181 -2L177 -1Q170 -1 170 -12V-153V-156Q170 -180 193 -182Q203 -183 216.5 -184.0Q230 -185 236.0 -185.5Q242 -186 250.0 -187.0Q258 -188 261.5 -190.0Q265 -192 268.5 -195.0Q272 -198 273.0 -202.5Q274 -207 274 -214Q274 -229 262 -229Q260 -229 247.5 -228.0Q235 -227 213.0 -226.0Q191 -225 166 -225Q133 -225 100.5 -227.0Q68 -229 49 -231L30 -233Q13 -233 13 -213Q13 -210 13.5 -207.5Q14 -205 15.5 -203.5Q17 -202 18.0 -200.5Q19 -199 22.5 -197.5Q26 -196 28.5 -195.5Q31 -195 36.5 -193.5Q42 -192 46.5 -191.5Q51 -191 59.0 -189.0Q67 -187 73 -186Q95 -182 95 -158V315V317Q95 333 82 338Q68 344 48 353Q22 364 17.5 367.0Q13 370 13 374V375Q13 379 58 405Q94 426 123 443Q126 445 129.0 446.5Q132 448 133.5 449.5Q135 451 136.5 451.5Q138 452 140 452Q148 452 148 440V380Q148 374 152 374L165 388Q178 402 206.0 418.5Q234 435 269 440Q277 441 293 441Z"
+        },
+        "x": {
+          "bounds": [
+            9,
+            -5,
+            444,
+            425
+          ],
+          "advance": 453,
+          "path": "M25 425Q27 425 38.0 424.5Q49 424 68.0 423.0Q87 422 109.0 422.0Q131 422 150.5 423.0Q170 424 181.0 424.5Q192 425 194 425Q206 425 206 411V409Q206 407 206.5 403.5Q207 400 207 399Q207 392 202.5 390.0Q198 388 180 386Q174 385 170 385Q154 383 154 371Q154 366 168 346Q192 315 214 285Q227 269 229.0 269.0Q231 269 234 272Q306 368 306 373Q306 384 281.0 385.0Q256 386 256 399Q256 425 269 425Q271 425 280.5 424.5Q290 424 306.5 423.0Q323 422 342 422H345Q365 422 382.0 423.0Q399 424 408.5 424.5Q418 425 420 425Q433 425 433 410Q433 400 430.0 395.5Q427 391 422.0 389.5Q417 388 402 386Q397 385 395 385Q374 382 365.0 376.0Q356 370 342 353Q255 238 255 237Q255 234 396 55Q399 51 401.5 48.0Q404 45 406.5 42.5Q409 40 410.5 39.0Q412 38 415.5 37.0Q419 36 420.5 35.5Q422 35 427.0 34.0Q432 33 434 33Q444 31 444 20Q444 -4 429 -4Q427 -4 416.5 -3.0Q406 -2 387.0 -1.0Q368 0 346.0 0.0Q324 0 305.0 -1.0Q286 -2 275.5 -3.0Q265 -4 263 -4Q251 -4 251 13Q251 24 255.5 28.5Q260 33 277.0 35.0Q294 37 302 39Q314 43 314 52Q314 54 310 62Q216 179 215 180Q214 180 214 180L212 181Q208 181 177 139Q152 104 132 78Q118 60 118 52Q118 37 146.0 34.5Q174 32 178 27Q180 24 180 16Q180 -4 167 -4Q165 -4 155.5 -3.0Q146 -2 129.5 -1.0Q113 0 93 0Q74 0 57.0 -1.0Q40 -2 30.5 -3.5Q21 -5 19 -5Q9 -5 9 16Q9 32 30.5 36.0Q52 40 56.0 43.0Q60 46 66 54Q184 210 185 214Q185 217 181 221Q63 368 57 374Q47 383 30 385Q11 387 11 408Q11 425 25 425Z"
+        },
+        "H": {
+          "bounds": [
+            14.0,
+            -6,
+            769,
+            706
+          ],
+          "advance": 780,
+          "path": "M36 -6Q15 -6 15 22Q15 41 60 43Q75 44 85 45Q102 46 107.0 54.5Q112 63 112 78V620Q112 628 110.0 633.5Q108 639 105.5 642.5Q103 646 96.5 648.0Q90 650 87.0 650.5Q84 651 73.5 652.5Q63 654 59 654Q56 655 45.0 655.5Q34 656 29.0 657.5Q24 659 19.0 663.5Q14 668 14.0 676.0Q14 684 20.0 693.5Q26 703 38 703Q41 703 56.5 702.5Q72 702 99.0 701.5Q126 701 158 701H161Q194 701 221.5 701.5Q249 702 265.0 702.5Q281 703 284 703Q300 703 303 682Q303 680 303.5 677.0Q304 674 304 673Q304 661 293.5 657.5Q283 654 248 652Q234 652 226 651Q203 650 203 621V452Q203 437 216 437H562Q580 437 580 456V607Q580 643 558 651Q549 655 528.5 655.5Q508 656 496.5 660.0Q485 664 485 679Q485 703 510 703Q513 703 526.5 702.5Q540 702 563.5 701.5Q587 701 615 701Q635 701 656.0 701.5Q677 702 693.0 703.0Q709 704 721.5 704.5Q734 705 741.5 705.5Q749 706 750 706Q769 706 769 685Q769 679 768.0 674.5Q767 670 763.5 666.5Q760 663 756.5 661.0Q753 659 746.0 657.5Q739 656 733.5 655.5Q728 655 717.0 653.5Q706 652 698 651Q671 648 671 622V84V79Q671 48 699 46Q705 46 714.5 45.5Q724 45 729.0 44.5Q734 44 740.5 43.0Q747 42 750.5 40.5Q754 39 757.0 36.5Q760 34 761.5 30.0Q763 26 763 20Q763 -6 742 -6Q741 -6 734.0 -5.5Q727 -5 715.5 -4.0Q704 -3 689.0 -2.0Q674 -1 655.0 -0.5Q636 0 617.0 0.0Q598 0 579.0 -0.5Q560 -1 545.5 -2.0Q531 -3 520.0 -4.0Q509 -5 502.0 -5.5Q495 -6 494 -6Q477 -6 477 14Q477 20 477.5 23.5Q478 27 479.5 30.5Q481 34 482.0 35.5Q483 37 487.0 38.5Q491 40 494.0 41.0Q497 42 503.5 42.5Q510 43 515.5 43.5Q521 44 531.5 44.5Q542 45 550 46Q570 47 575.5 56.0Q581 65 581 85V362Q581 374 567 374H218Q203 374 203 356V79Q203 70 204.5 65.0Q206 60 217.5 53.5Q229 47 252 45Q254 45 265.5 44.0Q277 43 283.0 42.0Q289 41 295.5 36.0Q302 31 302 23Q302 -6 286 -6Q285 -6 278.5 -5.5Q272 -5 260.0 -4.0Q248 -3 233.5 -2.0Q219 -1 200.0 -0.5Q181 0 162.0 0.0Q143 0 123.0 -0.5Q103 -1 88.5 -2.0Q74 -3 62.5 -4.0Q51 -5 44.0 -5.5Q37 -6 36 -6Z"
+        },
+        "o": {
+          "bounds": [
+            22,
+            -19,
+            457,
+            442
+          ],
+          "advance": 478,
+          "path": "M22 209Q22 312 87.5 377.0Q153 442 243 442Q335 442 396.0 376.5Q457 311 457 209Q457 104 393.5 42.5Q330 -19 239 -19Q143 -19 82.5 47.0Q22 113 22 209ZM387 205Q387 285 341.5 339.5Q296 394 236 394Q186 394 143.5 350.0Q101 306 101 214Q101 134 140.0 82.5Q179 31 242.0 31.0Q305 31 346.0 82.5Q387 134 387 205Z"
+        },
+        "O": {
+          "bounds": [
+            18,
+            -25,
+            778,
+            737
+          ],
+          "advance": 796,
+          "path": "M778 345Q778 186 670.5 80.5Q563 -25 411 -25Q336 -25 264.0 4.0Q192 33 137 86Q20 199 18 361Q18 516 129.5 626.5Q241 737 396 737Q558 737 668.0 621.0Q778 505 778 345ZM116 393Q116 325 134.5 262.0Q153 199 188.0 148.0Q223 97 280.0 66.0Q337 35 407 35Q454 35 499.0 51.0Q544 67 585.0 99.5Q626 132 651.5 191.0Q677 250 677 327Q677 408 649.5 485.5Q622 563 564 614Q486 683 380 683Q331 683 285.0 665.5Q239 648 200.5 614.5Q162 581 139.0 523.5Q116 466 116 393Z"
+        }
+      }
+    }
+  ]
+}

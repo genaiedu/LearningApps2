@@ -23,7 +23,6 @@
 
   function connection(remote){$('connection-diagram').classList.toggle('remote',remote);$('connection-local').setAttribute('aria-pressed',String(!remote));$('connection-remote').setAttribute('aria-pressed',String(remote));$('connection-explanation').textContent=remote?'Die Webseite lädt zusätzliche Schriftdateien beim Fontdienst. Dorthin gelangen IP-Adresse und technische Verbindungsdaten.':'HTML und Schriftdateien kommen vom eigenen Webangebot. Keine zusätzliche Fontverbindung zu Google.';}
   $('connection-local').onclick=()=>connection(false);$('connection-remote').onclick=()=>connection(true);
-  $('anatomy-font').onchange=()=>$('anatomy-word').style.fontFamily='"'+$('anatomy-font').value+'"';
   const pairs={humanist:['Inter','Source Sans 3','groteskbetont','humanistisch'],geometric:['Poppins','Source Sans 3','geometrisch','humanistisch'],rounded:['Nunito','Inter','gerundet','groteskbetont']};
   $('sans-pair').onchange=()=>{const pair=pairs[$('sans-pair').value];['a','b'].forEach((id,i)=>{$('sans-sample-'+id).style.fontFamily='"'+pair[i]+'"';$('sans-label-'+id).textContent=pair[i]+' · '+pair[i+2];});};
   $('variable-weight').oninput=()=>{const v=$('variable-weight').value;$('variable-value').textContent=v;$('variable-specimen').style.fontWeight=v;};
