@@ -45,7 +45,9 @@ test('Sans comparison initializes named fonts and covers every pair of the four 
 test('definitions precede the comparison and distinguish form, tradition and file technology',()=>{
   const at=id=>html.indexOf('id="'+id+'"');
   const section=html.slice(at('sans-formen'),at('buchstaben-varianten'));
-  for(const phrase of ['Schreib- und Buchkultur der Renaissance','nicht einfach auf „freundlich“','„Dynamisch / humanistisch“ ist hier kein Gegensatz.','Formprinzip','sechs Paarungen','Die Positionen überschneiden sich'])assert.ok(section.includes(phrase),phrase);
+  for(const phrase of ['Schreib- und Buchkultur der Renaissance','nicht einfach auf „freundlich“','Formprinzip','sechs Paarungen','Die Positionen überschneiden sich'])assert.ok(section.includes(phrase),phrase);
+  assert.ok(!section.includes('sans-category-note'));
+  assert.ok(!section.includes('„Dynamisch / humanistisch“ ist hier kein Gegensatz.'));
   assert.ok(section.indexOf('sans-term-guide')<section.indexOf('id="sans-pair"'));
   assert.ok(section.includes('https://www.monotype.com/resources/guide-type-styles'));
   assert.ok(section.includes('https://www.typolexikon.de/grotesk/'));
