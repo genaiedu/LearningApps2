@@ -2145,6 +2145,526 @@
           "path": "M778 345Q778 186 670.5 80.5Q563 -25 411 -25Q336 -25 264.0 4.0Q192 33 137 86Q20 199 18 361Q18 516 129.5 626.5Q241 737 396 737Q558 737 668.0 621.0Q778 505 778 345ZM116 393Q116 325 134.5 262.0Q153 199 188.0 148.0Q223 97 280.0 66.0Q337 35 407 35Q454 35 499.0 51.0Q544 67 585.0 99.5Q626 132 651.5 191.0Q677 250 677 327Q677 408 649.5 485.5Q622 563 564 614Q486 683 380 683Q331 683 285.0 665.5Q239 648 200.5 614.5Q162 581 139.0 523.5Q116 466 116 393Z"
         }
       }
+    },
+    {
+      "id": "breeserif",
+      "name": "Bree Serif",
+      "source": "fonts/typografie/breeserif/BreeSerif-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/breeserif/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/breeserif",
+      "copyright": "Copyright (c) 2011, TypeTogether (www.type-together.com), with Reserved Font Names \"Bree\" and \"Bree Serif\"",
+      "sha256": "092f1fed0dcbc9fcfa1abdc9bf3307a352769d1f2a0950d65abe82ae468578dc",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            40,
+            -13,
+            539,
+            518
+          ],
+          "advance": 567
+        },
+        "b": {
+          "bounds": [
+            17,
+            -13,
+            518,
+            713
+          ],
+          "advance": 556
+        },
+        "g": {
+          "bounds": [
+            35,
+            -214.0,
+            480,
+            518
+          ],
+          "advance": 544
+        },
+        "p": {
+          "bounds": [
+            22,
+            -207,
+            530,
+            518
+          ],
+          "advance": 568
+        },
+        "x": {
+          "bounds": [
+            14,
+            0,
+            516,
+            503
+          ],
+          "advance": 534
+        },
+        "H": {
+          "bounds": [
+            32,
+            0,
+            684,
+            665
+          ],
+          "advance": 712
+        },
+        "o": {
+          "bounds": [
+            33,
+            -15.0,
+            494,
+            518
+          ],
+          "advance": 528
+        },
+        "O": {
+          "bounds": [
+            40,
+            -13.0,
+            624.0,
+            677.0
+          ],
+          "advance": 664
+        }
+      }
+    },
+    {
+      "id": "robotoslab",
+      "name": "Roboto Slab",
+      "source": "fonts/typografie/robotoslab/RobotoSlab[wght].woff2",
+      "license": "Apache 2.0",
+      "licensePath": "fonts/typografie/robotoslab/LICENSE.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/apache/robotoslab",
+      "copyright": "Copyright 2018 The Roboto Slab Project Authors (https://github.com/googlefonts/robotoslab)",
+      "sha256": "38fc902a7570a6a3c37f94228a1d1b71a3a5697a360f147c19303d71a1ee863c",
+      "unitsPerEm": 2048,
+      "axes": {
+        "wght": 400
+      },
+      "glyphs": {
+        "a": {
+          "bounds": [
+            79,
+            -21,
+            1053,
+            1102
+          ],
+          "advance": 1132.0
+        },
+        "b": {
+          "bounds": [
+            -16,
+            -21,
+            1071,
+            1560
+          ],
+          "advance": 1145.0
+        },
+        "g": {
+          "bounds": [
+            78,
+            -437,
+            1133,
+            1102
+          ],
+          "advance": 1157.0
+        },
+        "p": {
+          "bounds": [
+            34,
+            -416,
+            1119,
+            1102
+          ],
+          "advance": 1197.0
+        },
+        "x": {
+          "bounds": [
+            42,
+            0,
+            1163,
+            1082
+          ],
+          "advance": 1203.0
+        },
+        "H": {
+          "bounds": [
+            81,
+            0,
+            1497,
+            1456
+          ],
+          "advance": 1578.0
+        },
+        "o": {
+          "bounds": [
+            78,
+            -21,
+            1046,
+            1102
+          ],
+          "advance": 1124.0
+        },
+        "O": {
+          "bounds": [
+            70,
+            -21,
+            1281,
+            1477
+          ],
+          "advance": 1351.0
+        }
+      }
+    },
+    {
+      "id": "belleza",
+      "name": "Belleza",
+      "source": "fonts/typografie/belleza/Belleza-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/belleza/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/belleza",
+      "copyright": "Copyright 2012 The Belleza Project Authors (https://github.com/etunni/belleza)",
+      "sha256": "eca3f781f90526370fb490272dfb0887869324d4d96e2d3d6a748ace61b8d13f",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            33,
+            -13,
+            419,
+            464
+          ],
+          "advance": 444
+        },
+        "b": {
+          "bounds": [
+            69,
+            -13,
+            467,
+            683
+          ],
+          "advance": 500
+        },
+        "g": {
+          "bounds": [
+            26,
+            -222,
+            449,
+            464
+          ],
+          "advance": 490
+        },
+        "p": {
+          "bounds": [
+            23,
+            -212,
+            476,
+            464
+          ],
+          "advance": 500
+        },
+        "x": {
+          "bounds": [
+            30,
+            0,
+            444,
+            452
+          ],
+          "advance": 474
+        },
+        "H": {
+          "bounds": [
+            90,
+            0,
+            587,
+            662
+          ],
+          "advance": 677
+        },
+        "o": {
+          "bounds": [
+            27,
+            -12,
+            471,
+            464
+          ],
+          "advance": 500
+        },
+        "O": {
+          "bounds": [
+            34,
+            -12,
+            691,
+            674
+          ],
+          "advance": 725
+        }
+      }
+    },
+    {
+      "id": "limelight",
+      "name": "Limelight",
+      "source": "fonts/typografie/limelight/Limelight-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/limelight/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/limelight",
+      "copyright": "Copyright (c) 2010 by Sorkin Type Co with Reserved Font Name Limelight.\r\rThis Font Software is licensed under the SIL Open Font License, Version 1.1.\rThis license is copied below, and is also available with a FAQ at:\rhttp://scripts.sil.org/OFL",
+      "sha256": "18d267cc63566c63262019abd35f4e95bdf98025cea3927d1b255a960fc6d5fb",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            96,
+            -19,
+            1270,
+            1086
+          ],
+          "advance": 1410
+        },
+        "b": {
+          "bounds": [
+            173,
+            -19,
+            1429,
+            1415
+          ],
+          "advance": 1513
+        },
+        "g": {
+          "bounds": [
+            95,
+            -355,
+            1153,
+            1193
+          ],
+          "advance": 1194
+        },
+        "p": {
+          "bounds": [
+            173,
+            -320,
+            1429,
+            1086.0
+          ],
+          "advance": 1512
+        },
+        "x": {
+          "bounds": [
+            10,
+            -19.0,
+            1107,
+            1086
+          ],
+          "advance": 1087
+        },
+        "H": {
+          "bounds": [
+            177,
+            -11.0,
+            1373,
+            1426
+          ],
+          "advance": 1461
+        },
+        "o": {
+          "bounds": [
+            81,
+            -19,
+            1220,
+            1086
+          ],
+          "advance": 1303
+        },
+        "O": {
+          "bounds": [
+            109.0,
+            -19.0,
+            1565,
+            1433
+          ],
+          "advance": 1673
+        }
+      }
+    },
+    {
+      "id": "podkova",
+      "name": "Podkova",
+      "source": "fonts/typografie/podkova/Podkova[wght].woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/podkova/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/podkova",
+      "copyright": "Copyright 2011 The Podkova Project Authors (https://github.com/cyrealtype/Podkova)",
+      "sha256": "9b6de7b71468b0c6e878a664d16d530997b3cb5b627eadfea8ef86b5c7133471",
+      "unitsPerEm": 1000,
+      "axes": {
+        "wght": 400
+      },
+      "glyphs": {
+        "a": {
+          "bounds": [
+            35.976470588235294,
+            -17,
+            504,
+            444
+          ],
+          "advance": 525.0
+        },
+        "b": {
+          "bounds": [
+            -29,
+            -15,
+            472,
+            649
+          ],
+          "advance": 516.0
+        },
+        "g": {
+          "bounds": [
+            23,
+            -223,
+            517,
+            469
+          ],
+          "advance": 535.0
+        },
+        "p": {
+          "bounds": [
+            20,
+            -208,
+            521,
+            447
+          ],
+          "advance": 561.0
+        },
+        "x": {
+          "bounds": [
+            25,
+            0,
+            572,
+            429
+          ],
+          "advance": 591.0
+        },
+        "H": {
+          "bounds": [
+            37,
+            0,
+            677,
+            589
+          ],
+          "advance": 714.0
+        },
+        "o": {
+          "bounds": [
+            41,
+            -15,
+            481,
+            444
+          ],
+          "advance": 521.0
+        },
+        "O": {
+          "bounds": [
+            44,
+            -15,
+            592,
+            604
+          ],
+          "advance": 636.0
+        }
+      }
+    },
+    {
+      "id": "abel",
+      "name": "Abel",
+      "source": "fonts/typografie/abel/Abel-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/abel/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/abel",
+      "copyright": "Copyright (c) 2011, Matthew Desmond (http://www.madtype.com | mattdesmond@gmail.com), with Reserved Font Name Abel.",
+      "sha256": "cd2b54d574a4cf3ff926c656520045a0073759fcfecf68b12ae0b0047f4d7f29",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            123,
+            -20,
+            807,
+            1044
+          ],
+          "advance": 930
+        },
+        "b": {
+          "bounds": [
+            123,
+            -20,
+            807,
+            1434
+          ],
+          "advance": 930
+        },
+        "g": {
+          "bounds": [
+            123,
+            -410,
+            827,
+            1044
+          ],
+          "advance": 930
+        },
+        "p": {
+          "bounds": [
+            123,
+            -410,
+            807,
+            1044
+          ],
+          "advance": 930
+        },
+        "x": {
+          "bounds": [
+            82,
+            0,
+            786,
+            1024
+          ],
+          "advance": 868
+        },
+        "H": {
+          "bounds": [
+            164,
+            0,
+            971,
+            1434
+          ],
+          "advance": 1135
+        },
+        "o": {
+          "bounds": [
+            123,
+            -20,
+            807,
+            1044
+          ],
+          "advance": 930
+        },
+        "O": {
+          "bounds": [
+            143,
+            -20,
+            950,
+            1454
+          ],
+          "advance": 1094
+        }
+      }
     }
   ]
 }

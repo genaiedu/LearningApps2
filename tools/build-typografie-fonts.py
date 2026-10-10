@@ -37,10 +37,22 @@ FAMILIES = [
     ('Source Sans 3','sourcesans3','sans','Humanistische Sans','Offene Formen und humanistischer Rhythmus. Für Erklärtexte, Navigation und Tabellen.'),
     ('Libre Baskerville','librebaskerville','serif','Barocke Antiqua / Transitional','Baskerville-inspirierte Interpretation für Bildschirmtext. Mehr Strichkontrast und aufrechtere Formen als viele Renaissance-Antiqua-Schriften.'),
     ('Goudy Bookletter 1911','goudybookletter1911','serif','Venezianisch geprägte Renaissance-Antiqua','Nach Frederic Goudys Kennerley Oldstyle: schräge e-Querlinie, geringer Strichkontrast und schräg betonte Rundungen. Eine moderne Interpretation, keine originale Jenson-Drucktype. Ein echter Regular-Schnitt; kein mitgelieferter Bold oder Italic.'),
+    ('Bree Serif','breeserif','serif','Schreibbetonte Slab Serif','Aufrechte, schreibbetonte Formen mit kräftigen Serifen und vergleichsweise geringem Strichkontrast. Die freie Google-Fonts-Fassung enthält nur Regular.'),
+    ('Roboto Slab','robotoslab','serif','Geometrisch beeinflusste Slab Serif','Eher mechanischer Bauplan mit kräftigen Serifen und relativ geringem Strichkontrast. Variable Gewichte; Apache-Lizenz statt OFL.'),
+    ('Belleza','belleza','sans','Kontrastreiche humanistische Sans','Deutlich wechselnde Strichstärken auch ohne Serifen. Humanistische Proportionen; ein echter Regular-Schnitt.'),
+    ('Limelight','limelight','display','Kontrastreiche Art-déco-Sans','Geometrische Displayformen mit extremem Strichkontrast. Für mittlere und große Grade, nicht für lange kleine Lesetexte.'),
+    ('Podkova','podkova','serif','Kontrastarme Slab Serif','Annähernd gleichmäßige Strichstärken und kantige Formen. Den schrägen oberen Stammabschluss zeigt das kleine t, nicht die gemeinsame Probe Form.'),
+    ('Abel','abel','sans','Schmale, kontrastarme Sans','Flachseitige, schmale Formen mit einzelnen schrägen Abschlüssen. Nur Regular; Details immer am einzelnen Buchstaben prüfen.'),
 ]
 SLUGS = {'Zilla Slab':'zilla-slab','DM Mono':'dm-mono','Bebas Neue':'bebas-neue','Dancing Script':'dancing-script','DM Sans':'dm-sans','Plus Jakarta Sans':'plus-jakarta-sans','Archivo Black':'archivo-black'}
-NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville','goudybookletter1911'}
+NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville','goudybookletter1911',
+       'breeserif','robotoslab','belleza','limelight','podkova','abel'}
 RAW = 'https://raw.githubusercontent.com/google/fonts/main/ofl/'
+
+def font_upstream(directory):
+    branch='apache' if directory=='robotoslab' else 'ofl'
+    license_file='LICENSE.txt' if branch=='apache' else 'OFL.txt'
+    return 'https://raw.githubusercontent.com/google/fonts/main/'+branch+'/'+directory+'/', branch, license_file
 
 def get(url):
     with urlopen(Request(url, headers={'User-Agent':'LearningApps-Typografie-build'}),timeout=60) as r:
@@ -57,7 +69,7 @@ def write_desktop_package(entry, folder, files, extra_note=''):
             'Variable Dateien enthalten mehrere Gewichte; bei älteren Programmen die Kompatibilität prüfen.\n'
             'Keine WOFF2-Dateien installieren. Nicht gleichzeitig mehrere Versionen derselben Familie installieren.\n'
             'Desktop-Originale können neuer sein als die vorhandenen Webfont-Teildateien; Schnitte und Funktionen können sich unterscheiden.\n'
-            'Lizenz und Copyright: beiliegende OFL.txt.\nQuelle: '+entry['source']+'\n'+extra_note)
+            'Lizenz und Copyright: beiliegende '+Path(entry['licensePath']).name+'.\nQuelle: '+entry['source']+'\n'+extra_note)
     entry['desktop']='fonts/typografie/'+entry['id']+'/'+entry['id']+'-desktop.zip'
 
 def download_original_desktop(entry, metadata, base, folder):
@@ -73,7 +85,7 @@ def download_original_desktop(entry, metadata, base, folder):
                           'sha256':hashlib.sha256(content).hexdigest(),
                           'axes':{a.axisTag:[a.minValue,a.maxValue] for a in font['fvar'].axes} if 'fvar' in font else {}})
     entry['desktopFiles']=originals
-    write_desktop_package(entry,folder,files+['OFL.txt','METADATA.pb'])
+    write_desktop_package(entry,folder,files+[Path(entry['licensePath']).name,'METADATA.pb'])
     return entry
 
 def write_collection(entries):
@@ -95,11 +107,11 @@ def complete_desktop_packages():
     catalogue=json.loads(catalogue_path.read_text())
     def build(entry):
         if entry.get('desktop'): return entry
-        base=RAW+entry['id']+'/'
+        base,branch,license_file=font_upstream(entry['id'])
         folder=DEST/entry['id'];folder.mkdir(parents=True,exist_ok=True)
         metadata=get(base+'METADATA.pb').decode()
         (folder/'METADATA.pb').write_text(metadata)
-        (folder/'OFL.txt').write_bytes(get(base+'OFL.txt'))
+        (folder/license_file).write_bytes(get(base+license_file))
         return download_original_desktop(entry,metadata,base,folder)
     with ThreadPoolExecutor(max_workers=4) as pool:
         catalogue['families']=list(pool.map(build,catalogue['families']))
@@ -109,15 +121,15 @@ def complete_desktop_packages():
 
 def build_family(row):
     name, directory, group, classification, advice = row
-    base = RAW + directory + '/'
+    base,branch,license_file=font_upstream(directory)
     metadata = get(base+'METADATA.pb').decode()
-    license_bytes = get(base+'OFL.txt')
+    license_bytes = get(base+license_file)
     folder = DEST / directory
     folder.mkdir(parents=True,exist_ok=True)
-    (folder/'OFL.txt').write_bytes(license_bytes)
+    (folder/license_file).write_bytes(license_bytes)
     (folder/'METADATA.pb').write_text(metadata)
     designer = re.search(r'^designer: "([^"]+)"',metadata,re.M).group(1)
-    entry = dict(name=name,id=directory,group=group,classification=classification,advice=advice,designer=designer,license='SIL OFL 1.1',source='https://github.com/google/fonts/tree/main/ofl/'+directory,licensePath='fonts/typografie/'+directory+'/OFL.txt',files=[],uses=[])
+    entry = dict(name=name,id=directory,group=group,classification=classification,advice=advice,designer=designer,license='Apache 2.0' if branch=='apache' else 'SIL OFL 1.1',source='https://github.com/google/fonts/tree/main/'+branch+'/'+directory,licensePath='fonts/typografie/'+directory+'/'+license_file,files=[],uses=[])
     if directory in NEW:
         files = list(dict.fromkeys(re.findall(r'filename: "([^"]+\.ttf)"',metadata)))
         for filename in files:
@@ -131,7 +143,7 @@ def build_family(row):
             out = filename.removesuffix('.ttf')+'.woff2'
             font.flavor='woff2'; font.save(folder/out)
             entry['files'].append(dict(path='fonts/typografie/'+directory+'/'+out,weight=weight,style='italic' if italic else 'normal',axes=axes,sha256=hashlib.sha256(content).hexdigest()))
-        desktop_files=files+['OFL.txt','METADATA.pb']
+        desktop_files=files+[license_file,'METADATA.pb']
         extra_note=''
         if directory=='goudybookletter1911':
             extra_note='Goudy Bookletter 1911 enthält einen echten Regular-Schnitt (400), keine eigenen Bold- oder Italic-Schnitte. Nicht künstlich fett oder kursiv als weitere Original-Schnitte ausgeben.\nGestaltung: Barry Schwartz, nach Frederic Goudys Kennerley Oldstyle.\n'
@@ -186,7 +198,7 @@ def main(selected=None):
                 if any(Path(f['path']).name in text for f in entry['files']):
                     rel=str(path.relative_to(repo))
                     entry['uses'].append(dict(repo=repo.name,path=rel,url='https://genaiedu.github.io/'+repo.name+'/'+rel))
-    out={'checked':'2026-10-09','families':entries,'existingFamilies':sum(not e['new'] for e in entries),'existingFiles':sum(len(e['files']) for e in entries if not e['new']),'method':'Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.'}
+    out={'checked':'2026-10-10','families':entries,'existingFamilies':sum(not e['new'] for e in entries),'existingFiles':sum(len(e['files']) for e in entries if not e['new']),'method':'Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.'}
     (ROOT/'data'/'typografie-fonts.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
     css=[]
     for e in entries:
@@ -195,7 +207,7 @@ def main(selected=None):
             weight=' '.join(str(int(w)) for w in f['weight']) if isinstance(f['weight'],list) else str(f['weight'])
             css.append('@font-face{font-family:"'+e['name']+'";src:url("../'+f['path']+'") format("woff2");font-weight:'+weight+';font-style:'+f['style']+';font-display:swap;}')
     # Study aliases reuse the complete existing TTFs without creating catalogue families.
-    css.append('/* Dedicated study aliases reuse existing complete desktop fonts; the catalogue stays at 24 families. */')
+    css.append('/* Dedicated study aliases reuse existing complete desktop fonts; no additional catalogue families. */')
     for name,filename,max_weight in [('Inter','inter/Inter[opsz,wght].ttf',900),('DM Sans','dmsans/DMSans[opsz,wght].ttf',1000)]:
         css.append('@font-face{font-family:"'+name+' Optical Study";src:url("../fonts/typografie/'+filename+'") format("truetype");font-weight:100 '+str(max_weight)+';font-style:normal;font-display:swap;}')
     (ROOT/'styles'/'typografie-fonts.css').write_text('\n'.join(css)+'\n')

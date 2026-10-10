@@ -56,6 +56,12 @@
 @font-face{font-family:"Libre Baskerville";src:url("../fonts/typografie/librebaskerville/LibreBaskerville[wght].woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap;}
 @font-face{font-family:"Libre Baskerville";src:url("../fonts/typografie/librebaskerville/LibreBaskerville-Italic[wght].woff2") format("woff2");font-weight:400 700;font-style:italic;font-display:swap;}
 @font-face{font-family:"Goudy Bookletter 1911";src:url("../fonts/typografie/goudybookletter1911/GoudyBookletter1911.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
-/* Dedicated study aliases reuse existing complete desktop fonts; the catalogue stays at 24 families. */
+@font-face{font-family:"Bree Serif";src:url("../fonts/typografie/breeserif/BreeSerif-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Roboto Slab";src:url("../fonts/typografie/robotoslab/RobotoSlab[wght].woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap;}
+@font-face{font-family:"Belleza";src:url("../fonts/typografie/belleza/Belleza-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Limelight";src:url("../fonts/typografie/limelight/Limelight-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Podkova";src:url("../fonts/typografie/podkova/Podkova[wght].woff2") format("woff2");font-weight:400 800;font-style:normal;font-display:swap;}
+@font-face{font-family:"Abel";src:url("../fonts/typografie/abel/Abel-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+/* Dedicated study aliases reuse existing complete desktop fonts; no additional catalogue families. */
 @font-face{font-family:"Inter Optical Study";src:url("../fonts/typografie/inter/Inter[opsz,wght].ttf") format("truetype");font-weight:100 900;font-style:normal;font-display:swap;}
 @font-face{font-family:"DM Sans Optical Study";src:url("../fonts/typografie/dmsans/DMSans[opsz,wght].ttf") format("truetype");font-weight:100 1000;font-style:normal;font-display:swap;}

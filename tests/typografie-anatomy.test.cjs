@@ -2,11 +2,11 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const A=require('../scripts/typografie-anatomy.js');
 const root=path.resolve(__dirname,'..'),data=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-anatomy.json')));
 const illustrated=data.families.filter(f=>f.glyphs.x.path);
-test('all 24 measurements refer to the exact existing local webfonts',()=>{
-  assert.equal(data.families.length,24);assert.equal(illustrated.length,9);
+test('all 30 measurements refer to the exact existing local webfonts',()=>{
+  assert.equal(data.families.length,30);assert.equal(illustrated.length,9);
   for(const f of data.families){
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.resolve(root,f.source))).digest('hex'),f.sha256);
-    assert.equal(f.license,'SIL OFL 1.1');assert.ok(fs.existsSync(path.resolve(root,f.licensePath)));
+    assert.equal(f.license,f.id==='robotoslab'?'Apache 2.0':'SIL OFL 1.1');assert.ok(fs.existsSync(path.resolve(root,f.licensePath)));
     assert.ok(f.unitsPerEm>=1000);if('wght' in f.axes)assert.equal(f.axes.wght,400);
     for(const glyph of Object.values(f.glyphs)){assert.equal(glyph.bounds.length,4);assert.ok(glyph.advance>0);assert.ok(glyph.bounds[3]>glyph.bounds[1]);}
   }

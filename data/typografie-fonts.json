@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-09",
+  "checked": "2026-10-10",
   "families": [
     {
       "name": "Poppins",
@@ -2571,6 +2571,207 @@
         "ss01"
       ],
       "desktop": "fonts/typografie/goudybookletter1911/goudybookletter1911-desktop.zip",
+      "new": true
+    },
+    {
+      "name": "Bree Serif",
+      "id": "breeserif",
+      "group": "serif",
+      "classification": "Schreibbetonte Slab Serif",
+      "advice": "Aufrechte, schreibbetonte Formen mit kräftigen Serifen und vergleichsweise geringem Strichkontrast. Die freie Google-Fonts-Fassung enthält nur Regular.",
+      "designer": "TypeTogether",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/breeserif",
+      "licensePath": "fonts/typografie/breeserif/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/breeserif/BreeSerif-Regular.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "fd080582d70112ef479ba4ddd72407f9a4fcbcec4caa7d29de259b13eeb5f431"
+        }
+      ],
+      "uses": [],
+      "features": [],
+      "desktop": "fonts/typografie/breeserif/breeserif-desktop.zip",
+      "new": true
+    },
+    {
+      "name": "Roboto Slab",
+      "id": "robotoslab",
+      "group": "serif",
+      "classification": "Geometrisch beeinflusste Slab Serif",
+      "advice": "Eher mechanischer Bauplan mit kräftigen Serifen und relativ geringem Strichkontrast. Variable Gewichte; Apache-Lizenz statt OFL.",
+      "designer": "Christian Robertson",
+      "license": "Apache 2.0",
+      "source": "https://github.com/google/fonts/tree/main/apache/robotoslab",
+      "licensePath": "fonts/typografie/robotoslab/LICENSE.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/robotoslab/RobotoSlab[wght].woff2",
+          "weight": [
+            100.0,
+            900.0
+          ],
+          "style": "normal",
+          "axes": {
+            "wght": [
+              100.0,
+              900.0
+            ]
+          },
+          "sha256": "786ae192477447d33c6672c3055fba7cbfe45184c9a79e77a14f15716ca05b16"
+        }
+      ],
+      "uses": [],
+      "features": [
+        "aalt",
+        "c2sc",
+        "case",
+        "ccmp",
+        "dlig",
+        "frac",
+        "liga",
+        "lnum",
+        "locl",
+        "ordn",
+        "smcp",
+        "ss01",
+        "ss02",
+        "ss03",
+        "ss04",
+        "ss05",
+        "sups"
+      ],
+      "desktop": "fonts/typografie/robotoslab/robotoslab-desktop.zip",
+      "new": true
+    },
+    {
+      "name": "Belleza",
+      "id": "belleza",
+      "group": "sans",
+      "classification": "Kontrastreiche humanistische Sans",
+      "advice": "Deutlich wechselnde Strichstärken auch ohne Serifen. Humanistische Proportionen; ein echter Regular-Schnitt.",
+      "designer": "Eduardo Tunni",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/belleza",
+      "licensePath": "fonts/typografie/belleza/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/belleza/Belleza-Regular.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "a88eb0fdf4e78687a40d3478e1c90d4d3079e8c0d7d3a2452488a3ba805bff1d"
+        }
+      ],
+      "uses": [],
+      "features": [
+        "aalt",
+        "case",
+        "ccmp",
+        "frac",
+        "liga",
+        "locl",
+        "ordn",
+        "sups"
+      ],
+      "desktop": "fonts/typografie/belleza/belleza-desktop.zip",
+      "new": true
+    },
+    {
+      "name": "Limelight",
+      "id": "limelight",
+      "group": "display",
+      "classification": "Kontrastreiche Art-déco-Sans",
+      "advice": "Geometrische Displayformen mit extremem Strichkontrast. Für mittlere und große Grade, nicht für lange kleine Lesetexte.",
+      "designer": "Nicole Fally, Sorkin Type",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/limelight",
+      "licensePath": "fonts/typografie/limelight/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/limelight/Limelight-Regular.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "f5bf8a9159adfc5b9c756c85d812a4fd1299b8916fefdf39ad4b24ade6d8d0cf"
+        }
+      ],
+      "uses": [],
+      "features": [],
+      "desktop": "fonts/typografie/limelight/limelight-desktop.zip",
+      "new": true
+    },
+    {
+      "name": "Podkova",
+      "id": "podkova",
+      "group": "serif",
+      "classification": "Kontrastarme Slab Serif",
+      "advice": "Annähernd gleichmäßige Strichstärken und kantige Formen. Den schrägen oberen Stammabschluss zeigt das kleine t, nicht die gemeinsame Probe Form.",
+      "designer": "Cyreal",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/podkova",
+      "licensePath": "fonts/typografie/podkova/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/podkova/Podkova[wght].woff2",
+          "weight": [
+            400.0,
+            800.0
+          ],
+          "style": "normal",
+          "axes": {
+            "wght": [
+              400.0,
+              800.0
+            ]
+          },
+          "sha256": "a7be6732a489b1c5c7c37a5c2e816fad901563ccd882e9bbc56d13eeebf4a4e7"
+        }
+      ],
+      "uses": [],
+      "features": [
+        "aalt",
+        "case",
+        "ccmp",
+        "dnom",
+        "frac",
+        "liga",
+        "locl",
+        "numr",
+        "ordn",
+        "rvrn",
+        "sinf",
+        "subs",
+        "sups"
+      ],
+      "desktop": "fonts/typografie/podkova/podkova-desktop.zip",
+      "new": true
+    },
+    {
+      "name": "Abel",
+      "id": "abel",
+      "group": "sans",
+      "classification": "Schmale, kontrastarme Sans",
+      "advice": "Flachseitige, schmale Formen mit einzelnen schrägen Abschlüssen. Nur Regular; Details immer am einzelnen Buchstaben prüfen.",
+      "designer": "MADType",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/abel",
+      "licensePath": "fonts/typografie/abel/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/abel/Abel-Regular.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4"
+        }
+      ],
+      "uses": [],
+      "features": [],
+      "desktop": "fonts/typografie/abel/abel-desktop.zip",
       "new": true
     }
   ],

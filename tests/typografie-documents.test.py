@@ -31,7 +31,7 @@ class Links(HTMLParser):
 class Templates(unittest.TestCase):
     def test_all_desktop_downloads_and_collection(self):
         data=json.loads((ROOT/'data'/'typografie-fonts.json').read_text())
-        self.assertEqual(len(data['families']),24)
+        self.assertEqual(len(data['families']),30)
         html=(ROOT/'typografie-atelier.html').read_text()
         with ZipFile(ROOT/data['desktopCollection']) as collection:
             self.assertIsNone(collection.testzip())
@@ -41,7 +41,8 @@ class Templates(unittest.TestCase):
                     self.assertIsNone(z.testzip())
                     self.assertIn(font['desktop'],html)
                     prefix=font['id']+'/'
-                    self.assertIn('SIL OPEN FONT LICENSE',z.read(prefix+'OFL.txt').decode())
+                    license_name=Path(font['licensePath']).name
+                    self.assertIn('Apache License' if font['id']=='robotoslab' else 'SIL OPEN FONT LICENSE',z.read(prefix+license_name).decode())
                     instructions=z.read(prefix+'INSTALLATION.txt').decode()
                     self.assertIn('Mac:',instructions)
                     self.assertIn('Windows:',instructions)
@@ -55,7 +56,7 @@ class Templates(unittest.TestCase):
                             self.assertIn(z.read(name)[:4],[b'\x00\x01\x00\x00',b'OTTO'])
                     for original in font.get('desktopFiles',[]):
                         self.assertEqual(sha256((ROOT/original['path']).read_bytes()).hexdigest(),original['sha256'])
-            self.assertEqual(len({n.split('/')[0] for n in collection.namelist() if '/' in n}),24)
+            self.assertEqual(len({n.split('/')[0] for n in collection.namelist() if '/' in n}),30)
 
     def test_goudy_desktop_package(self):
         data=json.loads((ROOT/'data'/'typografie-fonts.json').read_text())
