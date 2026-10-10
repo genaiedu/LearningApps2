@@ -1,0 +1,54 @@
+{
+  "checked": "2026-10-11",
+  "note": "All images are served locally. Commons thumbnail reductions were retained without additional edits. Each image retains its stated licence. Surrounding original app code is not a derivative of the photographs.",
+  "images": [
+    {
+      "file": "griechisches-alphabet.jpg", "width": 1280, "height": 1118,
+      "title": "Greek alphabet on an Attic vessel, around 420 BCE",
+      "creator": "Marsyas; processing: 1970gemini (existing Commons version)",
+      "source": "https://commons.wikimedia.org/wiki/File:NAMA_Alphabet_grec.jpg",
+      "license": "CC BY 2.5", "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
+      "sha256": "107c1dada4e14bd874e259d478317d6730ce47a1b25bb0bf58583b5ce89bae92"
+    },
+    {
+      "file": "trajan-inschrift.jpg", "width": 1280, "height": 720,
+      "title": "Trajan's Column inscription, Rome, 113 CE",
+      "creator": "Jamie Heath / MumblerJamie, 2017",
+      "source": "https://commons.wikimedia.org/wiki/File:Inscription,_Trajan%27s_Column.jpg",
+      "license": "CC BY-SA 2.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "sha256": "701f976abc792231701ca0af93c26e0f38c15daf251e30b4973ee0f7cbf5a910"
+    },
+    {
+      "file": "karolingische-minuskel.jpg", "width": 1280, "height": 434,
+      "title": "Alcuin Bible detail, Burgerbibliothek Bern, Cod. 4, fol. 27v",
+      "creator": "Historical manuscript; reproduction from Wikimedia Commons; photographer not specified",
+      "source": "https://commons.wikimedia.org/wiki/File:Bern_Burgerbibliothek_Cod_4_fol_27v_detail.jpg",
+      "license": "Public domain (Commons image metadata)", "licenseUrl": "https://commons.wikimedia.org/wiki/File:Bern_Burgerbibliothek_Cod_4_fol_27v_detail.jpg",
+      "sha256": "0d7f89e0d462a3a5122e7cc3a3db2ec82d9371973cb47960732095735658bb9a"
+    },
+    {
+      "file": "gutenberg-bibel.jpg", "width": 960, "height": 1349,
+      "title": "Gutenberg Bible, Genesis, around 1455; Staatsbibliothek Berlin, volume I, fol. 5r",
+      "creator": "Historical print by Johannes Gutenberg; scan: Jossi",
+      "source": "https://commons.wikimedia.org/wiki/File:Gutenberg_Bible_B42_Genesis.JPG",
+      "license": "Public domain (faithful reproduction / PD-Art)", "licenseUrl": "https://commons.wikimedia.org/wiki/File:Gutenberg_Bible_B42_Genesis.JPG",
+      "sha256": "0e012c09b7e18259d556838cc830f4da38c2cbfdbb84a002ebb4e33daada6c26"
+    },
+    {
+      "file": "zeitung-linotype.jpg", "width": 1280, "height": 953,
+      "title": "Linotype machine, printing room, New York World, 1909",
+      "creator": "New York World (catalogue attribution); George Grantham Bain Collection, Library of Congress, LCCN 2004667832",
+      "source": "https://commons.wikimedia.org/wiki/File:Linotype_machine,_printing_room,_N.Y._World_LCCN2004667832.jpg",
+      "license": "Public domain / PD-old-70-expired; Library of Congress: no known restrictions on publication", "licenseUrl": "https://commons.wikimedia.org/wiki/File:Linotype_machine,_printing_room,_N.Y._World_LCCN2004667832.jpg",
+      "sha256": "035a443c35cfcf2916fdb6ab34f5de6a798632a9c5d2898f0a0688be165c5933"
+    },
+    {
+      "file": "computer-vt100.jpg", "width": 1280, "height": 1071,
+      "title": "Text on a DEC VT100-family terminal (device badge: VT101); photograph from 2008",
+      "creator": "Dave Fischer / Shieldforyoureyes; collection of the Retro-Computing Society of Rhode Island",
+      "source": "https://commons.wikimedia.org/wiki/File:Vt100-adventure.jpg",
+      "license": "CC BY-SA 3.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sha256": "0b336e037d7d9869b51bce220be988692532dee4a9a7839bdb8391b83718d4ee"
+    }
+  ]
+}
