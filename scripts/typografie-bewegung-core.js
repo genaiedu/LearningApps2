@@ -13,8 +13,8 @@
       paper:[40,20,880,580],words:[[94,175,0,90],[94,275,0,90],[94,375,0,90]],kicker:[94,80,0],copy:[94,450,0],action:[94,541,0],color:[555,106,294,430],amp:[550,443,0,380],guides:.5,annotation:0,camera:[60,0,620,620]},
     {at:12,hold:3,title:'03 / GEWICHTEN',note:'Mehr freier Raum, etwas kleinere Titel und eine eigenständige Motivfläche: Text und Zeichen spielen unterschiedliche Rollen. Die Erklärung ist kein zweiter Blickfang.',
       paper:[40,20,880,580],words:[[110,175,0,80],[110,266,0,80],[110,357,0,80]],kicker:[110,80,0],copy:[110,425,0],action:[110,541,0],color:[555,70,320,486],amp:[570,421,0,350],guides:.2,annotation:0,camera:[60,0,850,620]},
-    {at:20,hold:4,title:'04 / NEU UMBRECHEN',note:'Der Raum wird schmal. Die Titel werden neu abgestimmt, das Zeichen tritt als Anschnitt hinter die Aussage. Absatz und Handlungsfläche behalten ihren eigenen Platz. Nicht alles wird gemeinsam kleiner.',
-      paper:[305,20,350,580],words:[[335,145,0,56],[335,214,0,56],[335,283,0,56]],kicker:[335,70,0],copy:[335,363,0],action:[335,530,0],color:[555,100,110,216],amp:[495,306,0,235],guides:0,annotation:1,camera:[280,0,400,620]}
+    {at:20,hold:4,title:'04 / NEU UMBRECHEN',note:'Der Raum wird schmal. Die Titel werden neu abgestimmt, das Zeichen bleibt als Anschnitt am rechten Rand – mit Abstand zum Text. Absatz und Handlungsfläche behalten ihren eigenen Platz. Nicht alles wird gemeinsam kleiner.',
+      paper:[305,20,350,580],words:[[335,145,0,56],[335,214,0,56],[335,283,0,56]],kicker:[335,70,0],copy:[335,363,0],action:[335,530,0],color:[592,115,63,200],amp:[595,300,0,150],guides:0,annotation:1,camera:[280,0,400,620]}
   ];
   function time(value){const n=Number(value);return Number.isFinite(n)?Math.max(0,Math.min(duration,n)):0;}
   function ease(t){return t*t*(3-2*t);}

@@ -34,6 +34,16 @@ test('every intermediate composition stays finite and in its designed viewport',
   }
   assert.deepEqual(M.frame(20,true).camera,[280,0,400,620]);assert.deepEqual(M.frame(20,false).camera,[0,0,960,620]);
 });
+test('the final composition reserves separate space for the title and the cropped sign',()=>{
+  for(const narrow of [false,true]){
+    const f=M.frame(M.duration,narrow);
+    // Reserve 240 SVG units for the 56 px Cardo word, checked against its rendered bounds.
+    assert.ok(f.amp[0]>f.words[2][0]+240+10);assert.ok(f.color[0]>f.words[2][0]+240+10);
+    assert.equal(f.amp[3],150);assert.equal(f.amp[2],0);assert.ok(f.amp[0]<f.paper[0]+f.paper[2]);
+    assert.ok(f.note.includes('mit Abstand zum Text'));
+  }
+  assert.ok(html.includes('ohne den Titel zu überlagern'));
+});
 test('motion requires consent, visibility and both movement permissions; sleep never skips the sequence',()=>{
   const o={requested:true,reduced:false,paused:false,visible:true,hidden:false,time:6};assert.equal(M.running(o),true);
   for(const override of [{requested:false},{reduced:true},{paused:true},{visible:false},{hidden:true},{time:24}])assert.equal(M.running({...o,...override}),false);

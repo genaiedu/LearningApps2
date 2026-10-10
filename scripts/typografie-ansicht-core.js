@@ -40,13 +40,28 @@
     ['bewegte-grafik','M','Source Sans 3','Bewegung mit Aufgabe'],
     ['webwerkstatt','W','Source Sans 3','Die Bildschirmwerkstatt']
   ].map(([id,glyph,font,meaning],index)=>Object.freeze({id,glyph,font,meaning,side:index%2?'right':'left'}));
+  const positions=Object.freeze([
+    {id:'alternating',name:'Abwechselnd links / rechts'},
+    {id:'left',name:'Links'},
+    {id:'right',name:'Rechts'},
+    {id:'center',name:'Mittig'}
+  ].map(Object.freeze));
+  function bounded(value,min,max,fallback){
+    const n=typeof value==='number'||typeof value==='string'&&value.trim()?Number(value):NaN;
+    return Number.isFinite(n)?Math.round(Math.max(min,Math.min(max,n))):fallback;
+  }
   function settings(o={}){
     if(!o||typeof o!=='object')o={};
-    return {palette:palettes.some(p=>p.id===o.palette)?o.palette:'atelier',theme:o.theme==='dark'?'dark':'light',glyphs:typeof o.glyphs==='boolean'?o.glyphs:true};
+    return {palette:palettes.some(p=>p.id===o.palette)?o.palette:'atelier',theme:o.theme==='dark'?'dark':'light',glyphs:typeof o.glyphs==='boolean'?o.glyphs:true,
+      glyphPosition:positions.some(p=>p.id===o.glyphPosition)?o.glyphPosition:'alternating',glyphInset:bounded(o.glyphInset,0,40,5),glyphHeight:bounded(o.glyphHeight,10,90,34)};
+  }
+  function placement(chapterSide,o={}){
+    const s=settings(o),side=s.glyphPosition==='alternating'?(chapterSide==='right'?'right':'left'):s.glyphPosition;
+    return {side,x:side==='center'?50:side==='right'?100-s.glyphInset:s.glyphInset,y:s.glyphHeight};
   }
   function shift(top,viewport,enabled=true){
     if(!enabled||!Number.isFinite(top)||!Number.isFinite(viewport))return 0;
     return Math.max(-140,Math.min(220,(viewport*.35-top)*.5));
   }
-  return {palettes:Object.freeze(palettes),chapters:Object.freeze(chapters),settings,shift};
+  return {palettes:Object.freeze(palettes),chapters:Object.freeze(chapters),positions,settings,placement,shift};
 });

@@ -7,15 +7,34 @@ test('twenty chapter-specific local glyphs alternate cropped left and right',()=
   assert.equal(A.chapters.length,20);assert.equal(new Set(A.chapters.map(c=>c.id)).size,20);
   A.chapters.forEach((c,i)=>{assert.ok(html.includes('id="'+c.id+'"'));assert.equal(c.side,i%2?'right':'left');assert.ok(['Cardo','Source Sans 3'].includes(c.font));assert.equal([...c.glyph].length,1);assert.ok(c.meaning);});
   assert.equal(A.chapters.find(c=>c.id==='details').glyph,'&');assert.equal(A.chapters.find(c=>c.id==='mathematiksatz').glyph,'π');
-  assert.ok(css.includes('left:5%'));assert.ok(css.includes('left:95%'));assert.ok(css.includes('overflow:hidden'));assert.ok(css.includes('pointer-events:none'));
+  assert.ok(css.includes('left:var(--page-glyph-x,5%)'));assert.ok(css.includes('left:var(--page-glyph-x,95%)'));assert.ok(css.includes('overflow:hidden'));assert.ok(css.includes('pointer-events:none'));
 });
 test('appearance accepts only known settings and never needs storage or external files',()=>{
-  assert.deepEqual(A.settings(),{palette:'atelier',theme:'light',glyphs:true});assert.deepEqual(A.settings({palette:'slate',theme:'dark',glyphs:false}),{palette:'slate',theme:'dark',glyphs:false});
+  const positionDefaults={glyphPosition:'alternating',glyphInset:5,glyphHeight:34};
+  assert.deepEqual(A.settings(),{palette:'atelier',theme:'light',glyphs:true,...positionDefaults});assert.deepEqual(A.settings({palette:'slate',theme:'dark',glyphs:false}),{palette:'slate',theme:'dark',glyphs:false,...positionDefaults});
   assert.deepEqual(A.settings({palette:'url(evil)',theme:'url(evil)',glyphs:'false'}),A.settings());
   assert.deepEqual(A.settings(null),A.settings());assert.deepEqual(A.settings({palette:'constructor'}),A.settings());
   assert.ok(!/fetch\(|localStorage|sessionStorage|innerHTML/.test(ui));assert.ok(!/url\(https?:/.test(css));
   for(const id of ['theme-toggle','page-glyph-toggle','appearance-status'])assert.ok(html.includes('id="'+id+'"'));
   assert.ok(ui.includes("setAttribute('aria-hidden','true')"));assert.ok(ui.includes('glyph.textContent=chapter.glyph'));
+});
+test('global glyph positions are bounded, mirror correctly and retain the chapter default',()=>{
+  assert.deepEqual(A.positions.map(p=>p.id),['alternating','left','right','center']);assert.ok(Object.isFrozen(A.positions));
+  assert.deepEqual(A.placement('left'),{side:'left',x:5,y:34});assert.deepEqual(A.placement('right'),{side:'right',x:95,y:34});
+  for(const side of ['left','right']){
+    assert.deepEqual(A.placement(side,{glyphPosition:'right',glyphInset:20,glyphHeight:60}),{side:'right',x:80,y:60});
+    assert.deepEqual(A.placement(side,{glyphPosition:'left',glyphInset:20,glyphHeight:60}),{side:'left',x:20,y:60});
+    assert.deepEqual(A.placement(side,{glyphPosition:'center',glyphInset:20,glyphHeight:60}),{side:'center',x:50,y:60});
+  }
+  const safe=A.settings({glyphPosition:'url(evil)',glyphInset:-999,glyphHeight:Infinity});
+  assert.equal(safe.glyphPosition,'alternating');assert.equal(safe.glyphInset,0);assert.equal(safe.glyphHeight,34);
+  assert.equal(A.settings({glyphInset:999,glyphHeight:999}).glyphInset,40);assert.equal(A.settings({glyphHeight:-999}).glyphHeight,10);
+  for(const value of [null,false,{},[],NaN,'calc(100%)','']){
+    assert.equal(A.settings({glyphInset:value}).glyphInset,5);assert.equal(A.settings({glyphHeight:value}).glyphHeight,34);
+  }
+  for(const id of ['appearance-position','appearance-inset','appearance-height','appearance-glyphs','appearance-position-reset'])assert.ok(html.includes('id="'+id+'"'));
+  assert.ok(ui.includes('A.placement(chapter.side,current)'));assert.ok(ui.includes("layer.style.setProperty('--page-glyph-x'"));assert.ok(ui.includes("layer.style.setProperty('--page-glyph-y'"));
+  assert.ok(ui.includes("current.glyphPosition==='center'"));assert.ok(css.includes('top:var(--page-glyph-y,34%)'));
 });
 test('bounded parallax responds to scroll while reduced motion and pause remove extra movement',()=>{
   assert.equal(A.shift(0,900),157.5);assert.equal(A.shift(100,900),107.5);
@@ -51,7 +70,7 @@ test('all eight versions maintain reading contrast on every reading surface and 
 test('appearance control opens an accessible selection dialog rather than blindly toggling darkness',()=>{
   for(const id of ['appearance-dialog','appearance-title','appearance-help','appearance-choices','appearance-current','appearance-close'])assert.ok(html.includes('id="'+id+'"'));
   assert.ok(html.includes('aria-haspopup="dialog" aria-controls="appearance-dialog" aria-expanded="false"'));
-  for(const marker of ['dialog.showModal()',"dialog.addEventListener('close'",'lastOpener?.focus()',"querySelector('[data-palette-choice][aria-pressed=true]')?.focus()",'root.dataset.palette=current.palette','next.palette!==current.palette',"setAttribute('aria-pressed',String(button.dataset.paletteChoice===current.palette&&button.dataset.themeChoice===current.theme))"]){assert.ok(ui.includes(marker),marker);}
+  for(const marker of ['dialog.showModal()',"dialog.addEventListener('close'",'lastOpener?.focus()',"(current.glyphs?$('appearance-position'):$('appearance-glyphs')).focus()",'root.dataset.palette=current.palette','Object.keys(next).some(key=>next[key]!==current[key])',"setAttribute('aria-pressed',String(button.dataset.paletteChoice===current.palette&&button.dataset.themeChoice===current.theme))"]){assert.ok(ui.includes(marker),marker);}
   assert.ok(!ui.includes("theme:current.theme==='dark'?'light':'dark'"));
   assert.ok(css.includes('max-height:calc(100dvh - 32px)'));assert.ok(css.includes('@media(max-width:480px)'));
 });

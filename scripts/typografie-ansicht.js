@@ -29,7 +29,7 @@
     const layer=document.createElement('div'),glyph=document.createElement('span');
     layer.className='page-glyph-window';layer.dataset.side=chapter.side;layer.setAttribute('aria-hidden','true');
     glyph.className='page-glyph';glyph.textContent=chapter.glyph;glyph.style.fontFamily='"'+chapter.font+'"';
-    layer.append(glyph);host.prepend(layer);layers.push({layer,glyph});
+    layer.append(glyph);host.prepend(layer);layers.push({layer,glyph,chapter});
   }
   const active=new Set();
   const observer=new IntersectionObserver(entries=>{
@@ -46,18 +46,30 @@
   function readerStatus(){
     const target=$('reader-appearance-state');if(!target)return;
     const palette=A.palettes.find(p=>p.id===current.palette);
-    const text=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell')+'. Randzeichen '+(current.glyphs?'sichtbar':'ausgeblendet')+'. Animation '+(document.body.classList.contains('motion-paused')?'pausiert':'freigegeben')+'.';
+    const position=A.positions.find(p=>p.id===current.glyphPosition).name;
+    const text=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell')+'. Randzeichen '+(current.glyphs?'sichtbar: '+position:'ausgeblendet')+'. Animation '+(document.body.classList.contains('motion-paused')?'pausiert':'freigegeben')+'.';
     if(target.textContent!==text)target.textContent=text;
   }
   addEventListener('typography-motion-change',readerStatus);
   function apply(o={},announce=true){
-    const next=A.settings({...current,...o}),changed=next.palette!==current.palette||next.theme!==current.theme||next.glyphs!==current.glyphs;current=next;
+    const next=A.settings({...current,...o}),changed=Object.keys(next).some(key=>next[key]!==current[key]);current=next;
     const palette=A.palettes.find(p=>p.id===current.palette),description=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell');
     root.dataset.palette=current.palette;root.dataset.theme=current.theme;root.classList.toggle('page-glyphs-off',!current.glyphs);
-    for(const button of openers){button.setAttribute('aria-label','Farbschema wählen, aktuell: '+description);button.title='Farbschema wählen · '+description;}
+    for(const button of openers){button.setAttribute('aria-label','Darstellung wählen, aktuell: '+description);button.title='Farbschema und Randzeichen · '+description;}
     for(const button of dialog.querySelectorAll('[data-palette-choice]'))button.setAttribute('aria-pressed',String(button.dataset.paletteChoice===current.palette&&button.dataset.themeChoice===current.theme));
     $('appearance-current').textContent='Aktuell: '+description;
     for(const button of document.querySelectorAll('#page-glyph-toggle,[data-page-glyphs]'))button.setAttribute('aria-pressed',String(current.glyphs));
+    for(const {layer,chapter} of layers){
+      const place=A.placement(chapter.side,current);layer.dataset.side=place.side;
+      layer.style.setProperty('--page-glyph-x',place.x+'%');layer.style.setProperty('--page-glyph-y',place.y+'%');
+    }
+    $('appearance-glyphs').checked=current.glyphs;
+    $('appearance-position').value=current.glyphPosition;$('appearance-position').disabled=!current.glyphs;
+    $('appearance-inset').value=current.glyphInset;$('appearance-inset').disabled=!current.glyphs||current.glyphPosition==='center';
+    $('appearance-height').value=current.glyphHeight;$('appearance-height').disabled=!current.glyphs;
+    $('appearance-inset-value').textContent=current.glyphInset+' %';$('appearance-height-value').textContent=current.glyphHeight+' %';
+    $('appearance-inset').setAttribute('aria-valuetext',current.glyphInset+' Prozent Abstand zur Seitenkante');
+    $('appearance-height').setAttribute('aria-valuetext',current.glyphHeight+' Prozent der Kapitel-Dekorationshöhe');
     schedule();
     if(changed&&announce){$('appearance-status').textContent=description+'. Randzeichen '+(current.glyphs?'eingeblendet.':'ausgeblendet.');}
     readerStatus();
@@ -66,11 +78,18 @@
   function resize(){root.style.setProperty('--page-width',root.clientWidth+'px');schedule();}
   for(const button of openers)button.addEventListener('click',()=>{
     lastOpener=button;dialog.showModal();for(const opener of openers)opener.setAttribute('aria-expanded','true');
-    dialog.querySelector('[data-palette-choice][aria-pressed=true]')?.focus();
+    (current.glyphs?$('appearance-position'):$('appearance-glyphs')).focus();
   });
   $('appearance-close').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('close',()=>{for(const opener of openers)opener.setAttribute('aria-expanded','false');lastOpener?.focus();});
   for(const button of document.querySelectorAll('#page-glyph-toggle,[data-page-glyphs]'))button.addEventListener('click',()=>apply({glyphs:!current.glyphs}));
+  $('appearance-glyphs').addEventListener('change',()=>apply({glyphs:$('appearance-glyphs').checked}));
+  $('appearance-position').addEventListener('change',()=>apply({glyphPosition:$('appearance-position').value}));
+  for(const [id,key] of [['appearance-inset','glyphInset'],['appearance-height','glyphHeight']]){
+    $(id).addEventListener('input',()=>apply({[key]:$(id).value},false));
+    $(id).addEventListener('change',()=>{$('appearance-status').textContent='Randzeichen: '+A.positions.find(p=>p.id===current.glyphPosition).name+'. Randabstand '+current.glyphInset+' Prozent, Höhe '+current.glyphHeight+' Prozent.';});
+  }
+  $('appearance-position-reset').addEventListener('click',()=>{const s=A.settings();apply({glyphPosition:s.glyphPosition,glyphInset:s.glyphInset,glyphHeight:s.glyphHeight});});
   // Same-origin device previews use the same appearance without persistent storage.
   A.current=()=>({...current});A.apply=apply;
   addEventListener('scroll',()=>{if(current.glyphs)schedule();},{passive:true});
