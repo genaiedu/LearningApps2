@@ -2,10 +2,25 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const P=require('../scripts/typografie-seite-core.js'),C=require('../scripts/typografie-core.js');
 const dest=path.join(__dirname,'../downloads/typografie/seitenstudien');
-test('18 original A4 studies form three coherent groups with real downloads',()=>{
-  assert.equal(P.studies.length,18);assert.equal(new Set(P.studies.map(s=>s.id)).size,18);
-  for(const group of ['richtung','farbe','raum'])assert.equal(P.studies.filter(s=>s.group===group).length,6);
+test('19 original A4 studies form three coherent groups with real downloads',()=>{
+  assert.equal(P.studies.length,19);assert.equal(new Set(P.studies.map(s=>s.id)).size,19);
+  for(const [group,count] of [['richtung',7],['farbe',6],['raum',6]])assert.equal(P.studies.filter(s=>s.group===group).length,count);
   for(const s of P.studies){const p=P.scene(s);assert.ok(Math.abs(p.width/p.height-210/297)<1e-10);assert.ok(s.note&&s.task);for(const ext of ['pdf','svg'])assert.ok(fs.statSync(path.join(dest,s.id+'.'+ext)).size>2000);}
+});
+test('the added print study matches shear then rotation and keeps stems upright',()=>{
+  for(const angle of [-25,-14,0,14,25]){
+    const p=P.scene('upright',{angle,guides:true}),g=p.ops.find(o=>o.kind==='group'),[a,b,c,d,x,y]=g.matrix;
+    const combined=P.matrix(x,y,angle,angle);
+    g.matrix.forEach((v,i)=>assert.ok(Math.abs(v-combined[i])<1e-12));
+    assert.equal(c,0);assert.ok(d>0);assert.ok(Math.abs(a*d-b*c-1)<1e-12);
+    assert.ok(g.children.some(o=>o.kind==='line'&&o.y1===0&&o.y2===0));
+    if(angle)assert.notEqual(b,0);
+  }
+  assert.equal(P.studies[P.studies.findIndex(s=>s.mode==='rotate')+1].mode,'upright');
+  const h=fs.readFileSync(path.join(__dirname,'../typografie-atelier.html'),'utf8');
+  assert.ok(h.includes('<option value="19-aufrechte-diagonale">'));
+  assert.ok(h.includes('seitenstudien-19-pdf-svg.zip'));
+  assert.ok(!h.includes('seitenstudien-18-pdf-svg.zip'));
 });
 test('shear keeps a horizontal baseline, rotation preserves glyph shape and rail turns 90 degrees',()=>{
   const group=mode=>P.scene(mode).ops.find(o=>o.kind==='group');

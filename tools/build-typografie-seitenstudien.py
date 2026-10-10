@@ -35,6 +35,15 @@ def init_fonts(tmp):
         original=TTFont(source)
         assert original['OS/2'].fsType==0, 'Embedding must be permitted'
         static=instantiateVariableFont(original,{'wght':weight},inplace=False)
+        # ReportLab caches faces by PostScript name. Weight instances must not
+        # share the variable font's original name or Bold renders as Regular.
+        style='Regular' if weight==400 else 'Bold'
+        for name_id,value in [(2,style),(4,'Source Sans 3 '+style),(6,'SourceSans3-'+style)]:
+            for record in list(static['name'].names):
+                if record.nameID==name_id:
+                    static['name'].setName(value,name_id,record.platformID,record.platEncID,record.langID)
+        static['head'].modified=original['head'].modified
+        static.recalcTimestamp=False
         path=tmp/(key+'.ttf');static.save(path);paths[key]=path
     for name,path in paths.items():
         f=TTFont(path);assert f['OS/2'].fsType==0
@@ -106,7 +115,7 @@ GUIDES=[
   ('Richtung und Eingriff',[
     ('Eine Aufgabe für jede Ebene','Ein langer Absatz braucht eine verlässliche Leserichtung. Ein kurzer Plakattitel darf dagegen unterbrechen. Halte Datum, Ort, Namen und Anweisungen vollständig lesbar.'),
     ('Randklammer','Eine um 90 Grad gedrehte Zeile kann neben mehreren waagerechten Absätzen ein gemeinsames Thema markieren. Abstand und eine begrenzte Farbe verbinden die Bereiche.'),
-    ('Scheren oder drehen','Scherung verzerrt Zeichen auf einer waagerechten Grundlinie. Sie ist kein echter kursiver Schriftschnitt. Drehung kippt Zeichen und Grundlinie gemeinsam; die einzelnen Formen bleiben unverzerrt.'),
+    ('Scheren, drehen, kombinieren','Scherung verzerrt Zeichen auf einer waagerechten Grundlinie (03). Drehung kippt Zeichen und Grundlinie gemeinsam, ohne die Formen zu verzerren (04). Erst scheren, dann passend drehen (19): Die Zeile steigt an, die ursprünglich senkrechten Stämme des H stehen wieder senkrecht. Die Querlinie steigt mit der Zeile; die Formen sind verzerrt. Keine dieser Transformationen ist ein echter kursiver Schriftschnitt.'),
     ('Banderole','Die deckende Fläche kann eine Aussage sichtbar zurückweisen. Hier ist der verdeckte Text erfunden. Bei realen Quellen braucht es korrekte Zuschreibung und einen Zugang zum vollständigen Text.'),
     ('Prüfen','Beobachte deine eigene Reaktion. Kopfneigen ist eine mögliche Wirkung, keine garantierte Reaktion jedes Lesers. Frage eine zweite Person, ohne ihr vorher den vorgesehenen Blickweg zu erklären.')]),
   ('Farbe und Lesbarkeit',[
@@ -124,10 +133,11 @@ GUIDES=[
 ]
 
 def booklet(payload):
+    count=len(payload['studies'])
     c=canvas.Canvas(str(DEST/'studienheft-die-seite.pdf'),pagesize=(W,H),pageCompression=1,invariant=1)
-    c.setTitle('Die Seite - 18 kommentierte Gestaltungsstudien');c.setAuthor('Typografie-Atelier')
+    c.setTitle(f'Die Seite - {count} kommentierte Gestaltungsstudien');c.setAuthor('Typografie-Atelier')
     text(c,'TEIL II / TYPOGRAFIE-ATELIER',52,75,11)
-    text(c,'Die Seite',52,260,54,'serif');text(c,'18 Gestaltungsstudien',52,319,27,'serif')
+    text(c,'Die Seite',52,260,54,'serif');text(c,f'{count} Gestaltungsstudien',52,319,27,'serif')
     paragraph(c,'Richtung, Farbe und Seitenraum: eigene Entwürfe zum Vergleichen, Begründen und Weiterdenken.',52,404,430,15,23)
     paragraph(c,'Die Einzeldateien haben echtes DIN-A4-Format. Dieses Studienheft zeigt verkleinerte Muster mit Erläuterungen. Bewusste Gegenbeispiele sind keine Gestaltungsempfehlungen.',52,551,440,12,19)
     paragraph(c,'PDF mit eingebetteten Schriftuntergruppen. SVG mit Buchstaben als Vektorpfade. Offline-Werkstatt mit lokal eingebetteten Fonts. Keine Museumsbilder und keine externen Fontverbindungen.',52,643,440,12,19)
@@ -165,7 +175,7 @@ article>div{min-width:0}select{display:block;width:100%;max-width:100%;margin-to
 </style><main><header><p>TYPOGRAFIE-ATELIER / TEIL II</p><h1>Die Seite</h1><p>18 eigene DIN-A4-Studien. Diese Datei enthält ihre Schriftdateien und benötigt keine Internetverbindung. Einige Studien zeigen bewusst misslungene Entscheidungen. Quellenlinks werden erst beim Anklicken geöffnet.</p></header><article><div class="controls"><label>Gestaltungsstudie<select id="choice"></select></label><label><input id="gray" type="checkbox"> Graustufenvergleich</label><label><input id="guides" type="checkbox"> Konstruktionslinien</label><button id="reset">Ausgangspunkte wiederherstellen</button><button id="print">Diese Studie drucken</button><p id="status"></p><div class="explanation"><h2 id="name"></h2><p id="note"></p><h2>Vergleichsfrage</h2><p id="task"></p><p>Der Druck zeigt nur die gewählte Musterseite. Im Druckdialog A4, keine zusätzlichen Kopfzeilen und 100 % wählen. Farbflächen benötigen gegebenenfalls die Freigabe für Hintergrundgrafiken. Ein randloser Entwurf bleibt von den Möglichkeiten deines Druckers abhängig.</p></div></div><div class="proof" id="proof"></div></article><details><summary>Veröffentlichungen und Fontlizenzen</summary><ul id="sources"></ul><pre>LICENSES</pre></details></main><script>CORE_JS</script><script>
 const P=TypoPage,S=STUDIES,C=document.getElementById('choice');S.forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.id.slice(0,2)+' · '+s.title;C.append(o)});function update(){const s=S.find(s=>s.id===C.value);document.getElementById('proof').innerHTML=P.svg(P.scene(s,{gray:document.getElementById('gray').checked,guides:document.getElementById('guides').checked}));for(const k of ['name','note','task'])document.getElementById(k).textContent=s[k==='name'?'title':k];document.getElementById('status').textContent=s.mode==='bad'?'Bewusstes Gegenbeispiel: zu wenig Helligkeitskontrast.':'';}for(const id of ['choice','gray','guides'])document.getElementById(id).addEventListener('input',update);document.getElementById('reset').onclick=()=>{C.value=S[0].id;document.getElementById('gray').checked=false;document.getElementById('guides').checked=false;update()};document.getElementById('print').onclick=()=>window.print();P.sources.forEach(([title,url])=>{const li=document.createElement('li'),a=document.createElement('a');a.textContent=title;a.href=url;a.target='_blank';a.rel='noopener noreferrer';li.append(a);document.getElementById('sources').append(li)});update();
 </script></html>'''
-    html=html.replace('FONT_CSS',fontcss).replace('LICENSES',escape(licenses)).replace('CORE_JS',JS.read_text().replace('</script','<\\/script')).replace('STUDIES',json.dumps(payload['studies'],ensure_ascii=False))
+    html=html.replace('18 eigene DIN-A4-Studien.',f'{len(payload["studies"])} eigene DIN-A4-Studien.').replace('FONT_CSS',fontcss).replace('LICENSES',escape(licenses)).replace('CORE_JS',JS.read_text().replace('</script','<\\/script')).replace('STUDIES',json.dumps(payload['studies'],ensure_ascii=False))
     (DEST/'seitenstudien-offline.html').write_text(html,encoding='utf-8')
 
 def main():
@@ -177,9 +187,10 @@ def main():
             c=canvas.Canvas(str(DEST/(page['id']+'.pdf')),pagesize=(W,H),pageCompression=1,invariant=1);c.setTitle(page['title']);c.setAuthor('Typografie-Atelier');draw_page(c,page);c.showPage();c.save();write_svg(page,DEST/(page['id']+'.svg'))
         booklet(payload);offline(payload)
     for folder in ['cardo','sourcesans3']:(DEST/(folder+'-OFL.txt')).write_text((ROOT/'fonts/typografie'/folder/'OFL.txt').read_text())
-    with zipfile.ZipFile(DEST/'seitenstudien-18-pdf-svg.zip','w',zipfile.ZIP_DEFLATED) as z:
+    count=len(payload['pages'])
+    with zipfile.ZipFile(DEST/f'seitenstudien-{count}-pdf-svg.zip','w',zipfile.ZIP_DEFLATED) as z:
         paths=[DEST/(p['id']+'.'+ext) for p in payload['pages'] for ext in ['pdf','svg']]+[DEST/'studienheft-die-seite.pdf',DEST/'seitenstudien-offline.html',DEST/'cardo-OFL.txt',DEST/'sourcesans3-OFL.txt']
         for path in paths:z.write(path,path.name)
-    print(json.dumps({'studies':len(payload['pages']),'pdfs':19,'svg':18,'offline':1,'destination':str(DEST)},ensure_ascii=False))
+    print(json.dumps({'studies':count,'pdfs':count+1,'svg':count,'offline':1,'destination':str(DEST)},ensure_ascii=False))
 
 if __name__=='__main__':main()

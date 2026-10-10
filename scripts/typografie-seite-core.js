@@ -15,6 +15,7 @@
     {id:'02-randklammer',group:'richtung',mode:'rail',title:'Eine thematische Randklammer',note:'Die um 90 Grad gedrehte Zeile rahmt den waagerechten Text. Farbe und Abstand verbinden die Teile, ohne den Absatz zu verdecken.',task:'Lies zuerst nur die Randzeile. Wie verändert sie deine Erwartung an den Text rechts?'},
     {id:'03-scherung',group:'richtung',mode:'skew',title:'Schräge Formen auf gerader Zeile',note:'Bei der Scherung bleibt die Grundlinie waagerecht; die Buchstaben werden geometrisch verzerrt. Das ist kein echter kursiver Schriftschnitt.',task:'Vergleiche mit Studie 04. Was geschieht mit der Grundlinie, was mit den einzelnen Buchstaben?'},
     {id:'04-drehung',group:'richtung',mode:'rotate',title:'Die ganze Zeile kippt',note:'Bei der Drehung kippen Grundlinie und Zeichen gemeinsam. Die Schriftform bleibt unverzerrt, aber ihre Leserichtung ändert sich.',task:'Drehst du den Kopf oder liest du mental gedreht? Das ist eine eigene Beobachtung, kein allgemeiner Wirkungsbeweis.'},
+    {id:'19-aufrechte-diagonale',group:'richtung',mode:'upright',title:'Geschert, dann gedreht',note:'Die Zeile steigt schräg an; die ursprünglich senkrechten Stämme des H stehen wieder senkrecht. Erst wird geschert, dann gedreht. Die Querlinie steigt mit der Grundlinie, die Buchstaben sind geometrisch verändert. Das ist keine echte Kursive.',task:'Vergleiche mit den Studien 03 und 04. Verfolge Grundlinie, Seiten und Querlinie des H. Was bleibt aufrecht, was verändert sich?'},
     {id:'05-diagonale',group:'richtung',mode:'diagonal',title:'Ein Plakat mit Bewegungsrichtung',note:'Titel und Band aktivieren die Diagonale. Termin und Ort bleiben ruhig und waagerecht: Aufmerksamkeit und Gebrauchsinformation haben verschiedene Aufgaben.',task:'Welche Teile darf man hier experimenteller setzen? Was muss auf einen Blick lesbar bleiben?'},
     {id:'06-banderole',group:'richtung',mode:'banner',title:'Ein Widerspruch über dem Text',note:'Die Banderole verdeckt absichtlich einen Teil eines erfundenen Werbetexts. Nicht dessen vollständige Lektüre, sondern die Zurückweisung ist die Hauptbotschaft.',task:'Was behauptet der verdeckte Text, was antwortet die Banderole? Wäre dieser Eingriff in eine Arbeitsanweisung vertretbar?'},
     {id:'07-positiv',group:'farbe',mode:'positive',title:'Dunkle Schrift auf hellem Grund',note:'Ein heller Grund und dunkle Buchstaben sind ein robuster Ausgangspunkt für längere Lesetexte. Schriftgrad und Maß bleiben wichtig.',task:'Vergleiche Titel und Absatz mit Studie 08. Was ist nur Stimmung, was verändert deine Lesearbeit?'},
@@ -33,6 +34,8 @@
   function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));}
   function gray(hex){const c=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);const l=.2126*c[0]+.7152*c[1]+.0722*c[2];const s=l<=.0031308?12.92*l:1.055*l**(1/2.4)-.055;return '#'+Math.round(s*255).toString(16).padStart(2,'0').repeat(3);}
   function matrix(x,y,rotate=0,skew=0){const a=rotate*Math.PI/180,k=Math.tan(skew*Math.PI/180),c=Math.cos(a),s=Math.sin(a);return [c,s,c*k-s,s*k+c,x,y];}
+  // Rotation after same-angle X shear: the second column is exactly vertical.
+  function uprightMatrix(x,y,angle=-14){const a=angle*Math.PI/180,c=Math.cos(a);return [c,Math.sin(a),0,1/c,x,y];}
   function scene(study,options={}){
     if(typeof study==='string')study=studies.find(s=>s.id===study||s.mode===study);
     if(!study)throw Error('Unbekannte Druckstudie');
@@ -55,18 +58,19 @@
     ];
     const event=(x=62,y=670)=>{lines(['Freitag, 23. Oktober · 19 Uhr','Atelier im Schulhaus','Eintritt frei · Komm ins Gespräch.'],x,y,12,'sans',fg,22);};
     ops.push(box(0,0,W,H,bg));
-    if(['normal','rail','skew','rotate','diagonal','banner'].includes(mode)){
+    if(['normal','rail','skew','rotate','upright','diagonal','banner'].includes(mode)){
       label();let bx=62,bodyY=425;
       if(mode==='rail'){
         ops.push(box(28,140,58,510,accent));
         ops.push({kind:'group',matrix:matrix(68,616,-90),children:[tx('GESPRÄCHSKULTUR',0,0,27,'bold',colors.paper)]});bx=120;
         lines(['Haltung','zeigen.'],bx,236,47,'bold',fg,54);
-      }else if(mode==='skew'||mode==='rotate'){
+      }else if(['skew','rotate','upright'].includes(mode)){
         const angle=Number.isFinite(options.angle)?options.angle:-14;
         const titleOps=[tx('Haltung zeigen.',0,0,48,'bold')];
         if(options.guides)titleOps.unshift(line(-12,0,360,0,'#737c74',.7,'4 4'));
-        ops.push({kind:'group',matrix:matrix(70,295,mode==='rotate'?angle:0,mode==='skew'?-angle:0),children:titleOps});
-        if(mode==='rotate')bodyY+=Math.max(0,Math.sin(angle*Math.PI/180)*160);
+        const transform=mode==='upright'?uprightMatrix(70,295,angle):matrix(70,295,mode==='rotate'?angle:0,mode==='skew'?-angle:0);
+        ops.push({kind:'group',matrix:transform,children:titleOps});
+        if(mode!=='skew')bodyY+=Math.max(0,Math.sin(angle*Math.PI/180)*160);
       }else if(mode==='diagonal'){
         ops.push({kind:'group',matrix:matrix(34,360,-14),children:[box(-60,-124,650,143,accent),tx('Haltung',8,-52,68,'bold',colors.paper),tx('zeigen.',8,8,68,'bold',colors.paper)]});
       }else if(mode==='banner'){
@@ -131,5 +135,5 @@
     };
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="210mm" height="297mm" role="img" aria-label="${esc(page.title)}"><title>${esc(page.title)}</title>${page.ops.map(op).join('')}</svg>`;
   }
-  return {W,H,PHI,colors,sources,studies,gray,matrix,scene,svg,esc};
+  return {W,H,PHI,colors,sources,studies,gray,matrix,uprightMatrix,scene,svg,esc};
 });
