@@ -15,14 +15,20 @@ test('ligature control initializes and updates both real-text samples',()=>{
   const code=source.slice(source.indexOf('  function updateLigatures(){'),source.indexOf("  $('kerning-toggle')"));
   for(const initiallyEnabled of [false,true]){
     const elements={};
-    for(const id of ['ligature-toggle','ligature-pairs','ligature-proof','ligature-status']){
-      const classes=new Set();elements[id]={checked:initiallyEnabled,textContent:'',classes,classList:{toggle(name,force){force?classes.add(name):classes.delete(name);}}};
+    for(const id of ['ligature-toggle','ligature-font','ligature-reference','ligature-pairs','ligature-proof','ligature-status','ligature-font-note']){
+      const classes=new Set();elements[id]={checked:initiallyEnabled,value:'cardo',style:{},textContent:'',classes,classList:{toggle(name,force){force?classes.add(name):classes.delete(name);}}};
     }
     vm.runInNewContext(code,{$:id=>elements[id]});
     for(const enabled of [initiallyEnabled,!initiallyEnabled,initiallyEnabled]){
       elements['ligature-toggle'].checked=enabled;elements['ligature-toggle'].onchange();
       for(const id of ['ligature-pairs','ligature-proof'])assert.equal(elements[id].classes.has('ligatures-off'),!enabled);
       assert.equal(elements['ligature-status'].textContent,enabled?'Probe mit Ligaturen':'Probe ohne Ligaturen');
+    }
+    for(const [key,family,style] of [['cardo','Cardo','normal'],['cardo-italic','Cardo','italic'],['garamond','EB Garamond','normal'],['baskerville','Libre Baskerville','normal'],['bodoni','Libre Bodoni','normal'],['zilla','Zilla Slab','normal'],['lora','Lora','normal']]){
+      elements['ligature-font'].value=key;elements['ligature-font'].onchange();
+      for(const id of ['ligature-reference','ligature-pairs','ligature-proof']){assert.equal(elements[id].style.fontFamily,'"'+family+'"');assert.equal(elements[id].style.fontStyle,style);assert.equal(elements[id].style.fontWeight,'400');}
+      assert.ok(elements['ligature-font-note'].textContent.startsWith(family));
+      assert.equal(elements['ligature-font-note'].textContent.includes('keinen eigenen Standardersatz'),key==='lora');
     }
   }
 });
@@ -31,10 +37,31 @@ test('feature specimens override font shorthand resets and show a true baseline'
   assert.ok(html.includes('id="ligature-reference">fi fl ffi'));
   assert.ok(html.includes('id="ligature-pairs">fi fl ffi'));
   assert.ok(css.includes('.feature-panel .ligatures-off{font-variant-ligatures:none;font-feature-settings:"liga" 0'));
+  assert.ok(css.includes('.feature-panel .ligature-typesample,.feature-panel .ligature-proof{font-language-override:"ENG"}'));
+  assert.ok(html.includes('Nur diese technische Vergleichsprobe'));
   assert.ok(css.includes('.figure-proof .oldstyle{font-family:Cardo,Georgia,serif;font-variant-numeric:oldstyle-nums'));
   assert.ok(css.lastIndexOf('.figure-proof .oldstyle')>css.indexOf('.figure-proof p{font:'));
   assert.ok(css.includes('vertical-align:baseline;width:0;height:0'));
   assert.equal((html.match(/class="baseline-anchor"/g)||[]).length,2);
+});
+test('letter forms, emphasis and font roles remain inside the characters part',()=>{
+  const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.resolve(__dirname,'../styles/typografie-atelier.css'),'utf8');
+  const end=html.indexOf('<section class="chapter wrap" id="details">');
+  for(const id of ['buchstaben-varianten','auszeichnung','schrift-aufgabe'])assert.ok(html.indexOf('id="'+id+'"')<end);
+  for(const phrase of ['einstöckige a','zweistöckige a','Für das g folgt daraus erst recht keine pauschale Rangliste.','Formprinzip allein','Nonverbal','Dateitechnik','Cardo Regular','Cardo Italic','Cardo Bold','Farbe kann zusätzliche Bedeutungen tragen'])assert.ok(html.includes(phrase),phrase);
+  assert.ok(css.includes('.emphasis-comparison strong{font-weight:700}'));
+  const statements=[...html.matchAll(/<aside class="author-essay author-comment[^\"]*"[\s\S]*?<\/aside>/g)].map(m=>m[0]);
+  assert.equal(statements.length,3);
+  for(const statement of statements){assert.equal((statement.match(/aria-hidden="true">„<\/span>/g)||[]).length,1);assert.ok(!/Claus|Unterberg|Autorenkommentar|“|”/.test(statement));}
+  assert.ok(html.includes('Geometrische Fonts für Fließtext zu verwenden ist genauso peinlich wie ein Text voller Rechtschreibfehler.'));
+  assert.ok(html.includes('Kursiv und fett sind nicht einfach ästhetische Entscheidungen.'));
+});
+test('independent signs are distinguished from optional OpenType ligatures',()=>{
+  const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8');
+  assert.ok(html.includes('id="zeichen-aus-ligaturen"'));
+  assert.equal((html.match(/class="origin-glyph /g)||[]).length,8);
+  for(const phrase of ['langem s und z','ſ + z · ſ + s','Der Ligaturschalter kann &amp; und ß nicht zerlegen.','gewöhnliche Einzelzeichen','lateinischen et','keine vollständige historische Ableitung jeder Kontur'])assert.ok(html.includes(phrase),phrase);
+  const options=html.match(/id="ligature-font"[\s\S]*?<\/select>/)[0];assert.equal((options.match(/<option/g)||[]).length,7);
 });
 test('Word guidance distinguishes syllables from word parts and links all desktop downloads',()=>{
   const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),data=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-fonts.json')));

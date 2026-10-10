@@ -99,10 +99,14 @@
   $('book-reset').onclick=()=>{Object.entries({'book-font':'EB Garamond','book-paragraphs':'indent','book-headings':'restrained','caps-spacing':6,'foot-size':14,'foot-gap':20,'folio-position':'outer'}).forEach(([id,v])=>$(id).value=v);$('book-caps').checked=true;updateBook();};updateBook();
   function updateLigatures(){
     const enabled=$('ligature-toggle').checked;
+    const variants={cardo:['Cardo','normal','fi, fl und ffi'], 'cardo-italic':['Cardo','italic','fi, fl und ffi'],garamond:['EB Garamond','normal','fi, fl und ffi'],baskerville:['Libre Baskerville','normal','fi, fl und ffi'],bodoni:['Libre Bodoni','normal','fi, fl und ffi'],zilla:['Zilla Slab','normal','fi, fl und ffi'],lora:['Lora','normal','fi und fl']};
+    const [family,style,forms]=variants[$('ligature-font').value]||variants.cardo;
+    for(const id of ['ligature-reference','ligature-pairs','ligature-proof'])Object.assign($(id).style,{fontFamily:'"'+family+'"',fontStyle:style,fontWeight:'400'});
     ['ligature-pairs','ligature-proof'].forEach(id=>$(id).classList.toggle('ligatures-off',!enabled));
     $('ligature-status').textContent=enabled?'Probe mit Ligaturen':'Probe ohne Ligaturen';
+    $('ligature-font-note').textContent=family+' · '+(style==='italic'?'kursiv':'aufrecht')+': '+forms+' sind in der lokalen Fontdatei als Standardligaturen vorhanden.'+(family==='Lora'?' Die ffi-Gruppe hat keinen eigenen Standardersatz; darin kann sich nur fi verbinden.':'');
   }
-  $('ligature-toggle').onchange=updateLigatures;updateLigatures();
+  $('ligature-toggle').onchange=updateLigatures;$('ligature-font').onchange=updateLigatures;updateLigatures();
   $('kerning-toggle').onchange=()=>$('kerning-proof').style.fontKerning=$('kerning-toggle').checked?'normal':'none';
 
   const palettes={paper:['#202823','#f5f1e8'],night:['#f4ead5','#18251f'],sage:['#263e31','#e6ecdf'],blue:['#18364c','#e8eff4'],bad:['#b2b7a6','#e6e9df']};
