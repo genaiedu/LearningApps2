@@ -31,8 +31,52 @@
 
   function connection(remote){$('connection-diagram').classList.toggle('remote',remote);$('connection-local').setAttribute('aria-pressed',String(!remote));$('connection-remote').setAttribute('aria-pressed',String(remote));$('connection-explanation').textContent=remote?'Die Webseite lädt zusätzliche Schriftdateien beim Fontdienst. Dorthin gelangen IP-Adresse und technische Verbindungsdaten.':'HTML und Schriftdateien kommen vom eigenen Webangebot. Keine zusätzliche Fontverbindung zu Google.';}
   $('connection-local').onclick=()=>connection(false);$('connection-remote').onclick=()=>connection(true);
-  const pairs={humanist:['Inter','Source Sans 3','groteskbetont','humanistisch'],geometric:['Poppins','Source Sans 3','geometrisch','humanistisch'],rounded:['Nunito','Inter','gerundet','groteskbetont']};
-  $('sans-pair').onchange=()=>{const pair=pairs[$('sans-pair').value];['a','b'].forEach((id,i)=>{$('sans-sample-'+id).style.fontFamily='"'+pair[i]+'"';$('sans-label-'+id).textContent=pair[i]+' · '+pair[i+2];});};
+  const sansStyles={
+    grotesque:{family:'Inter',label:'groteskbetont, eher statisch'},
+    humanist:{family:'Source Sans 3',label:'humanistisch, dynamisch'},
+    geometric:{family:'Poppins',label:'geometrisch'},
+    rounded:{family:'Nunito',label:'gerundet'},
+    fira:{family:'Fira Sans',label:'humanistisch, dynamisch'}
+  };
+  const pairs={
+    humanist:['grotesque','humanist','Vergleiche die eher gleichmäßigen Formen von Inter mit dem Schreibduktus und den offenen Formen von Source Sans 3.'],
+    geometric:['geometric','humanist','Vergleiche die wiederkehrenden geometrischen Grundformen von Poppins mit den stärker differenzierten humanistischen Formen von Source Sans 3.'],
+    rounded:['rounded','grotesque','Vergleiche die weich gerundeten Abschlüsse von Nunito mit den kantigeren Abschlüssen von Inter. Die Form des Strichendes ist eine andere Frage als statisch oder dynamisch.'],
+    'grotesque-geometric':['grotesque','geometric','Inter und Poppins wirken beide eher gleichmäßig, unterscheiden sich aber im Bauplan: Betrachte besonders das zweistöckige a in Inter und das einstöckige a in Poppins.'],
+    'humanist-rounded':['humanist','rounded','Vergleiche den humanistischen Buchstabenbau von Source Sans 3 mit den gerundeten Abschlüssen von Nunito. Humanistisch und gerundet schließen einander grundsätzlich nicht aus.'],
+    'geometric-rounded':['geometric','rounded','Poppins betont geometrische Grundformen, Nunito weich gerundete Enden. Das sind keine Gegensätze: Geometrische Formen können zugleich gerundete Abschlüsse besitzen.'],
+    'humanist-families':['humanist','fira','Zwei humanistische, dynamische Sans: Vergleiche Source Sans 3 und Fira Sans am a, am g und an den Wortproportionen. Eine gemeinsame Tradition bedeutet nicht identische Buchstaben.']
+  };
+  function updateSansComparison(){
+    const pair=pairs[$('sans-pair').value]||pairs.humanist;
+    ['a','b'].forEach((id,i)=>{
+      const font=sansStyles[pair[i]],sample=$('sans-sample-'+id),download=$('sans-download-'+id);
+      Object.assign(sample.style,{fontFamily:'"'+font.family+'",sans-serif',fontWeight:'400',fontStyle:'normal'});
+      $('sans-label-'+id).textContent=font.family+' · '+font.label;
+      download.href='https://fonts.google.com/specimen/'+font.family.split(' ').join('+')+'?preview.script=Latn';
+      download.dataset.googleFont=font.family;download.textContent=font.family+' · Download bei Google Fonts ↗';
+    });
+    $('sans-comparison-note').textContent=pair[2];
+  }
+  $('sans-pair').onchange=updateSansComparison;updateSansComparison();
+
+  const glossaryEntries=[...document.querySelectorAll('#glossar dl>div')];
+  const glossaryGroups=[...document.querySelectorAll('[data-glossary-group]')];
+  const glossaryText=text=>String(text).toLocaleLowerCase('de-DE').replace(/[äöü]/g,char=>({ä:'ae',ö:'oe',ü:'ue'}[char])).normalize('NFD').replace(/\p{M}/gu,'').replace(/ß/g,'ss').trim();
+  function updateGlossary(){
+    const query=glossaryText($('glossary-search').value),words=query.split(/\s+/).filter(Boolean);let count=0;
+    for(const entry of glossaryEntries){entry.hidden=!words.every(word=>glossaryText(entry.textContent).includes(word));if(!entry.hidden)count++;}
+    for(const group of glossaryGroups)group.hidden=![...group.querySelectorAll('dl>div')].some(entry=>!entry.hidden);
+    $('glossary-index').hidden=Boolean(query);$('glossary-reset').disabled=!query;
+    $('glossary-status').textContent=query?(count?count+' von '+glossaryEntries.length+' Begriffen passen zur Suche.':'Kein Begriff gefunden. Versuche einen anderen Ausdruck oder zeige alle Begriffe.'):
+      glossaryEntries.length+' Fachbegriffe · alphabetisch geordnet. Die Links führen zu den Beispielen.';
+  }
+  $('glossary-search').oninput=updateGlossary;
+  $('glossary-reset').onclick=()=>{$('glossary-search').value='';updateGlossary();$('glossary-search').focus();};
+  document.addEventListener('click',event=>{
+    if(event.target.closest('a[href^="#glossar"]')&&$('glossary-search').value){$('glossary-search').value='';updateGlossary();}
+  });
+  $('glossary-tools').hidden=false;updateGlossary();
   $('variable-weight').oninput=()=>{const v=$('variable-weight').value;$('variable-value').textContent=v;$('variable-specimen').style.fontWeight=v;};
 
   const opticalFonts={inter:{name:'Inter',family:'Inter Optical Study',min:14,max:32,maxWeight:900},dmsans:{name:'DM Sans',family:'DM Sans Optical Study',min:9,max:40,maxWeight:1000}};
