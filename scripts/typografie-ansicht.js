@@ -1,9 +1,27 @@
 (function(){
   'use strict';
   const A=window.TypoAppearance,$=id=>document.getElementById(id);
-  if(!A||!$('theme-toggle')||!$('page-glyph-toggle'))return;
+  if(!A||!$('theme-toggle')||!$('page-glyph-toggle')||!$('appearance-dialog'))return;
   const root=document.documentElement,reduced=matchMedia('(prefers-reduced-motion: reduce)');
-  let current=A.settings(),pending=0;
+  const dialog=$('appearance-dialog'),openers=document.querySelectorAll('#theme-toggle,[data-page-theme]');
+  let current=A.settings(),pending=0,lastOpener=null;
+  for(const palette of A.palettes){
+    const card=document.createElement('section'),title=document.createElement('h3'),note=document.createElement('p'),choices=document.createElement('div');
+    card.className='appearance-palette';title.textContent=palette.name;note.textContent=palette.note;
+    choices.className='appearance-pair';choices.setAttribute('role','group');choices.setAttribute('aria-label',palette.name);
+    for(const mode of ['light','dark']){
+      const button=document.createElement('button'),sample=document.createElement('span'),label=document.createElement('span'),mark=document.createElement('span');
+      button.type='button';button.className='appearance-option';button.dataset.paletteChoice=palette.id;button.dataset.themeChoice=mode;
+      button.setAttribute('aria-label',palette.name+' · '+(mode==='light'?'Hell':'Dunkel'));button.setAttribute('aria-pressed','false');
+      button.style.setProperty('--choice-bg',palette[mode].paper);button.style.setProperty('--choice-ink',palette[mode].ink);button.style.setProperty('--choice-accent',palette[mode].red);
+      sample.className='appearance-sample';sample.textContent='Aa';sample.setAttribute('aria-hidden','true');
+      label.className='appearance-label';label.textContent=mode==='light'?'Hell':'Dunkel';
+      mark.className='appearance-selected';mark.textContent='✓';mark.setAttribute('aria-hidden','true');
+      button.append(sample,label,mark);choices.append(button);
+      button.addEventListener('click',()=>apply({palette:palette.id,theme:mode}));
+    }
+    card.append(title,note,choices);$('appearance-choices').append(card);
+  }
   const layers=[];
   for(const chapter of A.chapters){
     const host=$(chapter.id);if(!host)continue;
@@ -26,16 +44,24 @@
   }
   function schedule(){if(!pending)pending=requestAnimationFrame(draw);}
   function apply(o={},announce=true){
-    const next=A.settings({...current,...o}),changed=next.theme!==current.theme||next.glyphs!==current.glyphs;current=next;
-    root.dataset.theme=current.theme;root.classList.toggle('page-glyphs-off',!current.glyphs);
-    for(const button of document.querySelectorAll('#theme-toggle,[data-page-theme]'))button.setAttribute('aria-pressed',String(current.theme==='dark'));
+    const next=A.settings({...current,...o}),changed=next.palette!==current.palette||next.theme!==current.theme||next.glyphs!==current.glyphs;current=next;
+    const palette=A.palettes.find(p=>p.id===current.palette),description=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell');
+    root.dataset.palette=current.palette;root.dataset.theme=current.theme;root.classList.toggle('page-glyphs-off',!current.glyphs);
+    for(const button of openers){button.setAttribute('aria-label','Farbschema wählen, aktuell: '+description);button.title='Farbschema wählen · '+description;}
+    for(const button of dialog.querySelectorAll('[data-palette-choice]'))button.setAttribute('aria-pressed',String(button.dataset.paletteChoice===current.palette&&button.dataset.themeChoice===current.theme));
+    $('appearance-current').textContent='Aktuell: '+description;
     for(const button of document.querySelectorAll('#page-glyph-toggle,[data-page-glyphs]'))button.setAttribute('aria-pressed',String(current.glyphs));
     schedule();
-    if(changed&&announce){$('appearance-status').textContent=(current.theme==='dark'?'Dunkle':'Helle')+' Ansicht. Randzeichen '+(current.glyphs?'eingeblendet.':'ausgeblendet.');}
+    if(changed&&announce){$('appearance-status').textContent=description+'. Randzeichen '+(current.glyphs?'eingeblendet.':'ausgeblendet.');}
     if(changed)dispatchEvent(new Event('typography-appearance-change'));
   }
   function resize(){root.style.setProperty('--page-width',root.clientWidth+'px');schedule();}
-  for(const button of document.querySelectorAll('#theme-toggle,[data-page-theme]'))button.addEventListener('click',()=>apply({theme:current.theme==='dark'?'light':'dark'}));
+  for(const button of openers)button.addEventListener('click',()=>{
+    lastOpener=button;dialog.showModal();for(const opener of openers)opener.setAttribute('aria-expanded','true');
+    dialog.querySelector('[data-palette-choice][aria-pressed=true]')?.focus();
+  });
+  $('appearance-close').addEventListener('click',()=>dialog.close());
+  dialog.addEventListener('close',()=>{for(const opener of openers)opener.setAttribute('aria-expanded','false');lastOpener?.focus();});
   for(const button of document.querySelectorAll('#page-glyph-toggle,[data-page-glyphs]'))button.addEventListener('click',()=>apply({glyphs:!current.glyphs}));
   // Same-origin device previews use the same appearance without persistent storage.
   A.current=()=>({...current});A.apply=apply;

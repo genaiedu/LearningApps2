@@ -10,8 +10,9 @@ test('twenty chapter-specific local glyphs alternate cropped left and right',()=
   assert.ok(css.includes('left:5%'));assert.ok(css.includes('left:95%'));assert.ok(css.includes('overflow:hidden'));assert.ok(css.includes('pointer-events:none'));
 });
 test('appearance accepts only known settings and never needs storage or external files',()=>{
-  assert.deepEqual(A.settings(),{theme:'light',glyphs:true});assert.deepEqual(A.settings({theme:'dark',glyphs:false}),{theme:'dark',glyphs:false});
-  assert.deepEqual(A.settings({theme:'url(evil)',glyphs:'false'}),A.settings());
+  assert.deepEqual(A.settings(),{palette:'atelier',theme:'light',glyphs:true});assert.deepEqual(A.settings({palette:'slate',theme:'dark',glyphs:false}),{palette:'slate',theme:'dark',glyphs:false});
+  assert.deepEqual(A.settings({palette:'url(evil)',theme:'url(evil)',glyphs:'false'}),A.settings());
+  assert.deepEqual(A.settings(null),A.settings());assert.deepEqual(A.settings({palette:'constructor'}),A.settings());
   assert.ok(!/fetch\(|localStorage|sessionStorage|innerHTML/.test(ui));assert.ok(!/url\(https?:/.test(css));
   for(const id of ['theme-toggle','page-glyph-toggle','appearance-status'])assert.ok(html.includes('id="'+id+'"'));
   assert.ok(ui.includes("setAttribute('aria-hidden','true')"));assert.ok(ui.includes('glyph.textContent=chapter.glyph'));
@@ -23,13 +24,36 @@ test('bounded parallax responds to scroll while reduced motion and pause remove 
   for(const marker of ['prefers-reduced-motion: reduce',"classList.contains('motion-paused')",'IntersectionObserver','requestAnimationFrame','{passive:true}',"addEventListener('typography-motion-change',schedule)"])assert.ok(ui.includes(marker));
   assert.ok(css.includes('@media(prefers-reduced-motion:reduce)'));assert.ok(css.includes('@media print'));assert.ok(!ui.includes('setInterval'));
 });
-test('both themes maintain reading contrast even over decorative glyphs',()=>{
-  for(const theme of [{bg:'#f5f1e8',mark:'#e3e0d7',ink:'#202823',muted:'#56635b',accent:'#a83424'},{bg:'#17241f',mark:'#2b3832',ink:'#f0ece1',muted:'#bac5bb',accent:'#eea38c'}]){
-    for(const fg of [theme.ink,theme.muted,theme.accent])for(const bg of [theme.bg,theme.mark])assert.ok(C.contrast(fg,bg)>=4.5,fg+' / '+bg);
+test('all four palettes have genuine light and dark versions and reproducible local CSS',()=>{
+  const paletteCSS=read('styles/typografie-palettes.css');
+  assert.equal(A.palettes.length,4);assert.equal(new Set(A.palettes.map(p=>p.id)).size,4);assert.ok(Object.isFrozen(A.palettes));
+  for(const p of A.palettes){
+    assert.ok(p.name&&p.note);assert.ok(Object.isFrozen(p));assert.notEqual(p.light.paper,p.dark.paper);
+    for(const mode of ['light','dark']){
+      const s=A.settings({palette:p.id,theme:mode,glyphs:false});assert.equal(s.palette,p.id);assert.equal(s.theme,mode);assert.equal(s.glyphs,false);
+      const rule=paletteCSS.match(new RegExp('html\\[data-palette="'+p.id+'"\\]\\[data-theme="'+mode+'"\\]\\{([^}]+)\\}'))?.[1];assert.ok(rule);
+      assert.ok(Object.isFrozen(p[mode]));assert.equal(Object.keys(p[mode]).length,16);
+      for(const [key,value] of Object.entries(p[mode])){assert.match(value,/^#[0-9a-f]{6}$/);assert.ok(rule.includes('--'+key+':'+value+';'));}
+    }
   }
-  assert.ok(C.contrast('#17241f','#d9957d')>=4.5);
+  assert.ok(html.includes('styles/typografie-palettes.css'));assert.ok(!/url\(|@import/.test(paletteCSS));
+});
+test('all eight versions maintain reading contrast on every reading surface and decorative glyph',()=>{
+  for(const p of A.palettes)for(const mode of ['light','dark']){
+    const t=p[mode];
+    for(const fg of [t.ink,t.muted,t.red])for(const bg of [t.paper,t.white,t.surface,t['page-mark'],t['hero-bg'],t['quote-bg']])assert.ok(C.contrast(fg,bg)>=4.5,p.id+' '+mode+' '+fg+' / '+bg);
+    for(const bg of [t['button-bg'],t['button-hover']])assert.ok(C.contrast(t['button-ink'],bg)>=4.5);
+  }
   for(const selector of ['.poster','.book-proof','.study-sheet','.gi-page','.wt-root','.web-color-example:not(.dark)'])assert.ok(css.includes(selector));
+  assert.ok(css.includes('html[data-palette] :is(.poster'));assert.ok(css.includes('@media print{html[data-palette][data-theme]'));
   assert.ok(!/filter:\s*invert/.test(css));
+});
+test('appearance control opens an accessible selection dialog rather than blindly toggling darkness',()=>{
+  for(const id of ['appearance-dialog','appearance-title','appearance-help','appearance-choices','appearance-current','appearance-close'])assert.ok(html.includes('id="'+id+'"'));
+  assert.ok(html.includes('aria-haspopup="dialog" aria-controls="appearance-dialog" aria-expanded="false"'));
+  for(const marker of ['dialog.showModal()',"dialog.addEventListener('close'",'lastOpener?.focus()',"querySelector('[data-palette-choice][aria-pressed=true]')?.focus()",'root.dataset.palette=current.palette','next.palette!==current.palette',"setAttribute('aria-pressed',String(button.dataset.paletteChoice===current.palette&&button.dataset.themeChoice===current.theme))"]){assert.ok(ui.includes(marker),marker);}
+  assert.ok(!ui.includes("theme:current.theme==='dark'?'light':'dark'"));
+  assert.ok(css.includes('max-height:calc(100dvh - 32px)'));assert.ok(css.includes('@media(max-width:480px)'));
 });
 test('device previews inherit validated theme and glyph settings from the same-origin parent',()=>{
   const formats=read('scripts/typografie-formate.js');
