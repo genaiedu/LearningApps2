@@ -5,6 +5,7 @@ from xml.etree import ElementTree as ET
 from html.parser import HTMLParser
 from uuid import UUID
 from hashlib import sha256
+from urllib.parse import unquote, urlsplit
 import json
 import posixpath
 import unittest
@@ -112,7 +113,7 @@ class Templates(unittest.TestCase):
         p=Links();p.feed((ROOT/'typografie-atelier.html').read_text())
         self.assertEqual(len(p.ids),len(set(p.ids)))
         for anchor in p.anchors:self.assertIn(anchor,p.ids)
-        for path in p.paths:self.assertTrue((ROOT/path.split('#')[0].split('?')[0]).exists(),path)
+        for path in p.paths:self.assertTrue((ROOT/unquote(urlsplit(path).path)).exists(),path)
         for base in NAMES:
             for suffix in ['','-modern']:
                 self.assertIn('downloads/typografie/'+base+suffix+'.docx',p.paths)

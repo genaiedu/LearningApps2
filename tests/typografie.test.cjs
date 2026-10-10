@@ -63,6 +63,50 @@ test('independent signs are distinguished from optional OpenType ligatures',()=>
   for(const phrase of ['langem s und z','ſ + z · ſ + s','Der Ligaturschalter kann &amp; und ß nicht zerlegen.','gewöhnliche Einzelzeichen','lateinischen et','keine vollständige historische Ableitung jeder Kontur'])assert.ok(html.includes(phrase),phrase);
   const options=html.match(/id="ligature-font"[\s\S]*?<\/select>/)[0];assert.equal((options.match(/<option/g)||[]).length,7);
 });
+test('anatomy leads into overshoot and history; comments and variable cuts stay with their topics',()=>{
+  const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-atelier.css'),'utf8');
+  const headings=[...html.matchAll(/<h3 class="subchapter" id="([^"]+)"/g)].map(m=>m[1]);
+  assert.deepEqual(headings.slice(0,7),['overshoot','schriftgeschichte','sans-formen','buchstaben-varianten','schrift-aufgabe','auszeichnung','optische-groesse']);
+  const at=id=>html.indexOf('id="'+id+'"');
+  const comment=html.indexOf('class="author-essay author-comment letterform-statement"');
+  assert.ok(at('buchstaben-varianten')<comment&&comment<at('schrift-aufgabe'));
+  assert.ok(at('auszeichnung')<at('variable-schnitte')&&at('variable-schnitte')<at('optische-groesse'));
+  assert.ok(!html.includes('font-role-conversation'));
+  assert.ok(css.includes('.margin-context{font:400 19px/1.65 var(--sans)'));
+  assert.ok(html.includes('Warum so viele Zwischenstufen?'));
+});
+test('optical studies reuse complete local fonts with the declared real axes',()=>{
+  const root=path.resolve(__dirname,'..'),css=fs.readFileSync(path.join(root,'styles/typografie-fonts.css'),'utf8');
+  for(const [family,file,expected] of [['Inter Optical Study','inter/Inter[opsz,wght].ttf',{opsz:[14,14,32],wght:[100,400,900]}],['DM Sans Optical Study','dmsans/DMSans[opsz,wght].ttf',{opsz:[9,9,40],wght:[100,400,1000]}]]){
+    const buffer=fs.readFileSync(path.join(root,'fonts/typografie',file)),tables={};
+    for(let i=0;i<buffer.readUInt16BE(4);i++){const start=12+i*16;tables[buffer.toString('ascii',start,start+4)]=buffer.readUInt32BE(start+8);}
+    assert.ok(tables.gvar);assert.ok(tables.HVAR);assert.ok(tables.fvar);
+    const axes={},base=tables.fvar;
+    for(let i=0;i<buffer.readUInt16BE(base+8);i++){const a=base+buffer.readUInt16BE(base+4)+i*buffer.readUInt16BE(base+10);axes[buffer.toString('ascii',a,a+4)]=[4,8,12].map(d=>buffer.readInt32BE(a+d)/65536);}
+    assert.deepEqual(axes,expected);
+    assert.ok(css.includes('font-family:"'+family+'";src:url("../fonts/typografie/'+file+'")'));
+  }
+  assert.ok(!/https?:\/\//.test(css));
+});
+test('optical controls isolate shape and weight from display size and extra tracking',()=>{
+  const source=fs.readFileSync(path.resolve(__dirname,'../scripts/typografie-atelier.js'),'utf8');
+  const code=source.slice(source.indexOf('  const opticalFonts='),source.indexOf('  async function loadFonts()'));
+  const elements={};
+  for(const id of ['optical-font','optical-size','optical-weight','optical-sample-a','optical-sample-b','optical-label-a','optical-label-b','optical-weight-value','optical-size-value','optical-status','optical-reset'])elements[id]={value:id==='optical-font'?'inter':'',style:{},addEventListener(event,handler){this['on'+event]=handler;}};
+  vm.runInNewContext(code,{$:id=>elements[id],on:(ids,fn)=>ids.forEach(id=>elements[id].oninput=fn),dec:(n,d)=>Number(n).toFixed(d)});
+  for(const [key,min,max,maxWeight,family] of [['inter',14,32,900,'Inter Optical Study'],['dmsans',9,40,1000,'DM Sans Optical Study']]){
+    elements['optical-font'].value=key;elements['optical-font'].onchange();
+    assert.equal(elements['optical-size'].min,min);assert.equal(elements['optical-size'].max,max);assert.equal(elements['optical-weight'].max,maxWeight);
+    assert.equal(elements['optical-size'].value,max);assert.equal(elements['optical-weight'].value,400);
+    for(const id of ['a','b']){const s=elements['optical-sample-'+id].style;assert.equal(s.fontFamily,'"'+family+'"');assert.equal(s.fontOpticalSizing,'none');assert.equal(s.letterSpacing,'0px');assert.equal(s.fontSize,undefined);}
+    elements['optical-size'].value=min;elements['optical-size'].oninput();
+    assert.equal(elements['optical-sample-a'].style.fontVariationSettings,elements['optical-sample-b'].style.fontVariationSettings);
+    assert.ok(elements['optical-status'].textContent.includes('stimmen überein'));
+    elements['optical-weight'].value=700;elements['optical-weight'].oninput();
+    assert.equal(elements['optical-sample-a'].style.fontWeight,'700');assert.equal(elements['optical-sample-b'].style.fontWeight,'700');
+    elements['optical-reset'].onclick();assert.equal(elements['optical-weight'].value,400);assert.equal(elements['optical-size'].value,max);
+  }
+});
 test('Word guidance distinguishes syllables from word parts and links all desktop downloads',()=>{
   const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),data=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-fonts.json')));
   for(const phrase of ['id="word-ligaturen"','Format → Schriftart … → Erweitert','Nur Standard','Strg + D','Auf|lage','Af-fe','Ligaturen → Keine','Nein, darauf kannst du dich nicht verlassen.'])assert.ok(html.includes(phrase),phrase);

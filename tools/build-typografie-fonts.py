@@ -194,6 +194,10 @@ def main(selected=None):
             # CSS resides one level below the app, so relative paths gain ../.
             weight=' '.join(str(int(w)) for w in f['weight']) if isinstance(f['weight'],list) else str(f['weight'])
             css.append('@font-face{font-family:"'+e['name']+'";src:url("../'+f['path']+'") format("woff2");font-weight:'+weight+';font-style:'+f['style']+';font-display:swap;}')
+    # Study aliases reuse the complete existing TTFs without creating catalogue families.
+    css.append('/* Dedicated study aliases reuse existing complete desktop fonts; the catalogue stays at 24 families. */')
+    for name,filename,max_weight in [('Inter','inter/Inter[opsz,wght].ttf',900),('DM Sans','dmsans/DMSans[opsz,wght].ttf',1000)]:
+        css.append('@font-face{font-family:"'+name+' Optical Study";src:url("../fonts/typografie/'+filename+'") format("truetype");font-weight:100 '+str(max_weight)+';font-style:normal;font-display:swap;}')
     (ROOT/'styles'/'typografie-fonts.css').write_text('\n'.join(css)+'\n')
     print(f"Catalogue: {len(entries)} families, {out['existingFamilies']} existing / {out['existingFiles']} existing WOFF2 files, {len(NEW)} new licensed desktop packages.")
 

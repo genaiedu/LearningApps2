@@ -37,6 +37,24 @@
   $('sans-pair').onchange=()=>{const pair=pairs[$('sans-pair').value];['a','b'].forEach((id,i)=>{$('sans-sample-'+id).style.fontFamily='"'+pair[i]+'"';$('sans-label-'+id).textContent=pair[i]+' · '+pair[i+2];});};
   $('variable-weight').oninput=()=>{const v=$('variable-weight').value;$('variable-value').textContent=v;$('variable-specimen').style.fontWeight=v;};
 
+  const opticalFonts={inter:{name:'Inter',family:'Inter Optical Study',min:14,max:32,maxWeight:900},dmsans:{name:'DM Sans',family:'DM Sans Optical Study',min:9,max:40,maxWeight:1000}};
+  function updateOptical(reset=false){
+    const font=opticalFonts[$('optical-font').value]||opticalFonts.inter;
+    const size=$('optical-size'),weight=$('optical-weight');
+    size.min=font.min;size.max=font.max;weight.max=font.maxWeight;
+    if(reset){size.value=font.max;weight.value=400;}
+    const opsz=Math.max(font.min,Math.min(font.max,Number(size.value)||font.max));
+    const wght=Math.max(100,Math.min(font.maxWeight,Number(weight.value)||400));
+    size.value=opsz;weight.value=wght;
+    for(const [id,value] of [['a',font.min],['b',opsz]])Object.assign($('optical-sample-'+id).style,{fontFamily:'"'+font.family+'"',fontWeight:String(wght),fontOpticalSizing:'none',fontVariationSettings:'"opsz" '+value+', "wght" '+wght,letterSpacing:'0px'});
+    $('optical-label-a').textContent='Textentwurf · opsz '+dec(font.min,0);
+    $('optical-label-b').textContent=(opsz===font.max?'Displayentwurf':opsz===font.min?'Textentwurf':'Zwischenform')+' · opsz '+dec(opsz,1);
+    $('optical-weight-value').textContent=wght;$('optical-size-value').textContent=dec(opsz,1);
+    $('optical-status').textContent=font.name+' · beide Proben mit gleicher Anzeigegröße und Gewicht '+wght+'. '+(opsz===font.min?'Die Achsenwerte sind jetzt gleich; die Formen stimmen überein.':'Links bleibt opsz '+font.min+' fest, rechts verändert opsz '+dec(opsz,1)+' Formen und eingebaute Abstände.')+' Keine zusätzliche Sperrung.';
+  }
+  $('optical-font').onchange=()=>updateOptical(true);on(['optical-size','optical-weight'],()=>updateOptical());
+  $('optical-reset').onclick=()=>updateOptical(true);updateOptical(true);
+
   async function loadFonts(){
     try{const r=await fetch('data/typografie-fonts.json',{credentials:'omit'});if(!r.ok)throw Error();catalogue=await r.json();catalogue.families.forEach(f=>fonts.set(f.name,f));$('catalog-count').textContent=fonts.size;$('hero-count').textContent=fonts.size;renderFonts();updateBook();}
     catch(_){$('catalog-status').textContent='Das Schriftverzeichnis konnte nicht geladen werden. Die übrigen Werkstätten und Downloads bleiben nutzbar.';const retry=node('button',null,'Verzeichnis erneut laden');retry.onclick=()=>{retry.remove();loadFonts();};$('catalog-status').after(retry);}
