@@ -10,13 +10,48 @@ test('twenty chapter-specific local glyphs alternate cropped left and right',()=
   assert.ok(css.includes('left:var(--page-glyph-x,5%)'));assert.ok(css.includes('left:var(--page-glyph-x,95%)'));assert.ok(css.includes('overflow:hidden'));assert.ok(css.includes('pointer-events:none'));
 });
 test('appearance accepts only known settings and never needs storage or external files',()=>{
-  const positionDefaults={glyphPosition:'alternating',glyphInset:5,glyphHeight:34};
+  const positionDefaults={glyphPosition:'alternating',glyphInset:5,glyphHeight:34,sansFont:'sourcesans3',serifFont:'original'};
   assert.deepEqual(A.settings(),{palette:'atelier',theme:'light',glyphs:true,...positionDefaults});assert.deepEqual(A.settings({palette:'slate',theme:'dark',glyphs:false}),{palette:'slate',theme:'dark',glyphs:false,...positionDefaults});
   assert.deepEqual(A.settings({palette:'url(evil)',theme:'url(evil)',glyphs:'false'}),A.settings());
   assert.deepEqual(A.settings(null),A.settings());assert.deepEqual(A.settings({palette:'constructor'}),A.settings());
   assert.ok(!/fetch\(|localStorage|sessionStorage|innerHTML/.test(ui));assert.ok(!/url\(https?:/.test(css));
   for(const id of ['theme-toggle','page-glyph-toggle','appearance-status'])assert.ok(html.includes('id="'+id+'"'));
   assert.ok(ui.includes("setAttribute('aria-hidden','true')"));assert.ok(ui.includes('glyph.textContent=chapter.glyph'));
+});
+test('reading fonts are independently selectable, validated and locally available',()=>{
+  assert.ok(Object.isFrozen(A.readingFonts));
+  for(const choices of Object.values(A.readingFonts)){
+    assert.ok(Object.isFrozen(choices));for(const font of choices)assert.ok(Object.isFrozen(font));
+  }
+  for(const sans of ['sourcesans3','firasans'])for(const serif of ['original','librebaskerville']){
+    const settings=A.settings({sansFont:sans,serifFont:serif,palette:'plum',theme:'dark'}),pair=A.fontPair(settings);
+    assert.equal(settings.sansFont,sans);assert.equal(settings.serifFont,serif);
+    assert.equal(pair.sans.id,sans);assert.equal(pair.serif.id,serif);
+    assert.equal(settings.palette,'plum');assert.equal(settings.theme,'dark');
+  }
+  for(const bad of ['constructor','url(https://example.org/font)',null,{},[],true,23]){
+    assert.equal(A.settings({sansFont:bad}).sansFont,'sourcesans3');
+    assert.equal(A.settings({serifFont:bad}).serifFont,'original');
+    assert.deepEqual(A.fontPair({sansFont:bad,serifFont:bad}),A.fontPair());
+  }
+  assert.equal(A.fontPair().serif.editorialStack,'Cardo,Georgia,serif');
+  assert.equal(A.fontPair({serifFont:'librebaskerville'}).serif.editorialStack,'"Libre Baskerville",Georgia,serif');
+  const fontCSS=read('styles/typografie-fonts.css');
+  for(const family of ['Source Sans 3','Fira Sans','EB Garamond','Cardo','Libre Baskerville']){
+    const rules=fontCSS.split(/\n/).filter(line=>line.includes('font-family:"'+family+'"'));
+    assert.ok(rules.length>=2,family+' has local normal and italic cuts');
+    for(const rule of rules){
+      const asset=rule.match(/src:url\("([^"]+)"\)/)?.[1];
+      assert.ok(asset&&!/^https?:/.test(asset));
+      assert.ok(fs.existsSync(path.resolve(root,'styles',asset)));
+    }
+  }
+  for(const id of ['appearance-sans','appearance-serif','appearance-sans-reset','appearance-serif-reset'])assert.ok(html.includes('id="'+id+'"'));
+  for(const marker of ["root.style.setProperty('--sans',fonts.sans.stack)","root.style.setProperty('--serif',fonts.serif.stack)","root.style.setProperty('--editorial-serif',fonts.serif.editorialStack)","apply({sansFont:$('appearance-sans').value})","apply({serifFont:$('appearance-serif').value})"])assert.ok(ui.includes(marker));
+  assert.ok(css.includes('.appearance-position-ranges,.appearance-font-grid{grid-template-columns:1fr'));
+  assert.ok(css.includes('.author-comment h3'));
+  const editorialSelector=css.match(/:is\(([^}]*?)\)\{font-family:var\(--editorial-serif/)?.[1];
+  assert.ok(editorialSelector);assert.ok(!/\.cardo\b|\.ligature-proof\b|\.figure-proof\b|\.font-sample\b/.test(editorialSelector),'Named comparison samples keep their fonts');
 });
 test('global glyph positions are bounded, mirror correctly and retain the chapter default',()=>{
   assert.deepEqual(A.positions.map(p=>p.id),['alternating','left','right','center']);assert.ok(Object.isFrozen(A.positions));
@@ -84,7 +119,7 @@ test('reading accents have a distinct hue rather than disappearing into the base
 test('appearance control opens an accessible selection dialog rather than blindly toggling darkness',()=>{
   for(const id of ['appearance-dialog','appearance-title','appearance-help','appearance-choices','appearance-current','appearance-close'])assert.ok(html.includes('id="'+id+'"'));
   assert.ok(html.includes('aria-haspopup="dialog" aria-controls="appearance-dialog" aria-expanded="false"'));
-  for(const marker of ['dialog.showModal()',"dialog.addEventListener('close'",'lastOpener?.focus()',"(current.glyphs?$('appearance-position'):$('appearance-glyphs')).focus()",'root.dataset.palette=current.palette','Object.keys(next).some(key=>next[key]!==current[key])',"setAttribute('aria-pressed',String(button.dataset.paletteChoice===current.palette&&button.dataset.themeChoice===current.theme))"]){assert.ok(ui.includes(marker),marker);}
+  for(const marker of ['dialog.showModal()',"dialog.addEventListener('close'",'lastOpener?.focus()',"$('appearance-sans').focus()",'root.dataset.palette=current.palette','Object.keys(next).some(key=>next[key]!==current[key])',"setAttribute('aria-pressed',String(button.dataset.paletteChoice===current.palette&&button.dataset.themeChoice===current.theme))"]){assert.ok(ui.includes(marker),marker);}
   assert.ok(!ui.includes("theme:current.theme==='dark'?'light':'dark'"));
   assert.ok(css.includes('max-height:calc(100dvh - 32px)'));assert.ok(css.includes('@media(max-width:480px)'));
 });

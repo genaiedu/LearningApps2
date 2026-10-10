@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/typografie-formate.css?v=20261010-geraete">
   <link rel="stylesheet" href="styles/wikipedia-math.css">
   <link rel="stylesheet" href="styles/typografie-palettes.css?v=20261010-akzentfarben">
-  <link rel="stylesheet" href="styles/typografie-ansicht.css?v=20261010-randposition">
+  <link rel="stylesheet" href="styles/typografie-ansicht.css?v=20261010-leseschriften">
   <script defer src="../LearningApps/fonts/lucide.min.js"></script>
   <script src="scripts/typografie-math.js"></script>
   <script defer src="../LearningApps/fonts/tex-mml-chtml.js"></script>
@@ -41,8 +41,8 @@
   <script defer src="scripts/typografie-bewegung.js?v=20261010-lebendiges-studienbuch"></script>
   <script defer src="scripts/typografie-hintergrund-core.js?v=20261010-hintergrund"></script>
   <script defer src="scripts/typografie-hintergrund.js?v=20261010-randzeichen"></script>
-  <script defer src="scripts/typografie-ansicht-core.js?v=20261010-akzentfarben"></script>
-  <script defer src="scripts/typografie-ansicht.js?v=20261010-randposition"></script>
+  <script defer src="scripts/typografie-ansicht-core.js?v=20261010-leseschriften"></script>
+  <script defer src="scripts/typografie-ansicht.js?v=20261010-leseschriften"></script>
   <script defer src="scripts/typografie-hero-core.js?v=20261010-morph-v3"></script>
   <script defer src="scripts/typografie-hero.js?v=20261010-morph-v3"></script>
   <script defer src="scripts/typografie-formate-core.js?v=20261010-geraete"></script>
@@ -945,7 +945,14 @@ Schriftwahl, Zeilenlänge und Abstand bilden ein System. Was für einen Buchtite
 </main>
 <dialog id="appearance-dialog" aria-labelledby="appearance-title" aria-describedby="appearance-help">
   <header class="appearance-heading"><div><p class="eyebrow">Die Lesefläche gestalten</p><h2 id="appearance-title">Darstellung wählen</h2></div><button type="button" id="appearance-close" aria-label="Darstellungsmenü schließen"><i data-lucide="x" aria-hidden="true"></i></button></header>
-  <p id="appearance-help">Positioniere die Randzeichen und wähle ein Farbschema. Alle Änderungen wirken sofort auf die gesamte Seite und ihre Gerätevorschau; Papier- und Farbstudien behalten ihre eigenen Farben.</p>
+  <p id="appearance-help">Wähle die Leseschriften, positioniere die Randzeichen und vergleiche Farbschemata. Änderungen wirken sofort auf die Seite und ihre Gerätevorschau.</p>
+  <fieldset class="appearance-position appearance-fonts"><legend>Schriften der Lesefläche</legend>
+    <div class="appearance-font-grid">
+      <div><label for="appearance-sans">Serifenlose Schrift<select id="appearance-sans"><option value="sourcesans3">Source Sans 3 · bisher</option><option value="firasans">Fira Sans</option></select></label><p class="appearance-font-sample appearance-font-sans">Form für Gedanken.</p><span id="appearance-sans-name" class="small">Source Sans 3</span><button type="button" id="appearance-sans-reset">Sans Serif zurücksetzen ↺</button></div>
+      <div><label for="appearance-serif">Serifenschrift<select id="appearance-serif"><option value="original">EB Garamond / Cardo · bisher</option><option value="librebaskerville">Libre Baskerville</option></select></label><p class="appearance-font-sample appearance-font-serif">Form für Gedanken.</p><span id="appearance-serif-name" class="small">EB Garamond / Cardo</span><button type="button" id="appearance-serif-reset">Serifenschrift zurücksetzen ↺</button></div>
+    </div>
+    <p class="small">Beide Schriften sind unabhängig wählbar und lokal eingebunden. Lesetext, Navigation, allgemeine Überschriften und Randstimmen folgen deiner Wahl. Benannte Schriftproben, mathematische Schriften und feste Dokumentstudien behalten ihre jeweiligen Fonts; Papier- und Farbstudien behalten ihre eigenen Farben. Die Auswahl gilt bis zum Neuladen.</p>
+  </fieldset>
   <fieldset class="appearance-position"><legend>Randzeichen auf der ganzen Seite</legend><label class="check"><input type="checkbox" id="appearance-glyphs" checked> Randzeichen anzeigen</label><label for="appearance-position">Position<select id="appearance-position"><option value="alternating">Abwechselnd links / rechts</option><option value="left">Links</option><option value="right">Rechts</option><option value="center">Mittig</option></select></label><div class="appearance-position-ranges"><label for="appearance-inset">Randabstand <output id="appearance-inset-value" for="appearance-inset" aria-live="off">5 %</output><input type="range" id="appearance-inset" min="0" max="40" step="1" value="5"></label><label for="appearance-height">Höhe im Kapitel <output id="appearance-height-value" for="appearance-height" aria-live="off">34 %</output><input type="range" id="appearance-height" min="10" max="90" step="1" value="34"></label></div><p class="small">Der Randabstand verschiebt das Zeichen zur Mitte und verändert seinen Anschnitt. Bei „Mittig“ steht es immer in der Seitenmitte. Die Höhe bezieht sich auf den Dekorationsbereich des jeweiligen Kapitels; die Parallaxe bleibt zusätzlich pausierbar.</p><button type="button" id="appearance-position-reset">Position zurücksetzen ↺</button></fieldset>
   <h3 class="appearance-colors-title">Farbschemata</h3>
   <p class="small">Jede Farbwelt hat eine helle und eine dunkle Variante.</p>

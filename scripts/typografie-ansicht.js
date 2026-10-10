@@ -47,17 +47,23 @@
     const target=$('reader-appearance-state');if(!target)return;
     const palette=A.palettes.find(p=>p.id===current.palette);
     const position=A.positions.find(p=>p.id===current.glyphPosition).name;
-    const text=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell')+'. Randzeichen '+(current.glyphs?'sichtbar: '+position:'ausgeblendet')+'. Animation '+(document.body.classList.contains('motion-paused')?'pausiert':'freigegeben')+'.';
+    const fonts=A.fontPair(current);
+    const text=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell')+'. Schriften: '+fonts.sans.name+' und '+fonts.serif.name+'. Randzeichen '+(current.glyphs?'sichtbar: '+position:'ausgeblendet')+'. Animation '+(document.body.classList.contains('motion-paused')?'pausiert':'freigegeben')+'.';
     if(target.textContent!==text)target.textContent=text;
   }
   addEventListener('typography-motion-change',readerStatus);
   function apply(o={},announce=true){
     const next=A.settings({...current,...o}),changed=Object.keys(next).some(key=>next[key]!==current[key]);current=next;
     const palette=A.palettes.find(p=>p.id===current.palette),description=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell');
+    const fonts=A.fontPair(current),fontDescription=fonts.sans.name+' und '+fonts.serif.name;
+    root.style.setProperty('--sans',fonts.sans.stack);root.style.setProperty('--serif',fonts.serif.stack);
+    root.style.setProperty('--editorial-serif',fonts.serif.editorialStack);
+    $('appearance-sans').value=current.sansFont;$('appearance-serif').value=current.serifFont;
+    $('appearance-sans-name').textContent=fonts.sans.name;$('appearance-serif-name').textContent=fonts.serif.name;
     root.dataset.palette=current.palette;root.dataset.theme=current.theme;root.classList.toggle('page-glyphs-off',!current.glyphs);
-    for(const button of openers){button.setAttribute('aria-label','Darstellung wählen, aktuell: '+description);button.title='Farbschema und Randzeichen · '+description;}
+    for(const button of openers){button.setAttribute('aria-label','Darstellung wählen, aktuell: '+description+', '+fontDescription);button.title='Schriften, Farbschema und Randzeichen · '+description;}
     for(const button of dialog.querySelectorAll('[data-palette-choice]'))button.setAttribute('aria-pressed',String(button.dataset.paletteChoice===current.palette&&button.dataset.themeChoice===current.theme));
-    $('appearance-current').textContent='Aktuell: '+description;
+    $('appearance-current').textContent='Aktuell: '+description+'. Schriften: '+fontDescription+'.';
     for(const button of document.querySelectorAll('#page-glyph-toggle,[data-page-glyphs]'))button.setAttribute('aria-pressed',String(current.glyphs));
     for(const {layer,chapter} of layers){
       const place=A.placement(chapter.side,current);layer.dataset.side=place.side;
@@ -71,18 +77,23 @@
     $('appearance-inset').setAttribute('aria-valuetext',current.glyphInset+' Prozent Abstand zur Seitenkante');
     $('appearance-height').setAttribute('aria-valuetext',current.glyphHeight+' Prozent der Kapitel-Dekorationshöhe');
     schedule();
-    if(changed&&announce){$('appearance-status').textContent=description+'. Randzeichen '+(current.glyphs?'eingeblendet.':'ausgeblendet.');}
+    if(changed&&announce){$('appearance-status').textContent=description+'. Schriften: '+fontDescription+'. Randzeichen '+(current.glyphs?'eingeblendet.':'ausgeblendet.');}
     readerStatus();
     if(changed)dispatchEvent(new Event('typography-appearance-change'));
   }
   function resize(){root.style.setProperty('--page-width',root.clientWidth+'px');schedule();}
   for(const button of openers)button.addEventListener('click',()=>{
     lastOpener=button;dialog.showModal();for(const opener of openers)opener.setAttribute('aria-expanded','true');
-    (current.glyphs?$('appearance-position'):$('appearance-glyphs')).focus();
+    $('appearance-sans').focus();
   });
   $('appearance-close').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('close',()=>{for(const opener of openers)opener.setAttribute('aria-expanded','false');lastOpener?.focus();});
   for(const button of document.querySelectorAll('#page-glyph-toggle,[data-page-glyphs]'))button.addEventListener('click',()=>apply({glyphs:!current.glyphs}));
+  $('appearance-sans').addEventListener('change',()=>apply({sansFont:$('appearance-sans').value}));
+  $('appearance-serif').addEventListener('change',()=>apply({serifFont:$('appearance-serif').value}));
+  for(const [id,key] of [['appearance-sans-reset','sansFont'],['appearance-serif-reset','serifFont']]){
+    $(id).addEventListener('click',()=>apply({[key]:A.settings()[key]}));
+  }
   $('appearance-glyphs').addEventListener('change',()=>apply({glyphs:$('appearance-glyphs').checked}));
   $('appearance-position').addEventListener('change',()=>apply({glyphPosition:$('appearance-position').value}));
   for(const [id,key] of [['appearance-inset','glyphInset'],['appearance-height','glyphHeight']]){
