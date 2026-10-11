@@ -14,7 +14,17 @@
     const baseline=pad+upper*scale,height=baseline-lower*scale+pad;
     return {width,height,scale,baseline,y:value=>baseline-value*scale};
   }
-  const api={overshoot,layout};
+  function upperBands(font,characters,reference){
+    const capital=font.glyphs[reference].bounds[3],bands=[];
+    let start=0;
+    for(const character of characters){
+      const glyph=font.glyphs[character],bounds=glyph.bounds;
+      if(bounds[3]>capital)bands.push({character,x:start+Math.min(0,bounds[0]),width:Math.max(glyph.advance,bounds[2])-Math.min(0,bounds[0]),top:bounds[3],bottom:capital});
+      start+=glyph.advance;
+    }
+    return bands;
+  }
+  const api={overshoot,layout,upperBands};
   if(typeof module==='object'&&module.exports){module.exports=api;return;}
   const $=id=>document.getElementById(id);
   const create=(tag,attributes={},text)=>{
@@ -24,16 +34,19 @@
     return n;
   };
   const format=(v,d=2)=>Number(v).toLocaleString('de-DE',{maximumFractionDigits:d});
-  function draw(target,font,characters,markers,detail=false){
+  function draw(target,font,characters,markers,detail=false,upperReference=null){
     const m=layout(font,characters);
     const svg=create('svg',{viewBox:`0 0 ${m.width} ${m.height}`,role:'img','aria-label':font.name+': '+characters+(detail?', vergrößertes Grundliniendetail':', tatsächliche Schriftkonturen')});
     svg.append(create('title',{},font.name+' · '+characters+' · Regular / 400'));
     const highlight=create('g',{'class':'overshoot-bands'});
+    const reference=upperReference||(characters.length===2?characters[0]:null);
+    if(reference)for(const band of upperBands(font,characters,reference)){
+      highlight.append(create('rect',{x:30+band.x*m.scale,y:m.y(band.top),width:band.width*m.scale,height:(band.top-band.bottom)*m.scale,'data-band-character':band.character}));
+    }
     if(characters.length===2){
-      const f=font.glyphs[characters[0]].bounds,r=font.glyphs[characters[1]].bounds;
+      const r=font.glyphs[characters[1]].bounds;
       let roundStart=30+font.glyphs[characters[0]].advance*m.scale;
       const roundWidth=font.glyphs[characters[1]].advance*m.scale;
-      if(r[3]>f[3])highlight.append(create('rect',{x:roundStart,y:m.y(r[3]),width:roundWidth,height:(r[3]-f[3])*m.scale}));
       if(r[1]<0)highlight.append(create('rect',{x:roundStart,y:m.baseline,width:roundWidth,height:-r[1]*m.scale}));
     }
     svg.append(highlight);
@@ -83,16 +96,30 @@
     const f=families.find(font=>font.id==='firasans'),characters='Hliftx';
     const capital=f.glyphs.H.bounds[3],xHeight=f.glyphs.x.bounds[3];
     draw($('fira-height-word'),f,characters,[
-      {name:'capital',value:capital},{name:'x',value:xHeight},{name:'baseline',value:0}]);
+      {name:'capital',value:capital},{name:'x',value:xHeight},{name:'baseline',value:0}],false,'H');
     const svg=$('fira-height-word').querySelector('svg'),m=layout(f,characters);
-    const clip=create('clipPath',{id:'fira-above-capital',clipPathUnits:'userSpaceOnUse'});
-    clip.append(create('rect',{x:0,y:0,width:m.width,height:m.y(capital)}));
-    const defs=create('defs');defs.append(clip);svg.prepend(defs);
-    const above=svg.querySelector('.glyph-contours').cloneNode(true);
-    above.setAttribute('class','glyph-contours above-capital');
-    above.setAttribute('clip-path','url(#fira-above-capital)');
-    svg.insertBefore(above,svg.querySelector('.outline-guide'));
     svg.setAttribute('aria-label','Fira Sans: H, l, i, f, t und x auf derselben Grundlinie. l, f und der i-Punkt reichen über die Versalhöhe des H; t bleibt darunter.');
+    const strip=document.createElement('div');strip.className='height-detail-trio';
+    const top=Math.max(...[...'lif'].map(c=>f.glyphs[c].bounds[3]))+f.unitsPerEm*.035;
+    const bottom=capital-f.unitsPerEm*.1,cropWidth=f.unitsPerEm*.46*m.scale;
+    let start=30;
+    for(const c of characters){
+      const glyph=f.glyphs[c],bounds=glyph.bounds;
+      if('lif'.includes(c)){
+        const center=start+(bounds[0]+bounds[2])/2*m.scale,crop=svg.cloneNode(true);
+        crop.setAttribute('viewBox',`${center-cropWidth/2} ${m.y(top)} ${cropWidth} ${(top-bottom)*m.scale}`);
+        crop.setAttribute('aria-label',f.name+': '+c+', vergrößerter Überstand über die Versalhöhe');
+        crop.querySelector('title').textContent=f.name+' · '+c+' · Detail an der Versalhöhe';
+        crop.classList.add('outline-detail');
+        crop.querySelectorAll('[data-character]').forEach(path=>{if(path.dataset.character!==c)path.remove();});
+        crop.querySelectorAll('[data-band-character]').forEach(rect=>{if(rect.dataset.bandCharacter!==c)rect.remove();});
+        const frame=document.createElement('div'),label=document.createElement('span');
+        label.className='feature-caption';label.textContent=c+' · '+(c==='i'?'Punkt':'Oberlänge');
+        frame.append(label,crop);strip.append(frame);
+      }
+      start+=glyph.advance*m.scale;
+    }
+    $('fira-height-details').replaceChildren(strip);
     $('fira-height-status').textContent='H: '+format(capital)+' · l: '+format(f.glyphs.l.bounds[3])+' · i einschließlich Punkt: '+format(f.glyphs.i.bounds[3])+' · f: '+format(f.glyphs.f.bounds[3])+' · t: '+format(f.glyphs.t.bounds[3])+' · x: '+format(xHeight)+'. Oberkanten in Fontkoordinaten; '+format(f.unitsPerEm)+' Einheiten entsprechen einem Geviert, die Grundlinie liegt bei 0. Die Zahlen messen Konturen, nicht Schriftgrade.';
   }
   function updateOvershoot(){

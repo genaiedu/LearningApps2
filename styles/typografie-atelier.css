@@ -49,7 +49,11 @@ dialog{padding:35px;border:1px solid var(--line);border-radius:10px;color:var(--
 .outline-guide.guide-baseline{stroke-width:1.5;opacity:.75}
 .fira-height-study{margin-top:48px;gap:40px}.fira-height-proof{margin:0}.fira-height-proof .proof-label{margin-bottom:12px}
 .fira-height-proof .outline-guide[data-guide=capital]{stroke-width:1.5;opacity:.8}.fira-height-proof .outline-guide[data-guide=x]{stroke-dasharray:3 4;opacity:.6}
-.fira-height-proof .above-capital{fill:var(--red)}.fira-height-proof figcaption{font:17px/1.6 var(--sans)}
+.fira-height-proof figcaption{font:17px/1.6 var(--sans)}
+.height-detail-trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:24px 0}
+.height-detail-trio .outline-detail{display:block;width:100%;height:auto;border:1px solid var(--line);background:var(--paper)}
+@media(max-width:900px){.fira-height-study{grid-template-columns:1fr;gap:28px}}
+@media(max-width:450px){.height-detail-trio{grid-template-columns:1fr;gap:18px}.height-detail-trio .outline-detail{max-height:155px}}
 .fira-height-measures{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}.fira-height-measures summary{cursor:pointer;font-size:15px}.fira-height-measures p{margin-top:12px}
 .overshoot-controls{display:flex;align-items:center;gap:25px;flex-wrap:wrap;margin-top:30px}
 .overshoot-controls>label:first-child{flex:1;max-width:430px;min-width:220px}

@@ -49,11 +49,35 @@ test('the anatomy study explains the i-dot and shorter t before distinguishing o
   const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8');
   const study=html.slice(html.indexOf('id="fira-oberlaengen"'),html.indexOf('id="overshoot"'));
   for(const wording of ['Versalhöhe und Oberlängenhöhe','Punkt','nicht der Stamm','verkürzte Oberlänge','oberhalb des x, aber unterhalb des H','Kein bloßer Overshoot'])assert.ok(study.includes(wording));
-  for(const id of ['fira-height-word','fira-height-status'])assert.ok(study.includes('id="'+id+'"'));
+  for(const id of ['fira-height-word','fira-height-status','fira-height-details'])assert.ok(study.includes('id="'+id+'"'));
   assert.ok(study.includes('glyphsapp.com/learn/font-info-settings-in-glyphs-mini#vertical-metrics'));
   const source=fs.readFileSync(path.join(root,'scripts/typografie-anatomy.js'),'utf8');
-  assert.ok(source.includes("characters='Hliftx'"));assert.ok(source.includes('height:m.y(capital)'));
+  assert.ok(source.includes("characters='Hliftx'"));
   assert.ok(source.includes('updateAnatomy();showFiraHeights();updateOvershoot();'));
+});
+test('upper highlight bands measure each real overhang without recolouring glyph contours',()=>{
+  const f=data.families.find(font=>font.id==='firasans'),bands=A.upperBands(f,'Hliftx','H');
+  assert.deepEqual(bands.map(({character,top,bottom})=>({character,top,bottom})),[
+    {character:'l',top:750,bottom:689},{character:'i',top:780,bottom:689},{character:'f',top:750,bottom:689}
+  ]);
+  assert.equal(bands[0].x,f.glyphs.H.advance);
+  assert.equal(bands[1].x,f.glyphs.H.advance+f.glyphs.l.advance);
+  assert.ok(bands[2].width>=f.glyphs.f.bounds[2]); // The f extends beyond its advance.
+  for(const font of illustrated){
+    const [band]=A.upperBands(font,'HO','H');
+    assert.equal(band.character,'O');assert.equal(band.top-band.bottom,A.overshoot(font,'H','O').top);
+  }
+  const source=fs.readFileSync(path.join(root,'scripts/typografie-anatomy.js'),'utf8');
+  assert.ok(!source.includes('fira-above-capital'));assert.ok(!source.includes('above-capital'));
+});
+test('explanation describes a common type-design principle, naming Fira only as the specimen',()=>{
+  const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8');
+  const study=html.slice(html.indexOf('id="fira-oberlaengen"'),html.indexOf('id="overshoot"'));
+  const explanation=study.slice(study.indexOf('<div>'),study.indexOf('<figure'));
+  assert.ok(explanation.includes('In vielen Schriftarten'));assert.ok(explanation.includes('in vielen Schriften'));
+  assert.ok(!explanation.includes('Fira Sans'));assert.ok(study.includes('BEISPIEL: FIRA SANS'));
+  for(const wording of ['optische Ausgleich im Fließtext','Grauwert','großgeschriebenen Substantiven','keine zwingende Regel','x-Höhe, Abstand und Punktgröße'])assert.ok(explanation.includes(wording));
+  assert.ok(study.includes('tug.org/TUGboat/tb20-2/tb63geld.pdf#page=4'));
 });
 test('outline illustrations and enlarged crops preserve source contours',()=>{
   const source=fs.readFileSync(path.join(root,'scripts/typografie-anatomy.js'),'utf8');
