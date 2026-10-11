@@ -7,7 +7,7 @@ test('both apps opt into the shared standard without external fonts or additiona
   for(const [page,skin]of [['spiegelwelt','science'],['kunsttresor','gallery']]){
     const html=read(page+'.html');
     assert.ok(html.includes('class="editorial-app app-'+skin+'"'));
-    assert.ok(html.includes('href="styles/app-editorial.css?v=20261011-design"'));
+    assert.ok(html.includes('href="styles/app-editorial.css?v=20261011-heading-air"'));
     assert.ok(html.indexOf('styles/'+page+'.css')<html.indexOf('styles/app-editorial.css'));
     assert.ok(html.includes('class="'+(skin==='science'?'wordmark':'brand')+' editorial-wordmark"'));
     assert.ok(!/fonts\.googleapis|fonts\.gstatic|@import/.test(html+read('styles/'+page+'.css')+css));
@@ -60,4 +60,25 @@ test('wordmarks contrast weight, local icons follow interactive states, and resp
   assert.ok(css.includes('#motion-toggle[aria-pressed="true"]'));assert.ok(css.includes('#film-fullscreen[aria-pressed="true"]'));
   for(const size of ['1000','700'])assert.ok(css.includes('@media(max-width:'+size+'px)'));
   assert.ok(css.includes('@media(prefers-reduced-motion:reduce)'));
+});
+
+test('only large strong Sans headings receive a minimal tracking correction',()=>{
+  const atelier=read('styles/typografie-atelier.css');
+  for(const sheet of [css,atelier])assert.ok(sheet.includes('--large-heading-space:clamp(0px,calc(1em - 40px),.01em)'));
+  for(const selector of ['.app-science .film-copy h2','.app-gallery h1','.app-gallery .launch-dialog h2']){
+    const rule=css.split(selector+'{')[1].split('}')[0];
+    assert.ok(rule.includes('font-weight:600;letter-spacing:calc(-.035em + var(--large-heading-space))'));
+  }
+  assert.ok(atelier.includes('h2{font-size:clamp(40px,5.5vw,72px);letter-spacing:calc(-.03em + var(--large-heading-space));'));
+  assert.ok(css.includes('.app-gallery .launch-dialog h2 em{font-style:italic;font-weight:400;letter-spacing:-.015em}'));
+  assert.ok(css.includes('.app-gallery .intro-copy h2{font-family:var(--reading-serif);font-weight:400;letter-spacing:-.025em}'));
+  assert.ok(css.includes('.app-gallery .hero-rules h2{font-size:17px;line-height:1.4;letter-spacing:0}'));
+  assert.ok(css.includes('.editorial-wordmark{display:inline-flex;align-items:baseline;gap:.42em;'));
+  assert.ok(!css.match(/:where\(p,li,dd,figcaption\)\{[^}]*large-heading-space/));
+  for(const size of [16,27,32,38,40,43,54,76,100]){
+    const extra=Math.max(0,Math.min(size-40,size*.01));
+    assert.ok(extra>=0&&extra<=size*.01);
+    if(size<=40)assert.equal(extra,0);
+    else assert.equal(extra,size*.01);
+  }
 });

@@ -9,13 +9,15 @@
 @font-face{font-family:"EB Garamond";src:url('../fonts/typografie/ebgaramond/EBGaramond[wght].woff2') format('woff2');font-weight:400 800;font-style:normal;font-display:swap}
 @font-face{font-family:"EB Garamond";src:url('../fonts/typografie/ebgaramond/EBGaramond-Italic[wght].woff2') format('woff2');font-weight:400 800;font-style:italic;font-display:swap}
 
-:root{--reading-sans:"Fira Sans",Arial,sans-serif;--reading-serif:"EB Garamond",Georgia,serif}
+/* Only large, strong Sans headings gain at most .01em of air. The em is
+   resolved at the heading's own size; at 40px and below the addition is zero. */
+:root{--reading-sans:"Fira Sans",Arial,sans-serif;--reading-serif:"EB Garamond",Georgia,serif;--large-heading-space:clamp(0px,calc(1em - 40px),.01em)}
 .editorial-app{font-family:var(--reading-sans);font-kerning:normal;font-variant-ligatures:common-ligatures;font-variant-numeric:oldstyle-nums proportional-nums;font-synthesis:none}
 .editorial-app :where(p,li,dd,figcaption,summary,h1,h2,h3,h4,a,button,input,select,output){font-kerning:normal;font-variant-ligatures:common-ligatures}
 .editorial-app :where(p,li,dd,figcaption){font-variant-numeric:oldstyle-nums proportional-nums}
 .editorial-app :where(button,input,select,textarea,output,code,pre,table,.numeric-data){font-variant-numeric:lining-nums tabular-nums}
 .editorial-app :where(button,input,select,textarea){font-family:var(--reading-sans)}
-.editorial-app :where(h1,h2,h3,h4){font-family:var(--reading-sans);font-weight:600;letter-spacing:-.025em;text-wrap:balance}
+.editorial-app :where(h1,h2,h3,h4){font-family:var(--reading-sans);font-weight:600;letter-spacing:calc(-.025em + var(--large-heading-space));text-wrap:balance}
 .editorial-app :where(h1 em,h2 em){font-family:var(--reading-serif);font-style:italic;font-weight:400;letter-spacing:-.015em}
 .editorial-app strong,.editorial-app b{font-weight:700}
 .editorial-app :where(p,li,dd){overflow-wrap:break-word}
@@ -40,7 +42,7 @@
 .app-science .wordmark{letter-spacing:.1em}
 .app-science h1{font-weight:600;max-width:15ch}
 .app-science .chapter-heading h2,.app-science .story-map h2,.app-science .research-bridge>h2,.app-science .sources-section>h2{font-size:clamp(32px,4.2vw,54px);max-width:25ch}
-.app-science .film-copy h2{font-weight:600;letter-spacing:-.035em}
+.app-science .film-copy h2{font-weight:600;letter-spacing:calc(-.035em + var(--large-heading-space))}
 .app-science .film-copy h2 em{font-style:italic;letter-spacing:-.015em}
 .app-science .film-copy p:not(.eyebrow){max-width:40ch}
 .app-science .scene-comment-text,.app-science #scene-comment-text{max-width:68ch}
@@ -67,19 +69,19 @@
    signature is deliberately outside the normal heading/prose selectors. */
 .app-gallery{--background:var(--night);--foreground:var(--paper);--accent:var(--gold);background:var(--background);color:var(--foreground)}
 .app-gallery .masthead{min-height:84px}
-.app-gallery h1{font-weight:600;letter-spacing:-.035em}
+.app-gallery h1{font-weight:600;letter-spacing:calc(-.035em + var(--large-heading-space))}
 .app-gallery h1 em,.app-gallery .launch-dialog h2 em{font-style:italic;font-weight:400;letter-spacing:-.015em}
 .app-gallery .hero-lede{max-width:52ch;line-height:1.65}
 .app-gallery .hero-rules{max-width:62ch}
 .app-gallery .hero-rules h2{font-size:17px;line-height:1.4;letter-spacing:0}
 .app-gallery .hero-rules :is(ol,p){line-height:1.65}
 .app-gallery .hero-actions button{font-weight:600}
-.app-gallery :is(.rules,.archive-note) h2{font-weight:600;letter-spacing:-.025em}
+.app-gallery :is(.rules,.archive-note) h2{font-weight:600;letter-spacing:calc(-.025em + var(--large-heading-space))}
 .app-gallery .rules :is(p,li){font-variant-numeric:oldstyle-nums proportional-nums}
 .app-gallery :is(.rule-steps li>b,.hero-stats b,.score-strip,.result-score,.work-marker,.zoom-controls,.intro-progress,.intro-brand,.intro-footnote){font-variant-numeric:lining-nums tabular-nums}
 .app-gallery :is(.hero-stats b,.score-strip b,.result-score b){font-family:var(--reading-sans);font-weight:500;letter-spacing:-.015em}
 .app-gallery .score-strip span{font:600 12px/1.5 var(--reading-sans);letter-spacing:.03em;font-variant-numeric:lining-nums tabular-nums}
-.app-gallery .game-top h2{font-family:var(--reading-sans);font-weight:600;letter-spacing:-.025em}
+.app-gallery .game-top h2{font-family:var(--reading-sans);font-weight:600;letter-spacing:calc(-.025em + var(--large-heading-space))}
 .app-gallery .waiting h3{font-family:var(--reading-sans);font-weight:600}
 .app-gallery .work-heading .work-title,.app-gallery .solution-card h3{font-family:var(--reading-serif);font-weight:400;line-height:1.3;letter-spacing:0}
 .app-gallery .work-heading .work-title{font-size:22px;text-wrap:balance}
@@ -87,13 +89,13 @@
 .app-gallery .assignments select{line-height:1.4;min-height:46px}
 .app-gallery .lock-copy h3{font-weight:600}
 .app-gallery .lock-copy p{max-width:64ch;line-height:1.6}
-.app-gallery .result-dialog h2{font-family:var(--reading-sans);font-weight:600;letter-spacing:-.025em}
+.app-gallery .result-dialog h2{font-family:var(--reading-sans);font-weight:600;letter-spacing:calc(-.025em + var(--large-heading-space))}
 .app-gallery .solution-card dl{font-size:14px;line-height:1.55}
 .app-gallery .solution-card dd{font-variant-numeric:lining-nums tabular-nums}
 .app-gallery .solution-card .small{font-size:12px;line-height:1.6}
 .app-gallery #wiki-content :is(h2,h3){font-family:var(--reading-sans);font-weight:600}
 .app-gallery #wiki-content p{max-width:72ch}
-.app-gallery .launch-dialog h2{font-family:var(--reading-sans);font-weight:600;letter-spacing:-.035em}
+.app-gallery .launch-dialog h2{font-family:var(--reading-sans);font-weight:600;letter-spacing:calc(-.035em + var(--large-heading-space))}
 .app-gallery .launch-lede{max-width:42ch;line-height:1.6}
 .app-gallery .launch-dialog .launch-hint{max-width:62ch;line-height:1.65}
 .app-gallery .intro-copy h2{font-family:var(--reading-serif);font-weight:400;letter-spacing:-.025em}
