@@ -66,6 +66,7 @@ dialog{color-scheme:dark;color:var(--paper);background:var(--panel);border:1px s
 .curator-reading{max-width:65ch;font-family:var(--sans);font-kerning:normal;font-variant-ligatures:common-ligatures;font-variant-numeric:oldstyle-nums proportional-nums}
 .curator-reading p{font-size:16px;line-height:1.65;margin:0 0 15px;color:var(--paper)}
 .curator-reading .curator-opening{font-size:18px;line-height:1.55;margin-bottom:26px}
+.curator-reading .curator-history{border-left:2px solid var(--gold);padding:12px 16px;background:var(--deep);color:var(--paper);font:16px/1.65 var(--sans);font-variant-numeric:lining-nums}
 .curator-section{margin-top:25px}
 .curator-section h4{font:600 17px/1.4 var(--sans);letter-spacing:0;color:var(--gold);margin:0 0 12px}
 .curator-reading :is(.curator-time,.curator-comparison,.curator-work-note){border-left:2px solid var(--gold);padding:10px 0 10px 16px;color:var(--muted)}

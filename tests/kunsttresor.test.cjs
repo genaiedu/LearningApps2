@@ -369,7 +369,8 @@ test('a successful image load after the warning recovers, but stale rooms do not
   for(const stale of [false,true]) {
     let timeout,loading=null;
     const image={naturalWidth:0},button={disabled:true,querySelector:()=>loading,append:e=>{if(e!==image)loading=e;}};
-    const context={imageEpoch:5,imagesAllowed:true,imageTimers:new Set(),ready:new Set(),failed:new Set(),core,
+    const shown=[];
+    const context={imageEpoch:5,imagesAllowed:true,imageTimers:new Set(),ready:new Set(),failed:new Set(),core,rememberWork:id=>shown.push(id),
       node:tag=>tag==='img'?image:{remove:()=>{loading=null;}},update:()=>{},imageURL:w=>w.imageURL,
       setTimeout:fn=>{timeout=fn;return 17;},clearTimeout:()=>{}};
     vm.createContext(context);vm.runInContext(implementation,context);
@@ -378,6 +379,7 @@ test('a successful image load after the warning recovers, but stale rooms do not
     if(stale)context.imageEpoch++;
     image.naturalWidth=960;image.onload();
     assert.equal(button.disabled,stale);assert.equal(context.ready.has(pool[0].id),!stale);
+    assert.deepEqual(shown,stale?[]:[pool[0].id]);
     if(!stale){assert.equal(context.failed.size,0);assert.equal(loading,null);image.onerror();assert.equal(button.disabled,false);}
   }
   const madonna=pool.find(w=>w.title==='Nursing Madonna');
@@ -464,6 +466,7 @@ test('personal highscore persists through a loss and automatic new round', () =>
   const values=new Map([['best','5']]);
   const context={state:core.newState(pool,null,seeded(50)),pool,best:5,core,imagesAllowed:true,
     progress:require('../scripts/kunsttresor-progress.js'),playerProgress:{version:1,record:5,events:[]},
+    history:require('../scripts/kunsttresor-history.js'),workHistory:{version:1,since:Date.now(),rooms:[]},historyBlocked:false,
     keys:{game:'game',best:'best',progress:'progress'},store:{set:(key,value)=>values.set(key,value)},
     $:()=>({hidden:false}),render:()=>{},toGame:()=>{}};
   context.state.escaped=3;

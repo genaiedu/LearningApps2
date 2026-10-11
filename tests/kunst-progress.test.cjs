@@ -183,17 +183,18 @@ test('structural checks reject forged counters, unknown works/styles and invalid
 test('import combines records and badges only after confirmation; failed storage rolls back',()=>{
   const script=fs.readFileSync(require.resolve('../scripts/kunsttresor.js'),'utf8');
   const saved=won(), candidate=validate(payload(saved));
-  for (const fail of [false,true]) {
-    const values=new Map([['game','old-round'],['best','5'],['progress','old-progress']]), nodes=new Map();
+  for (const fail of [false,'progress','history']) {
+    const values=new Map([['game','old-round'],['best','5'],['progress','old-progress'],['history','old-history']]), nodes=new Map();
     const original=room(90), local=progress.fresh(5);
-    const context={pendingImport:candidate,transferBusy:false,progress,playerProgress:local,state:original,best:5,keys:{game:'game',best:'best',progress:'progress'},
-      store:{get:key=>values.get(key)||null,remove:key=>values.delete(key),set:(key,value)=>{if(fail&&key==='progress'&&value!=='old-progress')return false;values.set(key,value);return true;}},
-      localStorage:{removeItem:key=>values.delete(key)},$:id=>{if(!nodes.has(id))nodes.set(id,{});return nodes.get(id);},finishIntro:()=>{},close:()=>{},refreshBadges:()=>{},render:()=>{},toGame:()=>{}};
+    const history=require('../scripts/kunsttresor-history.js');
+    const context={pendingImport:candidate,transferBusy:false,progress,playerProgress:local,history,workHistory:history.fresh(),historyBlocked:false,aiClient:{clear:()=>{}},state:original,best:5,keys:{game:'game',best:'best',progress:'progress',history:'history'},
+      store:{get:key=>values.get(key)||null,remove:key=>values.delete(key),set:(key,value)=>{if(fail&&key===fail&&value!=='old-'+fail)return false;values.set(key,value);return true;}},
+      localStorage:{removeItem:key=>values.delete(key)},$:id=>{if(!nodes.has(id))nodes.set(id,{});return nodes.get(id);},finishIntro:()=>{},close:()=>{},refreshBadges:()=>{},refreshHistory:()=>{},render:()=>{},toGame:()=>{}};
     vm.createContext(context);
     vm.runInContext(script.slice(script.indexOf('function confirmImport()'),script.indexOf('function open(')),context);
     assert.equal(context.state,original);
     vm.runInContext('confirmImport()',context);
-    if(fail){assert.equal(context.state,original);assert.equal(context.best,5);assert.equal(values.get('game'),'old-round');assert.equal(values.get('progress'),'old-progress');assert.match(nodes.get('save-status').textContent,/nicht dauerhaft/);}
+    if(fail){assert.equal(context.state,original);assert.equal(context.best,5);assert.equal(values.get('game'),'old-round');assert.equal(values.get('progress'),'old-progress');assert.equal(values.get('history'),'old-history');assert.match(nodes.get('save-status').textContent,/nicht dauerhaft/);}
     else{assert.equal(context.state,candidate.state);assert.equal(context.best,5);assert.equal(context.playerProgress.events.length,1);assert.equal(context.playerProgress.record,5);assert.equal(context.pendingImport,null);}
   }
 });

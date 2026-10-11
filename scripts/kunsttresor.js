@@ -1,8 +1,8 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id), core = window.KunstTresor, curator = window.KunstKurator;
-  const progress = window.KunstProgress, transfers = window.KunstSave;
-  const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', images:'kunsttresor-images-v1', hero:'kunsttresor-hero-v1'};
+  const progress = window.KunstProgress, transfers = window.KunstSave, history = window.KunstHistory;
+  const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', history:'kunsttresor-history-v1', images:'kunsttresor-images-v1', hero:'kunsttresor-hero-v1'};
   const labels = {date:'Entstehungszeit', style:'Stilrichtung', artist:'Künstler', technique:'Technik'};
   const store = {
     get(key) { try { return localStorage.getItem(key); } catch { return null; } },
@@ -11,13 +11,20 @@
   };
   let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = progress.integer(Number(store.get(keys.best))) ? Number(store.get(keys.best)) : 0;
   let artKnowledge = null, archiveReplacements = [], pendingImport = null, transferBusy = false, fileEpoch = 0;
-  const ki=window.KunstKI, aiConsentKey='kunsttresor-ai-consent-v1', aiEnabledKey='kunsttresor-ai-enabled-v1';
+  // Renew permission because relevant earlier mistakes, not just wins, are now sent.
+  const ki=window.KunstKI, aiConsentKey='kunsttresor-ai-consent-v2', aiEnabledKey='kunsttresor-ai-enabled-v1';
   const aiEndpoint=window.KunstKIConfig?.endpoint || '';
   const aiClient=ki?.createClient({endpoint:aiEndpoint,fetcher:(...args)=>fetch(...args)});
   let aiAllowed=store.get(aiConsentKey)==='yes', aiEnabled=store.get(aiEnabledKey)!=='no', aiDisplayEpoch=0, aiBaseline=new Map();
   let playerProgress = progress.fresh(best);
   try { playerProgress = progress.restore(JSON.parse(store.get(keys.progress))) || playerProgress; } catch { /* Older browsers have no collection yet. */ }
   playerProgress.record = Math.max(playerProgress.record,best);
+  let workHistory=history.fresh(), historyBlocked=false;
+  const storedHistory=store.get(keys.history);
+  if(storedHistory!==null) {
+    try { const restored=history.restore(JSON.parse(storedHistory)); if(!restored)throw Error('history');workHistory=restored; }
+    catch { historyBlocked=true; } // Never overwrite a damaged history silently.
+  }
   let imagesAllowed = store.get(keys.images) === 'yes', pendingStart = false, imageEpoch = 0;
   let ready = new Set(), failed = new Set(), zoomEpoch = 0, zoomLoad = null;
   const imageTimers = new Set();
@@ -45,6 +52,9 @@
       if (!progress.tokenPattern.test(state.roomToken)) state.roomToken = progress.token();
       if (!progress.tokenPattern.test(state.runToken)) state.runToken = progress.token();
       if (state.parentRoomToken === undefined) state.parentRoomToken = null;
+      const oldHistory=workHistory.rooms.find(entry=>entry.id===(state.historyToken||state.roomToken));
+      if(oldHistory && JSON.stringify(oldHistory.ids)!==JSON.stringify(state.ids)) state.historyToken=progress.token();
+      rememberWork();
       if (store.set(keys.game, JSON.stringify(state)) === false) storageWarning();
     }
     if (state && state.escaped > best) { best = state.escaped; if (store.set(keys.best, String(best)) === false) storageWarning(); }
@@ -56,6 +66,23 @@
     $('progress-notice').textContent = 'Der Browser kann deinen Fortschritt gerade nicht dauerhaft speichern. Sichere ihn bitte unter „Spielstand“ als Datei.';
   }
   function saveProgress() { if (store.set(keys.progress,JSON.stringify(playerProgress)) === false) storageWarning(); }
+  function rememberWork(shownId) {
+    if(historyBlocked) {
+      $('progress-notice').hidden=false;
+      $('progress-notice').textContent='Deine vorhandene Bildhistorie konnte nicht gelesen werden und wird nicht überschrieben. Lade bitte eine gültige Spielstandsdatei; das Spiel und deine Abzeichen bleiben verfügbar.';
+      return;
+    }
+    try {
+      const next=history.track(workHistory,state,pool,{shownId});
+      if(next!==workHistory) { workHistory=next; if(!store.set(keys.history,JSON.stringify(workHistory)))storageWarning(); }
+      refreshHistory();
+    } catch(error) { $('progress-notice').hidden=false;$('progress-notice').textContent=error.message; }
+  }
+  function refreshHistory() {
+    const seen=new Set(workHistory.rooms.flatMap(entry=>entry.ids.filter((id,index)=>entry.seen&(1<<index))));
+    $('history-summary').textContent=seen.size+' verschiedene Werke in '+workHistory.rooms.length+' gespeicherten Räumen. Die Bildhistorie beginnt mit dieser Funktion; ältere Begegnungen sind nicht rekonstruierbar.';
+  }
+  function previousWorks() { return historyBlocked ? undefined : history.summarize(workHistory,state.ids,state.historyToken||state.roomToken); }
   function refreshBadges() {
     const collection = progress.collection(playerProgress), stats = progress.statistics(playerProgress);
     $('badge-count').textContent = collection.filter(badge=>badge.earned).length + ' / ' + collection.length;
@@ -93,8 +120,9 @@
     setTransferBusy(true); $('save-status').textContent = 'Deine Datei wird vorbereitet …';
     try {
       save();
-      const payload = {app:transfers.APP,version:transfers.VERSION,savedAt:Date.now(),state,best,progress:playerProgress};
-      transfers.validate(payload,pool,archiveReplacements,core,progress);
+      if(historyBlocked)throw Error('Die vorhandene Bildhistorie ist beschädigt. Sie wird durch eine neue Datei nicht überschrieben.');
+      const payload = {app:transfers.APP,version:transfers.VERSION,savedAt:Date.now(),state,best,progress:playerProgress,history:workHistory};
+      transfers.validate(payload,pool,archiveReplacements,core,progress,history);
       const text = await transfers.encode(payload), blob = new Blob([text],{type:'application/json'}), url = URL.createObjectURL(blob);
       const link = node('a'); link.href = url; link.download = 'kunsttresor-' + new Date().toISOString().replace(/[:.]/g,'-') + '.json';
       document.body.append(link); link.click(); link.remove(); setTimeout(()=>URL.revokeObjectURL(url),60000);
@@ -108,14 +136,15 @@
     const epoch = ++fileEpoch; pendingImport = null; $('import-preview').hidden = true;
     setTransferBusy(true); $('save-status').textContent = 'Die Datei wird geprüft. Dein bisheriger Stand bleibt unverändert.';
     try {
-      if (file.size > transfers.MAX_FILE_BYTES) throw Error('Die Datei ist zu groß. Erlaubt sind höchstens 3 MB.');
-      const decoded = await transfers.decode(await file.text()), candidate = transfers.validate(decoded,pool,archiveReplacements,core,progress);
+      if (file.size > transfers.MAX_FILE_BYTES) throw Error('Die Datei ist zu groß. Erlaubt sind höchstens 8 MB.');
+      const decoded = await transfers.decode(await file.text()), candidate = transfers.validate(decoded,pool,archiveReplacements,core,progress,history);
       progress.merge(playerProgress,candidate.progress); // Check conflicts before offering replacement.
+      history.merge(workHistory,candidate.history);
       if (epoch !== fileEpoch) return;
       pendingImport = candidate;
       const phase = !candidate.state ? 'Kein laufender Raum' : candidate.state.phase === 'playing' ? 'Laufender Raum · ' + candidate.state.attempts + ' von 2 Versuchen verbraucht' : candidate.state.phase === 'unlocked' ? 'Gelöster Raum' : 'Beendete Runde';
       const earned = progress.collection(candidate.progress).filter(badge=>badge.earned).length;
-      $('import-description').textContent = new Date(candidate.savedAt).toLocaleString('de-DE') + ' · ' + phase + ' · ' + (candidate.state?.escaped || 0) + ' geöffnete Räume · Rekord ' + candidate.best + ' · ' + earned + ' Abzeichen.' + (candidate.updated ? ' Der Raum wird an das aktualisierte Werkarchiv angepasst.' : '');
+      $('import-description').textContent = new Date(candidate.savedAt).toLocaleString('de-DE') + ' · ' + phase + ' · ' + (candidate.state?.escaped || 0) + ' geöffnete Räume · Rekord ' + candidate.best + ' · ' + earned + ' Abzeichen · ' + candidate.history.rooms.length + ' Räume in der Bildhistorie.' + (candidate.legacyHistory ? ' Diese ältere Datei enthält noch keine Bildhistorie; dein vorhandener Verlauf bleibt erhalten.' : '') + (candidate.updated ? ' Der Raum wird an das aktualisierte Werkarchiv angepasst.' : '');
       $('save-status').textContent = 'Datei und Inhalt sind geprüft. Übernehmen wird erst mit deiner Bestätigung wirksam.';
       $('import-preview').hidden = false;
     } catch (error) { if (epoch === fileEpoch) $('save-status').textContent = error.message; }
@@ -124,8 +153,8 @@
   function confirmImport() {
     if (!pendingImport || transferBusy) return;
     try {
-      const candidate = pendingImport, merged = progress.merge(playerProgress,candidate.progress), nextBest = Math.max(best,candidate.best);
-      const entries = [[keys.game,candidate.state ? JSON.stringify(candidate.state) : null],[keys.best,String(nextBest)],[keys.progress,JSON.stringify(merged)]];
+      const candidate = pendingImport, merged = progress.merge(playerProgress,candidate.progress), mergedHistory=history.merge(workHistory,candidate.history), nextBest = Math.max(best,candidate.best);
+      const entries = [[keys.game,candidate.state ? JSON.stringify(candidate.state) : null],[keys.best,String(nextBest)],[keys.progress,JSON.stringify(merged)],[keys.history,JSON.stringify(mergedHistory)]];
       const old = entries.map(([key])=>[key,store.get(key)]);
       try {
         for (const [key,value] of entries) {
@@ -136,11 +165,12 @@
         throw error;
       }
       finishIntro(); close('result-dialog');
-      state = candidate.state; best = nextBest; playerProgress = merged; pendingImport = null;
+      state = candidate.state; best = nextBest; playerProgress = merged; workHistory=mergedHistory;historyBlocked=false;pendingImport = null;
+      aiClient?.clear(); refreshHistory();
       $('import-preview').hidden = true; $('archive-update').hidden = true;
       refreshBadges(); render();
       $('progress-notice').hidden = false;
-      $('progress-notice').textContent = 'Spielstand übernommen. Deine gesammelten Abzeichen und dein höherer Rekord bleiben erhalten.';
+      $('progress-notice').textContent = 'Spielstand übernommen. Deine Bildhistorie, gesammelten Abzeichen und dein höherer Rekord bleiben erhalten.';
       close('save-dialog'); toGame();
     } catch (error) { $('save-status').textContent = error.message; }
   }
@@ -359,7 +389,7 @@
       clearTimeout(timer); imageTimers.delete(timer);
       if (epoch !== imageEpoch || !imagesAllowed) return;
       button.querySelector('.image-loading')?.remove();
-      if (ok) { loaded = true; ready.add(work.id); failed.delete(work.id); button.disabled = false; }
+      if (ok) { loaded = true; ready.add(work.id); failed.delete(work.id); button.disabled = false; rememberWork(work.id); }
       else { failed.add(work.id); button.append(node('div','image-loading',slow ? 'Bild lädt ungewöhnlich lange …' : 'Bild nicht erreichbar')); button.disabled = true; }
       update();
     };
@@ -510,6 +540,8 @@
     }
     const opening=node('p','curator-opening',explanation.opening); opening.dataset.curatorWork=work.id;
     aiBaseline.set(work.id,explanation.opening); container.append(opening);
+    const previous=previousWorks()?.find(entry=>entry.id===work.id), historyNote=history.note(previous);
+    if(historyNote) container.append(node('p','curator-history',historyNote));
     if(explanation.temporal) container.append(node('p','curator-time',explanation.temporal));
     if(explanation.mistake) container.append(node('p','curator-comparison',explanation.mistake));
     if(explanation.workNote) container.append(node('p','curator-work-note',explanation.workNote));
@@ -614,7 +646,7 @@
     if (!state || state.phase==='playing' || !$('solution-dialog').open) return;
     if (!aiAllowed || !aiEnabled) { $('ai-status').textContent='Redaktionelle Kuratorenhinweise · KI-Antworten sind ausgeschaltet.'; return; }
     if (!aiClient || !aiEndpoint) { $('ai-status').textContent='Der KI-Dienst ist noch nicht freigeschaltet. Du liest die vollständigen redaktionellen Hinweise.'; return; }
-    const input=ki.payload(state,playerProgress), roomToken=state.roomToken, epoch=++aiDisplayEpoch;
+    const input=ki.payload(state,playerProgress,previousWorks()), roomToken=state.roomToken, epoch=++aiDisplayEpoch;
     await aiClient.request(input,result=> {
       if (epoch!==aiDisplayEpoch || !aiAllowed || !aiEnabled || state?.roomToken!==roomToken || !$('solution-dialog').open) return;
       if (result.status==='pending') { $('ai-status').textContent='Die KI formuliert deine persönliche Ansprache. Die redaktionellen Hinweise kannst du bereits lesen.'; return; }
@@ -769,7 +801,7 @@
       $('start-here').textContent = state ? 'Spiel fortsetzen →' : 'Galerie betreten →';
       if (state) save(); else saveProgress();
       $('open-save').disabled = false;
-      refreshBadges();
+      refreshBadges(); refreshHistory();
       $('best').textContent = number(best); heroImages();
       if (state && imagesAllowed) render();
       prepareLaunch();

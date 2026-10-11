@@ -28,10 +28,30 @@ Zusätzlich beim Groq-Konto Ausgaben-/Nutzungsgrenzen kontrollieren.
 Der Dienst validiert vier echte Archivwerke und die vollständigen geprüften
 Zuordnungen, rekonstruiert die Programmtexte aus geprüften Quellen und erlaubt
 keine frei eingegebenen Prompts, Modellwahl oder Bilder. Die KI erhält nur die
-Ergebnisse, aggregierte frühere Erfolge und diese Programmtexte. Ein fehlender
-Verlauf wird nicht als Beweis für den ersten Besuch ausgegeben. Verlorene
-frühere Spiele sind im Abzeichenprofil nicht enthalten: Das wird dem Modell
-ausdrücklich erklärt. Keine Namen, dauerhaften Browser-IDs oder Spielstände.
+Ergebnisse, aggregierte frühere Erfolge und diese Programmtexte. Zusätzlich
+ermittelt die App über Werk-IDs wiederkehrende Quizbilder. Für die vier aktuellen
+Werke sendet sie Begegnungszahlen und die Richtig/Falsch-Zusammenfassung der
+letzten gespeicherten Prüfung. Der Dienst prüft diese begrenzten Daten und
+übersetzt sie in die Namen der Zuordnungsfelder; er gibt dem Modell ausdrücklich
+vor, jede dokumentierte Wiederholung in der Ansprache zu berücksichtigen.
+Keine vollständige Bildhistorie, Zeitstempel, falschen Antworttexte, Namen,
+dauerhaften Browser-IDs oder Spielstandsdateien werden gesendet.
+
+Die lokale Bildhistorie erfasst nur tatsächlich geladene Quizbilder, nicht den
+Vorspann oder Hero-Bilder. Sie enthält auch verlorene und ungeprüft verlassene
+Räume. Laden desselben Raums zählt nicht erneut; ein neuer Raum mit demselben
+Werk zählt als neue Begegnung. Die aktuelle Begegnung ist aus der an die KI
+gesendeten Vorgeschichte ausgeschlossen. Frühere Spiele vor Einführung der
+Funktion sind unbekannt, nicht angeblich erstmalige Besuche. Das Abzeichenprofil
+enthält weiterhin nur erfolgreiche Räume. Keines dieser Daten beweist, dass
+ein Werk bewusst angesehen oder wiedererkannt wurde.
+
+Die Historie wird im Browser und in der verschlüsselten JSON-Spielstandsdatei
+gespeichert. Import führt Verläufe anhand lokaler Raumkennungen zusammen und
+verhindert Doppelzählung; widersprüchliche Datensätze werden abgewiesen.
+Ältere Dateien ohne Bildhistorie bleiben ladbar und löschen den vorhandenen
+Verlauf nicht. Bis zu 10.000 Räume, danach sichtbare Warnung statt stiller
+Löschung. Größere Browser-Speicherprobleme werden ebenfalls angezeigt.
 
 Ein Server-Zwischenspeicher und eine lokale Zugriffsbremse begrenzen
 wiederholte Anfragen. Beide gelten **nur pro laufender Serverinstanz** und
@@ -54,6 +74,9 @@ damit ein Vergleich keine neue Anfrage benötigt. Die An/Aus-Präferenz und die
 Freigabe werden getrennt gespeichert; „Freigabe widerrufen“ entfernt die
 Zustimmung, schaltet KI-Antworten aus und leert den temporären Cache. Keiner
 dieser Werte gehört zur Spielstandsdatei.
+
+Die Einwilligungsversion wird für die Bildhistorie erneuert, weil erstmals auch
+frühere Fehlzuordnungen der aktuellen Werke zusammengefasst übertragen werden.
 
 Der Build übernimmt die vorhandenen lokalen geprüften Quelldateien. Wenn
 die Bereitstellung nur dieses Verzeichnis enthält, verwendet er zunächst die
