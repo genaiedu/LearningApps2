@@ -223,11 +223,14 @@ test('the finale reveals the main title before the connected handwritten signatu
   assert.match(css,/@media\(prefers-reduced-motion:reduce\)\{[^}]*animation-duration:0s/);
   assert.ok(css.includes('p:last-child{animation-duration:0s}'));
   for(const file of ['styles/kunsttresor.css','styles/spiegelwelt.css']){
-    const text=fs.readFileSync(path.join(root,file),'utf8'),faces=[...text.matchAll(/@font-face\{[^}]+\}/g)];
+    const own=fs.readFileSync(path.join(root,file),'utf8'),shared=fs.readFileSync(path.join(root,'styles/app-editorial.css'),'utf8');
+    const page=fs.readFileSync(path.join(root,file.includes('kunsttresor')?'kunsttresor.html':'spiegelwelt.html'),'utf8');
+    assert.ok(page.includes('href="styles/app-editorial.css?'));
+    const text=own+'\n'+shared,faces=[...text.matchAll(/@font-face\{[^}]+\}/g)];
     assert.ok(faces.length>=4,file);
     for(const [face] of faces){
       const source=/src:url\(['"]?([^'"\)]+)/.exec(face)?.[1];
-      assert.ok(source?.startsWith('../../LearningApps/fonts/'),face);
+      assert.ok(source?.startsWith('../../LearningApps/fonts/')||source?.startsWith('../fonts/typografie/'),face);
       const font=fs.readFileSync(path.resolve(root,path.dirname(file),source));
       assert.equal(font.subarray(0,4).toString(),'wOF2',source);
     }

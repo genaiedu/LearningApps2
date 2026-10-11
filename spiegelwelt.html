@@ -5,19 +5,21 @@
   <title>Spiegelwelt · Chemie-Nobelpreis 2026</title>
   <meta name="description" content="Eine animierte Reise durch Chiralität, nichtlineare Effekte und die Soai-Reaktion. Chemie-Nobelpreis 2026: Henri B. Kagan und Kensō Soai. Interaktive Erklärmodelle, ohne Aufgaben.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://genaiedu.github.io; script-src 'self' 'unsafe-inline' https://genaiedu.github.io; style-src 'self' 'unsafe-inline' https://genaiedu.github.io; font-src 'self' https://genaiedu.github.io; img-src 'self' data: https://*.wikimedia.org https://www.nobelprize.org; connect-src 'self' https://de.wikipedia.org https://en.wikipedia.org https://commons.wikimedia.org; object-src 'none'; base-uri 'self'">
-  <link rel="stylesheet" href="styles/spiegelwelt.css?v=20261008-mystery">
+  <link rel="preload" href="fonts/typografie/firasans/FiraSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles/spiegelwelt.css?v=20261011-design">
   <link rel="stylesheet" href="styles/wikipedia-math.css">
+  <link rel="stylesheet" href="styles/app-editorial.css?v=20261011-design">
   <script>window.MathJax={loader:{paths:{'mathjax-newcm':new URL('../LearningApps/fonts/mathjax-newcm',document.baseURI).href}},tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},chtml:{fontURL:new URL('../LearningApps/fonts/mathjax-newcm/chtml/woff2',document.baseURI).href,dynamicPrefix:new URL('../LearningApps/fonts/mathjax-newcm/chtml/dynamic',document.baseURI).href},options:{enableEnrichment:false,enableSpeech:false,enableBraille:false,enableExplorer:false},startup:{ready(){window.QMMath=MathJax;MathJax.startup.defaultReady();}}};</script>
   <script defer src="../LearningApps/fonts/tex-mml-chtml.js"></script>
   <script defer src="scripts/spiegelwelt-core.js"></script>
-  <script defer src="scripts/spiegelwelt.js?v=20261008-mystery"></script>
+  <script defer src="scripts/spiegelwelt.js?v=20261011-design"></script>
   <script defer src="scripts/spiegelwelt-adventure.js?v=20261007-4"></script>
   <script defer src="scripts/wikipedia-math.js"></script>
   <script defer src="scripts/schroedinger-wikipedia.js"></script>
 </head>
-<body>
+<body class="editorial-app app-science">
 <a class="skip" href="#entdecken">Zur Erklärung</a>
-<header class="masthead"><a class="wordmark" href="#auftakt">spiegel<span>welt</span><i aria-hidden="true">↔</i></a><span class="edition">CHEMIE · NOBELPREIS 2026</span><button id="motion-toggle" aria-pressed="false">Animationen pausieren</button></header>
+<header class="masthead"><a class="wordmark editorial-wordmark" href="#auftakt"><strong>SPIEGEL</strong><span>WELT</span></a><span class="edition">CHEMIE · NOBELPREIS 2026</span><button id="motion-toggle" aria-pressed="false">Animationen pausieren</button></header>
 
 <main>
 <section class="cinema" id="auftakt" aria-label="Einstiegspräsentation">

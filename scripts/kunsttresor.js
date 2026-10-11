@@ -422,7 +422,7 @@
   }
   function fullscreenLabel() {
     const active = document.fullscreenElement === $('spiel') || $('spiel').classList.contains('fullscreen-fallback');
-    $('fullscreen').innerHTML = active ? '⤢ <span>Vollbild verlassen</span>' : '⛶ <span>Vollbild</span>';
+    $('fullscreen').innerHTML = active ? '<span>Vollbild verlassen</span>' : '<span>Vollbild</span>';
     $('fullscreen').setAttribute('aria-label',active ? 'Vollbild verlassen' : 'Spiel im Vollbild öffnen');
   }
   async function enterFullscreen() {

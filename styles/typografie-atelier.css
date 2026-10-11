@@ -112,6 +112,8 @@ dialog{padding:35px;border:1px solid var(--line);border-radius:10px;color:var(--
 .author-comment .comment-opening{position:absolute;left:10px;top:-68px;font:400 136px/1 Cardo,serif;color:#718367;pointer-events:none;user-select:none}
 .author-comment p{margin:0 0 18px;font:inherit;letter-spacing:normal}
 .author-comment p:last-child{margin-bottom:0}
+.closing-voice-wrap{padding-block:50px 70px}
+.author-comment.closing-voice{margin:35px auto 30px;text-align:left}
 .author-comment h3{font:700 22px/1.35 Cardo,serif;margin:28px 0 18px;letter-spacing:normal}
 .author-comment strong{font-weight:700}.author-comment .author-pullquote{font-style:italic}
 .print-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 40px;margin:40px 0}
