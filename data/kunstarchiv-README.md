@@ -47,7 +47,7 @@ Verschiedene Namensformen mit derselben persönlichen Wikipediazuordnung
 gelten bei der Raumwahl als ein Künstler, ohne gespeicherte Antwortwerte
 umzubenennen.
 
-## Fünf Dateien
+## Werkdateien
 
 `kunstarchiv.json` enthält Werkdaten, `kunstbilder.json` die geprüften
 Bild-URLs und Rechte, `kunst-wikipedia.json` die zugeordneten Artikel.
@@ -60,7 +60,43 @@ und etablierte fremdsprachige Titel bleiben gegebenenfalls erhalten. Eigene
 nicht als offizielle Museumstitel. Dort bleibt auch der Originaltitel sichtbar.
 Die Galerie, Vergrößerung und Schlussbild-Beschriftung nutzen dieselbe deutsche
 Fassung; Wikipedia-Artikelziele und gespeicherte Antworten bleiben unverändert.
-Diese Werke haben einen eigenen Wikipediaartikel und breite dokumentierte
+
+## Kurator und Glossar
+
+`kunst-glossar.json` ergänzt eine lokale, redaktionell formulierte Wissensbasis:
+15 Techniken und 40 im Archiv verwendete Stile, Epochen und regionale Schulen.
+Jeder Eintrag enthält Definition, mögliche Erkennungsmerkmale, Zeitkontext,
+wichtige Vergleichskünstler, Grenzen der Zuordnung und verlinkte Museumsquellen.
+Die Texte sind keine automatische Einzelbildanalyse. Bildträger und Bindemittel
+sind anhand einer digitalen Aufnahme oft nicht sicher zu bestimmen.
+Gesondert belegte Werkbesonderheiten stehen unter `workNotes`.
+
+`scripts/kunst-kurator.js` erzeugt nach dem Lösen oder Spielende für jedes Werk
+eine direkte Rückmeldung. Der Aufbau und die Formulierungen variieren mit dem
+Raum und dem Verlauf: erster Treffer, verbesserte Antwort, verlorene richtige
+Spur oder letzte Hürde. Eine erneute Anzeige desselben Ergebnisses bleibt stabil.
+Die beiden tatsächlich geprüften Antwortstände werden in `attemptLog` gesichert
+und bei Werkersetzungen mit übernommen. Alte Spielstände bleiben verwendbar;
+fehlende frühere Antworten werden nicht nachträglich erfunden.
+
+Nach der ersten Fehlprüfung gibt es höchstens einen kryptischen Hinweis für
+den gesamten Raum, ohne Werk, Stilname oder Jahreszahl. Dafür werden nur große
+Zeitwidersprüche bei ausdrücklich dokumentierten Bewegungsanfängen verwendet
+(mindestens 40 Jahre Abstand), keine vermeintlich scharfen Epochenränder.
+Konkrete Erläuterungen folgen erst in der Auflösung; dort werden auch inzwischen
+korrigierte Widersprüche erläutert. Frühe ähnliche Formen können älter sein als
+die benannte Bewegung. Ein spätes Datum beweist weder Nachahmung noch Epigonalität.
+Eine Häufigkeit im Spielarchiv ist keine Aussage über das gesamte Künstlerœuvre.
+
+Das durchsuchbare Glossar wird erst bei der Auflösung angeboten. Werkquellen,
+Bildrechte, erlaubte Downloads und bisherige Wikipedia-Verknüpfungen bleiben
+unter den Rückmeldungen erhalten. Die neue Wissensbasis ist eine lokale Datei;
+es gibt keine zusätzliche KI-Anfrage, keinen externen Textdienst und keine
+Übertragung der Spielerantworten. Prüfung: `node --test tests/kunst*.test.cjs`.
+
+## Vorspann und Bildansicht
+
+Die feste Hundert-Auswahl enthält Werke mit eigenem Wikipediaartikel und breiter dokumentierter
 Wikimedia-Rezeption. Die Auswahl wird vor Veröffentlichung anhand ihrer
 Titel und Künstler überprüft; Wikimedia-Verknüpfungen sind eine Auswahlhilfe,
 kein objektives Maß künstlerischer Bedeutung.

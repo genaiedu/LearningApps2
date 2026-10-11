@@ -70,7 +70,7 @@
   function newState(pool, previous = null, random = Math.random) {
     const recent = previous ? [...previous.recent, ...previous.ids].slice(-24) : [];
     const next = room(pool, recent, random);
-    return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent};
+    return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attemptLog: [], attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent};
   }
   function choose(state, workId, field, value) {
     if (state.phase !== 'playing' || !state.ids.includes(workId) || !fields.includes(field) || (value && !state.options[field].includes(value))) return state;
@@ -99,7 +99,8 @@
     const attempts = state.attempts + 1;
     const unlocked = correct === 16;
     const review = {choices:Object.fromEntries(state.ids.map(id => [id,{...state.choices[id]}]))};
-    return {checked: true, correct, state: {...state, review, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === 2 ? 'lost' : 'playing'}};
+    const attemptLog = [...(state.attemptLog || []), {attempt: attempts, choices: review.choices}];
+    return {checked: true, correct, state: {...state, review, attemptLog, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === 2 ? 'lost' : 'playing'}};
   }
   function restore(saved, pool) {
     if (!saved || saved.version !== 1 || !['playing','unlocked','lost'].includes(saved.phase) || !Number.isInteger(saved.escaped) || saved.escaped < 0 || !Number.isInteger(saved.attempts) || saved.attempts < 0 || saved.attempts > 2 || !Array.isArray(saved.ids) || saved.ids.length !== 4 || !Array.isArray(saved.recent) || (saved.choices && (typeof saved.choices !== 'object' || Array.isArray(saved.choices)))) return null;
@@ -123,7 +124,17 @@
       const unique = fields.every(field => new Set(saved.ids.map(id => choices?.[id]?.[field])).size === 4);
       if (complete && unique) review = {choices:Object.fromEntries(saved.ids.map(id => [id,{...choices[id]}]))};
     }
-    return {...saved, choices: saved.choices || {}, review};
+    // History is optional for version-1 saves. Never invent a first attempt from
+    // an older save's final choices. Invalid history is discarded, not the game.
+    const validSnapshot = choices => saved.ids.every(id => fields.every(field => saved.options[field].includes(choices?.[id]?.[field]))) && fields.every(field => new Set(saved.ids.map(id => choices?.[id]?.[field])).size === 4);
+    let attemptLog = saved.attemptLog;
+    if (attemptLog !== undefined) {
+      if (!Array.isArray(attemptLog) || attemptLog.length > saved.attempts || attemptLog.some((entry,index) => !Number.isInteger(entry?.attempt) || entry.attempt < 1 || entry.attempt > saved.attempts || (index > 0 && entry.attempt <= attemptLog[index-1].attempt) || !validSnapshot(entry.choices))) attemptLog = [];
+      else attemptLog = attemptLog.map(entry => ({attempt:entry.attempt,choices:Object.fromEntries(saved.ids.map(id => [id,{...entry.choices[id]}]))}));
+      const last = attemptLog.at(-1);
+      if (last?.attempt === saved.attempts && review && saved.ids.some(id => fields.some(field => last.choices[id][field] !== review.choices[id][field]))) attemptLog = [];
+    }
+    return {...saved, choices: saved.choices || {}, review, ...(attemptLog === undefined ? {} : {attemptLog})};
   }
   function restoreUpdated(saved, pool, replacements = []) {
     const current = restore(saved,pool);
@@ -141,7 +152,8 @@
     const selections = choices => Object.fromEntries(Object.entries(choices || {}).map(([id,selection]) => [idOf(id),Object.fromEntries(Object.entries(selection).map(([field,value])=>[field,valueOf(field,value)]))]));
     const migrated = {...original,ids:original.ids.map(idOf),recent:original.recent.map(idOf),
       options:Object.fromEntries(fields.map(field=>[field,original.options[field].map(value=>valueOf(field,value))])),
-      choices:selections(original.choices),review:original.review ? {choices:selections(original.review.choices)} : null};
+      choices:selections(original.choices),review:original.review ? {choices:selections(original.review.choices)} : null,
+      ...(original.attemptLog ? {attemptLog:original.attemptLog.map(entry=>({...entry,choices:selections(entry.choices)}))} : {})};
     const restored = restore(migrated,pool);
     if (restored) return {state:restored,updated:true,newRoom:false};
     // A new date might duplicate a neighbour's answer. Use a fair, unique replacement

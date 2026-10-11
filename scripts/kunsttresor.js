@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const $ = id => document.getElementById(id), core = window.KunstTresor;
+  const $ = id => document.getElementById(id), core = window.KunstTresor, curator = window.KunstKurator;
   const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', images:'kunsttresor-images-v1', hero:'kunsttresor-hero-v1'};
   const labels = {date:'Entstehungszeit', style:'Stilrichtung', artist:'Künstler', technique:'Technik'};
   const store = {
@@ -9,6 +9,7 @@
     remove(key) { try { localStorage.removeItem(key); } catch { /* The round still works in memory. */ } }
   };
   let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = Math.max(0, Number(store.get(keys.best)) || 0);
+  let artKnowledge = null;
   let imagesAllowed = store.get(keys.images) === 'yes', pendingStart = false, imageEpoch = 0;
   let ready = new Set(), failed = new Set(), zoomEpoch = 0, zoomLoad = null;
   const imageTimers = new Set();
@@ -42,7 +43,7 @@
     imageEpoch++;
     imageTimers.forEach(clearTimeout); imageTimers.clear();
     document.querySelectorAll('.mini-frame img, #art-grid img, #solutions img, #zoom-image').forEach(img => { img.removeAttribute('src'); if (img.id !== 'zoom-image') img.remove(); });
-    ready.clear(); failed.clear(); close('image-dialog'); close('solution-dialog');
+    ready.clear(); failed.clear(); close('image-dialog'); close('solution-dialog'); close('art-glossary-dialog');
   }
   function heroImages() {
     if (!imagesAllowed || !pool.length) return;
@@ -204,7 +205,7 @@
     $('check').textContent = 'Schloss prüfen · Versuch ' + (state.attempts + 1) + ' von 2';
     $('next-room').hidden = state.phase !== 'unlocked'; $('play-again').hidden = state.phase !== 'lost';
     $('show-solution').hidden = playing;
-    $('show-solution').textContent = 'Zuordnungen, Quellen & Wikipedia';
+    $('show-solution').textContent = 'Mit dem Kurator zu den Lösungen';
     $('lock-visual').classList.toggle('is-open', state.phase === 'unlocked');
     $('lock-visual').classList.toggle('is-lost', state.phase === 'lost');
     $('technical-note').hidden = failed.size === 0;
@@ -224,6 +225,9 @@
     });
     const visible = results.length > 0 && state.phase === 'playing';
     $('review-summary').hidden = !visible;
+    const chronologyHint = curator?.roomHint(state,artKnowledge) || '';
+    $('chronology-hint').hidden = !visible || !chronologyHint;
+    $('chronology-hint').textContent = chronologyHint;
     if (visible) {
       const wrong = results.filter(result => !result.correct).length, changed = results.filter(result => result.changed).length;
       $('review-title').textContent = 'Erste Prüfung: ' + wrong + ' von 16 Zuordnungen waren falsch.';
@@ -292,7 +296,7 @@
   }
   function nextRoom() {
     if (state?.phase !== 'unlocked') return;
-    close('result-dialog'); close('solution-dialog');
+    close('result-dialog'); close('solution-dialog'); close('art-glossary-dialog');
     state = core.newState(pool,state); save(); render(); toGame();
   }
   function inspect() {
@@ -306,13 +310,13 @@
       $('review-summary').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'start'});
     } else {
       $('lock-title').textContent = state.phase === 'unlocked' ? 'Der Schlüssel passt.' : 'Das Schloss bleibt zu.';
-      $('feedback').textContent = state.phase === 'unlocked' ? 'Alle 16 Zuordnungen sind richtig. Ein neuer Raum wartet – vorher kannst du die Künstler und Stile in Wikipedia erkunden.' : 'Der zweite Prüfversuch war nicht vollständig richtig. Die Runde ist beendet.';
+      $('feedback').textContent = state.phase === 'unlocked' ? 'Alle 16 Zuordnungen sind richtig. Ein neuer Raum wartet – vorher kannst du mit dem Kurator die Spuren in den Bildern erkunden.' : 'Der zweite Prüfversuch war nicht vollständig richtig. Die Runde ist beendet.';
       $('result-kicker').textContent = state.phase === 'unlocked' ? 'Raum gelöst · Das Schloss öffnet sich' : 'Zwei Versuche · Spiel beendet';
       $('result-title').textContent = state.phase === 'unlocked' ? 'Eine Tür weiter.' : 'Bis hierher. Und beim nächsten Mal?';
-      $('result-text').textContent = state.phase === 'unlocked' ? 'Vier Werke, 16 richtige Spuren. Du kannst jetzt über die Künstler, Stile und Techniken weiterlesen. Oder wagst du den nächsten Raum?' : checked.correct + ' von 16 Zuordnungen waren im letzten Versuch richtig. Sieh dir die Lösungen an und entdecke, was dir beim nächsten Rundgang helfen könnte.';
+      $('result-text').textContent = state.phase === 'unlocked' ? 'Vier Werke, 16 richtige Spuren. Geh noch einmal mit dem Kurator zu den Bildern: Welche Beobachtungen stützen deine Lösung? Oder wagst du den nächsten Raum?' : checked.correct + ' von 16 Zuordnungen waren im letzten Versuch richtig. Der Kurator begleitet dich noch einmal zu den Bildern – mit Hinweisen, die dir beim nächsten Rundgang helfen können.';
       $('result-number').textContent = number(state.escaped);
       $('result-action').textContent = state.phase === 'unlocked' ? 'Nächster Raum →' : 'Neue Runde beginnen ↻';
-      $('result-solution').textContent = 'Lösungen & Wikipedia entdecken';
+      $('result-solution').textContent = 'Mit dem Kurator noch einmal hinsehen';
       open('result-dialog');
     }
   }
@@ -376,35 +380,91 @@
       const link = node('a',null,'Originalbild öffnen und speichern ↗'); link.href = work.imageOriginalURL; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.referrerPolicy = 'no-referrer'; status.append(link);
     } finally { clearTimeout(timeout); button.disabled = false; }
   }
+  function referenceLink(reference) {
+    const link=node('a',null,reference.title+' ↗'); link.href=reference.url; link.target='_blank'; link.rel='noopener noreferrer'; link.referrerPolicy='no-referrer'; return link;
+  }
+  function renderCurator(work) {
+    const container=node('div','curator-reading'), explanation=curator?.explain(work,state,artKnowledge,pool);
+    if(!explanation) {
+      container.append(node('p',null,'Die Kuratorenhinweise konnten nicht geladen werden. Die Werkangaben und Quellen stehen dir trotzdem zur Verfügung. Bitte lade die Seite erneut, um auch die Erklärungen zu lesen.'));
+      return container;
+    }
+    container.append(node('p','curator-opening',explanation.opening));
+    if(explanation.temporal) container.append(node('p','curator-time',explanation.temporal));
+    if(explanation.mistake) container.append(node('p','curator-comparison',explanation.mistake));
+    if(explanation.workNote) container.append(node('p','curator-work-note',explanation.workNote));
+    explanation.sections.forEach(section => {
+      const block=node('section','curator-section');
+      block.append(node('h4',null,section.label+' · '+section.answer));
+      section.paragraphs.forEach(paragraph=>block.append(node('p',null,paragraph)));
+      const glossaryButton=node('button','curator-glossary-link',section.answer+' im Glossar'); glossaryButton.type='button';
+      glossaryButton.onclick=()=>showArtGlossary(section.answer,section.field==='style'?'styles':'techniques'); block.append(glossaryButton);
+      container.append(block);
+    });
+    const references=node('details','curator-references'); references.append(node('summary',null,'Museumsquellen zu diesen Hinweisen'));
+    const list=node('ul'); explanation.sources.forEach(reference=>{const item=node('li');item.append(referenceLink(reference));list.append(item);}); references.append(list); container.append(references);
+    return container;
+  }
+  function renderArtGlossary(expand=false) {
+    const list=$('art-glossary-entries'); list.replaceChildren();
+    if(!artKnowledge) { $('art-glossary-count').textContent='Das Glossar konnte nicht geladen werden. Bitte lade die Seite erneut.'; return; }
+    const search=$('art-glossary-search').value.trim().toLocaleLowerCase('de'), category=$('art-glossary-category').value;
+    const entries=['techniques','styles'].filter(group=>!category || category===group).flatMap(group=>Object.entries(artKnowledge[group]).map(([name,profile])=>({name,profile,group}))).filter(entry=>(entry.name+' '+(entry.profile.kind || '')).toLocaleLowerCase('de').includes(search)).sort((a,b)=>a.name.localeCompare(b.name,'de'));
+    $('art-glossary-count').textContent=entries.length+' von 55 Begriffen';
+    if(!entries.length) list.append(node('p',null,'Dazu gibt es hier keinen Eintrag. Versuche einen kürzeren Suchbegriff oder wechsle zu „Alle Begriffe“.'));
+    entries.forEach(({name,profile,group})=>{
+      const entry=node('details','art-glossary-entry'); entry.open=expand && name.toLocaleLowerCase('de')===search;
+      const summary=node('summary'); summary.append(node('span',null,name),node('small',null,profile.kind || 'Material / Technik')); entry.append(summary);
+      const body=node('div','art-glossary-body'); body.append(node('p',null,profile.definition));
+      body.append(node('h3',null,'Mögliche Erkennungsmerkmale')); const clues=node('ul'); profile.clues.forEach(clue=>clues.append(node('li',null,clue))); body.append(clues);
+      body.append(node('p',null,'Zeitkontext: '+profile.period+'.'),node('p',null,'Wichtige Vergleichsnamen: '+profile.artists.join(', ')+'.'));
+      if(profile.origin) body.append(node('p',null,profile.origin.statement));
+      body.append(node('p','glossary-caution',profile.caution));
+      const references=node('ul','glossary-sources'); profile.sources.forEach(id=>{const item=node('li');item.append(referenceLink(artKnowledge.sources[id]));references.append(item);});body.append(references);
+      // Existing archive records provide individual material examples, not a
+      // frequency claim about the artist's entire career.
+      if(group==='techniques') {
+        const examples=profile.artists.map(artist=>pool.find(work=>curator.artistKey(work.artistIdentity || work.artist)===curator.artistKey(artist) && work.technique===name)).filter(Boolean);
+        if(examples.length) { const examplesList=node('ul','glossary-sources'); examples.forEach(work=>{const item=node('li');item.append(referenceLink({title:work.artist+' · '+core.galleryTitle(work)+' · Werkbeleg',url:work.source}));examplesList.append(item);});body.append(examplesList); }
+      }
+      entry.append(body);list.append(entry);
+    });
+  }
+  function showArtGlossary(term='',category='') {
+    if(!state || state.phase==='playing') return;
+    $('art-glossary-search').value=term; $('art-glossary-category').value=category; renderArtGlossary(Boolean(term)); open('art-glossary-dialog'); $('art-glossary-dialog').scrollTop=0;
+    if(!term) $('art-glossary-search').focus();
+  }
   function solutions() {
     if (!state || state.phase === 'playing') return;
     close('result-dialog'); $('solutions').replaceChildren();
     state.ids.forEach((id,index) => {
-      const work = workById(id), card = node('article','solution-card');
+      const work = workById(id), card = node('article','solution-card'), overview=node('div','solution-overview'), sources=node('footer','solution-sources');
       if (imagesAllowed) {
         const imageButton = node('button','solution-image'); imageButton.type = 'button';
         imageButton.setAttribute('aria-label','Werk ' + 'ABCD'[index] + ' in der Lösung vergrößern');
         const img = node('img'); img.alt = core.galleryTitle(work); img.referrerPolicy = 'no-referrer'; img.src = imageURL(work);
         imageButton.append(img,node('span',null,'⤢ Bild vergrößern'));
-        imageButton.onclick = () => showImage(work,'ABCD'[index]); card.append(imageButton);
+        imageButton.onclick = () => showImage(work,'ABCD'[index]); overview.append(imageButton);
       }
-      card.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,core.galleryTitle(work)));
-      if (core.galleryTitle(work)!==work.title) card.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
-      const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); card.append(list);
-      card.append(node('p','small','Quellenangabe zur Technik: ' + work.medium + '. ' + (work.metadataProvider==='Cleveland Museum of Art' ? 'Stilzuordnung: ' + work.styleSource : 'Dokumentierter Stil: ' + work.styleOriginal) + '.'));
-      const source = node('a','small',work.metadataProvider==='Wikidata'?'Werkdatensatz & Nachweise ↗':'Originalwerk & Museumsdaten ↗'); source.href = work.source; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.referrerPolicy = 'no-referrer'; card.append(source);
+      overview.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,core.galleryTitle(work)));
+      if (core.galleryTitle(work)!==work.title) overview.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
+      const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); overview.append(list);
+      card.append(overview,renderCurator(work));
+      sources.append(node('p','small','Quellenangabe zur Technik: ' + work.medium + '. ' + (work.metadataProvider==='Cleveland Museum of Art' ? 'Stilzuordnung: ' + work.styleSource : 'Dokumentierter Stil: ' + work.styleOriginal) + '.'));
+      const source = node('a','small',work.metadataProvider==='Wikidata'?'Werkdatensatz & Nachweise ↗':'Originalwerk & Museumsdaten ↗'); source.href = work.source; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.referrerPolicy = 'no-referrer'; sources.append(source);
       if (work.catalogueSource) {
         const catalogue=node('a','small','Weiterführender Werknachweis ↗');
-        catalogue.href=work.catalogueSource; catalogue.target='_blank'; catalogue.rel='noopener noreferrer'; catalogue.referrerPolicy='no-referrer'; card.append(catalogue);
+        catalogue.href=work.catalogueSource; catalogue.target='_blank'; catalogue.rel='noopener noreferrer'; catalogue.referrerPolicy='no-referrer'; sources.append(catalogue);
       }
-      const imageSource = node('a','small',' · Commons-Bildquelle & Rechte ↗'); imageSource.href = work.imageSource; imageSource.target = '_blank'; imageSource.rel = 'noopener noreferrer'; imageSource.referrerPolicy = 'no-referrer'; card.append(imageSource);
-      card.append(node('p','small','Bild: ' + work.imageCredit + ' · ' + work.imageLicense + '.'));
+      const imageSource = node('a','small',' · Commons-Bildquelle & Rechte ↗'); imageSource.href = work.imageSource; imageSource.target = '_blank'; imageSource.rel = 'noopener noreferrer'; imageSource.referrerPolicy = 'no-referrer'; sources.append(imageSource);
+      sources.append(node('p','small','Bild: ' + work.imageCredit + ' · ' + work.imageLicense + '.'));
       if (core.canDownload(work)) {
         const actions = node('div','image-download'), button = node('button',null,'↓ Bild herunterladen' + (work.imageBytes ? ' · ' + (work.imageBytes/1048576).toLocaleString('de-DE',{maximumFractionDigits:1}) + ' MB' : ''));
         button.type='button'; button.setAttribute('aria-label','Originalbild von Werk ' + 'ABCD'[index] + ' herunterladen');
         const status = node('p','small'); status.setAttribute('role','status');
         button.onclick = () => downloadImage(work,button,status);
-        actions.append(button,node('p','small','Download erlaubt: Commons weist diese konkrete Bilddatei als ' + work.imageLicense + ' aus. Originalauflösung; Datei kann groß sein.'),status); card.append(actions);
+        actions.append(button,node('p','small','Download erlaubt: Commons weist diese konkrete Bilddatei als ' + work.imageLicense + ' aus. Originalauflösung; Datei kann groß sein.'),status); sources.append(actions);
       }
       const links = node('div','wiki-links'); links.append(node('p',null,'Weiterlesen in Wikipedia · Artikel im Fenster'));
       const artistArticle = wikiCatalogue.artists[work.artist];
@@ -416,7 +476,7 @@
       const year = work.date.match(/\b(1[3-9]\d{2})\b/)?.[1];
       if (year) links.append(wikiButton('Zeitkontext: ' + year,year));
       links.append(node('p','small','Artikel nach Möglichkeit auf Deutsch; sonst Englisch. Zeitkontext: Jahresartikel, kein Beleg für die Datierung des Werks.'));
-      card.append(links); $('solutions').append(card);
+      sources.append(links); card.append(sources); $('solutions').append(card);
     });
     open('solution-dialog');
   }
@@ -469,6 +529,9 @@
   document.addEventListener('visibilitychange',() => { if (document.hidden && $('intro-dialog').open) finishIntro(); });
   $('check').onclick = inspect; $('next-room').onclick = nextRoom;
   $('show-solution').onclick = $('result-solution').onclick = solutions;
+  $('open-art-glossary').onclick=()=>showArtGlossary();
+  $('art-glossary-search').oninput=()=>renderArtGlossary();
+  $('art-glossary-category').onchange=()=>renderArtGlossary();
   $('result-action').onclick = () => { close('result-dialog'); state.phase === 'unlocked' ? nextRoom() : newRound(); };
   $('play-again').onclick = newRound;
   $('restart-top').onclick = $('restart-game').onclick = () => { $('clear-best').checked = false; open('restart-dialog'); };
@@ -483,9 +546,11 @@
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
-  Promise.all(['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261009-vielfalt',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })))
-    .then(([data,media,wiki,landmarks,titles]) => {
+  const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261011-kurator',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
+  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261009-vielfalt',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest])
+    .then(([data,media,wiki,landmarks,titles,knowledge]) => {
       wikiCatalogue = wiki;
+      artKnowledge=knowledge;
       const images = new Map(media.images.map(image => [image.id,image]));
       const translated=new Set(titles.ownTranslations);
       pool = data.works.filter(work => images.has(work.id) && wiki.artists[work.artist] && core.validWork(work)).map(work => ({...work,...images.get(work.id),titleDe:titles.titles[work.id],titleDeTranslated:translated.has(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
