@@ -79,6 +79,22 @@
       {name:'baseline',value:0},{name:'descender',value:below}]);
     $('anatomy-status').textContent=f.name+' · Grundlinie: Fontkoordinate 0. Die weiteren Linien folgen der Oberkante von b und x sowie der tiefsten Kontur von g/p. Kleine Überstände einzelner Formen sind möglich.';
   }
+  function showFiraHeights(){
+    const f=families.find(font=>font.id==='firasans'),characters='Hliftx';
+    const capital=f.glyphs.H.bounds[3],xHeight=f.glyphs.x.bounds[3];
+    draw($('fira-height-word'),f,characters,[
+      {name:'capital',value:capital},{name:'x',value:xHeight},{name:'baseline',value:0}]);
+    const svg=$('fira-height-word').querySelector('svg'),m=layout(f,characters);
+    const clip=create('clipPath',{id:'fira-above-capital',clipPathUnits:'userSpaceOnUse'});
+    clip.append(create('rect',{x:0,y:0,width:m.width,height:m.y(capital)}));
+    const defs=create('defs');defs.append(clip);svg.prepend(defs);
+    const above=svg.querySelector('.glyph-contours').cloneNode(true);
+    above.setAttribute('class','glyph-contours above-capital');
+    above.setAttribute('clip-path','url(#fira-above-capital)');
+    svg.insertBefore(above,svg.querySelector('.outline-guide'));
+    svg.setAttribute('aria-label','Fira Sans: H, l, i, f, t und x auf derselben Grundlinie. l, f und der i-Punkt reichen über die Versalhöhe des H; t bleibt darunter.');
+    $('fira-height-status').textContent='H: '+format(capital)+' · l: '+format(f.glyphs.l.bounds[3])+' · i einschließlich Punkt: '+format(f.glyphs.i.bounds[3])+' · f: '+format(f.glyphs.f.bounds[3])+' · t: '+format(f.glyphs.t.bounds[3])+' · x: '+format(xHeight)+'. Oberkanten in Fontkoordinaten; '+format(f.unitsPerEm)+' Einheiten entsprechen einem Geviert, die Grundlinie liegt bei 0. Die Zahlen messen Konturen, nicht Schriftgrade.';
+  }
   function updateOvershoot(){
     const f=selected('overshoot-font');
     [['upper','H','O'],['lower','x','o']].forEach(([id,flat,round])=>{
@@ -93,16 +109,17 @@
   }
   async function init(){
     try{
-      const response=await fetch('data/typografie-anatomy.json?v=20261011-gebrochene-schriften',{credentials:'omit'});
+      const response=await fetch('data/typografie-anatomy.json?v=20261011-fira-oberlaengen',{credentials:'omit'});
       if(!response.ok)throw Error('metrics unavailable');
       families=(await response.json()).families;
       $('anatomy-font').addEventListener('change',updateAnatomy);
       $('overshoot-font').addEventListener('change',updateOvershoot);
       $('overshoot-highlight').addEventListener('change',updateOvershoot);
-      updateAnatomy();updateOvershoot();
+      updateAnatomy();showFiraHeights();updateOvershoot();
     }catch(_){
       $('anatomy-status').textContent='Die Konturdaten konnten nicht geladen werden. Es werden keine geschätzten Hilfslinien angezeigt.';
       $('overshoot-status').textContent='Die Konturvergleiche sind momentan nicht verfügbar. Bitte die Seite neu laden; die Erklärung bleibt lesbar.';
+      $('fira-height-status').textContent='Die Konturhöhen konnten nicht geladen werden. Es werden keine geschätzten Hilfslinien angezeigt.';
     }
   }
   init();

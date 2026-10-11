@@ -30,6 +30,31 @@ test('all ten demonstrated fonts really contain the stated round-form overshoots
   }
   const cardo=illustrated.find(f=>f.id==='cardo');assert.deepEqual(A.overshoot(cardo,'H','O'),{top:42,belowBaseline:27,belowFlat:27,upm:2048});
 });
+test('Fira Sans shows taller l and f, a high i-dot and the shorter t in the actual local outlines',()=>{
+  const f=data.families.find(font=>font.id==='firasans');
+  assert.equal(f.unitsPerEm,1000);
+  assert.deepEqual(Object.fromEntries([...'Hliftx'].map(c=>[c,f.glyphs[c].bounds[3]])),{H:689,l:750,i:780,f:750,t:657,x:527});
+  for(const c of 'lif')assert.ok(f.glyphs[c].bounds[3]>f.glyphs.H.bounds[3]);
+  assert.ok(f.glyphs.t.bounds[3]>f.glyphs.x.bounds[3]);
+  assert.ok(f.glyphs.t.bounds[3]<f.glyphs.H.bounds[3]);
+  // The first contour is the i's stem: its top, unlike the dot, equals x-height.
+  assert.ok(f.glyphs.i.path.startsWith('M187 527V0H95V527Z'));
+  const m=A.layout(f,'Hliftx');
+  assert.ok(m.y(f.glyphs.i.bounds[3])<m.y(f.glyphs.H.bounds[3]));
+  assert.ok(m.y(f.glyphs.H.bounds[3])<m.y(f.glyphs.t.bounds[3]));
+  assert.ok(m.y(f.glyphs.t.bounds[3])<m.y(f.glyphs.x.bounds[3]));
+  for(const c of 'Hliftx'){assert.ok(m.y(f.glyphs[c].bounds[3])>=0);assert.ok(m.y(f.glyphs[c].bounds[1])<=m.height);}
+});
+test('the anatomy study explains the i-dot and shorter t before distinguishing overshoot',()=>{
+  const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8');
+  const study=html.slice(html.indexOf('id="fira-oberlaengen"'),html.indexOf('id="overshoot"'));
+  for(const wording of ['Versalhöhe und Oberlängenhöhe','Punkt','nicht der Stamm','verkürzte Oberlänge','oberhalb des x, aber unterhalb des H','Kein bloßer Overshoot'])assert.ok(study.includes(wording));
+  for(const id of ['fira-height-word','fira-height-status'])assert.ok(study.includes('id="'+id+'"'));
+  assert.ok(study.includes('glyphsapp.com/learn/font-info-settings-in-glyphs-mini#vertical-metrics'));
+  const source=fs.readFileSync(path.join(root,'scripts/typografie-anatomy.js'),'utf8');
+  assert.ok(source.includes("characters='Hliftx'"));assert.ok(source.includes('height:m.y(capital)'));
+  assert.ok(source.includes('updateAnatomy();showFiraHeights();updateOvershoot();'));
+});
 test('outline illustrations and enlarged crops preserve source contours',()=>{
   const source=fs.readFileSync(path.join(root,'scripts/typografie-anatomy.js'),'utf8');
   assert.ok(source.includes('d:font.glyphs[c].path'));assert.ok(source.includes('svg.cloneNode(true)'));

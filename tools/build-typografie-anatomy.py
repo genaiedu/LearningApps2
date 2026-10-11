@@ -28,7 +28,8 @@ def extract(entry):
     glyphset=font.getGlyphSet(location=axes or None)
     cmap=font.getBestCmap()
     glyphs={}
-    for character in CHARACTERS:
+    characters = CHARACTERS + ('lift' if entry['id'] == 'firasans' else '')
+    for character in characters:
         glyph=glyphset[cmap[ord(character)]]
         bounds=BoundsPen(glyphset);glyph.draw(bounds)
         record={'bounds':list(bounds.bounds),'advance':glyph.width}
