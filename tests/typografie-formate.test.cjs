@@ -53,7 +53,8 @@ test('preview loads automatically once and remains loaded across format changes 
 test('format comparison has named controls, inherited motion pause and an honest limit statement',()=>{
   for(const id of ['format-scene','format-view','format-rotate','format-jump','format-reset','format-size','format-scale','format-status'])assert.ok(html.includes('id="'+id+'"'));
   for(const d of F.devices)assert.ok(html.includes('data-format-device="'+d.id+'"'));
-  for(const phrase of ['die vollständige, aktuelle Seite','keine Lesbarkeitsprüfung','weder Safari noch einen Touchscreen','CSS-Pixel','Retina','400 % Browserzoom'])assert.ok(html.includes(phrase));
+  assert.ok(!html.includes('Die Vorschau lädt'));
+  for(const phrase of ['keine Lesbarkeitsprüfung','weder Safari noch einen Touchscreen','CSS-Pixel','Retina','400 % Browserzoom'])assert.ok(html.includes(phrase));
   assert.ok(ui.includes("addEventListener('typography-motion-change',()=>config())"));assert.ok(ui.includes('contentWidth:document.documentElement.scrollWidth'));
 });
 test('format chapter is the second screen chapter and all twelve chapter numbers match navigation',()=>{
