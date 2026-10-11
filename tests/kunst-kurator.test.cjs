@@ -26,8 +26,8 @@ function swapDates(state) {
   state=core.choose(state,'point','date','1500');return core.choose(state,'ren','date','1890');
 }
 function allText(explanation) { return [explanation.opening,explanation.temporal,explanation.mistake,explanation.workNote,...explanation.sections.flatMap(section=>section.paragraphs)].join(' '); }
-test('the 55 sourced profiles cover every technique and style of all 1438 works',()=>{
-  assert.equal(Object.keys(knowledge.techniques).length,15);assert.equal(Object.keys(knowledge.styles).length,40);
+test('the 81 sourced profiles cover every technique and style of all 1505 works',()=>{
+  assert.equal(Object.keys(knowledge.techniques).length,26);assert.equal(Object.keys(knowledge.styles).length,55);
   for(const group of ['techniques','styles']) for(const [name,profile] of Object.entries(knowledge[group])) {
     assert.ok(profile.definition&&profile.period&&profile.caution,name);assert.equal(profile.clues.length,3,name);
     assert.ok(profile.artists.length>=1,name);assert.ok(profile.sources.length>=1,name);

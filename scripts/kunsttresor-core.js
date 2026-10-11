@@ -13,6 +13,8 @@
     return !works.some(work => work.id === candidate.id || fields.some(field => work[field] === candidate[field]) || (work.artistIdentity && work.artistIdentity === candidate.artistIdentity));
   }
   function introSelection(pool, landmarkIds, recent = [], random = Math.random) {
+    // Cropped cinematic detail shots are reserved for two-dimensional works.
+    pool = pool.filter(isIntroImage);
     const landmarks = pool.filter(work => landmarkIds.includes(work.id) && !recent.includes(work.id));
     const fallback = pool.filter(work => landmarkIds.includes(work.id));
     const closing = shuffle(landmarks.length ? landmarks : fallback, random)[0];
@@ -25,6 +27,7 @@
   }
   function galleryTitle(work) { return work.titleDe || work.galleryTitle || work.title; }
   function heroSelection(pool, recent = [], random = Math.random) {
+    pool = pool.filter(isIntroImage);
     const fresh = pool.filter(work => !recent.includes(work.id));
     const candidates = shuffle(fresh.length >= 3 ? fresh : pool,random), selected = [];
     const sameArtist = (a,b) => (a.artistIdentity || a.artist) === (b.artistIdentity || b.artist);
@@ -34,11 +37,27 @@
     return selected;
   }
   function validWork(work) {
-    return Boolean(work && work.id && work.title && work.imageId && work.source && work.medium && work.styleOriginal && work.publicDomain === true && work.artistDeath <= 1955 && fields.every(field => typeof work[field] === 'string' && work[field].trim()));
+    if (!work) return false;
+    const named = Number.isInteger(work.artistDeath) && work.artistDeath <= 1955 && work.artistDeath !== 0;
+    const anonymousAncient = work.artist === 'Unbekannter Künstler' && work.attribution === 'unknown'
+      && work.artistDeath === null && Number.isInteger(work.dateStart) && Number.isInteger(work.dateEnd)
+      && work.dateStart >= -10000 && work.dateEnd <= 600 && work.dateStart <= work.dateEnd
+      && work.rightsBasis === 'Ancient work; museum Open Access';
+    return Boolean(work.id && work.title && work.imageId && work.source && work.medium && work.styleOriginal && work.publicDomain === true && (named || anonymousAncient) && fields.every(field => typeof work[field] === 'string' && work[field].trim()));
+  }
+  function isIntroImage(work) {
+    return work.introEligible !== false && !['sculpture','relief','object'].includes(work.artForm);
   }
   function canDownload(work) {
     if (!work?.imageDownloadAllowed || !/public domain|cc0|cc-zero/i.test(work.imageLicense || '')) return false;
-    try { const url=new URL(work.imageOriginalURL); return url.protocol==='https:' && url.hostname==='upload.wikimedia.org'; } catch { return false; }
+    try {
+      const url=new URL(work.imageOriginalURL);
+      const museum = work.imageLicense === 'CC0' && work.downloadRightsChecked &&
+        ((work.metadataProvider === 'Art Institute of Chicago' && url.hostname === 'www.artic.edu' && url.pathname.startsWith('/iiif/2/')) ||
+         (work.metadataProvider === 'Cleveland Museum of Art' && url.hostname === 'openaccess-cdn.clevelandart.org') ||
+         (work.metadataProvider === 'Metropolitan Museum of Art' && url.hostname === 'images.metmuseum.org'));
+      return url.protocol==='https:' && (url.hostname==='upload.wikimedia.org' || Boolean(museum));
+    } catch { return false; }
   }
   function room(pool, recent = [], random = Math.random) {
     const eligible = pool.filter(validWork);
@@ -163,7 +182,7 @@
     if (original.phase === 'lost') { next.phase='lost'; next.attempts=2; }
     return {state:next,updated:true,newRoom:true};
   }
-  const api = {fields, shuffle, compatible, validWork, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore, restoreUpdated};
+  const api = {fields, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

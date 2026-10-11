@@ -1,11 +1,12 @@
 # Kunsttresor: Werkpool und Vorspann
 
 Die Edition heißt weiterhin „1000 Kunstwerke · Quiz Edition“. Ihr gezielt
-erweitertes Archiv verwendet tatsächlich 1438 spielbare Datensätze; die
+erweitertes Archiv verwendet tatsächlich 1505 spielbare Datensätze; die
 Oberfläche zeigt die tatsächliche Größe an. Die Bilder werden nicht
 im Repository gespeichert; der Browser lädt sie nach Zustimmung direkt von
-Wikimedia Commons. Die vier Antwortfelder sind Künstler, Datierung,
-Stilrichtung und Technik. Zu jedem Werk bleibt die Einzelquelle erhalten.
+Wikimedia Commons und den beteiligten Museumsservern. Die vier Antwortfelder
+sind Künstler, Datierung, Stil / Tradition und Material / Technik. Zu jedem
+Werk bleibt die Einzelquelle erhalten.
 
 ## Herkunft
 
@@ -30,12 +31,15 @@ Stilrichtung und Technik. Zu jedem Werk bleibt die Einzelquelle erhalten.
 - Weitere Werke stammen aus Wikidata. `P135` dokumentiert den Stil am Werk,
   `P170` den Künstler, `P571` die Datierung und `P186` die Materialien.
   Stilrichtungen werden nicht pauschal vom Künstler abgeleitet.
-- Neue Werke haben einen einzelnen benannten Künstler mit Wikipediaartikel,
-  eine hinreichend bestimmte Datierung, eine aus den Materialangaben
-  nachvollziehbare Technik und eine passende Commons-Abbildung.
-- Die Künstler sind spätestens 1955 gestorben. Zusätzlich wird die konkrete
-  Bilddatei anhand ihrer Commons-Metadaten auf Public Domain beziehungsweise
-  CC0 geprüft. Das Todesjahr allein ist keine Lizenzprüfung.
+- Namentlich bekannte Künstler haben einen zugeordneten Wikipediaartikel
+  und sind spätestens 1955 gestorben. Antike Werke ohne überlieferten Namen
+  haben stattdessen ausdrücklich `attribution: unknown`, `artistDeath: null`,
+  dokumentierte antike Datierungsgrenzen und eine geprüfte Museumsfreigabe.
+  „Unbekannter Künstler“ bezeichnet nicht eine gemeinsame Künstlerperson.
+- Zusätzlich wird die konkrete Bilddatei anhand ihrer Commons- oder
+  Museumsmetadaten auf Public Domain beziehungsweise CC0 geprüft. Bei
+  Skulpturen gilt das ausdrücklich für die eigenständigen Fotorechte.
+  Das Todesjahr allein und die allgemeine Museumsrichtlinie genügen nicht.
 - Vollständige Materialangaben, Werkquelle und Bildlizenz stehen in der
   Auflösung. Stilzuordnungen und vereinfachte Technikbegriffe sind keine
   Behauptung, Kunstwerke hätten stets eine einzig mögliche Einordnung.
@@ -64,7 +68,7 @@ Fassung; Wikipedia-Artikelziele und gespeicherte Antworten bleiben unverändert.
 ## Kurator und Glossar
 
 `kunst-glossar.json` ergänzt eine lokale, redaktionell formulierte Wissensbasis:
-15 Techniken und 40 im Archiv verwendete Stile, Epochen und regionale Schulen.
+26 Techniken und 55 im Archiv verwendete Stile, Epochen und regionale Schulen.
 Jeder Eintrag enthält Definition, mögliche Erkennungsmerkmale, Zeitkontext,
 wichtige Vergleichskünstler, Grenzen der Zuordnung und verlinkte Museumsquellen.
 Die Texte sind keine automatische Einzelbildanalyse. Bildträger und Bindemittel
@@ -101,7 +105,11 @@ Wikimedia-Rezeption. Die Auswahl wird vor Veröffentlichung anhand ihrer
 Titel und Künstler überprüft; Wikimedia-Verknüpfungen sind eine Auswahlhilfe,
 kein objektives Maß künstlerischer Bedeutung.
 
-Der Vorspann wählt fünf abwechslungsreiche Werke und zuletzt ein Werk aus
+Skulpturen und Reliefs haben `introEligible: false`. Der Vorspann und die
+Hero-Auswahl filtern dreidimensionale Werke auch in ihren Ausweichpfaden aus.
+Antike Statuen sind ausschließlich vollständig betrachtbare Quizwerke.
+
+Der Vorspann wählt fünf abwechslungsreiche zweidimensionale Werke und zuletzt ein Werk aus
 dieser festen Hundert-Auswahl. Die ersten fünf Kapitel dauern je sieben
 Sekunden. Im elfsekündigen Finale bleibt das Bild vollständig und unverzerrt
 sichtbar (`object-fit: contain`), zunächst ohne Haupttitel. Ab Sekunde 2 des
@@ -147,9 +155,9 @@ für die Bildfläche; das normale Zoomen der Webseite wird nicht global gesperrt
 ## Wartung
 
 Die ursprünglichen 1000 Werkdatensätze bleiben vollständig und unverändert
-erhalten. `expansion` dokumentiert die 438 zusätzlichen IDs und den SHA-256
+erhalten. `expansion` dokumentiert die 505 zusätzlichen IDs und den SHA-256
 der ursprünglichen Werkdaten. Die feste Auswahl der 100 Schlussbilder bleibt
-ebenfalls unverändert. Neue Räume können alle 1438 Werke verwenden.
+ebenfalls unverändert. Neue Räume können alle 1505 Werke verwenden.
 
 Die Ergänzungen stammen aus ausdrücklich dokumentierten Werkmaterialien und
 Stilzuordnungen: 222 weitere Temperabilder, 99 Holzschnitte, 46 Aquarelle,
@@ -166,8 +174,9 @@ schwarzweiß und keine entsättigte Fotografie eines farbigen Gemäldes.
 Eine reproduzierbare Simulation vergleicht jeweils 10.000 aufeinanderfolgende
 Räume. Sie prüft, dass Giovanni di Paolos Temperabild „Die Enthauptung Johannes
 des Täufers“ deutlich seltener gezogen wird als im alten Pool. Alle neuen
-Werke müssen zudem vollständige Quizangaben, einen Künstlerartikel und eine
-individuell geprüfte Public-Domain-/CC0-Bilddatei besitzen. Zufall bedeutet
+Werke müssen vollständige Quizangaben, einen Künstlerartikel beziehungsweise
+eine explizite anonyme antike Zuschreibung und eine individuell geprüfte
+Public-Domain-/CC0-Bilddatei besitzen. Zufall bedeutet
 weiterhin nicht, dass alle Werke garantiert erscheinen, bevor eines wiederholt
 wird; die vier unterschiedlichen Antwortwerte begrenzen zulässige Räume.
 
@@ -182,6 +191,26 @@ einen eigenen, auf Deutsch oder Englisch hinterlegten Wikipediaartikel.
 Große Originaldateien über 8 MiB werden nicht automatisch beim Vergrößern
 geladen; ihre geprüfte Vorschau bleibt sichtbar. Der ausdrücklich angeforderte
 Originaldownload ist weiterhin möglich.
+
+Die kuratierte Erweiterung vom 11. Oktober 2026 in `kunst-erweiterung-2026.json`
+enthält 67 Einzelwerke: 31 Gemälde, eine Collage, 14 Fotografien,
+18 Skulpturen und drei Reliefs. Moderne Beispiele stammen unter anderem von
+Kandinsky, Mondrian, Popowa, Beckmann, Kirchner, Marc, Gris und Delaunay;
+Fotografien von Stieglitz, Atget, White, Käsebier, Demachy und Evans. Canova und Rodin stehen neben
+ägyptischen, persischen, assyrischen, sumerischen, griechischen und römischen
+Arbeiten. Keine Mumien, menschlichen Überreste, Särge oder Grabmasken.
+Aufnahme/Modell und späterer Druck/Guss bleiben in der Datierung getrennt.
+Originalmaterialien und fremdsprachige Katalogdaten bleiben erhalten.
+
+`node scripts/extend-kunst-modern.mjs /private/tmp/kunst-modern-cache` prüft
+die zuvor eingeholten öffentlichen JSON-Metadaten und erzeugt ausschließlich
+eine append-only Patchdatei außerhalb des Repositorys. Keine KI-Anfrage,
+kein Bilderdownload, keine automatischen Änderungen der Anwendungsdaten.
+Alle alten 1438 Datensätze bleiben unverändert; neue Quellen müssen
+redaktionell geprüft werden. Vor Veröffentlichung offline testen und die
+Galerie einschließlich Fotos, Skulpturen und anonymer Werke im Browser prüfen.
+Der isolierte KI-Dienst benötigt dieselben neuen öffentlichen Quelldateien;
+seine Validierung wird ohne echte Groq-Aufrufe getestet.
 
 Der ältere Builder `expand-kunstarchiv.mjs` ist gegen ein versehentliches
 Zurückschneiden eines bereits erweiterten Archivs auf 1000 Werke gesperrt.

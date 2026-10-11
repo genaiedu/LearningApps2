@@ -55,23 +55,33 @@ test('the edition keeps its 1000 title but shows the true expanded archive size'
   assert.ok(!js.includes('pool.length!==1000'));
   assert.equal(titles.titles['wd-Q18339689'],'Ein Künstlerwappen');
 });
-test('large documented metadata-only archive, public domain images and named artists', () => {
+test('documented archive, individually free images and explicit ancient anonymous attribution', () => {
   assert.ok(pool.length>1000);
   assert.equal(pool.length,archive.works.length);
   assert.equal(new Set(pool.map(work => work.id)).size,pool.length);
   for (const work of pool) {
     assert.ok(core.validWork(work),work.id);
     assert.ok(work.styleTerms.includes(work.styleOriginal),work.id);
-    assert.ok(work.artistDeath > 1300 && work.artistDeath <= 1955);
-    assert.ok(['www.artic.edu','www.wikidata.org','www.clevelandart.org'].includes(new URL(work.source).hostname));
+    if(work.attribution==='unknown') {
+      assert.equal(work.artist,'Unbekannter Künstler'); assert.equal(work.artistDeath,null);
+      assert.equal(work.rightsBasis,'Ancient work; museum Open Access');
+      assert.ok(work.dateStart>=-10000 && work.dateEnd<=600 && work.dateStart<=work.dateEnd);
+      assert.equal(wiki.artists[work.artist].unknown,true);
+    } else assert.ok(work.artistDeath > 1300 && work.artistDeath <= 1955,work.id);
+    assert.ok(['www.artic.edu','www.wikidata.org','www.clevelandart.org','www.metmuseum.org'].includes(new URL(work.source).hostname));
     if (work.metadataProvider==='Wikidata') {
       assert.equal(work.styleSource,'P135 am Werk, nicht vom Künstler abgeleitet');
       assert.ok(work.materialIds.length>=1);
       assert.match(work.wikidata,/\/Q\d+$/);
     }
     assert.equal(work.rights,'CC0 / Public Domain');
-    assert.ok(['upload.wikimedia.org','thumb.wikimedia.org'].includes(new URL(work.imageURL).hostname));
-    assert.equal(new URL(work.imageSource).hostname,'commons.wikimedia.org');
+    const imageHost=new URL(work.imageURL).hostname;
+    if(['upload.wikimedia.org','thumb.wikimedia.org'].includes(imageHost)) assert.equal(new URL(work.imageSource).hostname,'commons.wikimedia.org');
+    else {
+      assert.ok(['www.artic.edu','openaccess-cdn.clevelandart.org','images.metmuseum.org'].includes(imageHost),work.id);
+      assert.equal(work.imageSource,work.source); assert.equal(work.imageLicense,'CC0');
+      assert.equal(work.downloadRightsChecked,'2026-10-11');
+    }
     assert.match(work.imageLicense,/public domain|cc0/i);
     assert.ok(wiki.artists[work.artist]);
   }
@@ -138,9 +148,11 @@ test('replacement date collision creates a unique fair room without erasing prog
 test('image download is offered only for individually verified Public Domain / CC0 originals', () => {
   assert.equal(pool.filter(core.canDownload).length,pool.length);
   for (const work of pool.filter(core.canDownload)) {
-    assert.equal(new URL(work.imageOriginalURL).hostname,'upload.wikimedia.org');
-    assert.match(work.downloadRightsChecked,/^2026-10-09$/);
-    assert.ok(work.imageBytes > 0); assert.ok(work.imageMime.startsWith('image/'));
+    const host=new URL(work.imageOriginalURL).hostname;
+    assert.ok(['upload.wikimedia.org','www.artic.edu','openaccess-cdn.clevelandart.org','images.metmuseum.org'].includes(host),work.id);
+    assert.match(work.downloadRightsChecked,/^2026-10-(09|11)$/);
+    if(host==='upload.wikimedia.org')assert.ok(work.imageBytes > 0);
+    assert.ok(work.imageMime.startsWith('image/'));
   }
   const free=pool.find(core.canDownload);
   for (const invalid of [{...free,imageDownloadAllowed:false},{...free,imageLicense:'CC BY-SA 4.0'},{...free,imageOriginalURL:'https://example.org/image.jpg'},{...free,imageOriginalURL:'http://upload.wikimedia.org/image.jpg'},{...free,imageOriginalURL:null}]) assert.equal(core.canDownload(invalid),false);

@@ -25,7 +25,14 @@
   }
   function dateSpan(text) {
     if (typeof text !== 'string') return null;
-    const main=text.split(',')[0].trim(); // Later rework / added frame is not the creation date.
+    const main=text.split(/[,;]/)[0].trim(); // A later cast or print is not the model/negative date.
+    const ancient=main.match(/\b(\d{1,4})(?:\s*[–\-/]\s*(\d{1,4}))?\s*(v\.\s*Chr\.|n\.\s*Chr\.|BCE|CE)/i);
+    if(ancient){
+      const sign=/^(v\.|BCE)/i.test(ancient[3])?-1:1;
+      const values=[Number(ancient[1])*sign,Number(ancient[2]||ancient[1])*sign];
+      const approximate=/\b(um|ca\.?|circa|about|around)\b/i.test(main);
+      return {min:Math.min(...values),max:Math.max(...values),approximate};
+    }
     const decade=main.match(/^(\d{3})0s$/);
     if(decade) return {min:Number(decade[1]+'0'),max:Number(decade[1]+'9'),approximate:true};
     const match=main.match(/\b(1\d{3}|20\d{2})(?:\s*[–\-/]\s*(?:ca\.\s*)?(\d{1,4}))?/);
@@ -87,6 +94,37 @@
   }
   function opening(work,state,outcome,pick) {
     const artwork=quote(title(work)), who=work.artist;
+    if(work.attribution==='unknown'){
+      const response=outcome.finalCount===4 ? 'Deine letzte Zuordnung stimmt vollständig.' : outcome.soleObstacle ? 'Hier blieb die letzte Hürde des Raums.' : 'Bei deiner letzten Zuordnung blieb noch etwas offen.';
+      return response+' Unbekannter Künstler: '+pick('opening-anonymous',[
+        `Bei ${artwork} ist der Name des Künstlers nicht überliefert. Wir schauen deshalb besonders auf Form, Material und den belegten historischen Zusammenhang.`,
+        `${artwork} hat eine Geschichte, auch ohne bekannten Urheber. „Unbekannter Künstler“ ist hier die ehrliche Katalogangabe, kein Rätselname.`,
+        `Nimm ${artwork} zunächst als eigenständiges Werk ernst. Der unbekannte Künstlername lässt sich nicht erraten; Form und Werkquelle geben uns andere Anhaltspunkte.`,
+        `Wir können ${artwork} zeitlich und kulturell einordnen, ohne seinem Urheber einen erfundenen Namen zu geben. Lass uns die vorhandenen Spuren ansehen.`,
+        `Bei ${artwork} gehört die unbekannte Urheberschaft zur Überlieferung. Das nimmt dem Werk weder seine Qualität noch seine mögliche Aussage.`,
+        `Der Name hinter ${artwork} ist nicht gesichert. Die sinnvolle Frage lautet hier nicht „Wen erkenne ich?“, sondern „Welche Beobachtungen trägt der Werkbeleg?“`
+      ]);
+    }
+    if(['sculpture','relief'].includes(work.artForm)){
+      const response=outcome.finalCount===4 ? 'Deine letzte Zuordnung passt.' : 'Lass uns deine Zuordnung noch einmal am Werk prüfen.';
+      return response+' '+pick('opening-sculpture',[
+        `${artwork} von ${who} lebt von Körper, Oberfläche und Raum. Die Fotografie zeigt uns davon einen Blickwinkel, nicht die ganze plastische Form.`,
+        `Bei ${artwork} von ${who} schauen wir auf die räumliche Form und ihre Herstellung. Material, Modelljahr und ausgeführte Fassung sind unterschiedliche Fragen.`,
+        `${artwork} von ${who} ist keine gemalte Fläche. Achte auf den Zusammenhang von Volumen, Licht und Oberfläche; die Aufnahme kann ihn betonen oder verdecken.`,
+        `Bleiben wir bei ${artwork} von ${who}. Ein zweiter Blick auf die plastische Form ist hilfreicher als ein schneller Schluss aus der Farbe des Fotos.`
+      ]);
+    }
+    if(work.artForm==='photograph'){
+      const response=outcome.finalCount===4 ? 'Deine letzte Zuordnung passt.' : 'Lass uns die noch offenen Zuordnungen genauer ansehen.';
+      return response+' '+pick('opening-photograph',[
+        `${artwork} von ${who} ist eine Fotografie. Bildgestaltung und fotografisches Druckverfahren sind zwei verschiedene Spuren.`,
+        `Bei ${artwork} von ${who} lohnt es sich, Ausschnitt, Licht und Tonwerte getrennt von den Angaben zum Abzug zu betrachten.`,
+        `Nimm ${artwork} von ${who} als Ausgangspunkt. Die Aufnahme zeigt eine bewusste Bildentscheidung; das konkrete Verfahren ist im Katalog belegt.`,
+        `${artwork} von ${who} gibt uns Anlass zu einem zweiten Blick: Was erzählt die Komposition, und was verrät erst die Werkquelle über die Herstellung?`,
+        `Schauen wir bei ${artwork} von ${who} auf das Licht und die Anordnung im Bild. Ein späterer Abzug kann lange nach der ursprünglichen Aufnahme entstanden sein.`,
+        `Bei dieser Fotografie von ${who}, ${artwork}, sind Beobachtung und Quellenprüfung Partner: Nicht jeder fotografische Prozess lässt sich am Bildschirm sicher erkennen.`
+      ]);
+    }
     if(outcome.soleObstacle) return pick('opening-obstacle',[
       `Bei ${artwork} blieb die letzte Hürde dieses Raums. Lass uns das Bild von ${who} noch einmal mit etwas anderen Fragen ansehen.`,
       `Die übrigen Werke hattest du vollständig zugeordnet; hier blieb etwas offen. ${artwork} von ${who} bietet eine gute Gelegenheit, die entscheidenden Spuren genauer zu lesen.`,
@@ -154,6 +192,11 @@
     return aliases[key] || key;
   }
   function artistRelation(work,profile,field,pool,pick) {
+    if(work.attribution==='unknown')return field==='style'?'':pick('artist-anonymous',[
+      'Die unbekannten Urheber verschiedener Werke sind nicht als eine einzige Künstlerpersönlichkeit zu verstehen.',
+      'Der Personenname ist nicht überliefert. Die Bezeichnung erlaubt keine Aussage über ein gemeinsames Œuvre aller anonymen Arbeiten.',
+      'Hier vergleichen wir Werkstatttraditionen und einzelne Objekte, nicht ein erfundenes Œuvre eines „unbekannten Künstlers“.'
+    ]);
     const key=artistKey(work.artistIdentity || work.artist);
     const known=profile.artists.some(name=>artistKey(name)===key || artistKey(name)===artistKey(work.artist));
     if(known) return pick('artist-known-'+field,[
@@ -193,6 +236,11 @@
   }
   function practitioners(profile,field,pick) {
     const names=join(profile.artists);
+    if(profile.anonymousTradition)return pick('practitioners-tradition-'+field,[
+      `Historische Vergleichspunkte sind ${names}. Die Urheber bleiben häufig unbenannt.`,
+      `Für den Vergleich helfen diese Werkstattzusammenhänge: ${names}. Einzelne Künstler sind damit nicht sicher identifiziert.`,
+      `Diese Tradition lässt sich über ${names} erschließen; überlieferte Personen- und Werkstattnamen sind zu unterscheiden.`
+    ]);
     return pick('practitioners-'+field,[
       `Wichtige Vergleichsnamen sind ${names}.`,
       `Zum Wiedererkennen helfen dir Vergleichswerke von ${names}.`,

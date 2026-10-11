@@ -2,8 +2,9 @@
   'use strict';
   const $ = id => document.getElementById(id), core = window.KunstTresor, curator = window.KunstKurator;
   const progress = window.KunstProgress, transfers = window.KunstSave, history = window.KunstHistory;
-  const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', history:'kunsttresor-history-v1', images:'kunsttresor-images-v1', hero:'kunsttresor-hero-v1'};
-  const labels = {date:'Entstehungszeit', style:'Stilrichtung', artist:'Künstler', technique:'Technik'};
+  // Renew image consent: new CC0 photographs are served by the museums, too.
+  const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', history:'kunsttresor-history-v1', images:'kunsttresor-images-v2', hero:'kunsttresor-hero-v1'};
+  const labels = {date:'Entstehungszeit', style:'Stil / Tradition', artist:'Künstler', technique:'Material / Technik'};
   const store = {
     get(key) { try { return localStorage.getItem(key); } catch { return null; } },
     set(key,value) { try { localStorage.setItem(key,value); return true; } catch { return false; } },
@@ -541,7 +542,8 @@
     'Radierung mit Aquatinta':'Aquatinta', 'Kaltnadelradierung':'Kaltnadelradierung', Lithografie:'Lithografie',
     Holzschnitt:'Holzschnitt', Kupferstich:'Kupferstich', Kreidezeichnung:'Zeichnung (Kunst)',
     Tuschezeichnung:'Tuschezeichnung', Graphitzeichnung:'Zeichnung (Kunst)', Kohlezeichnung:'Zeichenkohle', Gouache:'Gouache',
-    'Fotogravüre':'Heliogravüre', 'Platindruck':'Platindruck', 'Gummidruck':'Gummidruck', 'Silbergelatineabzug':'Gelatineverfahren'
+    'Fotogravüre':'Heliogravüre', 'Platindruck':'Platindruck', 'Palladiumdruck':'Platindruck', 'Albuminabzug':'Albuminpapier', 'Gummidruck':'Gummidruck', 'Silbergelatineabzug':'Gelatineverfahren',
+    'Marmorskulptur':'Skulptur','Gipsskulptur':'Skulptur','Bronzeguss':'Bronzeguss','Steinskulptur':'Skulptur','Steinrelief':'Relief','Collage':'Collage'
   };
   const styleArticle = {Realismus:'Realismus (Kunst)',Symbolismus:'Symbolismus (Bildende Kunst)'};
   function wikiButton(text,title,language = 'de') {
@@ -556,7 +558,7 @@
       const link=node('a',null,'Originalbild direkt öffnen und speichern ↗'); link.href=work.imageOriginalURL; link.target='_blank'; link.rel='noopener noreferrer'; link.referrerPolicy='no-referrer'; status.append(link); return;
     }
     const controller = new AbortController(), timeout = setTimeout(() => controller.abort(),60000);
-    button.disabled = true; status.textContent = 'Die freigegebene Originaldatei wird von Wikimedia Commons geladen …';
+    button.disabled = true; status.textContent = 'Die freigegebene Bilddatei wird von ihrer Bildquelle geladen …';
     try {
       const response = await fetch(work.imageOriginalURL,{credentials:'omit',referrerPolicy:'no-referrer',signal:controller.signal});
       if (!response.ok) throw Error('Download');
@@ -604,14 +606,15 @@
     if(!artKnowledge) { $('art-glossary-count').textContent='Das Glossar konnte nicht geladen werden. Bitte lade die Seite erneut.'; return; }
     const search=$('art-glossary-search').value.trim().toLocaleLowerCase('de'), category=$('art-glossary-category').value;
     const entries=['techniques','styles'].filter(group=>!category || category===group).flatMap(group=>Object.entries(artKnowledge[group]).map(([name,profile])=>({name,profile,group}))).filter(entry=>(entry.name+' '+(entry.profile.kind || '')).toLocaleLowerCase('de').includes(search)).sort((a,b)=>a.name.localeCompare(b.name,'de'));
-    $('art-glossary-count').textContent=entries.length+' von 55 Begriffen';
+    const total=Object.keys(artKnowledge.techniques).length+Object.keys(artKnowledge.styles).length;
+    $('art-glossary-count').textContent=entries.length+' von '+total+' Begriffen';
     if(!entries.length) list.append(node('p',null,'Dazu gibt es hier keinen Eintrag. Versuche einen kürzeren Suchbegriff oder wechsle zu „Alle Begriffe“.'));
     entries.forEach(({name,profile,group})=>{
       const entry=node('details','art-glossary-entry'); entry.open=expand && name.toLocaleLowerCase('de')===search;
       const summary=node('summary'); summary.append(node('span',null,name),node('small',null,profile.kind || 'Material / Technik')); entry.append(summary);
       const body=node('div','art-glossary-body'); body.append(node('p',null,profile.definition));
       body.append(node('h3',null,'Mögliche Erkennungsmerkmale')); const clues=node('ul'); profile.clues.forEach(clue=>clues.append(node('li',null,clue))); body.append(clues);
-      body.append(node('p',null,'Zeitkontext: '+profile.period+'.'),node('p',null,'Wichtige Vergleichsnamen: '+profile.artists.join(', ')+'.'));
+      body.append(node('p',null,'Zeitkontext: '+profile.period+'.'),node('p',null,(profile.anonymousTradition?'Werkstätten und Vergleichszusammenhänge: ':'Wichtige Vergleichsnamen: ')+profile.artists.join(', ')+'.'));
       if(profile.origin) body.append(node('p',null,profile.origin.statement));
       body.append(node('p','glossary-caution',profile.caution));
       const references=node('ul','glossary-sources'); profile.sources.forEach(id=>{const item=node('li');item.append(referenceLink(artKnowledge.sources[id]));references.append(item);});body.append(references);
@@ -646,29 +649,31 @@
       if (core.galleryTitle(work)!==work.title) overview.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
       const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); overview.append(list);
       card.append(overview,renderCurator(work));
-      sources.append(node('p','small','Quellenangabe zur Technik: ' + work.medium + '. ' + (work.metadataProvider==='Cleveland Museum of Art' ? 'Stilzuordnung: ' + work.styleSource : 'Dokumentierter Stil: ' + work.styleOriginal) + '.'));
+      sources.append(node('p','small','Quellenangabe zu Material / Technik: ' + work.medium + '. ' + (work.styleSource?.startsWith('Redaktion') ? 'Einordnung: ' + work.styleSource : 'Dokumentierter Stil: ' + work.styleOriginal) + '.'));
+      if(work.dateOriginal && work.dateOriginal!==work.date) sources.append(node('p','small','Originale Datierungsangabe der Werkquelle: '+work.dateOriginal+'.'));
+      if(work.attribution==='unknown') sources.append(node('p','small','Der Name des Urhebers ist nicht überliefert. Dargestellte Personen wie Gudea oder Amenophis sind nicht als Künstlernamen zu verstehen.'));
       const source = node('a','small',work.metadataProvider==='Wikidata'?'Werkdatensatz & Nachweise ↗':'Originalwerk & Museumsdaten ↗'); source.href = work.source; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.referrerPolicy = 'no-referrer'; sources.append(source);
       if (work.catalogueSource) {
         const catalogue=node('a','small','Weiterführender Werknachweis ↗');
         catalogue.href=work.catalogueSource; catalogue.target='_blank'; catalogue.rel='noopener noreferrer'; catalogue.referrerPolicy='no-referrer'; sources.append(catalogue);
       }
-      const imageSource = node('a','small',' · Commons-Bildquelle & Rechte ↗'); imageSource.href = work.imageSource; imageSource.target = '_blank'; imageSource.rel = 'noopener noreferrer'; imageSource.referrerPolicy = 'no-referrer'; sources.append(imageSource);
+      const imageSource = node('a','small',' · Bildquelle & Rechte ↗'); imageSource.href = work.imageSource; imageSource.target = '_blank'; imageSource.rel = 'noopener noreferrer'; imageSource.referrerPolicy = 'no-referrer'; sources.append(imageSource);
       sources.append(node('p','small','Bild: ' + work.imageCredit + ' · ' + work.imageLicense + '.'));
       if (core.canDownload(work)) {
         const actions = node('div','image-download'), button = node('button',null,'↓ Bild herunterladen' + (work.imageBytes ? ' · ' + (work.imageBytes/1048576).toLocaleString('de-DE',{maximumFractionDigits:1}) + ' MB' : ''));
         button.type='button'; button.setAttribute('aria-label','Originalbild von Werk ' + 'ABCD'[index] + ' herunterladen');
         const status = node('p','small'); status.setAttribute('role','status');
         button.onclick = () => downloadImage(work,button,status);
-        actions.append(button,node('p','small','Download erlaubt: Commons weist diese konkrete Bilddatei als ' + work.imageLicense + ' aus. Originalauflösung; Datei kann groß sein.'),status); sources.append(actions);
+        actions.append(button,node('p','small','Download erlaubt: Die Bildquelle weist diese konkrete Abbildung als ' + work.imageLicense + ' aus. Freigegebene Hochauflösung; Datei kann groß sein.'),status); sources.append(actions);
       }
       const links = node('div','wiki-links'); links.append(node('p',null,'Weiterlesen in Wikipedia · Artikel im Fenster'));
       const artistArticle = wikiCatalogue.artists[work.artist];
-      if (artistArticle) links.append(wikiButton('Künstler: ' + work.artist,artistArticle.title,artistArticle.language));
+      if (artistArticle && !artistArticle.unknown) links.append(wikiButton('Künstler: ' + work.artist,artistArticle.title,artistArticle.language));
       const movementArticle = wikiCatalogue.styles?.[work.style];
       links.append(wikiButton(work.style,movementArticle?.title || styleArticle[work.style] || work.style,movementArticle?.language || 'de'),wikiButton(work.technique,techniqueArticle[work.technique] || work.technique));
       const workArticle = wikiCatalogue.works[work.id];
       if (workArticle) links.append(wikiButton('Wikipedia zum Werk: ' + core.galleryTitle(work),workArticle.title,workArticle.language));
-      const year = work.date.match(/\b(1[3-9]\d{2})\b/)?.[1];
+      const year = !/v\.\s*Chr\.|BCE/i.test(work.date) && work.date.match(/\b(1[3-9]\d{2})\b/)?.[1];
       if (year) links.append(wikiButton('Zeitkontext: ' + year,year));
       links.append(node('p','small','Artikel nach Möglichkeit auf Deutsch; sonst Englisch. Zeitkontext: Jahresartikel, kein Beleg für die Datierung des Werks.'));
       sources.append(links); card.append(sources); $('solutions').append(card);
@@ -813,8 +818,8 @@
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
-  const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261011-kurator',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
-  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261009-vielfalt',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest])
+  const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261011-kunstformen',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
+  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261011-kunstformen',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest])
     .then(([data,media,wiki,landmarks,titles,knowledge]) => {
       wikiCatalogue = wiki;
       archiveReplacements = data.replacements || [];
@@ -839,6 +844,7 @@
       $('pool-count').textContent = pool.length;
       $('intro-count').textContent = pool.length;
       $('archive-count').textContent = pool.length.toLocaleString('de-DE');
+      if(artKnowledge) $('open-art-glossary').textContent='Glossar · '+(Object.keys(artKnowledge.techniques).length+Object.keys(artKnowledge.styles).length)+' Begriffe';
       $('intro-replay').disabled=false;
       $('start-game').disabled = $('start-here').disabled = false;
       $('start-game').textContent = state ? 'Spiel fortsetzen →' : 'Galerie betreten →';

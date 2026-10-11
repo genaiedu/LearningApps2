@@ -1,7 +1,8 @@
 (function(root) {
   'use strict';
   const fields=['date','style','artist','technique'], MAX_ROOMS=10000;
-  const roomId=/^[a-f0-9]{32}$/, workId=/^[a-zA-Z0-9_-]{1,128}$/;
+  // Museum accession numbers (e.g. cma-1943.279) legitimately contain dots.
+  const roomId=/^[a-f0-9]{32}$/, workId=/^[a-zA-Z0-9_.-]{1,128}$/;
   const time=value=>Number.isSafeInteger(value)&&value>=0&&value<=Date.now()+300000;
   const mask=value=>Number.isInteger(value)&&value>=0&&value<=15;
   const vector=value=>Array.isArray(value)&&value.length===4&&value.every(mask);

@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-09",
+  "checked": "2026-10-11",
   "source": "https://www.wikidata.org/",
   "artists": {
     "Jacques Louis David": {
@@ -1401,6 +1401,75 @@
     "John Marin": {
       "title": "John Marin",
       "language": "de"
+    },
+    "Alexej von Jawlensky": {
+      "title": "Alexej von Jawlensky",
+      "language": "de"
+    },
+    "Georges Valmier": {
+      "title": "Georges Valmier",
+      "language": "de"
+    },
+    "Tadeusz Makowski": {
+      "title": "Tadeusz Makowski",
+      "language": "de"
+    },
+    "Frits Van den Berghe": {
+      "title": "Frits Van den Berghe",
+      "language": "de"
+    },
+    "Ljubow Sergejewna Popowa": {
+      "title": "Ljubow Sergejewna Popowa",
+      "language": "de"
+    },
+    "Chaim Soutine": {
+      "title": "Chaim Soutine",
+      "language": "de"
+    },
+    "Konrad Krzyżanowski": {
+      "title": "Konrad Krzyżanowski",
+      "language": "de"
+    },
+    "Ismael Nery": {
+      "title": "Ismael Nery",
+      "language": "de"
+    },
+    "Alfred Stieglitz": {
+      "title": "Alfred Stieglitz",
+      "language": "de"
+    },
+    "Eugène Atget": {
+      "title": "Eugène Atget",
+      "language": "de"
+    },
+    "Antonio Canova": {
+      "title": "Antonio Canova",
+      "language": "de"
+    },
+    "Gertrude Käsebier": {
+      "title": "Gertrude Käsebier",
+      "language": "de"
+    },
+    "Robert Demachy": {
+      "title": "Robert Demachy",
+      "language": "de"
+    },
+    "Clarence H. White": {
+      "title": "Clarence H. White",
+      "language": "en"
+    },
+    "Frederick H. Evans": {
+      "title": "Frederick H. Evans",
+      "language": "de"
+    },
+    "Auguste Rodin": {
+      "title": "Auguste Rodin",
+      "language": "de"
+    },
+    "Unbekannter Künstler": {
+      "title": "Unbekannter Künstler",
+      "language": "de",
+      "unknown": true
     }
   },
   "works": {
@@ -3875,6 +3944,14 @@
     "wd-Q3904392": {
       "title": "Pietà (Bellini, Bergamo)",
       "language": "en"
+    },
+    "wd-Q16937070": {
+      "title": "View of Collioure",
+      "language": "en"
+    },
+    "wd-Q2267583": {
+      "title": "Selbstbildnis im Smoking",
+      "language": "de"
     }
   },
   "styles": {
@@ -4016,6 +4093,66 @@
     },
     "Venezianische Schule": {
       "title": "Venezianische Malerei",
+      "language": "de"
+    },
+    "Neue Sachlichkeit": {
+      "title": "Neue Sachlichkeit",
+      "language": "de"
+    },
+    "Konstruktivismus": {
+      "title": "Konstruktivismus",
+      "language": "de"
+    },
+    "Neoplastizismus": {
+      "title": "Neoplastizismus",
+      "language": "de"
+    },
+    "Piktorialismus": {
+      "title": "Piktorialismus",
+      "language": "de"
+    },
+    "Dokumentarfotografie": {
+      "title": "Dokumentarfotografie",
+      "language": "de"
+    },
+    "Moderne Fotografie": {
+      "title": "Fotografie",
+      "language": "de"
+    },
+    "Moderne Skulptur": {
+      "title": "Skulptur",
+      "language": "de"
+    },
+    "Altägyptische Kunst": {
+      "title": "Altägyptische Kunst",
+      "language": "de"
+    },
+    "Amarna-Kunst": {
+      "title": "Amarna",
+      "language": "de"
+    },
+    "Achämenidische Kunst": {
+      "title": "Achämenidenreich",
+      "language": "de"
+    },
+    "Neuassyrische Kunst": {
+      "title": "Mesopotamische Kunst",
+      "language": "de"
+    },
+    "Sumerische Kunst": {
+      "title": "Mesopotamische Kunst",
+      "language": "de"
+    },
+    "Griechische Archaik": {
+      "title": "Archaik",
+      "language": "de"
+    },
+    "Griechische geometrische Kunst": {
+      "title": "Geometrischer Stil",
+      "language": "de"
+    },
+    "Römische Kunst": {
+      "title": "Römische Kunst",
       "language": "de"
     }
   }

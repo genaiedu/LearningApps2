@@ -78,6 +78,14 @@ dieser Werte gehört zur Spielstandsdatei.
 Die Einwilligungsversion wird für die Bildhistorie erneuert, weil erstmals auch
 frühere Fehlzuordnungen der aktuellen Werke zusammengefasst übertragen werden.
 
+Neue Werkformen werden ausdrücklich mitgegeben: Fotografie, Skulptur oder
+Relief sind keine Gemälde. Bei antiken Arbeiten bedeutet „Unbekannter Künstler“
+keinen gemeinsamen Urheber; die kulturelle Tradition ersetzt keine gesicherte
+Namenszuschreibung. Vollständige Material- und Katalogdatierungen bleiben im
+verifizierten Kontext. Der Stand vom 11. Oktober 2026 umfasst 1505 Werke.
+Erweiterungstests verwenden ausschließlich simulierte Providerantworten,
+keine echten Groq-Anfragen und keinen API-Schlüssel.
+
 Der Build übernimmt die vorhandenen lokalen geprüften Quelldateien. Wenn
 die Bereitstellung nur dieses Verzeichnis enthält, verwendet er zunächst die
 im Dateipaket enthaltenen Quellen, andernfalls lädt er dieselben Quellen aus
