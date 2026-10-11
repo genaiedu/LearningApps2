@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="styles/wikipedia-math.css">
   <link rel="stylesheet" href="styles/typografie-palettes.css?v=20261010-akzentfarben">
   <link rel="stylesheet" href="styles/typografie-ansicht.css?v=20261011-prosa">
+  <link rel="stylesheet" href="styles/lesepfad.css?v=20261011-leserhythmus">
   <script defer src="../LearningApps/fonts/lucide.min.js"></script>
   <script src="scripts/typografie-math.js"></script>
   <script defer src="../LearningApps/fonts/tex-mml-chtml.js"></script>
@@ -51,8 +52,9 @@
   <script defer src="scripts/typografie-formate.js?v=20261010-randzeichen"></script>
   <script defer src="scripts/wikipedia-math.js"></script>
   <script defer src="scripts/schroedinger-wikipedia.js"></script>
+  <script defer src="scripts/lesepfad.js?v=20261011-leserhythmus"></script>
 </head>
-<body class="prose-typography">
+<body class="prose-typography" data-reading-app="typografie">
 <a class="skip" href="#teil-zeichen">Zum Inhalt</a>
 <div class="reading-progress" aria-hidden="true"><i id="reading-progress"></i></div>
 <header class="masthead"><a class="brand" href="#start"><span aria-hidden="true">T<span class="brand-dot">.</span></span> TYPOGRAFIE<span>ATELIER</span></a><span class="masthead-note">Schrift sehen. Satz verstehen.</span><div class="appearance-tools" role="group" aria-label="Darstellung der Seite"><button id="theme-toggle" class="quiet" type="button" aria-haspopup="dialog" aria-controls="appearance-dialog" aria-expanded="false" title="Farbschema und Randzeichen wählen"><i data-lucide="palette" aria-hidden="true"></i><span>Darstellung</span></button><button id="page-glyph-toggle" class="quiet" type="button" aria-pressed="true" title="Dekorative Randzeichen ein- oder ausblenden"><i data-lucide="type" aria-hidden="true"></i><span>Randzeichen</span></button><button id="motion-toggle" class="quiet" type="button" aria-pressed="false" title="Zusätzliche Bewegung pausieren oder fortsetzen"><i data-lucide="pause" aria-hidden="true"></i><span>Animation pausieren</span></button></div></header>

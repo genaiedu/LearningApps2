@@ -57,7 +57,7 @@ test('Fira Sans is the initial reading font with explicit prose shaping and prot
   assert.equal(A.fontPair().sans.name,'Fira Sans');
   assert.equal(A.fontPair().serif.name,'EB Garamond / Cardo');
   assert.ok(read('styles/typografie-atelier.css').includes('--sans:"Fira Sans",Arial,sans-serif'));
-  assert.ok(html.includes('<body class="prose-typography">'));
+  assert.match(html, /<body\b[^>]*class="prose-typography"[^>]*>/);
   assert.ok(html.includes('<option value="firasans">Fira Sans · Standard</option>'));
   assert.ok(css.includes('font-variant-ligatures:common-ligatures'));
   assert.ok(css.includes('font-variant-numeric:oldstyle-nums proportional-nums'));
