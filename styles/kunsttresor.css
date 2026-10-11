@@ -100,3 +100,44 @@ dialog{color-scheme:dark;color:var(--paper);background:var(--panel);border:1px s
 @media(max-width:600px){.solution-card{padding:18px;gap:24px}.solution-dialog{padding:18px}.solution-tools{width:100%}.solution-tools button{flex:1}.curator-reading p{font-size:16px}.curator-reading .curator-opening{font-size:17px}.curator-section h4{font-size:16px}.glossary-controls{grid-template-columns:minmax(0,1fr);gap:13px}.art-glossary-dialog{padding:20px}.art-glossary-entry summary{gap:10px}.art-glossary-entry summary small{font-size:11px}.art-glossary-body{padding-left:5px}.solution-overview .solution-image img{height:240px}}
 .launch-dialog h2{font-size:clamp(38px,6.5vw,76px);line-height:1.08;margin:0 0 25px}.launch-dialog h2 em{display:inline-block;margin-top:9px}.launch-lede{max-width:520px;margin:0 auto 28px!important;color:var(--muted);font-size:18px}.launch-dialog .primary{padding:16px 27px;font-size:17px}.launch-dialog .launch-privacy{margin:22px auto 0;max-width:570px;color:var(--muted);font-size:12px;line-height:1.65}.launch-dialog .launch-hint{margin:22px auto 9px;max-width:520px;color:var(--muted);font-size:12px;line-height:1.6}.launch-dialog .quiet{font-size:13px;color:var(--gold)}
 @media(max-width:700px),(max-height:650px){.launch-dialog[open]{padding:24px}.launch-dialog .eyebrow{font-size:10px;margin-bottom:17px}.launch-symbol{width:48px;height:48px;font-size:29px;margin-bottom:20px}.launch-dialog h2{font-size:clamp(32px,8vw,54px);margin-bottom:18px}.launch-lede{font-size:15px;margin-bottom:20px!important}.launch-dialog .primary{font-size:14px;padding:14px 19px}.launch-dialog .launch-privacy,.launch-dialog .launch-hint{font-size:11px;margin-top:17px}}
+
+/* Persistent achievements and portable game files share the gallery's visual language. */
+.game-tools{flex-wrap:wrap;justify-content:flex-end;max-width:470px}
+#open-badges{display:flex;align-items:center;gap:10px}
+#badge-count,.badge-value{font-variant-numeric:lining-nums tabular-nums}
+#badge-count{color:var(--gold);font-size:12px;white-space:nowrap}
+.progress-notice{padding:14px 18px;border:1px solid var(--line);border-left:3px solid var(--gold);color:var(--paper);font-size:15px;margin-bottom:24px}
+.badges-dialog{width:min(1000px,calc(100% - 32px))}
+.badges-dialog>p{max-width:70ch;line-height:1.65}
+.badge-summary{font-variant-numeric:lining-nums tabular-nums;color:var(--gold)!important;border-block:1px solid var(--line);padding-block:14px;margin:24px 0!important}
+.badge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-block:24px}
+.badge-tier-heading{grid-column:1/-1;font:600 14px/1.4 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--gold);padding-top:14px;margin:4px 0 0}
+.badge-tier-heading:not(:first-child){border-top:1px solid var(--line);margin-top:16px;padding-top:24px}
+.badge-card{display:flex;align-items:flex-start;gap:18px;padding:22px;border:1px solid var(--line);border-radius:8px;background:var(--deep);min-width:0}
+.badge-card.is-earned{border-color:var(--gold);background:#ddbc7b0a}
+.badge-seal{width:58px;height:68px;flex:none;display:grid;place-items:center;clip-path:polygon(50% 0,100% 22%,100% 77%,50% 100%,0 77%,0 22%);background:#40524a;color:var(--paper)}
+.is-earned .badge-seal{background:var(--gold);color:var(--deep)}
+.badge-seal svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.badge-copy{min-width:0;flex:1}
+.badge-copy h3{font:600 21px/1.25 var(--sans);margin:7px 0 10px}
+.badge-copy p{font:15px/1.6 var(--sans);margin:0 0 13px;color:var(--muted)}
+.badge-copy .badge-state{font:12px/1.4 var(--sans);margin:0;color:var(--muted)}
+.is-earned .badge-copy .badge-state{color:var(--gold)}
+.badge-copy progress{display:block;width:100%;height:5px;border:0;border-radius:3px;background:var(--line);accent-color:var(--gold);margin-top:17px;overflow:hidden}
+.badge-copy progress::-webkit-progress-bar{background:var(--line)}
+.badge-copy progress::-webkit-progress-value{background:var(--gold)}
+.badge-copy progress::-moz-progress-bar{background:var(--gold)}
+.badge-value{display:block;font:12px/1.5 var(--mono);color:var(--muted);margin-top:7px}
+.result-dialog .result-badges{color:var(--gold);border-block:1px solid var(--line);padding-block:16px;line-height:1.65}
+.save-dialog{width:min(700px,calc(100% - 32px))}
+.save-options{display:flex;flex-wrap:wrap;gap:12px;margin:25px 0 20px}
+.save-options button{flex:1;min-width:200px}
+#save-status{color:var(--gold);line-height:1.65}
+.import-preview{border:1px solid var(--gold);border-radius:6px;padding:22px;margin:24px 0}
+.import-preview h3{font-size:21px}
+.import-preview p{font-size:15px;line-height:1.65}
+.save-protection{border-top:1px solid var(--line);padding-top:20px;margin-top:28px}
+.save-protection summary{cursor:pointer;color:var(--gold);padding-block:8px}
+.save-protection p{font-size:14px;line-height:1.7}
+@media(max-width:800px){.game-top{flex-wrap:wrap}.game-tools{max-width:none;justify-content:flex-start}.badge-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:700px){.game-tools{flex-direction:row;width:100%;gap:8px}.game-tools button{min-height:44px;font-size:12px;padding:10px 12px}.badges-dialog,.save-dialog{padding:22px}.badges-dialog>.dialog-head,.save-dialog>.dialog-head{flex-wrap:wrap;gap:12px}.badge-card{padding:18px;gap:14px}.badge-seal{width:44px;height:54px}.badge-copy h3{font-size:19px}.badge-copy p{font-size:15px}.badge-summary{font-size:14px}.save-options{flex-direction:column}.save-options button{min-width:0}.import-preview{padding:16px}.progress-notice{font-size:14px}}

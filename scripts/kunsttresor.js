@@ -1,15 +1,19 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id), core = window.KunstTresor, curator = window.KunstKurator;
-  const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', images:'kunsttresor-images-v1', hero:'kunsttresor-hero-v1'};
+  const progress = window.KunstProgress, transfers = window.KunstSave;
+  const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', images:'kunsttresor-images-v1', hero:'kunsttresor-hero-v1'};
   const labels = {date:'Entstehungszeit', style:'Stilrichtung', artist:'Künstler', technique:'Technik'};
   const store = {
     get(key) { try { return localStorage.getItem(key); } catch { return null; } },
-    set(key,value) { try { localStorage.setItem(key,value); } catch { /* Private browsers may deny storage. */ } },
+    set(key,value) { try { localStorage.setItem(key,value); return true; } catch { return false; } },
     remove(key) { try { localStorage.removeItem(key); } catch { /* The round still works in memory. */ } }
   };
-  let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = Math.max(0, Number(store.get(keys.best)) || 0);
-  let artKnowledge = null;
+  let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = progress.integer(Number(store.get(keys.best))) ? Number(store.get(keys.best)) : 0;
+  let artKnowledge = null, archiveReplacements = [], pendingImport = null, transferBusy = false, fileEpoch = 0;
+  let playerProgress = progress.fresh(best);
+  try { playerProgress = progress.restore(JSON.parse(store.get(keys.progress))) || playerProgress; } catch { /* Older browsers have no collection yet. */ }
+  playerProgress.record = Math.max(playerProgress.record,best);
   let imagesAllowed = store.get(keys.images) === 'yes', pendingStart = false, imageEpoch = 0;
   let ready = new Set(), failed = new Set(), zoomEpoch = 0, zoomLoad = null;
   const imageTimers = new Set();
@@ -33,8 +37,108 @@
     return element;
   }
   function save() {
-    if (state) store.set(keys.game, JSON.stringify(state));
-    if (state && state.escaped > best) { best = state.escaped; store.set(keys.best, String(best)); }
+    if (state) {
+      if (!progress.tokenPattern.test(state.roomToken)) state.roomToken = progress.token();
+      if (!progress.tokenPattern.test(state.runToken)) state.runToken = progress.token();
+      if (state.parentRoomToken === undefined) state.parentRoomToken = null;
+      if (store.set(keys.game, JSON.stringify(state)) === false) storageWarning();
+    }
+    if (state && state.escaped > best) { best = state.escaped; if (store.set(keys.best, String(best)) === false) storageWarning(); }
+    playerProgress.record = Math.max(playerProgress.record,best);
+    saveProgress();
+  }
+  function storageWarning() {
+    $('progress-notice').hidden = false;
+    $('progress-notice').textContent = 'Der Browser kann deinen Fortschritt gerade nicht dauerhaft speichern. Sichere ihn bitte unter „Spielstand“ als Datei.';
+  }
+  function saveProgress() { if (store.set(keys.progress,JSON.stringify(playerProgress)) === false) storageWarning(); }
+  function refreshBadges() {
+    const collection = progress.collection(playerProgress), stats = progress.statistics(playerProgress);
+    $('badge-count').textContent = collection.filter(badge=>badge.earned).length + ' / ' + collection.length;
+    $('badge-summary').textContent = stats.wins + (stats.wins === 1 ? ' gelöster Raum' : ' gelöste Räume') + ' · ' + stats.first + ' im ersten Versuch · ' + stats.styles + ' Stilrichtungen · ' + stats.techniques + ' Techniken';
+    $('badge-grid').replaceChildren();
+    const paths = {door:'M8 20V4h8v16M4 20h16M12 12h.01', eye:'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0', return:'M7 7H3V3M3 7a9 9 0 1 1-1 9M8 12l3 3 5-6', route:'M5 3v14a4 4 0 0 0 8 0V7a4 4 0 0 1 8 0v14', key:'M14 4a6 6 0 1 1-4 10l-7 7H1v-3l7-7a6 6 0 0 1 6-7M16 8h.01', gallery:'M3 3h18v18H3zM7 7h10v10H7z', search:'M16 10a6 6 0 1 1-12 0 6 6 0 0 1 12 0M15 15l6 6M7 10l2 2 3-4'};
+    const levelTitles = ['Einsteigen','Dranbleiben','Vertiefen','Meisterklasse'];
+    let currentLevel = -1;
+    for (const badge of collection) {
+      if (badge.level !== currentLevel) { currentLevel = badge.level; $('badge-grid').append(node('h3','badge-tier-heading',levelTitles[badge.level])); }
+      const card = node('article','badge-card' + (badge.earned ? ' is-earned' : ''));
+      const seal = node('div','badge-seal'); seal.setAttribute('aria-hidden','true');
+      const svg = document.createElementNS('http://www.w3.org/2000/svg','svg'), path = document.createElementNS(svg.namespaceURI,'path');
+      svg.setAttribute('viewBox','0 0 24 24'); path.setAttribute('d',paths[badge.symbol]); svg.append(path); seal.append(svg);
+      const copy = node('div','badge-copy'); copy.append(node('p','badge-state',badge.earned ? '✓ Erworben' : 'Noch zu entdecken'),node('h3','',badge.title),node('p','',badge.description));
+      const meter = node('progress'); meter.max = badge.target; meter.value = Math.min(badge.value,badge.target); meter.setAttribute('aria-label',badge.title + ': ' + meter.value + ' von ' + badge.target);
+      copy.append(meter,node('span','badge-value',(badge.metric === 'perfectStreak' ? 'Beste Serie: ' : '') + meter.value + ' / ' + badge.target)); card.append(seal,copy); $('badge-grid').append(card);
+    }
+  }
+  function awardProgress() {
+    if (state.phase !== 'unlocked') return [];
+    try {
+      const result = progress.recordWin(playerProgress,state,pool);
+      playerProgress = result.profile; saveProgress(); refreshBadges();
+      return result.earned;
+    } catch (error) { $('progress-notice').textContent = error.message; $('progress-notice').hidden = false; return []; }
+  }
+  function setTransferBusy(busy) {
+    transferBusy = busy;
+    for (const id of ['export-save','choose-save','confirm-import']) $(id).disabled = busy;
+    $('save-dialog').setAttribute('aria-busy',String(busy));
+  }
+  async function exportSave() {
+    if (transferBusy || !pool.length) return;
+    setTransferBusy(true); $('save-status').textContent = 'Deine Datei wird vorbereitet …';
+    try {
+      save();
+      const payload = {app:transfers.APP,version:transfers.VERSION,savedAt:Date.now(),state,best,progress:playerProgress};
+      transfers.validate(payload,pool,archiveReplacements,core,progress);
+      const text = await transfers.encode(payload), blob = new Blob([text],{type:'application/json'}), url = URL.createObjectURL(blob);
+      const link = node('a'); link.href = url; link.download = 'kunsttresor-' + new Date().toISOString().replace(/[:.]/g,'-') + '.json';
+      document.body.append(link); link.click(); link.remove(); setTimeout(()=>URL.revokeObjectURL(url),60000);
+      $('save-status').textContent = 'Die JSON-Datei ist vorbereitet. Bewahre sie auf, um diesen Stand später oder auf einem anderen Gerät zu laden.';
+    } catch (error) { $('save-status').textContent = error.message; }
+    finally { setTransferBusy(false); }
+  }
+  async function readSaveFile() {
+    const file = $('save-file').files?.[0]; $('save-file').value = '';
+    if (!file || transferBusy) return;
+    const epoch = ++fileEpoch; pendingImport = null; $('import-preview').hidden = true;
+    setTransferBusy(true); $('save-status').textContent = 'Die Datei wird geprüft. Dein bisheriger Stand bleibt unverändert.';
+    try {
+      if (file.size > transfers.MAX_FILE_BYTES) throw Error('Die Datei ist zu groß. Erlaubt sind höchstens 3 MB.');
+      const decoded = await transfers.decode(await file.text()), candidate = transfers.validate(decoded,pool,archiveReplacements,core,progress);
+      progress.merge(playerProgress,candidate.progress); // Check conflicts before offering replacement.
+      if (epoch !== fileEpoch) return;
+      pendingImport = candidate;
+      const phase = !candidate.state ? 'Kein laufender Raum' : candidate.state.phase === 'playing' ? 'Laufender Raum · ' + candidate.state.attempts + ' von 2 Versuchen verbraucht' : candidate.state.phase === 'unlocked' ? 'Gelöster Raum' : 'Beendete Runde';
+      const earned = progress.collection(candidate.progress).filter(badge=>badge.earned).length;
+      $('import-description').textContent = new Date(candidate.savedAt).toLocaleString('de-DE') + ' · ' + phase + ' · ' + (candidate.state?.escaped || 0) + ' geöffnete Räume · Rekord ' + candidate.best + ' · ' + earned + ' Abzeichen.' + (candidate.updated ? ' Der Raum wird an das aktualisierte Werkarchiv angepasst.' : '');
+      $('save-status').textContent = 'Datei und Inhalt sind geprüft. Übernehmen wird erst mit deiner Bestätigung wirksam.';
+      $('import-preview').hidden = false;
+    } catch (error) { if (epoch === fileEpoch) $('save-status').textContent = error.message; }
+    finally { setTransferBusy(false); }
+  }
+  function confirmImport() {
+    if (!pendingImport || transferBusy) return;
+    try {
+      const candidate = pendingImport, merged = progress.merge(playerProgress,candidate.progress), nextBest = Math.max(best,candidate.best);
+      const entries = [[keys.game,candidate.state ? JSON.stringify(candidate.state) : null],[keys.best,String(nextBest)],[keys.progress,JSON.stringify(merged)]];
+      const old = entries.map(([key])=>[key,store.get(key)]);
+      try {
+        for (const [key,value] of entries) {
+          if (value === null) { localStorage.removeItem(key); } else if (!store.set(key,value)) throw Error('Der Browser kann die Datei nicht dauerhaft übernehmen. Bitte erlaube lokalen Browserspeicher.');
+        }
+      } catch (error) {
+        for (const [key,value] of old) { if (value === null) store.remove(key); else store.set(key,value); }
+        throw error;
+      }
+      finishIntro(); close('result-dialog');
+      state = candidate.state; best = nextBest; playerProgress = merged; pendingImport = null;
+      $('import-preview').hidden = true; $('archive-update').hidden = true;
+      refreshBadges(); render();
+      $('progress-notice').hidden = false;
+      $('progress-notice').textContent = 'Spielstand übernommen. Deine gesammelten Abzeichen und dein höherer Rekord bleiben erhalten.';
+      close('save-dialog'); toGame();
+    } catch (error) { $('save-status').textContent = error.message; }
   }
   function open(id) { if (!$(id).open) $(id).showModal(); }
   function close(id) { if ($(id).open) $(id).close(); }
@@ -175,12 +279,20 @@
     $('archive-update').hidden = true;
     const previous = state;
     state = core.newState(pool, previous);
+    delete state.runToken; delete state.parentRoomToken;
     state.escaped = 0;
     save(); if (imagesAllowed) { render(); toGame(); } else askForImages(true);
   }
   function update() {
     $('best').textContent = number(best);
-    if (!state) return;
+    if (!state) {
+      $('room-kicker').textContent = 'Die Galerie wartet'; $('game-title').textContent = 'Der erste Schlüssel.';
+      $('escaped').textContent = '00'; $('filled-label').textContent = '0 / 16 zugeordnet'; $('filled-bar').style.width = '0%';
+      $('attempts').setAttribute('aria-label','Zwei Versuche verfügbar');
+      [...$('attempts').children].forEach(dot=>dot.classList.remove('used'));
+      $('review-summary').hidden = true; $('start-game').textContent = 'Galerie betreten →';
+      return;
+    }
     const done = core.filled(state), playing = state.phase === 'playing';
     $('room-kicker').textContent = 'Raum ' + number(state.phase === 'unlocked' ? state.escaped : state.escaped + 1) + ' · Vier Spuren pro Werk';
     $('game-title').textContent = state.phase === 'unlocked' ? 'Die Tür ist offen.' : state.phase === 'lost' ? 'Hier endet dein Rundgang.' : 'Lies die Bilder.';
@@ -303,7 +415,8 @@
     if (ready.size !== 4 || failed.size || !imagesAllowed) return;
     const checked = core.inspect(state,pool);
     if (!checked.checked) return;
-    state = checked.state; save(); update();
+    state = checked.state;
+    const earned = awardProgress(); save(); update();
     if (state.phase === 'playing') {
       $('lock-visual').classList.remove('shake'); void $('lock-visual').offsetWidth; $('lock-visual').classList.add('shake');
       $('feedback').textContent = checked.correct + ' von 16 Zuordnungen passen. Das Schloss bleibt zu. Du hast noch genau einen Prüfversuch.';
@@ -315,6 +428,8 @@
       $('result-title').textContent = state.phase === 'unlocked' ? 'Eine Tür weiter.' : 'Bis hierher. Und beim nächsten Mal?';
       $('result-text').textContent = state.phase === 'unlocked' ? 'Vier Werke, 16 richtige Spuren. Geh noch einmal mit dem Kurator zu den Bildern: Welche Beobachtungen stützen deine Lösung? Oder wagst du den nächsten Raum?' : checked.correct + ' von 16 Zuordnungen waren im letzten Versuch richtig. Der Kurator begleitet dich noch einmal zu den Bildern – mit Hinweisen, die dir beim nächsten Rundgang helfen können.';
       $('result-number').textContent = number(state.escaped);
+      $('result-badges').hidden = !earned.length;
+      $('result-badges').textContent = earned.length ? 'Neu in deiner Sammlung: ' + earned.map(badge=>badge.title).join(' · ') : '';
       $('result-action').textContent = state.phase === 'unlocked' ? 'Nächster Raum →' : 'Neue Runde beginnen ↻';
       $('result-solution').textContent = 'Mit dem Kurator noch einmal hinsehen';
       open('result-dialog');
@@ -528,6 +643,14 @@
   $('intro-dialog').addEventListener('cancel',() => finishIntro({enterGame:true}));
   document.addEventListener('visibilitychange',() => { if (document.hidden && $('intro-dialog').open) finishIntro(); });
   $('check').onclick = inspect; $('next-room').onclick = nextRoom;
+  $('open-badges').onclick = () => { refreshBadges(); open('badges-dialog'); };
+  $('open-save').onclick = () => { if (!transferBusy) { pendingImport=null; $('import-preview').hidden=true; $('save-status').textContent=''; } open('save-dialog'); };
+  $('export-save').onclick = exportSave;
+  $('choose-save').onclick = () => { if (!transferBusy) $('save-file').click(); };
+  $('save-file').onchange = readSaveFile;
+  $('confirm-import').onclick = confirmImport;
+  $('cancel-import').onclick = () => { pendingImport=null; $('import-preview').hidden=true; $('save-status').textContent='Nicht übernommen. Dein bisheriger Spielstand bleibt unverändert.'; };
+  $('save-dialog').addEventListener('close',()=>{ fileEpoch++; pendingImport=null; $('import-preview').hidden=true; });
   $('show-solution').onclick = $('result-solution').onclick = solutions;
   $('open-art-glossary').onclick=()=>showArtGlossary();
   $('art-glossary-search').oninput=()=>renderArtGlossary();
@@ -550,6 +673,7 @@
   Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261009-vielfalt',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest])
     .then(([data,media,wiki,landmarks,titles,knowledge]) => {
       wikiCatalogue = wiki;
+      archiveReplacements = data.replacements || [];
       artKnowledge=knowledge;
       const images = new Map(media.images.map(image => [image.id,image]));
       const translated=new Set(titles.ownTranslations);
@@ -575,6 +699,9 @@
       $('start-game').disabled = $('start-here').disabled = false;
       $('start-game').textContent = state ? 'Spiel fortsetzen →' : 'Galerie betreten →';
       $('start-here').textContent = state ? 'Spiel fortsetzen →' : 'Galerie betreten →';
+      if (state) save(); else saveProgress();
+      $('open-save').disabled = false;
+      refreshBadges();
       $('best').textContent = number(best); heroImages();
       if (state && imagesAllowed) render();
       prepareLaunch();

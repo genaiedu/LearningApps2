@@ -463,7 +463,8 @@ test('personal highscore persists through a loss and automatic new round', () =>
   const vm=require('node:vm'), js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
   const values=new Map([['best','5']]);
   const context={state:core.newState(pool,null,seeded(50)),pool,best:5,core,imagesAllowed:true,
-    keys:{game:'game',best:'best'},store:{set:(key,value)=>values.set(key,value)},
+    progress:require('../scripts/kunsttresor-progress.js'),playerProgress:{version:1,record:5,events:[]},
+    keys:{game:'game',best:'best',progress:'progress'},store:{set:(key,value)=>values.set(key,value)},
     $:()=>({hidden:false}),render:()=>{},toGame:()=>{}};
   context.state.escaped=3;
   vm.createContext(context);

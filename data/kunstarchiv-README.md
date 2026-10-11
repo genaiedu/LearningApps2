@@ -201,6 +201,42 @@ ausdrücklichen Wunsch mit der separaten Option „Bestmarke löschen“ gelösc
 Der Speicher ist geräte- und browsergebunden; das Löschen der Browserdaten
 kann ihn ebenfalls entfernen.
 
+## Abzeichen und portable Spielstände
+
+`kunsttresor-progress.js` führt zwölf Abzeichen in vier Stufen mit transparenten Bedingungen.
+Die Sammlung liegt getrennt vom Rundgang unter `kunsttresor-progress-v1`.
+Neustart, Verlust und ausdrücklich zurückgesetzter Highscore löschen sie nicht.
+Ein zufälliges `roomToken` identifiziert jeden Raum dauerhaft. Gelöste Räume
+werden einmalig protokolliert; wiederholtes Importieren und Zusammenführen
+addiert dieselbe Leistung nicht erneut. Nur tatsächlich gewonnene Räume zählen
+für Zuordnung, Korrektur und Stil-/Technikvielfalt. Historische Rekorde zählen
+für Rundgang-Meilensteine, nicht als erfundene frühere Einzelspiele.
+Die höchste Stufe verlangt 25 aufeinanderfolgende Räume im ersten Versuch
+innerhalb einer Runde beziehungsweise 500 gewonnene Räume insgesamt. Für die
+perfekte Serie werden `runToken`, Elternraum und Raumtiefe geprüft. Getrennte
+Runden und importierte Abzweigungen können nicht zu einer falschen Serie
+zusammengezählt werden. Eine Korrektur bricht die Serie, widerruft jedoch kein
+bereits erworbenes Abzeichen.
+
+`kunsttresor-save.js` exportiert versioniertes JSON mit AES-256-GCM, einem
+frischen 96-Bit-IV und authentifizierten Formatangaben. Der Dateiinhalt ist
+kein lesbarer Spieltext. Der ausgelieferte Schlüssel ist **nicht geheim**:
+Diese rein browserbasierte App kann keine manipulationssicheren Leistungsnachweise
+oder vertraulichen Geheimnisse garantieren. Nicht durch bloßes Base64/XOR ersetzen;
+Schlüssel und Formatversion für alte Exporte beibehalten beziehungsweise migrieren.
+
+Vor einer Übernahme werden Authentifizierung, Größenlimit, Zähler, Abzeichen und
+der Raum gegen das aktuelle Werkarchiv geprüft. Dann bestätigt der Spieler
+ausdrücklich den Ersatz seines aktuellen Raums. Bestehende Leistungen werden
+ohne Doppelzählung zusammengeführt, der höhere Rekord bleibt. Versuche,
+Prüfschnappschüsse und Kuratorhistorie bleiben erhalten; externe Bildfreigaben
+werden nicht übertragen. Speicherfehler rollen die drei lokalen Speicherwerte
+zurück, bevor der aktive Raum gewechselt wird. Dateien werden nur lokal gelesen,
+nicht hochgeladen. Schutzdetails stehen im Spielstandsfenster.
+
+Prüfung: `node --test tests/kunst*.test.cjs`. Zusätzlich Download, Dateiübernahme,
+beschädigte Datei, Neuladen, Neustart und Handy-/Tabletansichten im Browser testen.
+
 `node scripts/localize-kunsttitel.mjs /private/tmp/kunst-1000-cache` erstellt
 eine separate Titel-Patchdatei. Bestehende eigene Übersetzungen werden bewahrt;
 neue fehlende Titel müssen vor Veröffentlichung redaktionell ergänzt werden.
