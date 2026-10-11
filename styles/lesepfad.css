@@ -29,7 +29,7 @@ html:has(.reading-ready){scroll-padding-top:var(--reading-offset,140px)}
 .reading-ready .reading-section>p:not(.small,.source-note){max-width:70ch}
 .reading-ready .reading-section>p.lead{max-width:57ch;margin-bottom:38px}
 .reading-station{position:relative;border-top:1px solid var(--line);padding-top:42px;margin-top:72px}
-.reading-station-number{font:500 12px/1.4 var(--reading-sans);font-variant-numeric:lining-nums tabular-nums;letter-spacing:.1em;color:var(--reading-accent);margin:0 0 18px}
+.reading-station-number{font:500 20px/1.4 var(--reading-sans);font-variant-numeric:lining-nums tabular-nums;letter-spacing:.1em;color:var(--reading-accent);margin:0 0 18px}
 .reading-station>.subchapter{margin-top:0;max-width:28ch;margin-bottom:26px}
 .reading-station>p:not(.small,.source-note){max-width:70ch}
 .reading-station>p.lead{max-width:57ch}
@@ -119,6 +119,7 @@ html:has(.reading-ready){scroll-padding-top:var(--reading-offset,140px)}
   .reading-route{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px;margin-bottom:40px}
   .reading-route a{font-size:12px;min-height:50px}
   .reading-station{margin-top:55px;padding-top:30px}
+  .reading-station-number{font-size:18px}
   .reading-station>.subchapter{font-size:30px}
   .reading-ready .reading-section>h2{font-size:38px}
   [data-reading-app=typografie].reading-ready .chapter{padding-block:60px}

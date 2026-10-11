@@ -13,7 +13,7 @@ test('only the two text-heavy apps opt into a local progressive reading layer', 
   for (const [page, app] of [['typografie-atelier', 'typografie'], ['spiegelwelt', 'spiegelwelt']]) {
     const html = read(page + '.html');
     assert.ok(html.includes('data-reading-app="' + app + '"'));
-    assert.ok(html.includes('styles/lesepfad.css?v=20261011-leserhythmus'));
+    assert.match(html, /href="styles\/lesepfad\.css\?v=[\w-]+"/);
     assert.ok(html.includes('defer src="scripts/lesepfad.js?v=20261011-leserhythmus"'));
     assert.ok(html.indexOf('scripts/lesepfad.js') > html.indexOf('scripts/schroedinger-wikipedia.js'));
   }
@@ -75,4 +75,13 @@ test('models stack on small screens; original content survives printing and redu
   assert.ok(css.includes('@media(prefers-reduced-motion:reduce)'));
   assert.ok(css.includes('@media print'));
   assert.ok(css.includes('.reading-compass,.reading-next,.reading-route{display:none}'));
+});
+
+test('chapter numbers are legible orientation marks while retaining their accent and numeral style', () => {
+  const rule = css.match(/\.reading-station-number\{([^}]+)\}/)[1];
+  assert.ok(rule.includes('font:500 20px/1.4 var(--reading-sans)'));
+  assert.ok(rule.includes('font-variant-numeric:lining-nums tabular-nums'));
+  assert.ok(rule.includes('color:var(--reading-accent)'));
+  const mobile = css.slice(css.indexOf('@media(max-width:760px)'));
+  assert.ok(mobile.includes('.reading-station-number{font-size:18px}'));
 });
