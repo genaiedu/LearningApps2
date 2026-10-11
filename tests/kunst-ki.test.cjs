@@ -78,6 +78,8 @@ test('visible AI toggles distinguish pausing answers from withdrawing permission
   const pause=js.slice(js.indexOf('function setAIEnabled('),js.indexOf('function toggleAI('));
   assert.match(pause,/aiClient\?\.cancel\(\)/);assert.match(pause,/resetAIReading\(\)/);
   assert.doesNotMatch(pause,/remove\(aiConsentKey\)/);
+  const css=fs.readFileSync(require.resolve('../styles/kunsttresor.css'),'utf8');
+  assert.match(css,/\.ai-toggle\[aria-pressed="true"\]:hover:not\(:disabled\)\{background:#[a-f0-9]+;color:var\(--deep\)\}/);
 });
 test('network errors, quota, malformed JSON and incomplete output all retain fallback',async()=>{
   const input=ki.payload(room(),progress.fresh());
