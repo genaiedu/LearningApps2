@@ -80,7 +80,8 @@
   }
   function refreshHistory() {
     const seen=new Set(workHistory.rooms.flatMap(entry=>entry.ids.filter((id,index)=>entry.seen&(1<<index))));
-    $('history-summary').textContent=seen.size+' verschiedene Werke in '+workHistory.rooms.length+' gespeicherten Räumen. Die Bildhistorie beginnt mit dieser Funktion; ältere Begegnungen sind nicht rekonstruierbar.';
+    const rooms=workHistory.rooms.length;
+    $('history-summary').textContent=seen.size+(seen.size===1?' verschiedenes Werk in ':' verschiedene Werke in ')+rooms+(rooms===1?' gespeichertem Raum.':' gespeicherten Räumen.')+' Die Bildhistorie beginnt mit dieser Funktion; ältere Begegnungen sind nicht rekonstruierbar.';
   }
   function previousWorks() { return historyBlocked ? undefined : history.summarize(workHistory,state.ids,state.historyToken||state.roomToken); }
   function refreshBadges() {

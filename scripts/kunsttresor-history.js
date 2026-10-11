@@ -86,7 +86,7 @@
     const count=fields.filter((_,index)=>lastMask&(1<<index)).length;
     if(firstMask===15&&lastMask===15)return start+' Bei der letzten gespeicherten Prüfung waren alle vier Zuordnungen schon beim ersten Prüfen richtig.';
     if(lastMask===15&&checks===2)return start+' Bei der letzten gespeicherten Prüfung gelangen alle vier Zuordnungen nach dem zweiten Versuch.';
-    return start+' Bei der letzten gespeicherten Prüfung waren '+count+' von vier Zuordnungen richtig.';
+    return start+' Bei der letzten gespeicherten Prüfung '+(count===1?'war eine':'waren '+count)+' von vier Zuordnungen richtig.';
   }
   const api={fresh,restore,track,merge,summarize,note,fields,MAX_ROOMS};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.KunstHistory=api;
