@@ -44,6 +44,17 @@ test('feature specimens override font shorthand resets and show a true baseline'
   assert.ok(css.includes('vertical-align:baseline;width:0;height:0'));
   assert.equal((html.match(/class="baseline-anchor"/g)||[]).length,2);
 });
+test('microtypography comparison uses lining raw numbers and amounts but oldstyle dates',()=>{
+  const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-ansicht.css'),'utf8');
+  assert.ok(html.includes('<p class="micro-raw">"Gute Typografie" - das kostet z.B. 10 EUR. Von 2024-2026.</p>'));
+  assert.ok(html.includes('<span class="micro-amount">10 €</span>'));
+  assert.ok(html.includes('<span class="micro-date">2024–2026</span>'));
+  assert.ok(css.includes('.micro-compare p span{font:inherit;letter-spacing:inherit;color:inherit}'));
+  assert.ok(css.includes('body.prose-typography .micro-compare p.micro-raw{font-variant-numeric:lining-nums proportional-nums}'));
+  assert.ok(css.includes('body.prose-typography .micro-compare p.micro-composed{font-variant-numeric:oldstyle-nums proportional-nums}'));
+  assert.ok(css.includes('.micro-compare p .micro-amount{font-variant-numeric:lining-nums proportional-nums}'));
+  assert.ok(css.includes('.micro-compare p .micro-date{font-variant-numeric:oldstyle-nums proportional-nums}'));
+});
 test('letter forms, emphasis and font roles remain inside the characters part',()=>{
   const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8'),css=fs.readFileSync(path.resolve(__dirname,'../styles/typografie-atelier.css'),'utf8');
   const end=html.indexOf('<section class="chapter wrap" id="details">');
