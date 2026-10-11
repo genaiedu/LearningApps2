@@ -29,7 +29,7 @@
   }
   if(!$('format-stage'))return;
   const stage=$('format-stage'),frame=$('format-frame'),shell=$('format-device');
-  let current=F.settings(),started=false,ready=false,reported=null;
+  let current=F.settings(),ready=false,reported=null;
   function config(jump=false){if(ready)frame.contentWindow.postMessage({type:'typography-format-config',...current,jump,paused:document.body.classList.contains('motion-paused'),appearance:window.TypoAppearance?.current?.()},targetOrigin);}
   function sizing(){
     const d=F.dimensions(current),factor=F.scale(current,Math.max(1,stage.clientWidth-48),Math.max(1,stage.clientHeight-48));
@@ -41,7 +41,7 @@
   function status(){
     const d=F.dimensions(current);
     $('format-jump').disabled=!ready;
-    $('format-status').textContent=!started?'Die vollständige Seite wird erst beim Starten der Vorschau ein zweites Mal geladen.':!ready?'Die Seite für die Formatvorschau wird geladen …':reported?'Tatsächliches Browserfenster: '+reported.width+' × '+reported.height+' CSS-Pixel. '+(reported.contentWidth>reported.width+1?'An dieser Seite gibt es einen horizontalen Überstand. Prüfe, ob er auf eine bewusst zweidimensionale Grafik begrenzt ist.':'Kein horizontaler Seitenüberstand in dieser Ansicht.'):'Die Vorschau ist geladen. Scrolle und bediene die Seite innerhalb des Rahmens.';
+    $('format-status').textContent=!ready?'Die Seite für die Formatvorschau wird geladen …':reported?'Tatsächliches Browserfenster: '+reported.width+' × '+reported.height+' CSS-Pixel. '+(reported.contentWidth>reported.width+1?'An dieser Seite gibt es einen horizontalen Überstand. Prüfe, ob er auf eine bewusst zweidimensionale Grafik begrenzt ist.':'Kein horizontaler Seitenüberstand in dieser Ansicht.'):'Die Vorschau ist geladen. Scrolle und bediene die Seite innerhalb des Rahmens.';
     frame.title='Vollständiges Typografie-Atelier · '+d.name+' · '+d.width+' × '+d.height;
   }
   function update(o={},jump=false){
@@ -51,18 +51,9 @@
     $('format-scene').value=current.scene;$('format-view').value=current.view;$('format-observation').textContent=d.note;
     sizing();config(jump);status();
   }
-  function start(){
-    if(started)return;started=true;ready=false;
-    $('format-placeholder').hidden=true;$('format-frame').hidden=false;$('format-start').hidden=true;$('format-stop').hidden=false;
-    frame.src='typografie-atelier.html?format-preview=1';status();
-  }
-  function stop(){
-    started=false;ready=false;reported=null;frame.removeAttribute('src');frame.hidden=true;
-    $('format-placeholder').hidden=false;$('format-start').hidden=false;$('format-stop').hidden=true;status();
-  }
-  frame.addEventListener('load',()=>{if(!started)return;ready=true;config(true);status();});
+  frame.addEventListener('load',()=>{if(!frame.getAttribute('src'))return;ready=true;config(true);status();});
   addEventListener('message',event=>{
-    if(!started||event.source!==frame.contentWindow||event.origin!==origin||event.data?.type!=='typography-format-status')return;
+    if(event.source!==frame.contentWindow||event.origin!==origin||event.data?.type!=='typography-format-status')return;
     const r=event.data;if(![r.width,r.height,r.contentWidth].every(v=>Number.isFinite(v)&&v>0&&v<20000))return;
     reported=r;ready=true;status();
   });
@@ -70,10 +61,10 @@
   $('format-rotate').addEventListener('click',()=>update({rotated:!current.rotated},true));
   $('format-scene').addEventListener('change',()=>update({scene:$('format-scene').value},true));
   $('format-view').addEventListener('change',()=>update({view:$('format-view').value}));
-  $('format-start').addEventListener('click',start);$('format-stop').addEventListener('click',stop);
   $('format-jump').addEventListener('click',()=>config(true));
   $('format-reset').addEventListener('click',()=>{update(F.settings(),true);stage.scrollTo({left:0,top:0,behavior:'instant'});});
   addEventListener('typography-motion-change',()=>config());
   addEventListener('typography-appearance-change',()=>config());
   new ResizeObserver(sizing).observe(stage);update();
+  frame.src='typografie-atelier.html?format-preview=1';
 })();

@@ -1,5 +1,5 @@
 'use strict';
-const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const F=require('../scripts/typografie-formate-core.js'),root=path.resolve(__dirname,'..');
 const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),ui=fs.readFileSync(path.join(root,'scripts/typografie-formate.js'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-formate.css'),'utf8');
 test('four real viewport profiles include the large portrait monitor, tablet and phone',()=>{
@@ -23,16 +23,35 @@ test('overview scales a fully laid-out viewport while actual-size view never cha
   }
   assert.ok(ui.includes("frame.style.width=d.width+'px'"));assert.ok(ui.includes("frame.style.height=d.height+'px'"));assert.ok(css.includes('transform-origin:0 0'));
 });
-test('full-page preview is opt-in, stops cleanly and cannot recursively embed itself',()=>{
+test('full-page preview is always visible and cannot recursively embed itself',()=>{
   assert.ok(!/<iframe id="format-frame"[^>]*src=/.test(html));
+  assert.ok(!/<iframe id="format-frame"[^>]*hidden/.test(html));
+  assert.ok(!/format-start|format-stop|format-placeholder|Vorschau schließen|Vorschau starten/.test(html));
   assert.ok(ui.includes("if(embedded){"));assert.ok(ui.includes('schedule();return;'));
   assert.ok(css.includes('html.format-preview .screen-format-lab{display:none}'));
-  assert.ok(ui.includes("frame.removeAttribute('src')"));assert.ok(ui.includes('event.source!==frame.contentWindow'));
+  assert.ok(!ui.includes("frame.removeAttribute('src')"));assert.ok(ui.includes('event.source!==frame.contentWindow'));
   assert.ok(ui.includes('event.source!==parent||event.origin!==origin'));
   assert.ok(!/localStorage|sessionStorage/.test(ui));
 });
+test('preview loads automatically once and remains loaded across format changes and reset',()=>{
+  const elements={},events={},messages=[],buttons=F.devices.map(d=>({dataset:{formatDevice:d.id},handlers:{},setAttribute(){},addEventListener(type,handler){this.handlers[type]=handler;}}));
+  for(const id of ['format-stage','format-frame','format-device','format-size','format-scale','format-jump','format-status','format-rotate','format-scene','format-view','format-observation','format-reset'])elements[id]={style:{},dataset:{},handlers:{},attributes:{},setAttribute(key,value){this.attributes[key]=value;},getAttribute(key){return this.attributes[key]??null;},addEventListener(type,handler){this.handlers[type]=handler;}};
+  const frame=elements['format-frame'];let navigations=0;
+  Object.defineProperty(frame,'src',{get(){return this.attributes.src;},set(value){this.attributes.src=value;navigations++;}});
+  frame.contentWindow={postMessage(message){messages.push(message);}};
+  Object.assign(elements['format-stage'],{clientWidth:1000,clientHeight:600,scrollTo(){}});
+  vm.runInNewContext(ui,{window:{TypoFormats:F},document:{getElementById:id=>elements[id],querySelectorAll:()=>buttons,body:{classList:{contains:()=>false}}},location:{origin:'https://example.test',search:''},URLSearchParams,ResizeObserver:class{observe(){}},addEventListener(type,handler){events[type]=handler;}});
+  assert.equal(navigations,1);assert.equal(frame.src,'typografie-atelier.html?format-preview=1');
+  assert.equal(elements['format-jump'].disabled,true);frame.handlers.load();assert.equal(elements['format-jump'].disabled,false);
+  buttons.find(b=>b.dataset.formatDevice==='phone').handlers.click();assert.equal(frame.style.width,'390px');
+  elements['format-rotate'].handlers.click();assert.equal(frame.style.width,'844px');
+  elements['format-reset'].handlers.click();assert.equal(frame.style.width,'1440px');assert.equal(navigations,1);
+  assert.ok(messages.length>=4);assert.ok(messages.every(m=>m.type==='typography-format-config'));
+  events.message({source:frame.contentWindow,origin:'https://example.test',data:{type:'typography-format-status',width:1440,height:900,contentWidth:1440}});
+  assert.ok(elements['format-status'].textContent.includes('Kein horizontaler Seitenüberstand'));
+});
 test('format comparison has named controls, inherited motion pause and an honest limit statement',()=>{
-  for(const id of ['format-scene','format-view','format-rotate','format-start','format-stop','format-jump','format-reset','format-size','format-scale','format-status'])assert.ok(html.includes('id="'+id+'"'));
+  for(const id of ['format-scene','format-view','format-rotate','format-jump','format-reset','format-size','format-scale','format-status'])assert.ok(html.includes('id="'+id+'"'));
   for(const d of F.devices)assert.ok(html.includes('data-format-device="'+d.id+'"'));
   for(const phrase of ['die vollständige, aktuelle Seite','keine Lesbarkeitsprüfung','weder Safari noch einen Touchscreen','CSS-Pixel','Retina','400 % Browserzoom'])assert.ok(html.includes(phrase));
   assert.ok(ui.includes("addEventListener('typography-motion-change',()=>config())"));assert.ok(ui.includes('contentWidth:document.documentElement.scrollWidth'));
