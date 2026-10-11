@@ -37,6 +37,9 @@
   function remove(gallery,id) {
     return {...gallery,liked:gallery.liked.filter(entry=>entry.id!==id),film:{...gallery.film,items:gallery.film.items.filter(item=>item.id!==id)}};
   }
+  function removeFromFilm(gallery,id) {
+    return {...gallery,film:{...gallery.film,items:gallery.film.items.filter(item=>item.id!==id)}};
+  }
   function merge(left,right) {
     const liked=new Map(left.liked.map(entry=>[entry.id,entry]));
     right.liked.forEach(entry=>{if(!liked.has(entry.id))liked.set(entry.id,entry);});
@@ -76,6 +79,6 @@
     const technique=texts?.techniques?.[work.technique]?.[item.variant]||work.technique;
     return item.caption==='style'?style:item.caption==='technique'?technique:style+'\n'+technique;
   }
-  const api={UNLOCK,MIN,MAX,DEFAULT,modes,fresh,winningRoom,restore,like,remove,merge,item,automatic,validateFilm,timeline,frameAt,caption};
+  const api={UNLOCK,MIN,MAX,DEFAULT,modes,fresh,winningRoom,restore,like,remove,removeFromFilm,merge,item,automatic,validateFilm,timeline,frameAt,caption};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.KunstGallery=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

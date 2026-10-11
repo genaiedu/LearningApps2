@@ -44,6 +44,23 @@ test('film runs for the actual complete soundtrack with every detail before ever
     assert.equal(gallery.frameAt(frames,128.4).phase,'ending');
   }
 });
+test('removing from the film preserves the liked gallery, remaining order and all other editing',()=>{
+  const f=fixture(),g=gallery.automatic(f.g,seeded(4));
+  g.film.name='Meine Sammlung';g.film.motto='Ein eigener Blick';
+  g.film.items[1]={...g.film.items[1],caption:'custom',text:'Mein unveränderter Text',variant:1};
+  const before=structuredClone(g),removed=gallery.removeFromFilm(g,g.film.items[0].id);
+  assert.deepEqual(g,before);assert.deepEqual(removed.liked,g.liked);
+  assert.deepEqual(removed.film,{...g.film,items:g.film.items.slice(1)});
+  assert.ok(gallery.restore(removed,pool,f.h));assert.ok(gallery.validateFilm(removed));
+  assert.deepEqual(gallery.removeFromFilm(removed,g.film.items[0].id),removed);
+  const short={...g,film:{...g.film,items:g.film.items.slice(0,6)}};
+  const draft=gallery.removeFromFilm(short,short.film.items[0].id);
+  assert.deepEqual(draft.liked,g.liked);assert.ok(gallery.restore(draft,pool,f.h));
+  assert.throws(()=>gallery.validateFilm(draft),/6 bis 10/);
+  const ui=fs.readFileSync(require.resolve('../scripts/kunsttresor-gallery-ui.js'),'utf8');
+  assert.equal((ui.match(/model\.removeFromFilm\(/g)||[]).length,2);
+  assert.doesNotMatch(ui,/add\.disabled=selected\.has/);
+});
 test('editor name, motto, text modes, variants and exact ordering survive encrypted JSON and reload',async()=>{
   const f=fixture();f.g=gallery.automatic(f.g,seeded(4));f.g.film.name='Licht & Körper – meine Galerie';f.g.film.motto='Ein eigener Blick. ÄÖÜß';
   f.g.film.items.reverse();f.g.film.items[0]={...f.g.film.items[0],caption:'custom',text:'Mein Text <bleibt Text>',variant:1};

@@ -63,10 +63,12 @@
         card.append(imageButton(work),node('h3',null,title(work)),node('p','small',work.artist+' · '+work.date));
         const actions=node('div','gallery-card-actions');
         actions.append(button('Aus Galerie entfernen',()=>{if(change(model.remove(getGallery(),entry.id),null))status('Werk entfernt. '+progressText());}));
-        if(gallery.liked.length>=model.UNLOCK){const add=button(selected.has(entry.id)?'Im Film':'Zum Film hinzufügen',()=>{
-          const g=getGallery();if(g.film.items.length>=model.MAX){status('Im Film sind höchstens 10 Werke möglich. Entferne zunächst ein Werk aus der Filmauswahl.');return;}
+        if(gallery.liked.length>=model.UNLOCK){const add=button(selected.has(entry.id)?'Aus Film entfernen':'Zum Film hinzufügen',()=>{
+          const g=getGallery();
+          if(g.film.items.some(item=>item.id===entry.id)){change(model.removeFromFilm(g,entry.id),'Aus dem Film entfernt; das Werk bleibt in deiner Galerie.');return;}
+          if(g.film.items.length>=model.MAX){status('Im Film sind höchstens 10 Werke möglich. Entferne zunächst ein Werk aus der Filmauswahl.');return;}
           change({...g,film:{...g.film,items:[...g.film.items,model.item(entry.id)]}},'Werk zum Film hinzugefügt.');
-        });add.disabled=selected.has(entry.id);actions.append(add);}
+        });add.title=selected.has(entry.id)?'Nur aus dem Film entfernen. Das Werk bleibt gelikt und in deiner Galerie.':'Dieses Lieblingswerk in deinen Film aufnehmen.';actions.append(add);}
         card.append(actions);$('gallery-grid').append(card);
         const sources=node('p','gallery-source');
         for(const [label,url] of [['Werkquelle',work.source],['Bildrechte: '+work.imageLicense,work.imageSource]]){const link=node('a',null,label);link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.referrerPolicy='no-referrer';sources.append(link,node('span',null,' '));}card.append(sources);
@@ -90,7 +92,7 @@
           const current=getGallery(),items=[...current.film.items],other=index+delta;
           [items[index],items[other]]=[items[other],items[index]];change({...current,film:{...current.film,items}},'Reihenfolge gespeichert.');
         });b.disabled=index+delta<0 || index+delta>=g.film.items.length;b.setAttribute('aria-label',title(work)+' · '+label);tools.append(b);}
-        tools.append(button('Aus Film entfernen',()=>{const current=getGallery();change({...current,film:{...current.film,items:current.film.items.filter(i=>i.id!==item.id)}},'Aus dem Film entfernt; das Werk bleibt in deiner Galerie.');}));head.append(tools);card.append(head);
+        tools.append(button('Aus Film entfernen',()=>change(model.removeFromFilm(getGallery(),item.id),'Aus dem Film entfernt; das Werk bleibt in deiner Galerie.')));head.append(tools);card.append(head);
         const label=node('label',null,'Einblendung für dieses Werk'), select=node('select');select.setAttribute('aria-label','Einblendung für '+title(work));
         for(const [value,name] of [['both','Stil / Epoche und Material'],['style','Stil / Epoche'],['technique','Material / Technik'],['none','Nur Werkangaben'],['custom','Mein eigener Text']]){const option=node('option',null,name);option.value=value;select.append(option);}select.value=item.caption;label.append(select);
         const variantLabel=node('label',null,'Formulierung'), variant=node('select');variant.setAttribute('aria-label','Formulierung für '+title(work));
