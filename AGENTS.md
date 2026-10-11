@@ -1,6 +1,9 @@
 # Publishing and shared assets
 
 - Do not deploy this repository to Vercel. The user explicitly prohibits it.
+- Narrow exception explicitly approved on 11 October 2026: only the separate
+  `services/kunst-kurator` feedback service may be published to Vercel. Do not
+  import or deploy the entire repository there or change existing projects.
 - Keep automatic Vercel Git deployments disabled in `vercel.json`.
 - Publish finished, verified applications with GitHub Pages under
   `https://genaiedu.github.io/LearningApps2/`.

@@ -1,0 +1,4 @@
+generated/
+.vercel/
+node_modules/
+.env*

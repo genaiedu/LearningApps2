@@ -11,6 +11,10 @@
   };
   let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = progress.integer(Number(store.get(keys.best))) ? Number(store.get(keys.best)) : 0;
   let artKnowledge = null, archiveReplacements = [], pendingImport = null, transferBusy = false, fileEpoch = 0;
+  const ki=window.KunstKI, aiConsentKey='kunsttresor-ai-consent-v1', aiEnabledKey='kunsttresor-ai-enabled-v1';
+  const aiEndpoint=window.KunstKIConfig?.endpoint || '';
+  const aiClient=ki?.createClient({endpoint:aiEndpoint,fetcher:(...args)=>fetch(...args)});
+  let aiAllowed=store.get(aiConsentKey)==='yes', aiEnabled=store.get(aiEnabledKey)!=='no', aiDisplayEpoch=0, aiBaseline=new Map();
   let playerProgress = progress.fresh(best);
   try { playerProgress = progress.restore(JSON.parse(store.get(keys.progress))) || playerProgress; } catch { /* Older browsers have no collection yet. */ }
   playerProgress.record = Math.max(playerProgress.record,best);
@@ -504,7 +508,8 @@
       container.append(node('p',null,'Die Kuratorenhinweise konnten nicht geladen werden. Die Werkangaben und Quellen stehen dir trotzdem zur Verfügung. Bitte lade die Seite erneut, um auch die Erklärungen zu lesen.'));
       return container;
     }
-    container.append(node('p','curator-opening',explanation.opening));
+    const opening=node('p','curator-opening',explanation.opening); opening.dataset.curatorWork=work.id;
+    aiBaseline.set(work.id,explanation.opening); container.append(opening);
     if(explanation.temporal) container.append(node('p','curator-time',explanation.temporal));
     if(explanation.mistake) container.append(node('p','curator-comparison',explanation.mistake));
     if(explanation.workNote) container.append(node('p','curator-work-note',explanation.workNote));
@@ -552,6 +557,7 @@
   }
   function solutions() {
     if (!state || state.phase === 'playing') return;
+    aiClient?.cancel(); aiDisplayEpoch++; aiBaseline=new Map();
     close('result-dialog'); $('solutions').replaceChildren();
     state.ids.forEach((id,index) => {
       const work = workById(id), card = node('article','solution-card'), overview=node('div','solution-overview'), sources=node('footer','solution-sources');
@@ -594,6 +600,60 @@
       sources.append(links); card.append(sources); $('solutions').append(card);
     });
     open('solution-dialog');
+    void requestAI();
+  }
+  function resetAIReading() {
+    $('ai-intro').hidden=true; $('ai-intro').textContent=''; $('ai-retry').hidden=true;
+    $('solutions').querySelectorAll('[data-curator-work]').forEach(element=>{
+      element.textContent=aiBaseline.get(element.dataset.curatorWork) || element.textContent;
+      element.classList.remove('is-ai');
+    });
+  }
+  async function requestAI(retry=false) {
+    resetAIReading();
+    if (!state || state.phase==='playing' || !$('solution-dialog').open) return;
+    if (!aiAllowed || !aiEnabled) { $('ai-status').textContent='Redaktionelle Kuratorenhinweise · KI-Antworten sind ausgeschaltet.'; return; }
+    if (!aiClient || !aiEndpoint) { $('ai-status').textContent='Der KI-Dienst ist noch nicht freigeschaltet. Du liest die vollständigen redaktionellen Hinweise.'; return; }
+    const input=ki.payload(state,playerProgress), roomToken=state.roomToken, epoch=++aiDisplayEpoch;
+    await aiClient.request(input,result=> {
+      if (epoch!==aiDisplayEpoch || !aiAllowed || !aiEnabled || state?.roomToken!==roomToken || !$('solution-dialog').open) return;
+      if (result.status==='pending') { $('ai-status').textContent='Die KI formuliert deine persönliche Ansprache. Die redaktionellen Hinweise kannst du bereits lesen.'; return; }
+      if (result.status!=='ready') {
+        resetAIReading(); $('ai-status').textContent='Die KI ist gerade nicht verfügbar. Hier bleiben die vollständigen redaktionellen Kuratorenhinweise.';
+        $('ai-retry').hidden=false; return;
+      }
+      $('ai-status').textContent='Persönliche Ansprachen mit KI formuliert · Sachhinweise und Museumsquellen bleiben redaktionell. KI kann irren.';
+      $('ai-intro').textContent=result.data.intro; $('ai-intro').hidden=false;
+      const byId=new Map(result.data.works.map(work=>[work.id,work.text]));
+      $('solutions').querySelectorAll('[data-curator-work]').forEach(element=>{
+        element.textContent=byId.get(element.dataset.curatorWork); element.classList.add('is-ai');
+      });
+    },{retry});
+  }
+  function updateAIToggles() {
+    const active=aiAllowed && aiEnabled;
+    document.querySelectorAll('[data-ai-toggle]').forEach(button=>{
+      button.textContent='KI-Antworten: ' + (active ? 'An' : 'Aus');
+      button.setAttribute('aria-pressed',String(active));
+      button.disabled=!aiEndpoint;
+    });
+  }
+  function setAIEnabled(enabled) {
+    aiEnabled=enabled; store.set(aiEnabledKey,enabled ? 'yes' : 'no');
+    aiDisplayEpoch++; aiClient?.cancel(); updateAIToggles();
+    if (enabled) { void requestAI(); return; }
+    resetAIReading(); $('ai-status').textContent='Redaktionelle Kuratorenhinweise · KI-Antworten sind ausgeschaltet.';
+  }
+  function toggleAI() {
+    if (!aiEndpoint) return;
+    if (!aiAllowed) { aiSettings(); return; }
+    setAIEnabled(!aiEnabled);
+  }
+  function aiSettings() {
+    $('ai-enable').disabled=!aiEndpoint;
+    $('ai-disable').textContent=aiAllowed ? 'Freigabe widerrufen' : 'Ohne KI fortfahren';
+    $('ai-availability').textContent=aiEndpoint ? (aiAllowed ? 'Freigabe vorhanden · KI-Antworten sind gerade ' + (aiEnabled ? 'eingeschaltet.' : 'ausgeschaltet.') : 'Bisher keine Freigabe. Es wird noch keine KI-Anfrage gesendet.') : 'Der geschützte Rückmeldedienst wird noch eingerichtet. Bis dahin bleiben die redaktionellen Texte aktiv.';
+    open('ai-dialog');
   }
   function fullscreenLabel() {
     const active = document.fullscreenElement === $('spiel') || $('spiel').classList.contains('fullscreen-fallback');
@@ -652,6 +712,14 @@
   $('cancel-import').onclick = () => { pendingImport=null; $('import-preview').hidden=true; $('save-status').textContent='Nicht übernommen. Dein bisheriger Spielstand bleibt unverändert.'; };
   $('save-dialog').addEventListener('close',()=>{ fileEpoch++; pendingImport=null; $('import-preview').hidden=true; });
   $('show-solution').onclick = $('result-solution').onclick = solutions;
+  $('ai-settings').onclick=aiSettings;
+  $('ai-settings-footer').onclick=aiSettings;
+  document.querySelectorAll('[data-ai-toggle]').forEach(button=>{ button.onclick=toggleAI; });
+  updateAIToggles();
+  $('ai-enable').onclick=()=> { if (!aiEndpoint) return; aiAllowed=true; store.set(aiConsentKey,'yes'); close('ai-dialog'); setAIEnabled(true); };
+  $('ai-disable').onclick=()=> { aiAllowed=false; store.remove(aiConsentKey); aiClient?.clear(); close('ai-dialog'); setAIEnabled(false); };
+  $('ai-retry').onclick=()=>void requestAI(true);
+  $('solution-dialog').addEventListener('close',()=>{aiDisplayEpoch++;aiClient?.cancel();});
   $('open-art-glossary').onclick=()=>showArtGlossary();
   $('art-glossary-search').oninput=()=>renderArtGlossary();
   $('art-glossary-category').onchange=()=>renderArtGlossary();
