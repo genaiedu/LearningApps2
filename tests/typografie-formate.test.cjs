@@ -57,10 +57,10 @@ test('format comparison has named controls, inherited motion pause and an honest
   for(const phrase of ['keine Lesbarkeitsprüfung','weder Safari noch einen Touchscreen','CSS-Pixel','Retina','400 % Browserzoom'])assert.ok(html.includes(phrase));
   assert.ok(ui.includes("addEventListener('typography-motion-change',()=>config())"));assert.ok(ui.includes('contentWidth:document.documentElement.scrollWidth'));
 });
-test('format chapter is the second screen chapter and all twelve chapter numbers match navigation',()=>{
+test('format chapter is the second screen chapter and all thirteen chapter numbers match navigation',()=>{
   const part=html.slice(html.indexOf('data-part="bildschirm"'),html.indexOf('id="entscheidungen"'));
   const chapters=[...part.matchAll(/<section[^>]*id="([^"]+)"[^>]*>\s*(?:<div class="wrap">\s*)?<div class="section-label">III\.(\d+)/g)];
-  assert.equal(chapters.length,12);assert.equal(chapters[1][1],'bildschirmformate');
+  assert.equal(chapters.length,13);assert.equal(chapters[1][1],'bildschirmformate');
   chapters.forEach((m,i)=>{assert.equal(Number(m[2]),i+1);assert.ok(part.includes('href="#'+m[1]+'">III.'+(i+1)+' '));});
 });
 test('reader-facing hero labels describe design principles, including offline downloads',()=>{

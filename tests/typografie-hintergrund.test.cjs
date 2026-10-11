@@ -44,7 +44,7 @@ test('repeated ideas explicitly refer back to the print chapters and background 
   assert.ok(web.includes('nicht als neue Regeln, sondern unter veränderten Bedingungen'));
   assert.ok(html.includes('href="#hintergrund">III.5 Zeichen im Hintergrund &amp; Parallaxe'));
   const chapters=[...web.matchAll(/<section[^>]*id="([^"]+)"[^>]*>\s*(?:<div class="wrap">\s*)?<div class="section-label">III\.(\d+)/g)];
-  assert.equal(chapters.length,12);chapters.forEach((m,i)=>assert.equal(Number(m[2]),i+1));
+  assert.equal(chapters.length,13);chapters.forEach((m,i)=>assert.equal(Number(m[2]),i+1));
 });
 test('the downloadable lab is the real chapter and uses only embedded local fonts and scripts',()=>{
   const doc=fs.readFileSync(path.join(root,'downloads/typografie/hintergrund/hintergrund-werkstatt.html'),'utf8');
