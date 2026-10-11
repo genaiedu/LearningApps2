@@ -301,10 +301,11 @@ test('one explicit start click unlocks music before fullscreen, then opens the f
   const html=fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
   const launch=js.slice(js.indexOf('async function launchGallery('),js.indexOf('function finishIntro('));
   const events=[],context={
-    imagesAllowed:false,state:null,pool:[],introSoundEnabled:false,introAudio:{},keys:{images:'images'},
+    imagesAllowed:false,state:null,pool:[],introSoundEnabled:false,introAudio:{},launchEpoch:0,keys:{images:'images'},
     close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
     core:{newState:()=>({})},save:()=>{},render:()=>{},$:()=>({focus:()=>events.push('focus')}),
     startIntroAudio:()=>events.push('music'),enterFullscreen:async()=>events.push('fullscreen'),
+    prepareIntro:()=>events.push('preload'),
     showIntro:options=>{events.push('film');assert.equal(options.audioPrimed,true);}
   };
   const vm=require('node:vm'); vm.createContext(context); vm.runInContext(launch,context);

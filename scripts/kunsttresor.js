@@ -29,14 +29,16 @@
   let ready = new Set(), failed = new Set(), zoomEpoch = 0, zoomLoad = null;
   const imageTimers = new Set();
   let introTimer = null, pendingIntro = false, previousIntro = [], introEpoch = 0, introSoundEnabled = true;
+  let introPreparation=null, introWaitTimer=null, launchEpoch=0, introAudioEpoch=0;
   const introAudio = new Audio('../LearningApps/assets/kunst-der-fuge/fuge-orchester-suno.mp3');
   introAudio.preload='metadata'; introAudio.volume=.65;
   const introSeconds=46; // Five 7-second chapters followed by an 11-second full-artwork finale.
   let introFadeTimer=null;
   function startIntroAudio() {
     if (!introSoundEnabled) return;
-    introAudio.play().then(()=>{ $('intro-sound').textContent='♫ Musik ausschalten'; $('intro-sound').setAttribute('aria-pressed','true'); })
-      .catch(()=>{ $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); });
+    const epoch=++introAudioEpoch;
+    introAudio.play().then(()=>{ if(epoch!==introAudioEpoch)return; $('intro-sound').textContent='♫ Musik ausschalten'; $('intro-sound').setAttribute('aria-pressed','true'); })
+      .catch(()=>{ if(epoch!==introAudioEpoch)return; $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); });
   }
   const imageURL = work => work.imageURL;
   const workById = id => pool.find(work => work.id === id);
@@ -201,7 +203,16 @@
   function askForImages(start) {
     pendingStart = start; open('consent-dialog');
   }
+  function prepareIntro() {
+    // Never make an external image request before the existing image permission.
+    if (!imagesAllowed || !pool.length) return null;
+    if (!introPreparation || introPreparation.status==='cancelled' || introPreparation.status==='failed') {
+      introPreparation=window.KunstIntro.prepare(core.introSelection(pool,landmarkIds,previousIntro));
+    }
+    return introPreparation;
+  }
   function prepareLaunch() {
+    prepareIntro();
     $('launch-privacy').hidden = imagesAllowed;
     $('launch-start').textContent = imagesAllowed ? 'Vollbild & Musik starten →' : 'Kunstbilder erlauben & starten →';
     $('launch-skip').textContent = imagesAllowed ? 'Ohne Vorspann direkt spielen →' : 'Kunstbilder erlauben · direkt spielen →';
@@ -221,18 +232,26 @@
       return;
     }
     introSoundEnabled = true;
-    introAudio.volume=.65; introAudio.currentTime=0;
+    introAudio.volume=0; introAudio.currentTime=0;
     // Unlock audio and request fullscreen before the first await loses transient activation.
+    // Stay silent until the first decoded image and the film are ready together.
     startIntroAudio();
+    prepareIntro();
+    const launch=++launchEpoch;
     await enterFullscreen();
+    if (launch!==launchEpoch || !imagesAllowed) return;
     // The film must be added to the browser's top layer AFTER fullscreen, not below it.
     showIntro({audioPrimed:true});
   }
-  function finishIntro({enterGame = false, keepAudio = false} = {}) {
+  function finishIntro({enterGame = false, keepAudio = false, keepPreparation = false} = {}) {
+    launchEpoch++;
     introEpoch++; clearTimeout(introTimer); introTimer=null;
+    clearTimeout(introWaitTimer); introWaitTimer=null;
     clearInterval(introFadeTimer); introFadeTimer=null;
-    if (!keepAudio) { introAudio.pause(); introAudio.currentTime=0; }
-    close('intro-dialog'); $('intro-slides').replaceChildren(); $('intro-dialog').classList.remove('is-running','is-finale');
+    if (!keepAudio) { introAudioEpoch++; introAudio.pause(); introAudio.currentTime=0; }
+    if (!keepPreparation) { introPreparation?.cancel(); introPreparation=null; }
+    close('intro-dialog'); $('intro-slides').replaceChildren(); $('intro-dialog').classList.remove('is-running','is-finale','is-loading');
+    $('intro-slides').setAttribute('aria-busy','false'); $('intro-loading').hidden=true;
     if (enterGame && imagesAllowed && pool.length) {
       if (!state) { state = core.newState(pool); save(); render(); }
       toGame();
@@ -241,10 +260,9 @@
   function showIntro({audioPrimed = false} = {}) {
     if (!pool.length) return;
     if (!imagesAllowed) { pendingIntro=true; askForImages(false); return; }
-    finishIntro({keepAudio:audioPrimed});
-    introAudio.volume=.65;
-    const chosen=core.introSelection(pool,landmarkIds,previousIntro);
-    previousIntro=chosen.map(work=>work.id);
+    finishIntro({keepAudio:audioPrimed,keepPreparation:true});
+    const preparation=prepareIntro(), chosen=preparation.works, epoch=++introEpoch;
+    introAudio.volume=0;
     const chapters=[
       {title:pool.length+' Werke. Unzählige Spuren.',text:'Ein Raum wird still. Farben bleiben. In dieser Galerie warten '+pool.length+' echte Kunstwerke auf deinen Blick – und hinter jeder Tür eine neue Auswahl.'},
       {title:'Vier Bilder. Vier Fragen.',text:'Wann entstand das Werk? Welcher Stil? Von wem? Wie gemacht? Ordne Zeit, Stil, Künstler und Technik zu. Jede Antwort passt genau einmal.'},
@@ -255,13 +273,14 @@
     ];
     chosen.forEach((work,index)=>{
       const finale=index===chosen.length-1;
-      const slide=node('div',finale?'intro-slide intro-slide--full':'intro-slide'), image=node('img'); slide.dataset.id=work.id;
+      const slide=node('div',finale?'intro-slide intro-slide--full':'intro-slide'), image=index===0?preparation.image:node('img'); slide.dataset.id=work.id;
       slide.style.setProperty('--chapter-duration',(finale?11000:7000)+'ms');
       const closeUp=index===1 || index===3, start=closeUp?1.65+Math.random()*.35:1.08+Math.random()*.12;
       slide.style.setProperty('--scale-start',start); slide.style.setProperty('--scale-end',start+.12+Math.random()*.16);
       slide.style.setProperty('--pan-x-start',(Math.random()*10-5)+'%'); slide.style.setProperty('--pan-x-end',(Math.random()*10-5)+'%');
       slide.style.setProperty('--pan-y-start',(Math.random()*8-4)+'%'); slide.style.setProperty('--pan-y-end',(Math.random()*8-4)+'%');
-      image.alt=''; image.referrerPolicy='no-referrer'; image.src=work.imageLargeURL||imageURL(work); slide.append(image); $('intro-slides').append(slide);
+      if(index!==0) { image.alt=''; image.referrerPolicy='no-referrer'; image.src=work.imageLargeURL||imageURL(work); }
+      slide.append(image); $('intro-slides').append(slide);
       if (finale) {
         const alternatives=core.shuffle(pool.filter(other=>landmarkIds.includes(other.id) && !chosen.some(selected=>selected.id===other.id)));
         image.onerror=()=>{
@@ -275,7 +294,7 @@
         };
       }
     });
-    const slides=[...$('intro-slides').children], epoch=++introEpoch;
+    const slides=[...$('intro-slides').children];
     const durations=[7000,7000,7000,7000,7000,11000];
     $('intro-progress-bar').style.width='0%';
     let index=0;
@@ -301,8 +320,30 @@
       }
       introTimer=setTimeout(()=>{ index++; index<slides.length?frame():finishIntro({enterGame:true}); },chapterMs);
     }
-    open('intro-dialog'); $('intro-dialog').classList.add('is-running'); frame();
-    if (!audioPrimed) startIntroAudio();
+    $('intro-dialog').classList.add('is-loading');
+    $('intro-slides').setAttribute('aria-busy','true');
+    $('intro-copy').classList.remove('is-visible'); $('intro-art-caption').textContent='';
+    $('intro-loading-title').textContent='Das erste Bild wird geladen …';
+    $('intro-loading-text').textContent='Der Vorspann wartet auf das Bild. Du verpasst nichts – oder gehst direkt ins Spiel.';
+    $('intro-retry').hidden=true;
+    open('intro-dialog');
+    introWaitTimer=setTimeout(()=>{ if(epoch===introEpoch) $('intro-loading').hidden=false; },450);
+    preparation.ready.then(status=>{
+      if(epoch!==introEpoch || !imagesAllowed || !$('intro-dialog').open) return;
+      clearTimeout(introWaitTimer); introWaitTimer=null;
+      $('intro-slides').setAttribute('aria-busy','false');
+      if(status!=='ready') {
+        $('intro-loading').hidden=false; $('intro-retry').hidden=false;
+        $('intro-loading-title').textContent='Das erste Bild ist gerade nicht erreichbar.';
+        $('intro-loading-text').textContent='Du kannst es noch einmal versuchen oder den Vorspann überspringen. Das ist kein Fehlversuch.';
+        return;
+      }
+      previousIntro=chosen.map(work=>work.id);
+      $('intro-loading').hidden=true; $('intro-dialog').classList.remove('is-loading');
+      $('intro-dialog').classList.add('is-running');
+      introAudio.currentTime=0; introAudio.volume=.65;
+      frame(); startIntroAudio();
+    });
   }
   function start() {
     if (!pool.length) return;
@@ -729,6 +770,8 @@
   $('launch-read').onclick = () => close('launch-dialog');
   $('intro-replay').onclick = () => { if (!imagesAllowed) { pendingIntro=true; askForImages(false); } else void launchGallery(); };
   $('intro-skip').onclick = () => finishIntro({enterGame:true});
+  $('intro-loading-skip').onclick = $('intro-skip').onclick;
+  $('intro-retry').onclick = () => { finishIntro(); void launchGallery(); };
   $('intro-sound').onclick = () => {
     if (introAudio.paused) { introSoundEnabled = true; startIntroAudio(); }
     else { introSoundEnabled = false; introAudio.pause(); $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); }
@@ -803,9 +846,8 @@
       if (state) save(); else saveProgress();
       $('open-save').disabled = false;
       refreshBadges(); refreshHistory();
-      $('best').textContent = number(best); heroImages();
+      $('best').textContent = number(best); prepareLaunch(); heroImages();
       if (state && imagesAllowed) render();
-      prepareLaunch();
     }).catch(() => {
       $('start-game').textContent = $('start-here').textContent = 'Archiv nicht erreichbar';
       $('waiting').querySelector('p').textContent = 'Das lokale Werkarchiv konnte nicht geladen werden. Bitte lade die veröffentlichte Seite erneut. Eine direkt als Datei geöffnete Kopie benötigt einen Webserver.';
