@@ -152,7 +152,47 @@ Abgebrochene Gesten und das Schließen setzen die Kontaktpunkte zurück.
 Plus/Minus, Scrollen und Tastatur bleiben nutzbar. `touch-action: none` gilt nur
 für die Bildfläche; das normale Zoomen der Webseite wird nicht global gesperrt.
 
-## Wartung
+## Persönliche Galerie und Kunstfilm
+
+Nach vollständig gewonnenen Räumen lassen sich ihre vier Werke mit dem Herz
+als Lieblingswerke merken. Verlorene und laufende Räume erlauben keine neuen
+Likes. Die Galerieprüfung verknüpft jedes Lieblingswerk mit einer gespeicherten
+geladenen Bildbegegnung und einer vollständig richtigen Raumprüfung. Das ist
+eine nachvollziehbare Belohnung, keine fälschungssichere Serverleistung.
+
+Ab 20 unterschiedlichen Lieblingswerken sind Film und Editor freigeschaltet.
+Weniger als 20 (auch nach einer Entfernung) sperren beides wieder. Der Editor
+wählt ausschließlich aus der Galerie: 6–10 Werke, automatisch 8. Reihenfolge,
+Galerie-Name, Schlussmotto und individuelle Textart/Variante bleiben erhalten.
+Aus dem Film entfernte Werke bleiben in der Galerie; aus der Galerie entfernte
+Werke werden auch aus der Filmauswahl entfernt. Neue Runden löschen nichts.
+
+`kunst-filmtexte.json` enthält je zwei redaktionelle Impulse zu allen 55 Stilen
+und 26 Materialien/Techniken. Diese poetischen Einblendungen sind keine
+Bildanalyse. Alternativ sind nur Werkangaben oder eigene Texte möglich.
+Eigene Namen, Motto und Texte verlassen den Browser nicht. Es gibt keine
+KI-Anfrage für den Film, auch nicht beim Testen oder erneuten Abspielen.
+
+Der Film wartet vor dem Start auf alle decodierten ausgewählten Bilder.
+Nicht erreichbare Werke werden angezeigt, nicht stillschweigend ersetzt.
+Der bewusste Musikstart ist ein eigener Klick. Die vollständige lokale
+Suno-Orchesterfassung (128,4 Sekunden) steuert die Bildzeit über ihre echte
+Abspielposition, nicht über unabhängige Timer. Sechs Sekunden Auftakt,
+danach zuerst sämtliche Detailfahrten, dann in gleicher Reihenfolge sämtliche
+vollständigen Ansichten, zuletzt acht Sekunden Name und handschriftliches
+Motto. Unterbrechungen pausieren; keine Zeit läuft unsichtbar weiter.
+Reduzierte Bewegung erhält ruhige Bilder. Bei Musikproblemen gibt es eine
+ausdrücklich gewählte stille Variante. Anders als beim regulären Vorspann
+sind hier auch Fotografien, Skulpturen und Reliefs erlaubt.
+
+Galerie und Film-Entwurf gehören zur vorhandenen AES-GCM-JSON-Spielstandsdatei.
+Der Export enthält Bild-IDs, keine Bilder, Musik oder Videodatei. Ältere Dateien
+ohne Galerie löschen die vorhandene Sammlung nicht. Neuere Importe vereinigen
+die Lieblingswerke und übernehmen nach Bestätigung die Filmgestaltung der
+Datei. Beschädigte Sammlungen werden nicht still überschrieben. Eigene Texte
+erscheinen über `textContent`, niemals als ausgeführtes HTML.
+
+## Wartung des Werkbestands
 
 Die ursprünglichen 1000 Werkdatensätze bleiben vollständig und unverändert
 erhalten. `expansion` dokumentiert die 505 zusätzlichen IDs und den SHA-256

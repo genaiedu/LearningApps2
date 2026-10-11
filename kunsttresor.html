@@ -6,7 +6,7 @@
   <title>Kunsttresor · Die Galerie der verschlossenen Türen</title>
   <link rel="preload" href="../LearningApps/fonts/dancing-script-v29-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/typografie/firasans/FiraSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles/kunsttresor.css?v=20261011-kunstformen">
+  <link rel="stylesheet" href="styles/kunsttresor.css?v=20261011-galeriefilm">
   <link rel="stylesheet" href="styles/wikipedia-math.css">
   <link rel="stylesheet" href="styles/app-editorial.css?v=20261011-heading-air">
   <script defer src="scripts/kunsttresor-core.js?v=20261011-kunstformen"></script>
@@ -15,10 +15,12 @@
   <script defer src="scripts/kunsttresor-ki-config.js?v=20261011-ki-kurator"></script>
   <script defer src="scripts/kunsttresor-progress.js?v=20261011-abzeichen"></script>
   <script defer src="scripts/kunsttresor-history.js?v=20261011-kunstformen-2"></script>
-  <script defer src="scripts/kunsttresor-save.js?v=20261011-bildhistorie"></script>
+  <script defer src="scripts/kunsttresor-gallery.js?v=20261011-galeriefilm"></script>
+  <script defer src="scripts/kunsttresor-gallery-ui.js?v=20261011-galeriefilm"></script>
+  <script defer src="scripts/kunsttresor-save.js?v=20261011-galeriefilm"></script>
   <script defer src="scripts/kunsttresor-zoom.js?v=20261009-pinch"></script>
   <script defer src="scripts/kunsttresor-intro.js?v=20261011-vorspann-bereit"></script>
-  <script defer src="scripts/kunsttresor.js?v=20261011-kunstformen"></script>
+  <script defer src="scripts/kunsttresor.js?v=20261011-galeriefilm"></script>
   <script defer src="scripts/wikipedia-math.js"></script>
   <script defer src="scripts/schroedinger-wikipedia.js"></script>
 </head>
@@ -36,6 +38,18 @@
       <div class="score-strip"><div><span>Geöffnete Räume</span><b id="escaped">00</b></div><div><span>Dein Rekord</span><b id="best">00</b></div><div class="attempt-block"><span>Verfügbare Versuche</span><div id="attempts" aria-label="Zwei Versuche verfügbar"><i></i><i></i></div></div><div class="room-progress"><span id="filled-label">0 / 16 zugeordnet</span><div class="progress-track"><i id="filled-bar"></i></div></div></div>
       <p class="small" id="archive-update" role="status" hidden></p>
       <p class="progress-notice" id="progress-notice" role="status" aria-live="polite" hidden></p>
+      <div class="gallery-reward"><div><h3>Deine Lieblingswerke. Dein Kunstfilm.</h3><p id="gallery-progress" role="status" aria-live="polite">Nach gewonnenen Räumen kannst du Werke mit dem Herz sammeln. Ab 20 Lieblingswerken wird dein eigener Kunstfilm freigeschaltet.</p></div><button id="open-gallery" type="button" aria-haspopup="dialog" disabled>Meine Galerie <span id="gallery-count">0</span></button></div>
+      <dialog id="gallery-dialog" class="gallery-dialog" aria-labelledby="gallery-title">
+        <div class="dialog-head"><div><p class="eyebrow">Mit deinem Blick gesammelt</p><h2 id="gallery-title">Deine persönliche Galerie.</h2></div><button type="button" data-close="gallery-dialog">Schließen ×</button></div>
+        <p>Nach einem gewonnenen Raum kannst du seine vier Werke mit dem Herz markieren. Auch Fotografien, Skulpturen und Reliefs gehören hierher. Deine Galerie bleibt über neue Runden hinweg erhalten.</p><p id="gallery-summary" class="gallery-summary"></p>
+        <div class="gallery-actions"><button id="gallery-edit-open" type="button" disabled>Film gestalten</button><button id="gallery-play" class="primary" type="button" disabled>Kunstfilm vorbereiten</button><button id="gallery-export" type="button">Galerie &amp; Film als JSON sichern</button></div><p id="gallery-status" role="status" aria-live="polite" class="small"></p><div id="gallery-grid" class="gallery-grid"></div>
+        <section id="gallery-editor" class="gallery-editor" hidden aria-labelledby="gallery-edit-title"><p class="eyebrow">Dein Schnitt. Deine Worte.</p><h2 id="gallery-edit-title">Ein Film aus deiner Sammlung.</h2><p>6 bis 10 Werke geben Details und vollständigen Ansichten Raum. Zuerst siehst du alle Detailfahrten, danach nacheinander alle vollständigen Werke. Die Orchesterfassung läuft ganz: rund 2 Minuten 8 Sekunden. Der Film wird hier abgespielt; die JSON-Datei speichert deine Auswahl und Gestaltung, keine Videodatei.</p><div class="gallery-name-fields"><label>Name deiner Galerie<input id="gallery-name" type="text" maxlength="80" autocomplete="off"></label><label>Handschriftliches Schlussmotto<textarea id="gallery-motto" maxlength="180" rows="3"></textarea></label></div><button id="gallery-auto" type="button">8 Lieblingswerke zusammenstellen</button><p id="film-selection-count" class="small"></p><ol id="film-selection" class="film-selection"></ol><p class="small">Du kannst oben weitere gelikte Werke hinzufügen. Entfernen aus dem Film lässt das Werk in deiner Galerie. Alle Änderungen werden automatisch im Browser und beim JSON-Export gespeichert. Einblendungen sind redaktionelle Impulse zu Stil und Material, keine automatische Bildanalyse; eigene Texte bleiben ebenfalls lokal. Die Musik stammt wie im Vorspann aus der Fugen-App. Reduzierte Bewegung ersetzt die Kamerafahrt durch ruhige Ansichten.</p></section>
+      </dialog>
+      <dialog id="gallery-film-dialog" class="gallery-film-dialog" aria-label="Dein persönlicher Kunstfilm">
+        <div id="gallery-film-stage" class="gallery-film-stage" aria-hidden="true"></div><div class="gallery-film-shade" aria-hidden="true"></div><div class="gallery-film-tools"><button id="gallery-film-pause" type="button" hidden>Pause</button><button id="gallery-film-sound" type="button" hidden aria-pressed="true">Musik aus</button><button id="gallery-film-stop" type="button">Zur Galerie ×</button></div>
+        <div id="gallery-film-loading" class="gallery-film-loading"><svg class="intro-hourglass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h14M5 21h14M6 3v3a6 6 0 0 0 3 5l3 1 3-1a6 6 0 0 0 3-5V3M6 21v-3a6 6 0 0 1 3-5l3-1 3 1a6 6 0 0 1 3 5v3"/></svg><h2>Dein Kunstfilm.</h2><p id="gallery-film-loading-text" role="status">Die Filmbilder werden geladen …</p><div class="dialog-actions"><button id="gallery-film-start" class="primary" type="button" hidden>Film mit Musik starten</button><button id="gallery-film-silent" type="button" hidden>Bewusst ohne Musik abspielen</button><button id="gallery-film-retry" type="button" hidden>Erneut laden</button></div></div>
+        <div id="gallery-film-copy" class="gallery-film-copy" hidden><p id="gallery-film-kicker"></p><h2 id="gallery-film-heading"></h2><p id="gallery-film-motto"></p></div><p id="gallery-film-caption" class="gallery-film-caption"></p><div class="gallery-film-bottom"><progress id="gallery-film-meter" max="128.4" value="0" aria-label="Filmfortschritt"></progress><span id="gallery-film-time">0:00 / 2:08</span></div>
+      </dialog>
       <div class="waiting" id="waiting"><div class="waiting-key" aria-hidden="true">⌘</div><h3>Dein Rundgang beginnt hier.</h3><p>Die echten Kunstwerke werden erst nach deiner Zustimmung geladen. Die Abbildungen bleiben auf den Servern von Wikimedia Commons und den beteiligten Museen.</p><button class="primary" id="start-here" type="button" disabled>Archiv wird geladen …</button></div>
       <div class="review-summary" id="review-summary" hidden role="status" aria-live="polite"><h3 id="review-title"></h3><p id="review-help"></p><p class="chronology-hint" id="chronology-hint" hidden></p></div>
       <div class="art-grid" id="art-grid" hidden></div>

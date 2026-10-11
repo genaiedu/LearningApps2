@@ -2,6 +2,16 @@
   'use strict';
   const $ = id => document.getElementById(id), core = window.KunstTresor, curator = window.KunstKurator;
   const progress = window.KunstProgress, transfers = window.KunstSave, history = window.KunstHistory;
+  const galleryModel=window.KunstGallery, galleryKey='kunsttresor-gallery-v1';
+  let personalGallery=galleryModel.fresh(), galleryUI=null, galleryBlocked=false;
+  function saveGallery(value) {
+    if(galleryBlocked)throw Error('Die gespeicherte Galerie konnte nicht gelesen werden. Sie wird nicht überschrieben; lade bitte eine gültige Spielstandsdatei.');
+    rememberWork();
+    const checked=galleryModel.restore(value,pool,workHistory);
+    if(!checked)throw Error('Diese Galerieänderung ist ungültig. Dein bisheriger Stand bleibt erhalten.');
+    personalGallery=checked;
+    if(!store.set(galleryKey,JSON.stringify(personalGallery)))storageWarning();
+  }
   // Renew image consent: new CC0 photographs are served by the museums, too.
   const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', history:'kunsttresor-history-v1', images:'kunsttresor-images-v2', hero:'kunsttresor-hero-v1'};
   const labels = {date:'Entstehungszeit', style:'Stil / Tradition', artist:'Künstler', technique:'Material / Technik'};
@@ -125,7 +135,8 @@
     try {
       save();
       if(historyBlocked)throw Error('Die vorhandene Bildhistorie ist beschädigt. Sie wird durch eine neue Datei nicht überschrieben.');
-      const payload = {app:transfers.APP,version:transfers.VERSION,savedAt:Date.now(),state,best,progress:playerProgress,history:workHistory};
+      if(galleryBlocked)throw Error('Die vorhandene Galerie ist beschädigt. Sie wird durch eine neue Datei nicht überschrieben.');
+      const payload = {app:transfers.APP,version:transfers.VERSION,savedAt:Date.now(),state,best,progress:playerProgress,history:workHistory,gallery:personalGallery};
       transfers.validate(payload,pool,archiveReplacements,core,progress,history);
       const text = await transfers.encode(payload), blob = new Blob([text],{type:'application/json'}), url = URL.createObjectURL(blob);
       const link = node('a'); link.href = url; link.download = 'kunsttresor-' + new Date().toISOString().replace(/[:.]/g,'-') + '.json';
@@ -150,6 +161,7 @@
       const earned = progress.collection(candidate.progress).filter(badge=>badge.earned).length;
       $('import-description').textContent = new Date(candidate.savedAt).toLocaleString('de-DE') + ' · ' + phase + ' · ' + (candidate.state?.escaped || 0) + ' geöffnete Räume · Rekord ' + candidate.best + ' · ' + earned + ' Abzeichen · ' + candidate.history.rooms.length + ' Räume in der Bildhistorie.' + (candidate.legacyHistory ? ' Diese ältere Datei enthält noch keine Bildhistorie; dein vorhandener Verlauf bleibt erhalten.' : '') + (candidate.updated ? ' Der Raum wird an das aktualisierte Werkarchiv angepasst.' : '');
       $('save-status').textContent = 'Datei und Inhalt sind geprüft. Übernehmen wird erst mit deiner Bestätigung wirksam.';
+      $('import-description').textContent+=' '+candidate.gallery.liked.length+' Lieblingswerke.'+(candidate.legacyGallery?' Diese ältere Datei enthält keine Galerie; deine vorhandene Sammlung und Filmgestaltung bleiben erhalten.':' Deine Lieblingswerke werden zusammengeführt; die Filmgestaltung dieser Datei wird übernommen.');
       $('import-preview').hidden = false;
     } catch (error) { if (epoch === fileEpoch) $('save-status').textContent = error.message; }
     finally { setTransferBusy(false); }
@@ -158,7 +170,9 @@
     if (!pendingImport || transferBusy) return;
     try {
       const candidate = pendingImport, merged = progress.merge(playerProgress,candidate.progress), mergedHistory=history.merge(workHistory,candidate.history), nextBest = Math.max(best,candidate.best);
-      const entries = [[keys.game,candidate.state ? JSON.stringify(candidate.state) : null],[keys.best,String(nextBest)],[keys.progress,JSON.stringify(merged)],[keys.history,JSON.stringify(mergedHistory)]];
+      const mergedGallery=candidate.legacyGallery?personalGallery:galleryBlocked?candidate.gallery:galleryModel.merge(personalGallery,candidate.gallery);
+      if(!galleryModel.restore(mergedGallery,pool,mergedHistory))throw Error('Die zusammengeführte Galerie ist ungültig.');
+      const entries = [[keys.game,candidate.state ? JSON.stringify(candidate.state) : null],[keys.best,String(nextBest)],[keys.progress,JSON.stringify(merged)],[keys.history,JSON.stringify(mergedHistory)],...(!candidate.legacyGallery?[[galleryKey,JSON.stringify(mergedGallery)]]:[])];
       const old = entries.map(([key])=>[key,store.get(key)]);
       try {
         for (const [key,value] of entries) {
@@ -169,7 +183,9 @@
         throw error;
       }
       finishIntro(); close('result-dialog');
+      galleryUI?.stopFilm();
       state = candidate.state; best = nextBest; playerProgress = merged; workHistory=mergedHistory;historyBlocked=false;pendingImport = null;
+      personalGallery=mergedGallery;if(!candidate.legacyGallery)galleryBlocked=false;galleryUI?.refresh();
       aiClient?.clear(); refreshHistory();
       $('import-preview').hidden = true; $('archive-update').hidden = true;
       refreshBadges(); render();
@@ -186,6 +202,7 @@
     imageTimers.forEach(clearTimeout); imageTimers.clear();
     document.querySelectorAll('.mini-frame img, #art-grid img, #solutions img, #zoom-image').forEach(img => { img.removeAttribute('src'); if (img.id !== 'zoom-image') img.remove(); });
     ready.clear(); failed.clear(); close('image-dialog'); close('solution-dialog'); close('art-glossary-dialog');
+    if(!imagesAllowed)galleryUI?.stopImages();
   }
   function heroImages() {
     if (!imagesAllowed || !pool.length) return;
@@ -361,6 +378,7 @@
     save(); if (imagesAllowed) { render(); toGame(); } else askForImages(true);
   }
   function update() {
+    galleryUI?.refresh();
     $('best').textContent = number(best);
     if (!state) {
       $('room-kicker').textContent = 'Die Galerie wartet'; $('game-title').textContent = 'Der erste Schlüssel.';
@@ -477,7 +495,7 @@
         select.setAttribute('aria-describedby',result.id);
         label.append(select,result); assignments.append(label);
       }
-      card.append(heading,picture,assignments); $('art-grid').append(card); loadWorkImage(work,picture,epoch);
+      card.append(heading,picture,galleryUI.likeButton(id),assignments); $('art-grid').append(card); loadWorkImage(work,picture,epoch);
     });
     $('lock-title').textContent = state.phase === 'unlocked' ? 'Der Schlüssel passt.' : state.phase === 'lost' ? 'Das Schloss bleibt zu.' : 'Das Schloss wartet auf deinen Schlüssel.';
     $('feedback').textContent = state.phase === 'unlocked' ? 'Alle 16 Zuordnungen stimmen. Erfahre mehr über die Werke – oder gehe in den nächsten Raum.' : state.phase === 'lost' ? 'Auch der zweite Versuch war nicht vollständig richtig. Die Runde ist beendet. Du kannst jetzt alle Zuordnungen nachlesen.' : state.attempts === 1 ? 'Der erste Prüfversuch war nicht vollständig richtig. Du hast noch genau einen Versuch. Prüfe deine Zuordnungen sorgfältig.' : 'Ordne erst alle 16 Antworten zu. Die Auswahl allein zählt noch nicht als Versuch.';
@@ -648,6 +666,7 @@
       overview.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,core.galleryTitle(work)));
       if (core.galleryTitle(work)!==work.title) overview.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
       const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); overview.append(list);
+      overview.append(galleryUI.likeButton(id));
       card.append(overview,renderCurator(work));
       sources.append(node('p','small','Quellenangabe zu Material / Technik: ' + work.medium + '. ' + (work.styleSource?.startsWith('Redaktion') ? 'Einordnung: ' + work.styleSource : 'Dokumentierter Stil: ' + work.styleOriginal) + '.'));
       if(work.dateOriginal && work.dateOriginal!==work.date) sources.append(node('p','small','Originale Datierungsangabe der Werkquelle: '+work.dateOriginal+'.'));
@@ -679,6 +698,7 @@
       sources.append(links); card.append(sources); $('solutions').append(card);
     });
     open('solution-dialog');
+    galleryUI.refresh();
     void requestAI();
   }
   function resetAIReading() {
@@ -819,8 +839,9 @@
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
   const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261011-kunstformen',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
-  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261011-kunstformen',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest])
-    .then(([data,media,wiki,landmarks,titles,knowledge]) => {
+  const filmTextRequest=fetch('data/kunst-filmtexte.json?v=20261011-galeriefilm',{credentials:'same-origin'}).then(response=>response.ok?response.json():null).catch(()=>null);
+  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261011-kunstformen',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest,filmTextRequest])
+    .then(([data,media,wiki,landmarks,titles,knowledge,filmTexts]) => {
       wikiCatalogue = wiki;
       archiveReplacements = data.replacements || [];
       artKnowledge=knowledge;
@@ -841,6 +862,11 @@
         }
       } catch { state = null; }
       if (!state) store.remove(keys.game);
+      const storedGallery=store.get(galleryKey);
+      if(storedGallery!==null){try{const restored=galleryModel.restore(JSON.parse(storedGallery),pool,workHistory);if(!restored)throw Error();personalGallery=restored;}catch{galleryBlocked=true;storageWarning();$('progress-notice').textContent='Deine gespeicherte Galerie konnte nicht gelesen werden und wird nicht überschrieben. Lade bitte eine gültige Spielstandsdatei.';}}
+      galleryUI=window.KunstGalleryUI.create({pool,getGallery:()=>personalGallery,setGallery:saveGallery,getState:()=>state,imagesAllowed:()=>imagesAllowed,requestImages:()=>askForImages(false),showImage:work=>showImage(work),stopIntro:finishIntro,saveFile:async()=>{await exportSave();return $('save-status').textContent;},texts:filmTexts});
+      galleryUI.refresh();$('open-gallery').disabled=false;
+      $('save-dialog').querySelector(':scope > p').textContent='Der Browser merkt sich deinen Raum automatisch. Als JSON-Datei nimmst du Zuordnungen, verbrauchte Versuche, Rekord, Abzeichen, Bildhistorie, Lieblingswerke und deine vollständige Filmgestaltung mit auf ein anderes Gerät.';
       $('pool-count').textContent = pool.length;
       $('intro-count').textContent = pool.length;
       $('archive-count').textContent = pool.length.toLocaleString('de-DE');

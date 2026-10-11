@@ -37,7 +37,7 @@
     try { return JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(plain)); }
     catch { throw Error('Der gespeicherte Inhalt ist ungültig.'); }
   }
-  function validate(payload, pool, replacements, core, progress, history=root.KunstHistory || (typeof require==='function' ? require('./kunsttresor-history.js') : null)) {
+  function validate(payload, pool, replacements, core, progress, history=root.KunstHistory || (typeof require==='function' ? require('./kunsttresor-history.js') : null), gallery=root.KunstGallery || (typeof require==='function' ? require('./kunsttresor-gallery.js') : null)) {
     if (!payload || payload.app !== APP || payload.version !== VERSION || !Number.isSafeInteger(payload.savedAt) || payload.savedAt < 0 || payload.savedAt > Date.now()+300000 || !progress.integer(payload.best)) throw Error('Die Spielstandsdaten sind ungültig.');
     const profile = progress.restore(payload.progress);
     const knownStyles = new Set([...pool,...replacements.map(entry=>entry.previous)].map(work=>work.style));
@@ -65,7 +65,9 @@
         state.historyToken=progress.token(); // Archive replacement is a new encounter, not a new badge win.
       }
     }
-    return {state, progress:profile, history:workHistory, legacyHistory:payload.history===undefined, best:payload.best, savedAt:payload.savedAt, updated, newRoom};
+    const collection=payload.gallery===undefined ? gallery.fresh() : gallery.restore(payload.gallery,pool,workHistory);
+    if(!collection)throw Error('Die persönliche Galerie oder die Filmauswahl passt nicht zu deinen gewonnenen Räumen.');
+    return {state, progress:profile, history:workHistory, gallery:collection, legacyGallery:payload.gallery===undefined, legacyHistory:payload.history===undefined, best:payload.best, savedAt:payload.savedAt, updated, newRoom};
   }
   const api = {APP, VERSION, MAX_FILE_BYTES, encode, decode, validate};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
