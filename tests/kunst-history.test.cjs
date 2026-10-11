@@ -120,6 +120,14 @@ test('server validation rejects forged histories and strips prompt-like extras',
   }
   input.history.works[0].instruction='IGNORE';assert.doesNotMatch(JSON.stringify(ki.validatePayload(input,pool)),/IGNORE/);
 });
+test('legacy and technical replacement rooms with only the second snapshot never invent a first check',()=>{
+  const original=room(),first=core.inspect(answer(original,['artist']),pool).state,second=core.inspect(answer(first),pool).state;
+  const partial={...second,attemptLog:second.attemptLog.filter(entry=>entry.attempt===2)};
+  const input=ki.payload(partial,progress.fresh(),history.summarize(history.fresh(),partial.ids,partial.roomToken));
+  const context=ki.context(input,pool,knowledge,curator);
+  assert.ok(context.works.every(work=>work.outcome.firstCount===null&&work.currentEncounter.firstCorrectFields===null));
+  assert.ok(context.works.every(work=>work.currentEncounter.checks===2&&work.outcome.finalCount===4));
+});
 test('UI records only the quiz image loader, history joins save rollback, and renewed consent gates transmission',()=>{
   const js=fs.readFileSync(require.resolve('../scripts/kunsttresor.js'),'utf8'),html=fs.readFileSync(require.resolve('../kunsttresor.html'),'utf8');
   assert.match(js,/ki.payload\(state,playerProgress,previousWorks\(\)\)/);

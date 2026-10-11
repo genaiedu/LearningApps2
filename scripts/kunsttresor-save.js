@@ -59,6 +59,11 @@
       state = {version:1, roomToken:state.roomToken || progress.token(), runToken:state.runToken || progress.token(), parentRoomToken:state.parentRoomToken || null, ...(state.historyToken ? {historyToken:state.historyToken} : {}), ids:state.ids, options:state.options,
         choices:Object.fromEntries(state.ids.map(id=>[id,Object.fromEntries(core.fields.filter(field=>state.choices[id]?.[field]).map(field=>[field,state.choices[id][field]]))])),
         attemptLog:state.attemptLog || [], attempts:state.attempts, escaped:state.escaped, phase:state.phase, recent:state.recent, review:state.review};
+      const recorded=workHistory.rooms.find(entry=>entry.id===(state.historyToken||state.roomToken));
+      if(recorded && JSON.stringify(recorded.ids)!==JSON.stringify(state.ids)) {
+        if(!updated)throw Error('Der gespeicherte Raum widerspricht der Bildhistorie.');
+        state.historyToken=progress.token(); // Archive replacement is a new encounter, not a new badge win.
+      }
     }
     return {state, progress:profile, history:workHistory, legacyHistory:payload.history===undefined, best:payload.best, savedAt:payload.savedAt, updated, newRoom};
   }

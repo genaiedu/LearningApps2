@@ -39,11 +39,12 @@
     if (allCorrect !== (room.phase==='unlocked')) throw Error('phase');
     if (!Array.isArray(room.attemptLog) || room.attemptLog.length>2) throw Error('history');
     const attemptLog=room.attemptLog.map((entry,index)=> {
-      if (entry.attempt!==index+1 || entry.attempt>room.attempts) throw Error('attempt');
+      if (![1,2].includes(entry.attempt) || entry.attempt>room.attempts || index>0&&entry.attempt<=room.attemptLog[index-1].attempt) throw Error('attempt');
       return {attempt:entry.attempt,choices:checkedChoices(entry.choices)};
     });
-    if (attemptLog.length && (attemptLog.length!==room.attempts || JSON.stringify(attemptLog.at(-1).choices)!==JSON.stringify(choices))) throw Error('checked snapshot');
-    if (room.attempts===2 && attemptLog.length && works.every(work=>fields.every(field=>attemptLog[0].choices[work.id][field]===work[field]))) throw Error('unnecessary retry');
+    if (attemptLog.length && (attemptLog.at(-1).attempt!==room.attempts || JSON.stringify(attemptLog.at(-1).choices)!==JSON.stringify(choices))) throw Error('checked snapshot');
+    const first=attemptLog.find(entry=>entry.attempt===1);
+    if (room.attempts===2 && first && works.every(work=>fields.every(field=>first.choices[work.id][field]===work[field]))) throw Error('unnecessary retry');
     const history=Object.fromEntries(['wins','first','recentWins','recentFirst'].map(key=>[key,input.history[key]]));
     if (Object.values(history).some(value=>!integer(value)) || history.first>history.wins || history.recentWins>Math.min(20,history.wins) || history.recentFirst>Math.min(history.first,history.recentWins) || history.wins-history.first<history.recentWins-history.recentFirst) throw Error('statistics');
     if(input.history.works!==undefined) {
