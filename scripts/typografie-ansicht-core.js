@@ -16,7 +16,10 @@
       dark:{paper:'#291e2b',white:'#37283a',ink:'#f3eaf2',muted:'#c9b8c8',red:'#91d3ad',line:'#655068',dark:'#1e1420',cream:'#f3eaf2',surface:'#423047','page-mark':'#3f3142','button-bg':'#91d3ad','button-ink':'#2f1c2b','button-hover':'#b1e8c9','quote-bg':'#47314b','quote-mark':'#cda4c5','hero-bg':'#302234'}},
     {id:'graphite',name:'Graphit',note:'Zurückhaltende Grautöne mit kräftigem Blau als Akzent.',
       light:{paper:'#f2f2f0',white:'#fcfcfa',ink:'#2c2d2c',muted:'#5d615e',red:'#245ca8',line:'#c6ccc5',dark:'#232624',cream:'#f2f2ed',surface:'#e5e6e2','page-mark':'#dedfda','button-bg':'#245ca8','button-ink':'#ffffff','button-hover':'#19467f','quote-bg':'#e2e4df','quote-mark':'#7b837a','hero-bg':'#edede8'},
-      dark:{paper:'#242626',white:'#303333',ink:'#f1f2ee',muted:'#c2c7c1',red:'#9dc7fa',line:'#555d55',dark:'#181b18',cream:'#f1f2ee',surface:'#393e39','page-mark':'#373c37','button-bg':'#9dc7fa','button-ink':'#242824','button-hover':'#c0dcff','quote-bg':'#3c443c','quote-mark':'#b9c2b6','hero-bg':'#2a2e2a'}}
+      dark:{paper:'#242626',white:'#303333',ink:'#f1f2ee',muted:'#c2c7c1',red:'#9dc7fa',line:'#555d55',dark:'#181b18',cream:'#f1f2ee',surface:'#393e39','page-mark':'#373c37','button-bg':'#9dc7fa','button-ink':'#242824','button-hover':'#c0dcff','quote-bg':'#3c443c','quote-mark':'#b9c2b6','hero-bg':'#2a2e2a'}},
+    {id:'bordeaux',name:'Bordeaux',note:'Die Grautöne von Graphit mit dem Bordeauxrot des Schullogos als Akzent.',
+      light:{paper:'#f2f2f0',white:'#fcfcfa',ink:'#2c2d2c',muted:'#5d615e',red:'#94001c',line:'#c6ccc5',dark:'#232624',cream:'#f2f2ed',surface:'#e5e6e2','page-mark':'#dedfda','button-bg':'#94001c','button-ink':'#ffffff','button-hover':'#760016','quote-bg':'#e2e4df','quote-mark':'#7b837a','hero-bg':'#edede8'},
+      dark:{paper:'#242626',white:'#303333',ink:'#f1f2ee',muted:'#c2c7c1',red:'#f1a8b6',line:'#555d55',dark:'#181b18',cream:'#f1f2ee',surface:'#393e39','page-mark':'#373c37','button-bg':'#f1a8b6','button-ink':'#242824','button-hover':'#f7c4ce','quote-bg':'#3c443c','quote-mark':'#b9c2b6','hero-bg':'#2a2e2a'}}
   ].map(p=>Object.freeze({...p,light:Object.freeze(p.light),dark:Object.freeze(p.dark)}));
   // Chapter-related forms, not a random wallpaper. Sides alternate along the reading path.
   const chapters=[
