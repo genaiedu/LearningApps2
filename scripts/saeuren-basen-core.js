@@ -61,10 +61,10 @@
     {id:'bromthymol',name:'Bromthymolblau',low:6,high:7.6,acid:'#e5cb3c',base:'#297bc4',description:'gelb → blau (grün im Umschlag)'}
   ];
   function crossing(previous,next,targets,unitVolume){
-    return targets.some(v=>previous<=v+1e-10&&next>v+1e-10&&(next-previous)>Math.max(.05,unitVolume*.01)+1e-10);
+    return targets.some(v=>previous<=v+1e-10&&next>v+1e-10&&(next-previous)>Math.max(1e-8,unitVolume*.01)+1e-10);
   }
   function measurementsComplete(points,targets,unitVolume){
-    const band=Math.max(.05,unitVolume*.02);
+    const band=Math.max(1e-8,unitVolume*.02)+1e-10;
     return points.length>=8&&targets.every(v=>points.some(p=>p[0]<v&&v-p[0]<=band)&&points.some(p=>p[0]>v&&p[0]-v<=band))&&points[0][0]===0;
   }
   function bloodBuffer({bicarbonate=24,co2=1.2,load=1,ventilated=false}={}){

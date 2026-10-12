@@ -21,3 +21,5 @@ html[data-awaiting-consent] body>main,html[data-awaiting-consent] .app-header,ht
 .lab mjx-container svg,.lab:fullscreen mjx-container svg,.lab.fullscreen-fallback mjx-container svg{width:revert;height:revert;max-height:none;background:transparent;border:0;border-radius:0;display:inline}
 
 .flask>div{clip-path:polygon(30% 0,70% 0,96% 85%,91% 98%,9% 98%,4% 85%)}@media(max-width:650px){.flask{height:78px}}
+
+.dose-controls input{max-width:140px}.dose-controls label{font-variant-numeric:lining-nums tabular-nums}
