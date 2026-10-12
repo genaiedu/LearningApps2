@@ -25,31 +25,6 @@ button,.button,input,select,output{font-family:'Fira Sans',sans-serif;font-size:
 .dose-controls input{max-width:140px}.dose-controls label{font-variant-numeric:lining-nums tabular-nums}
 @media(max-width:650px){.tit-work{display:contents}.tit-work>#titration-chart{grid-column:1/-1;grid-row:1}.tit-layout>.apparatus{grid-column:1;grid-row:2 / span 4}.tit-work>.dose-controls,.tit-work>p,.tit-work>#tit-analysis{grid-column:2}}
 
-/* Quiet frosted glass, with opaque controls and an opaque fallback. */
-.task-card{
-  --task-glass-fill:var(--white);
-  box-shadow:0 14px 32px -24px color-mix(in srgb,var(--ink) 26%,transparent),
-    inset 0 1px 0 color-mix(in srgb,var(--white) 90%,transparent);
-}
-.task-card.is-solved{--task-glass-fill:var(--quote-bg)}
-@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .task-card,.task-card.is-solved{
-    background:linear-gradient(135deg,
-      color-mix(in srgb,var(--task-glass-fill) 82%,transparent),
-      color-mix(in srgb,var(--task-glass-fill) 66%,transparent));
-    -webkit-backdrop-filter:blur(9px) saturate(1.08);
-    backdrop-filter:blur(9px) saturate(1.08);
-  }
-  .task-card{border-color:color-mix(in srgb,var(--white) 48%,var(--line))}
-}
-@media(prefers-reduced-transparency:reduce){
-  .task-card,.task-card.is-solved{
-    background:var(--task-glass-fill);
-    -webkit-backdrop-filter:none;
-    backdrop-filter:none;
-  }
-}
-
 /* Keep the side glyphs cropped, but leave more of each form visible. */
 .station[data-mark]{--acid-mark-inset:-.10em}
 .station[data-mark]>.page-watermark{left:var(--acid-mark-inset)}
@@ -57,4 +32,3 @@ button,.button,input,select,output{font-family:'Fira Sans',sans-serif;font-size:
 html[data-marks=left] .station[data-mark]>.page-watermark{left:var(--acid-mark-inset);right:auto}
 html[data-marks=right] .station[data-mark]>.page-watermark{left:auto;right:var(--acid-mark-inset)}
 @media(max-width:650px){.station[data-mark]{--acid-mark-inset:-.07em}}
-@media print{.task-card,.task-card.is-solved{background:var(--task-glass-fill);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}}
