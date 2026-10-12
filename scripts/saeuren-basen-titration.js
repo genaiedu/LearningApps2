@@ -1,10 +1,10 @@
 (()=>{
   'use strict';
-  const C=window.AcidMission,$=id=>document.getElementById(id);
+  const C=window.AcidMission,M=window.AcidTypeset,$=id=>document.getElementById(id);
   let helpers,added=0,busy=false,timer=null,practical=null;
   const cases={hcl:{id:'hcl',c:.074,target:1,title:'Bestimme die Konzentration einer Salzsäureprobe.'},acetic:{id:'acetic',c:.086,target:1,title:'Bestimme die Konzentration einer Essigsäureprobe.'},phosphate1:{id:'phosphoric',c:.062,target:1,title:'Bestimme Phosphorsäure über den ersten Äquivalenzbereich.'},phosphate2:{id:'phosphoric',c:.062,target:2,title:'Bestimme Phosphorsäure über den zweiten Äquivalenzbereich.'}};
   const f=n=>helpers.format(n,3),tex=n=>String(Number(n.toPrecision(5))).replace(/e([+-]?\d+)/,'\\cdot10^{$1}').replace('.', '{,}');
-  const math=html=>{const el=$('tit-point-math');window.MathJax?.typesetClear?.([el]);el.innerHTML=html;window.MathJax?.typesetPromise?.([el]).catch(()=>{});};
+  const math=html=>M.replace($('tit-point-math'),html);
   function config(){const c=practical?cases[practical].c:Number($('tit-c').value),v=Number($('tit-v').value),ct=Number($('tit-ct').value);if(![c,ct].every(n=>Number.isFinite(n)&&n>=.001&&n<=.2)||!Number.isFinite(v)||v<5||v>50)return null;return{id:$('tit-substance').value,c,v,ct};}
   function spec(conf){const s=C.get(conf.id),unit=conf.c*conf.v/conf.ct;return{s,unit,max:(s.pKs?3.5:2)*unit,targets:s.pKs?[unit,2*unit]:[unit],acid:s.type.endsWith('acid')};}
   function suitable(conf,sp,v,ind){const a=C.titration({...conf,added:v-sp.unit*.015}).pH,b=C.titration({...conf,added:v+sp.unit*.015}).pH;return ind.high>=Math.min(a,b)&&ind.low<=Math.max(a,b);}
@@ -38,9 +38,9 @@
   }
   function endpoint(){
     const conf=config();if(!conf||!practical||busy)return;const sp=spec(conf),target=cases[practical].target,ind=indicator(),value=conf.ct*added/(target*conf.v),matches=suitable(conf,sp,target*sp.unit,ind),near=Math.abs(added-target*sp.unit)<=sp.unit*.015;
-    $('practical-answer').hidden=false;const el=$('practical-solution');window.MathJax?.typesetClear?.([el]);
-    el.innerHTML='<p>c₀ ist die gesuchte Anfangskonzentration der Probe, V₀ ihr Anfangsvolumen. c<sub>B</sub> ist die NaOH-Konzentration, V<sub>End</sub> der von dir gewählte Verbrauch. j ist die Anzahl der umgesetzten Protonen pro Säuremolekül; für diese Stufe gilt j = '+target+'.</p>'+calculation('j\\,c_0V_0=c_\\mathrm{B}V_\\mathrm{End},\\quad c_0\\approx\\frac{c_\\mathrm{B}V_\\mathrm{End}}{jV_0}','c_0\\approx\\frac{'+quantity(conf.ct)+'\\cdot'+quantity(added,'mL')+'}{'+target+'\\cdot'+quantity(conf.v,'mL')+'}='+quantity(value))+'<p>Aus dem gewählten Verbrauch folgt für Stufe '+target+' c₀ ≈ '+f(value)+' mol/L. Der vorgegebene Modellwert ist '+f(conf.c)+' mol/L. '+(matches?'Der Indikatorbereich liegt am gewünschten Sprung.':'Der gewählte Indikatorbereich liegt nicht am gewünschten Sprung.')+' '+(near?'Der Verbrauch liegt nahe am stöchiometrischen Punkt.':'Der Verbrauch weicht vom stöchiometrischen Punkt ab. Mit dem Schieberegler kannst du ihn ohne neuen Durchgang korrigieren.')+'</p>';
-    window.MathJax?.typesetPromise?.([el]).catch(()=>{});status('Der gewählte Verbrauch ist ausgewertet. Du kannst frei weiter untersuchen oder einen anderen Punkt wählen.');render();
+    $('practical-answer').hidden=false;const el=$('practical-solution');
+    M.replace(el,'<p>c₀ ist die gesuchte Anfangskonzentration der Probe, V₀ ihr Anfangsvolumen. c<sub>B</sub> ist die NaOH-Konzentration, V<sub>End</sub> der von dir gewählte Verbrauch. j ist die Anzahl der umgesetzten Protonen pro Säuremolekül; für diese Stufe gilt j = '+target+'.</p>'+calculation('j\\,c_0V_0=c_\\mathrm{B}V_\\mathrm{End},\\quad c_0\\approx\\frac{c_\\mathrm{B}V_\\mathrm{End}}{jV_0}','c_0\\approx\\frac{'+quantity(conf.ct)+'\\cdot'+quantity(added,'mL')+'}{'+target+'\\cdot'+quantity(conf.v,'mL')+'}='+quantity(value))+'<p>Aus dem gewählten Verbrauch folgt für Stufe '+target+' c₀ ≈ '+f(value)+' mol/L. Der vorgegebene Modellwert ist '+f(conf.c)+' mol/L. '+(matches?'Der Indikatorbereich liegt am gewünschten Sprung.':'Der gewählte Indikatorbereich liegt nicht am gewünschten Sprung.')+' '+(near?'Der Verbrauch liegt nahe am stöchiometrischen Punkt.':'Der Verbrauch weicht vom stöchiometrischen Punkt ab. Mit dem Schieberegler kannst du ihn ohne neuen Durchgang korrigieren.')+'</p>');
+    status('Der gewählte Verbrauch ist ausgewertet. Du kannst frei weiter untersuchen oder einen anderen Punkt wählen.');render();
   }
   const quantity=(n,unit='mol/L')=>tex(n)+'\\ \\mathrm{'+unit+'}';
   const calculation=(formula,substitution)=>'\\['+formula+'\\]\\['+substitution+'\\]';

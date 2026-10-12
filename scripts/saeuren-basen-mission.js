@@ -1,13 +1,13 @@
 (()=>{
   'use strict';
-  const C=window.AcidMission,T=window.AcidTasks,$=id=>document.getElementById(id),KEY='protonen-mission-v1';
+  const C=window.AcidMission,T=window.AcidTasks,M=window.AcidTypeset,$=id=>document.getElementById(id),KEY='protonen-mission-v1';
   const format=(n,d=2)=>n.toLocaleString('de-DE',{maximumFractionDigits:d}),sci=n=>n.toExponential(2).replace('.',',');
   const escape=text=>String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const seed=()=>{const x=new Uint32Array(1);crypto.getRandomValues(x);return x[0];};
   const tex=n=>String(Number(n.toPrecision(5))).replace(/e([+-]?\d+)/,'\\cdot10^{$1}').replace('.', '{,}');
   const qty=(n,u='mol/L')=>tex(n)+'\\ \\mathrm{'+u+'}';
   const calc=(formula,substitution)=>'\\['+formula+'\\]\\['+substitution+'\\]';
-  function calculationPanel(id,html){const el=$(id);window.MathJax?.typesetClear?.([el]);el.innerHTML=html;window.MathJax?.typesetPromise?.([el]).catch(()=>{});}
+  function calculationPanel(id,html){M.replace($(id),html);}
   function equilibriumMath(s,c,r){
     const acid=s.type.endsWith('acid'),weak=s.type.startsWith('weak'),sub=acid?'s':'b',ion=acid?'x':'y';
     let html='<h4>Den angezeigten Wert nachvollziehen</h4><p>c₀ ist die Anfangskonzentration der Probe. h = c(H₃O⁺) und y = c(OH⁻) sind Gleichgewichtskonzentrationen. Kₛ/pKₛ beschreiben die Säurestärke, Kᵦ/pKᵦ die Basenstärke. K<sub>w</sub> ist das Ionenprodukt des Wassers; pK<sub>w</sub> ≈ 14 bei 25 °C. Konzentrationen im Logarithmus und in den Radikaltermen werden als Zahlenwerte in mol/L eingesetzt.</p>';
@@ -44,7 +44,7 @@
     const a=resultFor(task),done=!!a.done;card.classList.toggle('is-solved',!!a.solved);
     card.querySelector('input,select').disabled=done;card.querySelector('.check-task').disabled=done;
     const feedback=card.querySelector('.task-feedback');feedback.textContent=a.solved?`✓ Gelöst im ${a.attempts}. Versuch · ${a.attempts===1?'1':'0,5'} Punkte.`:done?'Zwei Versuche genutzt · Vergleiche jetzt den Lösungsweg.':a.attempts===1?'Noch nicht richtig. Nutze den Hinweis und prüfe deinen Ansatz – ein Versuch bleibt.':'';
-    const explanation=card.querySelector('.task-solution');explanation.hidden=!done;explanation.querySelector('strong').textContent='Ergebnis: '+answerText(task);explanation.querySelector('.solution-comment').textContent=task.explanation;if(done&&task.math&&!explanation.querySelector('.math')){const block=node('div','math');block.textContent=task.math;const key=node('p','formula-key',task.symbols);explanation.prepend(key,block);window.MathJax?.typesetPromise?.([key,block]).catch(()=>{});}
+    const explanation=card.querySelector('.task-solution');explanation.hidden=!done;explanation.querySelector('strong').textContent='Ergebnis: '+answerText(task);explanation.querySelector('.solution-comment').textContent=task.explanation;if(done&&task.math&&!explanation.querySelector('.math')){const block=node('div','math');block.textContent=task.math;const key=node('p','formula-key',task.symbols);explanation.prepend(key,block);if(card.isConnected)M.typeset([key,block]);}
     card.querySelector('.task-hint').hidden=!a.hint;
   }
   function dashboard(){
@@ -57,7 +57,9 @@
     $('random-task').disabled=finished===32;
   }
   function renderTasks(){
-    const bank=new Map(T.bank(state.seed).map(t=>[t.id,t]));tasks=state.ids.map(id=>bank.get(id));window.MathJax?.typesetClear?.([$('task-groups')]);$('task-groups').replaceChildren();
+    const bank=new Map(T.bank(state.seed).map(t=>[t.id,t]));tasks=state.ids.map(id=>bank.get(id));
+    M.update($('task-groups'),()=>{
+    $('task-groups').replaceChildren();
     let index=0;
     T.groups.forEach(([g,title])=>{const section=node('section','task-group'),grid=node('div','task-grid');section.append(node('h3',null,title));
       tasks.filter(t=>t.group===g).forEach(task=>{
@@ -81,6 +83,7 @@
         updateTask(task,card);grid.append(card);
       });section.append(grid);$('task-groups').append(section);
     });dashboard();save();
+    });
   }
   function values(id,items){$(id).replaceChildren(...items.map(([title,value])=>{const box=node('div');box.append(node('small',null,title),node('strong',null,value));return box;}));}
   function fillSubstances(id){C.substances.forEach(s=>{const option=node('option',null,s.name+' · '+s.formula);option.value=s.id;$(id).append(option);});$(id).value='acetic';}

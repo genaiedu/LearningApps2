@@ -4,6 +4,9 @@ const {JSDOM}=require('jsdom'),root=path.join(__dirname,'..');
 function setup(t,saved){
   const dom=new JSDOM(fs.readFileSync(path.join(root,'saeuren-basen-mission.html'),'utf8'),{url:'https://test.invalid/LearningApps2/',runScripts:'outside-only'}),w=dom.window,q=s=>w.document.querySelector(s),timers=[];
   w.matchMedia=()=>({matches:true,addEventListener(){}});w.HTMLElement.prototype.scrollIntoView=function(){};w.MathJax={typesetClear(){},typesetPromise(){return Promise.resolve();}};
+  // These tests cover immediate UI/calculation state; the real async renderer
+  // and its startup/restore ordering are exercised in saeuren-basen-math.test.
+  w.AcidTypeset={replace(root,html){root.innerHTML=html;},update(root,write){write();},typeset(){return Promise.resolve();}};
   w.setTimeout=callback=>{timers.push(callback);return timers.length;};w.clearTimeout=()=>{};
   if(saved)w.localStorage.setItem('protonen-mission-v1',JSON.stringify(saved));
   for(const file of ['saeuren-basen-core','saeuren-basen-rechenwege','saeuren-basen-aufgaben','saeuren-basen-titration','saeuren-basen-mission','saeuren-basen-vertiefung'])w.eval(fs.readFileSync(path.join(root,'scripts',file+'.js'),'utf8'));

@@ -2,7 +2,7 @@
   'use strict';
   const C=window.AcidMission,$=id=>document.getElementById(id),f=n=>n.toLocaleString('de-DE',{maximumFractionDigits:3});
   $('blood-hint-button').onclick=()=>{$('blood-hint').hidden=false;$('blood-hint-button').disabled=true;};
-  $('blood-solution-button').onclick=()=>{$('blood-solution').hidden=!$('blood-solution').hidden;$('blood-solution-button').textContent=$('blood-solution').hidden?'Lösungsweg anzeigen':'Lösungsweg schließen';if(!$('blood-solution').hidden)window.MathJax?.typesetPromise?.([$('blood-solution')]).catch(()=>{});};
+  $('blood-solution-button').onclick=()=>{$('blood-solution').hidden=!$('blood-solution').hidden;$('blood-solution-button').textContent=$('blood-solution').hidden?'Lösungsweg anzeigen':'Lösungsweg schließen';if(!$('blood-solution').hidden)window.AcidTypeset.typeset([$('blood-solution')]);};
   function hagg(){
     const phosphate=$('hagg-system').value==='phosphoric',pKs=phosphate?[2.15,7.21,12.35]:[4.76],names=phosphate?['H₃PO₄','H₂PO₄⁻','HPO₄²⁻','PO₄³⁻']:['CH₃COOH','CH₃COO⁻'],colors=['#2875bb','#ce6343','#729b36','#ad67a4'],ct=Number($('hagg-c').value),pH=Number($('hagg-ph').value),x=p=>65+p/14*680,y=log=>390-(log+14)/14*340;
     $('hagg-label').textContent=f(pH);let svg='<rect width="800" height="470" fill="var(--white)"/>';
