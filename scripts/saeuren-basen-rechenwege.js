@@ -202,18 +202,22 @@
         'pKᵦ gehört zur gegebenen Base B, pKₛ zur gesuchten konjugierten Säure BH⁺; pK_w beschreibt das Ionenprodukt des Wassers.',
         'pH und pOH sind die angegebenen negativen normierten Logarithmen der Ionenkonzentrationen. pK_w ist der gesuchte negative normierte Logarithmus ihres Produkts.',
         'h = c(H₃O⁺), a = c(A⁻) und c(HA) sind die vorgegebenen Gleichgewichtskonzentrationen. Kₛ ist die daraus gesuchte Säurekonstante.',
-        'K_c bezeichnet die schulische Konzentrationskonstante mit Wasser im Nenner. c(H₂O) ist die nahezu konstante Wasserkonzentration; ihr Faktor wird in Kₛ aufgenommen.',
+        'HA ist die Säure, A⁻ ihre konjugierte Base, c(X) jeweils eine Gleichgewichtskonzentration. K_c gehört zum vollständigen Konzentrations-MWG der Reaktion HA + H₂O ⇌ H₃O⁺ + A⁻. c_W,ref = 55,5 mol/L ist der näherungsweise konstante Wasserwert. c(H₂O) ≈ c_W,ref ist eine sehr gute Näherung für verdünnte Lösungen; Wasser ist nicht exakt unveränderlich.',
         'h = c(H₃O⁺) ist die vorgegebene Oxoniumionen-Konzentration. K_w ist das Ionenprodukt, c(OH⁻) die gesuchte Hydroxidionen-Konzentration.',
         null,
         'pKₛ gehört zur gegebenen Säure, pKᵦ zur konjugierten Base. pK_w ist ausdrücklich der Wert bei der angegebenen anderen Temperatur.'
       ]
     };
     let symbols=specific[task.group]?.[i]||keys[task.group];
+    if(task.group==='konstanten'&&i===5){
+      formula='K_\\mathrm{c}=\\frac{c(\\mathrm{H_3O^+})c(\\mathrm{A^-})}{c(\\mathrm{HA})c(\\mathrm{H_2O})},\\quad c(\\mathrm{H_2O})\\approx c_{\\mathrm{W,ref}},\\quad K_\\mathrm{s}:=K_\\mathrm{c}c_{\\mathrm{W,ref}}';
+    }
     if(formula.includes('K_\\mathrm{w}'))symbols+=' pK_w ist der negative normierte Logarithmus des Ionenprodukts K_w. '+((task.group==='ph'&&i===6)||(task.group==='konstanten'&&i===8)?'Hier gilt der vorgegebene Temperaturwert.':'Bei 25 °C: pK_w ≈ 14, K_w = 10⁻¹⁴ (mol/L)².');
+    if(/K_|p\\}K_|pK/.test(formula))symbols+=' Die Konzentrationskonstanten enthalten den Wasserfaktor aus dem vollständigen MWG: einen Faktor für Kₛ/Kᵦ, dessen Quadrat für K_w. Dabei wird die Wasserkonzentration in verdünnten Lösungen nur näherungsweise als konstant behandelt. Das vernachlässigt noch nicht den Ionenbeitrag der Autoprotolyse.';
     if(formula.includes('\\lg'))symbols+=' Konzentrationswerte im Logarithmus werden auf 1 mol/L bezogen; pH, pOH und pK sind einheitenlos.';
     if(formula.includes('\\sqrt'))symbols+=' In den Radikaltermen werden Zahlenwerte der Konzentrationsgrößen in mol/L eingesetzt.';
-    const symbolNames={'α_Näherung':'\\alpha_\\mathrm{Näherung}','pK_w':'\\mathrm{p}K_\\mathrm{w}','K_w':'K_\\mathrm{w}','K_c':'K_\\mathrm{c}','c_A':'c_\\mathrm{A}','V_A':'V_\\mathrm{A}','c_B':'c_\\mathrm{B}','V_B':'V_\\mathrm{B}','V_Ä':'V_\\mathrm{Ä}','V_Anfang':'V_\\mathrm{Anfang}','V_Ende':'V_\\mathrm{Ende}','V_gesamt':'V_\\mathrm{gesamt}','c_verdünnt':'c_\\mathrm{verdünnt}','c_Original':'c_\\mathrm{Original}','n_B,zu':'n_{\\mathrm{B,zu}}','n_NaOH':'n_\\mathrm{NaOH}','n_Zugabe':'n_\\mathrm{Zugabe}','n_HA':'n_\\mathrm{HA}','n_A':'n_\\mathrm{A}','α_%':'\\alpha_\\%'};
-    symbols=symbols.replace(/α_Näherung|pK_w|K_w|K_c|c_A|V_Anfang|V_Ende|V_gesamt|V_A|c_B|V_B|V_Ä|c_verdünnt|c_Original|n_B,zu|n_NaOH|n_Zugabe|n_HA|n_A|α_%/g,name=>'\\('+symbolNames[name]+'\\)');
+    const symbolNames={'c_W,ref':'c_{\\mathrm{W,ref}}','α_Näherung':'\\alpha_\\mathrm{Näherung}','pK_w':'\\mathrm{p}K_\\mathrm{w}','K_w':'K_\\mathrm{w}','K_c':'K_\\mathrm{c}','c_A':'c_\\mathrm{A}','V_A':'V_\\mathrm{A}','c_B':'c_\\mathrm{B}','V_B':'V_\\mathrm{B}','V_Ä':'V_\\mathrm{Ä}','V_Anfang':'V_\\mathrm{Anfang}','V_Ende':'V_\\mathrm{Ende}','V_gesamt':'V_\\mathrm{gesamt}','c_verdünnt':'c_\\mathrm{verdünnt}','c_Original':'c_\\mathrm{Original}','n_B,zu':'n_{\\mathrm{B,zu}}','n_NaOH':'n_\\mathrm{NaOH}','n_Zugabe':'n_\\mathrm{Zugabe}','n_HA':'n_\\mathrm{HA}','n_A':'n_\\mathrm{A}','α_%':'\\alpha_\\%'};
+    symbols=symbols.replace(/c_W,ref|α_Näherung|pK_w|K_w|K_c|c_A|V_Anfang|V_Ende|V_gesamt|V_A|c_B|V_B|V_Ä|c_verdünnt|c_Original|n_B,zu|n_NaOH|n_Zugabe|n_HA|n_A|α_%/g,name=>'\\('+symbolNames[name]+'\\)');
     const rounded=['pH','pOH','pK'].includes(task.unit)?task.answer.toFixed(2).replace('.',','):Number(task.answer.toPrecision(3)).toLocaleString('de-DE',{maximumSignificantDigits:3});
     const response=['pH','pOH','pK'].includes(task.unit)?'Der gesuchte '+task.unit+'-Wert beträgt '+rounded+'.':'Die gesuchte Größe beträgt '+rounded+(task.unit?' '+task.unit:'')+'.';
     return {symbols,calculationSteps:[{formula,substitution:sub}],math:blocks(formula)+blocks(sub)+'\\[\\boxed{\\text{Ergebnis: }'+N(['pH','pOH','pK'].includes(task.unit)?Number(A.toFixed(2)):Number(A.toPrecision(3)))+unit+'}\\]',explanation:'Antwort: '+response+' '+(interpretation||'Es gelten die genannten Modellbedingungen; erst das Endergebnis runden.')};

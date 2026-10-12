@@ -89,7 +89,7 @@
 
   function balanceMath(conf,r,sp){
     const ct=r.n/r.total,titrant=r.nt/r.total;
-    let html='<h4>Welche Bilanz trägt die Kurve?</h4><p>c<sub>t</sub> ist die analytische Gesamtkonzentration der Probe im Mischungsvolumen; c<sub>Z</sub> die Konzentration des durch die Maßlösung eingebrachten Zuschauerions (Na⁺ bei NaOH, Cl⁻ bei HCl). h = c(H₃O⁺) ist die gesuchte Gleichgewichtsgröße. Wasser und alle Säureformen bleiben in der Rechnung.</p>';
+    let html='<h4>Welche Bilanz trägt die Kurve?</h4><p>c<sub>t</sub> ist die analytische Gesamtkonzentration der Probe im Mischungsvolumen; c<sub>Z</sub> die Konzentration des durch die Maßlösung eingebrachten Zuschauerions (Na⁺ bei NaOH, Cl⁻ bei HCl). h = c(H₃O⁺) ist die gesuchte Gleichgewichtsgröße. Wasser und alle Säureformen bleiben in der Rechnung.</p><p>Auch diese Bilanz verwendet die sehr gute Näherung einer annähernd konstanten Wasserkonzentration in verdünnter Lösung. Der Wasserfaktor aus dem vollständigen MWG ist in Kₛ bzw. Kᵦ aufgenommen, sein Quadrat in K<sub>w</sub>. Der Ionenbeitrag der Autoprotolyse wird dabei weiterhin berücksichtigt. Herleitungen: <a href="#ks-derivation">Kₛ</a> · <a href="#kb-derivation">Kᵦ</a> · <a href="#kw-derivation">K<sub>w</sub></a>.</p>';
     html+=calculation('c_\\mathrm{t}=\\frac{n_0}{V_\\mathrm{gesamt}},\\quad c_\\mathrm{Z}=\\frac{n_\\mathrm{Maßlösung}}{V_\\mathrm{gesamt}}','c_\\mathrm{t}='+quantity(ct)+',\\quad c_\\mathrm{Z}='+quantity(titrant));
     if(sp.s.pKs){
       html+='<p>α₀ bis α₃ sind die Anteile H₃PO₄, H₂PO₄⁻, HPO₄²⁻ und PO₄³⁻. K₁, K₂, K₃ stehen kurz für die drei Säurekonstanten in mol/L. D ist der gemeinsame Nenner; die Anteile addieren sich zu 1.</p>';
