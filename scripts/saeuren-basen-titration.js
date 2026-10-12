@@ -39,12 +39,56 @@
   function endpoint(){
     const conf=config();if(!conf||!practical||busy)return;const sp=spec(conf),target=cases[practical].target,ind=indicator(),value=conf.ct*added/(target*conf.v),matches=suitable(conf,sp,target*sp.unit,ind),near=Math.abs(added-target*sp.unit)<=sp.unit*.015;
     $('practical-answer').hidden=false;const el=$('practical-solution');window.MathJax?.typesetClear?.([el]);
-    el.innerHTML='\\['+target+'\\,c_0V_0=c_\\mathrm{B}V_\\mathrm{End}\\quad\\Longrightarrow\\quad c_0\\approx\\frac{c_\\mathrm{B}V_\\mathrm{End}}{'+target+'\\,V_0}=\\frac{'+tex(conf.ct)+'\\cdot'+tex(added)+'}{'+target+'\\cdot'+tex(conf.v)+'}='+tex(value)+'\\ \\mathrm{mol/L}\\]'+'<p>Aus dem gewählten Verbrauch folgt für Stufe '+target+' c₀ ≈ '+f(value)+' mol/L. Der vorgegebene Modellwert ist '+f(conf.c)+' mol/L. '+(matches?'Der Indikatorbereich liegt am gewünschten Sprung.':'Der gewählte Indikatorbereich liegt nicht am gewünschten Sprung.')+' '+(near?'Der Verbrauch liegt nahe am stöchiometrischen Punkt.':'Der Verbrauch weicht vom stöchiometrischen Punkt ab. Mit dem Schieberegler kannst du ihn ohne neuen Durchgang korrigieren.')+'</p>';
+    el.innerHTML='<p>c₀ ist die gesuchte Anfangskonzentration der Probe, V₀ ihr Anfangsvolumen. c<sub>B</sub> ist die NaOH-Konzentration, V<sub>End</sub> der von dir gewählte Verbrauch. j ist die Anzahl der umgesetzten Protonen pro Säuremolekül; für diese Stufe gilt j = '+target+'.</p>'+calculation('j\\,c_0V_0=c_\\mathrm{B}V_\\mathrm{End},\\quad c_0\\approx\\frac{c_\\mathrm{B}V_\\mathrm{End}}{jV_0}','c_0\\approx\\frac{'+quantity(conf.ct)+'\\cdot'+quantity(added,'mL')+'}{'+target+'\\cdot'+quantity(conf.v,'mL')+'}='+quantity(value))+'<p>Aus dem gewählten Verbrauch folgt für Stufe '+target+' c₀ ≈ '+f(value)+' mol/L. Der vorgegebene Modellwert ist '+f(conf.c)+' mol/L. '+(matches?'Der Indikatorbereich liegt am gewünschten Sprung.':'Der gewählte Indikatorbereich liegt nicht am gewünschten Sprung.')+' '+(near?'Der Verbrauch liegt nahe am stöchiometrischen Punkt.':'Der Verbrauch weicht vom stöchiometrischen Punkt ab. Mit dem Schieberegler kannst du ihn ohne neuen Durchgang korrigieren.')+'</p>';
     window.MathJax?.typesetPromise?.([el]).catch(()=>{});status('Der gewählte Verbrauch ist ausgewertet. Du kannst frei weiter untersuchen oder einen anderen Punkt wählen.');render();
   }
+  const quantity=(n,unit='mol/L')=>tex(n)+'\\ \\mathrm{'+unit+'}';
+  const calculation=(formula,substitution)=>'\\['+formula+'\\]\\['+substitution+'\\]';
+  function initialPoint(conf,sp){
+    const s=sp.s,acid=sp.acid,ion=acid?'x':'y';let out='';
+    if(s.type.startsWith('weak')){
+      const k=10**(-s.pK),x=C.quadratic(k,conf.c),sub=acid?'s':'b';
+      out=calculation('K_\\mathrm{'+sub+'}=10^{-\\mathrm{p}K_\\mathrm{'+sub+'}}\\ \\mathrm{mol/L}','K_\\mathrm{'+sub+'}=10^{-'+tex(s.pK)+'}\\ \\mathrm{mol/L}='+quantity(k));
+      out+=calculation(ion+'=\\frac{\\sqrt{K_\\mathrm{'+sub+'}^2+4K_\\mathrm{'+sub+'}c_0}-K_\\mathrm{'+sub+'}}2',ion+'=\\frac{\\sqrt{('+tex(k)+')^2+4\\cdot('+tex(k)+')\\cdot'+tex(conf.c)+'}-'+tex(k)+'}{2}\\ \\mathrm{mol/L}='+quantity(x));
+      out+=calculation('\\mathrm{'+(acid?'pH':'pOH')+'}=-\\lg '+ion,'\\mathrm{'+(acid?'pH':'pOH')+'}=-\\lg('+tex(x)+')='+tex(-Math.log10(x)));
+      if(!acid)out+=calculation('\\mathrm{pH}=\\mathrm{p}K_\\mathrm{w}-\\mathrm{pOH}','\\mathrm{pH}\\approx14-'+tex(-Math.log10(x))+'='+tex(14+Math.log10(x)));
+    }else{
+      out=calculation('\\mathrm{'+(acid?'pH':'pOH')+'}\\approx-\\lg c_0','\\mathrm{'+(acid?'pH':'pOH')+'}\\approx-\\lg('+tex(conf.c)+')='+tex(-Math.log10(conf.c)));
+      if(!acid)out+=calculation('\\mathrm{pH}=\\mathrm{p}K_\\mathrm{w}-\\mathrm{pOH}','\\mathrm{pH}\\approx14-'+tex(-Math.log10(conf.c))+'='+tex(14+Math.log10(conf.c)));
+    }
+    return out;
+  }
+  function excessPoint(sp,q,n0,nt,total,multiplier=1){
+    const ion=(q<1?sp.acid:!sp.acid)?'H_3O^+':'OH^-',rest=Math.abs(nt-multiplier*n0),c=rest/total;
+    let out=calculation('c(\\mathrm{'+ion+'})\\approx\\frac{|n_\\mathrm{Maßlösung}-'+(multiplier===1?'':multiplier)+'n_0|}{V_\\mathrm{gesamt}}','c(\\mathrm{'+ion+'})\\approx\\frac{|'+quantity(nt,'mol')+'-'+quantity(multiplier*n0,'mol')+'|}{'+quantity(total,'L')+'}='+quantity(c));
+    out+=ion==='OH^-'?calculation('\\mathrm{pH}=\\mathrm{p}K_\\mathrm{w}+\\lg c(\\mathrm{OH^-})','\\mathrm{pH}\\approx14+\\lg('+tex(c)+')='+tex(14+Math.log10(c))):calculation('\\mathrm{pH}=-\\lg c(\\mathrm{H_3O^+})','\\mathrm{pH}=-\\lg('+tex(c)+')='+tex(-Math.log10(c)));
+    return out;
+  }
+  function phosphatePoint(conf,sp,q,n0,nt,total){
+    const ks=sp.s.pKs,j=Math.round(q);let out='<p>Die Indizes s1, s2 und s3 bezeichnen die drei Protonenabgaben. c_P ist die gesamte Phosphat-Konzentration aller Formen. j bezeichnet die betrachtete Stufe; r ihr stöchiometrisches Verhältnis aus deprotonierter und protonierter Form. Die Gleichgewichts- und Wasserbeiträge können diese Mengenrechnung merklich verändern.</p>';
+    if(q===0)return out+initialPoint(conf,{...sp,s:{...sp.s,type:'weak-acid',pK:ks[0]}});
+    if(j>=1&&j<=2&&Math.abs(q-j)<.001){
+      return out+calculation('\\mathrm{pH}\\approx\\frac{\\mathrm{p}K_{\\mathrm{s}'+j+'}+\\mathrm{p}K_{\\mathrm{s}'+(j+1)+'}}2','\\mathrm{pH}\\approx\\frac{'+tex(ks[j-1])+'+'+tex(ks[j])+'}{2}='+tex((ks[j-1]+ks[j])/2));
+    }
+    if(Math.abs(q-3)<1e-6){
+      const c=n0/total,k=C.KW/10**(-ks[2]),y=C.quadratic(k,c);
+      out+=calculation('c_\\mathrm{P}=\\frac{n_0}{V_\\mathrm{gesamt}}','c_\\mathrm{P}=\\frac{'+quantity(n0,'mol')+'}{'+quantity(total,'L')+'}='+quantity(c));
+      out+=calculation('K_{\\mathrm{b3}}=\\frac{K_\\mathrm{w}}{K_{\\mathrm{s3}}}','K_{\\mathrm{b3}}=\\frac{10^{-14}\\ (\\mathrm{mol/L})^2}{'+quantity(10**(-ks[2]))+'}='+quantity(k));
+      out+=calculation('y=\\frac{\\sqrt{K_{\\mathrm{b3}}^2+4K_{\\mathrm{b3}}c_\\mathrm{P}}-K_{\\mathrm{b3}}}2','y=\\frac{\\sqrt{('+tex(k)+')^2+4\\cdot('+tex(k)+')\\cdot'+tex(c)+'}-'+tex(k)+'}{2}\\ \\mathrm{mol/L}='+quantity(y));
+      out+=calculation('\\mathrm{pOH}=-\\lg y','\\mathrm{pOH}=-\\lg('+tex(y)+')='+tex(-Math.log10(y)));
+      return out+calculation('\\mathrm{pH}=\\mathrm{p}K_\\mathrm{w}-\\mathrm{pOH}','\\mathrm{pH}\\approx14-'+tex(-Math.log10(y))+'='+tex(14+Math.log10(y)));
+    }
+    if(q<3){
+      const j=Math.floor(q)+1,ratio=(nt-(j-1)*n0)/(j*n0-nt);
+      out+=calculation('r=\\frac{n_\\mathrm{Maßlösung}-(j-1)n_0}{jn_0-n_\\mathrm{Maßlösung}}','r=\\frac{'+quantity(nt,'mol')+'-('+j+'-1)\\cdot'+quantity(n0,'mol')+'}{'+j+'\\cdot'+quantity(n0,'mol')+'-'+quantity(nt,'mol')+'}='+tex(ratio));
+      return out+calculation('\\mathrm{pH}\\approx\\mathrm{p}K_{\\mathrm{s}'+j+'}+\\lg r','\\mathrm{pH}\\approx'+tex(ks[j-1])+'+\\lg('+tex(ratio)+')='+tex(ks[j-1]+Math.log10(ratio)));
+    }
+    return out+excessPoint(sp,q,n0,nt,total,3);
+  }
+
   function pointMath(conf,r,sp){const s=sp.s,q=added/sp.unit,n0=conf.c*conf.v/1000,nt=conf.ct*added/1000,total=(conf.v+added)/1000;let formula='';
-    if(s.pKs){const j=Math.round(q);if(q===0)formula=String.raw`\[h\approx\frac{\sqrt{K_{\mathrm{s1}}^2+4K_{\mathrm{s1}}c_0}-K_{\mathrm{s1}}}{2},\qquad\mathrm{pH}=-\lg h\]`;else if(j>=1&&j<=2&&Math.abs(q-j)<.001)formula=String.raw`\[\mathrm{pH}\approx\frac12(\mathrm{p}K_{\mathrm{s}${j}}+\mathrm{p}K_{\mathrm{s}${j+1}})\]`;else if(Math.abs(q-3)<1e-6)formula=String.raw`\[c_\mathrm{P}=\frac{n_0}{V_0+V_\mathrm{B}},\quad K_{\mathrm{b3}}=\frac{K_\mathrm w}{K_{\mathrm{s3}}}\]\[y^2+K_{\mathrm{b3}}y-K_{\mathrm{b3}}c_\mathrm P=0,\quad y=\frac{\sqrt{K_{\mathrm{b3}}^2+4K_{\mathrm{b3}}c_\mathrm P}-K_{\mathrm{b3}}}{2}\]\[\mathrm{pOH}=-\lg y,\quad\mathrm{pH}=14-\mathrm{pOH}\]`;else if(q<3){const j=Math.floor(q)+1,ratio=(q-(j-1))/(j-q);if(ratio>0)formula=String.raw`\[\mathrm{pH}\approx\mathrm{p}K_{\mathrm{s}${j}}+\lg\frac{n(\text{deprotonierte Form})}{n(\text{protonierte Form})}=${tex(s.pKs[j-1])}+\lg${tex(ratio)}\]`;}else formula=String.raw`\[c(\mathrm{OH^-})\approx\frac{c_\mathrm{B}V_\mathrm B-3n_0}{V_0+V_\mathrm B}\]`;
-    }else if(added===0){formula=s.type.startsWith('weak')?String.raw`\[x=\frac{\sqrt{K^2+4Kc_0}-K}{2},\qquad ${sp.acid?'\\mathrm{pH}=-\\lg x':'\\mathrm{pOH}=-\\lg x,\\quad\\mathrm{pH}=14-\\mathrm{pOH}'}\]`:String.raw`\[${sp.acid?'\\mathrm{pH}=-\\lg c_0':'\\mathrm{pOH}=-\\lg c_0,\\quad\\mathrm{pH}=14-\\mathrm{pOH}'}\]`;
+    if(s.pKs){formula=phosphatePoint(conf,sp,q,n0,nt,total);
+    }else if(added===0){formula=initialPoint(conf,sp);
     }else if(Math.abs(q-1)<1e-6){
       if(s.type.startsWith('weak')){
         const partner=sp.acid?'A^-':'BH^+',pk=sp.acid?'b':'s',initialPk=sp.acid?'s':'b',concentration=n0/total;
@@ -59,9 +103,9 @@
       else formula+=String.raw`\[\begin{aligned}&n(\mathrm{B})\approx n_0-n_\mathrm{umgesetzt}\\&=${tex(n0-nt)}\ \mathrm{mol}\\&n(\mathrm{BH^+})\approx n_\mathrm{umgesetzt}\\&=${tex(nt)}\ \mathrm{mol}\end{aligned}\]\[\frac{n(\mathrm{BH^+})}{n(\mathrm{B})}\approx\frac{${tex(nt)}}{${tex(n0-nt)}}=1\]\[\begin{aligned}\mathrm{pOH(HÄP)}&\approx\mathrm{p}K_\mathrm{b}+\lg1\\&=${tex(s.pK)}+0=${tex(s.pK)}\end{aligned}\]\[\boxed{\mathrm{pH(HÄP)}\approx14-\mathrm{p}K_\mathrm{b}=${tex(14-s.pK)}}\]`;
       formula+='<p>Das Mengenverhältnis ist näherungsweise 1 : 1. Deshalb ist lg 1 = 0. Die vollständige Bilanz darunter berücksichtigt zusätzlich die Gleichgewichtskorrekturen.</p>';
     }else if(q<1&&s.type.startsWith('weak')){formula=String.raw`\[${sp.acid?'\\mathrm{pH}':'\\mathrm{pOH}'}\approx${sp.acid?'\\mathrm{p}K_\\mathrm{s}':'\\mathrm{p}K_\\mathrm{b}'}+\lg\frac{n_\mathrm{umgesetzt}}{n_0-n_\mathrm{umgesetzt}}=${tex(s.pK)}+\lg\frac{${tex(nt)}}{${tex(n0-nt)}}\]`;if(!sp.acid)formula+=String.raw`\[\mathrm{pH}=14-\mathrm{pOH}\]`;
-    }else{const ion=(q<1?sp.acid:!sp.acid)?'H_3O^+':'OH^-';formula=String.raw`\[c(\mathrm{${ion}})\approx\frac{|n_\mathrm{Maßlösung}-n_0|}{V_\mathrm{gesamt}}=\frac{${tex(Math.abs(nt-n0))}}{${tex(total)}}=${tex(Math.abs(nt-n0)/total)}\]`+ (ion==='OH^-'?String.raw`\[\mathrm{pH}=14+\lg c(\mathrm{OH^-})\]`:String.raw`\[\mathrm{pH}=-\lg c(\mathrm{H_3O^+})\]`);}
-    const definitions='<p><strong>Bezeichnungen für diese Probe:</strong> n₀ ist die anfänglich eingesetzte Stoffmenge der '+(sp.acid?'Säure':'Base')+' ('+s.name+'). c₀ und V₀ bezeichnen deren Anfangskonzentration und Anfangsvolumen. Die Stoffmenge der Maßlösung zählt die insgesamt zugegebene '+(sp.acid?'NaOH':'HCl')+', nicht die frei im Kolben verbliebenen Ionen.</p><div class="math">\\[n_0=c_0V_0='+tex(n0)+'\\ \\mathrm{mol}\\]\\[n_\\mathrm{Maßlösung}=c_\\mathrm{Maßlösung}V_\\mathrm{zu}='+tex(nt)+'\\ \\mathrm{mol}\\]</div><p class="small">Volumina im Produkt cV in L einsetzen. V<sub>gesamt</sub> ist das Anfangsvolumen plus die Zugabe. Vor dem ÄP entspricht n<sub>umgesetzt</sub> in der vereinfachten Mengenrechnung der zugegebenen Maßlösung. <a href="#titration-symbols">Bezeichnungen und Einheiten nachlesen</a>.</p>';
-    math(definitions+'<p>Rechenansatz für diesen Punkt. Die Näherungen gelten nur bei dominierendem Stoffbeitrag und hinreichend kleinen Gleichgewichtskorrekturen.</p>'+formula+String.raw`\[\mathrm{pH}_{\mathrm{vollständige\ Bilanz}}=${tex(r.pH)}\]`+'<p>Am HÄP einer schwachen, einprotonigen Säure stammt pH ≈ pKₛ aus dem annähernd gleichen Partnerverhältnis. Bei Phosphorsäure, sehr großer Verdünnung und am Übergang zum Wasserbeitrag ist die Abweichung sichtbar. <a href="#equilibrium-lab">Im Protolyse-Labor nachprüfen</a>.</p>');
+    }else{formula=excessPoint(sp,q,n0,nt,total);}
+    const definitions='<p><strong>Bezeichnungen für diese Probe:</strong> n₀ ist die anfänglich eingesetzte Stoffmenge der '+(sp.acid?'Säure':'Base')+' ('+s.name+'). c₀ und V₀ bezeichnen deren Anfangskonzentration und Anfangsvolumen. Die Stoffmenge der Maßlösung zählt die insgesamt zugegebene '+(sp.acid?'NaOH':'HCl')+', nicht die frei im Kolben verbliebenen Ionen.</p>'+calculation('n_0=c_0V_0','n_0='+quantity(conf.c)+'\\cdot'+quantity(conf.v/1000,'L')+'='+quantity(n0,'mol'))+calculation('n_\\mathrm{Maßlösung}=c_\\mathrm{Maßlösung}V_\\mathrm{zu}','n_\\mathrm{Maßlösung}='+quantity(conf.ct)+'\\cdot'+quantity(added/1000,'L')+'='+quantity(nt,'mol'))+calculation('V_\\mathrm{gesamt}=V_0+V_\\mathrm{zu}','V_\\mathrm{gesamt}='+quantity(conf.v/1000,'L')+'+'+quantity(added/1000,'L')+'='+quantity(total,'L'))+'<p class="small">HA ist die schwache Säure, A⁻ ihre konjugierte Base; B ist eine schwache Base, BH⁺ ihre konjugierte Säure. x bzw. h bezeichnet c(H₃O⁺), y die OH⁻-Konzentration. Kₛ und pKₛ beschreiben die Säurestärke, Kᵦ und pKᵦ die Basenstärke. K<sub>w</sub> ist das Ionenprodukt des Wassers; bei 25 °C ist pK<sub>w</sub> ≈ 14. Unter dem Logarithmus und in den Radikaltermen werden Zahlenwerte der Konzentrationsgrößen in mol/L eingesetzt. Volumina im Produkt cV in L einsetzen. Vor dem ÄP entspricht n<sub>umgesetzt</sub> in der vereinfachten Mengenrechnung der zugegebenen Maßlösung. <a href="#titration-symbols">Bezeichnungen und Einheiten nachlesen</a>.</p>';
+    math(definitions+'<p>Rechenansatz für diesen Punkt. Die Näherungen gelten nur bei dominierendem Stoffbeitrag und hinreichend kleinen Gleichgewichtskorrekturen.</p>'+formula+'<p>h<sub>Bilanz</sub> ist die aus Massen-, Ladungs- und Wasserbilanz numerisch berechnete Oxoniumionen-Konzentration.</p>'+calculation('h_\\mathrm{Bilanz}=c(\\mathrm{H_3O^+})','h_\\mathrm{Bilanz}='+quantity(r.h))+calculation('\\mathrm{pH}_\\mathrm{vollständige\\ Bilanz}=-\\lg h_\\mathrm{Bilanz}','\\mathrm{pH}_\\mathrm{vollständige\\ Bilanz}=-\\lg('+tex(r.h)+')='+tex(r.pH))+'<p>Am HÄP einer schwachen, einprotonigen Säure stammt pH ≈ pKₛ aus dem annähernd gleichen Partnerverhältnis. Bei Phosphorsäure, sehr großer Verdünnung und am Übergang zum Wasserbeitrag ist die Abweichung sichtbar. <a href="#equilibrium-lab">Im Protolyse-Labor nachprüfen</a>.</p>');
   }
   function init(h){
     helpers=h;const select=$('tit-substance');select.replaceChildren();

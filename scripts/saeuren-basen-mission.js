@@ -4,6 +4,32 @@
   const format=(n,d=2)=>n.toLocaleString('de-DE',{maximumFractionDigits:d}),sci=n=>n.toExponential(2).replace('.',',');
   const escape=text=>String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const seed=()=>{const x=new Uint32Array(1);crypto.getRandomValues(x);return x[0];};
+  const tex=n=>String(Number(n.toPrecision(5))).replace(/e([+-]?\d+)/,'\\cdot10^{$1}').replace('.', '{,}');
+  const qty=(n,u='mol/L')=>tex(n)+'\\ \\mathrm{'+u+'}';
+  const calc=(formula,substitution)=>'\\['+formula+'\\]\\['+substitution+'\\]';
+  function calculationPanel(id,html){const el=$(id);window.MathJax?.typesetClear?.([el]);el.innerHTML=html;window.MathJax?.typesetPromise?.([el]).catch(()=>{});}
+  function equilibriumMath(s,c,r){
+    const acid=s.type.endsWith('acid'),weak=s.type.startsWith('weak'),sub=acid?'s':'b',ion=acid?'x':'y';
+    let html='<h4>Den angezeigten Wert nachvollziehen</h4><p>c₀ ist die Anfangskonzentration der Probe. h = c(H₃O⁺) und y = c(OH⁻) sind Gleichgewichtskonzentrationen. Kₛ/pKₛ beschreiben die Säurestärke, Kᵦ/pKᵦ die Basenstärke. K<sub>w</sub> ist das Ionenprodukt des Wassers; pK<sub>w</sub> ≈ 14 bei 25 °C. Konzentrationen im Logarithmus und in den Radikaltermen werden als Zahlenwerte in mol/L eingesetzt.</p>';
+    if(weak){
+      const k=10**(-s.pK),x=C.quadratic(k,c),approx=Math.sqrt(k*c),fraction=(acid?r.acidIon:r.baseIon)/c;
+      html+=calc('K_\\mathrm{'+sub+'}=10^{-\\mathrm{p}K_\\mathrm{'+sub+'}}\\ \\mathrm{mol/L}','K_\\mathrm{'+sub+'}=10^{-'+tex(s.pK)+'}\\ \\mathrm{mol/L}='+qty(k));
+      html+='<p>Wurzelnäherung: Anfangskonzentration statt Restkonzentration einsetzen, nur bei kleinem Umsatz und vernachlässigbarem Wasserbeitrag:</p>'+calc(ion+'\\approx\\sqrt{K_\\mathrm{'+sub+'}c_0}',ion+'\\approx\\sqrt{('+tex(k)+')\\cdot'+tex(c)+'}\\ \\mathrm{mol/L}='+qty(approx));
+      html+='<p>Quadratische Konzentrationsrechnung: Die Restkonzentration wird beibehalten, der Wasserbeitrag noch vernachlässigt:</p>'+calc(ion+'=\\frac{\\sqrt{K_\\mathrm{'+sub+'}^2+4K_\\mathrm{'+sub+'}c_0}-K_\\mathrm{'+sub+'}}2',ion+'=\\frac{\\sqrt{('+tex(k)+')^2+4\\cdot('+tex(k)+')\\cdot'+tex(c)+'}-'+tex(k)+'}{2}\\ \\mathrm{mol/L}='+qty(x));
+      html+='<p>α ist der protolysierte Anteil. Für die vollständige numerische Bilanz verwenden wir die Konzentration des tatsächlich entstandenen Partners, nicht automatisch h, denn h enthält auch den Wasserbeitrag:</p>'+calc('\\alpha=\\frac{c(\\mathrm{'+(acid?'A^-':'BH^+')+'})}{c_0}','\\alpha=\\frac{'+qty(acid?r.acidIon:r.baseIon)+'}{'+qty(c)+'}='+tex(fraction)+'='+tex(100*fraction)+'\\ \\%');
+    }else html+='<p>Für starke Partner gilt oberhalb des Wasserbeitrags näherungsweise die vollständige Bereitstellung der Ionen:</p>'+calc('c(\\mathrm{'+(acid?'H_3O^+':'OH^-')+'})\\approx c_0','c(\\mathrm{'+(acid?'H_3O^+':'OH^-')+'})\\approx'+qty(c));
+    html+='<p>Die angezeigte Hauptzahl stammt aus der vollständigen Massen-, Ladungs- und Wasserbilanz. Deren berechnete Oxoniumionen-Konzentration ist h:</p>'+calc('h=c(\\mathrm{H_3O^+})','h='+qty(r.h))+calc('\\mathrm{pH}=-\\lg h','\\mathrm{pH}=-\\lg('+tex(r.h)+')='+tex(r.pH))+calc('\\mathrm{pOH}=\\mathrm{p}K_\\mathrm{w}-\\mathrm{pH}','\\mathrm{pOH}\\approx14-'+tex(r.pH)+'='+tex(r.pOH));
+    calculationPanel('eq-calculation',html);
+  }
+  function bufferMath(s,ha,a,volume,change,r){
+    let html='<h4>Erst Mengen, dann pH</h4><p>n<sub>HA,0</sub> und n<sub>A,0</sub> sind die Anfangsmengen der Säure HA und ihrer konjugierten Base A⁻. Δn ist die vorzeichenbehaftete Zugabe: positiv für OH⁻, negativ für H₃O⁺. Der Index 1 bezeichnet die Mengen nach der Reaktion. V ist das feste Gesamtvolumen, pKₛ gehört zur gewählten Säure.</p>';
+    html+=calc('n_{\\mathrm{HA},1}=n_{\\mathrm{HA},0}-\\Delta n','n_{\\mathrm{HA},1}='+qty(ha,'mmol')+'-('+qty(change,'mmol')+')='+qty(r.remainingHA,'mmol'));
+    html+=calc('n_{\\mathrm{A},1}=n_{\\mathrm{A},0}+\\Delta n','n_{\\mathrm{A},1}='+qty(a,'mmol')+'+('+qty(change,'mmol')+')='+qty(r.remainingA,'mmol'));
+    if(!r.exhausted)html+=calc('\\mathrm{pH}_\\mathrm{HH}\\approx\\mathrm{p}K_\\mathrm{s}+\\lg\\frac{n_{\\mathrm{A},1}}{n_{\\mathrm{HA},1}}','\\mathrm{pH}_\\mathrm{HH}\\approx'+tex(s.pK)+'+\\lg\\frac{'+qty(r.remainingA,'mmol')+'}{'+qty(r.remainingHA,'mmol')+'}='+tex(r.hh));
+    else html+='<p>Mindestens ein Vorrat ist verbraucht; ein negatives Ergebnis der einfachen Mengenrechnung ist kein realer Teilchenbestand. Die Puffergleichung wird hier nicht eingesetzt.</p>';
+    html+='<p>h ist die aus der vollständigen Bilanz berechnete H₃O⁺-Konzentration. Bei sehr großem Überschuss oder Verdünnung kann der tatsächliche pH von der Mengen-Näherung abweichen. Unter dem Logarithmus steht der Zahlenwert in mol/L:</p>'+calc('h=c(\\mathrm{H_3O^+})','h='+qty(r.h))+calc('\\mathrm{pH}_\\mathrm{Bilanz}=-\\lg h','\\mathrm{pH}_\\mathrm{Bilanz}=-\\lg('+tex(r.h)+')='+tex(r.pH));
+    calculationPanel('buf-calculation',html);
+  }
   let state,tasks,storageOK=true;
   function fresh(previous=[]){const n=seed(),selected=T.select(n,previous);return {version:1,seed:n,ids:selected.map(t=>t.id),answers:{}};}
   try{const saved=JSON.parse(localStorage.getItem(KEY));if(saved?.version===1&&Number.isInteger(saved.seed)&&Array.isArray(saved.ids)&&saved.ids.length===32&&new Set(saved.ids).size===32&&saved.answers&&typeof saved.answers==='object'){
@@ -18,7 +44,7 @@
     const a=resultFor(task),done=!!a.done;card.classList.toggle('is-solved',!!a.solved);
     card.querySelector('input,select').disabled=done;card.querySelector('.check-task').disabled=done;
     const feedback=card.querySelector('.task-feedback');feedback.textContent=a.solved?`✓ Gelöst im ${a.attempts}. Versuch · ${a.attempts===1?'1':'0,5'} Punkte.`:done?'Zwei Versuche genutzt · Vergleiche jetzt den Lösungsweg.':a.attempts===1?'Noch nicht richtig. Nutze den Hinweis und prüfe deinen Ansatz – ein Versuch bleibt.':'';
-    const explanation=card.querySelector('.task-solution');explanation.hidden=!done;explanation.querySelector('strong').textContent='Ergebnis: '+answerText(task);explanation.querySelector('p').textContent=task.explanation;if(done&&task.math&&!explanation.querySelector('.math')){const block=node('div','math');block.textContent=task.math;explanation.prepend(block);window.MathJax?.typesetPromise?.([block]).catch(()=>{});}
+    const explanation=card.querySelector('.task-solution');explanation.hidden=!done;explanation.querySelector('strong').textContent='Ergebnis: '+answerText(task);explanation.querySelector('.solution-comment').textContent=task.explanation;if(done&&task.math&&!explanation.querySelector('.math')){const block=node('div','math');block.textContent=task.math;const key=node('p','formula-key',task.symbols);explanation.prepend(key,block);window.MathJax?.typesetPromise?.([key,block]).catch(()=>{});}
     card.querySelector('.task-hint').hidden=!a.hint;
   }
   function dashboard(){
@@ -46,7 +72,7 @@
         const actions=node('div','task-actions'),check=node('button','check-task primary','Prüfen'),hint=node('button',null,'Strategiehinweis');check.type='submit';hint.type='button';actions.append(check,hint);form.append(actions);
         const hintText=node('p','task-hint',task.hint);hintText.hidden=true;form.append(hintText);
         const feedback=node('p','task-feedback');feedback.setAttribute('role','status');feedback.id='feedback-'+task.id;input.setAttribute('aria-describedby',feedback.id);form.append(feedback);
-        const solution=node('div','task-solution');solution.hidden=true;solution.append(node('strong'),node('p'));card.append(form,solution);
+        const solution=node('div','task-solution');solution.hidden=true;solution.append(node('strong'),node('p','solution-comment'));card.append(form,solution);
         hint.onclick=()=>{state.answers[task.id]={...resultFor(task),hint:true};save();updateTask(task,card);};
         form.onsubmit=event=>{event.preventDefault();const previous=resultFor(task);if(previous.done)return;
           if(!input.value||(task.kind==='number'&&!Number.isFinite(C.parseNumber(input.value)))){feedback.textContent='Bitte gib zuerst eine gültige Zahl oder Auswahl ein. Das verbraucht keinen Versuch.';return;}
@@ -61,7 +87,7 @@
   fillSubstances('eq-substance');fillSubstances('tit-substance');
   function equilibrium(){
     const s=C.get($('eq-substance').value),c=10**Number($('eq-log').value),r=C.solution(s.id,c),acid=s.type.endsWith('acid'),weak=s.type.startsWith('weak');
-    $('eq-structure').textContent=s.structure||'';
+    $('eq-structure').textContent=s.structure||'';equilibriumMath(s,c,r);
     $('eq-c').textContent=sci(c)+' mol/L';$('eq-ph').textContent=format(r.pH,2);$('eq-poh').textContent='pOH '+format(r.pOH,2)+' · '+(r.pH<6.999?'sauer':r.pH>7.001?'basisch':'nahe neutral');$('eq-marker').style.left=Math.max(0,Math.min(100,r.pH/14*100))+'%';
     const fraction=weak?(acid?r.acidIon:r.baseIon)/c:1,count=Math.round(fraction*48);$('eq-particles').replaceChildren();for(let i=0;i<48;i++)$('eq-particles').append(node('i',i<count?'ion':'',i<count?(acid?'A⁻':'BH⁺'):(acid?'HA':'B')));
     $('eq-particle-caption').textContent=weak?`Protolysierter Anteil: ${format(fraction*100,2)} %. 48 Modellpunkte; unter rund 2 % ist ein einzelner Punkt bereits zu grob. Der Zahlenwert bleibt maßgeblich.`:'Im Modell praktisch vollständig umgesetzt. Für Laugen zeigt A⁻/BH⁺ hier symbolisch die vollständige Bereitstellung von OH⁻; das Hydroxid ist kein B-Molekül.';
@@ -94,7 +120,7 @@
   function buffer(){
     const s=C.get($('buf-substance').value),ha=Number($('buf-ha').value),a=Number($('buf-a').value),volume=Number($('buf-v').value),change=Number($('buf-change').value);
     if(![ha,a].every(n=>Number.isFinite(n)&&n>=.5&&n<=10)||!Number.isFinite(volume)||volume<50||volume>500){$('buf-explanation').textContent='Bitte HA und A⁻ zwischen 0,5 und 10 mmol sowie ein Volumen von 50–500 mL eingeben.';return;}
-    const conf={pKa:s.pK,ha,a,volume},r=C.buffer({...conf,change}),plain=C.solve({diff:change/volume});
+    const conf={pKa:s.pK,ha,a,volume},r=C.buffer({...conf,change}),plain=C.solve({diff:change/volume});bufferMath(s,ha,a,volume,change,r);
     $('buf-change-label').textContent=change===0?'keine Zugabe':format(Math.abs(change),1)+' mmol '+(change>0?'OH⁻':'H₃O⁺');
     const xs=Array.from({length:361},(_,i)=>-12+24*i/360),series=[{points:xs.map(n=>[n,C.buffer({...conf,change:n}).pH])},{points:xs.map(n=>[n,C.solve({diff:n/volume}).pH]),color:'#89988d',dashed:true}];
     chart('buffer-chart',{xmin:-12,xmax:12,xlabel:'Zugabe / mmol · negativ: H₃O⁺ · positiv: OH⁻',series,marker:[change,r.pH],vertical:[{at:-a,label:'A⁻-Vorrat'},{at:ha,label:'HA-Vorrat'}]});

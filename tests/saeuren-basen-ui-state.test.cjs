@@ -21,7 +21,7 @@ test('point calculations define the initial sample amount and distinguish it fro
   const {q,set}=setup(t);set('tit-substance','acetic');q('[data-point=half]').click();
   let text=q('#tit-point-math').textContent;
   assert.ok(text.indexOf('n₀ ist die anfänglich eingesetzte Stoffmenge der Säure')<text.indexOf('Rechenansatz'));
-  assert.ok(text.includes('n_0=c_0V_0=0{,}0025'));assert.ok(text.includes('V_\\mathrm{zu}=0{,}00125'));
+  assert.ok(text.includes('n_0=c_0V_0'));assert.ok(text.includes('n_0=0{,}1\\ \\mathrm{mol/L}\\cdot0{,}025\\ \\mathrm{L}=0{,}0025\\ \\mathrm{mol}'));assert.ok(text.includes('n_\\mathrm{Maßlösung}=0{,}1\\ \\mathrm{mol/L}\\cdot0{,}0125\\ \\mathrm{L}=0{,}00125\\ \\mathrm{mol}'));
   assert.ok(text.includes('nicht die frei im Kolben verbliebenen Ionen'));
   set('tit-substance','ammonia');q('[data-point=half]').click();text=q('#tit-point-math').textContent;
   assert.ok(text.includes('anfänglich eingesetzte Stoffmenge der Base'));assert.ok(text.includes('zugegebene HCl'));
@@ -87,13 +87,25 @@ test('all practice cases are selectable; phosphate consumption includes the chos
   for(const b of w.document.querySelectorAll('[data-practical]'))assert.ok(!b.disabled);
   q('[data-practical=phosphate2]').click();assert.ok(q('#tit-c-label').hidden);assert.ok(!q('#tit-endpoint').hidden);assert.ok(!q('#tit-analysis').hidden);
   set('tit-indicator','phenolphthalein');q('#tit-added').value=31;q('#tit-added').dispatchEvent(new w.Event('input'));click('tit-endpoint');
-  assert.ok(!q('#practical-answer').hidden);assert.match(q('#practical-solution').textContent,/Stufe 2/);assert.ok(q('#practical-solution').textContent.includes('2\\,V_0'));assert.ok(q('#practical-solution').textContent.includes('0{,}062'));
+  assert.ok(!q('#practical-answer').hidden);assert.match(q('#practical-solution').textContent,/Stufe 2/);assert.ok(q('#practical-solution').textContent.includes('jV_0'));assert.ok(q('#practical-solution').textContent.includes('0{,}062'));assert.ok(q('#practical-solution').textContent.includes('j = 2'));
   set('tit-indicator','bromthymol');assert.equal(q('#tit-added-label').textContent,'31 mL','indicator change must not reset volume');click('tit-endpoint');assert.match(q('#practical-solution').textContent,/nicht am gewünschten Sprung/);assert.ok(!q('#tit-add').disabled);
   q('[data-practical=phosphate1]').click();set('tit-indicator','bromocresol');q('#tit-added').value=15.5;q('#tit-added').dispatchEvent(new w.Event('input'));click('tit-endpoint');assert.match(q('#practical-solution').textContent,/Stufe 1/);
   click('tit-free');assert.ok(q('#practical-answer').hidden);assert.ok(!q('#tit-c-label').hidden);assert.ok(!q('#tit-substance').disabled);assert.ok(q('#tit-endpoint').hidden);
 });
 test('blood simplification appears only after hint request; solutions and Hagg remain separate',t=>{
   const {q,click}=setup(t);assert.ok(q('#blood-hint').hidden);assert.ok(q('#blood-solution').hidden);click('blood-hint-button');assert.ok(!q('#blood-hint').hidden);assert.match(q('#blood-hint').textContent,/starken einprotonigen Säure/);assert.ok(q('#blood-solution').hidden);click('blood-solution-button');assert.ok(!q('#blood-solution').hidden);assert.match(q('#blood-solution').textContent,/119/);assert.ok(q('#hagg-chart').querySelectorAll('path').length>10);
+});
+test('equilibrium and buffer panels explain their quantities before symbolic and numeric working',t=>{
+  const {w,q}=setup(t),setChange=value=>{q('#buf-change').value=value;q('#buf-change').dispatchEvent(new w.Event('input'));};
+  const eq=q('#eq-calculation').textContent;
+  assert.ok(eq.indexOf('c₀ ist die Anfangskonzentration')<eq.indexOf('K_\\mathrm{s}'));
+  assert.ok(eq.includes('K_\\mathrm{s}=10^{-\\mathrm{p}K_\\mathrm{s}}'));
+  assert.ok(eq.includes('\\mathrm{pH}=-\\lg h'));
+  setChange(-1);const buffer=q('#buf-calculation').textContent;
+  assert.ok(buffer.indexOf('vorzeichenbehaftete Zugabe')<buffer.indexOf('n_{\\mathrm{HA},1}'));
+  assert.ok(buffer.includes('n_{\\mathrm{HA},1}=n_{\\mathrm{HA},0}-\\Delta n'));
+  assert.ok(buffer.includes('5\\ \\mathrm{mmol}-(-1\\ \\mathrm{mmol})=6\\ \\mathrm{mmol}'));
+  setChange(12);assert.ok(q('#buf-calculation').textContent.includes('Puffergleichung wird hier nicht eingesetzt'));
 });
 
 test('free portions work at very small equivalence volumes and negative inputs stay rejected',t=>{

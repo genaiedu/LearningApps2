@@ -117,6 +117,26 @@ test('blood buffer model distinguishes closed and CO2-regulated calculation',()=
 test('every numeric task includes real mathematical solution markup',()=>{
   for(let seed=0;seed<25;seed++)for(const task of T.bank(seed).filter(t=>t.kind==='number')){assert.ok(task.math.charCodeAt(0)===92&&task.math[1]==='[',task.id);assert.ok(task.math.includes('boxed'),task.id);assert.ok(!task.math.includes('undefined'),task.id);}
 });
+test('every generated numeric solution explains symbols and puts general formulas before unit-bearing substitutions',()=>{
+  for(let seed=0;seed<12;seed++)for(const task of T.bank(seed).filter(t=>t.kind==='number')){
+    assert.ok(task.parameters,task.id);assert.ok(task.symbols.length>80,task.id);assert.ok(task.calculationSteps.length,task.id);
+    for(const {formula,substitution} of task.calculationSteps){
+      assert.ok(formula&&substitution,task.id);assert.ok(task.math.indexOf(formula.split(',\\quad ')[0])<task.math.indexOf(substitution.split(',\\quad ')[0]),task.id);
+      if(['mol/L','mL','mmol','%'].includes(task.unit))assert.match(substitution,/\\mathrm|\\%/,task.id);
+    }
+    assert.doesNotMatch(task.explanation,/\d\s*[+·/−-]\s*\d/,task.id);
+  }
+});
+test('blood, buffer and excess calculations identify symbols before numeric arithmetic',()=>{
+  const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
+  const blood=html.slice(html.indexOf('id="blutpuffer"'),html.indexOf('id="blood-task"'));
+  assert.ok(blood.indexOf('Löslichkeitskoeffizient')<blood.indexOf('0{,}0300'));
+  assert.ok(blood.indexOf('c(\\mathrm{CO_2^*})=\\alpha_{\\mathrm{CO_2}}p_{\\mathrm{CO_2}}')<blood.indexOf('0{,}0300'));
+  assert.ok(blood.includes('\\frac{\\mathrm{mmol}}{\\mathrm{L}\\cdot\\mathrm{mmHg}}'));
+  const solution=html.slice(html.indexOf('id="blood-solution"'),html.indexOf('id="hagg-lab"'));
+  for(const expression of ['n_{\\mathrm{B},0}=c_{\\mathrm{B},0}V','n_{\\mathrm{S},0}=c_{\\mathrm{S},0}V','\\Delta\\mathrm{pH}_1=\\mathrm{pH}_1-\\mathrm{pH}_0','c_{\\mathrm{B},2}=\\frac{n_{\\mathrm{B},1}}{V}'])assert.ok(solution.includes(expression),expression);
+  assert.ok(html.includes('\\Delta n=c_\\mathrm{B}V_\\mathrm{B}-n_0'));assert.ok(html.includes('id="eq-calculation"'));assert.ok(html.includes('id="buf-calculation"'));
+});
 test('new lesson has hidden milk-acid hint, diagram, four manual cases and window tools',()=>{
   const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
   for(const id of ['blood-hint','blood-solution','hagg-chart','titration-chart','tit-analysis'])assert.ok(html.includes('id="'+id+'"'));
