@@ -29,7 +29,7 @@ test('half-equivalence has its own numbered characteristic-point calculation',()
     '0{,}100\\ \\mathrm{mol/L}\\cdot0{,}0125\\ \\mathrm{L}',
     '(2{,}50-1{,}25)\\ \\mathrm{mmol}',
     '\\frac{1{,}25\\ \\mathrm{mmol}}{1{,}25\\ \\mathrm{mmol}}=1',
-    '\\boxed{\\mathrm{pH(HÄP)}\\approx\\mathrm{p}K_\\mathrm{s}=4{,}76}',
+    '\\boxed{\\mathrm{pH(HÄP)}\\approx\\mathrm{p}K_\\mathrm{S}=4{,}76}',
     'Für HCl gilt sie nicht'
   ])assert.ok(half.includes(step),step);
 });
@@ -66,14 +66,14 @@ test('Hagg distribution formulas are derived from equilibrium and the two-form m
   const derivation=html.slice(start,html.indexOf('</section>',start));
   assert.equal((derivation.match(/<li>/g)||[]).length,4);
   for(const step of [
-    'K_\\mathrm{s}=\\frac{c(\\mathrm{H_3O^+})\\cdot c(\\mathrm{A^-})}{c(\\mathrm{HA})}',
-    'c(\\mathrm{A^-})=\\frac{K_\\mathrm{s}}{c(\\mathrm{H_3O^+})}\\cdot c(\\mathrm{HA})',
+    'K_\\mathrm{S}=\\frac{c(\\mathrm{H_3O^+})\\cdot c(\\mathrm{A^-})}{c(\\mathrm{HA})}',
+    'c(\\mathrm{A^-})=\\frac{K_\\mathrm{S}}{c(\\mathrm{H_3O^+})}\\cdot c(\\mathrm{HA})',
     'c_\\mathrm{ges}=c(\\mathrm{HA})+c(\\mathrm{A^-})',
-    'c(\\mathrm{HA})\\cdot \\left(1+\\frac{K_\\mathrm{s}}{c(\\mathrm{H_3O^+})}\\right)',
-    '\\boxed{c(\\mathrm{HA})=\\frac{c_\\mathrm{ges}\\cdot c(\\mathrm{H_3O^+})}{c(\\mathrm{H_3O^+})+K_\\mathrm{s}}}',
-    '\\boxed{c(\\mathrm{A^-})=\\frac{c_\\mathrm{ges}\\cdot K_\\mathrm{s}}{c(\\mathrm{H_3O^+})+K_\\mathrm{s}}}',
-    'K_\\mathrm{s}\\cdot c_\\mathrm{ges}\\cdot c(\\mathrm{H_3O^+})',
-    'c(\\mathrm{H_3O^+})\\cdot \\bigl(c(\\mathrm{H_3O^+})+K_\\mathrm{s}\\bigr)',
+    'c(\\mathrm{HA})\\cdot \\left(1+\\frac{K_\\mathrm{S}}{c(\\mathrm{H_3O^+})}\\right)',
+    '\\boxed{c(\\mathrm{HA})=\\frac{c_\\mathrm{ges}\\cdot c(\\mathrm{H_3O^+})}{c(\\mathrm{H_3O^+})+K_\\mathrm{S}}}',
+    '\\boxed{c(\\mathrm{A^-})=\\frac{c_\\mathrm{ges}\\cdot K_\\mathrm{S}}{c(\\mathrm{H_3O^+})+K_\\mathrm{S}}}',
+    'K_\\mathrm{S}\\cdot c_\\mathrm{ges}\\cdot c(\\mathrm{H_3O^+})',
+    'c(\\mathrm{H_3O^+})\\cdot \\bigl(c(\\mathrm{H_3O^+})+K_\\mathrm{S}\\bigr)',
     'c(\\mathrm{HA})=c(\\mathrm{A^-})=\\frac{c_\\mathrm{ges}}{2}',
     'Aktivitätskorrekturen bleiben unberücksichtigt',
     'alle vier Formen gemeinsam bilanziert'
@@ -106,9 +106,9 @@ test('buffers survive small changes, have finite capacity and exact solver beyon
   assert.ok(C.buffer({change:-6}).pH<3);assert.equal(C.buffer({change:-5}).hh,null);
   close(C.buffer({volume:100}).pH,C.buffer({volume:200}).pH,.002);
 });
-test('240 variants are complete; 32 selected with all eight topics and no repeated IDs',()=>{
+test('315 variants are complete; 32 selected with all eight topics and no repeated IDs',()=>{
   for(let seed=0;seed<100;seed++){
-    const bank=T.bank(seed);assert.equal(bank.length,240);assert.equal(new Set(bank.map(t=>t.id)).size,240);assert.deepEqual(T.bank(seed),bank);
+    const bank=T.bank(seed);assert.equal(bank.length,315);assert.equal(new Set(bank.map(t=>t.id)).size,315);assert.deepEqual(T.bank(seed),bank);
     for(const t of bank){assert.ok(t.prompt&&t.hint&&t.explanation);if(t.kind==='choice'){assert.ok(t.options.includes(t.answer),t.id);assert.equal(new Set(t.options).size,t.options.length,t.id);}else{assert.ok(Number.isFinite(t.answer),t.id);assert.ok(C.accepts(t,String(t.answer)),t.id);}}
     const chosen=T.select(seed);assert.equal(chosen.length,32);T.groups.forEach(([g])=>{const group=chosen.filter(t=>t.group===g);assert.equal(group.length,4);assert.equal(new Set(group.map(t=>t.id.split('-')[1])).size,4);});
     const next=T.select(seed+100,chosen.map(t=>t.id));assert.equal(next.filter(t=>chosen.some(o=>o.id===t.id)).length,0);
@@ -122,8 +122,8 @@ test('number validation allows commas and scientific notation but rejects expres
 });
 test('page includes the complete curriculum, local assets, four full-screen modules and reset',()=>{
   const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
-  for(const word of ['Arrhenius','Brønsted','Lewis','Henderson','Äquivalenzpunkt','Autoprotolyse','K_{c,\\mathrm{Auto}}','K_{c,\\mathrm{S}}','K_{c,\\mathrm{B}}','K_\\mathrm s','K_\\mathrm b','Pufferkapazität','5-%'])assert.ok(html.includes(word),word);
-  assert.equal((html.match(/data-fullscreen=/g)||[]).length,4);assert.ok(html.includes('id="reset-dialog"'));assert.ok(html.includes('id="consent" data-defer-initial'));assert.ok(!html.includes('data-awaiting-consent'));assert.ok(html.includes('Abbrechen · ohne Wikipedia weiterlesen'));assert.ok(html.includes('240'));assert.doesNotMatch(html,/fonts\.googleapis|fonts\.gstatic|materialien\.html/);
+  for(const word of ['Arrhenius','Brønsted','Lewis','Henderson','Äquivalenzpunkt','Autoprotolyse','K_{c,\\mathrm{Auto}}','K_{c,\\mathrm{S}}','K_{c,\\mathrm{B}}','K_\\mathrm S','K_\\mathrm B','Pufferkapazität','5-%'])assert.ok(html.includes(word),word);
+  assert.equal((html.match(/data-fullscreen=/g)||[]).length,4);assert.ok(html.includes('id="reset-dialog"'));assert.ok(html.includes('id="consent" data-defer-initial'));assert.ok(!html.includes('data-awaiting-consent'));assert.ok(html.includes('Abbrechen · ohne Wikipedia weiterlesen'));assert.ok(html.includes('data-task-count'));assert.doesNotMatch(html,/fonts\.googleapis|fonts\.gstatic|materialien\.html/);
   const css=fs.readFileSync(require.resolve('../styles/saeuren-basen-mission.css'),'utf8');assert.ok(css.includes('prefers-reduced-motion'));assert.ok(css.includes('color:#163b38'));
 });
 
@@ -149,8 +149,9 @@ test('every generated numeric solution explains symbols and puts general formula
   for(let seed=0;seed<12;seed++)for(const task of T.bank(seed).filter(t=>t.kind==='number')){
     assert.ok(task.parameters,task.id);assert.ok(task.symbols.length>80,task.id);assert.ok(task.calculationSteps.length,task.id);
     for(const {formula,substitution} of task.calculationSteps){
-      assert.ok(formula&&substitution,task.id);assert.ok(task.math.indexOf(formula.split(',\\quad ')[0])<task.math.indexOf(substitution.split(',\\quad ')[0]),task.id);
-      if(['mol/L','mL','mmol','%'].includes(task.unit))assert.match(substitution,/\\mathrm|\\%/,task.id);
+      assert.ok(formula&&substitution,task.id);assert.ok(task.math.indexOf(formula.split(/,\\quad |\\qquad/)[0])<task.math.indexOf(substitution.split(/,\\quad |\\qquad/)[0]),task.id);
+      // A dimensionless intermediate ratio has no concentration/mole unit.
+      if(['mol/L','mL','mmol','%'].includes(task.unit)&&!formula.startsWith('r=10'))assert.match(substitution,/\\mathrm|\\%/,task.id);
     }
     assert.doesNotMatch(task.explanation,/\d\s*[+·/−-]\s*\d/,task.id);
   }
@@ -162,7 +163,7 @@ test('blood, buffer and excess calculations identify symbols before numeric arit
   assert.ok(blood.indexOf('c(\\mathrm{CO_2^*})=\\alpha_{\\mathrm{CO_2}}p_{\\mathrm{CO_2}}')<blood.indexOf('0{,}0300'));
   assert.ok(blood.includes('\\frac{\\mathrm{mmol}}{\\mathrm{L}\\cdot\\mathrm{mmHg}}'));
   const solution=html.slice(html.indexOf('id="blood-solution"'),html.indexOf('id="hagg-lab"'));
-  for(const expression of ['n_{\\mathrm{B},0}=c_{\\mathrm{B},0}V','n_{\\mathrm{S},0}=c_{\\mathrm{S},0}V','\\Delta\\mathrm{pH}_1=\\mathrm{pH}_1-\\mathrm{pH}_0','c_{\\mathrm{B},2}=\\frac{n_{\\mathrm{B},1}}{V}'])assert.ok(solution.includes(expression),expression);
+  for(const expression of ['n_{\\mathrm{HCO_3},0}=c_{\\mathrm{HCO_3},0}V','n_{\\mathrm{CO_2},0}=c_{\\mathrm{CO_2},0}V','\\Delta\\mathrm{pH}_1=\\mathrm{pH}_1-\\mathrm{pH}_0','c_{\\mathrm{HCO_3},2}=\\frac{n_{\\mathrm{HCO_3},1}}{V}'])assert.ok(solution.includes(expression),expression);
   assert.ok(html.includes('\\Delta n=c_\\mathrm{B}V_\\mathrm{B}-n_0'));assert.ok(html.includes('id="eq-calculation"'));assert.ok(html.includes('id="buf-calculation"'));
 });
 test('new lesson has hidden milk-acid hint, diagram, four manual cases and window tools',()=>{

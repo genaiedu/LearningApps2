@@ -34,5 +34,9 @@ html[data-marks=right] .station[data-mark]>.page-watermark{left:auto;right:var(-
 @media(max-width:650px){.station[data-mark]{--acid-mark-inset:-.07em}}
 
 #hagg-derivation p{max-width:65ch}
+.training-extension{display:flex;align-items:center;gap:.7em;max-width:65ch;margin-block:1.5rem .5rem}
+.training-extension input{width:1.2em;height:1.2em;min-height:0;flex:none;accent-color:var(--red)}
+.task-card.has-solution{grid-column:1/-1}.task-card.has-solution>p,.task-card .formula-key,.task-card .solution-comment{max-width:65ch}
+.rechen-glossar dt{font-weight:700;margin-top:1em}.rechen-glossar dd{margin:0;max-width:65ch}
 #hagg-derivation ol{padding-inline-start:32px}
 @media(max-width:650px){#hagg-derivation ol{padding-inline-start:20px}}

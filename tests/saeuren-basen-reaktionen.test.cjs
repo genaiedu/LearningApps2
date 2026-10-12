@@ -26,7 +26,7 @@ test('proton transfer conserves atoms and pairs and displays the charged conjuga
   }
 });
 test('Lewis addition forms a shared N-B pair with no proton transfer and a neutral formal-charge sum',t=>{
-  const {q,select,step,symbols}=setup(t);select('lewis');const before=symbols();
+  const {q,select,step,symbols}=setup(t);select('comparison');const before=symbols();
   assert.equal(q('[data-bond="coordinate-bond"]'),null);assert.equal(q('#reaction-stage').querySelectorAll('.reaction-pair').length,1);
   step(1);assert.deepEqual(symbols(),before);assert.equal(q('#reaction-stage').querySelectorAll('.reaction-electron-arrow').length,1);
   assert.equal(q('[data-atom="transferred-hydrogen"]'),null);
@@ -50,4 +50,16 @@ test('reduced motion retains all states and reveals products without starting mo
 test('all three scientists open the existing Wikipedia reader with their actual article titles',t=>{
   const {q}=setup(t);
   for(const title of ['Svante Arrhenius','Johannes Nicolaus Brønsted','Gilbert Newton Lewis'])assert.ok(q(`.scientist-row [data-wiki="${title}"]`));
+});
+test('boric acid water model conserves all atoms, three highlighted pairs and total charge',t=>{
+  const {q,select,step,symbols}=setup(t);select('lewis');const before=symbols();
+  assert.equal(before.length,13);assert.equal(before.filter(s=>s==='O').length,5);assert.equal(before.filter(s=>s==='H').length,7);
+  assert.match(q('#reaction-equation').textContent,/B\(OH\)_3\+2/);
+  assert.equal(q('#reaction-stage').querySelectorAll('.reaction-pair').length,3);
+  step(1);assert.deepEqual(symbols(),before);assert.equal(q('#reaction-stage').querySelectorAll('.reaction-electron-arrow').length,3);
+  assert.match(q('#reaction-explanation').textContent,/keine Behauptung eines einstufigen/);
+  step(2);assert.deepEqual(symbols(),before);assert.equal(q('#reaction-stage').querySelectorAll('.reaction-pair').length,3);
+  assert.equal(q('[data-bond="boric-old-oh"]'),null);assert.ok(q('[data-bond="boric-coordinate-bond"]'));assert.ok(q('[data-bond="boric-new-oh"]'));
+  assert.equal(q('[data-atom="boric-boron"] .reaction-charge').textContent,'−');assert.equal(q('[data-atom="hydronium-oxygen"] .reaction-charge').textContent,'+');
+  assert.match(q('#reaction-explanation').textContent,/nicht durch einfache Abgabe eines Protons/);
 });

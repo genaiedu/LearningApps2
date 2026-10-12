@@ -36,14 +36,14 @@ test('restored numeric solution is inserted into the real task grid before types
   assert.ok(solved);
   const saved={version:1,seed:123456,ids:tasks.map(task=>task.id),answers:{[solved.id]:{attempts:1,value:String(solved.answer),done:true,solved:true}}};
   w.localStorage.setItem('protonen-mission-v1',JSON.stringify(saved));
-  for(const name of ['saeuren-basen-core','saeuren-basen-rechenwege','saeuren-basen-aufgaben','saeuren-basen-titration','saeuren-basen-reaktionen','saeuren-basen-mission','saeuren-basen-vertiefung'])w.eval(source(name));
+  for(const name of ['saeuren-basen-schreibweise','saeuren-basen-core','saeuren-basen-rechenwege','saeuren-basen-transfer','saeuren-basen-aufgaben','saeuren-basen-titration','saeuren-basen-reaktionen','saeuren-basen-mission','saeuren-basen-vertiefung'])w.eval(source(name));
   await w.AcidTypeset.whenIdle();
   const card=w.document.getElementById('task-'+solved.id);
   assert.equal(w.document.querySelectorAll('.task-card').length,32);
   assert.ok(card.classList.contains('is-solved'));assert.ok(!card.querySelector('.task-solution').hidden);
   assert.equal(card.querySelector('.math').textContent,solved.math);
   assert.equal(w.document.getElementById('score').textContent,'1 / 32');
-  assert.deepEqual(JSON.parse(w.localStorage.getItem('protonen-mission-v1')),{...saved,version:2});
+  assert.deepEqual(JSON.parse(w.localStorage.getItem('protonen-mission-v1')),{...saved,version:3,lewis:false});
   assert.ok(calls.some(c=>c.typeset?.some(node=>node.id==='task-groups')));
   assert.equal(warnings.length,0);
 });

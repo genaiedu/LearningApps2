@@ -28,6 +28,7 @@
   function typeset(elements){
     return enqueue(()=>{
       const attached=roots(elements);
+      attached.forEach(root=>window.AcidNotation?.decorate(root));
       if(nativeTypeset&&attached.length)return nativeTypeset(attached);
     });
   }
@@ -38,6 +39,7 @@
       if(!root.isConnected||versions.get(root)!==version)return;
       nativeClear?.([root]);
       write();
+      window.AcidNotation?.decorate(root);
       if(nativeTypeset&&visible(root))await nativeTypeset([root]);
     });
   }
