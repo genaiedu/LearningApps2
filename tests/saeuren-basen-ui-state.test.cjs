@@ -13,6 +13,24 @@ function setup(t,saved){
   const click=id=>q('#'+id).click(),set=(id,value)=>{q('#'+id).value=String(value);q('#'+id).dispatchEvent(new w.Event('change',{bubbles:true}));},dose=(value,custom=false)=>{set(custom?'tit-dose-custom':'tit-dose',value);click('tit-add');assert.ok(q('#titration-lab').classList.contains('is-pouring'));timers.shift()();assert.ok(!q('#titration-lab').classList.contains('is-pouring'));};
   t.after(()=>w.close());return{w,q,click,set,dose,timers};
 }
+test('all learner-facing hydronium labels use the full concentration notation',t=>{
+  const {q,set}=setup(t);
+  const alias=/(?<![\p{L}])h(?![\p{L}\p{N}])/u;
+  for(const id of ['hcl','acetic','ammonia','phosphoric']){
+    set('tit-substance',id);
+    for(const point of ['start','half','eq','after']){
+      q('[data-point="'+point+'"]').click();
+      const text=q('#tit-point-math').textContent;
+      assert.doesNotMatch(text,alias,id+' / '+point);
+      assert.ok(text.includes('c(\\mathrm{H_3O^+})'));
+      assert.doesNotMatch(text,/c\(\\mathrm\{H_3O\^\+\}\)=c\(\\mathrm\{H_3O\^\+\}\)/);
+    }
+  }
+  for(const id of ['eq-calculation','buf-calculation','hagg-derivation'])assert.doesNotMatch(q('#'+id).textContent,alias,id);
+  for(const task of require('../scripts/saeuren-basen-aufgaben.js').bank(123456)){
+    for(const key of ['prompt','hint','explanation','symbols','math'])if(task[key])assert.doesNotMatch(task[key],alias,task.id+' / '+key);
+  }
+});
 test('changed square-root tasks migrate without discarding unrelated answers',t=>{
   const ids=require('../scripts/saeuren-basen-aufgaben.js').select(123456).map(t=>t.id);
   const changed=ids.find(id=>/^(saeuren|basen)-1-/.test(id)),unchanged=ids.find(id=>id.startsWith('ph-'));
@@ -29,7 +47,7 @@ test('phosphate and near-endpoint calculations replace invalid shortcuts with de
   set('tit-substance','acetic');q('#tit-added').value=24.9999;q('#tit-added').dispatchEvent(new w.Event('input'));
   const text=q('#tit-point-math').textContent;
   assert.match(text,/Hier reicht die einfache Näherung nicht/);assert.doesNotMatch(text,/NaN|Infinity/);
-  assert.ok(text.includes('h+c_\\mathrm{Z}'));
+  assert.ok(text.includes('c(\\mathrm{H_3O^+})+c_\\mathrm{Z}'));
 });
 test('round code is absent while a saved task set and its progress are preserved',t=>{
   const tasks=require('../scripts/saeuren-basen-aufgaben.js').select(123456);
@@ -130,7 +148,7 @@ test('equilibrium and buffer panels explain their quantities before symbolic and
   const eq=q('#eq-calculation').textContent;
   assert.ok(eq.indexOf('c₀ ist die Anfangskonzentration')<eq.indexOf('K_\\mathrm{s}'));
   assert.ok(eq.includes('K_\\mathrm{s}=10^{-\\mathrm{p}K_\\mathrm{s}}'));
-  assert.ok(eq.includes('\\mathrm{pH}=-\\lg h'));
+  assert.ok(eq.includes('\\mathrm{pH}=-\\lg c(\\mathrm{H_3O^+})'));
   setChange(-1);const buffer=q('#buf-calculation').textContent;
   assert.ok(buffer.indexOf('vorzeichenbehaftete Zugabe')<buffer.indexOf('n_{\\mathrm{HA},1}'));
   assert.ok(buffer.includes('n_{\\mathrm{HA},1}=n_{\\mathrm{HA},0}-\\Delta n'));

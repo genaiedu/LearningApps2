@@ -66,12 +66,12 @@ test('Hagg distribution formulas are derived from equilibrium and the two-form m
   const derivation=html.slice(start,html.indexOf('</section>',start));
   assert.equal((derivation.match(/<li>/g)||[]).length,4);
   for(const step of [
-    'K_\\mathrm{s}=\\frac{h\\,c(\\mathrm{A^-})}{c(\\mathrm{HA})}',
-    'c(\\mathrm{A^-})=\\frac{K_\\mathrm{s}}{h}\\,c(\\mathrm{HA})',
+    'K_\\mathrm{s}=\\frac{c(\\mathrm{H_3O^+})\\,c(\\mathrm{A^-})}{c(\\mathrm{HA})}',
+    'c(\\mathrm{A^-})=\\frac{K_\\mathrm{s}}{c(\\mathrm{H_3O^+})}\\,c(\\mathrm{HA})',
     'c_\\mathrm{ges}=c(\\mathrm{HA})+c(\\mathrm{A^-})',
-    'c(\\mathrm{HA})\\left(1+\\frac{K_\\mathrm{s}}{h}\\right)',
-    '\\boxed{c(\\mathrm{HA})=\\frac{c_\\mathrm{ges}h}{h+K_\\mathrm{s}}}',
-    '\\boxed{c(\\mathrm{A^-})=\\frac{c_\\mathrm{ges}K_\\mathrm{s}}{h+K_\\mathrm{s}}}',
+    'c(\\mathrm{HA})\\left(1+\\frac{K_\\mathrm{s}}{c(\\mathrm{H_3O^+})}\\right)',
+    '\\boxed{c(\\mathrm{HA})=\\frac{c_\\mathrm{ges}c(\\mathrm{H_3O^+})}{c(\\mathrm{H_3O^+})+K_\\mathrm{s}}}',
+    '\\boxed{c(\\mathrm{A^-})=\\frac{c_\\mathrm{ges}K_\\mathrm{s}}{c(\\mathrm{H_3O^+})+K_\\mathrm{s}}}',
     'c(\\mathrm{HA})=c(\\mathrm{A^-})=\\frac{c_\\mathrm{ges}}{2}',
     'Aktivitätskorrekturen bleiben unberücksichtigt',
     'alle vier Formen gemeinsam bilanziert'

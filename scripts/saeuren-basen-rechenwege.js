@@ -2,10 +2,10 @@
   'use strict';
   // Templates are mathematical notation, never arbitrary learner input.
   const formulas={
-    ph:['\\mathrm{pH}=-\\lg c(\\mathrm{H_3O^+})','c(\\mathrm{H_3O^+})=10^{-\\mathrm{pH}}\\ \\mathrm{mol/L}','\\mathrm{pOH}=14-\\mathrm{pH}','c(\\mathrm{OH^-})=10^{-(14-\\mathrm{pH})}\\ \\mathrm{mol/L}','c_2=\\frac{c_1}{F},\\quad\\mathrm{pH}=-\\lg c_2','F=10^{|\\Delta\\mathrm{pH}|}','\\mathrm{pH}_\\mathrm{neutral}=\\frac{\\mathrm{p}K_\\mathrm w}{2}',null,'\\mathrm{pOH}=-\\lg c(\\mathrm{OH^-})','h=\\frac{c_0+\\sqrt{c_0^2+4K_\\mathrm w}}2,\\quad\\mathrm{pH}=-\\lg h'],
-    saeuren:['\\mathrm{pH}=-\\lg c_0','K_\\mathrm s=\\frac{x^2}{c_0-x}\\approx\\frac{x^2}{c_0},\\quad x\\approx\\sqrt{K_\\mathrm s c_0},\\quad\\mathrm{pH}\\approx\\frac12(\\mathrm{p}K_\\mathrm s-\\lg c_0)','x^2+K_\\mathrm s x-K_\\mathrm s c_0=0,\\quad x=-\\frac{K_\\mathrm s}2+\\sqrt{\\frac{K_\\mathrm s^2}4+K_\\mathrm s c_0},\\quad\\mathrm{pH}=-\\lg x','\\alpha=\\frac{x}{c_0}','h=10^{-\\mathrm{pH}}\\ \\mathrm{mol/L},\\quad K_\\mathrm s=\\frac{h^2}{c_0-h}','\\mathrm{p}K_\\mathrm s=-\\lg K_\\mathrm s',null,'\\Delta\\mathrm{pH}=\\frac12\\lg F','c=\\frac nV,\\quad\\mathrm{pH}=-\\lg c'],
+    ph:['\\mathrm{pH}=-\\lg c(\\mathrm{H_3O^+})','c(\\mathrm{H_3O^+})=10^{-\\mathrm{pH}}\\ \\mathrm{mol/L}','\\mathrm{pOH}=14-\\mathrm{pH}','c(\\mathrm{OH^-})=10^{-(14-\\mathrm{pH})}\\ \\mathrm{mol/L}','c_2=\\frac{c_1}{F},\\quad\\mathrm{pH}=-\\lg c_2','F=10^{|\\Delta\\mathrm{pH}|}','\\mathrm{pH}_\\mathrm{neutral}=\\frac{\\mathrm{p}K_\\mathrm w}{2}',null,'\\mathrm{pOH}=-\\lg c(\\mathrm{OH^-})','c(\\mathrm{H_3O^+})=\\frac{c_0+\\sqrt{c_0^2+4K_\\mathrm w}}2,\\quad\\mathrm{pH}=-\\lg c(\\mathrm{H_3O^+})'],
+    saeuren:['\\mathrm{pH}=-\\lg c_0','K_\\mathrm s=\\frac{x^2}{c_0-x}\\approx\\frac{x^2}{c_0},\\quad x\\approx\\sqrt{K_\\mathrm s c_0},\\quad\\mathrm{pH}\\approx\\frac12(\\mathrm{p}K_\\mathrm s-\\lg c_0)','x^2+K_\\mathrm s x-K_\\mathrm s c_0=0,\\quad x=-\\frac{K_\\mathrm s}2+\\sqrt{\\frac{K_\\mathrm s^2}4+K_\\mathrm s c_0},\\quad\\mathrm{pH}=-\\lg x','\\alpha=\\frac{x}{c_0}','c(\\mathrm{H_3O^+})=10^{-\\mathrm{pH}}\\ \\mathrm{mol/L},\\quad K_\\mathrm s=\\frac{c(\\mathrm{H_3O^+})^2}{c_0-c(\\mathrm{H_3O^+})}','\\mathrm{p}K_\\mathrm s=-\\lg K_\\mathrm s',null,'\\Delta\\mathrm{pH}=\\frac12\\lg F','c=\\frac nV,\\quad\\mathrm{pH}=-\\lg c'],
     basen:['\\mathrm{pOH}=-\\lg c_0,\\quad\\mathrm{pH}=14-\\mathrm{pOH}','y\\approx\\sqrt{K_\\mathrm b c_0},\\quad\\mathrm{pOH}\\approx\\frac12(\\mathrm{p}K_\\mathrm b-\\lg c_0),\\quad\\mathrm{pH}=14-\\mathrm{pOH}','y^2+K_\\mathrm b y-K_\\mathrm b c_0=0,\\quad y=\\frac{\\sqrt{K_\\mathrm b^2+4K_\\mathrm b c_0}-K_\\mathrm b}2,\\quad\\mathrm{pH}=14+\\lg y','\\mathrm{p}K_\\mathrm b=-\\lg K_\\mathrm b','c_2=\\frac{c_1}{F},\\quad\\mathrm{pH}=14+\\lg c_2','c(\\mathrm{OH^-})=2c_0,\\quad\\mathrm{pH}=14+\\lg(2c_0)','\\alpha=\\frac{y}{c_0}',null,'n=cV'],
-    konstanten:['\\mathrm{p}K_\\mathrm b=\\mathrm{p}K_\\mathrm w-\\mathrm{p}K_\\mathrm s','K_\\mathrm b=\\frac{K_\\mathrm w}{K_\\mathrm s}','\\mathrm{p}K_\\mathrm s=\\mathrm{p}K_\\mathrm w-\\mathrm{p}K_\\mathrm b','\\mathrm{p}K_\\mathrm w=\\mathrm{pH}+\\mathrm{pOH}','K_\\mathrm s=\\frac{h\\,c(\\mathrm{A^-})}{c(\\mathrm{HA})}','K_\\mathrm s=K_\\mathrm c\\,c(\\mathrm{H_2O})','c(\\mathrm{OH^-})=\\frac{K_\\mathrm w}{h}',null,'\\mathrm{p}K_\\mathrm b=\\mathrm{p}K_\\mathrm w-\\mathrm{p}K_\\mathrm s'],
+    konstanten:['\\mathrm{p}K_\\mathrm b=\\mathrm{p}K_\\mathrm w-\\mathrm{p}K_\\mathrm s','K_\\mathrm b=\\frac{K_\\mathrm w}{K_\\mathrm s}','\\mathrm{p}K_\\mathrm s=\\mathrm{p}K_\\mathrm w-\\mathrm{p}K_\\mathrm b','\\mathrm{p}K_\\mathrm w=\\mathrm{pH}+\\mathrm{pOH}','K_\\mathrm s=\\frac{c(\\mathrm{H_3O^+})\\,c(\\mathrm{A^-})}{c(\\mathrm{HA})}','K_\\mathrm s=K_\\mathrm c\\,c(\\mathrm{H_2O})','c(\\mathrm{OH^-})=\\frac{K_\\mathrm w}{c(\\mathrm{H_3O^+})}',null,'\\mathrm{p}K_\\mathrm b=\\mathrm{p}K_\\mathrm w-\\mathrm{p}K_\\mathrm s'],
     titration:['c_\\mathrm A V_\\mathrm A=c_\\mathrm B V_\\mathrm{Ä},\\quad c_\\mathrm A=\\frac{c_\\mathrm B V_\\mathrm{Ä}}{V_\\mathrm A}','V_\\mathrm{Ä}=\\frac{c_\\mathrm A V_\\mathrm A}{c_\\mathrm B}','c_0=\\frac{c(\\mathrm{HCl})V(\\mathrm{HCl})}{V(\\mathrm B)}','2c_\\mathrm A V_\\mathrm A=c_\\mathrm B V_\\mathrm{Ä},\\quad c_\\mathrm A=\\frac{c_\\mathrm B V_\\mathrm{Ä}}{2V_\\mathrm A}','V=V_\\mathrm{Ende}-V_\\mathrm{Anfang}','c_\\mathrm{Original}=F\\,c_\\mathrm{verdünnt}','n=cV',null,'\\overline V=\\frac{V_1+V_2+V_3}{3}','c_\\mathrm A=\\frac{c_\\mathrm B V_\\mathrm{Ä}}{V_\\mathrm A}'],
     kurven:["\\mathrm{pH}\\approx\\frac12(\\mathrm{p}K_\\mathrm s-\\lg c_0)","\\mathrm{pH}_\\mathrm{HÄP}\\approx\\mathrm{p}K_\\mathrm s","c(\\mathrm{H_3O^+})=\\frac{n_0-n(\\mathrm{OH^-})}{V_\\mathrm{gesamt}},\\quad\\mathrm{pH}=-\\lg c(\\mathrm{H_3O^+})","c(\\mathrm{OH^-})=\\frac{n_\\mathrm{NaOH}-n_0}{V_\\mathrm{gesamt}},\\quad\\mathrm{pH}=14+\\lg c(\\mathrm{OH^-})","c(\\mathrm{A^-})=\\frac{n_0}{V_\\mathrm{gesamt}},\\quad\\mathrm{p}K_\\mathrm b=14-\\mathrm{p}K_\\mathrm s,\\quad\\mathrm{pH}\\approx14-\\frac12(\\mathrm{p}K_\\mathrm b-\\lg c(\\mathrm{A^-}))","\\mathrm{pH}\\approx\\mathrm{p}K_\\mathrm s+\\lg\\frac{V}{V_\\mathrm{Ä}-V}","\\mathrm{pH}_\\mathrm{HÄP}\\approx14-\\mathrm{p}K_\\mathrm b"],
     puffer:['\\mathrm{pH}\\approx\\mathrm{p}K_\\mathrm s+\\lg\\frac{n(\\mathrm{A^-})}{n(\\mathrm{HA})}','n_\\mathrm A^{\\prime}=n_\\mathrm A-n_\\mathrm{Zugabe},\\quad n_\\mathrm{HA}^{\\prime}=n_\\mathrm{HA}+n_\\mathrm{Zugabe},\\quad\\mathrm{pH}\\approx\\mathrm{p}K_\\mathrm s+\\lg\\frac{n_\\mathrm A^{\\prime}}{n_\\mathrm{HA}^{\\prime}}','n_\\mathrm A^{\\prime}=n_\\mathrm A+n_\\mathrm{Zugabe},\\quad n_\\mathrm{HA}^{\\prime}=n_\\mathrm{HA}-n_\\mathrm{Zugabe},\\quad\\mathrm{pH}\\approx\\mathrm{p}K_\\mathrm s+\\lg\\frac{n_\\mathrm A^{\\prime}}{n_\\mathrm{HA}^{\\prime}}','\\frac{n(\\mathrm{A^-})}{n(\\mathrm{HA})}=10^{\\mathrm{pH}-\\mathrm{p}K_\\mathrm s}','\\mathrm{pH}\\approx\\mathrm{p}K_\\mathrm s\\Longrightarrow\\lg\\frac{n(\\mathrm{A^-})}{n(\\mathrm{HA})}=0\\Longrightarrow n(\\mathrm{A^-})=n(\\mathrm{HA})',null,null,'\\mathrm{pH}\\approx\\mathrm{p}K_\\mathrm s+\\lg\\frac{n(\\mathrm{A^-})}{n(\\mathrm{HA})}',null,'\\Delta\\mathrm{pH}=\\lg\\frac{r_2}{r_1}']
@@ -13,10 +13,10 @@
   const tex=n=>String(Number(n.toPrecision(6))).replace(/e([+-]?\d+)/,'\\cdot10^{$1}').replace('.', '{,}');
   const q=(n,u='mol/L')=>tex(n)+'\\ \\mathrm{'+u+'}';
   const keys={
-    ph:'h = c(H₃O⁺) ist die Oxoniumionen-Konzentration; c(OH⁻) die Hydroxidionen-Konzentration. c₁ und c₂ stehen für vor und nach Verdünnung, F = V₂/V₁ für den Verdünnungsfaktor. ΔpH ist End-pH minus Anfangs-pH.',
-    saeuren:'c₀ ist die Anfangskonzentration der Säure; h bzw. x die entstehende H₃O⁺-Konzentration. Kₛ ist die Säurekonstante, pKₛ ihr negativer normierter Logarithmus. α ist der protolysierte Anteil, F der Verdünnungsfaktor. n ist die Stoffmenge, V das Lösungsvolumen; 1 mmol = 10⁻³ mol.',
+    ph:'c(H₃O⁺) ist die Oxoniumionen-Konzentration; c(OH⁻) die Hydroxidionen-Konzentration. c₁ und c₂ stehen für vor und nach Verdünnung, F = V₂/V₁ für den Verdünnungsfaktor. ΔpH ist End-pH minus Anfangs-pH.',
+    saeuren:'c₀ ist die Anfangskonzentration der Säure; c(H₃O⁺) die Oxoniumionen-Konzentration. x bezeichnet hier die durch Protolyse entstehende Konzentration ohne Wasserbeitrag. Kₛ ist die Säurekonstante, pKₛ ihr negativer normierter Logarithmus. α ist der protolysierte Anteil, F der Verdünnungsfaktor. n ist die Stoffmenge, V das Lösungsvolumen; 1 mmol = 10⁻³ mol.',
     basen:'c₀ ist die Anfangskonzentration der Base; y = c(OH⁻) die Hydroxidionen-Konzentration. Kᵦ und pKᵦ beschreiben die Basenstärke, α den protolysierten Anteil. c₁ und c₂ stehen für vor und nach Verdünnung, F für den Verdünnungsfaktor. n ist die Stoffmenge, V das Lösungsvolumen.',
-    konstanten:'Kₛ und Kᵦ gehören zu Säure und Base desselben konjugierten Paares. pKₛ und pKᵦ sind ihre negativen normierten Logarithmen. h = c(H₃O⁺) und a = c(A⁻) sind Gleichgewichtskonzentrationen. K_c bezeichnet die schulische Konstante mit Wasser im Nenner.',
+    konstanten:'Kₛ und Kᵦ gehören zu Säure und Base desselben konjugierten Paares. pKₛ und pKᵦ sind ihre negativen normierten Logarithmen. c(H₃O⁺) und c(A⁻) sind Gleichgewichtskonzentrationen. K_c bezeichnet die schulische Konstante mit Wasser im Nenner.',
     titration:'c_A und V_A sind Konzentration und Volumen der Säureprobe, c_B die NaOH-Konzentration, V_Ä das NaOH-Volumen am ÄP. Bei Basenproben steht c₀ für deren Konzentration, V(B) für ihr Volumen; c(HCl) und V(HCl) gehören zur Säure-Maßlösung. V_Anfang und V_Ende sind Bürettenablesungen, V̄ der Mittelwert, F der Verdünnungsfaktor, n eine Stoffmenge.',
     kurven:'c₀ und V₀ sind Anfangskonzentration und Anfangsvolumen; n₀ = c₀V₀ die Anfangsstoffmenge. n_B,zu ist die zugegebene OH⁻-Menge, nicht das freie OH⁻. n_NaOH bezeichnet dieselbe Zugabe. V_gesamt = V₀ + V_B ist das Mischungsvolumen, V_Ä das Äquivalenzvolumen, V bzw. V_B die bisherige Zugabe. HA ist die Säure, A⁻ ihr konjugierter Partner. pKₛ gehört zur Säure, pKᵦ zur Base.',
     puffer:'HA ist die schwache Säure, A⁻ ihre konjugierte Base; pKₛ gehört zu HA. n bezeichnet Stoffmengen in mmol. Ein Strich (′) kennzeichnet den Zustand nach Zugabe; n_Zugabe ist die zugegebene starke Säure oder Base. r = n(A⁻)/n(HA) ist das Mengenverhältnis; r₁ und r₂ gehören zu den beiden verglichenen Puffern.'
@@ -40,14 +40,14 @@
         '\\mathrm{pH}_\\mathrm{neutral}=\\frac{'+N([13.26,12.8,14.94][v])+'}{2}='+N(A),
         null,
         '\\mathrm{pOH}=-\\lg('+N(p.c)+')='+N(A),
-        'h=\\frac{'+N([1e-8,2e-8,5e-8][v])+'+\\sqrt{('+N([1e-8,2e-8,5e-8][v])+')^2+4\\cdot10^{-14}}}{2}\\ \\mathrm{mol/L}='+q(10**(-A))+',\\quad'+PH(10**(-A))
+        'c(\\mathrm{H_3O^+})=\\frac{'+N([1e-8,2e-8,5e-8][v])+'+\\sqrt{('+N([1e-8,2e-8,5e-8][v])+')^2+4\\cdot10^{-14}}}{2}\\ \\mathrm{mol/L}='+q(10**(-A))+',\\quad'+PH(10**(-A))
       ],
       saeuren:[
         '\\mathrm{pH}\\approx-\\lg('+N(p.c)+')='+N(A),
         weakK(p.pKa)+',\\quad x\\approx\\sqrt{'+N(p.ka)+'\\cdot'+N(p.c)+'}\\ \\mathrm{mol/L},\\quad\\mathrm{pH}\\approx\\frac{'+N(p.pKa)+'-\\lg('+N(p.c)+')}{2}='+N(A),
         weakK(p.pKa)+',\\quad x='+root(p.ka,p.c)+'='+q(p.x)+',\\quad'+PH(p.x),
         '\\alpha=\\frac{'+q(p.x)+'}{'+q(p.c)+'}='+N(A/100)+'='+N(A)+'\\ \\%',
-        'h=10^{-'+N(Number((-Math.log10(p.x)).toFixed(2)))+'}\\ \\mathrm{mol/L}='+q(10**(-Number((-Math.log10(p.x)).toFixed(2))))+',\\quad K_\\mathrm{s}=\\frac{('+N(10**(-Number((-Math.log10(p.x)).toFixed(2))))+')^2}{'+N(p.c)+'-'+N(10**(-Number((-Math.log10(p.x)).toFixed(2))))+'}\\ \\mathrm{mol/L}='+q(A),
+        'c(\\mathrm{H_3O^+})=10^{-'+N(Number((-Math.log10(p.x)).toFixed(2)))+'}\\ \\mathrm{mol/L}='+q(10**(-Number((-Math.log10(p.x)).toFixed(2))))+',\\quad K_\\mathrm{s}=\\frac{('+N(10**(-Number((-Math.log10(p.x)).toFixed(2))))+')^2}{'+N(p.c)+'-'+N(10**(-Number((-Math.log10(p.x)).toFixed(2))))+'}\\ \\mathrm{mol/L}='+q(A),
         '\\mathrm{p}K_\\mathrm{s}=-\\lg('+N(10**(-p.pk))+')='+N(A),
         null,
         '\\Delta\\mathrm{pH}=\\tfrac12\\lg('+[10,100,1000][v]+')='+N(A),
@@ -172,14 +172,14 @@
         'pK_w gehört zum Ionenprodukt des Wassers bei der angegebenen Temperatur. Im neutralen Wasser sind H₃O⁺- und OH⁻-Konzentration gleich.',
         null,
         'c(OH⁻) ist die Hydroxidionen-Konzentration. pOH ist ihr negativer normierter Zehnerlogarithmus; lg bedeutet Zehnerlogarithmus.',
-        'c₀ ist die zugesetzte HCl-Konzentration; h = c(H₃O⁺) enthält auch den Wasserbeitrag. K_w ist das Ionenprodukt des Wassers.'
+        'c₀ ist die zugesetzte HCl-Konzentration; c(H₃O⁺) enthält auch den Wasserbeitrag. K_w ist das Ionenprodukt des Wassers.'
       ],
       saeuren:[
         'c₀ ist die Anfangskonzentration der einprotonigen starken HCl; ihre H₃O⁺-Konzentration entspricht ihr hier näherungsweise.',
         'c₀ ist die Anfangskonzentration der Säure; Kₛ und pKₛ beschreiben ihre Säurestärke. x ist die entstehende H₃O⁺-Konzentration; α_Näherung = x/c₀ ist der damit geschätzte protolysierte Anteil.',
         'c₀ ist die Anfangskonzentration der Säure; Kₛ und pKₛ beschreiben ihre Säurestärke. x ist die gesuchte H₃O⁺-Konzentration ohne Wasserbeitrag.',
         'x ist die quadratisch berechnete H₃O⁺-Konzentration, c₀ die Anfangskonzentration. α = x/c₀ ist der protolysierte Anteil; 0,01 entspricht 1 %.',
-        'h = c(H₃O⁺) wird aus dem vorgegebenen pH berechnet. c₀ ist die Anfangskonzentration, c₀ − h die verbleibende Säure-Konzentration, Kₛ die gesuchte Säurekonstante.',
+        'c(H₃O⁺) wird aus dem vorgegebenen pH berechnet. c₀ ist die Anfangskonzentration, c₀ − c(H₃O⁺) die verbleibende Säure-Konzentration, Kₛ die gesuchte Säurekonstante.',
         'Kₛ ist die vorgegebene Säurekonstante; pKₛ ihr negativer normierter Zehnerlogarithmus.',
         null,
         'F = V₂/V₁ ist der Verdünnungsfaktor; ΔpH = pH₂ − pH₁ beschreibt die dadurch bewirkte pH-Änderung in der Wurzelnäherung.',
@@ -201,9 +201,9 @@
         'Kₛ gehört zur gegebenen Säure, Kᵦ zur konjugierten Base, K_w zum Ionenprodukt des Wassers. Es muss genau dasselbe konjugierte Paar sein.',
         'pKᵦ gehört zur gegebenen Base B, pKₛ zur gesuchten konjugierten Säure BH⁺; pK_w beschreibt das Ionenprodukt des Wassers.',
         'pH und pOH sind die angegebenen negativen normierten Logarithmen der Ionenkonzentrationen. pK_w ist der gesuchte negative normierte Logarithmus ihres Produkts.',
-        'h = c(H₃O⁺), a = c(A⁻) und c(HA) sind die vorgegebenen Gleichgewichtskonzentrationen. Kₛ ist die daraus gesuchte Säurekonstante.',
+        'c(H₃O⁺), c(A⁻) und c(HA) sind die vorgegebenen Gleichgewichtskonzentrationen. Kₛ ist die daraus gesuchte Säurekonstante.',
         'HA ist die Säure, A⁻ ihre konjugierte Base, c(X) jeweils eine Gleichgewichtskonzentration. K_c gehört zum vollständigen Konzentrations-MWG der Reaktion HA + H₂O ⇌ H₃O⁺ + A⁻. c_W,ref = 55,5 mol/L ist der näherungsweise konstante Wasserwert. c(H₂O) ≈ c_W,ref ist eine sehr gute Näherung für verdünnte Lösungen; Wasser ist nicht exakt unveränderlich.',
-        'h = c(H₃O⁺) ist die vorgegebene Oxoniumionen-Konzentration. K_w ist das Ionenprodukt, c(OH⁻) die gesuchte Hydroxidionen-Konzentration.',
+        'c(H₃O⁺) ist die vorgegebene Oxoniumionen-Konzentration. K_w ist das Ionenprodukt, c(OH⁻) die gesuchte Hydroxidionen-Konzentration.',
         null,
         'pKₛ gehört zur gegebenen Säure, pKᵦ zur konjugierten Base. pK_w ist ausdrücklich der Wert bei der angegebenen anderen Temperatur.'
       ]
