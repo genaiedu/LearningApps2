@@ -6,6 +6,13 @@ test('water, strong acids and bases include autoprotolysis',()=>{
   const diluted=C.solution('hcl',1e-8);assert.ok(diluted.pH<7&&diluted.pH>6.97);close(diluted.h*diluted.oh,C.KW,1e-25);
   for(const s of C.substances)for(const c of [1e-8,1e-5,.001,.1]){const r=C.solution(s.id,c);close(r.pH+r.pOH,14,1e-10);assert.ok(s.type.endsWith('acid')?r.pH<7:r.pH>7);assert.ok(Math.abs(r.residual)<1e-12);}
 });
+
+test('scientist overview keeps historical context without portraits or automatic image requests',()=>{
+  const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
+  assert.doesNotMatch(html,/data-portrait=|class="portrait|Wissenschaftlerporträts/);
+  for(const name of ['Svante Arrhenius','Johannes N. Brønsted','Gilbert N. Lewis','Thomas M. Lowry'])assert.ok(html.includes(name));
+  assert.ok(html.includes('Wikipedia-Artikel mit Abbildungen und Formeln laden erst beim Öffnen des Lesefensters.'));
+});
 test('weak partner fractions obey mass balance, not complete dissociation',()=>{
   const r=C.solution('acetic',.1),k=10**(-4.76);close(r.pH,2.88,.01);close(r.h*r.acidIon/(.1-r.acidIon),k,1e-12);assert.ok(r.acidIon/.1<.02);
   close(C.solution('ammonia',.1).pH,11.13,.01);
