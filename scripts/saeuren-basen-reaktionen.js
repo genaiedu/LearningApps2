@@ -22,6 +22,13 @@
           'Aus H₂O wird OH⁻ mit drei freien Elektronenpaaren am O-Atom. Aus NH₃ wird NH₄⁺ mit vier N–H-Bindungen und keinem freien Paar am N-Atom. Gezeigt ist ein einzelner Übergang: Im Gleichgewicht reagiert nur ein kleiner Teil des Ammoniaks. Auch die Rückreaktion ist möglich.'
         ]},
 
+      autoprotolysis:{title:'Autoprotolyse: Wasser reagiert mit Wasser.',equation:'\\[\\mathrm{2\\,H_2O\\rightleftharpoons OH^-+H_3O^+}\\]',
+        labels:[['H₂O · Säure','H₂O · Base'],['Wasser gibt ein Proton ab','Wasser nimmt ein Proton auf'],['OH⁻ · konjugierte Base','H₃O⁺ · konjugierte Säure']],
+        explanations:[
+          'Zwei Wassermoleküle übernehmen unterschiedliche Rollen: Links gibt Wasser ein Proton ab und ist die Brønsted-Säure; rechts nimmt Wasser es auf und ist die Brønsted-Base. Beide O-Atome besitzen zunächst zwei freie Elektronenpaare. Wasser ist ein Ampholyt: Es kann als Säure oder als Base reagieren.',
+          'Das Proton wechselt vom linken zum rechten O-Atom. Das Elektronenpaar der bisherigen O–H-Bindung bleibt vollständig am linken O. Ein freies Paar des rechten O bildet die neue O–H-Bindung. Die zwei gebogenen Pfeile zeigen die Elektronenpaarverschiebungen; ein isoliertes H⁺ wird nicht freigesetzt.',
+          'Links entsteht OH⁻ mit einer O–H-Bindung und drei freien Elektronenpaaren; rechts H₃O⁺ mit drei O–H-Bindungen und einem freien Paar. Die Gesamtladung bleibt null. Im Gleichgewicht reagiert nur ein sehr kleiner Anteil des Wassers: Bei 25 °C liegen in reinem Wasser je etwa 10⁻⁷ mol/L H₃O⁺ und OH⁻ vor. Die Rückreaktion bildet wieder zwei Wassermoleküle. Gezeigt ist ein einzelner Protonenübergang, keine vollständige Umsetzung des Wassers.'
+        ]},
       lewis:{title:'Borsäure bindet eine weitere OH-Gruppe aus Wasser.',equation:'\\[\\mathrm{B(OH)_3+2\\,H_2O\\rightleftharpoons B(OH)_4^-+H_3O^+}\\]',
         labels:[['B(OH)₃ · Lewis-Säure','Zwei H₂O-Moleküle'],['O stellt das Bindungspaar bereit','Weiteres Wasser nimmt H⁺ auf'],['B(OH)₄⁻ · vier B–O-Bindungen','H₃O⁺ · saure Wirkung']],
         explanations:[
@@ -45,7 +52,9 @@
     const number=n=>Number(n.toFixed(2));
     function atom(symbol,x,y,{active=false,charge='',id=''}={}){
       const [px,py]=point(x,y);
-      return `<g class="reaction-atom${active?' is-active':''}"${id?` data-atom="${id}"`:''}><text x="${number(px)}" y="${number(py)}">${symbol}</text>${charge?`<text class="reaction-charge" x="${number(px+20)}" y="${number(py-18)}">${charge}</text>`:''}</g>`;
+      // In the horizontal drawing, an upper-right bond starts where the old
+      // charge sat. Lift it clear; the rotated narrow drawing has other bonds.
+      return `<g class="reaction-atom${active?' is-active':''}"${id?` data-atom="${id}"`:''}><text x="${number(px)}" y="${number(py)}">${symbol}</text>${charge?`<text class="reaction-charge" x="${number(px+20)}" y="${number(py-(compact.matches?18:39))}">${charge}</text>`:''}</g>`;
     }
     function bond(x1,y1,x2,y2,{opacity=1,active=false,partial=false,wedge=false,hashed=false,id=''}={}){
       if(opacity<=0)return '';
@@ -77,13 +86,16 @@
       if(kind==='acid'){
         art+=atom('Cl',donor,y,{charge:final?'−':'',id:'donor'});
         art+=pair(donor-37,y,{vertical:true})+pair(donor,y-39)+pair(donor,y+39);
-        art+=atom('O',acceptor,y,{charge:final?'+':'',id:'acceptor'})+pair(acceptor,y-39);
-        for(const [x,dy] of [[acceptor+73,-61],[acceptor+73,61]])art+=bond(acceptor,y,x,y+dy)+atom('H',x,y+dy);
       }else{
         art+=atom('O',donor,y,{charge:final?'−':'',id:'donor'});
         art+=pair(donor,y-39)+pair(donor,y+39)+bond(donor,y,donor-73,y-61)+atom('H',donor-73,y-61);
+      }
+      if(kind==='base'){
         art+=atom('N',acceptor,y,{charge:final?'+':'',id:'acceptor'});
         for(const [x,dy] of [[acceptor+70,-74],[acceptor+94,0],[acceptor+70,74]])art+=bond(acceptor,y,x,y+dy)+atom('H',x,y+dy);
+      }else{
+        art+=atom('O',acceptor,y,{charge:final?'+':'',id:'acceptor'})+pair(acceptor,y-39);
+        for(const [x,dy] of [[acceptor+73,-61],[acceptor+73,61]])art+=bond(acceptor,y,x,y+dy)+atom('H',x,y+dy);
       }
       if(step===1){
         art+=arrow([acceptor-36,y-10],[hx+100,hy-108],[hx+8,hy-19]);
@@ -179,6 +191,12 @@
       frame=window.requestAnimationFrame(tick);
     }
     lab.querySelectorAll('button[data-reaction]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.reaction)));
+    document.querySelectorAll('a[data-reaction-open]').forEach(a=>a.addEventListener('click',event=>{
+      if(event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+      event.preventDefault();select(a.dataset.reactionOpen);
+      if(location.hash!==a.hash)history.pushState(null,'',a.hash);
+      lab.scrollIntoView({block:'start',behavior:'instant'});$('reaction-title').focus({preventScroll:true});
+    }));
     lab.querySelectorAll('[data-reaction-step]').forEach(b=>b.addEventListener('click',()=>setStep(Number(b.dataset.reactionStep))));
     $('reaction-restart').addEventListener('click',()=>setStep(0));
     $('reaction-play').addEventListener('click',()=>{

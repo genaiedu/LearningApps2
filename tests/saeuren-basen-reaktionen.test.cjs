@@ -1,19 +1,20 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {JSDOM}=require('jsdom'),root=path.join(__dirname,'..');
 function setup(t,{reduced=false,compact=false}={}){
-  const dom=new JSDOM(fs.readFileSync(path.join(root,'saeuren-basen-mission.html'),'utf8'),{runScripts:'outside-only',url:'https://test.invalid/'}),w=dom.window,q=s=>w.document.querySelector(s),frames=new Map();let serial=0;
+  const dom=new JSDOM(fs.readFileSync(path.join(root,'saeuren-basen-mission.html'),'utf8'),{runScripts:'outside-only',url:'https://test.invalid/'}),w=dom.window,q=s=>w.document.querySelector(s),frames=new Map(),scrolled=[];let serial=0;
   w.matchMedia=query=>({matches:query.includes('reduced-motion')?reduced:query.includes('max-width')&&compact,addEventListener(){}});
   w.AcidTypeset={replace(element,html){element.innerHTML=html;}};
   w.requestAnimationFrame=callback=>{const id=++serial;frames.set(id,callback);return id;};w.cancelAnimationFrame=id=>frames.delete(id);
+  w.HTMLElement.prototype.scrollIntoView=function(options){scrolled.push({id:this.id,options});};
   w.eval(fs.readFileSync(path.join(root,'scripts/saeuren-basen-reaktionen.js'),'utf8'));w.AcidReactionLab.init();
   const select=k=>q(`[data-reaction="${k}"]`).click(),step=n=>q(`[data-reaction-step="${n}"]`).click();
   const tick=time=>{const callbacks=[...frames.values()];frames.clear();callbacks.forEach(fn=>fn(time));};
   const symbols=()=>[...q('#reaction-stage').querySelectorAll('.reaction-atom > text:first-child')].map(el=>el.textContent).sort();
-  t.after(()=>w.close());return{w,q,frames,select,step,tick,symbols};
+  t.after(()=>w.close());return{w,q,frames,select,step,tick,symbols,scrolled};
 }
 test('proton transfer conserves atoms and pairs and displays the charged conjugate products',t=>{
   const {q,select,step,symbols}=setup(t);
-  for(const [kind,donor,acceptor,pairs] of [['acid','Cl⁻','H₃O⁺',6],['base','OH⁻','NH₄⁺',4]]){
+  for(const [kind,donor,acceptor,pairs] of [['acid','Cl⁻','H₃O⁺',6],['base','OH⁻','NH₄⁺',4],['autoprotolysis','OH⁻','H₃O⁺',5]]){
     select(kind);const before=symbols();assert.equal(q('#reaction-stage').querySelectorAll('.reaction-pair').length,pairs);
     assert.ok(q('[data-bond="old-proton-bond"]'));assert.equal(q('[data-bond="new-proton-bond"]'),null);
     step(1);assert.deepEqual(symbols(),before);assert.equal(q('#reaction-stage').querySelectorAll('.reaction-pair').length,pairs);
@@ -24,6 +25,41 @@ test('proton transfer conserves atoms and pairs and displays the charged conjuga
     const charges=[...q('#reaction-stage').querySelectorAll('.reaction-charge')].map(e=>e.textContent).sort();assert.deepEqual(charges,['+','−']);
     assert.equal(q('#reaction-stage').querySelectorAll('.reaction-electron-arrow').length,0);
   }
+});
+
+for(const compact of [false,true])test(`autoprotolysis conserves two O, four H and the electron pairs (${compact?'narrow':'wide'})`,t=>{
+  const {q,select,step,tick,symbols,frames}=setup(t,{compact});select('autoprotolysis');
+  const before=symbols();assert.deepEqual(before,['H','H','H','H','O','O']);
+  assert.match(q('#reaction-equation').textContent,/2\\,H_2O\\rightleftharpoons OH\^-\+H_3O\^\+/);
+  assert.equal(q('#reaction-left-label').textContent,'H₂O · Säure');assert.equal(q('#reaction-right-label').textContent,'H₂O · Base');
+  const scene=([x,y])=>compact?[200+(y-105)/.65,200+(x-230)/.95]:[x,y];
+  const oxygen=id=>{const el=q(`[data-atom="${id}"] > text:first-child`);return scene([Number(el.getAttribute('x')),Number(el.getAttribute('y'))]);};
+  const lonePairs=id=>{const [x,y]=oxygen(id);return[...q('#reaction-stage').querySelectorAll('.reaction-pair')].filter(e=>{
+    const dots=[...e.querySelectorAll('circle')],center=scene(['cx','cy'].map(a=>dots.reduce((sum,d)=>sum+Number(d.getAttribute(a)),0)/2));
+    return Math.hypot(center[0]-x,center[1]-y)<41;
+  }).length;};
+  assert.equal(lonePairs('donor'),2);assert.equal(lonePairs('acceptor'),2);
+  assert.equal(q('#reaction-stage').querySelectorAll('.reaction-charge').length,0);
+  q('#reaction-play').click();tick(0);
+  for(let frame=0;frame<=130;frame++){
+    tick(frame*50);assert.deepEqual(symbols(),before);assert.equal(q('#reaction-stage').querySelectorAll('.reaction-pair').length,5);
+    assert.equal(q('[data-atom="transferred-hydrogen"] .reaction-charge'),null);
+    const charges=[...q('#reaction-stage').querySelectorAll('.reaction-charge')].map(e=>e.textContent).sort();
+    assert.deepEqual(charges,frame===130?['+','−']:[]);
+  }
+  assert.equal(frames.size,0);assert.equal(lonePairs('donor'),3);assert.equal(lonePairs('acceptor'),1);
+  const acceptorY=Number(q('[data-atom="acceptor"] > text:first-child').getAttribute('y'));
+  assert.equal(Number(q('[data-atom="acceptor"] .reaction-charge').getAttribute('y')),acceptorY-(compact?18:39));
+  assert.match(q('#reaction-explanation').textContent,/nur ein sehr kleiner Anteil/i);assert.match(q('#reaction-explanation').textContent,/Rückreaktion/);
+  step(1);assert.equal(q('#reaction-stage').querySelectorAll('.reaction-electron-arrow').length,2);
+});
+
+test('the water-equilibrium chapter opens autoprotolysis in the existing animation lab',t=>{
+  const {w,q,frames,tick,scrolled}=setup(t);q('#reaction-play').click();tick(0);tick(1000);
+  q('#kw-derivation [data-reaction-open="autoprotolysis"]').click();
+  assert.equal(q('#reaction-stage').dataset.reactionKind,'autoprotolysis');assert.equal(q('#reaction-stage').dataset.progress,'0');
+  assert.equal(frames.size,0);assert.equal(w.location.hash,'#concept-lab');assert.equal(w.document.activeElement.id,'reaction-title');
+  assert.equal(scrolled.at(-1).id,'concept-lab');assert.equal(scrolled.at(-1).options.behavior,'instant');
 });
 test('Lewis addition forms a shared N-B pair with no proton transfer and a neutral formal-charge sum',t=>{
   const {q,select,step,symbols}=setup(t);select('comparison');const before=symbols();
@@ -46,6 +82,9 @@ test('playback finishes once, holds products, and cancels cleanly on step or rea
 });
 test('reduced motion retains all states and reveals products without starting movement',t=>{
   const {q,step,frames}=setup(t,{reduced:true});assert.equal(q('#reaction-play').textContent,'Produkte zeigen');q('#reaction-play').click();assert.equal(frames.size,0);assert.equal(q('#reaction-stage').dataset.progress,'1');step(1);assert.equal(q('#reaction-stage').dataset.progress,'0.5');
+  q('[data-reaction="autoprotolysis"]').click();q('#reaction-play').click();assert.equal(frames.size,0);
+  assert.equal(q('#reaction-stage').dataset.reactionKind,'autoprotolysis');assert.equal(q('#reaction-stage').dataset.progress,'1');
+  assert.equal(q('#reaction-stage').querySelectorAll('.reaction-pair').length,5);
 });
 test('all three scientists open the existing Wikipedia reader with their actual article titles',t=>{
   const {q}=setup(t);
