@@ -34,6 +34,19 @@ test('half-equivalence has its own numbered characteristic-point calculation',()
   ])assert.ok(half.includes(step),step);
 });
 
+test('half-equivalence derivation, worked example and limits share the characteristic-points article',t=>{
+  const {JSDOM}=require('jsdom'),dom=new JSDOM(fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8'));
+  t.after(()=>dom.window.close());
+  const document=dom.window.document,half=document.getElementById('titration-hap-calculation'),article=half.closest('article');
+  assert.equal(article.id,'titration-characteristic-points');
+  assert.equal(article.querySelector('h3').textContent,'Die charakteristischen Punkte ausrechnen');
+  assert.equal(half.querySelector('h4').textContent,'Herleitung: Warum gilt am HÄP pH ≈ pKS?');
+  for(const content of ['nicht den freien OH⁻-Bestand','analytischen','stark protolysiert','sehr verdünnt','Protolyse-Stufen überlappen','Aktivitäten wichtig','Im Protolyse-Labor','12{,}5','4{,}76'])assert.ok(half.textContent.includes(content),content);
+  assert.equal(half.querySelector('a[href="#equilibrium-lab"]').textContent,'Im Protolyse-Labor');
+  assert.equal(document.querySelectorAll('#titration-characteristic-points').length,1);
+  assert.ok(![...document.querySelectorAll('#titration > .wrap > article')].some(el=>el.querySelector('h3')?.textContent.startsWith('Warum gilt dort')));
+});
+
 test('equivalence defines acetate, total volume and each constant before inserting numbers',()=>{
   const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
   const eq=html.slice(html.indexOf('<li id="titration-equivalence-calculation"'),html.indexOf('<li><strong>Überschuss:'));

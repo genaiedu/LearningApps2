@@ -40,3 +40,7 @@ html[data-marks=right] .station[data-mark]>.page-watermark{left:auto;right:var(-
 .rechen-glossar dt{font-weight:700;margin-top:1em}.rechen-glossar dd{margin:0;max-width:65ch}
 #hagg-derivation ol{padding-inline-start:32px}
 @media(max-width:650px){#hagg-derivation ol{padding-inline-start:20px}}
+
+/* The integrated HÄP formulas use the card's full inner width on phones,
+   rather than losing space to the numbered step's 26px + 8px indent. */
+@media(max-width:650px){#titration-hap-calculation>.math{width:calc(100% + 34px);max-width:none;margin-inline-start:-34px;font-size:17px}}
