@@ -6,7 +6,7 @@ function setup(t){
   w.matchMedia=()=>({matches:true,addEventListener(){}});w.HTMLElement.prototype.scrollIntoView=function(){};w.MathJax={typesetClear(){},typesetPromise(){return Promise.resolve();}};
   w.setTimeout=callback=>{timers.push(callback);return timers.length;};w.clearTimeout=()=>{};
   for(const file of ['saeuren-basen-core','saeuren-basen-rechenwege','saeuren-basen-aufgaben','saeuren-basen-titration','saeuren-basen-mission','saeuren-basen-vertiefung'])w.eval(fs.readFileSync(path.join(root,'scripts',file+'.js'),'utf8'));
-  const click=id=>q('#'+id).click(),set=(id,value)=>{q('#'+id).value=String(value);q('#'+id).dispatchEvent(new w.Event('change',{bubbles:true}));},dose=value=>{set('tit-dose',value);click('tit-add');assert.ok(q('#titration-lab').classList.contains('is-pouring'));timers.shift()();assert.ok(!q('#titration-lab').classList.contains('is-pouring'));};
+  const click=id=>q('#'+id).click(),set=(id,value)=>{q('#'+id).value=String(value);q('#'+id).dispatchEvent(new w.Event('change',{bubbles:true}));},dose=(value,custom=false)=>{set(custom?'tit-dose-custom':'tit-dose',value);click('tit-add');assert.ok(q('#titration-lab').classList.contains('is-pouring'));timers.shift()();assert.ok(!q('#titration-lab').classList.contains('is-pouring'));};
   t.after(()=>w.close());return{w,q,click,set,dose};
 }
 test('flask-only trial hides pH and curve; overshoot locks doses until restart',t=>{
@@ -24,4 +24,11 @@ test('manual tasks require indicator choice and distinguish phosphate stage 1 fr
 });
 test('blood simplification appears only after hint request; solutions and Hagg remain separate',t=>{
   const {q,click}=setup(t);assert.ok(q('#blood-hint').hidden);assert.ok(q('#blood-solution').hidden);click('blood-hint-button');assert.ok(!q('#blood-hint').hidden);assert.match(q('#blood-hint').textContent,/starken einprotonigen Säure/);assert.ok(q('#blood-solution').hidden);click('blood-solution-button');assert.ok(!q('#blood-solution').hidden);assert.match(q('#blood-solution').textContent,/119/);assert.ok(q('#hagg-chart').querySelectorAll('path').length>10);
+});
+
+test('free dose supports very small equivalence volumes without accepting gross overshoot',t=>{
+  const {q,click,set,dose}=setup(t);set('tit-c',.001);set('tit-v',5);set('tit-ct',.2);dose(5);assert.ok(q('#tit-add').disabled);click('tit-reset');
+  for(const value of [.01,.01,.001,.001,.001,.001,...Array(11).fill(.0001)])dose(value,true);
+  click('tit-endpoint');assert.ok(!q('#tit-next').hidden);click('tit-next');assert.ok(q('#practical-answer').hidden,'free lab must not show manual-task answer');
+  click('tit-measure');for(const value of [.01,.01,.001,.001,.001,.001,...Array(11).fill(.0001)]){dose(value,true);click('tit-measure');}click('tit-finish');assert.ok(!q('#tit-analysis').hidden);
 });
