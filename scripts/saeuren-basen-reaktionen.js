@@ -102,7 +102,7 @@
     }
     function draw(){
       const width=compact.matches?460:900,height=compact.matches?565:360;
-      scene.dataset.reaction=kind;scene.dataset.progress=String(number(progress));
+      scene.dataset.reactionKind=kind;scene.dataset.progress=String(number(progress));
       scene.innerHTML=`<svg class="reaction-scene" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="reaction-svg-title reaction-svg-desc"><title id="reaction-svg-title">${models[kind].title} ${steps[step]}.</title><desc id="reaction-svg-desc">${models[kind].explanations[step]}</desc><defs><marker id="reaction-electron-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z"/></marker></defs>${kind==='lewis'?lewisDrawing(progress):protonDrawing(progress)}</svg>`;
     }
     function playLabel(){
@@ -120,7 +120,7 @@
     function stop(){if(frame!==null)window.cancelAnimationFrame(frame);frame=null;playLabel();}
     function setStep(next){stop();step=next;progress=next/2;draw();information();}
     function select(next){if(!models[next])return;stop();kind=next;step=0;progress=0;
-      lab.querySelectorAll('[data-reaction]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.reaction===kind)));
+      lab.querySelectorAll('button[data-reaction]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.reaction===kind)));
       window.AcidTypeset.replace($('reaction-equation'),models[kind].equation);draw();information();
     }
     function tick(time){
@@ -132,7 +132,7 @@
       if(progress>=1){frame=null;information();return;}
       frame=window.requestAnimationFrame(tick);
     }
-    lab.querySelectorAll('[data-reaction]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.reaction)));
+    lab.querySelectorAll('button[data-reaction]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.reaction)));
     lab.querySelectorAll('[data-reaction-step]').forEach(b=>b.addEventListener('click',()=>setStep(Number(b.dataset.reactionStep))));
     $('reaction-restart').addEventListener('click',()=>setStep(0));
     $('reaction-play').addEventListener('click',()=>{

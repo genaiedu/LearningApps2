@@ -40,7 +40,7 @@ test('playback finishes once, holds products, and cancels cleanly on step or rea
   tick(0);tick(3250);assert.equal(q('[data-reaction-step="1"]').getAttribute('aria-pressed'),'true');
   tick(6500);assert.equal(frames.size,0);assert.equal(q('#reaction-stage').dataset.progress,'1');assert.match(q('#reaction-play').textContent,/Noch einmal/);
   q('#reaction-play').click();tick(10000);tick(11500);step(0);assert.equal(frames.size,0);assert.equal(q('#reaction-stage').dataset.progress,'0');
-  q('#reaction-play').click();tick(12000);tick(13000);select('lewis');assert.equal(frames.size,0);assert.equal(q('#reaction-stage').dataset.reaction,'lewis');
+  q('#reaction-play').click();tick(12000);tick(13000);select('lewis');assert.equal(frames.size,0);assert.equal(q('#reaction-stage').dataset.reactionKind,'lewis');
   q('#reaction-play').click();tick(14000);tick(15000);q('#reaction-play').click();assert.equal(frames.size,0);const paused=q('#reaction-stage').dataset.progress;
   q('#reaction-play').click();tick(16000);assert.equal(q('#reaction-stage').dataset.progress,paused);tick(22500);assert.equal(frames.size,0);assert.equal(q('#reaction-stage').dataset.progress,'1');
 });
