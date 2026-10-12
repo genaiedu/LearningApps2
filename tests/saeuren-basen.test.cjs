@@ -7,6 +7,16 @@ test('water, strong acids and bases include autoprotolysis',()=>{
   for(const s of C.substances)for(const c of [1e-8,1e-5,.001,.1]){const r=C.solution(s.id,c);close(r.pH+r.pOH,14,1e-10);assert.ok(s.type.endsWith('acid')?r.pH<7:r.pH>7);assert.ok(Math.abs(r.residual)<1e-12);}
 });
 
+test('initial acid amount and added hydroxide are defined before the titration derivations',()=>{
+  const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
+  assert.ok(html.indexOf('id="titration-symbols"')<html.indexOf('class="curve-guide"'));
+  assert.ok(html.includes('n₀ ist die anfangs eingesetzte Stoffmenge der Säure'));
+  assert.ok(html.includes('nicht die frei in der Mischung verbliebenen Hydroxidionen'));
+  assert.ok(html.includes('n_{\\mathrm{B,zu}}=c_\\mathrm{B}V_\\mathrm{B}=\\frac{n_0}{2}'));
+  assert.ok(!html.includes('n(\\mathrm{OH^-})=\\frac{n_0}{2}'));
+  assert.ok(html.includes('Beide befinden sich im selben Gesamtvolumen'));
+});
+
 test('scientist overview keeps historical context without portraits or automatic image requests',()=>{
   const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
   assert.doesNotMatch(html,/data-portrait=|class="portrait|Wissenschaftlerporträts/);

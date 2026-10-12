@@ -17,6 +17,16 @@ test('full curve, pH and calculations are immediately visible; overshoot never f
   assert.equal(q('#tit-measure'),null);assert.equal(q('#tit-next'),null);assert.equal(q('#tit-finish'),null);
 });
 
+test('point calculations define the initial sample amount and distinguish it from the titrant',t=>{
+  const {q,set}=setup(t);set('tit-substance','acetic');q('[data-point=half]').click();
+  let text=q('#tit-point-math').textContent;
+  assert.ok(text.indexOf('n₀ ist die anfänglich eingesetzte Stoffmenge der Säure')<text.indexOf('Rechenansatz'));
+  assert.ok(text.includes('n_0=c_0V_0=0{,}0025'));assert.ok(text.includes('V_\\mathrm{zu}=0{,}00125'));
+  assert.ok(text.includes('nicht die frei im Kolben verbliebenen Ionen'));
+  set('tit-substance','ammonia');q('[data-point=half]').click();text=q('#tit-point-math').textContent;
+  assert.ok(text.includes('anfänglich eingesetzte Stoffmenge der Base'));assert.ok(text.includes('zugegebene HCl'));
+});
+
 test('page opens without disclaimer; Wikipedia stays consent-gated until an article is requested',async t=>{
   const {w,q}=setup(t),requests=[];
   w.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','');};
