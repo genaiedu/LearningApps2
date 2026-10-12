@@ -32,3 +32,6 @@ button,.button,input,select,output{font-family:'Fira Sans',sans-serif;font-size:
 html[data-marks=left] .station[data-mark]>.page-watermark{left:var(--acid-mark-inset);right:auto}
 html[data-marks=right] .station[data-mark]>.page-watermark{left:auto;right:var(--acid-mark-inset)}
 @media(max-width:650px){.station[data-mark]{--acid-mark-inset:-.07em}}
+
+#hagg-derivation p{max-width:65ch}
+#hagg-derivation ol{padding-inline-start:32px}

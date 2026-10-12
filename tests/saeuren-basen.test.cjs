@@ -59,6 +59,32 @@ test('weak partner fractions obey mass balance, not complete dissociation',()=>{
   close(C.solution('ammonia',.1).pH,11.13,.01);
   for(const k of [1e-3,1e-5,1e-10]){const x=C.quadratic(k,.1);close(x*x/(.1-x),k,1e-12);}
 });
+test('Hagg distribution formulas are derived from equilibrium and the two-form mass balance',()=>{
+  const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
+  const start=html.indexOf('<section id="hagg-derivation"');
+  assert.ok(start>=0);
+  const derivation=html.slice(start,html.indexOf('</section>',start));
+  assert.equal((derivation.match(/<li>/g)||[]).length,4);
+  for(const step of [
+    'K_\\mathrm{s}=\\frac{h\\,c(\\mathrm{A^-})}{c(\\mathrm{HA})}',
+    'c(\\mathrm{A^-})=\\frac{K_\\mathrm{s}}{h}\\,c(\\mathrm{HA})',
+    'c_\\mathrm{ges}=c(\\mathrm{HA})+c(\\mathrm{A^-})',
+    'c(\\mathrm{HA})\\left(1+\\frac{K_\\mathrm{s}}{h}\\right)',
+    '\\boxed{c(\\mathrm{HA})=\\frac{c_\\mathrm{ges}h}{h+K_\\mathrm{s}}}',
+    '\\boxed{c(\\mathrm{A^-})=\\frac{c_\\mathrm{ges}K_\\mathrm{s}}{h+K_\\mathrm{s}}}',
+    'c(\\mathrm{HA})=c(\\mathrm{A^-})=\\frac{c_\\mathrm{ges}}{2}',
+    'Aktivitätskorrekturen bleiben unberücksichtigt',
+    'alle vier Formen gemeinsam bilanziert'
+  ])assert.ok(derivation.includes(step),step);
+  assert.ok(derivation.indexOf('analytische Gesamtkonzentration')<derivation.indexOf('Massenwirkungsgesetz aufstellen'));
+  assert.ok(derivation.indexOf('Die Stoffbilanz ergänzen')<derivation.indexOf('\\boxed{c(\\mathrm{HA})'));
+  for(const c of [.001,.01,.1])for(const pK of [2.15,3.75,4.76,9.25])for(const pH of [0,2,4.76,7,12,14]){
+    const h=10**(-pH),k=10**(-pK),ha=c*h/(h+k),a=c*k/(h+k),fractions=C.fractions(pH,[pK]);
+    close(ha+a,c,c*1e-12);close(h*a/ha,k,k*1e-12);
+    close(ha/c,fractions[0],1e-12);close(a/c,fractions[1],1e-12);
+    const atHalf=C.fractions(pK,[pK]);close(atHalf[0],.5);close(atHalf[1],.5);
+  }
+});
 test('all titration types are continuous at equivalence and have correct half/equivalence pH',()=>{
   for(const id of ['hcl','acetic','formic','naoh','ammonia']){
     const base={id,c:.1,v:25,ct:.1},start=C.titration(base),half=C.titration({...base,added:12.5}),eq=C.titration({...base,added:25});
