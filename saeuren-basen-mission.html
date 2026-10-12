@@ -4,11 +4,11 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Protonen-Mission · Säuren, Basen und Gleichgewicht</title>
   <meta name="description" content="Ausführliche Säuren-Basen-Lernreise für die Oberstufe: Säurekonzepte, pH, Ks und Kb, Titrationen und Puffer. Fünf interaktive Labore und 32 wechselnde Missionen aus 240 Aufgabenvarianten.">
-  <link rel="stylesheet" href="styles/saeuren-basen-mission.css?v=20261012-14"><link rel="stylesheet" href="styles/wikipedia-math.css"><link rel="stylesheet" href="../LearningApps/chemie-formelsammlung.css?v=20261012-14"><link rel="stylesheet" href="styles/saeuren-basen-atelier.css?v=20261012-19"><link rel="stylesheet" href="styles/saeuren-basen-reaktionen.css?v=20261012-21">
+  <link rel="stylesheet" href="styles/saeuren-basen-mission.css?v=20261012-14"><link rel="stylesheet" href="styles/wikipedia-math.css"><link rel="stylesheet" href="../LearningApps/chemie-formelsammlung.css?v=20261012-14"><link rel="stylesheet" href="styles/saeuren-basen-atelier.css?v=20261012-25"><link rel="stylesheet" href="styles/saeuren-basen-reaktionen.css?v=20261012-21">
   <script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'local'},options:{enableMenu:false}};</script>
   <script defer src="../LearningApps/fonts/mathjax-svg-3.2.2/tex-svg.js"></script>
   <script defer src="scripts/saeuren-basen-math.js?v=20261012-16"></script>
-<script defer src="scripts/saeuren-basen-core.js?v=20261012-20"></script><script defer src="scripts/saeuren-basen-rechenwege.js?v=20261012-24"></script><script defer src="scripts/saeuren-basen-aufgaben.js?v=20261012-24"></script><script defer src="scripts/saeuren-basen-titration.js?v=20261012-24"></script><script defer src="scripts/saeuren-basen-reaktionen.js?v=20261012-22"></script><script defer src="scripts/saeuren-basen-mission.js?v=20261012-24"></script><script defer src="scripts/saeuren-basen-vertiefung.js?v=20261012-16"></script><script defer src="../LearningApps/atelier-tools.js?v=20261012-14"></script><script defer src="../LearningApps/fonts/lucide.min.js"></script><script defer src="../LearningApps/chemie-formelsammlung.js?v=20261012-24"></script><script defer src="../LearningApps/wissenschaftlicher-rechner.js?v=20261012-14"></script>
+<script defer src="scripts/saeuren-basen-core.js?v=20261012-20"></script><script defer src="scripts/saeuren-basen-rechenwege.js?v=20261012-24"></script><script defer src="scripts/saeuren-basen-aufgaben.js?v=20261012-24"></script><script defer src="scripts/saeuren-basen-titration.js?v=20261012-24"></script><script defer src="scripts/saeuren-basen-reaktionen.js?v=20261012-22"></script><script defer src="scripts/saeuren-basen-mission.js?v=20261012-24"></script><script defer src="scripts/saeuren-basen-vertiefung.js?v=20261012-16"></script><script defer src="../LearningApps/atelier-tools.js?v=20261012-14"></script><script defer src="../LearningApps/fonts/lucide.min.js"></script><script defer src="../LearningApps/chemie-formelsammlung.js?v=20261012-25"></script><script defer src="../LearningApps/wissenschaftlicher-rechner.js?v=20261012-14"></script>
   <script defer src="scripts/wikipedia-math.js"></script><script defer src="scripts/schroedinger-wikipedia.js?v=20261012-14"></script>
 </head>
 <body data-design-key="chemie-atelier-view" data-watermarks>
@@ -165,27 +165,27 @@
 <ol>
 <li><strong>Das vollständige Massenwirkungsgesetz aufstellen.</strong><p>Zur Protolyse gehört das folgende Gleichgewicht. K<sub>c,S</sub> ist der vollständige Konzentrationsquotient mit Wasser im Nenner. c<sub>W,ref</sub> ist der näherungsweise konstante Wasserwert; die Annahme c(H₂O) ≈ c<sub>W,ref</sub> ist für verdünnte wässrige Lösungen sehr gut, aber nicht exakt. Ihr Wasserfaktor wird in Kₛ aufgenommen:</p><div class="math">
 \[\mathrm{HA+H_2O\rightleftharpoons A^-+H_3O^+}\]
-\[K_{c,\mathrm{S}}=\frac{c(\mathrm{H_3O^+})\,c(\mathrm{A^-})}{c(\mathrm{HA})c(\mathrm{H_2O})}\]
-\[K_\mathrm{s}:=K_{c,\mathrm{S}}c_{\mathrm{W,ref}}\]\[\frac{c(\mathrm{H_3O^+})\,c(\mathrm{A^-})}{c(\mathrm{HA})}\approx K_\mathrm{s}\]
-\[K_\mathrm{s}=\frac{c(\mathrm{H_3O^+})\,c(\mathrm{A^-})}{c(\mathrm{HA})}\]
+\[K_{c,\mathrm{S}}=\frac{c(\mathrm{H_3O^+})\cdot c(\mathrm{A^-})}{c(\mathrm{HA})\cdot c(\mathrm{H_2O})}\]
+\[K_\mathrm{s}:=K_{c,\mathrm{S}}\cdot c_{\mathrm{W,ref}}\]\[\frac{c(\mathrm{H_3O^+})\cdot c(\mathrm{A^-})}{c(\mathrm{HA})}\approx K_\mathrm{s}\]
+\[K_\mathrm{s}=\frac{c(\mathrm{H_3O^+})\cdot c(\mathrm{A^-})}{c(\mathrm{HA})}\]
 </div><p>Mit \(c(\mathrm{HA})\) multiplizieren und durch \(c(\mathrm{H_3O^+})\) teilen:</p><div class="math">
-\[K_\mathrm{s}\,c(\mathrm{HA})=c(\mathrm{H_3O^+})\,c(\mathrm{A^-})\]
-\[c(\mathrm{A^-})=\frac{K_\mathrm{s}}{c(\mathrm{H_3O^+})}\,c(\mathrm{HA})\]
+\[K_\mathrm{s}\cdot c(\mathrm{HA})=c(\mathrm{H_3O^+})\cdot c(\mathrm{A^-})\]
+\[c(\mathrm{A^-})=\frac{K_\mathrm{s}}{c(\mathrm{H_3O^+})}\cdot c(\mathrm{HA})\]
 </div><p>Das Gleichgewicht legt also das <strong>Verhältnis</strong> beider Formen fest, noch nicht ihre einzelnen Konzentrationen.</p></li>
 <li><strong>Die Stoffbilanz ergänzen.</strong><p>Jedes Teilchen dieses Systems liegt entweder als HA oder als A⁻ vor. Die Protolyse verteilt den Säurebestand auf beide Formen, sie verändert nicht deren Summe:</p><div class="math">
 \[c_\mathrm{ges}=c(\mathrm{HA})+c(\mathrm{A^-})\]
 </div><p>Diese Gesamtbilanz liefert die zweite Gleichung, die wir zur Berechnung der beiden unbekannten Konzentrationen brauchen.</p></li>
 <li><strong>Nach der Säurekonzentration umstellen.</strong><p>Wir setzen den Ausdruck für \(c(\mathrm{A^-})\) aus Schritt 1 in die Bilanz ein, klammern \(c(\mathrm{HA})\) aus und bringen die Klammer auf einen gemeinsamen Nenner:</p><div class="math">
-\[\begin{aligned}&c_\mathrm{ges}\\&=c(\mathrm{HA})+\frac{K_\mathrm{s}}{c(\mathrm{H_3O^+})}\,c(\mathrm{HA})\\&=c(\mathrm{HA})\left(1+\frac{K_\mathrm{s}}{c(\mathrm{H_3O^+})}\right)\\&=c(\mathrm{HA})\frac{c(\mathrm{H_3O^+})+K_\mathrm{s}}{c(\mathrm{H_3O^+})}\end{aligned}\]
+\[\begin{aligned}&c_\mathrm{ges}\\&=c(\mathrm{HA})+\frac{K_\mathrm{s}}{c(\mathrm{H_3O^+})}\cdot c(\mathrm{HA})\\&=c(\mathrm{HA})\cdot \left(1+\frac{K_\mathrm{s}}{c(\mathrm{H_3O^+})}\right)\\&=c(\mathrm{HA})\cdot \frac{c(\mathrm{H_3O^+})+K_\mathrm{s}}{c(\mathrm{H_3O^+})}\end{aligned}\]
 </div><p>Nun mit \(c(\mathrm{H_3O^+})/(c(\mathrm{H_3O^+})+K_\mathrm{s})\) multiplizieren:</p><div class="math">
-\[\boxed{c(\mathrm{HA})=\frac{c_\mathrm{ges}c(\mathrm{H_3O^+})}{c(\mathrm{H_3O^+})+K_\mathrm{s}}}\]
+\[\boxed{c(\mathrm{HA})=\frac{c_\mathrm{ges}\cdot c(\mathrm{H_3O^+})}{c(\mathrm{H_3O^+})+K_\mathrm{s}}}\]
 </div></li>
 <li><strong>Die Konzentration der konjugierten Base berechnen.</strong><p>Das Ergebnis für \(c(\mathrm{HA})\) setzen wir wieder in das umgestellte Massenwirkungsgesetz ein. Dabei kürzt sich \(c(\mathrm{H_3O^+})\):</p><div class="math">
-\[\begin{aligned}&c(\mathrm{A^-})\\&=\frac{K_\mathrm{s}}{c(\mathrm{H_3O^+})}\,c(\mathrm{HA})\\&=\frac{K_\mathrm{s}c_\mathrm{ges}c(\mathrm{H_3O^+})}{c(\mathrm{H_3O^+})\bigl(c(\mathrm{H_3O^+})+K_\mathrm{s}\bigr)}\end{aligned}\]
-\[\boxed{c(\mathrm{A^-})=\frac{c_\mathrm{ges}K_\mathrm{s}}{c(\mathrm{H_3O^+})+K_\mathrm{s}}}\]
+\[\begin{aligned}&c(\mathrm{A^-})\\&=\frac{K_\mathrm{s}}{c(\mathrm{H_3O^+})}\cdot c(\mathrm{HA})\\&=\frac{K_\mathrm{s}\cdot c_\mathrm{ges}\cdot c(\mathrm{H_3O^+})}{c(\mathrm{H_3O^+})\cdot \bigl(c(\mathrm{H_3O^+})+K_\mathrm{s}\bigr)}\end{aligned}\]
+\[\boxed{c(\mathrm{A^-})=\frac{c_\mathrm{ges}\cdot K_\mathrm{s}}{c(\mathrm{H_3O^+})+K_\mathrm{s}}}\]
 </div><p>Beide Ausdrücke haben die Einheit mol/L: Im Zähler steht jeweils das Produkt zweier Größen mit der Einheit mol/L, im Nenner eine Größe mit der Einheit mol/L. Ihre Summe ist wieder \(c_\mathrm{ges}\).</p></li>
 </ol>
-<p><strong>Warum schneiden sich die Linien bei pH = pKₛ?</strong> Dann gilt in unserem Konzentrationsmodell \(c(\mathrm{H_3O^+})=K_\mathrm{s}\). In beiden Formeln ist der Nenner daher \(2K_\mathrm{s}\), und beide Partner erhalten die Hälfte der Gesamtkonzentration:</p><div class="math">
+<p><strong>Warum schneiden sich die Linien bei pH = pKₛ?</strong> Dann gilt in unserem Konzentrationsmodell \(c(\mathrm{H_3O^+})=K_\mathrm{s}\). In beiden Formeln ist der Nenner daher \(2\cdot K_\mathrm{s}\), und beide Partner erhalten die Hälfte der Gesamtkonzentration:</p><div class="math">
 \[c(\mathrm{HA})=c(\mathrm{A^-})=\frac{c_\mathrm{ges}}{2}\]
 </div>
 <p><strong>Grenzen der Herleitung:</strong> Wir haben weder vollständige Dissoziation noch \(c(\mathrm{A^-})=c(\mathrm{H_3O^+})\) vorausgesetzt. Zusätzliche Säure oder Base kann den pH einstellen; deshalb ist die Oxoniumionen-Konzentration nicht automatisch gleich der Konzentration von A⁻. Die beiden hergeleiteten Formeln gelten für ein System mit genau zwei Säureformen. Bei Phosphorsäure müssen dagegen alle vier Formen gemeinsam bilanziert werden; die Zwei-Formen-Gesamtbilanz darf dort nicht unverändert verwendet werden.</p>

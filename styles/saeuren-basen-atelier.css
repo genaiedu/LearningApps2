@@ -35,3 +35,4 @@ html[data-marks=right] .station[data-mark]>.page-watermark{left:auto;right:var(-
 
 #hagg-derivation p{max-width:65ch}
 #hagg-derivation ol{padding-inline-start:32px}
+@media(max-width:650px){#hagg-derivation ol{padding-inline-start:20px}}
