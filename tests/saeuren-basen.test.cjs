@@ -17,6 +17,37 @@ test('initial acid amount and added hydroxide are defined before the titration d
   assert.ok(html.includes('Beide befinden sich im selben Gesamtvolumen'));
 });
 
+test('half-equivalence has its own numbered characteristic-point calculation',()=>{
+  const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
+  const points=html.slice(html.indexOf('<h3>Die charakteristischen Punkte ausrechnen</h3>'),html.indexOf('<p class="eyebrow">Mehrprotonig'));
+  assert.equal((points.match(/<li(?: |>)/g)||[]).length,5);
+  assert.ok(points.indexOf('Vor dem ÄP:')<points.indexOf('id="titration-hap-calculation"'));
+  assert.ok(points.indexOf('id="titration-hap-calculation"')<points.indexOf('ÄP: Acetat'));
+  const half=points.slice(points.indexOf('id="titration-hap-calculation"'),points.indexOf('ÄP: Acetat'));
+  for(const step of [
+    'V_\\mathrm{HÄP}=\\frac{V_\\mathrm{Ä}}{2}',
+    '0{,}100\\ \\mathrm{mol/L}\\cdot0{,}0125\\ \\mathrm{L}',
+    '(2{,}50-1{,}25)\\ \\mathrm{mmol}',
+    '\\frac{1{,}25\\ \\mathrm{mmol}}{1{,}25\\ \\mathrm{mmol}}=1',
+    '\\boxed{\\mathrm{pH(HÄP)}\\approx\\mathrm{p}K_\\mathrm{s}=4{,}76}',
+    'Für HCl gilt sie nicht'
+  ])assert.ok(half.includes(step),step);
+});
+
+test('equivalence defines acetate, total volume and each constant before inserting numbers',()=>{
+  const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
+  const eq=html.slice(html.indexOf('<li id="titration-equivalence-calculation"'),html.indexOf('<li><strong>Überschuss:'));
+  for(const meaning of [
+    'Acetat-Ion CH₃COO⁻', 'V_\\mathrm{gesamt}=V_0+V_\\mathrm{Ä}',
+    '\\frac{0{,}00250\\ \\mathrm{mol}}{0{,}0500\\ \\mathrm{L}}',
+    'Gleicher Zahlenwert, andere Größe', 'Basenstärke ihres konjugierten Partners',
+    'Ionenprodukt des Wassers bei 25 °C', 'gehört zum Acetat, nicht zur zugegebenen starken NaOH',
+    '\\boxed{\\mathrm{pH(ÄP)}\\approx8{,}73}'
+  ])assert.ok(eq.includes(meaning),meaning);
+  assert.ok(eq.indexOf('Acetat-Ion CH₃COO⁻')<eq.indexOf('c(\\mathrm{A^-})'));
+  assert.ok(eq.indexOf('Basenstärke ihres konjugierten Partners')<eq.indexOf('14{,}00-4{,}76'));
+});
+
 test('scientist overview keeps historical context without portraits or automatic image requests',()=>{
   const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
   assert.doesNotMatch(html,/data-portrait=|class="portrait|Wissenschaftlerporträts/);

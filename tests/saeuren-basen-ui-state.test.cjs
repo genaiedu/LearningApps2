@@ -27,6 +27,41 @@ test('point calculations define the initial sample amount and distinguish it fro
   assert.ok(text.includes('anfänglich eingesetzte Stoffmenge der Base'));assert.ok(text.includes('zugegebene HCl'));
 });
 
+test('half-point explicitly shows acid pKa or base pKb, never an acid identity for strong or polyprotic samples',t=>{
+  const {q,set}=setup(t),half=()=>{q('[data-point=half]').click();return q('#tit-point-math').textContent;};
+  set('tit-substance','acetic');let text=half();
+  assert.equal(q('#tit-added-label').textContent,'12,5 mL');
+  assert.ok(text.includes('Halbäquivalenzpunkt (HÄP)'));
+  assert.ok(text.includes('\\boxed{\\mathrm{pH(HÄP)}\\approx\\mathrm{p}K_\\mathrm{s}=4{,}76}'));
+  assert.ok(text.includes('n(\\mathrm{HA})\\approx n_0-n_\\mathrm{umgesetzt}\\\\&=0{,}00125'));
+  assert.ok(text.includes('n(\\mathrm{A^-})\\approx n_\\mathrm{umgesetzt}\\\\&=0{,}00125'));
+  assert.ok(text.includes('vollständige\\ Bilanz'));
+  set('tit-substance','formic');text=half();
+  assert.ok(text.includes('\\boxed{\\mathrm{pH(HÄP)}\\approx\\mathrm{p}K_\\mathrm{s}=3{,}75}'));
+  set('tit-substance','ammonia');text=half();
+  assert.ok(text.includes('\\mathrm{pOH(HÄP)}&\\approx\\mathrm{p}K_\\mathrm{b}'));
+  assert.ok(text.includes('\\boxed{\\mathrm{pH(HÄP)}\\approx14-\\mathrm{p}K_\\mathrm{b}=9{,}25}'));
+  for(const id of ['hcl','phosphoric']){
+    set('tit-substance',id);text=half();
+    assert.ok(!text.includes('\\boxed{\\mathrm{pH(HÄP)}\\approx\\mathrm{p}K_\\mathrm{s}'),id);
+    assert.ok(text.includes('vollständige\\ Bilanz'),id);
+  }
+});
+
+test('live equivalence names the conjugate partner, mixture volume and units of the inserted quantities',t=>{
+  const {q,set}=setup(t);set('tit-substance','acetic');q('[data-point=eq]').click();
+  let text=q('#tit-point-math').textContent;
+  for(const meaning of ['bei Essigsäure ist das Acetat','Probe plus Maßlösung',
+    'V_\\mathrm{gesamt}=V_0+V_\\mathrm{Ä}\\\\&=0{,}05\\ \\mathrm{L}',
+    '\\frac{0{,}0025\\ \\mathrm{mol}}{0{,}05\\ \\mathrm{L}}',
+    'pKᵦ gehört zum konjugierten Partner, nicht zur Maßlösung',
+    '\\mathrm{p}K_\\mathrm{b}(\\mathrm{A^-})\\approx14-\\mathrm{p}K_\\mathrm{s}=9{,}24'
+  ])assert.ok(text.includes(meaning),meaning);
+  set('tit-substance','ammonia');q('[data-point=eq]').click();text=q('#tit-point-math').textContent;
+  assert.ok(text.includes('bei Ammoniak ist das Ammonium'));
+  assert.ok(text.includes('\\mathrm{p}K_\\mathrm{s}(\\mathrm{BH^+})\\approx14-\\mathrm{p}K_\\mathrm{b}=9{,}25'));
+});
+
 test('page opens without disclaimer; Wikipedia stays consent-gated until an article is requested',async t=>{
   const {w,q}=setup(t),requests=[];
   w.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','');};
