@@ -60,13 +60,6 @@
     {id:'methylorange',name:'Methylorange',low:3.1,high:4.4,acid:'#d84235',base:'#e6c438',description:'rot → gelb'},
     {id:'bromthymol',name:'Bromthymolblau',low:6,high:7.6,acid:'#e5cb3c',base:'#297bc4',description:'gelb → blau (grün im Umschlag)'}
   ];
-  function crossing(previous,next,targets,unitVolume){
-    return targets.some(v=>previous<=v+1e-10&&next>v+1e-10&&(next-previous)>Math.max(1e-8,unitVolume*.01)+1e-10);
-  }
-  function measurementsComplete(points,targets,unitVolume){
-    const band=Math.max(1e-8,unitVolume*.02)+1e-10;
-    return points.length>=8&&targets.every(v=>points.some(p=>p[0]<v&&v-p[0]<=band)&&points.some(p=>p[0]>v&&p[0]-v<=band))&&points[0][0]===0;
-  }
   function bloodBuffer({bicarbonate=24,co2=1.2,load=1,ventilated=false}={}){
     if(![bicarbonate,co2,load].every(Number.isFinite)||bicarbonate<=0||co2<=0||load<0||load>=bicarbonate)throw Error('Ungültige Blutpuffer-Modellwerte');
     const before=6.1+Math.log10(bicarbonate/co2),after=6.1+Math.log10((bicarbonate-load)/(ventilated?co2:co2+load));
@@ -76,5 +69,5 @@
   function shuffle(items,r=Math.random){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
   function parseNumber(value){const text=String(value).trim().replace(/\s/g,'').replace(',','.');return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(text)?Number(text):NaN;}
   function accepts(task,value){if(task.kind==='choice')return String(value)===String(task.answer);const n=parseNumber(value),tolerance=Math.max(task.absolute||0,Math.abs(task.answer)*(task.relative??.02),Number.EPSILON*Math.abs(task.answer)*10);return Number.isFinite(n)&&Math.abs(n-task.answer)<=tolerance;}
-  return {KW,substances,polySubstances,indicators,fractions,polySolve,crossing,measurementsComplete,bloodBuffer,get,solve,solution,quadratic,titration,buffer,rng,shuffle,parseNumber,accepts};
+  return {KW,substances,polySubstances,indicators,fractions,polySolve,bloodBuffer,get,solve,solution,quadratic,titration,buffer,rng,shuffle,parseNumber,accepts};
 });

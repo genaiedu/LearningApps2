@@ -61,11 +61,6 @@ test('polyprotic phosphate satisfies all mass, charge and stepwise equilibrium b
   assert.ok(Math.abs(C.titration({...conf,added:12.5}).pH-2.15)>.05,'first half point is not blindly pKa');
   let previous=0;for(let v=0;v<=87.5;v+=.125){const r=C.titration({...conf,added:v});assert.ok(r.pH>=previous);previous=r.pH;}
 });
-test('measurement gating rejects overshoot and requires near points on each side',()=>{
-  assert.ok(C.crossing(24,26,[25],25));assert.ok(!C.crossing(24.95,25.05,[25],25));assert.ok(!C.crossing(20,25,[25],25));
-  const points=[[0,1],[5,1.2],[10,1.4],[15,1.7],[20,2],[24.8,3],[25.1,10],[30,12]];
-  assert.ok(C.measurementsComplete(points,[25],25));assert.ok(!C.measurementsComplete(points.filter(p=>p[0]!==24.8),[25],25));assert.ok(!C.measurementsComplete(points,[25,50],25));
-});
 test('blood buffer model distinguishes closed and CO2-regulated calculation',()=>{
   const closed=C.bloodBuffer({load:.2}),open=C.bloodBuffer({load:.2,ventilated:true});
   close(closed.before,6.1+Math.log10(120/6));close(closed.after,6.1+Math.log10(119/7));close(open.after,6.1+Math.log10(119/6));
@@ -76,8 +71,8 @@ test('every numeric task includes real mathematical solution markup',()=>{
 });
 test('new lesson has hidden milk-acid hint, diagram, four manual cases and window tools',()=>{
   const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
-  for(const id of ['blood-hint','blood-solution','hagg-chart','indicator-preview','tit-measurement','tit-analysis'])assert.ok(html.includes('id="'+id+'"'));
+  for(const id of ['blood-hint','blood-solution','hagg-chart','titration-chart','tit-analysis'])assert.ok(html.includes('id="'+id+'"'));
   assert.ok(html.includes('id="blood-hint" hidden'));assert.equal((html.match(/data-practical=/g)||[]).length,4);
   assert.ok(html.includes('data-chemistry-formulas'));assert.ok(html.includes('data-scicalc-open'));assert.ok(html.includes('data-watermarks'));assert.ok(html.includes('p-q-Formel'));
-  const tit=fs.readFileSync(require.resolve('../scripts/saeuren-basen-titration.js'),'utf8');assert.ok(tit.includes("phase==='analysis'"));assert.ok(tit.includes('measurementsComplete'));
+  const tit=fs.readFileSync(require.resolve('../scripts/saeuren-basen-titration.js'),'utf8');assert.ok(tit.includes("helpers.chart('titration-chart'"));assert.ok(!tit.includes('measurementsComplete'));assert.ok(!tit.includes('C.crossing'));assert.ok(!html.includes('id="tit-analysis" hidden'));
 });
