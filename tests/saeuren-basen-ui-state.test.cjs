@@ -1,14 +1,23 @@
 // NODE_PATH=<jsdom node_modules> node --test tests/saeuren-basen-ui-state.test.cjs
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {JSDOM}=require('jsdom'),root=path.join(__dirname,'..');
-function setup(t){
+function setup(t,saved){
   const dom=new JSDOM(fs.readFileSync(path.join(root,'saeuren-basen-mission.html'),'utf8'),{url:'https://test.invalid/LearningApps2/',runScripts:'outside-only'}),w=dom.window,q=s=>w.document.querySelector(s),timers=[];
   w.matchMedia=()=>({matches:true,addEventListener(){}});w.HTMLElement.prototype.scrollIntoView=function(){};w.MathJax={typesetClear(){},typesetPromise(){return Promise.resolve();}};
   w.setTimeout=callback=>{timers.push(callback);return timers.length;};w.clearTimeout=()=>{};
+  if(saved)w.localStorage.setItem('protonen-mission-v1',JSON.stringify(saved));
   for(const file of ['saeuren-basen-core','saeuren-basen-rechenwege','saeuren-basen-aufgaben','saeuren-basen-titration','saeuren-basen-mission','saeuren-basen-vertiefung'])w.eval(fs.readFileSync(path.join(root,'scripts',file+'.js'),'utf8'));
   const click=id=>q('#'+id).click(),set=(id,value)=>{q('#'+id).value=String(value);q('#'+id).dispatchEvent(new w.Event('change',{bubbles:true}));},dose=(value,custom=false)=>{set(custom?'tit-dose-custom':'tit-dose',value);click('tit-add');assert.ok(q('#titration-lab').classList.contains('is-pouring'));timers.shift()();assert.ok(!q('#titration-lab').classList.contains('is-pouring'));};
   t.after(()=>w.close());return{w,q,click,set,dose,timers};
 }
+test('round code is absent while a saved task set and its progress are preserved',t=>{
+  const tasks=require('../scripts/saeuren-basen-aufgaben.js').select(123456);
+  const saved={version:1,seed:123456,ids:tasks.map(t=>t.id),answers:{[tasks[0].id]:{attempts:1,value:String(tasks[0].answer),done:true,solved:true}}};
+  const {w,q}=setup(t,saved),restored=JSON.parse(w.localStorage.getItem('protonen-mission-v1'));
+  assert.equal(q('#round-code'),null);assert.equal(q('.dashboard').querySelectorAll(':scope > div').length,3);
+  assert.equal(q('#score').textContent,'1 / 32');assert.equal(w.document.querySelectorAll('.task-card').length,32);
+  assert.equal(restored.seed,saved.seed);assert.deepEqual(restored.ids,saved.ids);assert.deepEqual(restored.answers,saved.answers);
+});
 test('full curve, pH and calculations are immediately visible; overshoot never forces restart',t=>{
   const {q,dose}=setup(t);assert.ok(!q('#tit-analysis').hidden);assert.ok(!q('#tit-results').hidden);assert.ok(!q('#tit-point-math').hidden);assert.match(q('#flask-ph').textContent,/^pH /);
   const curve=()=>q('#titration-chart').querySelector('path[stroke-width="3"]');assert.ok(curve().getAttribute('d').length>5000);

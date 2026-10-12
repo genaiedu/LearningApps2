@@ -57,7 +57,7 @@
     $('random-task').disabled=finished===32;
   }
   function renderTasks(){
-    const bank=new Map(T.bank(state.seed).map(t=>[t.id,t]));tasks=state.ids.map(id=>bank.get(id));$('round-code').textContent=state.seed.toString(36).toUpperCase();window.MathJax?.typesetClear?.([$('task-groups')]);$('task-groups').replaceChildren();
+    const bank=new Map(T.bank(state.seed).map(t=>[t.id,t]));tasks=state.ids.map(id=>bank.get(id));window.MathJax?.typesetClear?.([$('task-groups')]);$('task-groups').replaceChildren();
     let index=0;
     T.groups.forEach(([g,title])=>{const section=node('section','task-group'),grid=node('div','task-grid');section.append(node('h3',null,title));
       tasks.filter(t=>t.group===g).forEach(task=>{
