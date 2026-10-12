@@ -1,0 +1,40 @@
+/* Scoped to the concept lab: never style MathJax's SVG internals. */
+#concept-lab .reaction-stage{display:block;padding:0;margin:18px 0;background:var(--white);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+#concept-lab .reaction-scene{display:block;width:100%;height:auto;max-height:none;background:transparent;border:0;border-radius:0;overflow:visible}
+#concept-lab .reaction-scene text{font:500 32px 'Fira Sans',sans-serif;text-anchor:middle;dominant-baseline:central;fill:var(--ink);font-variant-numeric:lining-nums}
+#concept-lab .reaction-scene .reaction-charge{font-size:23px;font-weight:700}
+#concept-lab .reaction-scene .is-active text{fill:var(--red);font-weight:700}
+#concept-lab .reaction-bond{fill:none;stroke:var(--ink);stroke-width:2.8;stroke-linecap:round}
+#concept-lab path.reaction-bond{fill:var(--ink);stroke-width:1}
+#concept-lab .reaction-bond.is-active{stroke:var(--red)}
+#concept-lab .reaction-bond.is-partial{stroke-dasharray:6 6}
+#concept-lab .reaction-pair{fill:var(--ink)}
+#concept-lab .reaction-pair.is-active{fill:var(--red)}
+#concept-lab .reaction-electron-arrow{fill:none;stroke:var(--red);stroke-width:2.5;stroke-linecap:round}
+#concept-lab marker path{fill:var(--red)}
+#concept-lab .reaction-partners{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0 0;text-align:center;font-size:17px;font-weight:700}
+#concept-lab .reaction-partners span{padding:10px 14px;background:var(--surface);border-radius:6px}
+#concept-lab .reaction-steps{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+#concept-lab .reaction-steps button{flex:1;min-width:150px;text-align:left;background:var(--white);color:var(--ink);border-color:var(--line)}
+#concept-lab .reaction-steps button[aria-pressed=true]{border-color:var(--red);box-shadow:inset 0 -3px var(--red)}
+#concept-lab .reaction-steps b{color:var(--red);margin-right:8px}
+#concept-lab .reaction-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0}
+#concept-lab .reaction-actions p{margin:0 0 0 auto;font-size:15px;color:var(--muted)}
+#concept-lab .reaction-equation{margin:20px 0;font-size:clamp(19px,2.4vw,28px);text-align:center}
+#concept-lab .lab-explanation{margin:20px 0 12px}
+#concept-lab #reaction-legend{max-width:75ch;font-size:14px;color:var(--muted)}
+#concept-lab .reaction-selections button[aria-pressed=true]{background:var(--button-bg);color:var(--button-ink);border-color:var(--button-bg)}
+#concept-lab:fullscreen .reaction-stage,#concept-lab.fullscreen-fallback .reaction-stage{max-width:1000px;margin-inline:auto}
+#concept-lab:fullscreen .reaction-scene,#concept-lab.fullscreen-fallback .reaction-scene{max-height:42vh}
+@media(max-width:650px){
+  #concept-lab .reaction-partners{gap:8px;font-size:14px;margin-top:18px}
+  #concept-lab .reaction-partners span{padding:8px}
+  #concept-lab .reaction-steps{gap:6px}
+  #concept-lab .reaction-steps button{min-width:0;flex-basis:100%;font-size:15px;padding:9px 12px}
+  #concept-lab .reaction-actions p{width:100%;margin:0}
+  #concept-lab .reaction-actions button{font-size:14px}
+  #concept-lab .reaction-selections{display:grid;grid-template-columns:1fr}
+  #concept-lab .reaction-scene text{font-size:36px}
+  #concept-lab .reaction-scene .reaction-charge{font-size:26px}
+  #concept-lab:fullscreen .reaction-scene,#concept-lab.fullscreen-fallback .reaction-scene{max-height:none}
+}

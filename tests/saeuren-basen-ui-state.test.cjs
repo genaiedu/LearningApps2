@@ -9,7 +9,7 @@ function setup(t,saved){
   w.AcidTypeset={replace(root,html){root.innerHTML=html;},update(root,write){write();},typeset(){return Promise.resolve();}};
   w.setTimeout=callback=>{timers.push(callback);return timers.length;};w.clearTimeout=()=>{};
   if(saved)w.localStorage.setItem('protonen-mission-v1',JSON.stringify(saved));
-  for(const file of ['saeuren-basen-core','saeuren-basen-rechenwege','saeuren-basen-aufgaben','saeuren-basen-titration','saeuren-basen-mission','saeuren-basen-vertiefung'])w.eval(fs.readFileSync(path.join(root,'scripts',file+'.js'),'utf8'));
+  for(const file of ['saeuren-basen-core','saeuren-basen-rechenwege','saeuren-basen-aufgaben','saeuren-basen-titration','saeuren-basen-reaktionen','saeuren-basen-mission','saeuren-basen-vertiefung'])w.eval(fs.readFileSync(path.join(root,'scripts',file+'.js'),'utf8'));
   const click=id=>q('#'+id).click(),set=(id,value)=>{q('#'+id).value=String(value);q('#'+id).dispatchEvent(new w.Event('change',{bubbles:true}));},dose=(value,custom=false)=>{set(custom?'tit-dose-custom':'tit-dose',value);click('tit-add');assert.ok(q('#titration-lab').classList.contains('is-pouring'));timers.shift()();assert.ok(!q('#titration-lab').classList.contains('is-pouring'));};
   t.after(()=>w.close());return{w,q,click,set,dose,timers};
 }

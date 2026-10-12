@@ -102,12 +102,8 @@
     $('eq-explanation').textContent=`${s.name}: ${weak?'Gleichgewicht statt vollständiger Umsetzung.':'Praktisch vollständige Umsetzung.'}${compare} ${weak?`Wurzelnäherung: pH ${format(approx,2)}. Anteil nach quadratischer Rechnung: ${format(x/c*100,2)} %. `:''}${(weak?x:c)<1e-6?'Der Wasserbeitrag ist hier relevant: Verwende die numerische Bilanz, nicht blind eine einfache pH-Formel.':weak&&Math.sqrt(10**(-s.pK)*c)/c>.05?'Die 5-%-Faustregel für die Wurzelnäherung ist nicht erfüllt.':'In diesem Bereich ist die einfache Näherung meist gut verwendbar.'}`;
   }
   ['eq-substance','eq-log','eq-compare'].forEach(id=>$(id).addEventListener('input',equilibrium));
-  function reaction(kind){
-    const reactions={acid:['HCl','H₂O','Protonendonator','Protonenakzeptor','H₃O⁺ + Cl⁻','HCl gibt ein Proton ab, Wasser nimmt es auf. Wasser ist hier die Brønsted-Base.'],base:['H₂O','NH₃','Protonendonator','Protonenakzeptor','OH⁻ + NH₄⁺','Wasser gibt ein Proton an Ammoniak ab. Wasser ist hier die Brønsted-Säure; NH₃ ist die Base.'],lewis:['NH₃','BF₃','Elektronenpaardonator','Elektronenpaarakzeptor','H₃N → BF₃','NH₃ spendet sein freies Elektronenpaar, BF₃ nimmt es auf. Lewis-Base und Lewis-Säure bilden ein Addukt; es wird kein Proton übertragen.']},r=reactions[kind];
-    $('reaction-stage').innerHTML=`<div class="reaction-molecule">${r[0]}<small>${r[2]}</small></div><div class="reaction-arrow">→<i class="reaction-proton">${kind==='lewis'?':':'H⁺'}</i><span>${kind==='lewis'?'Elektronenpaar':'Proton'}</span></div><div class="reaction-molecule">${r[1]}<small>${r[3]}</small></div>`;
-    $('reaction-explanation').textContent='Produkte: '+r[4]+'. '+r[5];document.querySelectorAll('[data-reaction]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.reaction===kind)));
-  }
-  document.querySelectorAll('[data-reaction]').forEach(b=>b.onclick=()=>reaction(b.dataset.reaction));
+  const reactionLab=window.AcidReactionLab.init();
+  const reaction=kind=>reactionLab.select(kind);
   function chart(id,{xmin=0,xmax=50,xlabel='Zugegebenes Volumen / mL',series=[],marker,vertical=[]}){
     const x=n=>65+(n-xmin)/(xmax-xmin)*695,y=n=>365-n/14*320;let html='<rect width="800" height="430" fill="#fcfcf6"/>';
     for(let p=0;p<=14;p+=2)html+=`<path d="M65 ${y(p)} H760" stroke="#dce4d7"/><text x="50" y="${y(p)+5}" text-anchor="end" font-size="13" fill="#526b66">${p}</text>`;
