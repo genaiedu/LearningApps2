@@ -43,7 +43,7 @@ test('restored numeric solution is inserted into the real task grid before types
   assert.ok(card.classList.contains('is-solved'));assert.ok(!card.querySelector('.task-solution').hidden);
   assert.equal(card.querySelector('.math').textContent,solved.math);
   assert.equal(w.document.getElementById('score').textContent,'1 / 32');
-  assert.deepEqual(JSON.parse(w.localStorage.getItem('protonen-mission-v1')),saved);
+  assert.deepEqual(JSON.parse(w.localStorage.getItem('protonen-mission-v1')),{...saved,version:2});
   assert.ok(calls.some(c=>c.typeset?.some(node=>node.id==='task-groups')));
   assert.equal(warnings.length,0);
 });

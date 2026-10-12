@@ -13,6 +13,24 @@ function setup(t,saved){
   const click=id=>q('#'+id).click(),set=(id,value)=>{q('#'+id).value=String(value);q('#'+id).dispatchEvent(new w.Event('change',{bubbles:true}));},dose=(value,custom=false)=>{set(custom?'tit-dose-custom':'tit-dose',value);click('tit-add');assert.ok(q('#titration-lab').classList.contains('is-pouring'));timers.shift()();assert.ok(!q('#titration-lab').classList.contains('is-pouring'));};
   t.after(()=>w.close());return{w,q,click,set,dose,timers};
 }
+test('changed square-root tasks migrate without discarding unrelated answers',t=>{
+  const ids=require('../scripts/saeuren-basen-aufgaben.js').select(123456).map(t=>t.id);
+  const changed=ids.find(id=>/^(saeuren|basen)-1-/.test(id)),unchanged=ids.find(id=>id.startsWith('ph-'));
+  assert.ok(changed);assert.ok(unchanged);
+  const saved={version:1,seed:123456,ids,answers:{[changed]:{done:true},[unchanged]:{done:true}}};
+  const {w}=setup(t,saved),restored=JSON.parse(w.localStorage.getItem('protonen-mission-v1'));
+  assert.equal(restored.version,2);assert.equal(restored.answers[changed],undefined);assert.deepEqual(restored.answers[unchanged],{done:true});
+});
+test('phosphate and near-endpoint calculations replace invalid shortcuts with defined balances',t=>{
+  const {w,q,set}=setup(t);
+  set('tit-substance','phosphoric');q('[data-point=half]').click();
+  assert.match(q('#tit-point-math').textContent,/Hier reicht die einfache Näherung nicht/);
+  assert.ok(q('#tit-point-math').textContent.includes('α₀ bis α₃'));
+  set('tit-substance','acetic');q('#tit-added').value=24.9999;q('#tit-added').dispatchEvent(new w.Event('input'));
+  const text=q('#tit-point-math').textContent;
+  assert.match(text,/Hier reicht die einfache Näherung nicht/);assert.doesNotMatch(text,/NaN|Infinity/);
+  assert.ok(text.includes('h+c_\\mathrm{Z}'));
+});
 test('round code is absent while a saved task set and its progress are preserved',t=>{
   const tasks=require('../scripts/saeuren-basen-aufgaben.js').select(123456);
   const saved={version:1,seed:123456,ids:tasks.map(t=>t.id),answers:{[tasks[0].id]:{attempts:1,value:String(tasks[0].answer),done:true,solved:true}}};
@@ -52,7 +70,7 @@ test('half-point explicitly shows acid pKa or base pKb, never an acid identity f
   assert.ok(text.includes('\\boxed{\\mathrm{pH(HÄP)}\\approx\\mathrm{p}K_\\mathrm{s}=3{,}75}'));
   set('tit-substance','ammonia');text=half();
   assert.ok(text.includes('\\mathrm{pOH(HÄP)}&\\approx\\mathrm{p}K_\\mathrm{b}'));
-  assert.ok(text.includes('\\boxed{\\mathrm{pH(HÄP)}\\approx14-\\mathrm{p}K_\\mathrm{b}=9{,}25}'));
+  assert.ok(text.includes('\\boxed{\\mathrm{pH(HÄP)}\\approx\\mathrm{p}K_\\mathrm{w}-\\mathrm{p}K_\\mathrm{b}=14-4{,}75=9{,}25}'));
   for(const id of ['hcl','phosphoric']){
     set('tit-substance',id);text=half();
     assert.ok(!text.includes('\\boxed{\\mathrm{pH(HÄP)}\\approx\\mathrm{p}K_\\mathrm{s}'),id);
@@ -67,11 +85,11 @@ test('live equivalence names the conjugate partner, mixture volume and units of 
     'V_\\mathrm{gesamt}=V_0+V_\\mathrm{Ä}\\\\&=0{,}05\\ \\mathrm{L}',
     '\\frac{0{,}0025\\ \\mathrm{mol}}{0{,}05\\ \\mathrm{L}}',
     'pKᵦ gehört zum konjugierten Partner, nicht zur Maßlösung',
-    '\\mathrm{p}K_\\mathrm{b}(\\mathrm{A^-})\\approx14-\\mathrm{p}K_\\mathrm{s}=9{,}24'
+    '\\mathrm{p}K_\\mathrm{b}(\\mathrm{A^-})=\\mathrm{p}K_\\mathrm{w}-\\mathrm{p}K_\\mathrm{s}=14-4{,}76=9{,}24'
   ])assert.ok(text.includes(meaning),meaning);
   set('tit-substance','ammonia');q('[data-point=eq]').click();text=q('#tit-point-math').textContent;
   assert.ok(text.includes('bei Ammoniak ist das Ammonium'));
-  assert.ok(text.includes('\\mathrm{p}K_\\mathrm{s}(\\mathrm{BH^+})\\approx14-\\mathrm{p}K_\\mathrm{b}=9{,}25'));
+  assert.ok(text.includes('\\mathrm{p}K_\\mathrm{s}(\\mathrm{BH^+})=\\mathrm{p}K_\\mathrm{w}-\\mathrm{p}K_\\mathrm{b}=14-4{,}75=9{,}25'));
 });
 
 test('page opens without disclaimer; Wikipedia stays consent-gated until an article is requested',async t=>{
@@ -89,7 +107,7 @@ test('page opens without disclaimer; Wikipedia stays consent-gated until an arti
 });
 test('slider returns to earlier volumes; point shortcuts, free doses and automatic pouring stay available',t=>{
   const {w,q,click,dose,timers}=setup(t);dose(5);q('#tit-added').value=2;q('#tit-added').dispatchEvent(new w.Event('input'));assert.equal(q('#tit-added-label').textContent,'2 mL');
-  q('[data-point=eq]').click();assert.equal(q('#tit-added-label').textContent,'25 mL');assert.match(q('#flask-ph').textContent,/pH 7/);assert.match(q('#tit-point-math').textContent,/\\mathrm\{pH\}=7/);
+  q('[data-point=eq]').click();assert.equal(q('#tit-added-label').textContent,'25 mL');assert.match(q('#flask-ph').textContent,/pH 7/);assert.ok(q('#tit-point-math').textContent.includes('\\mathrm{pH}=\\frac{\\mathrm{p}K_\\mathrm{w}}2=\\frac{14}{2}=7'));
   click('tit-play');assert.ok(q('#titration-lab').classList.contains('is-pouring'));assert.match(q('#tit-play').textContent,/Anhalten/);assert.ok(q('#titration-chart').querySelector('path[stroke-width="3"]'));
   click('tit-play');assert.ok(!q('#titration-lab').classList.contains('is-pouring'));assert.ok(!q('#tit-add').disabled);
   click('tit-reset');assert.equal(q('#tit-added-label').textContent,'0 mL');

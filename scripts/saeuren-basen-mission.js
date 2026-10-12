@@ -22,24 +22,25 @@
     calculationPanel('eq-calculation',html);
   }
   function bufferMath(s,ha,a,volume,change,r){
-    let html='<h4>Erst Mengen, dann pH</h4><p>n<sub>HA,0</sub> und n<sub>A,0</sub> sind die Anfangsmengen der Säure HA und ihrer konjugierten Base A⁻. Δn ist die vorzeichenbehaftete Zugabe: positiv für OH⁻, negativ für H₃O⁺. Der Index 1 bezeichnet die Mengen nach der Reaktion. V ist das feste Gesamtvolumen, pKₛ gehört zur gewählten Säure.</p>';
+    let html='<h4>Erst Mengen, dann pH</h4><p>n<sub>HA,0</sub> und n<sub>A,0</sub> sind die Anfangsmengen der Säure HA und ihrer konjugierten Base A⁻. Δn ist die vorzeichenbehaftete Zugabe: positiv für OH⁻, negativ für H₃O⁺. Der Index 1 bezeichnet die stöchiometrisch berechneten Restmengen vor der anschließenden Gleichgewichtskorrektur. V ist das feste Gesamtvolumen, pKₛ gehört zur gewählten Säure.</p>';
     html+=calc('n_{\\mathrm{HA},1}=n_{\\mathrm{HA},0}-\\Delta n','n_{\\mathrm{HA},1}='+qty(ha,'mmol')+'-('+qty(change,'mmol')+')='+qty(r.remainingHA,'mmol'));
     html+=calc('n_{\\mathrm{A},1}=n_{\\mathrm{A},0}+\\Delta n','n_{\\mathrm{A},1}='+qty(a,'mmol')+'+('+qty(change,'mmol')+')='+qty(r.remainingA,'mmol'));
     if(!r.exhausted)html+=calc('\\mathrm{pH}_\\mathrm{HH}\\approx\\mathrm{p}K_\\mathrm{s}+\\lg\\frac{n_{\\mathrm{A},1}}{n_{\\mathrm{HA},1}}','\\mathrm{pH}_\\mathrm{HH}\\approx'+tex(s.pK)+'+\\lg\\frac{'+qty(r.remainingA,'mmol')+'}{'+qty(r.remainingHA,'mmol')+'}='+tex(r.hh));
-    else html+='<p>Mindestens ein Vorrat ist verbraucht; ein negatives Ergebnis der einfachen Mengenrechnung ist kein realer Teilchenbestand. Die Puffergleichung wird hier nicht eingesetzt.</p>';
+    if(!r.exhausted&&Math.abs(r.hh-r.pH)>.05)html+='<p><strong>Die Mengen-Näherung weicht hier merklich ab.</strong> Positive Restmengen allein garantieren noch keine verlässliche Puffernäherung. Die anschließende Protolyse verändert ihr Verhältnis; verwende den Bilanzwert.</p>';
+    if(r.exhausted)html+='<p>Mindestens ein Vorrat ist verbraucht; ein negatives Ergebnis der einfachen Mengenrechnung ist kein realer Teilchenbestand. Die Puffergleichung wird hier nicht eingesetzt.</p>';
     html+='<p>h ist die aus der vollständigen Bilanz berechnete H₃O⁺-Konzentration. Bei sehr großem Überschuss oder Verdünnung kann der tatsächliche pH von der Mengen-Näherung abweichen. Unter dem Logarithmus steht der Zahlenwert in mol/L:</p>'+calc('h=c(\\mathrm{H_3O^+})','h='+qty(r.h))+calc('\\mathrm{pH}_\\mathrm{Bilanz}=-\\lg h','\\mathrm{pH}_\\mathrm{Bilanz}=-\\lg('+tex(r.h)+')='+tex(r.pH));
     calculationPanel('buf-calculation',html);
   }
   let state,tasks,storageOK=true;
-  function fresh(previous=[]){const n=seed(),selected=T.select(n,previous);return {version:1,seed:n,ids:selected.map(t=>t.id),answers:{}};}
-  try{const saved=JSON.parse(localStorage.getItem(KEY));if(saved?.version===1&&Number.isInteger(saved.seed)&&Array.isArray(saved.ids)&&saved.ids.length===32&&new Set(saved.ids).size===32&&saved.answers&&typeof saved.answers==='object'){
-    const available=new Map(T.bank(saved.seed).map(t=>[t.id,t]));if(saved.ids.every(id=>available.has(id))&&T.groups.every(([g])=>saved.ids.filter(id=>available.get(id).group===g).length===4))state=saved;
+  function fresh(previous=[]){const n=seed(),selected=T.select(n,previous);return {version:2,seed:n,ids:selected.map(t=>t.id),answers:{}};}
+  try{const saved=JSON.parse(localStorage.getItem(KEY));if([1,2].includes(saved?.version)&&Number.isInteger(saved.seed)&&Array.isArray(saved.ids)&&saved.ids.length===32&&new Set(saved.ids).size===32&&saved.answers&&typeof saved.answers==='object'){
+    const available=new Map(T.bank(saved.seed).map(t=>[t.id,t]));if(saved.ids.every(id=>available.has(id))&&T.groups.every(([g])=>saved.ids.filter(id=>available.get(id).group===g).length===4)){state=saved;if(state.version===1){for(const id of state.ids)if(/^(saeuren|basen)-1-/.test(id))delete state.answers[id];state.version=2;}}
   }}catch{storageOK=false;}
   if(!state)state=fresh();
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch{storageOK=false;}$('storage-warning').hidden=storageOK;if(!storageOK)$('storage-warning').textContent='Der Browser kann den Lernstand nicht dauerhaft speichern. Diese Runde funktioniert trotzdem; nach dem Schließen kann der Fortschritt verloren gehen.';}
   function node(tag,className,text){const e=document.createElement(tag);if(className)e.className=className;if(text!==undefined)e.textContent=text;return e;}
   function resultFor(task){let a=state.answers[task.id];if(!a||!Number.isInteger(a.attempts)||a.attempts<0||a.attempts>2)a={attempts:0,value:'',hint:false};return a;}
-  function answerText(task){return task.kind==='choice'?task.answer:(['pH','pOH','pK'].includes(task.unit)?format(task.answer,2):T.f(task.answer,4))+(task.unit?' '+task.unit:'');}
+  function answerText(task){return task.kind==='choice'?task.answer:(['pH','pOH','pK'].includes(task.unit)?format(task.answer,2):T.f(task.answer,4))+(task.unit&&!['pH','pOH','pK','Faktor','Verhältnis'].includes(task.unit)?' '+task.unit:'');}
   function updateTask(task,card){
     const a=resultFor(task),done=!!a.done;card.classList.toggle('is-solved',!!a.solved);
     card.querySelector('input,select').disabled=done;card.querySelector('.check-task').disabled=done;

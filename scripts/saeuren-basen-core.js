@@ -34,6 +34,35 @@
     else data=solve({base:n/total,kb:10**(-s.pK),diff:-nt/total});
     return {...data,veq,total,n,nt,region:added===0?'Anfang':Math.abs(added-veq)<1e-8?'Äquivalenzpunkt':Math.abs(added-veq/2)<1e-8&&s.type.startsWith('weak')?'Halbäquivalenzpunkt':added<veq?(s.type.startsWith('weak')?'Pufferbereich':'Vor dem Äquivalenzpunkt'):'Überschuss der Maßlösung'};
   }
+
+  // Didactic shortcut and its check against the ideal mass/charge/water balance.
+  // This is not an experimental accuracy claim: 0.05 pH is an internal display guard.
+  function titrationEstimate(conf){
+    const r=titration(conf),s=get(conf.id),q=r.nt/r.n,ct=r.n/r.total,acid=s.type.endsWith('acid');
+    const at=n=>Math.abs(q-n)<1e-8;
+    let kind,pH;
+    if(s.pKs){
+      if(at(0)){kind='initial';pH=-Math.log10(quadratic(10**(-s.pKs[0]),conf.c));}
+      else if(at(1)||at(2)){const j=Math.round(q);kind='ampholyte';pH=(s.pKs[j-1]+s.pKs[j])/2;}
+      else if(at(3)){kind='phosphate-base';pH=14+Math.log10(quadratic(KW/10**(-s.pKs[2]),ct));}
+      else if(q<3){const j=Math.floor(q);kind='buffer';pH=s.pKs[j]+Math.log10((q-j)/(j+1-q));}
+      else{kind='excess';pH=14+Math.log10((r.nt-3*r.n)/r.total);}
+    }else if(at(0)){
+      kind='initial';const ion=s.type.startsWith('weak')?quadratic(10**(-s.pK),conf.c):conf.c;
+      pH=acid?-Math.log10(ion):14+Math.log10(ion);
+    }else if(at(1)){
+      kind=s.type.startsWith('weak')?'partner':'neutral';
+      pH=kind==='neutral'?7:acid?14-.5*(14-s.pK-Math.log10(ct)):.5*(14-s.pK-Math.log10(ct));
+    }else if(q<1&&s.type.startsWith('weak')){
+      kind=at(.5)?'half':'buffer';const p=s.pK+Math.log10(q/(1-q));pH=acid?p:14-p;
+    }else{
+      kind='excess';const ion=Math.abs(r.nt-r.n)/r.total,isAcid=q<1?acid:!acid;
+      pH=isAcid?-Math.log10(ion):14+Math.log10(ion);
+    }
+    const error=Math.abs(pH-r.pH);
+    return {kind,pH,exactPH:r.pH,error,usable:Number.isFinite(pH)&&error<=.05};
+  }
+
   function buffer({pKa=4.76,ha=5,a=5,change=0,volume=100}={}){
     if(![pKa,ha,a,change,volume].every(Number.isFinite)||ha<0||a<0||volume<=0)throw Error('Ungültiger Puffer');
     // Amounts are mmol, volume mL; their quotient is mol/L. Positive change adds OH−, negative H3O+.
@@ -69,5 +98,5 @@
   function shuffle(items,r=Math.random){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
   function parseNumber(value){const text=String(value).trim().replace(/\s/g,'').replace(',','.');return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(text)?Number(text):NaN;}
   function accepts(task,value){if(task.kind==='choice')return String(value)===String(task.answer);const n=parseNumber(value),tolerance=Math.max(task.absolute||0,Math.abs(task.answer)*(task.relative??.02),Number.EPSILON*Math.abs(task.answer)*10);return Number.isFinite(n)&&Math.abs(n-task.answer)<=tolerance;}
-  return {KW,substances,polySubstances,indicators,fractions,polySolve,bloodBuffer,get,solve,solution,quadratic,titration,buffer,rng,shuffle,parseNumber,accepts};
+  return {KW,substances,polySubstances,indicators,fractions,polySolve,bloodBuffer,get,solve,solution,quadratic,titration,titrationEstimate,buffer,rng,shuffle,parseNumber,accepts};
 });
