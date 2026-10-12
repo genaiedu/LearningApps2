@@ -54,7 +54,7 @@ test('number validation allows commas and scientific notation but rejects expres
 test('page includes the complete curriculum, local assets, four full-screen modules and reset',()=>{
   const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
   for(const word of ['Arrhenius','Brønsted','Lewis','Henderson','Äquivalenzpunkt','Autoprotolyse','K_\\mathrm c','K_\\mathrm s','K_\\mathrm b','Pufferkapazität','5-%'])assert.ok(html.includes(word),word);
-  assert.equal((html.match(/data-fullscreen=/g)||[]).length,4);assert.ok(html.includes('id="reset-dialog"'));assert.ok(!html.includes('data-defer-initial'));assert.ok(html.includes('Ohne externe Bilder beginnen'));assert.ok(html.includes('240'));assert.doesNotMatch(html,/fonts\.googleapis|fonts\.gstatic|materialien\.html/);
+  assert.equal((html.match(/data-fullscreen=/g)||[]).length,4);assert.ok(html.includes('id="reset-dialog"'));assert.ok(html.includes('id="consent" data-defer-initial'));assert.ok(!html.includes('data-awaiting-consent'));assert.ok(html.includes('Abbrechen · ohne Wikipedia weiterlesen'));assert.ok(html.includes('240'));assert.doesNotMatch(html,/fonts\.googleapis|fonts\.gstatic|materialien\.html/);
   const css=fs.readFileSync(require.resolve('../styles/saeuren-basen-mission.css'),'utf8');assert.ok(css.includes('prefers-reduced-motion'));assert.ok(css.includes('color:#163b38'));
 });
 

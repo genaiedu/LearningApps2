@@ -16,6 +16,20 @@ test('full curve, pH and calculations are immediately visible; overshoot never f
   assert.ok(!q('#tit-add').disabled);assert.equal(q('#tit-added-label').textContent,'35 mL');assert.doesNotMatch(q('#tit-status').textContent,/Wiederhole|übersprungen|Zu großer Schritt/);assert.ok(curve());
   assert.equal(q('#tit-measure'),null);assert.equal(q('#tit-next'),null);assert.equal(q('#tit-finish'),null);
 });
+
+test('page opens without disclaimer; Wikipedia stays consent-gated until an article is requested',async t=>{
+  const {w,q}=setup(t),requests=[];
+  w.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','');};
+  w.HTMLDialogElement.prototype.close=function(value){if(value!==undefined)this.returnValue=value;this.removeAttribute('open');this.dispatchEvent(new w.Event('close'));};
+  w.fetch=async url=>{requests.push(String(url));return{ok:true,json:async()=>({parse:{title:'Gilbert Newton Lewis',revid:1,text:'<p>Testartikel.</p>'}})};};
+  w.eval(fs.readFileSync(path.join(root,'scripts','schroedinger-wikipedia.js'),'utf8'));
+  assert.ok(!q('#consent').open);assert.ok(!w.document.documentElement.hasAttribute('data-awaiting-consent'));assert.equal(requests.length,0);
+  q('[data-wiki="Gilbert Newton Lewis"]').click();assert.ok(q('#consent').open);assert.equal(requests.length,0);
+  q('#consent').close('offline');await Promise.resolve();assert.equal(requests.length,0);assert.ok(!q('#wiki-reader').open);
+  q('[data-wiki="Gilbert Newton Lewis"]').click();assert.ok(q('#consent').open);q('#consent').close('allow');
+  for(let i=0;i<8;i++)await Promise.resolve();
+  assert.equal(requests.length,1);assert.ok(requests[0].startsWith('https://de.wikipedia.org/w/api.php'));assert.ok(q('#wiki-reader').open);
+});
 test('slider returns to earlier volumes; point shortcuts, free doses and automatic pouring stay available',t=>{
   const {w,q,click,dose,timers}=setup(t);dose(5);q('#tit-added').value=2;q('#tit-added').dispatchEvent(new w.Event('input'));assert.equal(q('#tit-added-label').textContent,'2 mL');
   q('[data-point=eq]').click();assert.equal(q('#tit-added-label').textContent,'25 mL');assert.match(q('#flask-ph').textContent,/pH 7/);assert.match(q('#tit-point-math').textContent,/\\mathrm\{pH\}=7/);
