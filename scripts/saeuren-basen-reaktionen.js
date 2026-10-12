@@ -129,13 +129,20 @@
       art+=atom('H',hx,hy,{active:true,id:'boric-transferred-hydrogen'});
       // These highlighted pairs are conserved. Dots on a bond are its pair,
       // not a second pair. Other lone pairs are omitted consistently.
-      art+=pair(mix(ox-35,(bx+ox)/2,p),oy,{active:true,id:'boric-acceptor-pair'});
-      art+=pair(mix((480+555)/2,ox, p),mix(177.5,oy-39,p),{active:true,id:'boric-old-bond-pair'});
-      art+=pair(mix(wx-35,(wx+hx)/2,p),oy,{active:true,id:'boric-water-pair'});
+      // Animate local offsets from the CURRENT O atoms, not absolute starting
+      // coordinates. Lone pairs stay in their O's vicinity even while the
+      // schematic atoms move apart; shared pairs end at bond midpoints.
+      const boPair=[ox-mix(35,Math.min((ox-bx)/2,50),p),oy];
+      const oldPair=[ox+mix(37.5,0,p),oy+mix(-22.5,-39,p)];
+      const ohLength=Math.hypot(hx-wx,hy-oy),ohRadius=Math.min(ohLength/2,45);
+      const waterPair=[mix(wx-35,wx+(hx-wx)/ohLength*ohRadius,p),mix(oy,oy+(hy-oy)/ohLength*ohRadius,p)];
+      art+=pair(...boPair,{active:true,id:'boric-acceptor-pair'});
+      art+=pair(...oldPair,{active:true,id:'boric-old-bond-pair'});
+      art+=pair(...waterPair,{active:true,id:'boric-water-pair'});
       if(step===1){
-        art+=arrow([ox-35,oy-10],[(bx+ox)/2,oy-100],[bx+20,oy-18]);
-        art+=arrow([(ox+hx)/2,(oy+hy)/2],[ox+60,oy-100],[ox+15,oy-28]);
-        art+=arrow([wx-35,oy-10],[hx+75,hy-85],[hx+14,hy-14]);
+        art+=arrow([boPair[0],boPair[1]-10],[(bx+ox)/2,oy-100],[bx+20,oy-18]);
+        art+=arrow([oldPair[0],oldPair[1]-10],[ox+60,oy-100],[ox+15,oy-28]);
+        art+=arrow([waterPair[0],waterPair[1]-10],[hx+75,hy-85],[hx+14,hy-14]);
       }
       return art;
     }

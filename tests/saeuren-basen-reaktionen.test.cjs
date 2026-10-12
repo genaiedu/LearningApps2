@@ -1,8 +1,8 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {JSDOM}=require('jsdom'),root=path.join(__dirname,'..');
-function setup(t,{reduced=false}={}){
+function setup(t,{reduced=false,compact=false}={}){
   const dom=new JSDOM(fs.readFileSync(path.join(root,'saeuren-basen-mission.html'),'utf8'),{runScripts:'outside-only',url:'https://test.invalid/'}),w=dom.window,q=s=>w.document.querySelector(s),frames=new Map();let serial=0;
-  w.matchMedia=query=>({matches:query.includes('reduced-motion')&&reduced,addEventListener(){}});
+  w.matchMedia=query=>({matches:query.includes('reduced-motion')?reduced:query.includes('max-width')&&compact,addEventListener(){}});
   w.AcidTypeset={replace(element,html){element.innerHTML=html;}};
   w.requestAnimationFrame=callback=>{const id=++serial;frames.set(id,callback);return id;};w.cancelAnimationFrame=id=>frames.delete(id);
   w.eval(fs.readFileSync(path.join(root,'scripts/saeuren-basen-reaktionen.js'),'utf8'));w.AcidReactionLab.init();
@@ -62,4 +62,38 @@ test('boric acid water model conserves all atoms, three highlighted pairs and to
   assert.equal(q('[data-bond="boric-old-oh"]'),null);assert.ok(q('[data-bond="boric-coordinate-bond"]'));assert.ok(q('[data-bond="boric-new-oh"]'));
   assert.equal(q('[data-atom="boric-boron"] .reaction-charge').textContent,'−');assert.equal(q('[data-atom="hydronium-oxygen"] .reaction-charge').textContent,'+');
   assert.match(q('#reaction-explanation').textContent,/nicht durch einfache Abgabe eines Protons/);
+});
+
+for(const compact of [false,true])test(`boric acid electron pairs stay attached throughout playback (${compact?'narrow':'wide'})`,t=>{
+  const {q,select,tick,symbols}=setup(t,{compact});select('lewis');const before=symbols();
+  const position=selector=>{const el=q(selector);return[Number(el.getAttribute('x')),Number(el.getAttribute('y'))];};
+  const center=id=>{const dots=[...q(`[data-pair="${id}"]`).querySelectorAll('circle')];return['cx','cy'].map(attribute=>dots.reduce((sum,dot)=>sum+Number(dot.getAttribute(attribute)),0)/dots.length);};
+  // Undo the narrow-screen projection so the same molecular bounds apply.
+  const scene=([x,y])=>compact?[200+(y-105)/.65,200+(x-230)/.95]:[x,y];
+  const atom=id=>scene(position(`[data-atom="${id}"] > text:first-child`));
+  const pair=id=>scene(center(id));
+  const distance=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+  q('#reaction-play').click();tick(0);
+  for(let frame=0;frame<=130;frame++){
+    tick(frame*50);
+    assert.deepEqual(symbols(),before);assert.equal(q('#reaction-stage').querySelectorAll('.reaction-pair').length,3);
+    const oxygen=atom('incoming-oxygen'),water=atom('hydronium-oxygen');
+    const oldPair=pair('boric-old-bond-pair');
+    assert.ok(distance(oldPair,oxygen)<=44.03,`former O–H pair detached at frame ${frame}`);
+    assert.ok(oldPair[0]>=oxygen[0]-.03&&oldPair[0]<=oxygen[0]+37.53,`former O–H pair did not follow O at frame ${frame}`);
+    assert.ok(distance(pair('boric-acceptor-pair'),oxygen)<=50.03,`B–O pair detached at frame ${frame}`);
+    assert.ok(distance(pair('boric-water-pair'),water)<=45.03,`second-water pair detached at frame ${frame}`);
+    const arrows=[...q('#reaction-stage').querySelectorAll('.reaction-electron-arrow')];
+    if(arrows.length){
+      const ids=['boric-acceptor-pair','boric-old-bond-pair','boric-water-pair'];
+      arrows.forEach((arrow,i)=>{
+        const start=scene(arrow.getAttribute('d').match(/^M([\d.-]+) ([\d.-]+)/).slice(1).map(Number)),origin=pair(ids[i]);
+        assert.ok(distance(start,[origin[0],origin[1]-10])<.03,`electron arrow lost its pair at frame ${frame}`);
+      });
+    }
+  }
+  const midpoint=(a,b)=>a.map((value,i)=>(value+b[i])/2);
+  assert.ok(distance(pair('boric-acceptor-pair'),midpoint(atom('boric-boron'),atom('incoming-oxygen')))<.03);
+  assert.ok(distance(pair('boric-water-pair'),midpoint(atom('hydronium-oxygen'),atom('boric-transferred-hydrogen')))<.03);
+  const oxygen=atom('incoming-oxygen');assert.ok(distance(pair('boric-old-bond-pair'),[oxygen[0],oxygen[1]-39])<.03);
 });
