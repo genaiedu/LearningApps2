@@ -18,7 +18,7 @@
     const a=resultFor(task),done=!!a.done;card.classList.toggle('is-solved',!!a.solved);
     card.querySelector('input,select').disabled=done;card.querySelector('.check-task').disabled=done;
     const feedback=card.querySelector('.task-feedback');feedback.textContent=a.solved?`✓ Gelöst im ${a.attempts}. Versuch · ${a.attempts===1?'1':'0,5'} Punkte.`:done?'Zwei Versuche genutzt · Vergleiche jetzt den Lösungsweg.':a.attempts===1?'Noch nicht richtig. Nutze den Hinweis und prüfe deinen Ansatz – ein Versuch bleibt.':'';
-    const explanation=card.querySelector('.task-solution');explanation.hidden=!done;explanation.querySelector('strong').textContent='Ergebnis: '+answerText(task);explanation.querySelector('p').textContent=task.explanation;
+    const explanation=card.querySelector('.task-solution');explanation.hidden=!done;explanation.querySelector('strong').textContent='Ergebnis: '+answerText(task);explanation.querySelector('p').textContent=task.explanation;if(done&&task.math&&!explanation.querySelector('.math')){const block=node('div','math');block.textContent=task.math;explanation.prepend(block);window.MathJax?.typesetPromise?.([block]).catch(()=>{});}
     card.querySelector('.task-hint').hidden=!a.hint;
   }
   function dashboard(){
@@ -31,12 +31,12 @@
     $('random-task').disabled=finished===32;
   }
   function renderTasks(){
-    const bank=new Map(T.bank(state.seed).map(t=>[t.id,t]));tasks=state.ids.map(id=>bank.get(id));$('round-code').textContent=state.seed.toString(36).toUpperCase();$('task-groups').replaceChildren();
+    const bank=new Map(T.bank(state.seed).map(t=>[t.id,t]));tasks=state.ids.map(id=>bank.get(id));$('round-code').textContent=state.seed.toString(36).toUpperCase();window.MathJax?.typesetClear?.([$('task-groups')]);$('task-groups').replaceChildren();
     let index=0;
     T.groups.forEach(([g,title])=>{const section=node('section','task-group'),grid=node('div','task-grid');section.append(node('h3',null,title));
       tasks.filter(t=>t.group===g).forEach(task=>{
         const card=node('article','task-card');card.id='task-'+task.id;
-        card.append(node('span','task-number','MISSION '+String(++index).padStart(2,'0')),node('h4',null,task.title),node('p',null,task.prompt));
+        card.append(node('span','task-number','MISSION '+String(++index).padStart(2,'0')),node('h4',null,task.title),node('p',null,task.prompt));C.substances.filter(s=>s.structure&&task.prompt.includes(s.name)).forEach(s=>card.append(node('p','equation',s.structure)));
         const form=node('form'),label=node('label',null,task.kind==='choice'?'Deine Entscheidung':'Dein Ergebnis · '+task.unit),input=node(task.kind==='choice'?'select':'input');input.id='input-'+task.id;label.htmlFor=input.id;
         if(task.kind==='choice'){const empty=node('option',null,'Bitte auswählen …');empty.value='';input.append(empty);task.options.forEach(o=>{const option=node('option',null,o);option.value=o;input.append(option);});}
         else{input.type='text';input.inputMode='decimal';input.autocomplete='off';input.spellcheck=false;input.placeholder=['pH','pOH','pK'].includes(task.unit)?'z. B. 3,25':'z. B. 1,2e-3';}
@@ -61,6 +61,7 @@
   fillSubstances('eq-substance');fillSubstances('tit-substance');
   function equilibrium(){
     const s=C.get($('eq-substance').value),c=10**Number($('eq-log').value),r=C.solution(s.id,c),acid=s.type.endsWith('acid'),weak=s.type.startsWith('weak');
+    $('eq-structure').textContent=s.structure||'';
     $('eq-c').textContent=sci(c)+' mol/L';$('eq-ph').textContent=format(r.pH,2);$('eq-poh').textContent='pOH '+format(r.pOH,2)+' · '+(r.pH<6.999?'sauer':r.pH>7.001?'basisch':'nahe neutral');$('eq-marker').style.left=Math.max(0,Math.min(100,r.pH/14*100))+'%';
     const fraction=weak?(acid?r.acidIon:r.baseIon)/c:1,count=Math.round(fraction*48);$('eq-particles').replaceChildren();for(let i=0;i<48;i++)$('eq-particles').append(node('i',i<count?'ion':'',i<count?(acid?'A⁻':'BH⁺'):(acid?'HA':'B')));
     $('eq-particle-caption').textContent=weak?`Protolysierter Anteil: ${format(fraction*100,2)} %. 48 Modellpunkte; unter rund 2 % ist ein einzelner Punkt bereits zu grob. Der Zahlenwert bleibt maßgeblich.`:'Im Modell praktisch vollständig umgesetzt. Für Laugen zeigt A⁻/BH⁺ hier symbolisch die vollständige Bereitstellung von OH⁻; das Hydroxid ist kein B-Molekül.';
@@ -83,31 +84,13 @@
     for(let i=0;i<=5;i++){const n=xmin+(xmax-xmin)*i/5;html+=`<path d="M${x(n)} 45 V365" stroke="#e6eadf"/><text x="${x(n)}" y="389" text-anchor="middle" font-size="13" fill="#526b66">${format(n,1)}</text>`;}
     html+='<path d="M65 45 V365 H760" fill="none" stroke="#526b66"/><text x="20" y="28" font-size="14" fill="#163b38">pH</text><text x="412" y="417" text-anchor="middle" font-size="14" fill="#163b38">'+escape(xlabel)+'</text>';
     vertical.forEach(({at,label})=>{if(at>=xmin&&at<=xmax)html+=`<path d="M${x(at)} 45 V365" stroke="#b78e50" stroke-dasharray="5 5"/><text x="${x(at)+4}" y="28" font-size="11" fill="#765b30">${escape(label)}</text>`;});
-    series.forEach(s=>{html+=`<path d="${s.points.map((p,i)=>(i?'L':'M')+x(p[0]).toFixed(2)+' '+y(p[1]).toFixed(2)).join(' ')}" fill="none" stroke="${s.color||'#186b57'}" stroke-width="3" ${s.dashed?'stroke-dasharray="7 5"':''}/>`;});
+    series.forEach(s=>{if(s.dots)s.points.forEach(p=>{html+=`<circle cx="${x(p[0])}" cy="${y(p[1])}" r="4" fill="${s.color||'var(--red)'}"/>`;});html+=`<path d="${s.points.map((p,i)=>(i?'L':'M')+x(p[0]).toFixed(2)+' '+y(p[1]).toFixed(2)).join(' ')}" fill="none" stroke="${s.color||'#186b57'}" stroke-width="3" ${s.dashed?'stroke-dasharray="7 5"':''}/>`;});
     if(marker)html+=`<circle cx="${x(marker[0])}" cy="${y(marker[1])}" r="6" fill="#c48239" stroke="#fff" stroke-width="2"/><text x="${Math.min(685,Math.max(75,x(marker[0])+12))}" y="${Math.max(53,y(marker[1])-12)}" font-size="15" font-weight="600" fill="#163b38">pH ${format(marker[1],2)}</text>`;
-    $(id).innerHTML=html;
+    html=html.replaceAll('#fcfcf6','var(--white)').replaceAll('#dce4d7','var(--line)').replaceAll('#e6eadf','var(--line)').replaceAll('#526b66','var(--muted)').replaceAll('#163b38','var(--ink)').replaceAll('#186b57','var(--red)').replaceAll('#c48239','var(--red)').replaceAll('#765b30','var(--muted)').replaceAll('#b78e50','var(--red)');$(id).innerHTML=html;
   }
-  let pouring=null;
-  const stopPour=()=>{clearInterval(pouring);pouring=null;$('tit-play').textContent='▶ Zugeben';$('titration-lab').classList.remove('is-pouring');};
-  function titConfig(){const c=Number($('tit-c').value),v=Number($('tit-v').value),ct=Number($('tit-ct').value);if(!Number.isFinite(c)||c<.001||c>.2||!Number.isFinite(ct)||ct<.001||ct>.2||!Number.isFinite(v)||v<5||v>50)return null;return {id:$('tit-substance').value,c,v,ct};}
-  function indicator(pH){return `hsl(${Math.max(0,Math.min(14,pH))/14*260},55%,58%)`;}
-  function titration(reset=false){
-    const config=titConfig();if(!config){stopPour();$('tit-validity').textContent='Bitte Werte im Modellbereich eingeben: Konzentrationen 0,001–0,2 mol/L, Probenvolumen 5–50 mL.';return;}$('tit-validity').textContent='';
-    const s=C.get(config.id),acid=s.type.endsWith('acid'),veq=config.c*config.v/config.ct,max=2*veq;
-    $('tit-added').max=String(max);$('tit-added').step=String(veq/500);
-    if(reset)$('tit-added').value='0';let added=Number($('tit-added').value);added=Math.max(0,Math.min(max,added));
-    const r=C.titration({...config,added}),xs=new Set(Array.from({length:301},(_,i)=>max*i/300));[veq/2,veq*.98,veq*.995,veq*.999,veq,veq*1.001,veq*1.005,veq*1.02].forEach(n=>xs.add(n));
-    const points=[...xs].sort((a,b)=>a-b).map(a=>[a,C.titration({...config,added:a}).pH]);
-    chart('titration-chart',{xmax:max,series:[{points}],marker:[added,r.pH],vertical:[...(s.type.startsWith('weak')?[{at:veq/2,label:'½ ÄP'}]:[]),{at:veq,label:'ÄP'}]});
-    $('tit-added-label').textContent=format(added,2)+' mL';$('flask-ph').textContent='pH '+format(r.pH,2);$('flask-liquid').style.background=indicator(r.pH);$('burette-liquid').style.height=(85-65*added/max)+'%';
-    values('tit-results',[['Maßlösung',acid?'NaOH':'HCl'],['VÄ / mL',format(veq,2)],['Aktueller pH',format(r.pH,2)],['Gesamtvolumen / mL',format(config.v+added,2)],['Bereich',r.region],['Anfangsmenge / mmol',format(r.n*1000,3)]]);
-    const weak=s.type.startsWith('weak'),description=r.region==='Anfang'?`Die ${weak?'schwache':'starke'} ${acid?'Säure':'Base'} bestimmt den Anfangs-pH.`:r.region==='Halbäquivalenzpunkt'?`Die analytischen Mengen des konjugierten Paares sind gleich. ${acid?'pH ≈ pKₛ':'pOH ≈ pKb; pH ≈ pKₛ(BH⁺)'}; der numerische Wert berücksichtigt die kleinen Gleichgewichtskorrekturen.`:r.region==='Äquivalenzpunkt'?(weak?`Die Probe ist stöchiometrisch umgesetzt. ${acid?'A⁻ reagiert als schwache Base mit Wasser: pH > 7.':'BH⁺ reagiert als schwache Säure: pH < 7.'}`:'Starke Partner: Na⁺ und Cl⁻/NO₃⁻ tragen hier nicht wesentlich zum Säure-Base-Gleichgewicht bei. Bei 25 °C ergibt sich pH ≈ 7.'):added<veq?(weak?'Ein Puffer entsteht. Das Mengenverhältnis verändert sich mit jeder Zugabe.':'Die noch nicht neutralisierte Probe bestimmt den pH. Teile die verbleibende Stoffmenge durch das Gesamtvolumen.'):'Der Überschuss der starken Maßlösung bestimmt zunehmend den pH.';
-    $('tit-explanation').textContent=r.region+': '+description;
-  }
-  ['tit-substance','tit-c','tit-v','tit-ct'].forEach(id=>$(id).addEventListener('input',()=>{stopPour();titration(true);}));$('tit-added').addEventListener('input',()=>{stopPour();titration();});
-  document.querySelectorAll('[data-point]').forEach(b=>b.onclick=()=>{stopPour();const c=titConfig();if(!c)return;const v=c.c*c.v/c.ct;$('tit-added').value=String(({start:0,half:.5,eq:1,after:1.3}[b.dataset.point])*v);titration();});
-  $('tit-play').onclick=()=>{if(pouring){stopPour();return;}const config=titConfig();if(!config)return;$('titration-lab').classList.add('is-pouring');$('tit-play').textContent='Ⅱ Anhalten';const max=Number($('tit-added').max);pouring=setInterval(()=>{const next=Number($('tit-added').value)+max/100;$('tit-added').value=String(Math.min(max,next));titration();if(next>=max)stopPour();},100);};
-  $('tit-reset').onclick=()=>{stopPour();titration(true);};
+  window.AcidTitration.init({chart,values,format});
+  const stopPour=()=>window.AcidTitration.stop();
+  const titration=reset=>window.AcidTitration.render(reset);
   function buffer(){
     const s=C.get($('buf-substance').value),ha=Number($('buf-ha').value),a=Number($('buf-a').value),volume=Number($('buf-v').value),change=Number($('buf-change').value);
     if(![ha,a].every(n=>Number.isFinite(n)&&n>=.5&&n<=10)||!Number.isFinite(volume)||volume<50||volume>500){$('buf-explanation').textContent='Bitte HA und A⁻ zwischen 0,5 und 10 mmol sowie ein Volumen von 50–500 mL eingeben.';return;}
@@ -119,8 +102,8 @@
     $('buf-explanation').textContent=r.exhausted?'Ein Vorrat ist stöchiometrisch aufgebraucht. Die Henderson–Hasselbalch-Mengenrechnung ist hier nicht mehr sinnvoll. Die numerische Bilanz beschreibt den Übergang zum Überschuss der starken Säure/Base.':`${change<0?'H₃O⁺ wird durch A⁻ abgefangen; HA entsteht.':change>0?'OH⁻ wird durch HA abgefangen; A⁻ entsteht.':'Ohne Zugabe bestimmt das Verhältnis der beiden Partner den pH.'} Beide Mengen sind noch positiv. ${r.remainingA/r.remainingHA<.1||r.remainingA/r.remainingHA>10?'Das Verhältnis liegt außerhalb des üblichen Bereichs 1:10 bis 10:1; eine Seite ist nur noch schwach vertreten.':'Beide Partner sind in nennenswerten Mengen vorhanden.'}`;
   }
   ['buf-substance','buf-ha','buf-a','buf-v','buf-change'].forEach(id=>$(id).addEventListener('input',buffer));$('buf-reset').onclick=()=>{$('buf-change').value='0';buffer();};
-  function resetLabs(){stopPour();$('eq-substance').value='acetic';$('eq-log').value='-1';$('eq-compare').checked=true;$('tit-substance').value='acetic';$('tit-c').value='0.1';$('tit-v').value='25';$('tit-ct').value='0.1';$('buf-substance').value='acetic';$('buf-ha').value='5';$('buf-a').value='5';$('buf-v').value='100';$('buf-change').value='0';reaction('acid');equilibrium();titration(true);buffer();}
-  $('reset-open').onclick=()=>$('reset-dialog').showModal();$('formula-open').onclick=()=>$('formula-dialog').showModal();
+  function resetLabs(){stopPour();$('eq-substance').value='acetic';$('eq-log').value='-1';$('eq-compare').checked=true;window.AcidTitration.clearPractical();$('tit-substance').value='hcl';$('tit-c').value='0.1';$('tit-v').value='25';$('tit-ct').value='0.1';$('buf-substance').value='acetic';$('buf-ha').value='5';$('buf-a').value='5';$('buf-v').value='100';$('buf-change').value='0';reaction('acid');equilibrium();titration(true);buffer();}
+  $('reset-open').onclick=()=>$('reset-dialog').showModal();
   document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
   $('reset-confirm').onclick=()=>{const old=state.ids;state=fresh(old);renderTasks();resetLabs();$('reset-dialog').close();$('training').scrollIntoView({behavior:'smooth'});};
   $('random-task').onclick=()=>{const candidates=tasks.filter(t=>!resultFor(t).done),t=candidates[Math.floor(Math.random()*candidates.length)];if(t){$('task-'+t.id).scrollIntoView({behavior:'smooth',block:'center'});$('input-'+t.id).focus({preventScroll:true});}};
@@ -130,5 +113,5 @@
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){stopPour();const active=document.querySelector('.fullscreen-fallback');if(active&&!document.querySelector('dialog[open]'))fullscreen(active.id);}});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stopPour();});
   const progress=()=>{$('page-progress').style.width=100*window.scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)+'%';};window.addEventListener('scroll',progress,{passive:true});
-  renderTasks();resetLabs();progress();
+  document.addEventListener('atelier-view-change',()=>{equilibrium();buffer();});renderTasks();resetLabs();progress();
 })();

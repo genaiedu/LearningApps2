@@ -102,6 +102,7 @@
       choice('puffer',8,'Welche Mischung puffert?',`Welche Mischung bildet einen Puffer mit ${acid.name}?`,['Ameisensäure/Natriumformiat','Benzoesäure/Natriumbenzoat','Essigsäure/Natriumacetat'].find(x=>x.startsWith(acid.name)), 'Eine schwache Säure und ihre konjugierte Base müssen in nennenswerten Mengen nebeneinander vorliegen.','Suche das genau passende konjugierte Paar.',[`${acid.name}/${{acetic:'Natriumacetat',formic:'Natriumformiat',benzoic:'Natriumbenzoat'}[acid.id]}`,'HCl/NaCl','NaOH/KOH','Reines Wasser']);
       number('puffer',9,'Der pH-Unterschied',`Zwei Puffer mit gleichem pKₛ: Verhältnis A⁻/HA = 1 bzw. ${[2,5,10][variant]}. Um wie viel ist der zweite pH höher?`,Math.log10([2,5,10][variant]),`ΔpH = lg(${[2,5,10][variant]}) = ${ph(Math.log10([2,5,10][variant]))}.`,`Subtrahiere die beiden Henderson–Hasselbalch-Gleichungen.`,'pH');
     }
+    const M=typeof module==='object'&&module.exports?require('./saeuren-basen-rechenwege.js'):window.AcidMath;tasks.forEach(t=>{if(t.kind==='number')t.math=M.solution(t);});
     return tasks;
   }
   function select(seed,previous=[]){const all=bank(seed),r=C.rng(seed^0x1234),excluded=new Set(previous);return groups.flatMap(([group])=>{const items=all.filter(t=>t.group===group),fresh=items.filter(t=>!excluded.has(t.id)),chosen=[],templates=new Set();for(const task of C.shuffle(fresh.length>=4?fresh:items,r)){const template=task.id.split('-')[1];if(!templates.has(template)){chosen.push(task);templates.add(template);}if(chosen.length===4)break;}return chosen;});}

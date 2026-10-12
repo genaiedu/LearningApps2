@@ -47,6 +47,37 @@ test('number validation allows commas and scientific notation but rejects expres
 test('page includes the complete curriculum, local assets, four full-screen modules and reset',()=>{
   const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
   for(const word of ['Arrhenius','Brønsted','Lewis','Henderson','Äquivalenzpunkt','Autoprotolyse','K_\\mathrm c','K_\\mathrm s','K_\\mathrm b','Pufferkapazität','5-%'])assert.ok(html.includes(word),word);
-  assert.equal((html.match(/data-fullscreen=/g)||[]).length,4);assert.ok(html.includes('id="reset-dialog"'));assert.ok(html.includes('data-defer-initial'));assert.ok(html.includes('240'));assert.doesNotMatch(html,/fonts\.googleapis|fonts\.gstatic|materialien\.html/);
+  assert.equal((html.match(/data-fullscreen=/g)||[]).length,4);assert.ok(html.includes('id="reset-dialog"'));assert.ok(!html.includes('data-defer-initial'));assert.ok(html.includes('Ohne externe Bilder beginnen'));assert.ok(html.includes('240'));assert.doesNotMatch(html,/fonts\.googleapis|fonts\.gstatic|materialien\.html/);
   const css=fs.readFileSync(require.resolve('../styles/saeuren-basen-mission.css'),'utf8');assert.ok(css.includes('prefers-reduced-motion'));assert.ok(css.includes('color:#163b38'));
+});
+
+test('polyprotic phosphate satisfies all mass, charge and stepwise equilibrium balances',()=>{
+  for(const c of [.001,.01,.1,.2])for(const ct of [.001,.1,.2])for(const fraction of [0,.25,.5,.99,1,1.01,1.5,1.99,2,2.01,2.5,3,3.5]){
+    const r=C.titration({id:'phosphoric',c,v:25,ct,added:fraction*c*25/ct});
+    close(r.alpha.reduce((a,b)=>a+b,0),1,1e-12);assert.ok(Math.abs(r.residual)<1e-11);close(r.h*r.oh,C.KW,1e-24);
+    r.alpha.slice(1).forEach((a,i)=>close(r.h*a/r.alpha[i],10**(-[2.15,7.21,12.35][i]),1e-12));
+  }
+  const conf={id:'phosphoric',c:.1,v:25,ct:.1};close(C.titration({...conf,added:25}).pH,4.68,.04);close(C.titration({...conf,added:50}).pH,9.6679472915,1e-9);assert.ok(Math.abs(C.titration({...conf,added:50}).pH-9.78)>.1,'ampholyte approximation has water correction');
+  assert.ok(Math.abs(C.titration({...conf,added:12.5}).pH-2.15)>.05,'first half point is not blindly pKa');
+  let previous=0;for(let v=0;v<=87.5;v+=.125){const r=C.titration({...conf,added:v});assert.ok(r.pH>=previous);previous=r.pH;}
+});
+test('measurement gating rejects overshoot and requires near points on each side',()=>{
+  assert.ok(C.crossing(24,26,[25],25));assert.ok(!C.crossing(24.95,25.05,[25],25));assert.ok(!C.crossing(20,25,[25],25));
+  const points=[[0,1],[5,1.2],[10,1.4],[15,1.7],[20,2],[24.8,3],[25.1,10],[30,12]];
+  assert.ok(C.measurementsComplete(points,[25],25));assert.ok(!C.measurementsComplete(points.filter(p=>p[0]!==24.8),[25],25));assert.ok(!C.measurementsComplete(points,[25,50],25));
+});
+test('blood buffer model distinguishes closed and CO2-regulated calculation',()=>{
+  const closed=C.bloodBuffer({load:.2}),open=C.bloodBuffer({load:.2,ventilated:true});
+  close(closed.before,6.1+Math.log10(120/6));close(closed.after,6.1+Math.log10(119/7));close(open.after,6.1+Math.log10(119/6));
+  assert.ok(Math.abs(open.delta)<Math.abs(closed.delta));assert.throws(()=>C.bloodBuffer({load:24}));
+});
+test('every numeric task includes real mathematical solution markup',()=>{
+  for(let seed=0;seed<25;seed++)for(const task of T.bank(seed).filter(t=>t.kind==='number')){assert.ok(task.math.charCodeAt(0)===92&&task.math[1]==='[',task.id);assert.ok(task.math.includes('boxed'),task.id);assert.ok(!task.math.includes('undefined'),task.id);}
+});
+test('new lesson has hidden milk-acid hint, diagram, four manual cases and window tools',()=>{
+  const html=fs.readFileSync(require.resolve('../saeuren-basen-mission.html'),'utf8');
+  for(const id of ['blood-hint','blood-solution','hagg-chart','indicator-preview','tit-measurement','tit-analysis'])assert.ok(html.includes('id="'+id+'"'));
+  assert.ok(html.includes('id="blood-hint" hidden'));assert.equal((html.match(/data-practical=/g)||[]).length,4);
+  assert.ok(html.includes('data-chemistry-formulas'));assert.ok(html.includes('data-scicalc-open'));assert.ok(html.includes('data-watermarks'));assert.ok(html.includes('p-q-Formel'));
+  const tit=fs.readFileSync(require.resolve('../scripts/saeuren-basen-titration.js'),'utf8');assert.ok(tit.includes("phase==='analysis'"));assert.ok(tit.includes('measurementsComplete'));
 });
