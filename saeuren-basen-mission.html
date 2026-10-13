@@ -10,11 +10,13 @@
   <script defer src="scripts/saeuren-basen-schreibweise.js?v=20261013-1"></script>
   <script defer src="scripts/saeuren-basen-math.js?v=20261013-1"></script>
   <link rel="stylesheet" href="styles/saeuren-basen-navigation.css?v=20261013-2">
-  <link rel="stylesheet" href="styles/saeuren-basen-einstieg.css?v=20261013-6">
+  <link rel="stylesheet" href="styles/saeuren-basen-einstieg.css?v=20261013-7">
+  <link rel="stylesheet" href="styles/saeuren-basen-titrationsstart.css?v=20261013-7">
   <script defer src="scripts/saeuren-basen-navigation.js?v=20261013-6"></script>
 <script defer src="scripts/saeuren-basen-core.js?v=20261012-20"></script><script defer src="scripts/saeuren-basen-rechenwege.js?v=20261013-1"></script><script defer src="scripts/saeuren-basen-transfer.js?v=20261013-1"></script><script defer src="scripts/saeuren-basen-aufgaben.js?v=20261013-1"></script><script defer src="scripts/saeuren-basen-titration.js?v=20261013-1"></script><script defer src="scripts/saeuren-basen-reaktionen.js?v=20261013-5"></script><script defer src="scripts/saeuren-basen-mission.js?v=20261013-1"></script><script defer src="scripts/saeuren-basen-vertiefung.js?v=20261013-1"></script><script defer src="../LearningApps/atelier-tools.js?v=20261012-14"></script><script defer src="../LearningApps/fonts/lucide.min.js"></script><script defer src="../LearningApps/chemie-formelsammlung.js?v=20261013-1"></script><script defer src="../LearningApps/wissenschaftlicher-rechner.js?v=20261012-14"></script>
   <script defer src="scripts/saeuren-basen-einstieg-core.js?v=20261013-6"></script>
   <script defer src="scripts/saeuren-basen-einstieg.js?v=20261013-6"></script>
+  <script defer src="scripts/saeuren-basen-titrationsstart.js?v=20261013-7"></script>
   <script defer src="scripts/wikipedia-math.js"></script><script defer src="scripts/schroedinger-wikipedia.js?v=20261012-14"></script>
 </head>
 <body data-design-key="chemie-atelier-view" data-watermarks>
@@ -85,7 +87,9 @@
 
   <section class="station wrap simple-lesson" id="simple-titration" data-mark="V">
     <p class="eyebrow">04 · Aus einem Verbrauch wird eine Konzentration</p><h2>Erst die Stoffmenge.<br><em>Dann die Konzentration.</em></h2>
-    <p class="intro">Eine Maßlösung hat eine bekannte Konzentration. Du gibst sie zur Probe, bis die Stoffmengen im Verhältnis der Reaktionsgleichung umgesetzt wurden: am Äquivalenzpunkt (ÄP).</p>
+    <p class="intro">Wie findest du heraus, wie konzentriert eine Säurelösung ist? Bei einer <strong>Titration</strong> lässt du eine Lösung mit bekannter Konzentration genau abgemessen zur Probe reagieren. Der benötigte Verbrauch verrät die Stoffmenge – und damit die gesuchte Konzentration.</p>
+    <div data-titration-primer></div>
+    <details class="simple-extra simple-lab-extra" id="simple-titrationsversuch"><summary>Selbst titrieren: Verbrauch und Indikator im virtuellen Labor prüfen</summary><p>Beginne mit Salzsäure, dann Essigsäure. Vergleiche anschließend die beiden Phosphorsäure-Fälle und die Indikatoren. Die freie Kurve ist sofort sichtbar; in den Übungsfällen wählst du den Indikator anhand der Kurve und bestimmst den Verbrauch am Kolben.</p><div id="simple-titration-slot"></div></details>
     <div class="simple-formulas">
       <article class="simple-formula"><h3>Stoffmenge und Volumen</h3><div class="math">\[n=c\cdot V\]\[V_\mathrm{zu}=V_\mathrm{Ende}-V_\mathrm{Anfang}\]</div><p>n ist die Stoffmenge, c die Konzentration, V das Lösungsvolumen. Der Bürettenverbrauch V_zu ist Endstand minus Anfangsstand, nicht einfach der Endstand.</p><p>mol/L · L ergibt mol. mol/L · mL ergibt mmol; innerhalb einer Rechnung dieselben Mengeneinheiten verwenden.</p></article>
       <article class="simple-formula"><h3>Einprotonige Säure mit NaOH · 1:1</h3><div class="math">\[c_0\cdot V_0=c_\mathrm{B}\cdot V_\mathrm{Ä}\]\[c_0=\frac{c_\mathrm{B}\cdot V_\mathrm{Ä}}{V_0}\]</div><p>c₀ und V₀ gehören zur Säureprobe, c_B zur NaOH-Maßlösung; V_Ä ist das bis zum ÄP zugegebene NaOH-Volumen. Das gilt am ÄP sowohl für starke als auch schwache einprotonige Säuren. Im Volumenquotienten darfst du mL verwenden.</p></article>
@@ -122,7 +126,7 @@
       <article class="simple-formula"><h3>Mehrprotonig · die Stufe zählt</h3><div class="math">\[c_\mathrm{B}\cdot V_{\mathrm{Ä},j}=j\cdot n_0\]</div><p>j ist die Zahl neutralisierter Protonen je Säureteilchen: bei H₃PO₄ j = 1 am ersten, j = 2 am zweiten ÄP. Die zugehörigen Volumina unterscheiden sich um den Faktor 2. Phosphorsäure ist eine dreiprotonige Säure, ihr dritter Sprung aber in Wasser schlecht aufgelöst.</p><p>Die Stufen können sich überlagern; „am halben Verbrauch pH = pK_S“ darf nicht unbesehen auf jede Stufe übertragen werden. Ein passend gewählter Indikator kann bei Phosphorsäure den ersten oder zweiten Endpunkt erfassen.</p></article>
     </div>
     <div class="simple-practice-title"><h3>Die Kurvenstellen unterscheiden</h3><span id="simple-count-kurve">0 / 6 geübt</span></div><div class="simple-task-grid" id="simple-tasks-kurve"></div>
-    <details class="simple-extra simple-lab-extra" id="simple-titrationsversuch"><summary>Selbst titrieren: Verbrauch und Indikator im virtuellen Labor prüfen</summary><p>Beginne mit Salzsäure, dann Essigsäure. Vergleiche anschließend die beiden Phosphorsäure-Fälle und die Indikatoren. Die freie Kurve ist sofort sichtbar; in den Übungsfällen wählst du den Indikator anhand der Kurve und bestimmst den Verbrauch am Kolben.</p><div id="simple-titration-slot"></div></details>
+    <p><a class="button" href="#simple-titrationsversuch">Die Kurven im Titrationslabor vergleichen ↑</a></p>
     <div class="simple-next"><a href="#titration-characteristic-points" data-full-target="titration-characteristic-points">Die charakteristischen Punkte ausführlich herleiten</a><a href="#simple-abschluss">Einstieg abschließen →</a></div>
   </section>
   <section class="simple-end wrap" id="simple-abschluss"><p class="eyebrow">Dein nächster Schritt</p><h2>Ein Rechenweg.<br><em>Jetzt auch begründen.</em></h2><p id="simple-completion"></p><p>Kannst du ohne Lösung erklären, warum die Rechnung passt? Warum ein Puffer zunächst Mengen braucht? Warum der ÄP nicht immer pH 7 hat? Dann wechsle zur ausführlichen Ansicht: Dort warten die Herleitungen, Modellgrenzen, Blutpuffer-Rechnung, Hägg-Diagramme und anspruchsvollere Transferaufgaben.</p><a class="button primary" href="#training" data-full-target="training">Zur ausführlichen Ansicht und zum LK-Training →</a><p class="simple-source">Umfang dieses Einstiegs: Brønsted, starke und schwache Säuren/Basen, pH, Puffer, Titrationsrechnung und charakteristische Kurvenpunkte einschließlich mehrprotoniger Säuren. Orientiert am <a href="https://lehrplannavigator.nrw.de/system/files/media/document/file/gost_klp_ch_2022_06_07.pdf" target="_blank" rel="noopener">Kernlehrplan NRW Chemie 2022 · Leistungskurs</a> und den <a href="https://www.standardsicherung.schulministerium.nrw.de/system/files/media/document/file/chemie_2028_gg.pdf" target="_blank" rel="noopener">Abiturvorgaben 2028</a>. Kein Ersatz für den ganzen Leistungskurs: Herleitungen, experimentelle Auswertung und weitere Themen des Inhaltsfelds, etwa Löslichkeitsgleichgewichte, Ionennachweise und Energetik, gehören zusätzlich zum Unterricht.</p></section>
@@ -327,6 +331,42 @@
 <details class="beyond wrap rechen-glossar"><summary>Rechenbegriffe kurz nachschlagen</summary><dl><dt>Analytische Gesamtkonzentration</dt><dd>Der durch Stoffmenge und Gesamtvolumen festgelegte Bestand einer Stofffamilie, etwa c(HA) + c(A⁻). Er ist nicht dasselbe wie die Konzentration einer einzelnen Gleichgewichtsform.</dd><dt>Aliquot</dt><dd>Eine genau abgemessene Teilprobe, deren Stoffmenge bei einer zusätzlichen Verdünnung mit Wasser gleich bleibt.</dd><dt>Hydrolyseanteil</dt><dd>Der Anteil eines Ions, der mit Wasser reagiert, etwa Acetat zu HA und OH⁻. Nur wenn er klein ist, darf die Ausgangsmenge unverändert angenähert werden.</dd><dt>Normierter Logarithmus</dt><dd>Ein Logarithmus verlangt eine dimensionslose Zahl. In −lg c steht daher der Zahlenwert der Konzentration in mol/L, also c/(1 mol/L).</dd><dt>Wurzelterm</dt><dd>Der Ausdruck unter oder mit einer Quadratwurzel. Seine Summanden müssen dieselbe Einheit haben; beim Einsetzen bleiben die Einheiten nachvollziehbar.</dd><dt>Ampholytnäherung</dt><dd>Eine pH-Abschätzung aus den pK-Werten beider benachbarter Protolyse-Stufen. Kleine Wasserbeiträge und ausreichend getrennte Gleichgewichte sind Voraussetzungen, nicht automatisch erfüllt.</dd><dt>Addukt</dt><dd>Ein gemeinsames Teilchen, das sich durch Addition zweier Partner bildet, beispielsweise H₃N–BF₃.</dd></dl></details>
 <section class="sources wrap"><h2>Nachlesen und Modellgrenzen prüfen</h2><p>Für die eigenen Erweiterungen: IUPAC (Aktivität), OpenStax (Gleichgewichte und Regulation), University of Southern Mississippi (Phosphorsäure) und American Physiological Society (Lactat/Protonenbilanz); Links stehen beim jeweiligen Abschnitt.</p><p>Eigene Erklärungen, Herleitungen, Grafiken und simulierte Werte; keine übernommenen Messkurven. Gerundete pK-Werte sind einheitliche Lehrwerte bei 25 °C. Die Bedingungen einer konkreten Messung können davon abweichen. Fachliche Referenzen:</p><div><a href="https://goldbook.iupac.org/terms/view/P04524" target="_blank" rel="noopener">IUPAC · pH-Definition ↗</a><a href="https://openstax.org/books/chemistry-2e/pages/14-2-ph-and-poh" target="_blank" rel="noopener">OpenStax · pH und pOH ↗</a><a href="https://openstax.org/books/chemistry-2e/pages/14-3-relative-strengths-of-acids-and-bases" target="_blank" rel="noopener">OpenStax · Säure- und Basengleichgewichte ↗</a><a href="https://openstax.org/books/chemistry-2e/pages/14-6-buffers" target="_blank" rel="noopener">OpenStax · Puffer ↗</a><a href="https://openstax.org/books/chemistry-2e/pages/14-7-acid-base-titrations" target="_blank" rel="noopener">OpenStax · Titration ↗</a><a href="https://openstax.org/books/chemistry-atoms-first-2e/pages/15-2-lewis-acids-and-bases" target="_blank" rel="noopener">OpenStax · Lewis-Konzept ↗</a><a href="https://openstax.org/books/chemistry-atoms-first-2e/pages/18-3-structure-and-general-properties-of-the-metalloids" target="_blank" rel="noopener">OpenStax · Borsäure ↗</a></div></section>
 </main>
+<template id="acid-titration-primer-template">
+  <section class="titration-primer" data-phase="ready" aria-label="Was ist eine Titration?">
+    <p class="eyebrow">Erst den Versuch verstehen</p><h3>Eine unbekannte Konzentration.<br>Ein messbarer Verbrauch.</h3>
+    <div class="primer-stages" role="group" aria-label="Die Titration in drei Bildern"><button type="button" data-primer-phase="ready" aria-pressed="true">1 · Vor der Zugabe</button><button type="button" data-primer-phase="adding" aria-pressed="false">2 · Maßlösung fließt</button><button type="button" data-primer-phase="endpoint" aria-pressed="false">3 · Umschlag erkennen</button></div>
+    <p class="primer-scene-status" role="status" aria-live="polite">Die Säureprobe ist mit Phenolphthalein zunächst farblos. Der Hahn ist geschlossen.</p>
+    <div class="titration-primer-grid">
+      <div class="primer-setup">
+        <article><span class="primer-marker">1</span><h4>In der Bürette: bekannt</h4><p><strong>Maßlösung: Natronlauge.</strong> Ihre Konzentration c_B ist bekannt: 0,100 mol/L. Die Bürette ist ein Messgerät mit Hahn; ihre Skala zeigt, wie viel Lösung abgegeben wurde.</p></article>
+        <article><span class="primer-marker">2</span><h4>Im Kolben: gesucht</h4><p><strong>Probe: Salzsäure.</strong> V₀ = 25,0 mL sind abgemessen. Gesucht ist ihre Anfangskonzentration c₀. Einige Tropfen Phenolphthalein machen den späteren Umschlag sichtbar.</p></article>
+      </div>
+      <figure class="primer-apparatus">
+        <svg viewBox="0 0 180 330" role="img" aria-label="Eine Bürette mit Natronlauge steht über einem Kolben mit Salzsäure. Die Maßlösung kann aus der Spitze in die Probe fließen.">
+          <path class="primer-outline" d="M26 18V320M8 320H170M26 64H92M26 118H92"/>
+          <path class="primer-burette-fill" d="M90 40H110V181H90Z"/>
+          <path class="primer-outline" d="M87 18Q87 12 94 12H106Q113 12 113 18V186H104V209L100 216L96 209V186H87Z"/>
+          <path class="primer-scale" d="M88 30H106M88 52H101M88 74H106M88 96H101M88 118H106M88 140H101M88 162H106"/>
+          <g class="primer-tap"><path d="M82 186H118"/></g>
+          <path class="primer-stream" d="M100 219V259"/>
+          <path class="primer-flask-fill" d="M61 290H139L153 312H47Z"/>
+          <path class="primer-outline" d="M82 239H118M86 239V262L43 311Q40 318 50 318H150Q160 318 157 311L114 262V239"/>
+          <circle class="primer-number-disc" cx="137" cy="77" r="15"/><text class="primer-number" x="137" y="83" text-anchor="middle">1</text>
+          <circle class="primer-number-disc" cx="149" cy="268" r="15"/><text class="primer-number" x="149" y="274" text-anchor="middle">2</text>
+        </svg>
+        <figcaption>Schematisch; Maßlösung zur Sichtbarkeit getönt. Der Kolben wird im echten Versuch geschwenkt oder gerührt.</figcaption>
+      </figure>
+      <div class="primer-process"><h4>Was du beim Titrieren tust</h4><ol>
+        <li><strong>Vorbereiten.</strong> Probe abmessen, passenden Indikator zugeben und den Anfangsstand an der Bürette ablesen.</li>
+        <li><strong>Dosiert zugeben.</strong> Die OH⁻-Ionen der Natronlauge reagieren mit der Säure. Gut mischen; nahe dem Umschlag nur noch tropfenweise zugeben.</li>
+        <li><strong>Am Endpunkt stoppen.</strong> Bei diesem Beispiel zeigt die erste bleibende, schwache Rosafärbung den Phenolphthalein-Umschlag. Endstand ablesen: Endstand minus Anfangsstand ergibt den Verbrauch.</li>
+      </ol></div>
+    </div>
+    <div class="math primer-reaction">\[\mathrm{H_3O^++OH^-\longrightarrow2\,H_2O}\]</div>
+    <p class="primer-boundary"><strong>Endpunkt ist nicht exakt Äquivalenzpunkt.</strong> Der Äquivalenzpunkt beschreibt das passende Stoffmengenverhältnis der Reaktion, nicht gleiche Volumina. Der beobachtete Farbumschlag soll möglichst nahe daran liegen. Ein kräftig pinker Kolben kann bereits zu viel NaOH bedeuten; „neutralisiert“ heißt auch nicht bei jeder Titration pH 7.</p>
+    <div class="primer-lab-link"><button type="button" class="primary" data-titration-start>Dieses Salzsäure-Beispiel im Labor starten →</button><p>Startet den vorhandenen Laborfall bei 0 mL Zugabe. Deine Rechenaufgaben und Lernstände bleiben erhalten.</p></div>
+  </section>
+</template>
 
 <dialog id="reset-dialog"><p class="eyebrow">Neue Runde · neuer Aufgabenmix</p><h2>Neu beginnen?</h2><p>Punkte, Antworten, Abzeichen und Labor-Einstellungen werden auf diesem Gerät zurückgesetzt. Du erhältst 32 neu ausgewählte Missionen. Diese Aktion betrifft keine andere App.</p><div class="dialog-actions"><button data-close="reset-dialog">Abbrechen</button><button id="reset-confirm" class="primary">Neu beginnen</button></div></dialog>
 <dialog id="wiki-reader" class="wiki-reader"><header><div><p class="eyebrow">Wikipedia · vollständiger Artikel</p><h2 id="wiki-title"></h2></div><button id="wiki-close" aria-label="Wikipedia schließen">×</button></header><p id="wiki-status" role="status"></p><article id="wiki-content" tabindex="0"></article><footer id="wiki-source"></footer></dialog>

@@ -9,7 +9,7 @@ function setup(t,{saved,hash='',blocked=false}={}){
   const round=T.select(123456),full={version:3,seed:123456,ids:round.map(task=>task.id),answers:{[round[0].id]:{value:String(round[0].answer),attempts:1,done:true,solved:true}},lewis:false};
   w.localStorage.setItem('protonen-mission-v1',JSON.stringify(full));if(saved)w.localStorage.setItem(KEY,JSON.stringify(saved));
   if(blocked)Object.defineProperty(w,'localStorage',{get(){throw Error('Blocked storage');}});
-  for(const file of ['schreibweise','core','rechenwege','transfer','aufgaben','titration','reaktionen','mission','vertiefung','navigation','einstieg-core','einstieg'])w.eval(fs.readFileSync(path.join(root,'scripts/saeuren-basen-'+file+'.js'),'utf8'));
+  for(const file of ['schreibweise','core','rechenwege','transfer','aufgaben','titration','reaktionen','mission','vertiefung','navigation','einstieg-core','einstieg','titrationsstart'])w.eval(fs.readFileSync(path.join(root,'scripts/saeuren-basen-'+file+'.js'),'utf8'));
   t.after(()=>w.close());
   return {w,q,full,simple(){q('#acid-mode-switch').click();},state(){return JSON.parse(w.localStorage.getItem(KEY));},submit(slot,value){const input=q('#simple-input-'+slot);input.value=value;input.dispatchEvent(new w.Event('input',{bubbles:true}));q('#simple-task-'+slot+' form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));}};
 }
@@ -79,4 +79,32 @@ test('hash navigation and explicit deep-reading links select the corresponding v
 });
 test('blocked storage leaves both modes usable with a clear warning',t=>{
   const s=setup(t,{blocked:true});s.simple();assert.equal(s.q('#simple-storage-warning').hidden,false);assert.equal(s.w.document.querySelectorAll('.simple-task').length,24);s.simple();assert.equal(s.q('#start').hidden,false);
+});
+test('both learning modes explain the apparatus and experiment before the calculation, without hydronium shorthand',t=>{
+  const s=setup(t);s.simple();
+  assert.equal(s.w.document.querySelectorAll('.titration-primer').length,2);
+  assert.ok(s.q('#simple-titration').contains(s.q('#simple-titrationsversuch')));
+  for(const id of ['simple-titration','titration']){
+    const section=s.q('#'+id),primer=section.querySelector('.titration-primer');assert.ok(primer);
+    assert.ok(primer.compareDocumentPosition(section.querySelector(id==='titration'?'.two':'.simple-formulas'))&s.w.Node.DOCUMENT_POSITION_FOLLOWING);
+    assert.match(primer.textContent,/bekannt/);assert.match(primer.textContent,/gesucht/);assert.match(primer.textContent,/Endpunkt ist nicht exakt Äquivalenzpunkt/);
+    assert.doesNotMatch(primer.textContent,/(?<![\p{L}])h(?![\p{L}\p{N}])/u);
+  }
+  const visibleText=Array.from(s.w.document.querySelectorAll('.math')).map(el=>el.textContent).join('\n');
+  assert.doesNotMatch(visibleText,/(?<![\p{L}])h(?![\p{L}\p{N}])/u);
+});
+test('the three illustrated stages change locally, use explicit states, and never alter the real experiment',t=>{
+  const s=setup(t);s.simple();const primer=s.q('#simple-titration .titration-primer'),before=s.q('#tit-added-label').textContent,full=s.w.localStorage.getItem('protonen-mission-v1');
+  for(const phase of ['adding','endpoint','ready']){
+    primer.querySelector('[data-primer-phase="'+phase+'"]').click();assert.equal(primer.dataset.phase,phase);
+    assert.equal(primer.querySelectorAll('[aria-pressed=true]').length,1);assert.match(primer.querySelector('.primer-scene-status').textContent,/Hahn/);
+  }
+  assert.equal(s.q('#tit-added-label').textContent,before);assert.equal(s.w.localStorage.getItem('protonen-mission-v1'),full);
+});
+test('the deliberate demonstration start opens the existing experiment, resets only that lab, and preserves task progress',t=>{
+  const s=setup(t);s.simple();s.submit('ph-0',String(E.task('ph-0',s.state().seed).answer));const entryBefore=s.w.localStorage.getItem(KEY),fullBefore=s.w.localStorage.getItem('protonen-mission-v1');
+  const lab=s.q('#titration-lab');s.q('#simple-titration [data-titration-start]').click();
+  assert.equal(s.q('#simple-titrationsversuch').open,true);assert.equal(s.q('#titration-lab'),lab);assert.equal(s.q('#tit-substance').value,'hcl');assert.equal(s.q('#tit-indicator').value,'phenolphthalein');assert.equal(s.q('#tit-added-label').textContent,'0 mL');
+  assert.equal(s.q('[data-practical=hcl]').getAttribute('aria-pressed'),'true');assert.equal(s.q('#tit-c-label').hidden,true);assert.equal(s.w.location.hash,'#simple-titrationsversuch');assert.equal(s.w.localStorage.getItem(KEY),entryBefore);assert.equal(s.w.localStorage.getItem('protonen-mission-v1'),fullBefore);
+  s.simple();s.q('#titration [data-titration-start]').click();assert.equal(s.w.location.hash,'#titration-lab');assert.equal(s.q('#acid-simple').hidden,true);assert.equal(s.q('#titration-lab'),lab);
 });

@@ -49,6 +49,12 @@ keine weiteren Versuche. Die ausgewählten Aufgaben nutzen dieselbe geprüfte
 Rechenbasis wie das vollständige Training. Eine Kurvenübersicht sowie die
 vorhandenen Teilchen- und Titrationslabore ergänzen den Einstieg.
 
+Vor den Titrationsformeln erklärt eine beschriftete Gerätezeichnung in drei
+aufrufbaren Bildern Probe, Maßlösung, Zugabe und Indikator-Endpunkt. Sie steht
+in beiden Lernwegen. Im Einstieg ist das bestehende Labor bereits in Station 4
+erreichbar; ein ausdrücklicher Beispielstart öffnet den Salzsäure-Übungsfall,
+ohne die Rechenaufgaben oder ihre gespeicherten Antworten zurückzusetzen.
+
 Die ausführliche Ansicht mit Herleitungen und 32 Missionen bleibt erhalten.
 Ihr Speicher `protonen-mission-v1` wird vom Einstieg nicht verändert; dessen
 Modus, Aufgabenvarianten, Entwürfe und Fortschritt stehen separat unter

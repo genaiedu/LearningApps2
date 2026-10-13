@@ -1,0 +1,40 @@
+.titration-primer{padding:28px;background:var(--white);border:1px solid var(--line);border-radius:12px;margin-block:26px}
+.titration-primer>h3{font-size:30px;line-height:1.25;margin-bottom:28px}
+.titration-primer-grid{display:grid;grid-template-columns:minmax(0,1fr) 180px minmax(0,1fr);gap:26px;align-items:start}
+.primer-setup{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;min-width:0}
+.primer-setup article{position:relative;border-left:2px solid var(--red);padding-left:20px;min-width:0;overflow-wrap:anywhere;hyphens:auto}
+.primer-marker{display:inline-grid;place-items:center;width:27px;height:27px;border:1px solid var(--red);border-radius:50%;color:var(--red);font-weight:700;font-variant-numeric:lining-nums tabular-nums;margin-bottom:10px}
+.titration-primer h4{font-size:21px;line-height:1.3;margin:0 0 12px}
+.titration-primer p,.primer-process li{font-size:17px;line-height:1.65;max-width:68ch}
+.primer-setup p{margin:0}
+.primer-apparatus{margin:0;min-width:0}
+.primer-apparatus>svg{display:block;width:100%;height:auto;background:transparent;border:0;border-radius:0}
+.primer-apparatus .primer-outline,.primer-apparatus .primer-scale{fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.primer-apparatus .primer-burette-fill{fill:#70bbd04d}
+.primer-apparatus .primer-tap{stroke:var(--red);stroke-width:5;transform-origin:100px 186px}
+.primer-apparatus .primer-stream{stroke:#438da3;stroke-width:3;stroke-dasharray:4 7;opacity:0}
+.primer-apparatus .primer-flask-fill{fill:var(--surface)}
+.primer-apparatus .primer-number-disc{fill:var(--white);stroke:var(--red);stroke-width:1.5}
+.primer-apparatus .primer-number{fill:var(--red);font:700 18px 'Fira Sans',sans-serif;font-variant-numeric:lining-nums tabular-nums}
+.primer-apparatus figcaption{font-size:13px;line-height:1.5;color:var(--muted);margin-top:12px}
+.primer-process ol{padding-left:23px;margin:0}
+.primer-process li{padding-left:5px;margin-bottom:18px}
+.primer-process li::marker{color:var(--red);font-weight:700;font-variant-numeric:lining-nums tabular-nums}
+.primer-stages{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}
+.primer-stages button{font-size:15px;color:var(--ink);background:var(--paper)}
+.primer-stages button[aria-pressed=true]{border-color:var(--red);box-shadow:inset 0 -2px var(--red)}
+.titration-primer .primer-scene-status{padding:16px 18px;background:var(--surface);min-height:4.8em;margin-block:18px}
+.primer-boundary{border-left:3px solid var(--red);padding-left:18px}
+.primer-lab-link{margin-top:23px}
+.primer-lab-link p{font-size:14px;color:var(--muted);margin:10px 0 0}
+.primer-reaction{font-size:20px;overflow-x:auto;overflow-y:hidden}
+.titration-primer[data-phase=adding] .primer-stream{opacity:1;animation:primer-flow 1s linear infinite}
+.titration-primer[data-phase=adding] .primer-tap{transform:rotate(90deg)}
+.titration-primer[data-phase=adding] .primer-burette-fill{transform:translateY(12px) scaleY(.93);transform-origin:100px 40px}
+.titration-primer[data-phase=endpoint] .primer-burette-fill{transform:translateY(40px) scaleY(.72);transform-origin:100px 40px}
+.titration-primer[data-phase=endpoint] .primer-flask-fill{fill:#c626863d}
+@keyframes primer-flow{to{stroke-dashoffset:-22}}
+@media(max-width:1000px){.titration-primer-grid{grid-template-columns:minmax(0,1fr) 180px;gap:24px}.primer-process{grid-column:1/-1}.primer-process ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px}}
+@media(max-width:650px){.titration-primer{padding:20px}.titration-primer>h3{font-size:25px}.titration-primer-grid{grid-template-columns:minmax(0,1fr);gap:25px}.primer-setup article{padding-left:12px}.titration-primer h4{font-size:20px}.primer-setup p{font-size:17px}.primer-apparatus{grid-row:1;width:150px;max-width:100%;justify-self:center}.primer-apparatus figcaption{font-size:12px}.primer-process ol{display:block}.primer-stages{display:grid;grid-template-columns:1fr}.primer-stages button{text-align:left}.primer-reaction{font-size:17px}.titration-primer .primer-scene-status{min-height:0}.primer-lab-link button{max-width:100%;white-space:normal;text-align:left}}
+@media(prefers-reduced-motion:reduce){.titration-primer[data-phase=adding] .primer-stream{animation:none}}
+@media print{.primer-stages,.primer-lab-link{display:none}.titration-primer{break-inside:avoid}}
