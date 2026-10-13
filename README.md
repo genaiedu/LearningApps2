@@ -39,6 +39,25 @@ Paket nötig. Die Webversion benötigt beim ersten Laden eine Internetverbindung
 `datenschutz.html` beschreibt GitHub Pages und die lokale Sitzungsspeicherung.
 Die Schülerseiten enthalten keine Rückverlinkung zur Materialübersicht.
 
+## Protonen-Mission · zwei Lernwege
+
+`saeuren-basen-mission.html` bietet oben den Schalter „Einfacher Einstieg“.
+Der kompakte Selbstlernweg enthält sechs Stationen und 24 Aufgaben zu Brønsted,
+pH, starken/schwachen Säuren und Basen, Titration und Puffern. Hinweise,
+Lösungswege und neue Varianten sind einzeln abrufbar; falsche Antworten sperren
+keine weiteren Versuche. Die ausgewählten Aufgaben nutzen dieselbe geprüfte
+Rechenbasis wie das vollständige Training. Eine Kurvenübersicht sowie die
+vorhandenen Teilchen- und Titrationslabore ergänzen den Einstieg.
+
+Die ausführliche Ansicht mit Herleitungen und 32 Missionen bleibt erhalten.
+Ihr Speicher `protonen-mission-v1` wird vom Einstieg nicht verändert; dessen
+Modus, Aufgabenvarianten, Entwürfe und Fortschritt stehen separat unter
+`protonen-mission-einstieg-v1`. Links mit `#simple-…` öffnen den Einstieg,
+Links zu bisherigen Kapiteln die ausführliche Ansicht. Die Labore werden beim
+Umschalten versetzt, nicht kopiert; ihre Eingaben und Ereignishandler bleiben
+erhalten. Der Umfang des Einstiegs orientiert sich an KLP NRW 2022 / Abitur 2028,
+ersetzt aber nicht den gesamten Leistungskurs.
+
 ## Drei Tore – Moderatorenproblem
 
 `moderatorenproblem.html`: beliebig wiederholbare Vorführung mit Vollbild und
