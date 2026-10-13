@@ -66,13 +66,18 @@ Antworten werden als Text validiert und angezeigt, nicht als HTML. Ein
 KI-Absatz ersetzt nur die persönliche Ansprache; die redaktionellen
 Sachhinweise und Museumsquellen bleiben unverändert sichtbar. KI kann irren.
 
-Die Kunstapp startet ohne KI-Freigabe. Nach der einmaligen Zustimmung lässt
-sich mit „KI-Antworten: An/Aus“ direkt zwischen beiden Textvarianten wechseln.
+Die Startmeldung nennt GPT-OSS 120B von OpenAI bei Groq und die Datenweitergabe.
+Beim ersten Besuch ist der KI-Tutor dort voreingestellt eingeschaltet und mit
+einem Schalter abschaltbar. Erst der informierte Start mit eingeschalteter KI
+erteilt die Freigabe; vor diesem Start und während der Zuordnung wird keine
+KI-Anfrage gesendet. Eine zuvor gespeicherte Ausschaltentscheidung bleibt
+erhalten. Danach lässt sich mit „KI-Antworten: An/Aus“ direkt zwischen beiden
+Textvarianten wechseln.
 Ausschalten bricht laufende Browseranfragen ab und stellt die exakten
 Programmtexte wieder her. Fertige KI-Texte bleiben im temporären Browsercache,
 damit ein Vergleich keine neue Anfrage benötigt. Die An/Aus-Präferenz und die
-Freigabe werden getrennt gespeichert; „Freigabe widerrufen“ entfernt die
-Zustimmung, schaltet KI-Antworten aus und leert den temporären Cache. Keiner
+Freigabe werden getrennt gespeichert; „Freigabe widerrufen“ speichert die
+ausdrückliche Ablehnung, schaltet KI-Antworten aus und leert den temporären Cache. Keiner
 dieser Werte gehört zur Spielstandsdatei.
 
 Die Einwilligungsversion wird für die Bildhistorie erneuert, weil erstmals auch
@@ -94,3 +99,7 @@ der festgelegten öffentlichen GitHub-Revision. `generated/` enthält nur
 
 Kontrolle: GET `/api/feedback` meldet nur Dienstversion und Betriebsbereitschaft.
 POST benötigt die freigegebene Origin und ein gültiges aufgelöstes Spiel.
+
+Didaktische Erklärung und lokales Ablaufmodell:
+`https://genaiedu.github.io/LearningApps2/ki-auf-webseiten.html`.
+Das Modell dieser Erklärseite stellt keine KI-Anfragen und benötigt keinen Schlüssel.
