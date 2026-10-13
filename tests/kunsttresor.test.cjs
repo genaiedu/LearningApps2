@@ -314,6 +314,7 @@ test('one explicit start click unlocks music before fullscreen, then opens the f
   const launch=js.slice(js.indexOf('async function launchGallery('),js.indexOf('function finishIntro('));
   const events=[],context={
     imagesAllowed:false,state:null,pool:[],introSoundEnabled:false,introAudio:{},launchEpoch:0,keys:{images:'images'},
+    confirmLaunchAIChoice:()=>events.push('ai-choice'),
     close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
     core:{newState:()=>({})},save:()=>{},render:()=>{},$:()=>({focus:()=>events.push('focus')}),
     startIntroAudio:()=>events.push('music'),enterFullscreen:async()=>events.push('fullscreen'),
@@ -322,6 +323,7 @@ test('one explicit start click unlocks music before fullscreen, then opens the f
   };
   const vm=require('node:vm'); vm.createContext(context); vm.runInContext(launch,context);
   const started=context.launchGallery();
+  assert.ok(events.indexOf('ai-choice')<events.indexOf('music'));
   assert.ok(events.indexOf('music')<events.indexOf('fullscreen'));
   assert.ok(!events.includes('film'));
   await started;
@@ -340,6 +342,7 @@ test('the smaller launch button skips the film and music, enters fullscreen and 
   for(const consent of [false,true])for(const existing of [false,true]){
     const events=[],saved=existing?{escaped:3,attempts:1,choices:{retained:true}}:null;
     const context={imagesAllowed:consent,state:saved,pool:[],introAudio:{},keys:{images:'images'},
+      confirmLaunchAIChoice:()=>events.push('ai-choice'),
       close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
       core:{newState:()=>{events.push('new');return {escaped:0};}},save:()=>events.push('save'),render:()=>events.push('render'),
       $:()=>({focus:()=>events.push('focus')}),finishIntro:()=>events.push('stop-film-and-music'),
@@ -347,6 +350,7 @@ test('the smaller launch button skips the film and music, enters fullscreen and 
       startIntroAudio:()=>events.push('music'),showIntro:()=>events.push('film')};
     const vm=require('node:vm');vm.createContext(context);vm.runInContext(launch,context);
     await context.launchGallery(false);
+    assert.ok(events.indexOf('ai-choice')<events.indexOf('fullscreen'));
     assert.ok(events.includes('stop-film-and-music'));assert.ok(events.includes('fullscreen'));assert.ok(events.includes('game'));
     assert.ok(events.indexOf('fullscreen')<events.indexOf('game'));
     assert.ok(!events.includes('music'));assert.ok(!events.includes('film'));

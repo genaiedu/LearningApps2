@@ -33,6 +33,8 @@ function createFilm({consent=true}={}) {
     imagesAllowed:consent,pool:works,landmarkIds:[],previousIntro:[],introPreparation:null,
     introEpoch:0,launchEpoch:0,introAudioEpoch:0,introWaitTimer:null,introTimer:null,introFadeTimer:null,
     introSoundEnabled:true,introSeconds:46,state:{escaped:2,attempts:1},keys:{images:'images'},
+    aiAllowed:false,aiEnabled:true,aiChoiceConfirmed:false,aiEndpoint:'',aiConsentKey:'ai-consent',
+    setAIEnabled:enabled=>{context.aiEnabled=enabled;},
     introAudio:{volume:.65,currentTime:0,pause:()=>events.push('pause')},
     $:id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);},
     core:{introSelection:()=>{events.push('selection');return works;},shuffle:a=>a,galleryTitle:w=>w.id},

@@ -26,7 +26,10 @@
   const ki=window.KunstKI, aiConsentKey='kunsttresor-ai-consent-v2', aiEnabledKey='kunsttresor-ai-enabled-v1';
   const aiEndpoint=window.KunstKIConfig?.endpoint || '';
   const aiClient=ki?.createClient({endpoint:aiEndpoint,fetcher:(...args)=>fetch(...args)});
-  let aiAllowed=store.get(aiConsentKey)==='yes', aiEnabled=store.get(aiEnabledKey)!=='no', aiDisplayEpoch=0, aiBaseline=new Map();
+  let aiAllowed=store.get(aiConsentKey)==='yes', aiEnabled=store.get(aiEnabledKey)==='yes' || (store.get(aiEnabledKey)!=='no' && store.get(aiConsentKey)!=='no'), aiDisplayEpoch=0, aiBaseline=new Map();
+  // Default to the tutor, but do not transmit results before an informed start.
+  // An earlier explicit pause or withdrawal remains an off choice.
+  let aiChoiceConfirmed=aiAllowed || !aiEnabled;
   let playerProgress = progress.fresh(best);
   try { playerProgress = progress.restore(JSON.parse(store.get(keys.progress))) || playerProgress; } catch { /* Older browsers have no collection yet. */ }
   playerProgress.record = Math.max(playerProgress.record,best);
@@ -229,14 +232,28 @@
     }
     return introPreparation;
   }
+  function updateLaunchAI() {
+    const selected=aiEnabled && Boolean(aiEndpoint);
+    $('launch-ai-switch').checked=selected;
+    $('launch-ai-switch').disabled=!aiEndpoint;
+    $('launch-ai-state').textContent=selected ? 'Ein' : 'Aus';
+    $('launch-ai-status').textContent=selected ? 'Voreingestellt: ein. Mit einem Startknopf erlaubst du auch die unten beschriebene KI-Rückmeldung. Du kannst sie hier ausschalten.' : 'Ausgeschaltet: Du erhältst die vollständigen redaktionellen Kuratorenhinweise. Es werden keine neuen KI-Anfragen gestellt.';
+    $('launch-start').textContent=selected ? (imagesAllowed ? 'Mit KI · Vollbild & Musik starten →' : 'Kunstbilder & KI erlauben · starten →') : (imagesAllowed ? 'Vollbild & Musik starten →' : 'Kunstbilder erlauben & starten →');
+    $('launch-skip').textContent=selected ? (imagesAllowed ? 'Mit KI · ohne Vorspann spielen →' : 'Kunstbilder & KI erlauben · direkt spielen →') : (imagesAllowed ? 'Ohne Vorspann direkt spielen →' : 'Kunstbilder erlauben · direkt spielen →');
+  }
+  function confirmLaunchAIChoice() {
+    const allowed=$('launch-ai-switch').checked && Boolean(aiEndpoint);
+    aiAllowed=allowed;aiChoiceConfirmed=true;store.set(aiConsentKey,allowed ? 'yes' : 'no');
+    setAIEnabled(allowed,{request:false});
+  }
   function prepareLaunch() {
     prepareIntro();
     $('launch-privacy').hidden = imagesAllowed;
-    $('launch-start').textContent = imagesAllowed ? 'Vollbild & Musik starten →' : 'Kunstbilder erlauben & starten →';
-    $('launch-skip').textContent = imagesAllowed ? 'Ohne Vorspann direkt spielen →' : 'Kunstbilder erlauben · direkt spielen →';
+    updateLaunchAI();
     open('launch-dialog');
   }
   async function launchGallery(withIntro = true) {
+    confirmLaunchAIChoice();
     close('launch-dialog');
     if (!imagesAllowed) { imagesAllowed = true; store.set(keys.images,'yes'); heroImages(); }
     if (!state) { state = core.newState(pool); save(); }
@@ -365,6 +382,7 @@
   }
   function start() {
     if (!pool.length) return;
+    if (!aiChoiceConfirmed && aiEndpoint) { prepareLaunch(); return; }
     if (!imagesAllowed) { askForImages(true); return; }
     if (!state) state = core.newState(pool);
     save(); render(); toGame(); void enterFullscreen();
@@ -737,10 +755,12 @@
       button.disabled=!aiEndpoint;
     });
   }
-  function setAIEnabled(enabled) {
+  function setAIEnabled(enabled,{request=true}={}) {
     aiEnabled=enabled; store.set(aiEnabledKey,enabled ? 'yes' : 'no');
+    if(enabled && !aiAllowed)aiChoiceConfirmed=false;
     aiDisplayEpoch++; aiClient?.cancel(); updateAIToggles();
-    if (enabled) { void requestAI(); return; }
+    updateLaunchAI();
+    if (enabled) { if(request)void requestAI(); return; }
     resetAIReading(); $('ai-status').textContent='Redaktionelle Kuratorenhinweise · KI-Antworten sind ausgeschaltet.';
   }
   function toggleAI() {
@@ -750,7 +770,7 @@
   }
   function aiSettings() {
     $('ai-enable').disabled=!aiEndpoint;
-    $('ai-disable').textContent=aiAllowed ? 'Freigabe widerrufen' : 'Ohne KI fortfahren';
+    $('ai-disable').textContent=aiAllowed ? 'KI ausschalten & Freigabe widerrufen' : 'Ohne KI fortfahren';
     $('ai-availability').textContent=aiEndpoint ? (aiAllowed ? 'Freigabe vorhanden · KI-Antworten sind gerade ' + (aiEnabled ? 'eingeschaltet.' : 'ausgeschaltet.') : 'Bisher keine Freigabe. Es wird noch keine KI-Anfrage gesendet.') : 'Der geschützte Rückmeldedienst wird noch eingerichtet. Bis dahin bleiben die redaktionellen Texte aktiv.';
     open('ai-dialog');
   }
@@ -793,7 +813,8 @@
   $('launch-start').onclick = launchGallery;
   $('launch-skip').onclick = () => launchGallery(false);
   $('launch-read').onclick = () => close('launch-dialog');
-  $('intro-replay').onclick = () => { if (!imagesAllowed) { pendingIntro=true; askForImages(false); } else void launchGallery(); };
+  $('launch-ai-switch').onchange = () => setAIEnabled($('launch-ai-switch').checked,{request:false});
+  $('intro-replay').onclick = () => { if (!aiChoiceConfirmed && aiEndpoint) { prepareLaunch(); return; } if (!imagesAllowed) { pendingIntro=true; askForImages(false); } else void launchGallery(); };
   $('intro-skip').onclick = () => finishIntro({enterGame:true});
   $('intro-loading-skip').onclick = $('intro-skip').onclick;
   $('intro-retry').onclick = () => { finishIntro(); void launchGallery(); };
@@ -817,8 +838,8 @@
   $('ai-settings-footer').onclick=aiSettings;
   document.querySelectorAll('[data-ai-toggle]').forEach(button=>{ button.onclick=toggleAI; });
   updateAIToggles();
-  $('ai-enable').onclick=()=> { if (!aiEndpoint) return; aiAllowed=true; store.set(aiConsentKey,'yes'); close('ai-dialog'); setAIEnabled(true); };
-  $('ai-disable').onclick=()=> { aiAllowed=false; store.remove(aiConsentKey); aiClient?.clear(); close('ai-dialog'); setAIEnabled(false); };
+  $('ai-enable').onclick=()=> { if (!aiEndpoint) return; aiAllowed=true; aiChoiceConfirmed=true; store.set(aiConsentKey,'yes'); close('ai-dialog'); setAIEnabled(true); };
+  $('ai-disable').onclick=()=> { aiAllowed=false; aiChoiceConfirmed=true; store.set(aiConsentKey,'no'); aiClient?.clear(); close('ai-dialog'); setAIEnabled(false); };
   $('ai-retry').onclick=()=>void requestAI(true);
   $('solution-dialog').addEventListener('close',()=>{aiDisplayEpoch++;aiClient?.cancel();});
   $('open-art-glossary').onclick=()=>showArtGlossary();
