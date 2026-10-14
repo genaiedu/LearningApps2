@@ -22,6 +22,11 @@ html[data-palette] :is(.archive-section,.color-section){background:var(--surface
 html[data-palette] :is(.controls,.note,pre),html[data-palette] #wiki-status{background:var(--surface)}
 html[data-palette] .author-comment{background:var(--quote-bg);color:var(--ink)}
 html[data-palette] .author-comment .comment-opening{color:var(--quote-mark)}
+html[data-palette] .font-choice-voice{background:#e2e8dd;color:#28382d;font-family:"EB Garamond",Georgia,serif;margin-inline:auto}
+html[data-palette] .font-choice-voice .comment-opening{color:#718367}
+html[data-theme="dark"] .font-choice-voice{background:#304436;color:#eef3eb}
+html[data-theme="dark"] .font-choice-voice .comment-opening{color:#a2b393}
+html[data-palette] .font-choice-voice h3{font-family:"Fira Sans",sans-serif;margin-top:0}
 html[data-palette] :is(.part-emblem,.part-numeral){color:var(--quote-mark)}
 html[data-palette] :is(.space-quadrant,.space-quadrant:nth-child(2),.space-quadrant:nth-child(3),.space-fixed-controls,.space-outline-wrap svg,.space-empty){background:var(--surface);border-color:var(--line)}
 html[data-palette] .space-quadrant-empty{background:var(--surface)!important}
