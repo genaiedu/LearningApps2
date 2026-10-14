@@ -65,7 +65,7 @@ test('letter forms, emphasis and font roles remain inside the characters part',(
   assert.equal(statements.length,16);
   for(const statement of statements){assert.equal((statement.match(/aria-hidden="true">„<\/span>/g)||[]).length,1);assert.ok(!/Claus|Unterberg|Autorenkommentar/.test(statement));if(!statement.includes('font-choice-voice'))assert.ok(!/“|”/.test(statement));}
   const choice=statements.find(s=>s.includes('font-choice-voice'));assert.ok(choice.includes('Bloß nicht Times New Roman'));assert.equal((choice.match(/<p>/g)||[]).length,10);assert.ok(html.indexOf(choice)<html.indexOf('data-part="papier"'));assert.ok(choice.includes('„ian“'));
-  const word=statements.find(s=>s.includes('id="word-randstimme"'));assert.ok(word.includes('Bloß kein Word'));assert.equal((word.match(/<p>/g)||[]).length,7);assert.ok(html.indexOf(word)>html.indexOf('id="texatelier"'));assert.ok(html.indexOf(word)<html.indexOf('data-part="bildschirm"'));assert.match(word,/font-variant-ligatures:none/);
+  const word=statements.find(s=>s.includes('id="word-randstimme"'));assert.ok(word.includes('Bloß kein Word'));assert.equal((word.match(/<p>/g)||[]).length,8);assert.ok(html.indexOf(word)>html.indexOf('id="texatelier"'));assert.ok(html.indexOf(word)<html.indexOf('data-part="bildschirm"'));assert.ok(word.includes('Mediävalziffern'));assert.ok(word.includes('Ziffernform und Ziffernabstand gezielt auswählen'));assert.ok(!word.includes('verschmolzenen Buchstabenpaare'));assert.ok(!word.includes('Ein Schusterjunge ist'));
   assert.ok(html.includes('Geometrische Fonts für Fließtext zu verwenden ist genauso peinlich wie ein Text voller Rechtschreibfehler.'));
   assert.ok(html.includes('Kursiv und fett sind nicht einfach ästhetische Entscheidungen.'));
 });
