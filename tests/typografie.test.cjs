@@ -62,9 +62,10 @@ test('letter forms, emphasis and font roles remain inside the characters part',(
   for(const phrase of ['einstöckige a','zweistöckige a','Für das g folgt daraus erst recht keine pauschale Rangliste.','Formprinzip allein','Nonverbal','Dateitechnik','Cardo Regular','Cardo Italic','Cardo Bold','Farbe kann zusätzliche Bedeutungen tragen'])assert.ok(html.includes(phrase),phrase);
   assert.ok(css.includes('.emphasis-comparison strong{font-weight:700}'));
   const statements=[...html.matchAll(/<aside class="author-essay author-comment[^\"]*"[\s\S]*?<\/aside>/g)].map(m=>m[0]);
-  assert.equal(statements.length,15);
+  assert.equal(statements.length,16);
   for(const statement of statements){assert.equal((statement.match(/aria-hidden="true">„<\/span>/g)||[]).length,1);assert.ok(!/Claus|Unterberg|Autorenkommentar/.test(statement));if(!statement.includes('font-choice-voice'))assert.ok(!/“|”/.test(statement));}
   const choice=statements.find(s=>s.includes('font-choice-voice'));assert.ok(choice.includes('Bloß nicht Times New Roman'));assert.equal((choice.match(/<p>/g)||[]).length,10);assert.ok(html.indexOf(choice)<html.indexOf('data-part="papier"'));assert.ok(choice.includes('„ian“'));
+  const word=statements.find(s=>s.includes('id="word-randstimme"'));assert.ok(word.includes('Bloß kein Word'));assert.equal((word.match(/<p>/g)||[]).length,7);assert.ok(html.indexOf(word)>html.indexOf('id="texatelier"'));assert.ok(html.indexOf(word)<html.indexOf('data-part="bildschirm"'));assert.match(word,/font-variant-ligatures:none/);
   assert.ok(html.includes('Geometrische Fonts für Fließtext zu verwenden ist genauso peinlich wie ein Text voller Rechtschreibfehler.'));
   assert.ok(html.includes('Kursiv und fett sind nicht einfach ästhetische Entscheidungen.'));
 });
