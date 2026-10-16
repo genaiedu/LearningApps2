@@ -23,6 +23,7 @@
       const gallery=getGallery(), unlocked=gallery.liked.length>=model.UNLOCK;
       $('gallery-progress').textContent=progressText();$('gallery-summary').textContent=progressText();
       $('gallery-count').textContent=gallery.liked.length;
+      document.querySelectorAll('[data-gallery-access]').forEach(button=>{button.disabled=false;button.title=progressText();});
       const winning=model.winningRoom(getState(),pool);
       document.querySelectorAll('[data-gallery-like]').forEach(b=>{
         const liked=gallery.liked.some(entry=>entry.id===b.dataset.galleryLike);
@@ -189,6 +190,7 @@
       else{paused=true;audio.pause();cancelAnimationFrame(raf);$('gallery-film-pause').textContent='Weiter abspielen';}
     }
     audio.addEventListener('ended',()=>{if(film&&!silent)finishFilm();});
+    document.querySelectorAll('[data-gallery-access]').forEach(button=>button.onclick=openGallery);
     $('open-gallery').onclick=openGallery;$('gallery-edit-open').onclick=()=>{$('gallery-editor').hidden=false;$('gallery-editor').scrollIntoView({block:'start'});};
     $('gallery-export').onclick=async()=>status(await saveFile());
     $('gallery-auto').onclick=()=>change(model.automatic(getGallery()),'8 Lieblingswerke ausgewählt. Du kannst sie austauschen und neu ordnen.');

@@ -240,3 +240,5 @@ dialog{color-scheme:dark;color:var(--paper);background:var(--panel);border:1px s
 .launch-intro .launch-lede{max-width:650px;margin-inline:auto;font-size:15px;line-height:1.55}
 .launch-content>.launch-ai{padding:16px 20px;margin:18px 0}.launch-ai-head{margin-bottom:10px}
 .launch-dialog .launch-forgery-note{margin-top:16px!important;font-size:13px!important}
+
+.curator-gallery-access{position:sticky;bottom:-36px;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:16px 20px;margin:24px -16px 0;background:var(--panel);border:1px solid var(--gold);border-radius:8px;box-shadow:0 -8px 20px #0003}.curator-gallery-access span{font-size:14px;color:var(--paper)}@media(max-width:600px){.curator-gallery-access{bottom:-18px;margin-inline:0;padding:12px}.curator-gallery-access button{width:100%}}
