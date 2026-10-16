@@ -1,8 +1,21 @@
 {
-  "buildCommand":"npm run build",
-  "framework":null,
-  "outputDirectory":"public",
-  "regions":["fra1"],
-  "functions":{"api/feedback.js":{"maxDuration":30,"includeFiles":"generated/**"}},
-  "git":{"deploymentEnabled":false}
+  "buildCommand": "npm run build",
+  "framework": null,
+  "outputDirectory": "public",
+  "regions": [
+    "fra1"
+  ],
+  "functions": {
+    "api/feedback.js": {
+      "maxDuration": 30,
+      "includeFiles": "generated/**"
+    },
+    "api/forgery.js": {
+      "maxDuration": 30,
+      "includeFiles": "generated/**"
+    }
+  },
+  "git": {
+    "deploymentEnabled": false
+  }
 }

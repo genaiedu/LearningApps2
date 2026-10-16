@@ -103,3 +103,37 @@ POST benötigt die freigegebene Origin und ein gültiges aufgelöstes Spiel.
 Didaktische Erklärung und lokales Ablaufmodell:
 `https://genaiedu.github.io/LearningApps2/ki-auf-webseiten.html`.
 Das Modell dieser Erklärseite stellt keine KI-Anfragen und benötigt keinen Schlüssel.
+
+## Experiment: live erzeugte Fälschungen (16.10.2026)
+
+`api/forgery.js` ergänzt denselben Dienst. Er benötigt serverseitig
+`FORGERY_ENABLED=true`, `CLOUDFLARE_ACCOUNT_ID` und `CLOUDFLARE_API_TOKEN`
+(Berechtigungen Workers AI: Read und Edit im betreffenden Konto). Keine dieser
+Zugangsdaten gehört in die Webseite. Optional verwendet er den vorhandenen
+`GROQ_API_KEY`, um aus verifizierten Werkdaten eine Motivbeschreibung zu bilden.
+FLUX.1 Schnell erzeugt daraus pro Aufruf ein neues Bild mit vier Schritten.
+Anschließend denselben separaten Dienst neu veröffentlichen. GET `/api/forgery`
+meldet nur `{ready:true/false}`, niemals Zugangsdaten. Eine Live-Erzeugung wurde
+hier ohne Cloudflare-Zugangsdaten nicht getestet.
+
+Der Browser-Schalter „Fälschungsmodus (Test)“ ist zunächst aus. Änderungen gelten
+ab dem nächsten Raum. Zwischen zwei tatsächlich erzeugten Fälschungen liegen
+mindestens neun weitere Räume; danach entscheidet pro Raum eine Zufallschance
+von 10 Prozent. Es wird höchstens eines der vier Bilder ersetzt. Die Sperre liegt
+im lokalen Browser und ist kein kontenübergreifendes Limit. Fehlschläge lassen
+alle Originale stehen und verbrauchen keinen Prüfversuch. Die bisherige
+Zuordnungsaufgabe bleibt auch für die Nachahmung erhalten. Falsche Markierungen
+von Originalen verhindern ebenfalls das Bestehen. Die Lösung zeigt Originale.
+
+Rücknahme: Browser-Schalter aus (ab dem nächsten Raum), serverseitig zusätzlich
+`FORGERY_ENABLED=false`. Damit stoppt die Generierung ohne Löschung von
+Spielständen. Vollständiger Rückbau betrifft ausschließlich den neuen Endpunkt,
+seine Funktionskonfiguration, die Fälschungsabschnitte in `kunsttresor.js`, die
+Zusatzprüfung in `kunsttresor-core.js`, den Konfigurationseintrag und Button-CSS.
+
+### Aktueller Test auf Nutzerwunsch, 16.10.2026
+
+`KunstKIConfig.forgeryEveryRoom=true`: standardmäßig eingeschaltet, genau eine
+KI-Nachahmung pro Raum statt der regulären Zehner-Sperre. Der Browser-Schalter
+kann den Test ausschalten. Bei Generierungsfehlern erscheint ausdrücklich ein
+Hinweis auf vier Originale. Zur seltenen Variante `forgeryEveryRoom=false` setzen.

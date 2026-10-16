@@ -92,6 +92,10 @@
     return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attemptLog: [], attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent,
       ...(previous?.runToken ? {runToken:previous.runToken, parentRoomToken:previous.phase === 'unlocked' ? previous.roomToken : previous.parentRoomToken || null} : {})};
   }
+  function forgeryPlan(cooldown, random = Math.random) {
+    cooldown = Number.isInteger(cooldown) && cooldown > 0 ? cooldown : 0;
+    return {cooldown:Math.max(0,cooldown-1), generate:cooldown === 0 && random() < .1};
+  }
   function choose(state, workId, field, value) {
     if (state.phase !== 'playing' || !state.ids.includes(workId) || !fields.includes(field) || (value && !state.options[field].includes(value))) return state;
     if (takenBy(state,workId,field,value)) return state;
@@ -117,13 +121,17 @@
     const byId = new Map(pool.map(work => [work.id, work]));
     const correct = state.ids.reduce((sum, id) => sum + fields.filter(field => state.choices[id][field] === byId.get(id)?.[field]).length, 0);
     const attempts = state.attempts + 1;
-    const unlocked = correct === 16;
+    const forgeryCorrect = state.ids.every(id => Boolean(state.forgeryMarks?.[id]) === (id === state.forgery?.id));
+    const unlocked = correct === 16 && forgeryCorrect;
     const review = {choices:Object.fromEntries(state.ids.map(id => [id,{...state.choices[id]}]))};
     const attemptLog = [...(state.attemptLog || []), {attempt: attempts, choices: review.choices}];
-    return {checked: true, correct, state: {...state, review, attemptLog, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === 2 ? 'lost' : 'playing'}};
+    return {checked: true, correct, forgeryCorrect, state: {...state, review, attemptLog, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === 2 ? 'lost' : 'playing'}};
   }
   function restore(saved, pool) {
     if (!saved || saved.version !== 1 || !['playing','unlocked','lost'].includes(saved.phase) || !Number.isInteger(saved.escaped) || saved.escaped < 0 || !Number.isInteger(saved.attempts) || saved.attempts < 0 || saved.attempts > 2 || !Array.isArray(saved.ids) || saved.ids.length !== 4 || !Array.isArray(saved.recent) || (saved.choices && (typeof saved.choices !== 'object' || Array.isArray(saved.choices)))) return null;
+    if (saved.forgery && (!saved.ids.includes(saved.forgery.id) || typeof saved.forgery.image !== 'string' || saved.forgery.image.length > 1800030 || !/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(saved.forgery.image))) return null;
+    if (saved.forgeryMarks && (typeof saved.forgeryMarks !== 'object' || Array.isArray(saved.forgeryMarks) || Object.entries(saved.forgeryMarks).some(([id,value]) => !saved.ids.includes(id) || typeof value !== 'boolean'))) return null;
+    if (saved.phase === 'unlocked' && saved.ids.some(id => Boolean(saved.forgeryMarks?.[id]) !== (saved.forgery?.id === id))) return null;
     const works = saved.ids.map(id => pool.find(work => work.id === id));
     if (works.some(work => !validWork(work))) return null;
     for (let i = 0; i < works.length; i++) if (!compatible(works.slice(0, i), works[i])) return null;
@@ -182,7 +190,7 @@
     if (original.phase === 'lost') { next.phase='lost'; next.attempts=2; }
     return {state:next,updated:true,newRoom:true};
   }
-  const api = {fields, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore, restoreUpdated};
+  const api = {forgeryPlan,fields, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

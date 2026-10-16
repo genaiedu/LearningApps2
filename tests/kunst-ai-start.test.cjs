@@ -6,7 +6,7 @@ function completedRoom(){
   for(const id of state.ids)for(const field of core.fields)state=core.choose(state,id,field,pool.find(work=>work.id===id)[field]);
   return core.inspect(state,pool).state;
 }
-async function setup(t,{saved={},blocked=false}={}){
+async function setup(t,{saved={},blocked=false,forgeryEveryRoom=false}={}){
   const dom=new JSDOM(fs.readFileSync(path.join(root,'kunsttresor.html'),'utf8'),{url:'https://test.invalid/LearningApps2/kunsttresor.html',runScripts:'outside-only'}),w=dom.window,q=selector=>w.document.querySelector(selector),requests=[];
   for(const [key,value] of Object.entries(saved))w.localStorage.setItem(key,value);
   w.TextEncoder=TextEncoder;w.TextDecoder=TextDecoder;
@@ -22,7 +22,7 @@ async function setup(t,{saved={},blocked=false}={}){
     requests.push({url,options});return{ok:false,status:503}; // Never contact Groq in tests.
   };
   if(blocked)Object.defineProperty(w,'localStorage',{get(){throw Error('storage blocked');}});
-  for(const file of ['scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor.js'])w.eval(fs.readFileSync(path.join(root,file),'utf8'));
+  for(const file of ['scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor.js']){ w.eval(fs.readFileSync(path.join(root,file),'utf8')); if(file==='scripts/kunsttresor-ki-config.js') w.KunstKIConfig={...w.KunstKIConfig,forgeryEveryRoom}; }
   for(let i=0;i<15;i++)await Promise.resolve();
   assert.equal(q('#launch-dialog').open,true,'archive loaded and launch is visible');
   t.after(()=>w.close());return{w,q,requests,click:id=>q('#'+id).click(),changeAI(value){q('#launch-ai-switch').checked=value;q('#launch-ai-switch').dispatchEvent(new w.Event('change',{bubbles:true}));}};
@@ -82,3 +82,5 @@ test('an off choice never sends a result, even when a completed saved room is re
   const s=await setup(t,{saved:{[AI_ENABLED]:'no','kunsttresor-game-v1':JSON.stringify(completedRoom())}});s.click('launch-skip');s.click('show-solution');for(let i=0;i<10;i++)await Promise.resolve();
   assert.equal(s.requests.length,0);assert.match(s.q('#ai-status').textContent,/ausgeschaltet/);assert.equal(s.w.document.querySelectorAll('[data-curator-work]').length,4);
 });
+
+test('every-room forgery test is on by default, attempts live generation once and reports failed generation',async t=>{const s=await setup(t,{forgeryEveryRoom:true});s.click('launch-skip');for(let i=0;i<30;i++)await Promise.resolve();assert.equal(s.requests.filter(r=>r.url.endsWith('/api/forgery')).length,1);assert.equal(s.w.document.querySelectorAll('.forgery-flag').length,4);assert.match(s.q('#feedback').textContent,/vier Originale/);assert.ok(s.q('#start-here'));});

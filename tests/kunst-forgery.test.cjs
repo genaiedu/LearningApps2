@@ -1,0 +1,19 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const core=require('../scripts/kunsttresor-core.js');
+const pool=require('../data/kunstarchiv.json').works;
+function solved(){let state=core.newState(pool);for(const id of state.ids)for(const field of core.fields)state=core.choose(state,id,field,pool.find(w=>w.id===id)[field]);return state;}
+test('a forgery must be marked before a correctly assigned room unlocks',()=>{
+ let state=solved();state.forgery={id:state.ids[1],image:'data:image/jpeg;base64,/9j/'};
+ let result=core.inspect(state,pool);assert.equal(result.correct,16);assert.equal(result.forgeryCorrect,false);assert.equal(result.state.phase,'playing');
+ state={...result.state,forgeryMarks:{[state.ids[1]]:true}};result=core.inspect(state,pool);assert.equal(result.state.phase,'unlocked');assert.equal(core.restore(result.state,pool).phase,'unlocked');
+});
+test('marking originals fails even when all assignments are correct',()=>{let state=solved();state.forgeryMarks={[state.ids[0]]:true};assert.equal(core.inspect(state,pool).state.phase,'playing');});
+test('legacy and all-original rooms still unlock normally',()=>assert.equal(core.inspect(solved(),pool).state.phase,'unlocked'));
+test('tampered forgery saves are rejected',()=>{let state=solved();state.forgery={id:'missing',image:'https://example.org/image'};assert.equal(core.restore(state,pool),null);});
+const {createHandler}=require('../services/kunst-kurator/api/forgery.js');
+function response(){return {headers:{},setHeader(k,v){this.headers[k]=v},status(s){this.code=s;return this},json(v){this.body=v;return this},end(){}};}
+test('unconfigured service fails closed without calling a provider',async()=>{const res=response();await createHandler({env:{},fetcher:()=>{throw Error('must not call')}})({method:'POST',headers:{origin:'https://genaiedu.github.io'}},res);assert.equal(res.code,503);});
+test('server uses only verified work metadata and returns Cloudflare image',async()=>{let calls=[];const res=response();await createHandler({env:{FORGERY_ENABLED:'true',CLOUDFLARE_ACCOUNT_ID:'account',CLOUDFLARE_API_TOKEN:'secret'},works:pool,fetcher:async(url,options)=>{calls.push({url,body:JSON.parse(options.body)});return {ok:true,json:async()=>({result:{image:'/9j/'}})}}})({method:'POST',headers:{origin:'https://genaiedu.github.io','content-type':'application/json'},body:{id:pool[0].id}},res);assert.equal(res.code,200);assert.equal(calls[0].body.steps,4);assert.equal(res.body.image,'data:image/jpeg;base64,/9j/');});
+
+test('even constant winning randomness cannot insert more than one forgery in any ten consecutive rooms',()=>{let cooldown=0,rooms=[];for(let i=0;i<1000;i++){const plan=core.forgeryPlan(cooldown,()=>0);rooms.push(plan.generate);cooldown=plan.generate?9:plan.cooldown;}for(let i=0;i<991;i++)assert.ok(rooms.slice(i,i+10).filter(Boolean).length<=1);assert.equal(rooms.filter(Boolean).length,100);});
+test('randomness can produce entirely original rooms even after the cooldown expires',()=>assert.equal(core.forgeryPlan(0,()=>.8).generate,false));

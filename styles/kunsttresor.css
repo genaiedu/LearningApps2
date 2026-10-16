@@ -219,3 +219,6 @@ dialog{color-scheme:dark;color:var(--paper);background:var(--panel);border:1px s
 @media(max-width:420px){.gallery-grid{grid-template-columns:1fr}.gallery-image{height:250px}}
 @media(max-height:500px){.gallery-film-copy{bottom:23vh}.gallery-film-copy h2{font-size:clamp(25px,5vh,42px)}.gallery-film-copy>p:first-child{margin-bottom:10px}.gallery-film-copy #gallery-film-motto{font-size:32px;margin-top:12px}.gallery-film-dialog.is-opening .gallery-film-copy,.gallery-film-dialog.is-ending .gallery-film-copy{inset:75px 5vw 65px}.gallery-film-dialog.is-full .gallery-film-slide{inset:65px 15px 95px}.gallery-film-caption{font-size:10px;bottom:46px;padding:5px}.gallery-film-loading{gap:12px;padding:70px 20px}.gallery-film-loading h2{font-size:32px}.gallery-film-loading .intro-hourglass{display:none}}
 @media(max-width:700px){.gallery-film-copy.has-long-motto #gallery-film-motto{font-size:24px}.gallery-film-dialog:is(.is-opening,.is-ending) .gallery-film-copy.has-long-title h2{font-size:28px}}
+
+.forgery-flag {margin: .6rem 0;}
+.forgery-flag[aria-pressed="true"] {background:#71384b;color:#fff;outline:3px solid #dba7b7;}

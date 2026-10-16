@@ -54,7 +54,53 @@
     introAudio.play().then(()=>{ if(epoch!==introAudioEpoch)return; $('intro-sound').textContent='♫ Musik ausschalten'; $('intro-sound').setAttribute('aria-pressed','true'); })
       .catch(()=>{ if(epoch!==introAudioEpoch)return; $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); });
   }
+  const forgeryEndpoint = window.KunstKIConfig?.forgeryEndpoint || '';
+  let forgeryCooldown = Math.max(0,Number(store.get('kunsttresor-forgery-cooldown-v1')) || 0);
+  const forgeryEveryRoom = window.KunstKIConfig?.forgeryEveryRoom === true;
+  const forgeryKey = forgeryEveryRoom ? 'kunsttresor-forgery-every-room-enabled-v1' : 'kunsttresor-forgery-enabled-v1';
+  let forgeryEnabled = store.get(forgeryKey) === 'yes' || (forgeryEveryRoom && store.get(forgeryKey) !== 'no'), forgeryBusy = false;
+  const forgerySwitch = document.createElement('button');
+  forgerySwitch.type = 'button';
+  function refreshForgerySwitch() {
+    forgerySwitch.textContent = (forgeryEveryRoom ? 'Test · eine Fälschung pro Raum: ' : 'Fälschungsmodus (Test): ') + (forgeryEnabled ? 'Ein' : 'Aus');
+    forgerySwitch.setAttribute('aria-pressed', String(forgeryEnabled));
+  }
+  refreshForgerySwitch();
+  $('restart-top').before(forgerySwitch);
+  forgerySwitch.onclick = () => {
+    forgeryEnabled = !forgeryEnabled; store.set(forgeryKey, forgeryEnabled ? 'yes' : 'no');
+    refreshForgerySwitch();
+    // A setting change takes effect at the next room; never swap an examined image.
+    alert(forgeryEnabled ? 'Ab dem nächsten Raum: Gelegentlich entsteht bei Cloudflare eine KI-Nachahmung. Dafür werden Werkbeschreibungen und technische Verbindungsdaten übertragen. Markiere Fälschungen, aber keine Originale. Im aktuellen Test wird in jedem Rätsel genau eines der vier Bilder neu erzeugt. Alle bisherigen Zuordnungen bleiben nötig.' : 'Ab dem nächsten Raum spielst du wieder ohne Fälschungen.');
+  };
+  async function prepareForgery() {
+    if (!state || state.forgeryPrepared) return;
+    state.forgeryPrepared = true;
+    state.forgeryMode = forgeryEnabled;
+    state.forgeryEveryRoom = forgeryEveryRoom;
+    const plan = core.forgeryPlan(forgeryCooldown);
+    forgeryCooldown = plan.cooldown;
+    store.set('kunsttresor-forgery-cooldown-v1',String(forgeryCooldown));
+    if (!forgeryEnabled || !forgeryEndpoint || state.attempts || state.phase !== 'playing' || (!forgeryEveryRoom && !plan.generate)) { save(); return; }
+    const candidates = state.ids.map(workById).filter(work => core.isIntroImage(work));
+    if (!candidates.length) { save(); return; }
+    const selected = candidates[Math.floor(Math.random()*candidates.length)], current = state;
+    forgeryBusy = true;
+    try {
+      const response = await fetch(forgeryEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:selected.id}),signal:AbortSignal.timeout(25000)});
+      if (!response.ok) throw Error('generation');
+      const value = await response.json();
+      if (!/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(value.image || '') || value.image.length > 1800000) throw Error('image');
+      // Load before committing: a failed generation never becomes a hidden answer.
+      await new Promise((resolve,reject) => { const image = new Image(); image.onload=resolve; image.onerror=reject; image.src=value.image; });
+      if (state !== current) return;
+      state.forgery = {id:selected.id,image:value.image};
+      forgeryCooldown = 9; store.set('kunsttresor-forgery-cooldown-v1','9');
+    } catch { if(state === current) state.forgeryError = true; }
+    finally { forgeryBusy = false; if(state === current) { save(); render(); } }
+  }
   const imageURL = work => work.imageURL;
+  const gameImageURL = work => state?.forgery?.id === work.id ? state.forgery.image : imageURL(work);
   const workById = id => pool.find(work => work.id === id);
   const number = value => String(value).padStart(2, '0');
   function node(tag, className, text) {
@@ -475,7 +521,7 @@
     // A timeout is feedback, not a permanent veto: a later successful onload recovers.
     const timer = setTimeout(() => finish(false,true), 30000); imageTimers.add(timer);
     img.onload = () => finish(img.naturalWidth > 0); img.onerror = () => finish(false);
-    button.append(img); img.src = imageURL(work);
+    button.append(img); img.src = gameImageURL(work);
   }
   function render() {
     stopImages(); heroImages();
@@ -484,6 +530,8 @@
       $('waiting').hidden = false; $('art-grid').hidden = true; $('lock-panel').hidden = true;
       $('start-here').textContent = 'Galerie betreten →'; update(); return;
     }
+    if (forgeryEveryRoom && forgeryEnabled && !state.forgeryEveryRoom && !state.forgery && state.attempts === 0 && state.phase === 'playing') state.forgeryPrepared = false;
+    if (!state.forgeryPrepared) { void prepareForgery(); if (forgeryBusy) { $('waiting').hidden=false; $('waiting').querySelector('p').textContent='Der nächste Raum wird vorbereitet …'; $('art-grid').hidden=true; $('lock-panel').hidden=true; return; } }
     const epoch = imageEpoch;
     $('waiting').hidden = true; $('art-grid').hidden = false; $('lock-panel').hidden = false;
     state.ids.forEach((id,index) => {
@@ -513,10 +561,16 @@
         select.setAttribute('aria-describedby',result.id);
         label.append(select,result); assignments.append(label);
       }
-      card.append(heading,picture,galleryUI.likeButton(id),assignments); $('art-grid').append(card); loadWorkImage(work,picture,epoch);
+      const flag = node('button','forgery-flag', 'Fälschung'); flag.type='button';
+      flag.setAttribute('aria-pressed',String(Boolean(state.forgeryMarks?.[id])));
+      flag.disabled = state.phase !== 'playing';
+      flag.onclick = () => { state.forgeryMarks ||= {}; state.forgeryMarks[id] = !state.forgeryMarks[id]; flag.setAttribute('aria-pressed',String(state.forgeryMarks[id])); save(); };
+      flag.hidden = !state.forgeryMode && !state.forgery;
+      card.append(heading,picture,flag,galleryUI.likeButton(id),assignments); $('art-grid').append(card); loadWorkImage(work,picture,epoch);
     });
     $('lock-title').textContent = state.phase === 'unlocked' ? 'Der Schlüssel passt.' : state.phase === 'lost' ? 'Das Schloss bleibt zu.' : 'Das Schloss wartet auf deinen Schlüssel.';
     $('feedback').textContent = state.phase === 'unlocked' ? 'Alle 16 Zuordnungen stimmen. Erfahre mehr über die Werke – oder gehe in den nächsten Raum.' : state.phase === 'lost' ? 'Auch der zweite Versuch war nicht vollständig richtig. Die Runde ist beendet. Du kannst jetzt alle Zuordnungen nachlesen.' : state.attempts === 1 ? 'Der erste Prüfversuch war nicht vollständig richtig. Du hast noch genau einen Versuch. Prüfe deine Zuordnungen sorgfältig.' : 'Ordne erst alle 16 Antworten zu. Die Auswahl allein zählt noch nicht als Versuch.';
+    if (state.forgeryError && state.forgeryMode) $('feedback').textContent = 'Die KI-Bilderzeugung ist ausgefallen. Dieser Raum enthält vier Originale und zählt nicht als Fälschungstest.';
     update();
   }
   function nextRoom() {
@@ -529,10 +583,11 @@
     const checked = core.inspect(state,pool);
     if (!checked.checked) return;
     state = checked.state;
+    document.querySelectorAll('.forgery-flag').forEach(button => { button.disabled = state.phase !== 'playing'; });
     const earned = awardProgress(); save(); update();
     if (state.phase === 'playing') {
       $('lock-visual').classList.remove('shake'); void $('lock-visual').offsetWidth; $('lock-visual').classList.add('shake');
-      $('feedback').textContent = checked.correct + ' von 16 Zuordnungen passen. Das Schloss bleibt zu. Du hast noch genau einen Prüfversuch.';
+      $('feedback').textContent = checked.correct + ' von 16 Zuordnungen passen. ' + (checked.forgeryCorrect ? '' : 'Die Fälschungsmarkierung stimmt noch nicht. ') + ' Das Schloss bleibt zu. Du hast noch genau einen Prüfversuch.';
       $('review-summary').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'start'});
     } else {
       $('lock-title').textContent = state.phase === 'unlocked' ? 'Der Schlüssel passt.' : 'Das Schloss bleibt zu.';
@@ -540,6 +595,7 @@
       $('result-kicker').textContent = state.phase === 'unlocked' ? 'Raum gelöst · Das Schloss öffnet sich' : 'Zwei Versuche · Spiel beendet';
       $('result-title').textContent = state.phase === 'unlocked' ? 'Eine Tür weiter.' : 'Bis hierher. Und beim nächsten Mal?';
       $('result-text').textContent = state.phase === 'unlocked' ? 'Vier Werke, 16 richtige Spuren. Geh noch einmal mit dem Kurator zu den Bildern: Welche Beobachtungen stützen deine Lösung? Oder wagst du den nächsten Raum?' : checked.correct + ' von 16 Zuordnungen waren im letzten Versuch richtig. Der Kurator begleitet dich noch einmal zu den Bildern – mit Hinweisen, die dir beim nächsten Rundgang helfen können.';
+      $('result-text').textContent += state.forgery ? ' KI-Nachahmung: Werk ' + 'ABCD'[state.ids.indexOf(state.forgery.id)] + '. In der Auflösung siehst du das Original.' : ' In diesem Raum waren alle Bilder Originale.';
       $('result-number').textContent = number(state.escaped);
       $('result-badges').hidden = !earned.length;
       $('result-badges').textContent = earned.length ? 'Neu in deiner Sammlung: ' + earned.map(badge=>badge.title).join(' · ') : '';
@@ -555,10 +611,10 @@
     $('image-title').textContent = 'Vergrößerte Kunstansicht';
     $('zoom-image').alt = 'Vergrößerte Ansicht: ' + core.galleryTitle(work);
     $('zoom-image').onload = () => imageViewer.layout();
-    $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = imageURL(work);
+    $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = gameImageURL(work);
     open('image-dialog'); imageViewer.reset();
-    const large = work.imageLargeURL || imageURL(work);
-    if (large !== imageURL(work)) {
+    const large = state?.forgery?.id === work.id ? gameImageURL(work) : work.imageLargeURL || imageURL(work);
+    if (large !== gameImageURL(work)) {
       zoomLoad = new Image(); zoomLoad.referrerPolicy = 'no-referrer';
       zoomLoad.onload = () => { if (epoch === zoomEpoch && $('image-dialog').open && imagesAllowed) $('zoom-image').src = large; };
       zoomLoad.src = large;
@@ -677,7 +733,7 @@
       if (imagesAllowed) {
         const imageButton = node('button','solution-image'); imageButton.type = 'button';
         imageButton.setAttribute('aria-label','Werk ' + 'ABCD'[index] + ' in der Lösung vergrößern');
-        const img = node('img'); img.alt = core.galleryTitle(work); img.referrerPolicy = 'no-referrer'; img.src = imageURL(work);
+        const img = node('img'); img.alt = core.galleryTitle(work); img.referrerPolicy = 'no-referrer'; img.src = work.imageURL;
         imageButton.append(img,node('span',null,'⤢ Bild vergrößern'));
         imageButton.onclick = () => showImage(work,'ABCD'[index]); overview.append(imageButton);
       }
