@@ -98,3 +98,15 @@ test('forged works receive factual original notes and a marking result, never pe
 test('loading a new room resets both the fullscreen scroll position and the page position immediately',async t=>{const saved=completedRoom(),s=await setup(t,{saved:{'kunsttresor-game-v1':JSON.stringify(saved)}}),calls=[];s.q('#spiel').scrollIntoView=options=>calls.push(options);s.click('launch-skip');s.q('#spiel').scrollTop=900;s.click('next-room');assert.equal(s.q('#spiel').scrollTop,0);assert.ok(calls.length>0);assert.ok(calls.every(call=>call.behavior==='instant'&&call.block==='start'));assert.equal(s.q('#room-loading').hidden,false);});
 
 test('private gallery and film remain reachable from both the game and the automatic curator',async t=>{const saved=completedRoom(),s=await setup(t,{saved:{'kunsttresor-game-v1':JSON.stringify(saved)}});s.click('launch-skip');assert.equal(s.q('#game-gallery').disabled,false);s.click('game-gallery');assert.equal(s.q('#gallery-dialog').open,true);s.q('#gallery-dialog').close();s.click('show-solution');for(const id of ['solution-gallery','solution-gallery-bottom']){assert.equal(s.q('#'+id).disabled,false);s.click(id);assert.equal(s.q('#gallery-dialog').open,true);assert.ok(s.q('#gallery-play'));assert.ok(s.q('#gallery-edit-open'));s.q('#gallery-dialog').close();assert.equal(s.q('#solution-dialog').open,true);}});
+
+test('winning starts the next forgery during curator reading and advancing reuses the in-flight room',async t=>{
+ const saved=completedRoom();saved.phase='playing';saved.attempts=0;saved.escaped=0;saved.attemptLog=[];delete saved.review;saved.forgeryPrepared=true;saved.forgeryEveryRoom=true;
+ const s=await setup(t,{forgeryEveryRoom:true,saved:{'kunsttresor-game-v1':JSON.stringify(saved)}});s.changeAI(false);s.click('launch-skip');
+ s.w.Date.now=()=>Date.now()+11000;
+ for(const image of s.q('#art-grid').querySelectorAll('img')){Object.defineProperty(image,'naturalWidth',{value:960,configurable:true});image.onload();}
+ let finish;const calls=[];s.w.fetch=(url,options)=>{calls.push({url,options});return new Promise(resolve=>{finish=resolve;});};
+ s.click('check');assert.equal(s.q('#solution-dialog').open,true);assert.equal(calls.length,1);assert.match(calls[0].url,/forgery$/);
+ const selected=JSON.parse(calls[0].options.body).id;
+ s.click('solution-next');assert.equal(calls.length,1);assert.ok(JSON.parse(s.w.localStorage.getItem('kunsttresor-game-v1')).ids.includes(selected));assert.equal(s.q('#art-grid').style.visibility,'hidden');
+ finish({ok:false});for(let i=0;i<20;i++)await Promise.resolve();assert.equal(calls.length,1);assert.match(s.q('#feedback').textContent,/vier Originale/);
+});

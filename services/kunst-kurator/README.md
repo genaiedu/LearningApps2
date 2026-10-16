@@ -109,17 +109,17 @@ Das Modell dieser Erklärseite stellt keine KI-Anfragen und benötigt keinen Sch
 `api/forgery.js` ergänzt denselben Dienst. Er benötigt serverseitig
 `FORGERY_ENABLED=true`, `CLOUDFLARE_ACCOUNT_ID` und `CLOUDFLARE_API_TOKEN`
 (Berechtigungen Workers AI: Read und Edit im betreffenden Konto). Keine dieser
-Zugangsdaten gehört in die Webseite. Optional verwendet er den vorhandenen
+Zugangsdaten gehört in die Webseite. Er benötigt außerdem den vorhandenen
 `GROQ_API_KEY`, um aus verifizierten Werkdaten eine Motivbeschreibung zu bilden.
-FLUX.1 Schnell erzeugt daraus pro Aufruf ein neues Bild mit vier Schritten.
+FLUX.2 Klein 4B erzeugt daraus per Multipart-Anfrage ein neues Bild (1024 × 1024, feste vier Schritte).
 Anschließend denselben separaten Dienst neu veröffentlichen. GET `/api/forgery`
 meldet nur `{ready:true/false}`, niemals Zugangsdaten. Eine Live-Erzeugung wurde
 hier ohne Cloudflare-Zugangsdaten nicht getestet.
 
-Der Browser-Schalter „Fälschungsmodus (Test)“ ist zunächst aus. Änderungen gelten
+Der Browser-Schalter „Seltene Fälschungen“ ist standardmäßig an. Änderungen gelten
 ab dem nächsten Raum. Zwischen zwei tatsächlich erzeugten Fälschungen liegen
-mindestens neun weitere Räume; danach entscheidet pro Raum eine Zufallschance
-von 10 Prozent. Es wird höchstens eines der vier Bilder ersetzt. Die Sperre liegt
+mindestens 19 weitere Räume; danach entscheidet pro Raum eine Zufallschance
+von fünf Prozent. Es wird höchstens eines der vier Bilder ersetzt. Die Sperre liegt
 im lokalen Browser und ist kein kontenübergreifendes Limit. Fehlschläge lassen
 alle Originale stehen und verbrauchen keinen Prüfversuch. Die bisherige
 Zuordnungsaufgabe bleibt auch für die Nachahmung erhalten. Falsche Markierungen
@@ -171,3 +171,5 @@ zum Original. Ältere Spielstände ohne Markierungsprotokoll bleiben unbekannt.
 Die Text-KI erhält nur Werk-ID und Markierungsstatus, niemals Bild oder Prompt;
 ihr Kontext kennzeichnet die Nachahmung und entfernt für dieses Werk frühere
 Leistungsvergleiche. Der feste Markierungskommentar wird nicht durch KI ersetzt.
+
+Nach einem gewonnenen Raum wird der nächste Raum einmalig geplant. Eine vorgesehene Fälschung wird bereits während der Kuratoransicht im Arbeitsspeicher erzeugt und beim Weitergehen übernommen. Ein Neustart oder Moduswechsel verwirft diese Vorbereitung. Die gemeinsame Bildenthüllung nach mindestens zehn Sekunden bleibt bestehen.

@@ -59,7 +59,9 @@
   let forgeryCooldown = Math.max(0,store.get('kunsttresor-forgery-cooldown-v2') === null ? 19 : Number(store.get('kunsttresor-forgery-cooldown-v2')) || 0);
   const forgeryEveryRoom = window.KunstKIConfig?.forgeryEveryRoom === true;
   const forgeryKey = forgeryEveryRoom ? 'kunsttresor-forgery-every-room-enabled-v1' : 'kunsttresor-forgery-rare-enabled-v2';
-  let forgeryEnabled = store.get(forgeryKey) === 'yes' || (store.get(forgeryKey) !== 'no' && (forgeryEveryRoom || store.get('kunsttresor-forgery-every-room-enabled-v1') !== 'no')), forgeryBusy = false;
+  let forgeryEnabled = store.get(forgeryKey) === 'yes' || (store.get(forgeryKey) !== 'no' && (forgeryEveryRoom || store.get('kunsttresor-forgery-every-room-enabled-v1') !== 'no'));
+  const forgeryLoading = new WeakSet();
+  let upcomingRoom = null;
   const forgerySwitch = document.createElement('button');
   forgerySwitch.type = 'button';
   function refreshForgerySwitch() {
@@ -71,22 +73,23 @@
   forgerySwitch.onclick = () => {
     forgeryEnabled = !forgeryEnabled; store.set(forgeryKey, forgeryEnabled ? 'yes' : 'no');
     refreshForgerySwitch();
+    upcomingRoom = null;
     // A setting change takes effect at the next room; never swap an examined image.
     alert(forgeryEnabled ? 'Ab dem nächsten Raum: Gelegentlich entsteht bei Cloudflare eine KI-Nachahmung. Dafür werden Werkbeschreibungen und technische Verbindungsdaten übertragen. Markiere Fälschungen, aber keine Originale. Höchstens fünf Prozent der Rätsel enthalten eine Nachahmung, jeweils nur ein Bild. Dazwischen liegen mindestens 19 Rätsel mit Originalen. Alle bisherigen Zuordnungen bleiben nötig.' : 'Ab dem nächsten Raum spielst du wieder ohne Fälschungen.');
   };
-  async function prepareForgery() {
-    if (!state || state.forgeryPrepared) return;
-    state.forgeryPrepared = true;
-    state.forgeryMode = forgeryEnabled;
-    state.forgeryEveryRoom = forgeryEveryRoom;
+  async function prepareForgery(target = state) {
+    if (!target || target.forgeryPrepared) return;
+    target.forgeryPrepared = true;
+    target.forgeryMode = forgeryEnabled;
+    target.forgeryEveryRoom = forgeryEveryRoom;
     const plan = core.forgeryPlan(forgeryCooldown);
     forgeryCooldown = plan.cooldown;
     store.set('kunsttresor-forgery-cooldown-v2',String(forgeryCooldown));
-    if (!forgeryEnabled || !forgeryEndpoint || state.attempts || state.phase !== 'playing' || (!forgeryEveryRoom && !plan.generate)) { save(); return; }
-    const candidates = state.ids.map(workById).filter(work => core.isIntroImage(work));
+    if (!forgeryEnabled || !forgeryEndpoint || target.attempts || target.phase !== 'playing' || (!forgeryEveryRoom && !plan.generate)) { save(); return; }
+    const candidates = target.ids.map(workById).filter(work => core.isIntroImage(work));
     if (!candidates.length) { save(); return; }
-    const selected = candidates[Math.floor(Math.random()*candidates.length)], current = state;
-    forgeryBusy = true;
+    const selected = candidates[Math.floor(Math.random()*candidates.length)];
+    forgeryLoading.add(target);
     try {
       const response = await fetch(forgeryEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:selected.id}),signal:AbortSignal.timeout(40000)});
       if (!response.ok) throw Error('generation');
@@ -97,11 +100,11 @@
       // Detailed brushwork can make the upstream JPEG unusually large. Keep a high-quality, full-resolution room copy.
       if(value.image.length>1700000) { const canvas=document.createElement('canvas'); canvas.width=generatedImage.naturalWidth; canvas.height=generatedImage.naturalHeight; canvas.getContext('2d').drawImage(generatedImage,0,0); value.image=canvas.toDataURL('image/jpeg',.94); }
       if(value.image.length>1800000) throw Error('Image too large for the room save');
-      if (state !== current) return;
-      state.forgery = {id:selected.id,image:value.image,prompt:typeof value.prompt === 'string' ? value.prompt.slice(0,1800) : ''};
+      if (target !== state && target !== upcomingRoom) return;
+      target.forgery = {id:selected.id,image:value.image,model:value.model || 'FLUX.2 Klein 4B',prompt:typeof value.prompt === 'string' ? value.prompt.slice(0,1800) : ''};
       forgeryCooldown = 19; store.set('kunsttresor-forgery-cooldown-v2','19');
-    } catch { if(state === current) state.forgeryError = true; }
-    finally { forgeryBusy = false; if(state === current) { save(); render(); } }
+    } catch { if(target === state || target === upcomingRoom) target.forgeryError = true; }
+    finally { forgeryLoading.delete(target); if(target === state) { save(); render(); } }
   }
   const imageURL = work => work.imageURL;
   const gameImageURL = work => state?.forgery?.id === work.id ? state.forgery.image : imageURL(work);
@@ -438,6 +441,7 @@
     save(); render(); toGame(); void enterFullscreen();
   }
   function newRound() {
+    upcomingRoom = null;
     clearForgeryPresentation();
     $('archive-update').hidden = true;
     const previous = state;
@@ -450,7 +454,7 @@
     galleryUI?.refresh();
     const timeReady = Date.now() >= revealAt;
     if (!timeReady && imagesAllowed && state && !revealTimer) revealTimer = setTimeout(() => { revealTimer = null; update(); }, Math.max(1,revealAt-Date.now()));
-    const allPicturesReady = imagesAllowed && ready.size === 4 && failed.size === 0 && !forgeryBusy && timeReady;
+    const allPicturesReady = imagesAllowed && ready.size === 4 && failed.size === 0 && !forgeryLoading.has(state) && timeReady;
     $('art-grid').style.visibility = allPicturesReady ? 'visible' : 'hidden';
     $('art-grid').inert = !allPicturesReady;
     $('art-grid').setAttribute('aria-busy',String(!allPicturesReady));
@@ -550,7 +554,7 @@
       $('start-here').textContent = 'Galerie betreten →'; update(); return;
     }
     if (forgeryEveryRoom && forgeryEnabled && !state.forgeryEveryRoom && !state.forgery && state.attempts === 0 && state.phase === 'playing') state.forgeryPrepared = false;
-    if (!state.forgeryPrepared) { void prepareForgery(); if (forgeryBusy) { $('waiting').hidden=false; $('waiting').querySelector('p').textContent='Der nächste Raum wird vorbereitet …'; $('art-grid').hidden=true; $('lock-panel').hidden=true; return; } }
+    if (!state.forgeryPrepared) { void prepareForgery(); if (forgeryLoading.has(state)) { $('waiting').hidden=false; $('waiting').querySelector('p').textContent='Der nächste Raum wird vorbereitet …'; $('art-grid').hidden=true; $('lock-panel').hidden=true; return; } }
     const epoch = imageEpoch;
     $('waiting').hidden = true; $('art-grid').hidden = false; $('lock-panel').hidden = false;
     state.ids.forEach((id,index) => {
@@ -601,7 +605,7 @@
     if (state?.phase !== 'unlocked') return;
     close('result-dialog'); close('solution-dialog'); close('art-glossary-dialog');
     clearForgeryPresentation();
-    state = core.newState(pool,state); save(); render(); toGame();
+    state = upcomingRoom || core.newState(pool,state); upcomingRoom = null; save(); render(); toGame();
   }
   function inspect() {
     if (ready.size !== 4 || failed.size || !imagesAllowed) return;
@@ -626,7 +630,11 @@
       $('result-badges').textContent = earned.length ? 'Neu in deiner Sammlung: ' + earned.map(badge=>badge.title).join(' · ') : '';
       $('result-action').textContent = state.phase === 'unlocked' ? 'Nächster Raum →' : 'Neue Runde beginnen ↻';
       $('result-solution').textContent = 'Mit dem Kurator noch einmal hinsehen';
-      if(state.phase === 'unlocked') solutions(); else open('result-dialog');
+      if(state.phase === 'unlocked') {
+        upcomingRoom = core.newState(pool,state);
+        void prepareForgery(upcomingRoom);
+        solutions();
+      } else open('result-dialog');
     }
   }
   function showImage(work,letter,original = false) {
@@ -779,7 +787,7 @@
         const comparison=node('section','forgery-comparison');
         comparison.append(node('h3',null,'Kuratorenvergleich: Original und KI-Fälschung'));
         const pair=node('div','forgery-comparison-pair');
-        for(const [caption,url,original] of [['Original · '+work.artist,work.imageURL,true],['KI-Fälschung · FLUX.1 Schnell',state.forgery.image,false]]) {
+        for(const [caption,url,original] of [['Original · '+work.artist,work.imageURL,true],['KI-Fälschung · '+(state.forgery.model || 'FLUX.1 Schnell'),state.forgery.image,false]]) {
           const figure=node('figure'),button=node('button','solution-image'),img=node('img');
           button.type='button'; button.setAttribute('aria-label',caption+' vergrößern');
           img.alt=caption+': '+core.galleryTitle(work); img.referrerPolicy='no-referrer'; img.src=url;
