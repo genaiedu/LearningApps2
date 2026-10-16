@@ -76,4 +76,6 @@ test('isolated instrument retains the original renderer and does not mount dupli
   assert.ok(css.includes('.show-mo .mo-hit{fill:transparent;stroke:transparent}'));
   assert.ok(css.includes('.show-mo .mo-line{stroke:currentColor;stroke-width:4}'));
   assert.ok(css.includes('prefers-reduced-motion:reduce'));
+  assert.match(css,/\.show-equation math\{[^}]*display:math/);
+  assert.doesNotMatch(css,/\.show-equation math\{[^}]*display:block/);
 });
