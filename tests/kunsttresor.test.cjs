@@ -402,7 +402,7 @@ test('a successful image load after the warning recovers, but stale rooms do not
   const madonna=pool.find(w=>w.title==='Nursing Madonna');
   assert.match(madonna.imageURL,/\/960px-/);
   assert.notEqual(madonna.imageURL,madonna.imageLargeURL);
-  assert.ok(js.includes("$('zoom-image').src = gameImageURL(work)"));
+  assert.ok(js.includes("$('zoom-image').src = original ? imageURL(work) : gameImageURL(work)"));
   assert.ok(js.includes("epoch === zoomEpoch && $('image-dialog').open && imagesAllowed"));
 });
 test('recent artworks are avoided when the fresh pool permits a room', () => {
@@ -485,7 +485,7 @@ test('personal highscore persists through a loss and automatic new round', () =>
     progress:require('../scripts/kunsttresor-progress.js'),playerProgress:{version:1,record:5,events:[]},
     history:require('../scripts/kunsttresor-history.js'),workHistory:{version:1,since:Date.now(),rooms:[]},historyBlocked:false,
     keys:{game:'game',best:'best',progress:'progress'},store:{set:(key,value)=>values.set(key,value)},
-    $:()=>({hidden:false}),render:()=>{},toGame:()=>{}};
+    $:()=>({hidden:false}),clearForgeryPresentation:()=>{},render:()=>{},toGame:()=>{}};
   context.state.escaped=3;
   vm.createContext(context);
   vm.runInContext(js.slice(js.indexOf('function save()'),js.indexOf('function open('))+js.slice(js.indexOf('function newRound()'),js.indexOf('function update()')),context);

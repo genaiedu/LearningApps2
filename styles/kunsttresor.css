@@ -222,3 +222,5 @@ dialog{color-scheme:dark;color:var(--paper);background:var(--panel);border:1px s
 
 .forgery-flag {margin: .6rem 0;}
 .forgery-flag[aria-pressed="true"] {background:#71384b;color:#fff;outline:3px solid #dba7b7;}
+
+.forgery-comparison{grid-column:1/-1;padding:1.5rem;border:1px solid currentColor;border-radius:1rem}.forgery-comparison-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.forgery-comparison figure{margin:0;min-width:0}.forgery-comparison img{width:100%;height:22rem;object-fit:contain}.forgery-comparison figcaption{padding:.6rem 0;font-weight:700}@media(max-width:600px){.forgery-comparison img{height:12rem}}

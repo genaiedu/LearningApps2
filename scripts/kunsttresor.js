@@ -88,14 +88,17 @@
     const selected = candidates[Math.floor(Math.random()*candidates.length)], current = state;
     forgeryBusy = true;
     try {
-      const response = await fetch(forgeryEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:selected.id}),signal:AbortSignal.timeout(25000)});
+      const response = await fetch(forgeryEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:selected.id}),signal:AbortSignal.timeout(40000)});
       if (!response.ok) throw Error('generation');
       const value = await response.json();
-      if (!/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(value.image || '') || value.image.length > 1800000) throw Error('image');
+      if (!/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(value.image || '') || value.image.length > 3800030) throw Error('image');
       // Load before committing: a failed generation never becomes a hidden answer.
-      await new Promise((resolve,reject) => { const image = new Image(); image.onload=resolve; image.onerror=reject; image.src=value.image; });
+      const generatedImage = await new Promise((resolve,reject) => { const image = new Image(); image.onload=()=>resolve(image); image.onerror=reject; image.src=value.image; });
+      // Detailed brushwork can make the upstream JPEG unusually large. Keep a high-quality, full-resolution room copy.
+      if(value.image.length>1700000) { const canvas=document.createElement('canvas'); canvas.width=generatedImage.naturalWidth; canvas.height=generatedImage.naturalHeight; canvas.getContext('2d').drawImage(generatedImage,0,0); value.image=canvas.toDataURL('image/jpeg',.94); }
+      if(value.image.length>1800000) throw Error('Image too large for the room save');
       if (state !== current) return;
-      state.forgery = {id:selected.id,image:value.image};
+      state.forgery = {id:selected.id,image:value.image,prompt:typeof value.prompt === 'string' ? value.prompt.slice(0,1800) : ''};
       forgeryCooldown = 9; store.set('kunsttresor-forgery-cooldown-v1','9');
     } catch { if(state === current) state.forgeryError = true; }
     finally { forgeryBusy = false; if(state === current) { save(); render(); } }
@@ -435,6 +438,7 @@
     save(); render(); toGame(); void enterFullscreen();
   }
   function newRound() {
+    clearForgeryPresentation();
     $('archive-update').hidden = true;
     const previous = state;
     state = core.newState(pool, previous);
@@ -587,9 +591,14 @@
     if (state.forgeryError && state.forgeryMode) $('feedback').textContent = 'Die KI-Bilderzeugung ist ausgefallen. Dieser Raum enthält vier Originale und zählt nicht als Fälschungstest.';
     update();
   }
+  function clearForgeryPresentation() {
+    $('solutions').replaceChildren();
+    cancelZoomLoad(); $('zoom-image').removeAttribute('src');
+  }
   function nextRoom() {
     if (state?.phase !== 'unlocked') return;
     close('result-dialog'); close('solution-dialog'); close('art-glossary-dialog');
+    clearForgeryPresentation();
     state = core.newState(pool,state); save(); render(); toGame();
   }
   function inspect() {
@@ -618,16 +627,16 @@
       open('result-dialog');
     }
   }
-  function showImage(work,letter) {
+  function showImage(work,letter,original = false) {
     if (!imagesAllowed) return;
     cancelZoomLoad();
     const epoch = zoomEpoch;
     $('image-title').textContent = 'Vergrößerte Kunstansicht';
     $('zoom-image').alt = 'Vergrößerte Ansicht: ' + core.galleryTitle(work);
     $('zoom-image').onload = () => imageViewer.layout();
-    $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = gameImageURL(work);
+    $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = original ? imageURL(work) : gameImageURL(work);
     open('image-dialog'); imageViewer.reset();
-    const large = state?.forgery?.id === work.id ? gameImageURL(work) : work.imageLargeURL || imageURL(work);
+    const large = !original && state?.forgery?.id === work.id ? gameImageURL(work) : work.imageLargeURL || imageURL(work);
     if (large !== gameImageURL(work)) {
       zoomLoad = new Image(); zoomLoad.referrerPolicy = 'no-referrer';
       zoomLoad.onload = () => { if (epoch === zoomEpoch && $('image-dialog').open && imagesAllowed) $('zoom-image').src = large; };
@@ -744,18 +753,38 @@
     close('result-dialog'); $('solutions').replaceChildren();
     state.ids.forEach((id,index) => {
       const work = workById(id), card = node('article','solution-card'), overview=node('div','solution-overview'), sources=node('footer','solution-sources');
-      if (imagesAllowed) {
+      if (imagesAllowed && state.forgery?.id !== id) {
         const imageButton = node('button','solution-image'); imageButton.type = 'button';
         imageButton.setAttribute('aria-label','Werk ' + 'ABCD'[index] + ' in der Lösung vergrößern');
         const img = node('img'); img.alt = core.galleryTitle(work); img.referrerPolicy = 'no-referrer'; img.src = work.imageURL;
         imageButton.append(img,node('span',null,'⤢ Bild vergrößern'));
-        imageButton.onclick = () => showImage(work,'ABCD'[index]); overview.append(imageButton);
+        imageButton.onclick = () => showImage(work,'ABCD'[index],true); overview.append(imageButton);
       }
       overview.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,core.galleryTitle(work)));
       if (core.galleryTitle(work)!==work.title) overview.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
       const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); overview.append(list);
       overview.append(galleryUI.likeButton(id));
       card.append(overview,renderCurator(work));
+      if (state.forgery?.id === id && imagesAllowed) {
+        const comparison=node('section','forgery-comparison');
+        comparison.append(node('h3',null,'Kuratorenvergleich: Original und KI-Fälschung'));
+        const pair=node('div','forgery-comparison-pair');
+        for(const [caption,url,original] of [['Original · '+work.artist,work.imageURL,true],['KI-Fälschung · FLUX.1 Schnell',state.forgery.image,false]]) {
+          const figure=node('figure'),button=node('button','solution-image'),img=node('img');
+          button.type='button'; button.setAttribute('aria-label',caption+' vergrößern');
+          img.alt=caption+': '+core.galleryTitle(work); img.referrerPolicy='no-referrer'; img.src=url;
+          button.append(img); button.onclick=()=>showImage(work,'ABCD'[index],original);
+          figure.append(button,node('figcaption',null,caption)); pair.append(figure);
+        }
+        comparison.append(pair,node('p',null,'Das Vorbild ist als '+work.style+' eingeordnet; die dokumentierte Technik ist '+work.technique+'. Vergleiche Linienführung, Farbauftrag, Licht, Raum und Details. Die KI-Nachahmung ist kein Werk von '+work.artist+'.'));
+        const clues=artKnowledge?.styles?.[work.style]?.clues || [];
+        if(clues.length) comparison.append(node('p',null,'Stilmerkmale zum Prüfen an beiden Bildern: '+clues.join('; ')+'.'));
+        const download=node('a','primary','↓ KI-Fälschung herunterladen');
+        download.href=state.forgery.image; download.download='KI-Faelschung-'+work.id+'.jpg';
+        comparison.append(download,node('p','small','Die Nachahmung wird nur für diesen Raum gehalten. Lade sie jetzt herunter, wenn du sie behalten möchtest. Beim nächsten Raum wird sie aus dem aktuellen Spielstand und der Ansicht entfernt. Bereits exportierte Spielstände oder Downloads bleiben bei dir.'));
+        if(state.forgery.prompt) { const details=node('details'),summary=node('summary',null,'Verwendeter KI-Bildprompt');details.append(summary,node('p','small',state.forgery.prompt));comparison.append(details); }
+        card.append(comparison);
+      }
       sources.append(node('p','small','Quellenangabe zu Material / Technik: ' + work.medium + '. ' + (work.styleSource?.startsWith('Redaktion') ? 'Einordnung: ' + work.styleSource : 'Dokumentierter Stil: ' + work.styleOriginal) + '.'));
       if(work.dateOriginal && work.dateOriginal!==work.date) sources.append(node('p','small','Originale Datierungsangabe der Werkquelle: '+work.dateOriginal+'.'));
       if(work.attribution==='unknown') sources.append(node('p','small','Der Name des Urhebers ist nicht überliefert. Dargestellte Personen wie Gudea oder Amenophis sind nicht als Künstlernamen zu verstehen.'));

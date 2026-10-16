@@ -137,3 +137,15 @@ Zusatzprüfung in `kunsttresor-core.js`, den Konfigurationseintrag und Button-CS
 KI-Nachahmung pro Raum statt der regulären Zehner-Sperre. Der Browser-Schalter
 kann den Test ausschalten. Bei Generierungsfehlern erscheint ausdrücklich ein
 Hinweis auf vier Originale. Zur seltenen Variante `forgeryEveryRoom=false` setzen.
+
+### Stiltreue und Auswertung (16.10.2026)
+
+Die Text-KI ist für die Prompt-Erstellung jetzt verpflichtend: GPT-OSS 120B
+verwendet Werkdaten und konkrete Stil-/Technikmerkmale aus dem Kunstglossar.
+Ein niedriger Reasoning-Aufwand und 2400 Ausgabe-Tokens vermeiden leere
+Antworten; es gibt keinen stillen Standardprompt mehr. FLUX berechnet acht
+Schritte. Gesamte Serverlaufzeit maximal 45 Sekunden, Browseranfrage 40 Sekunden.
+Die Auswertung zeigt Original und KI-Fälschung nebeneinander, Stilprüffragen,
+den verwendeten Prompt und einen lokalen Download der Fälschung. Beim nächsten
+Raum wird der alte Bildvergleich aus dem DOM entfernt und der neue Spielstand
+enthält das alte generierte Bild nicht mehr. Exportierte Dateien bleiben erhalten.
