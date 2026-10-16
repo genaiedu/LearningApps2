@@ -108,7 +108,7 @@ test('broker reconstructs trusted program text and keeps secrets strictly server
     calls++;assert.equal(url,'https://api.groq.com/openai/v1/chat/completions');assert.equal(options.headers.Authorization,'Bearer '+env.GROQ_API_KEY);
     const request=JSON.parse(options.body),context=JSON.parse(request.messages[1].content);
     assert.equal(context.works.length,4);assert.ok(context.works.every(work=>work.programText.includes(work.artist)));
-    assert.equal(request.response_format.json_schema.strict,true);assert.equal(request.max_completion_tokens,3000);
+    assert.equal(request.response_format.json_schema.strict,true);assert.equal(request.max_completion_tokens,6000);assert.equal(request.reasoning_effort,'low');
     return {ok:true,text:async()=>JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify(response(input.room.ids))}}]})};
   }});
   const result=res();await handler(req(input),result);assert.equal(result.code,200);assert.doesNotMatch(JSON.stringify(result.body),/test-only|Authorization/);

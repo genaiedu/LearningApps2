@@ -48,7 +48,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
         method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+env.GROQ_API_KEY},signal:controller.signal,redirect:'error',
         body:JSON.stringify({model:'openai/gpt-oss-120b',messages:[{role:'system',content:ki.instructions},{role:'user',content:JSON.stringify(context)}],
           response_format:{type:'json_schema',json_schema:{name:'museum_curator',strict:true,schema:ki.schema(input.room.ids)}},
-          temperature:.85,max_completion_tokens:3000})
+          temperature:.65,reasoning_effort:'low',max_completion_tokens:6000})
       });
       if (!response.ok) return send(response.status===429 ? 429 : 502,{error:'local_feedback_available'});
       const raw=await response.text(); if (raw.length>60000) throw Error('size');
@@ -63,7 +63,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
       }
       cache.set(digest,{at:now(),value:result}); while(cache.size>128) cache.delete(cache.keys().next().value);
       return send(200,result);
-    } catch { return send(502,{error:'local_feedback_available'}); }
+    } catch(error) { console.warn('Curator response unavailable',error.name,error.message?.slice(0,120)); return send(502,{error:'local_feedback_available'}); }
     finally { clearTimeout(timeout); }
   };
 }
