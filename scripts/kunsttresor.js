@@ -56,55 +56,34 @@
       .catch(()=>{ if(epoch!==introAudioEpoch)return; $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); });
   }
   const forgeryEndpoint = window.KunstKIConfig?.forgeryEndpoint || '';
-  let forgeryCooldown = Math.max(0,store.get('kunsttresor-forgery-cooldown-v2') === null ? 19 : Number(store.get('kunsttresor-forgery-cooldown-v2')) || 0);
-  const testParameter = new URLSearchParams(location.search).get('faelschungstest');
-  let forgeryEveryRoom = testParameter === '1' || (testParameter !== '0' && (store.get('kunsttresor-forgery-test-v1') === 'yes' || window.KunstKIConfig?.forgeryEveryRoom === true));
-  if(testParameter !== null) store.set('kunsttresor-forgery-test-v1',forgeryEveryRoom ? 'yes' : 'no');
+  let forgeryCooldown = Math.max(0,store.get('kunsttresor-forgery-cooldown-v3') === null ? 6 : Number(store.get('kunsttresor-forgery-cooldown-v3')) || 0);
   const forgeryKey = 'kunsttresor-forgery-rare-enabled-v2';
-  let forgeryEnabled = store.get(forgeryKey) === 'yes' || (store.get(forgeryKey) !== 'no' && (forgeryEveryRoom || store.get('kunsttresor-forgery-every-room-enabled-v1') !== 'no'));
+  let forgeryEnabled = store.get(forgeryKey) === 'yes' || (store.get(forgeryKey) !== 'no' && store.get('kunsttresor-forgery-every-room-enabled-v1') !== 'no');
   const forgeryLoading = new WeakSet();
   let upcomingRoom = null;
-  if(forgeryEveryRoom) forgeryEnabled = true;
   const forgerySwitch = document.createElement('button');
   forgerySwitch.type = 'button';
   function refreshForgerySwitch() {
-    forgerySwitch.textContent = (forgeryEveryRoom ? 'Test · eine Fälschung pro Raum: ' : 'Seltene Fälschungen: ') + (forgeryEnabled ? 'Ein' : 'Aus');
+    forgerySwitch.textContent = 'Fälschungen: ' + (forgeryEnabled ? 'Ein' : 'Aus');
     forgerySwitch.setAttribute('aria-pressed', String(forgeryEnabled));
   }
   refreshForgerySwitch();
   $('restart-top').before(forgerySwitch);
-  const forgeryTestSwitch = document.createElement('button');
-  forgeryTestSwitch.type='button'; forgeryTestSwitch.id='forgery-test-switch';
-  function refreshForgeryTestSwitch() {
-    forgeryTestSwitch.textContent='Fälschungstest: '+(forgeryEveryRoom?'Ein · jedes Rätsel':'Aus');
-    forgeryTestSwitch.setAttribute('aria-pressed',String(forgeryEveryRoom));
-  }
-  refreshForgeryTestSwitch(); $('restart-top').before(forgeryTestSwitch);
-  forgeryTestSwitch.onclick=()=>{
-    forgeryEveryRoom=!forgeryEveryRoom;
-    store.set('kunsttresor-forgery-test-v1',forgeryEveryRoom?'yes':'no');
-    // Remove the one-time URL override so a later reload respects this choice.
-    const url=new URL(location.href); url.searchParams.delete('faelschungstest'); window.history.replaceState(null,'',url);
-    if(forgeryEveryRoom) { forgeryEnabled=true; store.set(forgeryKey,'yes'); }
-    upcomingRoom=null; refreshForgerySwitch(); refreshForgeryTestSwitch();
-    alert(forgeryEveryRoom?'Ab dem nächsten Raum wird für jedes Rätsel eine Fälschung erzeugt. Bei einem Fehler bleiben vier Originale.':'Ab dem nächsten Raum gilt wieder der seltene Modus mit höchstens fünf Prozent Fälschungen.');
-  };
   forgerySwitch.onclick = () => {
     forgeryEnabled = !forgeryEnabled; store.set(forgeryKey, forgeryEnabled ? 'yes' : 'no');
     refreshForgerySwitch();
     upcomingRoom = null;
     // A setting change takes effect at the next room; never swap an examined image.
-    alert(forgeryEnabled ? 'Ab dem nächsten Raum: Gelegentlich entsteht bei Cloudflare eine KI-Nachahmung. Dafür werden Werkbeschreibungen und technische Verbindungsdaten übertragen. Markiere Fälschungen, aber keine Originale. Höchstens fünf Prozent der Rätsel enthalten eine Nachahmung, jeweils nur ein Bild. Dazwischen liegen mindestens 19 Rätsel mit Originalen. Alle bisherigen Zuordnungen bleiben nötig.' : 'Ab dem nächsten Raum spielst du wieder ohne Fälschungen.');
+    alert(forgeryEnabled ? 'Ab dem nächsten Raum: Gelegentlich entsteht bei Cloudflare eine KI-Nachahmung. Dafür werden Werkbeschreibungen und technische Verbindungsdaten übertragen. Markiere Fälschungen, aber keine Originale. Höchstens jedes siebte Rätsel enthält eine Nachahmung, jeweils nur ein Bild. Dazwischen liegen mindestens sechs Rätsel mit Originalen. Alle bisherigen Zuordnungen bleiben nötig.' : 'Ab dem nächsten Raum spielst du wieder ohne Fälschungen.');
   };
   async function prepareForgery(target = state) {
     if (!target || target.forgeryPrepared) return;
     target.forgeryPrepared = true;
     target.forgeryMode = forgeryEnabled;
-    target.forgeryEveryRoom = forgeryEveryRoom;
     const plan = core.forgeryPlan(forgeryCooldown);
     forgeryCooldown = plan.cooldown;
-    store.set('kunsttresor-forgery-cooldown-v2',String(forgeryCooldown));
-    if (!forgeryEnabled || !forgeryEndpoint || target.attempts || target.phase !== 'playing' || (!forgeryEveryRoom && !plan.generate)) { save(); return; }
+    store.set('kunsttresor-forgery-cooldown-v3',String(forgeryCooldown));
+    if (!forgeryEnabled || !forgeryEndpoint || target.attempts || target.phase !== 'playing' || !plan.generate) { save(); return; }
     const candidates = target.ids.map(workById).filter(work => core.isIntroImage(work));
     if (!candidates.length) { save(); return; }
     const selected = candidates[Math.floor(Math.random()*candidates.length)];
@@ -121,7 +100,7 @@
       if(value.image.length>1800000) throw Error('Image too large for the room save');
       if (target !== state && target !== upcomingRoom) return;
       target.forgery = {id:selected.id,image:value.image,model:value.model || 'FLUX.2 Klein 4B',prompt:typeof value.prompt === 'string' ? value.prompt.slice(0,1800) : ''};
-      forgeryCooldown = 19; store.set('kunsttresor-forgery-cooldown-v2','19');
+      forgeryCooldown = 6; store.set('kunsttresor-forgery-cooldown-v3','6');
     } catch { if(target === state || target === upcomingRoom) target.forgeryError = true; }
     finally { forgeryLoading.delete(target); if(target === state) { save(); render(); } }
   }
@@ -369,7 +348,7 @@
     const chapters=[
       {title:pool.length+' Werke. Unzählige Spuren.',text:'Ein Raum wird still. Farben bleiben. In dieser Galerie warten '+pool.length+' echte Kunstwerke auf deinen Blick – und hinter jeder Tür eine neue Auswahl.'},
       {title:'Vier Bilder. Vier Fragen.',text:'Wann entstand das Werk? Welcher Stil? Von wem? Wie gemacht? Ordne Zeit, Stil, Künstler und Technik zu. Jede Antwort passt genau einmal.'},
-      {title:'Traust du deinem Blick?',text:'Selten ist eines der vier Bilder eine KI-Fälschung: in höchstens fünf Prozent der Rätsel. Markiere es mit „Fälschung“. Die meisten Räume zeigen nur Originale.'},
+      {title:'Traust du deinem Blick?',text:'Selten ist eines der vier Bilder eine KI-Fälschung: höchstens in jedem siebten Rätsel. Markiere es mit „Fälschung“. Die meisten Räume zeigen nur Originale.'},
       {title:'Zwei Versuche. Eine Entscheidung.',text:'Ordne alle 16 Felder zu und markiere mögliche Fälschungen. Nur beides richtig öffnet das Schloss. Nach dem ersten Fehlversuch siehst du genau, welche Zuordnungen falsch waren. Du darfst einmal nachbessern.'},
       {title:'Wie weit trägt dein Blick?',text:'Alles richtig öffnet die nächste Tür. Ein zweiter Fehlversuch beendet die Runde. Nach der Auflösung kannst du weiterlesen – und freigegebene Bilder herunterladen.'},
       {title:'1000 Kunstwerke',text:'Quiz Edition'}
@@ -568,7 +547,6 @@
       $('waiting').hidden = false; $('art-grid').hidden = true; $('lock-panel').hidden = true;
       $('start-here').textContent = 'Galerie betreten →'; update(); return;
     }
-    if (forgeryEveryRoom && forgeryEnabled && !state.forgeryEveryRoom && !state.forgery && state.attempts === 0 && state.phase === 'playing') state.forgeryPrepared = false;
     if (!state.forgeryPrepared) { void prepareForgery(); if (forgeryLoading.has(state)) { $('waiting').hidden=false; $('waiting').querySelector('p').textContent='Der nächste Raum wird vorbereitet …'; $('art-grid').hidden=true; $('lock-panel').hidden=true; return; } }
     const epoch = imageEpoch;
     $('waiting').hidden = true; $('art-grid').hidden = false; $('lock-panel').hidden = false;

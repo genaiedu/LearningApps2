@@ -173,3 +173,5 @@ ihr Kontext kennzeichnet die Nachahmung und entfernt für dieses Werk frühere
 Leistungsvergleiche. Der feste Markierungskommentar wird nicht durch KI ersetzt.
 
 Nach einem gewonnenen Raum wird der nächste Raum einmalig geplant. Eine vorgesehene Fälschung wird bereits während der Kuratoransicht im Arbeitsspeicher erzeugt und beim Weitergehen übernommen. Ein Neustart oder Moduswechsel verwirft diese Vorbereitung. Die gemeinsame Bildenthüllung nach mindestens zehn Sekunden bleibt bestehen.
+
+Stand 16.10.2026, abschließend: Der Testmodusschalter und alle Test-Overrides per URL oder gespeicherter Einstellung sind entfernt. Fälschungen sind ein-/ausschaltbar, maximal eine in sieben Rätseln, mit mindestens sechs Originalräumen dazwischen. Nach der Sperrfrist entscheidet eine Zufallschance von 1/7; die tatsächliche mittlere Häufigkeit liegt daher darunter. Cooldown-Schlüssel v3 beginnt mit sechs Originalräumen. Die Vorausgenerierung während des Kurators bleibt erhalten. Vollbild ist ausschließlich manuell.
