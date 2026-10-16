@@ -9,6 +9,11 @@ const doc = new JSDOM(html).window.document;
 assert.ok(!doc.body.textContent.includes('Absorbanz'));
 assert.equal(doc.querySelector('mi')?.textContent, 'E'); // photon energy remains E
 assert.equal(doc.querySelector('#plot-unit option').textContent, 'Extinktion E');
+const symbolNote = doc.querySelector('#extinktion-symbol');
+assert.ok(symbolNote.textContent.includes('Energie eines Photons in Joule (J)'));
+assert.ok(symbolNote.textContent.includes('dimensionslos'));
+assert.equal(symbolNote.nextElementSibling.className, 'equations');
+assert.equal(symbolNote.closest('section').id, 'absorbanz');
 assert.ok(doc.querySelector('#extinktionskoeffizient').textContent.includes('E(λ)'));
 assert.ok(doc.querySelector('#extinktionskoeffizient').textContent.includes('ε(λ)'));
 for (const file of fs.readdirSync(path.join(root, 'scripts')).filter(p => /^uvvis-.*\.js$/.test(p))) {
