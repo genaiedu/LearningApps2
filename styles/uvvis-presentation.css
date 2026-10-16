@@ -1,4 +1,5 @@
 /* A staged, read-only presentation. The independent instrument uses the original lab. */
+.show-calculation{font-size:clamp(22px,3vw,42px);max-width:100%;min-width:0;padding:20px}.show-calculation>p{font:600 17px "Fira Sans",sans-serif;color:var(--muted);margin:24px 0 16px}.show-calculation>div{max-width:100%;overflow-x:auto;padding:12px 3px}.show-calculation math{font-size:1em;display:math;padding:0;overflow:visible;font-family:"Fira Math",math}
 /* Fira Math: local OpenType MATH font; license in fonts/mathjax/mathjax-fira/OFL.txt. */
 @font-face{font-family:"Fira Math";src:url("../fonts/mathjax/FiraMath-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
 body math,#uvvis-show .show-equation math,#uvvis-show .show-energy math{font-family:"Fira Math",math;font-weight:400}

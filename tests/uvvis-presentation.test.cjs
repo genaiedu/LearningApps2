@@ -80,4 +80,7 @@ test('isolated instrument retains the original renderer and does not mount dupli
   assert.match(css,/\.show-equation math\{[^}]*display:math/);
   assert.doesNotMatch(css,/\.show-equation math\{[^}]*display:block/);
   assert.match(css,/\.show-energy\{font-family:"Fira Math","Fira Sans",sans-serif/);
+  assert.ok(source.includes('class="show-calculation"'));
+  assert.ok(source.includes('<p>Ergebnis</p>'));
+  assert.match(css,/\.show-calculation\{font-size:clamp\(22px,3vw,42px\)/);
 });
