@@ -249,7 +249,7 @@
   }
   function open(id) { if (!$(id).open) $(id).showModal(); }
   function close(id) { if ($(id).open) $(id).close(); }
-  function toGame() { $('spiel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'}); }
+  function toGame() { const game=$('spiel'); game.scrollTop=0; game.scrollIntoView({behavior:'instant',block:'start'}); }
   function stopImages() {
     imageEpoch++;
     imageTimers.forEach(clearTimeout); imageTimers.clear();
@@ -544,6 +544,7 @@
     $('art-grid').setAttribute('aria-busy','true');
     $('room-loading').hidden = !state || !imagesAllowed;
     $('art-grid').replaceChildren();
+    if(state && imagesAllowed) toGame();
     if (!state || !imagesAllowed) {
       $('waiting').hidden = false; $('art-grid').hidden = true; $('lock-panel').hidden = true;
       $('start-here').textContent = 'Galerie betreten →'; update(); return;
