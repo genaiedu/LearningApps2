@@ -9,7 +9,7 @@
     const material=new T.MeshStandardMaterial({color,roughness:.46,metalness:.16});material.color.convertSRGBToLinear();const mesh=new T.Mesh(geo,material);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;
   }
   function put(parent,mesh,x,y,z){mesh.position.set(x,y,z);parent.add(mesh);return mesh;}
-  function label(text,w,h){const c=document.createElement('canvas');c.width=1024;c.height=256;const x=c.getContext('2d');x.fillStyle='#d8e0e5';x.font='500 64px system-ui';x.textAlign='center';x.fillText(text,512,150);const tx=new T.CanvasTexture(c);return new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({map:tx,transparent:true,depthWrite:false}));}
+  function label(text,w,h){const c=document.createElement('canvas');c.width=1024;c.height=256;const x=c.getContext('2d');x.fillStyle='#d8e0e5';x.font='600 64px "Fira Sans",sans-serif';x.textAlign='center';x.fillText(text,512,150);const tx=new T.CanvasTexture(c);return new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({map:tx,transparent:true,depthWrite:false}));}
   function cell(x,color){
     put(model,roundedBox(.48,.1,.5,0x27323c,.025),x,1.49,.15);
     const glass=new T.Mesh(new T.BoxGeometry(.31,.65,.31),new T.MeshPhysicalMaterial({color:0xeaf7fc,roughness:.04,metalness:0,transparent:true,opacity:.24,side:T.DoubleSide,depthWrite:false}));put(model,glass,x,1.82,.15);
@@ -50,6 +50,6 @@
   }
   function render(){if(renderer&&visible)renderer.render(scene,camera);}
   function animate(){frame=0;const target=open?-1.28:0;angle+=(target-angle)*.13;if(Math.abs(angle-target)<.003)angle=target;lid.rotation.x=angle;const f=angle/-1.28;camera.position.set(4.8+1.7*f,4.6+1.6*f,6.8+2.2*f);camera.lookAt(0,1.2+.2*f,0);render();if(angle!==target)frame=requestAnimationFrame(animate);}
-  function update(lidOpen,lambda,reading){if(!renderer)return;const text=lambda+'|'+(reading?reading.A.toFixed(3):'BEREIT');if(text!==lastText){lastText=text;ctx.fillStyle='#122b34';ctx.fillRect(0,0,768,384);ctx.fillStyle='#c5e3ea';ctx.font='56px monospace';ctx.textAlign='center';ctx.fillText(lambda+' nm',384,138);ctx.fillStyle='#97d5bc';ctx.font='44px monospace';ctx.fillText(reading?'A '+reading.A.toLocaleString('de-DE',{minimumFractionDigits:3,maximumFractionDigits:3}):'BEREIT',384,246);texture.needsUpdate=true;render();}if(lidOpen!==open){open=lidOpen;if(!frame)frame=requestAnimationFrame(animate);}}
+  function update(lidOpen,lambda,reading){if(!renderer)return;const text=lambda+'|'+(reading?reading.A.toFixed(3):'BEREIT');if(text!==lastText){lastText=text;ctx.fillStyle='#122b34';ctx.fillRect(0,0,768,384);ctx.fillStyle='#c5e3ea';ctx.font='56px "Fira Sans",sans-serif';ctx.textAlign='center';ctx.fillText(lambda+' nm',384,138);ctx.fillStyle='#97d5bc';ctx.font='44px "Fira Sans",sans-serif';ctx.fillText(reading?'A '+reading.A.toLocaleString('de-DE',{minimumFractionDigits:3,maximumFractionDigits:3}):'BEREIT',384,246);texture.needsUpdate=true;render();}if(lidOpen!==open){open=lidOpen;if(!frame)frame=requestAnimationFrame(animate);}}
   window.UVVisDevice3D={mount,update};
 })();

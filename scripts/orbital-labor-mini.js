@@ -59,7 +59,7 @@
           // labelled orientation aids, not electron density or another orbital.
           const atoms=this.spec.level.atoms||[[0,0,-.82],[0,0,.82]];
           for(const point of atoms){const marker=new T.Mesh(new T.SphereGeometry(.07,20,16),new T.MeshBasicMaterial({color:0x435662,depthTest:false}));marker.position.set(...point);marker.renderOrder=5;this.root.add(marker);}
-          if(this.spec.level.basis==='ring'){const points=[...atoms,atoms[0]].map(p=>new T.Vector3(...p));const skeleton=new T.Line(new T.BufferGeometry().setFromPoints(points),new T.LineBasicMaterial({color:0x7e9099,depthTest:false,transparent:true,opacity:.6}));skeleton.renderOrder=4;this.root.add(skeleton);}
+          if(this.spec.level.basis==='ring'){const bonds=this.spec.level.bonds;const points=(bonds?bonds.flatMap(([a,b])=>[atoms[a],atoms[b]]):[...atoms,atoms[0]]).map(p=>new T.Vector3(...p));const Line=bonds?T.LineSegments:T.Line;const skeleton=new Line(new T.BufferGeometry().setFromPoints(points),new T.LineBasicMaterial({color:0x7e9099,depthTest:false,transparent:true,opacity:.6}));skeleton.renderOrder=4;this.root.add(skeleton);}
           if(this.spec.level.kind==='antibonding'){
             const points=[[-1.3,-1.3,0],[1.3,-1.3,0],[1.3,1.3,0],[-1.3,1.3,0],[-1.3,-1.3,0]].map(p=>new T.Vector3(...p));
             this.nodePlane=new T.Group();const plane=new T.Mesh(new T.PlaneGeometry(2.6,2.6),new T.MeshBasicMaterial({color:0x82929b,transparent:true,opacity:.10,side:T.DoubleSide,depthWrite:false}));plane.renderOrder=2;this.nodePlane.add(plane);
