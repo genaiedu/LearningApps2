@@ -20,6 +20,8 @@ test('Amino comparison switches actual scales and explains both effects',()=>{
   assert.match(d.getElementById('aux-plot').textContent,/ε/);
   assert.match(d.querySelector('.compare').textContent,/Übergangswahrscheinlichkeit/);
   assert.match(d.querySelector('.compare').textContent,/Rotverschiebung direkt ablesen/);
+  assert.doesNotMatch(d.querySelector('.amino-orbitals').textContent,/Was bedeutet n|n steht für|Eine Anregung n → π/);
+  assert.match(d.querySelector('.amino-orbitals').textContent,/Wie verändert die Aminogruppe das π-System/);
   dom.window.close();
 });
 test('Complete π-MO schemes retain degeneracy, electron counts and shared energy scale',()=>{
