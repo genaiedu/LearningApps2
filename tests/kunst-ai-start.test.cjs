@@ -110,3 +110,18 @@ test('winning starts the next forgery during curator reading and advancing reuse
  s.click('solution-next');assert.equal(calls.length,1);assert.ok(JSON.parse(s.w.localStorage.getItem('kunsttresor-game-v1')).ids.includes(selected));assert.equal(s.q('#art-grid').style.visibility,'hidden');
  finish({ok:false});for(let i=0;i<20;i++)await Promise.resolve();assert.equal(calls.length,1);assert.match(s.q('#feedback').textContent,/vier Originale/);
 });
+
+test('the optional forgery test is remembered, generates every room, and can return to rare mode',async t=>{
+ const s=await setup(t,{saved:{'kunsttresor-forgery-test-v1':'yes'}});s.w.alert=()=>{};
+ assert.equal(s.q('#forgery-test-switch').getAttribute('aria-pressed'),'true');
+ s.click('launch-skip');for(let i=0;i<30;i++)await Promise.resolve();
+ assert.equal(s.requests.filter(r=>r.url.endsWith('/api/forgery')).length,1);
+ s.click('forgery-test-switch');assert.equal(s.w.localStorage.getItem('kunsttresor-forgery-test-v1'),'no');assert.equal(s.q('#forgery-test-switch').getAttribute('aria-pressed'),'false');
+ s.click('forgery-test-switch');assert.equal(s.w.localStorage.getItem('kunsttresor-forgery-test-v1'),'yes');
+});
+test('the sticky curator next button advances a won room and stays hidden after a loss',async t=>{
+ const saved=completedRoom(),s=await setup(t,{saved:{'kunsttresor-game-v1':JSON.stringify(saved)}});s.click('launch-skip');s.click('show-solution');
+ const button=s.q('.curator-gallery-access #solution-next-bottom');assert.ok(button);assert.equal(button.hidden,false);
+ s.click('solution-next-bottom');assert.equal(s.q('#solution-dialog').open,false);assert.equal(JSON.parse(s.w.localStorage.getItem('kunsttresor-game-v1')).phase,'playing');
+ const lost={...saved,phase:'lost',attempts:2};const other=await setup(t,{saved:{'kunsttresor-game-v1':JSON.stringify(lost)}});other.click('launch-skip');other.click('show-solution');assert.equal(other.q('#solution-next-bottom').hidden,true);
+});

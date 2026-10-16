@@ -57,11 +57,14 @@
   }
   const forgeryEndpoint = window.KunstKIConfig?.forgeryEndpoint || '';
   let forgeryCooldown = Math.max(0,store.get('kunsttresor-forgery-cooldown-v2') === null ? 19 : Number(store.get('kunsttresor-forgery-cooldown-v2')) || 0);
-  const forgeryEveryRoom = window.KunstKIConfig?.forgeryEveryRoom === true;
-  const forgeryKey = forgeryEveryRoom ? 'kunsttresor-forgery-every-room-enabled-v1' : 'kunsttresor-forgery-rare-enabled-v2';
+  const testParameter = new URLSearchParams(location.search).get('faelschungstest');
+  let forgeryEveryRoom = testParameter === '1' || (testParameter !== '0' && (store.get('kunsttresor-forgery-test-v1') === 'yes' || window.KunstKIConfig?.forgeryEveryRoom === true));
+  if(testParameter !== null) store.set('kunsttresor-forgery-test-v1',forgeryEveryRoom ? 'yes' : 'no');
+  const forgeryKey = 'kunsttresor-forgery-rare-enabled-v2';
   let forgeryEnabled = store.get(forgeryKey) === 'yes' || (store.get(forgeryKey) !== 'no' && (forgeryEveryRoom || store.get('kunsttresor-forgery-every-room-enabled-v1') !== 'no'));
   const forgeryLoading = new WeakSet();
   let upcomingRoom = null;
+  if(forgeryEveryRoom) forgeryEnabled = true;
   const forgerySwitch = document.createElement('button');
   forgerySwitch.type = 'button';
   function refreshForgerySwitch() {
@@ -70,6 +73,22 @@
   }
   refreshForgerySwitch();
   $('restart-top').before(forgerySwitch);
+  const forgeryTestSwitch = document.createElement('button');
+  forgeryTestSwitch.type='button'; forgeryTestSwitch.id='forgery-test-switch';
+  function refreshForgeryTestSwitch() {
+    forgeryTestSwitch.textContent='Fälschungstest: '+(forgeryEveryRoom?'Ein · jedes Rätsel':'Aus');
+    forgeryTestSwitch.setAttribute('aria-pressed',String(forgeryEveryRoom));
+  }
+  refreshForgeryTestSwitch(); $('restart-top').before(forgeryTestSwitch);
+  forgeryTestSwitch.onclick=()=>{
+    forgeryEveryRoom=!forgeryEveryRoom;
+    store.set('kunsttresor-forgery-test-v1',forgeryEveryRoom?'yes':'no');
+    // Remove the one-time URL override so a later reload respects this choice.
+    const url=new URL(location.href); url.searchParams.delete('faelschungstest'); window.history.replaceState(null,'',url);
+    if(forgeryEveryRoom) { forgeryEnabled=true; store.set(forgeryKey,'yes'); }
+    upcomingRoom=null; refreshForgerySwitch(); refreshForgeryTestSwitch();
+    alert(forgeryEveryRoom?'Ab dem nächsten Raum wird für jedes Rätsel eine Fälschung erzeugt. Bei einem Fehler bleiben vier Originale.':'Ab dem nächsten Raum gilt wieder der seltene Modus mit höchstens fünf Prozent Fälschungen.');
+  };
   forgerySwitch.onclick = () => {
     forgeryEnabled = !forgeryEnabled; store.set(forgeryKey, forgeryEnabled ? 'yes' : 'no');
     refreshForgerySwitch();
@@ -832,7 +851,7 @@
       links.append(node('p','small','Artikel nach Möglichkeit auf Deutsch; sonst Englisch. Zeitkontext: Jahresartikel, kein Beleg für die Datierung des Werks.'));
       sources.append(links); card.append(sources); $('solutions').append(card);
     });
-    $('solution-next').hidden = state.phase !== 'unlocked';
+    $('solution-next').hidden = $('solution-next-bottom').hidden = state.phase !== 'unlocked';
     open('solution-dialog');
     $('solution-dialog').scrollTop=0;
     galleryUI.refresh();
@@ -943,7 +962,7 @@
   };
   $('intro-dialog').addEventListener('cancel',() => finishIntro({enterGame:true}));
   document.addEventListener('visibilitychange',() => { if (document.hidden && $('intro-dialog').open) finishIntro(); });
-  $('check').onclick = inspect; $('next-room').onclick = $('solution-next').onclick = nextRoom;
+  $('check').onclick = inspect; $('next-room').onclick = $('solution-next').onclick = $('solution-next-bottom').onclick = nextRoom;
   $('open-badges').onclick = () => { refreshBadges(); open('badges-dialog'); };
   $('open-save').onclick = () => { if (!transferBusy) { pendingImport=null; $('import-preview').hidden=true; $('save-status').textContent=''; } open('save-dialog'); };
   $('export-save').onclick = exportSave;
