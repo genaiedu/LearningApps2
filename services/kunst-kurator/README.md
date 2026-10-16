@@ -160,3 +160,14 @@ Nachahmung im neuen Seltenheitsmodus. Damit gilt auch für jedes rollende
 Zehner-Testzähler konservativ mit einer neuen Sperre. Begrüßung, Vorspann
 und Regeln erklären die Mechanik. Die Bildkarten haben weiterhin vier
 Subgrid-Zeilen; beide Knöpfe liegen gemeinsam in `artwork-actions`.
+
+### Automatischer Kurator und Fälschungsrückmeldung
+
+Nach einem gewonnenen Rätsel öffnet sich unmittelbar der Kurator mit einem
+Nächster-Raum-Knopf. Prüfungen speichern die Fälschungsmarkierungen getrennt
+von den Zuordnungen. Die Nachahmung erhält ausschließlich eine deterministische
+Rückmeldung zur ersten/zweiten Markierung und separat gekennzeichnete Fakten
+zum Original. Ältere Spielstände ohne Markierungsprotokoll bleiben unbekannt.
+Die Text-KI erhält nur Werk-ID und Markierungsstatus, niemals Bild oder Prompt;
+ihr Kontext kennzeichnet die Nachahmung und entfernt für dieses Werk frühere
+Leistungsvergleiche. Der feste Markierungskommentar wird nicht durch KI ersetzt.

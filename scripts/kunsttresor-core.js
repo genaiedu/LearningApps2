@@ -124,7 +124,7 @@
     const forgeryCorrect = state.ids.every(id => Boolean(state.forgeryMarks?.[id]) === (id === state.forgery?.id));
     const unlocked = correct === 16 && forgeryCorrect;
     const review = {choices:Object.fromEntries(state.ids.map(id => [id,{...state.choices[id]}]))};
-    const attemptLog = [...(state.attemptLog || []), {attempt: attempts, choices: review.choices}];
+    const attemptLog = [...(state.attemptLog || []), {attempt: attempts, choices: review.choices, ...(state.forgery ? {forgeryMarks:{...state.forgeryMarks}} : {})}];
     return {checked: true, correct, forgeryCorrect, state: {...state, review, attemptLog, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === 2 ? 'lost' : 'playing'}};
   }
   function restore(saved, pool) {
@@ -158,7 +158,7 @@
     let attemptLog = saved.attemptLog;
     if (attemptLog !== undefined) {
       if (!Array.isArray(attemptLog) || attemptLog.length > saved.attempts || attemptLog.some((entry,index) => !Number.isInteger(entry?.attempt) || entry.attempt < 1 || entry.attempt > saved.attempts || (index > 0 && entry.attempt <= attemptLog[index-1].attempt) || !validSnapshot(entry.choices))) attemptLog = [];
-      else attemptLog = attemptLog.map(entry => ({attempt:entry.attempt,choices:Object.fromEntries(saved.ids.map(id => [id,{...entry.choices[id]}]))}));
+      else attemptLog = attemptLog.map(entry => ({attempt:entry.attempt,choices:Object.fromEntries(saved.ids.map(id => [id,{...entry.choices[id]}])), ...(entry.forgeryMarks && typeof entry.forgeryMarks === 'object' && !Array.isArray(entry.forgeryMarks) && Object.entries(entry.forgeryMarks).every(([id,value])=>saved.ids.includes(id)&&typeof value==='boolean') ? {forgeryMarks:{...entry.forgeryMarks}} : {})}));
       const last = attemptLog.at(-1);
       if (last?.attempt === saved.attempts && review && saved.ids.some(id => fields.some(field => last.choices[id][field] !== review.choices[id][field]))) attemptLog = [];
     }

@@ -25,3 +25,13 @@ test('even constant winning randomness cannot insert more than one forgery in an
 test('randomness can produce entirely original rooms even after the cooldown expires',()=>assert.equal(core.forgeryPlan(0,()=>.8).generate,false));
 
 test('the five percent random threshold never selects larger random values',()=>{assert.equal(core.forgeryPlan(0,()=>.049).generate,true);assert.equal(core.forgeryPlan(0,()=>.05).generate,false);});
+const ki=require('../services/kunst-kurator/lib/kunst-ki.js');
+test('forgery recognition records first and second marking independently of assignment correction and survives restore',()=>{
+ let state=solved();const id=state.ids[0];state.forgery={id,image:'data:image/jpeg;base64,/9j/'};
+ state=core.inspect(state,pool).state;state.forgeryMarks={[id]:true};state=core.inspect(state,pool).state;
+ assert.equal(ki.forgeryInfo(state).firstMarked,false);assert.match(ki.forgeryComment(ki.forgeryInfo(state)),/zweiten Prüfung/);
+ assert.equal(ki.forgeryInfo(core.restore(state,pool)).firstMarked,false);
+ const input=ki.payload(state,{events:[]});assert.equal(ki.validatePayload(input,pool).room.forgery.firstMarked,false);
+ assert.ok(!JSON.stringify(input).includes('data:image'));
+});
+test('first-check recognition is not inferred from the total number of assignment attempts',()=>{let state=solved();const id=state.ids[0];state.forgery={id,image:'data:image/jpeg;base64,/9j/'};state.forgeryMarks={[id]:true};state=core.inspect(state,pool).state;assert.match(ki.forgeryComment(ki.forgeryInfo(state)),/ersten Prüfung/);delete state.attemptLog[0].forgeryMarks;assert.match(ki.forgeryComment(ki.forgeryInfo(state)),/nicht gespeichert/);});

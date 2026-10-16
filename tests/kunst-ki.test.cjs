@@ -133,3 +133,4 @@ test('local broker rate brake is bounded and separate from required infrastructu
   for(let i=0;i<21;i++){const result=res();await handler(req(input),result);assert.equal(result.code,429);}
   assert.equal(calls,20);
 });
+test('forgery context separates the seen imitation from original facts and removes performance narratives',()=>{const state=room(),id=state.ids[0];state.forgery={id,image:'data:image/jpeg;base64,/9j/'};state.forgeryMarks={[id]:true};state.attemptLog[0].forgeryMarks={[id]:true};const input=ki.payload(state,progress.fresh());const value=ki.context(input,pool,knowledge,curator),fake=value.works.find(w=>w.id===id);assert.match(fake.shownImage,/NICHT/);assert.match(fake.forgeryRecognition,/ersten Prüfung/);assert.equal(fake.outcome,undefined);assert.equal(fake.previousEncounter,undefined);assert.match(fake.programText,/Zum Original/);assert.equal(value.room.forgery.id,id);});

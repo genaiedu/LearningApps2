@@ -526,7 +526,7 @@
       clearTimeout(timer); imageTimers.delete(timer);
       if (epoch !== imageEpoch || !imagesAllowed) return;
       button.querySelector('.image-loading')?.remove();
-      if (ok) { loaded = true; ready.add(work.id); failed.delete(work.id); button.disabled = false; rememberWork(work.id); }
+      if (ok) { loaded = true; ready.add(work.id); failed.delete(work.id); button.disabled = false; if(state?.forgery?.id !== work.id) rememberWork(work.id); }
       else { failed.add(work.id); button.append(node('div','image-loading',slow ? 'Bild lädt ungewöhnlich lange …' : 'Bild nicht erreichbar')); button.disabled = true; }
       update();
     };
@@ -625,7 +625,7 @@
       $('result-badges').textContent = earned.length ? 'Neu in deiner Sammlung: ' + earned.map(badge=>badge.title).join(' · ') : '';
       $('result-action').textContent = state.phase === 'unlocked' ? 'Nächster Raum →' : 'Neue Runde beginnen ↻';
       $('result-solution').textContent = 'Mit dem Kurator noch einmal hinsehen';
-      open('result-dialog');
+      if(state.phase === 'unlocked') solutions(); else open('result-dialog');
     }
   }
   function showImage(work,letter,original = false) {
@@ -696,6 +696,14 @@
     const container=node('div','curator-reading'), explanation=curator?.explain(work,state,artKnowledge,pool);
     if(!explanation) {
       container.append(node('p',null,'Die Kuratorenhinweise konnten nicht geladen werden. Die Werkangaben und Quellen stehen dir trotzdem zur Verfügung. Bitte lade die Seite erneut, um auch die Erklärungen zu lesen.'));
+      return container;
+    }
+    if(state.forgery?.id===work.id) {
+      const info=ki.forgeryInfo(state);
+      container.append(node('p','curator-forgery-result',ki.forgeryComment(info)),node('p',null,'Im Rätsel hast du eine KI-Nachahmung gesehen. Das Original zeigen wir dir erst jetzt im Vergleich.'),node('h4',null,'Zum Original'));
+      container.append(node('p',null,work.artist+' · '+work.date+' · '+work.style+' · '+work.medium+'.'));
+      if(explanation.workNote)container.append(node('p',null,explanation.workNote));
+      for(const [label,profile] of [['Stil',artKnowledge?.styles?.[work.style]],['Technik',artKnowledge?.techniques?.[work.technique]]]) if(profile)container.append(node('h4',null,label+' des Originals'),node('p',null,profile.definition));
       return container;
     }
     const opening=node('p','curator-opening',explanation.opening); opening.dataset.curatorWork=work.id;
@@ -815,7 +823,9 @@
       links.append(node('p','small','Artikel nach Möglichkeit auf Deutsch; sonst Englisch. Zeitkontext: Jahresartikel, kein Beleg für die Datierung des Werks.'));
       sources.append(links); card.append(sources); $('solutions').append(card);
     });
+    $('solution-next').hidden = state.phase !== 'unlocked';
     open('solution-dialog');
+    $('solution-dialog').scrollTop=0;
     galleryUI.refresh();
     void requestAI();
   }
@@ -924,7 +934,7 @@
   };
   $('intro-dialog').addEventListener('cancel',() => finishIntro({enterGame:true}));
   document.addEventListener('visibilitychange',() => { if (document.hidden && $('intro-dialog').open) finishIntro(); });
-  $('check').onclick = inspect; $('next-room').onclick = nextRoom;
+  $('check').onclick = inspect; $('next-room').onclick = $('solution-next').onclick = nextRoom;
   $('open-badges').onclick = () => { refreshBadges(); open('badges-dialog'); };
   $('open-save').onclick = () => { if (!transferBusy) { pendingImport=null; $('import-preview').hidden=true; $('save-status').textContent=''; } open('save-dialog'); };
   $('export-save').onclick = exportSave;
