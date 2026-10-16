@@ -2,6 +2,7 @@
   'use strict';
   let renderer,scene,camera,model,lid,display,texture,ctx,canvas3d,open=false,angle=0,frame=0,visible=false,lastText='';
   const T=window.THREE;
+  let sampleCell,insertionFrame=0;
   function roundedBox(w,h,d,color,r=.055){
     const shape=new T.Shape(),x=-w/2+r,y=-h/2+r,W=w-2*r,H=h-2*r;
     shape.moveTo(x+r,y);shape.lineTo(x+W-r,y);shape.quadraticCurveTo(x+W,y,x+W,y+r);shape.lineTo(x+W,y+H-r);shape.quadraticCurveTo(x+W,y+H,x+W-r,y+H);shape.lineTo(x+r,y+H);shape.quadraticCurveTo(x,y+H,x,y+H-r);shape.lineTo(x,y+r);shape.quadraticCurveTo(x,y,x+r,y);
@@ -11,10 +12,11 @@
   function put(parent,mesh,x,y,z){mesh.position.set(x,y,z);parent.add(mesh);return mesh;}
   function label(text,w,h){const c=document.createElement('canvas');c.width=1024;c.height=256;const x=c.getContext('2d');x.fillStyle='#d8e0e5';x.font='600 64px "Fira Sans",sans-serif';x.textAlign='center';x.fillText(text,512,150);const tx=new T.CanvasTexture(c);return new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({map:tx,transparent:true,depthWrite:false}));}
   function cell(x,color){
+    const holder=new T.Group();model.add(holder);
     put(model,roundedBox(.48,.1,.5,0x27323c,.025),x,1.49,.15);
     const glass=new T.Mesh(new T.BoxGeometry(.31,.65,.31),new T.MeshPhysicalMaterial({color:0xeaf7fc,roughness:.04,metalness:0,transparent:true,opacity:.24,side:T.DoubleSide,depthWrite:false}));put(model,glass,x,1.82,.15);
     const fluidMaterial=new T.MeshStandardMaterial({color,roughness:.35});fluidMaterial.color.convertSRGBToLinear();const fluid=new T.Mesh(new T.BoxGeometry(.26,.36,.26),fluidMaterial);put(model,fluid,x,1.69,.15);
-    const lines=new T.LineSegments(new T.EdgesGeometry(glass.geometry),new T.LineBasicMaterial({color:0x99b3bf,transparent:true,opacity:.6}));lines.position.copy(glass.position);model.add(lines);
+    const lines=new T.LineSegments(new T.EdgesGeometry(glass.geometry),new T.LineBasicMaterial({color:0x99b3bf,transparent:true,opacity:.6}));lines.position.copy(glass.position);holder.add(glass,fluid,lines);return holder;
   }
   function mount(){
     const host=document.getElementById('device'),wrap=document.createElement('div');wrap.className='device-3d';wrap.innerHTML='<div class="device-3d-toolbar"><span>3D-Gerät · mit der Maus leicht drehen</span><button id="device-front">Ansicht zurücksetzen</button></div><div id="device-canvas"></div><p class="small">Eigenes 3D-Lehrmodell nach Gerätefotos · keine maßgetreue Herstellerkopie</p>';host.prepend(wrap);
@@ -34,7 +36,7 @@
     put(model,roundedBox(3.4,.035,2.6,0x202d37,.02),-1.02,1.47,-.12);
     for(const x of [-2.69,.65])put(model,roundedBox(.1,.62,2.6,0x3a4752,.025),x,1.78,-.12);
     for(const z of [-1.39,1.15])put(model,roundedBox(3.35,.62,.1,0x3a4752,.025),-1.02,1.78,z);
-    cell(-1.75,0xb3d7df);cell(-.35,0x9372a8);
+    cell(-1.75,0xb3d7df);sampleCell=cell(-.35,0x9372a8);
     lid=new T.Group();lid.position.set(-1.02,2.09,-1.43);model.add(lid);put(lid,roundedBox(3.58,.14,2.7,0x303c48,.05),0,.015,1.35);
     put(lid,roundedBox(.7,.09,.09,0x85929c,.025),0,.03,2.66);
     const lidText=label('PROBENRAUM',2,.35);lidText.rotation.x=-Math.PI/2;put(lid,lidText,0,.092,1.5);
@@ -53,5 +55,16 @@
   function update(lidOpen,lambda,reading){if(!renderer)return;const text=lambda+'|'+(reading?reading.A.toFixed(3):'BEREIT');if(text!==lastText){lastText=text;ctx.fillStyle='#122b34';ctx.fillRect(0,0,768,384);ctx.fillStyle='#c5e3ea';ctx.font='56px "Fira Sans",sans-serif';ctx.textAlign='center';ctx.fillText(lambda+' nm',384,138);ctx.fillStyle='#97d5bc';ctx.font='44px "Fira Sans",sans-serif';ctx.fillText(reading?'E '+reading.A.toLocaleString('de-DE',{minimumFractionDigits:3,maximumFractionDigits:3}):'BEREIT',384,246);texture.needsUpdate=true;render();}if(lidOpen!==open){open=lidOpen;if(!frame)frame=requestAnimationFrame(animate);}}
   // An embedded presentation may resize or reveal its viewport without a reading change.
   function refresh(){if(!renderer)return;const surface=document.getElementById('device-canvas');visible=!!surface?.getBoundingClientRect().width;render();}
-  window.UVVisDevice3D={mount,update,refresh};
+  function prepareInsertion(){if(!sampleCell)return;cancelAnimationFrame(insertionFrame);sampleCell.visible=false;sampleCell.position.set(0,0,0);render();}
+  function insertCuvette(probe=false){
+    if(!sampleCell)return Promise.resolve();sampleCell.visible=true;
+    sampleCell.children[1].material.color.set(probe?0xd987b2:0xb3d7df).convertSRGBToLinear();
+    const duration=matchMedia('(prefers-reduced-motion:reduce)').matches?0:1600,start=performance.now();
+    return new Promise(resolve=>{function tick(now){const f=duration?Math.min(1,(now-start)/duration):1;
+      // First align over the holder, then lower vertically into the chamber.
+      const align=Math.min(1,f/.3),lower=Math.max(0,(f-.3)/.7),ease=lower*lower*(3-2*lower);
+      sampleCell.position.set(.5*(1-align),1.35*(1-ease),0);render();
+      if(f<1)insertionFrame=requestAnimationFrame(tick);else resolve();}tick(start);});
+  }
+  window.UVVisDevice3D={mount,update,refresh,prepareInsertion,insertCuvette};
 })();

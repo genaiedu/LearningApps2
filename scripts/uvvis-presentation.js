@@ -95,7 +95,8 @@
       while(instrumentCursor<target){const step=instrumentCursor+1;
         if(step===1){child('inside').click();child('rays').click();}
         if(step===2){if(child('inside').checked)child('inside').click();child('lid').click();}
-        if(step===3||step===6)child('insert').click();
+        if(step===2||step===5)frame.contentWindow.UVVisDevice3D.prepareInsertion();
+        if(step===3||step===6){child('insert').click();await frame.contentWindow.UVVisDevice3D.insertCuvette(step===6);}
         if(step===4){child('lid').click();child('blank').click();}
         if(step===5||step===7)child('lid').click();
         if(step===8){child('scan').click();await waitUntil(()=>!frame.contentWindow.UVVisLab.snapshot().scanning&&frame.contentWindow.UVVisLab.snapshot().lastCurve?.complete);}
