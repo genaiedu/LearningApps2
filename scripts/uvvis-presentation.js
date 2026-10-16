@@ -78,7 +78,7 @@
     function caption(text){const p=document.createElement('p');p.className='show-caption';p.textContent=text;visual.append(p);}
     function reading(){const p=document.createElement('p');p.className='show-reading';visual.append(p);return p;}
     function cuvetteScene(variant){visual.append(cuvetteHost);if(!cuvette)cuvette=window.UVVisCuvette.scene(cuvetteHost);const out=reading();
-      if(variant==='wavelength'){const r=getRecord('N05');animate(3000,f=>{const λ=430+170*f,m=window.UVVisCuvette.reading(window.UVVis,r,λ);cuvette?.update({wavelength:λ,T:m.T,tint:'#efb2ca',concentration:5});out.textContent=fmt(λ,0)+' nm · T = '+fmt(m.T*100,1)+' %';});caption('Eosin Y · c = 5 µmol/L · l = 1 cm · veröffentlichte ε-Messdaten');}
+      if(variant==='wavelength'){const r=getRecord('N05');animate(3000,f=>{const λ=Math.round(430+170*f),m=window.UVVisCuvette.reading(window.UVVis,r,λ);cuvette?.update({wavelength:λ,T:m.T,tint:'#efb2ca',concentration:5});out.textContent=fmt(λ,0)+' nm · T = '+fmt(m.T*100,1)+' %';});caption('Eosin Y · c = 5 µmol/L · l = 1 cm · veröffentlichte ε-Messdaten');}
       else if(variant==='concentration'||variant==='path'){animate(3000,f=>{const c=variant==='concentration'?10+10*f:10,l=variant==='path'?1+f:1,E=25000*c*1e-6*l,T=10**(-E);cuvette?.update({wavelength:532,T,concentration:c,path:l,tint:'#efb2ca'});out.textContent=(variant==='path'?'l = '+fmt(l,1)+' cm':'c = '+fmt(c,0)+' µmol/L')+' · E = '+fmt(E,2)+' · T = '+fmt(T*100,1)+' %';});}
       else{const T=variant==='transmission'?.25:.35;cuvette?.update({wavelength:525,T,concentration:10,tint:'#efb2ca'});out.textContent=variant==='transmission'?'I₀ = 100 · I = 25':'Lichtquelle · Küvette · Detektor';}}
     function spectrum(kind){const violet='#806796',copper='#c5784d';
