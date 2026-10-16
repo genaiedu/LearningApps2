@@ -78,4 +78,5 @@ test('isolated instrument retains the original renderer and does not mount dupli
   assert.ok(css.includes('prefers-reduced-motion:reduce'));
   assert.match(css,/\.show-equation math\{[^}]*display:math/);
   assert.doesNotMatch(css,/\.show-equation math\{[^}]*display:block/);
+  assert.match(css,/\.show-energy\{font-family:"Fira Math","Fira Sans",sans-serif/);
 });
