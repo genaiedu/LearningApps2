@@ -1,0 +1,242 @@
+{
+  "methylorange-base": [
+    {
+      "src": "assets/uvvis-indicators/methylorange-base-1.svg",
+      "smiles": "CN(C)C1=CC=C(N=NC2=CC=C(S(=O)(=O)[O-])C=C2)C=C1",
+      "charge": -1,
+      "formula": "C14H14N3O3S-"
+    },
+    {
+      "src": "assets/uvvis-indicators/methylorange-base-2.svg",
+      "smiles": "C[N+](C)=C1C=CC(=N[N-]C2=CC=C(S(=O)(=O)[O-])C=C2)C=C1",
+      "charge": -1,
+      "formula": "C14H14N3O3S-"
+    }
+  ],
+  "methylorange-acid": [
+    {
+      "src": "assets/uvvis-indicators/methylorange-acid-1.svg",
+      "smiles": "CN(C)C1=CC=C(N=[NH+]C2=CC=C(S(=O)(=O)[O-])C=C2)C=C1",
+      "charge": 0,
+      "formula": "C14H15N3O3S"
+    },
+    {
+      "src": "assets/uvvis-indicators/methylorange-acid-2.svg",
+      "smiles": "C[N+](C)=C1C=CC(=NNC2=CC=C(S(=O)(=O)[O-])C=C2)C=C1",
+      "charge": 0,
+      "formula": "C14H15N3O3S"
+    }
+  ],
+  "methylred-base": [
+    {
+      "src": "assets/uvvis-indicators/methylred-base-1.svg",
+      "smiles": "CN(C)C1=CC=C(N=NC2=CC=CC=C2C(=O)[O-])C=C1",
+      "charge": -1,
+      "formula": "C15H14N3O2-"
+    },
+    {
+      "src": "assets/uvvis-indicators/methylred-base-2.svg",
+      "smiles": "C[N+](C)=C1C=CC(=N[N-]C2=CC=CC=C2C(=O)[O-])C=C1",
+      "charge": -1,
+      "formula": "C15H14N3O2-"
+    }
+  ],
+  "methylred-acid": [
+    {
+      "src": "assets/uvvis-indicators/methylred-acid-1.svg",
+      "smiles": "CN(C)C1=CC=C(N=[NH+]C2=CC=CC=C2C(=O)[O-])C=C1",
+      "charge": 0,
+      "formula": "C15H15N3O2"
+    },
+    {
+      "src": "assets/uvvis-indicators/methylred-acid-2.svg",
+      "smiles": "C[N+](C)=C1C=CC(=NNC2=CC=CC=C2C(=O)[O-])C=C1",
+      "charge": 0,
+      "formula": "C15H15N3O2"
+    }
+  ],
+  "congored-base": [
+    {
+      "src": "assets/uvvis-indicators/congored-base-1.svg",
+      "smiles": "NC1=C(N=NC2=CC=C(C3=CC=C(N=NC4=C(N)C5=CC=CC=C5C(S(=O)(=O)[O-])=C4)C=C3)C=C2)C=C(S(=O)(=O)[O-])C2=CC=CC=C12",
+      "charge": -2,
+      "formula": "C32H22N6O6S2-2"
+    },
+    {
+      "src": "assets/uvvis-indicators/congored-base-2.svg",
+      "smiles": "NC1=C([N-]N=C2C=CC(=C3C=CC(=NN=C4C=C(S(=O)(=O)[O-])C5=CC=CC=C5C4=[NH2+])C=C3)C=C2)C=C(S(=O)(=O)[O-])C2=CC=CC=C12",
+      "charge": -2,
+      "formula": "C32H22N6O6S2-2"
+    }
+  ],
+  "congored-acid": [
+    {
+      "src": "assets/uvvis-indicators/congored-acid-1.svg",
+      "smiles": "NC1=C([NH+]=NC2=CC=C(C3=CC=C(N=[NH+]C4=C(N)C5=CC=CC=C5C(S(=O)(=O)[O-])=C4)C=C3)C=C2)C=C(S(=O)(=O)[O-])C2=CC=CC=C12",
+      "charge": 0,
+      "formula": "C32H24N6O6S2"
+    },
+    {
+      "src": "assets/uvvis-indicators/congored-acid-2.svg",
+      "smiles": "NC1=C(NN=C2C=CC(=C3C=CC(=N[NH+]=C4C=C(S(=O)(=O)[O-])C5=CC=CC=C5C4=[NH2+])C=C3)C=C2)C=C(S(=O)(=O)[O-])C2=CC=CC=C12",
+      "charge": 0,
+      "formula": "C32H24N6O6S2"
+    }
+  ],
+  "phenolphthalein-acid": [
+    {
+      "src": "assets/uvvis-indicators/phenolphthalein-acid-1.svg",
+      "smiles": "O=C1OC(C2=CC=C(O)C=C2)(C2=CC=C(O)C=C2)C2=CC=CC=C12",
+      "charge": 0,
+      "formula": "C20H14O4"
+    }
+  ],
+  "phenolphthalein-base": [
+    {
+      "src": "assets/uvvis-indicators/phenolphthalein-base-1.svg",
+      "smiles": "O=C1C=CC(=C(C2=CC=C([O-])C=C2)C2=CC=CC=C2C(=O)[O-])C=C1",
+      "charge": -2,
+      "formula": "C20H12O4-2"
+    },
+    {
+      "src": "assets/uvvis-indicators/phenolphthalein-base-2.svg",
+      "smiles": "O=C([O-])C1=CC=CC=C1C(C1=CC=C([O-])C=C1)=C1C=CC(=O)C=C1",
+      "charge": -2,
+      "formula": "C20H12O4-2"
+    }
+  ],
+  "bromophenolblue-acid": [
+    {
+      "src": "assets/uvvis-indicators/bromophenolblue-acid-1.svg",
+      "smiles": "O=S(=O)([O-])C1=CC=CC=C1[C+](C1=CC(Br)=C([O-])C(Br)=C1)C1=CC(Br)=C(O)C(Br)=C1",
+      "charge": -1,
+      "formula": "C19H9Br4O5S-"
+    },
+    {
+      "src": "assets/uvvis-indicators/bromophenolblue-acid-2.svg",
+      "smiles": "O=C1C(Br)=CC(=C(C2=CC(Br)=C(O)C(Br)=C2)C2=CC=CC=C2S(=O)(=O)[O-])C=C1Br",
+      "charge": -1,
+      "formula": "C19H9Br4O5S-"
+    }
+  ],
+  "bromophenolblue-base": [
+    {
+      "src": "assets/uvvis-indicators/bromophenolblue-base-1.svg",
+      "smiles": "O=S(=O)([O-])C1=CC=CC=C1[C+](C1=CC(Br)=C([O-])C(Br)=C1)C1=CC(Br)=C([O-])C(Br)=C1",
+      "charge": -2,
+      "formula": "C19H8Br4O5S-2"
+    },
+    {
+      "src": "assets/uvvis-indicators/bromophenolblue-base-2.svg",
+      "smiles": "O=C1C(Br)=CC(=C(C2=CC(Br)=C([O-])C(Br)=C2)C2=CC=CC=C2S(=O)(=O)[O-])C=C1Br",
+      "charge": -2,
+      "formula": "C19H8Br4O5S-2"
+    }
+  ],
+  "thymolblue-acid": [
+    {
+      "src": "assets/uvvis-indicators/thymolblue-acid-1.svg",
+      "smiles": "CC1=CC([O-])=C(C(C)C)C=C1[C+](C1=CC(C(C)C)=C(O)C=C1C)C1=CC=CC=C1S(=O)(=O)[O-]",
+      "charge": -1,
+      "formula": "C27H29O5S-"
+    },
+    {
+      "src": "assets/uvvis-indicators/thymolblue-acid-2.svg",
+      "smiles": "CC1=CC(O)=C(C(C)C)C=C1C(C1=CC=CC=C1S(=O)(=O)[O-])=C1C=C(C(C)C)C(=O)C=C1C",
+      "charge": -1,
+      "formula": "C27H29O5S-"
+    }
+  ],
+  "thymolblue-base": [
+    {
+      "src": "assets/uvvis-indicators/thymolblue-base-1.svg",
+      "smiles": "CC1=CC([O-])=C(C(C)C)C=C1[C+](C1=CC(C(C)C)=C([O-])C=C1C)C1=CC=CC=C1S(=O)(=O)[O-]",
+      "charge": -2,
+      "formula": "C27H28O5S-2"
+    },
+    {
+      "src": "assets/uvvis-indicators/thymolblue-base-2.svg",
+      "smiles": "CC1=CC([O-])=C(C(C)C)C=C1C(C1=CC=CC=C1S(=O)(=O)[O-])=C1C=C(C(C)C)C(=O)C=C1C",
+      "charge": -2,
+      "formula": "C27H28O5S-2"
+    }
+  ],
+  "thymolblue-strongacid": [
+    {
+      "src": "assets/uvvis-indicators/thymolblue-strongacid-1.svg",
+      "smiles": "CC1=CC(O)=C(C(C)C)C=C1[C+](C1=CC(C(C)C)=C(O)C=C1C)C1=CC=CC=C1S(=O)(=O)[O-]",
+      "charge": 0,
+      "formula": "C27H30O5S"
+    },
+    {
+      "src": "assets/uvvis-indicators/thymolblue-strongacid-2.svg",
+      "smiles": "CC1=CC(O)=C(C(C)C)C=C1C(C1=CC=CC=C1S(=O)(=O)[O-])=C1C=C(C(C)C)C(=[OH+])C=C1C",
+      "charge": 0,
+      "formula": "C27H30O5S"
+    }
+  ],
+  "alizarinyellow-acid": [
+    {
+      "src": "assets/uvvis-indicators/alizarinyellow-acid-1.svg",
+      "smiles": "O=C([O-])C1=C(O)C=CC(N=NC2=CC=C([N+](=O)[O-])C=C2)=C1",
+      "charge": -1,
+      "formula": "C13H8N3O5-"
+    },
+    {
+      "src": "assets/uvvis-indicators/alizarinyellow-acid-2.svg",
+      "smiles": "O=C([O-])C1=CC(=N[N-]C2=CC=C([N+](=O)[O-])C=C2)C=CC1=[OH+]",
+      "charge": -1,
+      "formula": "C13H8N3O5-"
+    }
+  ],
+  "alizarinyellow-base": [
+    {
+      "src": "assets/uvvis-indicators/alizarinyellow-base-1.svg",
+      "smiles": "O=C([O-])C1=C([O-])C=CC(N=NC2=CC=C([N+](=O)[O-])C=C2)=C1",
+      "charge": -2,
+      "formula": "C13H7N3O5-2"
+    },
+    {
+      "src": "assets/uvvis-indicators/alizarinyellow-base-2.svg",
+      "smiles": "O=C([O-])C1=CC(=N[N-]C2=CC=C([N+](=O)[O-])C=C2)C=CC1=O",
+      "charge": -2,
+      "formula": "C13H7N3O5-2"
+    }
+  ],
+  "malachitegreen-acid": [
+    {
+      "src": "assets/uvvis-indicators/malachitegreen-acid-1.svg",
+      "smiles": "CN(C)C1=CC=C([C+](C2=CC=CC=C2)C2=CC=C(N(C)C)C=C2)C=C1",
+      "charge": 1,
+      "formula": "C23H25N2+"
+    },
+    {
+      "src": "assets/uvvis-indicators/malachitegreen-acid-2.svg",
+      "smiles": "CN(C)C1=CC=C(C(C2=CC=CC=C2)=C2C=CC(=[N+](C)C)C=C2)C=C1",
+      "charge": 1,
+      "formula": "C23H25N2+"
+    }
+  ],
+  "malachitegreen-strongacid": [
+    {
+      "src": "assets/uvvis-indicators/malachitegreen-strongacid-1.svg",
+      "smiles": "CN(C)C1=CC=C([C+](C2=CC=CC=C2)C2=CC=C([NH+](C)C)C=C2)C=C1",
+      "charge": 2,
+      "formula": "C23H26N2+2"
+    },
+    {
+      "src": "assets/uvvis-indicators/malachitegreen-strongacid-2.svg",
+      "smiles": "C[N+](C)=C1C=CC(=C(C2=CC=CC=C2)C2=CC=C([NH+](C)C)C=C2)C=C1",
+      "charge": 2,
+      "formula": "C23H26N2+2"
+    }
+  ],
+  "malachitegreen-base": [
+    {
+      "src": "assets/uvvis-indicators/malachitegreen-base-1.svg",
+      "smiles": "CN(C)C1=CC=C(C(O)(C2=CC=CC=C2)C2=CC=C(N(C)C)C=C2)C=C1",
+      "charge": 0,
+      "formula": "C23H26N2O"
+    }
+  ]
+}

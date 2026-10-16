@@ -7,8 +7,8 @@ const P = require('../scripts/uvvis-presentation.js');
 const records = require('../data/uvvis-spectra.json').substances;
 const C = require('../scripts/uvvis-core.js');
 const source = fs.readFileSync(path.join(__dirname, '../scripts/uvvis-presentation.js'), 'utf8');
-test('32 stages cover theory, structures, HOMO/LUMO, complete measurement and calibration', () => {
-  assert.equal(P.slides.length, 32);
+test('35 stages cover theory, structures, HOMO/LUMO, complete measurement and calibration', () => {
+  assert.equal(P.slides.length, 35);
   assert.deepEqual(P.slides.filter(s=>s.visual==='instrument').map(s=>s.step), [0,1,2,3,4,5,6,7,8,9]);
   for (const visual of ['energy','photons','epsilon','benzene-normalized','benzene-absolute','mo','orbitals','resonance-base','resonance-acid','ph','calibration','calculation']) assert.ok(P.slides.some(s=>s.visual===visual), visual);
   assert.ok(P.slides.some(s=>s.visual==='orbitals'&&s.variant==='lumo'));
@@ -35,6 +35,7 @@ test('next-only theory, backward navigation, fullscreen fallback and model resto
   w.fetch=async()=>({ok:true,json:async()=>({substances:records})});
   w.matchMedia=()=>({matches:true});
   w.UVVis=C;
+  w.UVVisIndicators={...require('../scripts/uvvis-indicators'),ready:async()=>({records,manifest:require('../data/uvvis-indicator-structures.json')})};
   w.UVVisCuvette={...require('../scripts/uvvis-cuvette.js'),scene:()=>({update(){}})};
   w.UVVisSpectrumColors=require('../scripts/uvvis-spectrum-colors.js');
   const mo=d.createElement('div');mo.id='amino-energy';mo.innerHTML='<svg viewBox="0 0 100 100"><text>HOMO LUMO</text></svg>';d.querySelector('#farbstoffe').append(mo);
@@ -50,8 +51,8 @@ test('next-only theory, backward navigation, fullscreen fallback and model resto
   assert.equal(shell.hidden,false);
   d.dispatchEvent(new w.Event('fullscreenchange'));
   assert.equal(shell.hidden,false); // losing native fullscreen must not destroy the presentation
-  for(let i=1;i<=18;i++){next.click();await flush();assert.equal(Number(shell.dataset.slide),i);assert.ok(!d.querySelector('.show-error'), 'slide '+i);}
-  for(let i=0;i<3;i++){d.querySelector('#show-prev').click();await flush();}
+  for(let i=1;i<=21;i++){next.click();await flush();assert.equal(Number(shell.dataset.slide),i);assert.ok(!d.querySelector('.show-error'), 'slide '+i);}
+  for(let i=0;i<6;i++){d.querySelector('#show-prev').click();await flush();}
   assert.equal(shell.dataset.slide,'15');
   assert.ok(shell.contains(grid));
   assert.equal(grid.querySelector('select').value,'1');
