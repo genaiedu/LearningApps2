@@ -305,7 +305,7 @@ test('three entrance artworks vary between visits, with distinct artists and sty
   assert.ok(js.includes('heroWorks=core.heroSelection(pool,recent)'));
   assert.doesNotMatch(js,/id === 'aic-28560'|id === 'aic-20684'/);
 });
-test('one explicit start click unlocks music before fullscreen, then opens the film above it', async () => {
+test('one explicit start click unlocks music and opens the film without automatic fullscreen', async () => {
   const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
   const html=fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
   const launch=js.slice(js.indexOf('async function launchGallery('),js.indexOf('function finishIntro('));
@@ -321,17 +321,16 @@ test('one explicit start click unlocks music before fullscreen, then opens the f
   const vm=require('node:vm'); vm.createContext(context); vm.runInContext(launch,context);
   const started=context.launchGallery();
   assert.ok(events.indexOf('ai-choice')<events.indexOf('music'));
-  assert.ok(events.indexOf('music')<events.indexOf('fullscreen'));
-  assert.ok(!events.includes('film'));
+  assert.ok(!events.includes('fullscreen'));
   await started;
-  assert.ok(events.indexOf('fullscreen')<events.indexOf('film'));
+  assert.ok(events.indexOf('music')<events.indexOf('film'));
   assert.equal(context.introSoundEnabled,true);
   assert.equal(context.imagesAllowed,true);
   assert.ok(html.includes('id="launch-privacy" hidden'));
-  assert.ok(js.includes("imagesAllowed ? 'Vollbild & Musik starten →' : 'Kunstbilder erlauben & starten →'"));
+  assert.ok(js.includes("imagesAllowed ? 'Vorspann & Musik starten →' : 'Kunstbilder erlauben & starten →'"));
   assert.ok(js.includes('prepareLaunch();'));
 });
-test('the smaller launch button skips the film and music, enters fullscreen and preserves the current round', async () => {
+test('the smaller launch button skips film and music without fullscreen and preserves the current round', async () => {
   const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
   const html=fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
   const css=fs.readFileSync(path.join(__dirname,'../styles/kunsttresor.css'),'utf8');
@@ -347,9 +346,9 @@ test('the smaller launch button skips the film and music, enters fullscreen and 
       startIntroAudio:()=>events.push('music'),showIntro:()=>events.push('film')};
     const vm=require('node:vm');vm.createContext(context);vm.runInContext(launch,context);
     await context.launchGallery(false);
-    assert.ok(events.indexOf('ai-choice')<events.indexOf('fullscreen'));
-    assert.ok(events.includes('stop-film-and-music'));assert.ok(events.includes('fullscreen'));assert.ok(events.includes('game'));
-    assert.ok(events.indexOf('fullscreen')<events.indexOf('game'));
+    assert.ok(!events.includes('fullscreen'));
+    assert.ok(events.includes('stop-film-and-music'));assert.ok(!events.includes('fullscreen'));assert.ok(events.includes('game'));
+    assert.ok(events.indexOf('ai-choice')<events.indexOf('game'));
     assert.ok(!events.includes('music'));assert.ok(!events.includes('film'));
     assert.equal(events.includes('consent'),!consent);assert.equal(events.includes('new'),!existing);
     if(existing){assert.equal(context.state,saved);assert.equal(saved.escaped,3);assert.equal(saved.attempts,1);}

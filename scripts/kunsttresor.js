@@ -310,7 +310,7 @@
     $('launch-ai-switch').disabled=!aiEndpoint;
     $('launch-ai-state').textContent=selected ? 'Ein' : 'Aus';
     $('launch-ai-status').textContent=selected ? 'Voreingestellt: ein. Mit einem Startknopf erlaubst du auch die unten beschriebene KI-Rückmeldung. Du kannst sie hier ausschalten.' : 'Ausgeschaltet: Du erhältst die vollständigen redaktionellen Kuratorenhinweise. Es werden keine neuen KI-Anfragen gestellt.';
-    $('launch-start').textContent=selected ? (imagesAllowed ? 'Mit KI · Vollbild & Musik starten →' : 'Kunstbilder & KI erlauben · starten →') : (imagesAllowed ? 'Vollbild & Musik starten →' : 'Kunstbilder erlauben & starten →');
+    $('launch-start').textContent=selected ? (imagesAllowed ? 'Mit KI · Vorspann & Musik starten →' : 'Kunstbilder & KI erlauben · starten →') : (imagesAllowed ? 'Vorspann & Musik starten →' : 'Kunstbilder erlauben & starten →');
     $('launch-skip').textContent=selected ? (imagesAllowed ? 'Mit KI · ohne Vorspann spielen →' : 'Kunstbilder & KI erlauben · direkt spielen →') : (imagesAllowed ? 'Ohne Vorspann direkt spielen →' : 'Kunstbilder erlauben · direkt spielen →');
   }
   function confirmLaunchAIChoice() {
@@ -330,24 +330,20 @@
     if (!imagesAllowed) { imagesAllowed = true; store.set(keys.images,'yes'); heroImages(); }
     if (!state) { state = core.newState(pool); save(); }
     render();
-    // Keep the focus inside the fullscreen target when the film dialog closes later.
     $('fullscreen').focus({preventScroll:true});
     if (withIntro === false) {
       finishIntro();
-      await enterFullscreen();
       toGame();
       return;
     }
     introSoundEnabled = true;
     introAudio.volume=0; introAudio.currentTime=0;
-    // Unlock audio and request fullscreen before the first await loses transient activation.
+    // Unlock audio directly from the start click.
     // Stay silent until the first decoded image and the film are ready together.
     startIntroAudio();
     prepareIntro();
     const launch=++launchEpoch;
-    await enterFullscreen();
     if (launch!==launchEpoch || !imagesAllowed) return;
-    // The film must be added to the browser's top layer AFTER fullscreen, not below it.
     showIntro({audioPrimed:true});
   }
   function finishIntro({enterGame = false, keepAudio = false, keepPreparation = false} = {}) {
@@ -457,7 +453,7 @@
     if (!aiChoiceConfirmed && aiEndpoint) { prepareLaunch(); return; }
     if (!imagesAllowed) { askForImages(true); return; }
     if (!state) state = core.newState(pool);
-    save(); render(); toGame(); void enterFullscreen();
+    save(); render(); toGame();
   }
   function newRound() {
     upcomingRoom = null;
