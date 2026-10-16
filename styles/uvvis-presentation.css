@@ -1,4 +1,7 @@
 /* A staged, read-only presentation. The independent instrument uses the original lab. */
+/* Fira Math: local OpenType MATH font; license in fonts/mathjax/mathjax-fira/OFL.txt. */
+@font-face{font-family:"Fira Math";src:url("../fonts/mathjax/FiraMath-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+body math,#uvvis-show .show-equation math,#uvvis-show .show-energy math{font-family:"Fira Math",math;font-weight:400}
 .uvvis-show-entry{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;padding:clamp(24px,4vw,48px)!important;margin:0 0 3rem;border:1px solid var(--line);border-radius:22px;background:linear-gradient(120deg,var(--paper),var(--accent-soft));position:relative;overflow:hidden}
 .uvvis-show-entry h2{font-size:clamp(26px,3vw,42px);margin:.35rem 0}.uvvis-show-entry p{max-width:65ch;margin:.5rem 0}.uvvis-show-entry button{white-space:nowrap;font-size:18px;padding:18px 24px}
 #uvvis-show[hidden]{display:none!important}#uvvis-show{position:fixed;inset:0;z-index:1000;display:grid;grid-template-rows:56px minmax(0,1fr) 70px;background:var(--bg);color:var(--ink);height:100dvh;width:100%;isolation:isolate;overflow:hidden;font-family:"Fira Sans",sans-serif}
