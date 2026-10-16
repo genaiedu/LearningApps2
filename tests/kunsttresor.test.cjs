@@ -33,16 +33,13 @@ test('the expansion preserves the original 1000 records and old saved rounds', (
   assert.equal(core.restore(saved,pool).phase,'unlocked');
   assert.equal(core.restore(saved,pool).escaped,1);
 });
-test('a seeded 10000-room comparison reduces the frequently repeated tempera work', () => {
-  const added=new Set(archive.expansion.addedIds),legacy=pool.filter(work=>!added.has(work.id));
+test('a seeded 10000-room run keeps the formerly frequent tempera work rare and reaches the full archive', () => {
   function occurrences(works){
     const random=seeded(61274),seen=new Set();let state=null,count=0;
     for(let i=0;i<10000;i++){state=core.newState(works,state,random);state.ids.forEach(id=>seen.add(id));if(state.ids.includes('aic-16169'))count++;}
     return {count,seen:seen.size};
   }
-  const before=occurrences(legacy),after=occurrences(pool);
-  assert.ok(before.count>200);
-  assert.ok(after.count<before.count/3,JSON.stringify({before,after}));
+  const after=occurrences(pool);
   assert.ok(after.count<70,'under 0.7% of rooms, not the previous 3.1%');
   assert.equal(after.seen,pool.length);
 });
@@ -558,4 +555,16 @@ test('the outgoing intro image keeps its pan animation during the crossfade', ()
   assert.doesNotMatch(css,/\.intro-slide\.is-active img/);
   assert.match(css,/\.intro-slide\.is-started img\{animation:art-film-pan calc\(var\(--chapter-duration,6s\) \+ var\(--crossfade-duration,1\.5s\)\) ease-in-out both\}/);
   assert.match(css,/transition:opacity var\(--crossfade-duration,1\.5s\) ease/);
+});
+
+test('artists including Dürer do not recur in the next six rooms when the archive permits it',()=>{
+ const random=seeded(2),byId=new Map(pool.map(w=>[w.id,w]));let state=null,durer=0;
+ const artist=w=>w.artistIdentity||w.artist;
+ for(let i=0;i<1000;i++){
+  state=core.newState(pool,state,random);
+  const blocked=new Set(state.recent.map(id=>artist(byId.get(id))));
+  assert.ok(state.ids.every(id=>!blocked.has(artist(byId.get(id)))));
+  if(state.ids.some(id=>byId.get(id).artist==='Albrecht Dürer'))durer++;
+ }
+ assert.ok(durer<=143,`Dürer appeared in ${durer} of 1000 rooms`);
 });

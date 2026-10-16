@@ -76,12 +76,19 @@
       return search([], 0);
     }
     let selected = null;
-    // If a rare style/technique combination exhausts the fresh pool, release
-    // the oldest room first instead of immediately repeating recent works.
-    for (let keep = recent.length; keep >= 0 && !selected; keep = Math.max(0,keep - 4)) {
-      const blocked = keep ? recent.slice(-keep) : [];
-      selected = find(shuffle(eligible.filter(work => !blocked.includes(work.id)),random));
-      if (keep === 0) break;
+    const artistKey = work => work.artistIdentity || work.artist;
+    const byId = new Map(eligible.map(work => [work.id,work]));
+    // First avoid all artists from the last six rooms, releasing the oldest
+    // room only if four distinct answer sets cannot otherwise be assembled.
+    // Fall back to work-only exclusions for small or constrained archives.
+    for (const avoidArtists of [true,false]) {
+      for (let keep = recent.length; keep >= 0 && !selected; keep = Math.max(0,keep - 4)) {
+        const blocked = keep ? recent.slice(-keep) : [];
+        const artists = new Set(blocked.map(id=>byId.get(id)).filter(Boolean).map(artistKey));
+        selected = find(shuffle(eligible.filter(work => !blocked.includes(work.id) && (!avoidArtists || !artists.has(artistKey(work)))),random));
+        if (keep === 0) break;
+      }
+      if(selected) break;
     }
     if (!selected) throw new Error('Es gibt nicht genug eindeutig zuordenbare Werke für einen Raum.');
     return { works: shuffle(selected, random), options: Object.fromEntries(fields.map(field => [field, shuffle(selected.map(work => work[field]), random)])) };
