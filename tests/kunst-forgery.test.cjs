@@ -21,5 +21,7 @@ test('a mandatory text model writes a style-grounded prompt before eight-step Cl
 });
 test('missing text credentials never silently fall back to a generic image prompt',async()=>{const res=response();await createHandler({env:{FORGERY_ENABLED:'true',CLOUDFLARE_ACCOUNT_ID:'account',CLOUDFLARE_API_TOKEN:'secret'},fetcher:()=>{throw Error('no call')}})({method:'POST',headers:{origin:'https://genaiedu.github.io'}},res);assert.equal(res.code,503);});
 
-test('even constant winning randomness cannot insert more than one forgery in any ten consecutive rooms',()=>{let cooldown=0,rooms=[];for(let i=0;i<1000;i++){const plan=core.forgeryPlan(cooldown,()=>0);rooms.push(plan.generate);cooldown=plan.generate?9:plan.cooldown;}for(let i=0;i<991;i++)assert.ok(rooms.slice(i,i+10).filter(Boolean).length<=1);assert.equal(rooms.filter(Boolean).length,100);});
+test('even constant winning randomness cannot insert more than one forgery in any twenty consecutive rooms',()=>{let cooldown=19,rooms=[];for(let i=0;i<1000;i++){const plan=core.forgeryPlan(cooldown,()=>0);rooms.push(plan.generate);cooldown=plan.generate?19:plan.cooldown;}for(let i=0;i<981;i++)assert.ok(rooms.slice(i,i+20).filter(Boolean).length<=1);assert.equal(rooms.filter(Boolean).length,50);});
 test('randomness can produce entirely original rooms even after the cooldown expires',()=>assert.equal(core.forgeryPlan(0,()=>.8).generate,false));
+
+test('the five percent random threshold never selects larger random values',()=>{assert.equal(core.forgeryPlan(0,()=>.049).generate,true);assert.equal(core.forgeryPlan(0,()=>.05).generate,false);});

@@ -149,3 +149,14 @@ Die Auswertung zeigt Original und KI-Fälschung nebeneinander, Stilprüffragen,
 den verwendeten Prompt und einen lokalen Download der Fälschung. Beim nächsten
 Raum wird der alte Bildvergleich aus dem DOM entfernt und der neue Spielstand
 enthält das alte generierte Bild nicht mehr. Exportierte Dateien bleiben erhalten.
+
+### Dauerbetrieb nach Freigabe (16.10.2026)
+
+Der Test mit einer Fälschung in jedem Raum ist beendet: `forgeryEveryRoom=false`.
+Die Auswahlchance beträgt höchstens fünf Prozent, ergänzt durch mindestens
+19 reine Originalräume nach jeder Nachahmung und vor der ersten möglichen
+Nachahmung im neuen Seltenheitsmodus. Damit gilt auch für jedes rollende
+20-Räume-Fenster höchstens eine Nachahmung. Schlüssel v2 migriert den
+Zehner-Testzähler konservativ mit einer neuen Sperre. Begrüßung, Vorspann
+und Regeln erklären die Mechanik. Die Bildkarten haben weiterhin vier
+Subgrid-Zeilen; beide Knöpfe liegen gemeinsam in `artwork-actions`.

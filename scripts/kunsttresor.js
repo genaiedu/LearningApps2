@@ -56,14 +56,14 @@
       .catch(()=>{ if(epoch!==introAudioEpoch)return; $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); });
   }
   const forgeryEndpoint = window.KunstKIConfig?.forgeryEndpoint || '';
-  let forgeryCooldown = Math.max(0,Number(store.get('kunsttresor-forgery-cooldown-v1')) || 0);
+  let forgeryCooldown = Math.max(0,store.get('kunsttresor-forgery-cooldown-v2') === null ? 19 : Number(store.get('kunsttresor-forgery-cooldown-v2')) || 0);
   const forgeryEveryRoom = window.KunstKIConfig?.forgeryEveryRoom === true;
-  const forgeryKey = forgeryEveryRoom ? 'kunsttresor-forgery-every-room-enabled-v1' : 'kunsttresor-forgery-enabled-v1';
-  let forgeryEnabled = store.get(forgeryKey) === 'yes' || (forgeryEveryRoom && store.get(forgeryKey) !== 'no'), forgeryBusy = false;
+  const forgeryKey = forgeryEveryRoom ? 'kunsttresor-forgery-every-room-enabled-v1' : 'kunsttresor-forgery-rare-enabled-v2';
+  let forgeryEnabled = store.get(forgeryKey) === 'yes' || (store.get(forgeryKey) !== 'no' && (forgeryEveryRoom || store.get('kunsttresor-forgery-every-room-enabled-v1') !== 'no')), forgeryBusy = false;
   const forgerySwitch = document.createElement('button');
   forgerySwitch.type = 'button';
   function refreshForgerySwitch() {
-    forgerySwitch.textContent = (forgeryEveryRoom ? 'Test · eine Fälschung pro Raum: ' : 'Fälschungsmodus (Test): ') + (forgeryEnabled ? 'Ein' : 'Aus');
+    forgerySwitch.textContent = (forgeryEveryRoom ? 'Test · eine Fälschung pro Raum: ' : 'Seltene Fälschungen: ') + (forgeryEnabled ? 'Ein' : 'Aus');
     forgerySwitch.setAttribute('aria-pressed', String(forgeryEnabled));
   }
   refreshForgerySwitch();
@@ -72,7 +72,7 @@
     forgeryEnabled = !forgeryEnabled; store.set(forgeryKey, forgeryEnabled ? 'yes' : 'no');
     refreshForgerySwitch();
     // A setting change takes effect at the next room; never swap an examined image.
-    alert(forgeryEnabled ? 'Ab dem nächsten Raum: Gelegentlich entsteht bei Cloudflare eine KI-Nachahmung. Dafür werden Werkbeschreibungen und technische Verbindungsdaten übertragen. Markiere Fälschungen, aber keine Originale. Im aktuellen Test wird in jedem Rätsel genau eines der vier Bilder neu erzeugt. Alle bisherigen Zuordnungen bleiben nötig.' : 'Ab dem nächsten Raum spielst du wieder ohne Fälschungen.');
+    alert(forgeryEnabled ? 'Ab dem nächsten Raum: Gelegentlich entsteht bei Cloudflare eine KI-Nachahmung. Dafür werden Werkbeschreibungen und technische Verbindungsdaten übertragen. Markiere Fälschungen, aber keine Originale. Höchstens fünf Prozent der Rätsel enthalten eine Nachahmung, jeweils nur ein Bild. Dazwischen liegen mindestens 19 Rätsel mit Originalen. Alle bisherigen Zuordnungen bleiben nötig.' : 'Ab dem nächsten Raum spielst du wieder ohne Fälschungen.');
   };
   async function prepareForgery() {
     if (!state || state.forgeryPrepared) return;
@@ -81,7 +81,7 @@
     state.forgeryEveryRoom = forgeryEveryRoom;
     const plan = core.forgeryPlan(forgeryCooldown);
     forgeryCooldown = plan.cooldown;
-    store.set('kunsttresor-forgery-cooldown-v1',String(forgeryCooldown));
+    store.set('kunsttresor-forgery-cooldown-v2',String(forgeryCooldown));
     if (!forgeryEnabled || !forgeryEndpoint || state.attempts || state.phase !== 'playing' || (!forgeryEveryRoom && !plan.generate)) { save(); return; }
     const candidates = state.ids.map(workById).filter(work => core.isIntroImage(work));
     if (!candidates.length) { save(); return; }
@@ -99,7 +99,7 @@
       if(value.image.length>1800000) throw Error('Image too large for the room save');
       if (state !== current) return;
       state.forgery = {id:selected.id,image:value.image,prompt:typeof value.prompt === 'string' ? value.prompt.slice(0,1800) : ''};
-      forgeryCooldown = 9; store.set('kunsttresor-forgery-cooldown-v1','9');
+      forgeryCooldown = 19; store.set('kunsttresor-forgery-cooldown-v2','19');
     } catch { if(state === current) state.forgeryError = true; }
     finally { forgeryBusy = false; if(state === current) { save(); render(); } }
   }
@@ -351,8 +351,8 @@
     const chapters=[
       {title:pool.length+' Werke. Unzählige Spuren.',text:'Ein Raum wird still. Farben bleiben. In dieser Galerie warten '+pool.length+' echte Kunstwerke auf deinen Blick – und hinter jeder Tür eine neue Auswahl.'},
       {title:'Vier Bilder. Vier Fragen.',text:'Wann entstand das Werk? Welcher Stil? Von wem? Wie gemacht? Ordne Zeit, Stil, Künstler und Technik zu. Jede Antwort passt genau einmal.'},
-      {title:'Sehen heißt näher kommen.',text:'Ein Pinselstrich. Eine Linie. Ein unscheinbares Detail. Vergrößere jedes Bild und verschiebe den Ausschnitt mit Maus oder Finger.'},
-      {title:'Zwei Versuche. Eine Entscheidung.',text:'Fülle alle 16 Felder und prüfe das Schloss. Nach dem ersten Fehlversuch siehst du genau, welche Zuordnungen falsch waren. Du darfst einmal nachbessern.'},
+      {title:'Traust du deinem Blick?',text:'Selten ist eines der vier Bilder eine KI-Fälschung: in höchstens fünf Prozent der Rätsel. Markiere es mit „Fälschung“. Die meisten Räume zeigen nur Originale.'},
+      {title:'Zwei Versuche. Eine Entscheidung.',text:'Ordne alle 16 Felder zu und markiere mögliche Fälschungen. Nur beides richtig öffnet das Schloss. Nach dem ersten Fehlversuch siehst du genau, welche Zuordnungen falsch waren. Du darfst einmal nachbessern.'},
       {title:'Wie weit trägt dein Blick?',text:'Alles richtig öffnet die nächste Tür. Ein zweiter Fehlversuch beendet die Runde. Nach der Auflösung kannst du weiterlesen – und freigegebene Bilder herunterladen.'},
       {title:'1000 Kunstwerke',text:'Quiz Edition'}
     ];
@@ -584,7 +584,8 @@
       flag.disabled = state.phase !== 'playing';
       flag.onclick = () => { state.forgeryMarks ||= {}; state.forgeryMarks[id] = !state.forgeryMarks[id]; flag.setAttribute('aria-pressed',String(state.forgeryMarks[id])); save(); };
       flag.hidden = !state.forgeryMode && !state.forgery;
-      card.append(heading,picture,flag,galleryUI.likeButton(id),assignments); $('art-grid').append(card); loadWorkImage(work,picture,epoch);
+      const actions=node('div','artwork-actions'); actions.append(flag,galleryUI.likeButton(id));
+      card.append(heading,picture,actions,assignments); $('art-grid').append(card); loadWorkImage(work,picture,epoch);
     });
     $('lock-title').textContent = state.phase === 'unlocked' ? 'Der Schlüssel passt.' : state.phase === 'lost' ? 'Das Schloss bleibt zu.' : 'Das Schloss wartet auf deinen Schlüssel.';
     $('feedback').textContent = state.phase === 'unlocked' ? 'Alle 16 Zuordnungen stimmen. Erfahre mehr über die Werke – oder gehe in den nächsten Raum.' : state.phase === 'lost' ? 'Auch der zweite Versuch war nicht vollständig richtig. Die Runde ist beendet. Du kannst jetzt alle Zuordnungen nachlesen.' : state.attempts === 1 ? 'Der erste Prüfversuch war nicht vollständig richtig. Du hast noch genau einen Versuch. Prüfe deine Zuordnungen sorgfältig.' : 'Ordne erst alle 16 Antworten zu. Die Auswahl allein zählt noch nicht als Versuch.';

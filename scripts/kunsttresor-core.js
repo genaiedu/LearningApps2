@@ -94,7 +94,7 @@
   }
   function forgeryPlan(cooldown, random = Math.random) {
     cooldown = Number.isInteger(cooldown) && cooldown > 0 ? cooldown : 0;
-    return {cooldown:Math.max(0,cooldown-1), generate:cooldown === 0 && random() < .1};
+    return {cooldown:Math.max(0,cooldown-1), generate:cooldown === 0 && random() < .05};
   }
   function choose(state, workId, field, value) {
     if (state.phase !== 'playing' || !state.ids.includes(workId) || !fields.includes(field) || (value && !state.options[field].includes(value))) return state;
