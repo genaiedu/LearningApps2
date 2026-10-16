@@ -42,6 +42,7 @@
   let imagesAllowed = store.get(keys.images) === 'yes', pendingStart = false, imageEpoch = 0;
   let ready = new Set(), failed = new Set(), zoomEpoch = 0, zoomLoad = null;
   const imageTimers = new Set();
+  let revealRoom = null, revealAt = 0, revealTimer = null;
   let introTimer = null, pendingIntro = false, previousIntro = [], introEpoch = 0, introSoundEnabled = true;
   let introPreparation=null, introWaitTimer=null, launchEpoch=0, introAudioEpoch=0;
   const introAudio = new Audio('../LearningApps/assets/kunst-der-fuge/fuge-orchester-suno.mp3');
@@ -443,7 +444,9 @@
   }
   function update() {
     galleryUI?.refresh();
-    const allPicturesReady = imagesAllowed && ready.size === 4 && failed.size === 0 && !forgeryBusy;
+    const timeReady = Date.now() >= revealAt;
+    if (!timeReady && imagesAllowed && state && !revealTimer) revealTimer = setTimeout(() => { revealTimer = null; update(); }, Math.max(1,revealAt-Date.now()));
+    const allPicturesReady = imagesAllowed && ready.size === 4 && failed.size === 0 && !forgeryBusy && timeReady;
     $('art-grid').style.visibility = allPicturesReady ? 'visible' : 'hidden';
     $('art-grid').inert = !allPicturesReady;
     $('art-grid').setAttribute('aria-busy',String(!allPicturesReady));
@@ -529,6 +532,8 @@
     button.append(img); img.src = gameImageURL(work);
   }
   function render() {
+    const roomIdentity = state ? state.roomToken || state.ids.join('|') : null;
+    if (roomIdentity !== revealRoom) { revealRoom = roomIdentity; revealAt = Date.now()+10000; if(revealTimer)clearTimeout(revealTimer); revealTimer=null; }
     stopImages(); heroImages();
     $('art-grid').style.visibility = 'hidden';
     $('art-grid').inert = true;
