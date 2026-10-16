@@ -68,13 +68,19 @@ export function moDiagram(models,selected){
   return svg+'<text x="90" y="775">↑↓ zwei Elektronen · — unbesetzt · Niveau anklicken: räumliches Orbitalbild unten</text></svg>';
 }
 async function renderOrbitals(){
-  for(const file of ['core','surface','mini'])await load(`scripts/orbital-labor-${file}.js?v=20261016-6`);
+  for(const file of ['core','surface','viewer','mini'])await load(`scripts/orbital-labor-${file}.js?v=20261016-8`);
   const C=window.OrbitalCore,T=window.THREE,models=aminoModels(C);
   const gap=m=>m.levels[m.occupied].energy-m.levels[m.occupied-1].energy;
   const energy=document.getElementById('amino-energy');
   const selected=models.map(m=>m.occupied-1),draw=()=>{energy.innerHTML=moDiagram(models,selected);};draw();
   energy.dataset.gaps=models.map(gap).join(',');
-  const calculator={calculate:spec=>Promise.resolve(window.OrbitalSurface.generate(spec,(_,x,y,z)=>C.molecularValue(spec,x,y,z))),geometry:values=>{const g=new T.BufferGeometry();g.setAttribute('position',new T.BufferAttribute(values,3));g.computeVertexNormals();return g;}};
+  // Use precisely the OrbitalLabor geometry: welded vertices and normals from
+  // the signed wavefunction gradient. No deformation or smoothing of nodes.
+  const calculator={cache:new Map(),pending:new Map(),nextId:0,worker:null,calculate:window.OrbitalViewer.prototype.calculate,geometry:window.OrbitalViewer.prototype.geometry};
+  try{calculator.worker=new Worker('scripts/orbital-labor-worker.js?v=20261016-8');
+    calculator.worker.onmessage=({data})=>{const job=calculator.pending.get(data.id);if(!job)return;calculator.pending.delete(data.id);data.error?job.reject(new Error(data.error)):job.resolve(data);};
+    calculator.worker.onerror=()=>{calculator.worker?.terminate();calculator.worker=null;calculator.pending.forEach(job=>job.reject(new Error('Worker unavailable')));calculator.pending.clear();};
+  }catch(_){/* The shared calculator has an asynchronous local fallback. */}
   const renderer=new window.OrbitalMiniRenderer(calculator),grid=document.getElementById('amino-orbital-grid');
   const previousHeading=grid.previousElementSibling;if(previousHeading?.tagName==='H4')previousHeading.remove();
   const previewHeading=document.createElement('h4');previewHeading.textContent='Orbitale ansehen · frei drehen und vergleichen';energy.after(previewHeading,grid);
@@ -101,7 +107,7 @@ async function renderOrbitals(){
     const canvas=document.createElement('canvas');canvas.style.cssText='width:100%;height:290px;touch-action:none';canvas.dataset.label=`${i?'Anilin':'Benzol'} ${levelName}`;holder.append(canvas);
     const bonds=Array.from({length:6},(_,k)=>[k,(k+1)%6]);if(i)bonds.push([0,6]);
     const level={...m.levels[k],basis:'ring',atoms:m.atoms,bonds,normals:m.atoms.map(()=>[0,0,1]),kind:k>=m.occupied?'antibonding':'bonding'};
-    views.set(key,renderer.add(canvas,{mode:'mo',level,resolution:36,extent:4.6,threshold:.18}));draw();
+    views.set(key,renderer.add(canvas,{mode:'mo',level,resolution:64,extent:4.6,threshold:.18}));draw();
   }
   models.forEach((m,i)=>select(i,m.occupied-1));
   function choose(event){const target=event.target.closest('[data-orbital]');if(!target)return;if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;event.preventDefault();const i=Number(target.dataset.molecule),k=Number(target.dataset.orbital);select(i,k);expand(i);}
