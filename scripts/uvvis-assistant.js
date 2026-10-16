@@ -39,7 +39,7 @@
   function createSteps(kind) {
     const sequence = [
       step('1 · Den Messmodus auswählen', kind === 'spectrum' ? 'explore-mode' : 'unknown-mode',
-        kind === 'spectrum' ? 'Klicke auf „Spektren erforschen“. Wir nehmen eine Kurve auf: Absorbanz A über der Wellenlänge λ.' : 'Klicke auf „Unbekannte Konzentration“. Wir vergleichen die Probe mit Lösungen bekannter Konzentration (Standards).',
+        kind === 'spectrum' ? 'Klicke auf „Spektren erforschen“. Wir nehmen eine Kurve auf: Extinktion E über der Wellenlänge λ.' : 'Klicke auf „Unbekannte Konzentration“. Wir vergleichen die Probe mit Lösungen bekannter Konzentration (Standards).',
         'Ein Spektrum beantwortet: Bei welchen Wellenlängen absorbiert der Stoff? Die Kalibrierung beantwortet: Wie viel Stoff ist in der Probe?',
         s => !!s.record && s.mode === (kind === 'spectrum' ? 'explore' : 'unknown') && (kind === 'spectrum' || s.record.unit === 'epsilon')),
       step('2 · Substanz und Einstellungen prüfen', kind === 'spectrum' ? s => s.record?.unit === 'epsilon' ? 'concentration' : 'factor' : 'wavelength',
@@ -53,34 +53,34 @@
       step('5 · Für den Blindwert schließen', 'lid', 'Klicke auf „Probenraum schließen“. Lass die eingesetzte Blank-Küvette im Gerät.',
         'Einsetzen und Messen sind zwei verschiedene Handlungen. Erst mit geschlossenem Deckel ist die Messschaltfläche freigegeben.', s => s.blankReady || s.inserted && !s.lidOpen, 'blank'),
       step('6 · Den Blindwert messen', 'blank', 'Klicke auf „1 · Blank messen“. Das Gerät speichert die Referenz. Danach ist in dieser Simulation der Probenplatz wieder frei.',
-        'Für diese Referenz gilt A = 0 bzw. T = 100 %. In einem realen Zweistrahlgerät bleibt zusätzlich die Referenzküvette im Referenzweg; das Modell vereinfacht den Küvettenwechsel.', s => s.blankReady, 'blank'),
+        'Für diese Referenz gilt E = 0 bzw. T = 100 %. In einem realen Zweistrahlgerät bleibt zusätzlich die Referenzküvette im Referenzweg; das Modell vereinfacht den Küvettenwechsel.', s => s.blankReady, 'blank'),
       step('7 · Für die Probe wieder öffnen', 'lid', 'Öffne den Probenraum erneut. Jetzt kommt die Lösung mit dem untersuchten Stoff hinein, nicht noch einmal der Blank.',
         'Blank und Probe werden unter denselben optischen Bedingungen verglichen. Eine später geänderte Matrix oder Schichtdicke benötigt einen neuen Blank.', s => s.blankReady && (s.lidOpen || s.inserted), 'sample'),
       step('8 · Die Probe einsetzen', 'insert', 'Klicke auf „2 · Probe einsetzen“. Die Probe hat die zuvor ausgewählte Zusammensetzung. In einem echten Versuch: transparente Küvettenfenster im Strahlengang, keine Fingerabdrücke und keine Luftblasen.',
         'Der Stoff in der Probe absorbiert zusätzlich zum Lösungsmittel. In der Konzentrationsbestimmung repräsentiert dieser Platz anschließend die zu messende unbekannte Lösung.', s => s.blankReady && s.inserted, 'sample'),
       step('9 · Den Probenraum schließen', 'lid', 'Schließe den Probenraum. Nun ist die Probe messbereit. Öffne den Deckel während einer Messung nicht.',
-        'Der Detektor erfasst I für die Probe. Aus I/I₀ berechnet das Gerät Transmission und Absorbanz.', prepared, 'sample')
+        'Der Detektor erfasst I für die Probe. Aus I/I₀ berechnet das Gerät Transmission und Extinktion.', prepared, 'sample')
     ];
     if (kind === 'spectrum') sequence.push(
       step('10 · Das Spektrum aufnehmen', 'scan', s => s.scanning ? 'Der Scan läuft. Die Wellenlänge wandert durch den eingestellten Bereich und die Kurve wächst. Warte auf das Ende; „Weiter“ wird dann freigegeben.' : 'Klicke auf „3 · Scan starten“. Beobachte, wie die Kurve Punkt für Punkt entsteht. „Scan stoppen“ bricht ab und speichert nur einen Teilscan; dieser zählt hier nicht als vollständige Messung.',
         'Bei jeder Wellenlänge werden Referenz- und Probenlicht verglichen. Viele solcher Einzelmessungen ergeben das Spektrum.', s => !s.scanning && s.lastCurve?.complete && s.lastCurve.id !== baselineCurve, 'scan'),
-      step('11 · Die Kurve lesen', 'spectrum', 'Waagerecht: Wellenlänge in nm. Senkrecht: Absorbanz A. Wo die Kurve hoch ist, absorbiert die Probe stark. Die gestrichelte Linie zeigt nur die aktuell eingestellte Wellenlänge – sie ist keine zweite Messkurve. Klicke auf die Bande: Das Gerät zeigt A und T an dieser Stelle. Bestätige dann mit „Weiter“.',
-        'Ein Maximum ist nicht die Farbe, die die Lösung durchlässt, sondern der Bereich besonders starker Absorption. A = 1 bedeutet zum Beispiel T = 10 %. Die Diagrammauswahl kann auch auf Transmission umgeschaltet werden.', s => !!s.lastCurve?.complete, 'plot'),
+      step('11 · Die Kurve lesen', 'spectrum', 'Waagerecht: Wellenlänge in nm. Senkrecht: Extinktion E. Wo die Kurve hoch ist, absorbiert die Probe stark. Die gestrichelte Linie zeigt nur die aktuell eingestellte Wellenlänge – sie ist keine zweite Messkurve. Klicke auf die Bande: Das Gerät zeigt E und T an dieser Stelle. Bestätige dann mit „Weiter“.',
+        'Ein Maximum ist nicht die Farbe, die die Lösung durchlässt, sondern der Bereich besonders starker Absorption. E = 1 bedeutet zum Beispiel T = 10 %. Die Diagrammauswahl kann auch auf Transmission umgeschaltet werden.', s => !!s.lastCurve?.complete, 'plot'),
       step('12 · Messung geschafft', 'export', 'Deine Messkurve ist gespeichert. Du kannst sie als CSV exportieren. Für einen Vergleich ändere zum Beispiel die Konzentration und starte einen weiteren Scan; die bisherige Kurve bleibt stehen. Beim Wechsel der Substanz brauchst du einen neuen Blank. Der Assistent ist beendet, wenn du „Fertig“ klickst.',
-        'Vergleiche die Intensität nur bei bekannten Konzentrationen und Schichtdicken. Eine kleinere Absorbanz kann allein durch Verdünnen entstehen.', () => true, 'plot')
+        'Vergleiche die Intensität nur bei bekannten Konzentrationen und Schichtdicken. Eine kleinere Extinktion kann allein durch Verdünnen entstehen.', () => true, 'plot')
     );
     else sequence.push(
       step('10 · Den Nullstandard messen', 'standard-blank', 'Klicke unten im Konzentrationsmodul auf „Blank als Standard“. In der Tabelle entsteht der Messpunkt c = 0 µmol/L. Die Schaltflächen für Standards fassen in diesem Modell den Küvettenwechsel und die Einzelmessung zusammen.',
         'Der Nullstandard prüft die Basislinie der Kalibrierung. Die erste Blank-Messung oben war dagegen nötig, um das Gerät überhaupt abzugleichen.', s => s.standards.some(r => r.c === 0), 'calibration'),
       step('11 · Den ersten Standard messen', 'standard-c', s => 'Trage im Feld „Standard / µmol L⁻¹“ beispielsweise ' + fmt(s.standardSuggestion) + ' ein. Klicke danach auf „Standard messen“. Das ist eine bekannte Konzentration, noch nicht deine gesuchte Probe. Prüfe den neuen Tabellenpunkt.',
-        'Wir wählen eine gut messbare Absorbanz von ungefähr 0,3. Die vorgeschlagene Konzentration wird aus den aktuellen Stoffdaten und Messbedingungen bestimmt; andere geeignete Werte sind möglich.', s => s.standards.filter(r => r.c > 0).length >= 1, 'calibration'),
+        'Wir wählen eine gut messbare Extinktion von ungefähr 0,3. Die vorgeschlagene Konzentration wird aus den aktuellen Stoffdaten und Messbedingungen bestimmt; andere geeignete Werte sind möglich.', s => s.standards.filter(r => r.c > 0).length >= 1, 'calibration'),
       step('12 · Einen zweiten Standard messen', 'standard-c', s => 'Trage eine andere Konzentration ein, zum Beispiel ' + fmt(s.standardSuggestion * 2) + ' µmol/L, und klicke wieder auf „Standard messen“. Zusammen mit c = 0 brauchen wir mindestens drei verschiedene Konzentrationsstufen. Derselbe Wert ersetzt nur seinen alten Messpunkt.',
-        'Nun kann das Gerät eine Gerade A = m · c + b anpassen. Bei A > 2 solltest du niedrigere Konzentrationen einsetzen, weil dann zu wenig Licht ankommt.', s => s.standards.length >= 3 && !!s.fit && s.fit.slope > 0 && s.fit.r2 >= .99, 'calibration'),
-      step('13 · Die Kalibrierung kontrollieren', 'calibration-result', s => 'Lies die Gleichung A = m · c + b unter dem Diagramm ab. Hier steht die Konzentration auf der waagerechten Achse. Die Steigung m und der Achsenabschnitt b werden später zum Rechnen gebraucht. R² sollte nahe 1 liegen; aktuell: ' + fmt(s.fit?.r2) + '. Bestätige mit „Weiter“.',
+        'Nun kann das Gerät eine Gerade E = m · c + b anpassen. Bei E > 2 solltest du niedrigere Konzentrationen einsetzen, weil dann zu wenig Licht ankommt.', s => s.standards.length >= 3 && !!s.fit && s.fit.slope > 0 && s.fit.r2 >= .99, 'calibration'),
+      step('13 · Die Kalibrierung kontrollieren', 'calibration-result', s => 'Lies die Gleichung E = m · c + b unter dem Diagramm ab. Hier steht die Konzentration auf der waagerechten Achse. Die Steigung m und der Achsenabschnitt b werden später zum Rechnen gebraucht. R² sollte nahe 1 liegen; aktuell: ' + fmt(s.fit?.r2) + '. Bestätige mit „Weiter“.',
         'Das ist ein anderes Diagramm als das Spektrum: Die Wellenlänge bleibt fest, die Konzentration wird variiert. Für die unbekannte Probe nicht außerhalb des Kalibrierbereichs extrapolieren.', s => !!s.fit && s.fit.slope > 0 && s.fit.r2 >= .99, 'calibration'),
-      step('14 · Die unbekannte Probe messen', 'unknown-measure', 'Lass zunächst „Vorverdünnung der unbekannten Probe“ auf „Keine · Faktor 1“. Klicke auf „Unbekannte Probe messen“. Unter der Schaltfläche erscheint ihre Absorbanz A. Der Assistent kennt die versteckte Konzentration nicht.',
-        'Jetzt bestimmen wir die Konzentration aus der gemessenen Absorbanz und deiner Kalibriergeraden. Für diese Einzelmessung ist kein Spektrenscan erforderlich.', s => s.unknownMeasured, 'sample'),
-      step('15 · Berechnen und prüfen', 'answer-c', 'Rechne zunächst cMesslösung = (A − b) / m. Multipliziere anschließend mit dem Verdünnungsfaktor F: cOriginal = F · cMesslösung. Trage das Ergebnis in µmol/L ins Antwortfeld ein und klicke auf „Ergebnis prüfen“. Bei F = 1 sind beide Konzentrationen gleich.',
+      step('14 · Die unbekannte Probe messen', 'unknown-measure', 'Lass zunächst „Vorverdünnung der unbekannten Probe“ auf „Keine · Faktor 1“. Klicke auf „Unbekannte Probe messen“. Unter der Schaltfläche erscheint ihre Extinktion E. Der Assistent kennt die versteckte Konzentration nicht.',
+        'Jetzt bestimmen wir die Konzentration aus der gemessenen Extinktion und deiner Kalibriergeraden. Für diese Einzelmessung ist kein Spektrenscan erforderlich.', s => s.unknownMeasured, 'sample'),
+      step('15 · Berechnen und prüfen', 'answer-c', 'Rechne zunächst cMesslösung = (E − b) / m. Multipliziere anschließend mit dem Verdünnungsfaktor F: cOriginal = F · cMesslösung. Trage das Ergebnis in µmol/L ins Antwortfeld ein und klicke auf „Ergebnis prüfen“. Bei F = 1 sind beide Konzentrationen gleich.',
         'Verwende die ausgegebene Steigung mit c in µmol/L, nicht mol/L. Das Programm akzeptiert eine kleine Rundungsabweichung und gibt bei einem Fehler Hinweise.', s => s.unknownMeasured && s.feedback.startsWith('Richtig:'), 'calibration'),
       step('16 · Bestimmung geschafft', 'unknown-feedback', 'Du hast eine unbekannte Konzentration mit deiner eigenen Kalibrierung bestimmt. „Neue unbekannte Probe“ behält die Kalibrierung. Änderungen an Wellenlänge oder Messbedingungen löschen sie dagegen: Die Standards müssen dann neu gemessen werden.',
         'Eine Kalibrierung gilt nur für ihre festgelegten Bedingungen. In einem echten Labor gehören auch Wiederholungsmessungen, Unsicherheiten und die Kontrolle möglicher Störstoffe dazu.', () => true, 'calibration')
@@ -143,7 +143,7 @@
     setupTools.hidden = index !== 1 && !(index === 0 && flow === 'concentration' && s.record?.unit !== 'epsilon');
     $('coach-settings').hidden = index !== 1;
     $('coach-reason').textContent = current.reason;
-    const labels = {setup: ['Stoff', 'Einstellungen', 'Gerät'], blank: ['Lösungsmittel', 'Blank', 'A = 0'], sample: ['Probe', 'Küvette', 'Detektor'], scan: ['λ ₁', 'λ ₂', 'λ ₃ …'], plot: ['Wellenlänge λ', 'Absorbanz A', 'Bande'], calibration: ['bekanntes c', 'gemessenes A', 'Kalibrierung']};
+    const labels = {setup: ['Stoff', 'Einstellungen', 'Gerät'], blank: ['Lösungsmittel', 'Blank', 'E = 0'], sample: ['Probe', 'Küvette', 'Detektor'], scan: ['λ ₁', 'λ ₂', 'λ ₃ …'], plot: ['Wellenlänge λ', 'Extinktion E', 'Bande'], calibration: ['bekanntes c', 'gemessenes E', 'Kalibrierung']};
     $('coach-mini').replaceChildren(...labels[current.icon].map(text => {const span = document.createElement('span'); span.textContent = text; return span;}));
     $('coach-back').disabled = index === 0 || s.scanning;
     $('coach-next').disabled = !done;

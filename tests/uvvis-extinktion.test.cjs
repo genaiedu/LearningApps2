@@ -1,0 +1,40 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const path = require('node:path');
+const {JSDOM} = require('jsdom');
+const root = path.join(__dirname, '..');
+const html = fs.readFileSync(path.join(root, 'uvvis-labor.html'), 'utf8');
+const doc = new JSDOM(html).window.document;
+assert.ok(!doc.body.textContent.includes('Absorbanz'));
+assert.equal(doc.querySelector('mi')?.textContent, 'E'); // photon energy remains E
+assert.equal(doc.querySelector('#plot-unit option').textContent, 'Extinktion E');
+assert.ok(doc.querySelector('#extinktionskoeffizient').textContent.includes('E(λ)'));
+assert.ok(doc.querySelector('#extinktionskoeffizient').textContent.includes('ε(λ)'));
+for (const file of fs.readdirSync(path.join(root, 'scripts')).filter(p => /^uvvis-.*\.js$/.test(p))) {
+  assert.ok(!fs.readFileSync(path.join(root, 'scripts', file), 'utf8').includes('Absorbanz'), file);
+}
+const questions = require('../scripts/uvvis-aufgaben.js');
+assert.equal(questions.length, 120);
+assert.ok(!JSON.stringify(questions).includes('Absorbanz'));
+assert.ok(!JSON.stringify(questions).includes('ᴬ'));
+const source = fs.readFileSync(path.join(root, 'scripts/uvvis-labor.js'), 'utf8');
+const start = source.indexOf('  function coefficient(){');
+const end = source.indexOf("  $('epsilon-view').onchange", start);
+const nodes = {'epsilon-c': {value: '5'}, 'epsilon-view': {value: 'extinction'}, 'epsilon-plot': {}, 'epsilon-reading': {}, 'epsilon-result': {}};
+let plotted;
+const context = {data: require('../data/uvvis-spectra.json').substances, C: require('../scripts/uvvis-core.js'), $: id => nodes[id], colors: ['#123'], format: String, chart: (el, series, config) => { plotted = {series, config}; }};
+vm.runInNewContext(source.slice(start, end), context);
+context.coefficient();
+const first = plotted.series[0].points.map(p => p[1]);
+nodes['epsilon-c'].value = '10'; context.coefficient();
+plotted.series[0].points.forEach((p, i) => assert.equal(p[1], first[i] * 2));
+nodes['epsilon-view'].value = 'coefficient'; context.coefficient();
+const epsilon = JSON.stringify(plotted.series);
+nodes['epsilon-c'].value = '20'; context.coefficient();
+assert.equal(JSON.stringify(plotted.series), epsilon);
+assert.equal(plotted.config.ylabel, 'ε / L·mol⁻¹·cm⁻¹');
+const formulas = fs.readFileSync(path.join(root, '../LearningApps/chemie-formelsammlung.js'), 'utf8');
+assert.ok(formulas.includes('E=\\\\varepsilon cd'));
+assert.ok(!formulas.includes('dimensionslose Absorbanz'));
+console.log('PASS consistent Extinktion E, unchanged quiz pool, proportional E and concentration-independent epsilon, formula collection.');
