@@ -443,6 +443,11 @@
   }
   function update() {
     galleryUI?.refresh();
+    const allPicturesReady = imagesAllowed && ready.size === 4 && failed.size === 0 && !forgeryBusy;
+    $('art-grid').style.visibility = allPicturesReady ? 'visible' : 'hidden';
+    $('art-grid').inert = !allPicturesReady;
+    $('art-grid').setAttribute('aria-busy',String(!allPicturesReady));
+    $('room-loading').hidden = !state || !imagesAllowed || allPicturesReady;
     $('best').textContent = number(best);
     if (!state) {
       $('room-kicker').textContent = 'Die Galerie wartet'; $('game-title').textContent = 'Der erste Schlüssel.';
@@ -525,6 +530,10 @@
   }
   function render() {
     stopImages(); heroImages();
+    $('art-grid').style.visibility = 'hidden';
+    $('art-grid').inert = true;
+    $('art-grid').setAttribute('aria-busy','true');
+    $('room-loading').hidden = !state || !imagesAllowed;
     $('art-grid').replaceChildren();
     if (!state || !imagesAllowed) {
       $('waiting').hidden = false; $('art-grid').hidden = true; $('lock-panel').hidden = true;
