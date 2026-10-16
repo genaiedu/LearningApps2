@@ -69,3 +69,5 @@ math{font-family:math;font-synthesis:weight style;font-variant-numeric:lining-nu
 #measurement-coach,#wiki-reader,dialog{font-family:"Fira Sans",sans-serif}
 #wiki-content p{max-width:75ch}
 @media(max-width:580px){body{font-size:17px}.card p{font-size:16px}.lead{font-size:19px}.small{font-size:13px!important}}
+
+.methylorange-resonance{margin-block:2.5rem}.methylorange-resonance figure{margin:1.5rem 0;padding:clamp(.5rem,2vw,1.5rem);background:#fff;color:#25333a;border-radius:16px}.methylorange-resonance figure img{display:block;width:100%;height:auto}.methylorange-resonance figcaption{font-size:.85rem;line-height:1.5;color:#52656d;text-align:center}.methylorange-resonance .mesomeric-arrow{font-family:serif;font-size:3rem;line-height:1.2;text-align:center;margin:.6rem 0}.methylorange-resonance h4{margin-top:1.5rem}
