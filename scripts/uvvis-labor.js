@@ -78,7 +78,7 @@
     scanFrame=requestAnimationFrame(frame);
   };
   function chart(el,series,{lo,hi,ylabel='Absorbanz A',xlabel='Wellenlänge λ / nm',ymax=null,marker=null,scatter=false}={}){
-    const box=el.viewBox.baseVal,W=box.width,H=box.height,left=85,right=28,top=36,bottom=65,pw=W-left-right,ph=H-top-bottom;
+    const box=el.viewBox.baseVal,W=box.width,H=box.height,left=85,right=28,top=36,bottom=95,pw=W-left-right,ph=H-top-bottom;
     const visible=series.flatMap(s=>s.points.filter(p=>p[0]>=lo&&p[0]<=hi&&Number.isFinite(p[1])).map(p=>p[1]));const max=ymax??Math.max(.1,...visible)*1.12;
     const X=x=>left+(x-lo)/(hi-lo)*pw,Y=y=>top+ph-(y/max)*ph;let out='';
     for(let i=0;i<=5;i++){const x=lo+(hi-lo)*i/5,y=max*i/5;out+='<path class="grid" d="M'+X(x)+' '+top+'V'+(top+ph)+'M'+left+' '+Y(y)+'H'+(W-right)+'" fill="none"/><text x="'+X(x)+'" y="'+(H-bottom+28)+'" text-anchor="middle">'+format(x,0)+'</text><text x="'+(left-12)+'" y="'+(Y(y)+5)+'" text-anchor="end">'+format(y,max>100?0:2)+'</text>';}
@@ -86,7 +86,7 @@
     for(const s of series){if(scatter){for(const p of s.points)if(Number.isFinite(p[1])&&p[0]>=lo&&p[0]<=hi)out+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="5" fill="'+s.color+'"/>';continue;}let d='',pen=false;for(const p of s.points){if(p[0]<lo||p[0]>hi||!Number.isFinite(p[1])){pen=false;continue;}d+=(pen?'L':'M')+X(p[0]).toFixed(2)+' '+Y(Math.max(0,p[1])).toFixed(2);pen=true;}out+='<path d="'+d+'" fill="none" stroke="'+s.color+'" stroke-width="2.6"/>';}
     if(marker!==null&&marker>=lo&&marker<=hi)out+='<path d="M'+X(marker)+' '+top+'V'+(H-bottom)+'" stroke="#ac6144" stroke-dasharray="4 5" fill="none"/><text x="'+X(marker)+'" y="'+(top+15)+'" text-anchor="middle">'+format(marker,0)+' nm</text>';
     if(!visible.length)out+='<text x="'+W/2+'" y="'+H/2+'" text-anchor="middle">Noch keine Messkurve · erst Blank und Probe messen</text>';
-    el.innerHTML=out;el.dataset.lo=lo;el.dataset.hi=hi;
+    if(xlabel.includes('Wellenlänge'))out+=window.UVVisSpectrumColors?.strip(lo,hi,{left,right:W-right,y:H-49,height:14,id:el.id+'-visible'})||'';el.innerHTML=out;el.dataset.lo=lo;el.dataset.hi=hi;
   }
   function drawSpectrum(){
     const list=[...curves,...(scanCurrent?[scanCurrent]:[])],unit=$('plot-unit').value;
@@ -128,7 +128,7 @@
   $('lab-reset').onclick=()=>askReset('lab');$('app-reset').onclick=()=>askReset('app');$('reset-dialog').addEventListener('close',()=>{if($('reset-dialog').returnValue!=='reset')return;resetLab();if(resetTarget==='app'){try{localStorage.removeItem(KEY);}catch(_){}quizState=null;newQuiz();}});
   $('theme').onclick=()=>{document.body.classList.toggle('dark');$('theme').textContent=document.body.classList.contains('dark')?'Helles Farbschema':'Dunkles Farbschema';};
   function beer(){const c=Number($('beer-c').value),l=Number($('beer-l').value),a=25000*c*1e-6*l,t=10**(-a);$('beer-result').textContent='c = '+format(c,0)+' µmol/L · l = '+format(l,1)+' cm → A = '+format(a,3)+' → T = '+format(t*100,t<.001?4:1)+' %';$('beer-light').style.width=t*100+'%';}$('beer-c').oninput=beer;$('beer-l').oninput=beer;beer();
-  function aux(){import('./uvvis-amino.js?v=20261016-6').then(module=>module.mount(data)).catch(error=>console.error('Aminogruppenvergleich:',error));}
+  function aux(){import('./uvvis-amino.js?v=20261016-7').then(module=>module.mount(data)).catch(error=>console.error('Aminogruppenvergleich:',error));}
   $('aux-direction').onchange=aux;
   function phCompare(){const r=data.find(r=>r.id==='PH-J03');if(!r)return;const first=Number($('ph-first').value),second=Number($('ph-second').value),p=C.spectrum(r,first),q=C.spectrum(r,second);chart($('ph-plot'),[{points:p,color:colors[0]},{points:q,color:colors[1]}],{lo:350,hi:650});const a=C.peak(p,350,650),b=C.peak(q,350,650);$('ph-result').textContent='Violett: pH '+format(first,2)+' · Maximum '+format(a[0],0)+' nm. Kupfer: pH '+format(second,2)+' · Maximum '+format(b[0],0)+' nm. '+(Math.abs(a[0]-b[0])<3?'Ähnliche Bandlage: vergleiche nun die Intensitäten.':b[0]>a[0]?'In dieser Richtung verschiebt sich das Hauptmaximum bathochrom.':'In dieser Richtung verschiebt sich das Hauptmaximum hypsochrom.');}
   $('ph-first').onchange=phCompare;$('ph-second').onchange=phCompare;
