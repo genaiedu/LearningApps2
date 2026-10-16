@@ -91,7 +91,7 @@
     const selected = candidates[Math.floor(Math.random()*candidates.length)];
     forgeryLoading.add(target);
     try {
-      const response = await fetch(forgeryEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:selected.id}),signal:AbortSignal.timeout(40000)});
+      const response = await fetch(forgeryEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:selected.id}),signal:AbortSignal.timeout(80000)});
       if (!response.ok) throw Error('generation');
       const value = await response.json();
       if (!/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(value.image || '') || value.image.length > 3800030) throw Error('image');

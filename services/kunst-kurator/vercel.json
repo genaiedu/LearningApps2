@@ -11,7 +11,7 @@
       "includeFiles": "generated/**"
     },
     "api/forgery.js": {
-      "maxDuration": 45,
+      "maxDuration": 90,
       "includeFiles": "generated/**"
     }
   },

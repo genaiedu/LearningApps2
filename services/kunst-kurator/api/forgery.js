@@ -49,7 +49,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,works,knowledge
       const form=new FormData();
       form.append('prompt',description+' Artwork only, filling the image. No watermark, lettering, signature or frame.');
       form.append('width','1024'); form.append('height','1024');
-      const response=await fetcher(`https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(env.CLOUDFLARE_ACCOUNT_ID)}/ai/run/@cf/black-forest-labs/flux-2-klein-4b`,{method:'POST',headers:{Authorization:'Bearer '+env.CLOUDFLARE_API_TOKEN},signal:AbortSignal.timeout(23000),body:form});
+      const response=await fetcher(`https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(env.CLOUDFLARE_ACCOUNT_ID)}/ai/run/@cf/black-forest-labs/flux-2-klein-4b`,{method:'POST',headers:{Authorization:'Bearer '+env.CLOUDFLARE_API_TOKEN},signal:AbortSignal.timeout(60000),body:form});
       if(!response.ok) { const detail=await response.json().catch(()=>({})); console.warn('Cloudflare image generation failed',response.status,JSON.stringify(detail.errors || []).slice(0,700)); return send(502,{error:'cloudflare_rejected',status:response.status,codes:(detail.errors||[]).map(entry=>entry.code)}); }
       const value=await response.json(),image=value.result?.image;
       if(typeof image!=='string'||image.length>3800000||!image.length||!/^[A-Za-z0-9+/=]+$/.test(image))throw Error('Invalid generated image: '+typeof image+' length '+(image?.length || 0));
