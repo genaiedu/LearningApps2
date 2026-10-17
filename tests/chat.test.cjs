@@ -14,3 +14,13 @@ test('the page renders responses as text, sends context, and clears a conversati
  const q=id=>w.document.getElementById(id);q('prompt').value='Hallo';await q('form').onsubmit({preventDefault(){}});assert.equal(w.document.querySelectorAll('.message').length,2);assert.equal(w.document.querySelectorAll('.message img').length,0);
  q('prompt').value='Und weiter?';await q('form').onsubmit({preventDefault(){}});assert.equal(calls[1].messages.length,3);q('reset').click();assert.equal(q('messages').children.length,0);q('prompt').value='Neu';await q('form').onsubmit({preventDefault(){}});assert.equal(calls[2].messages.length,1);dom.window.close();
 });
+
+test('Return submits, Shift+Return and IME composition keep editing, and pending requests are not duplicated',async()=>{
+ const fs=require('node:fs'),path=require('node:path'),{JSDOM}=require('jsdom'),root=path.join(__dirname,'..'),dom=new JSDOM(fs.readFileSync(path.join(root,'chat.html'),'utf8'),{runScripts:'outside-only'}),w=dom.window;
+ w.HTMLElement.prototype.scrollIntoView=()=>{};w.AbortController=AbortController;let calls=0,finish;
+ w.fetch=()=>{calls++;return new Promise(resolve=>{finish=resolve;});};w.eval(fs.readFileSync(path.join(root,'scripts/chat.js'),'utf8'));
+ const input=w.document.getElementById('prompt'),key=options=>{const event=new w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true,...options});input.dispatchEvent(event);return event;};
+ input.value='Hallo';assert.equal(key({shiftKey:true}).defaultPrevented,false);assert.equal(key({isComposing:true}).defaultPrevented,false);assert.equal(calls,0);
+ assert.equal(key().defaultPrevented,true);assert.equal(calls,1);input.value='Weiter';key();assert.equal(calls,1);
+ finish({ok:true,json:async()=>({answer:'Hallo!'})});for(let i=0;i<10;i++)await Promise.resolve();dom.window.close();
+});
