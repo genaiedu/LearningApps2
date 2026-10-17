@@ -121,19 +121,19 @@ test('broker rejects foreign origins, unconfigured use and arbitrary prompts bef
   let calls=0;const handler=createHandler({env,sources,fetcher:async()=>{calls++;throw Error();}});
   for (const request of [req({}, {headers:{origin:'https://evil.example','content-type':'application/json'}}),req({prompt:'unrelated question'}),req({}, {method:'PUT'})]) {const result=res();await handler(request,result);assert.ok([403,400,405].includes(result.code));}
   const disabled=createHandler({env:{},sources});const result=res();await disabled(req(ki.payload(room(),progress.fresh())),result);assert.equal(result.code,503);assert.equal(calls,0);
-  const health=res();await handler(req(null,{method:'GET',headers:{}}),health);assert.deepEqual(health.body,{service:'kunst-kurator',version:5,roomSizes:[4,7],fieldCounts:[4,5],ready:true});
+  const health=res();await handler(req(null,{method:'GET',headers:{}}),health);assert.deepEqual(health.body,{service:'kunst-kurator',version:6,roomSizes:[4,7],fieldCounts:[4,5],ready:true});
 });
 test('broker provider errors and invented dates return neutral failures without provider details',async()=>{
   const input=ki.payload(room(),progress.fresh());
   for(const fetcher of [async()=>({ok:false,status:401,text:async()=>env.GROQ_API_KEY}),async()=>({ok:true,text:async()=>'{bad'}),async()=>({ok:true,text:async()=>JSON.stringify({choices:[{finish_reason:'length',message:{content:'partial'}}]})}),async()=>{
     const value=response(input.room.ids);value.works[0].text+=' Erfundenes Datum 9999.';
     return {ok:true,text:async()=>JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify(value)}}]})};
-  }]) {const handler=createHandler({env,sources,fetcher}),result=res();await handler(req(input),result);assert.equal(result.code,502);assert.deepEqual(result.body,{error:'local_feedback_available'});}
+  }]) {const handler=createHandler({env,sources,fetcher,wait:async()=>{},logger:{warn(){}}}),result=res();await handler(req(input),result);assert.equal(result.code,502);assert.equal(result.body.error,'local_feedback_available');assert.ok(['unavailable','invalid_response'].includes(result.body.reason));assert.match(result.body.reference,/^[a-f0-9-]{36}$/);assert.doesNotMatch(JSON.stringify(result.body),/test-only|9999|partial/);}
 });
 test('local broker rate brake is bounded and separate from required infrastructure firewall',async()=>{
   const input=ki.payload(room(),progress.fresh());let calls=0;
-  const handler=createHandler({env,sources,fetcher:async()=>{calls++;return {ok:false,status:429};}});
+  const handler=createHandler({env,sources,wait:async()=>{},logger:{warn(){}},fetcher:async()=>{calls++;return {ok:false,status:429};}});
   for(let i=0;i<21;i++){const result=res();await handler(req(input),result);assert.equal(result.code,429);}
-  assert.equal(calls,20);
+  assert.equal(calls,40); // At most two provider attempts, still only 20 admitted browser requests.
 });
 test('forgery context separates the seen imitation from original facts and removes performance narratives',()=>{const state=room(),id=state.ids[0];state.forgery={id,image:'data:image/jpeg;base64,/9j/'};state.forgeryMarks={[id]:true};state.attemptLog[0].forgeryMarks={[id]:true};const input=ki.payload(state,progress.fresh());const value=ki.context(input,pool,knowledge,curator),fake=value.works.find(w=>w.id===id);assert.match(fake.shownImage,/NICHT/);assert.match(fake.forgeryRecognition,/ersten Prüfung/);assert.equal(fake.outcome,undefined);assert.equal(fake.previousEncounter,undefined);assert.match(fake.programText,/Zum Original/);assert.equal(value.room.forgery.id,id);});

@@ -158,7 +158,15 @@ Variiere Erzählwege, Satzlängen, Anfänge und Übergänge deutlich zwischen de
     if (!value || !textOK(value.intro,1200) || !Array.isArray(value.works) || value.works.length!==ids.length || new Set(value.works.map(work=>work.id)).size!==ids.length || value.works.some(work=>!ids.includes(work.id) || !textOK(work.text,1800))) throw Error('response');
     return {intro:value.intro.trim(),works:ids.map(id=>({id,text:value.works.find(work=>work.id===id).text.trim()}))};
   }
-  function createClient({endpoint,fetcher,timeoutMs=22000}={}) {
+  function failureNotice(reason) {
+    const messages={busy:'Der KI-Dienst erhält gerade zu viele Anfragen. Bitte versuche es etwas später noch einmal.',
+      timeout:'Die KI-Antwort hat zu lange gedauert. Du kannst die Anfrage erneut versuchen.',
+      network:'Die Verbindung zum KI-Dienst ist unterbrochen. Bitte prüfe deine Internetverbindung oder versuche es später noch einmal.',
+      invalid_response:'Die KI-Antwort war nicht vollständig oder konnte nicht sicher übernommen werden. Du kannst die Anfrage erneut versuchen.',
+      invalid_request:'Die gespeicherten Raumdaten konnten nicht verarbeitet werden. Bitte lade die Seite neu; dein Spielstand bleibt gespeichert.'};
+    return (messages[reason]||'Der KI-Dienst ist vorübergehend nicht verfügbar. Bitte versuche es später noch einmal.')+' Die vollständigen redaktionellen Kuratorenhinweise bleiben verfügbar.';
+  }
+  function createClient({endpoint,fetcher,timeoutMs=28000}={}) {
     const cache=new Map(); let active=null, epoch=0;
     function cancel() {
       epoch++;
@@ -178,11 +186,21 @@ Variiere Erzählwege, Satzlängen, Anfänge und Übergänge deutlich zwischen de
       const network=(async()=> {
         try {
           const response=await fetcher(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:key,credentials:'omit',referrerPolicy:'no-referrer',signal:controller.signal,redirect:'error'});
-          if (!response.ok) return {status:'fallback',reason:response.status===429?'busy':'unavailable'};
+          if (!response.ok) {
+            let reason=response.status===429?'busy':response.status===400?'invalid_request':'unavailable';
+            try {
+              const body=await response.text();
+              if(body.length<=2000) { const reported=JSON.parse(body)?.reason;
+                if(['busy','timeout','invalid_response','unavailable'].includes(reported)&&response.status!==400)reason=reported;
+              }
+            } catch { /* Status alone also covers a firewall's non-JSON response. */ }
+            return {status:'fallback',reason};
+          }
           const body=await response.text();
-          if (body.length>22000) throw Error('oversize');
-          return {status:'ready',data:parseResponse(body,input.room.ids)};
-        } catch { return {status:'fallback',reason:'unavailable'}; }
+          if (body.length>22000) return {status:'fallback',reason:'invalid_response'};
+          try { return {status:'ready',data:parseResponse(body,input.room.ids)}; }
+          catch { return {status:'fallback',reason:'invalid_response'}; }
+        } catch { return {status:'fallback',reason:controller.signal.aborted?'timeout':'network'}; }
       })();
       const result=await Promise.race([network,interruption]); clearTimeout(timer);
       if (ticket!==epoch || result.status==='cancelled') return {status:'cancelled'};
@@ -192,7 +210,7 @@ Variiere Erzählwege, Satzlängen, Anfänge und Übergänge deutlich zwischen de
     }
     return {request,cancel,clear};
   }
-  const api={forgeryInfo,forgeryComment,payload,validatePayload,context,programText,instructions,schema,parseResponse,createClient};
+  const api={forgeryInfo,forgeryComment,payload,validatePayload,context,programText,instructions,schema,parseResponse,failureNotice,createClient};
   if (typeof module!=='undefined' && module.exports) module.exports=api;
   else root.KunstKI=api;
 })(typeof globalThis!=='undefined' ? globalThis : this);

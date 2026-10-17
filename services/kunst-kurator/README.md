@@ -1,8 +1,43 @@
 # Geschützte KI-Rückmeldungen für den Kunsttresor
 
+## Ergänzung vom 17. Oktober 2026: begrenzte Wiederholung und Fehlerdiagnose
+
+GET `/api/feedback` meldet jetzt Dienstversion 6. Bei einem vorübergehenden
+Verbindungs-/Serverfehler, einer kurzen Anfragebegrenzung oder einer nicht
+verwertbaren Modellantwort gibt es höchstens einen zweiten Generierungsversuch
+innerhalb derselben Browseranfrage. Ein normaler Erfolg wartet nicht zusätzlich.
+`Retry-After` wird beachtet; längere Sperrfristen als zwei Sekunden führen direkt
+zum lokalen Ersatztext, nicht zu wiederholtem Anfragen während der Sperre.
+Authentifizierungs- und ungültige Anfragefehler werden nicht wiederholt.
+Ausnahme: Groqs `json_validate_failed` kennzeichnet eine fehlerhafte Generierung
+und darf einmal wiederholt werden. Es gibt keine Wiederholungsschleife im Browser.
+
+Jeder Versuch hat höchstens 11,5 Sekunden Zeit. Beide Versuche zusammen bleiben
+einschließlich kurzer Pause innerhalb von 25 Sekunden; der Browser wartet maximal
+28 Sekunden, der bestehende Server maximal 30. Auch das Einlesen des Antworttexts
+liegt innerhalb der Frist. Die lokalen Kuratorentexte bleiben die ganze Zeit lesbar;
+Abschalten oder Schließen verhindert verspätete Änderungen im Browser.
+
+Strukturierte Warnprotokolle enthalten ausschließlich Dienstversion, eine pro
+Anfrage neu erzeugte zufällige Fehlerreferenz, Versuch, Zeitdauer, eine feste
+Fehlerkategorie, HTTP-Status und freigegebene Provider-/Abbruchcodes. Sie enthalten
+keine IPs, Werk-IDs, Antworten, Prompts, Schlüssel, rohen Providertexte oder
+Fehlermeldungen. Fremde/unbekannte Fehlercodes werden zu `other` zusammengefasst.
+Die Referenz ist keine dauerhafte Spielerkennung. Die technischen Zugriffsprotokolle
+der Hostingplattform sind davon unabhängig und bleiben unverändert.
+
+Die Webseite zeigt nur feste Hinweise zu Überlastung, Zeitüberschreitung,
+Verbindungsproblemen oder einer unvollständigen/nicht sicher übernehmbaren Antwort.
+Unverarbeitete Providerdetails werden weder angezeigt noch an den Browser geschickt.
+Die bisherigen Größen-, Schema-, Werk-ID- und Datumsprüfungen bleiben erhalten;
+eine fehlerhafte Antwort wird auch beim zweiten Versuch nicht ungeprüft akzeptiert.
+Tests verwenden simulierte Fehler einschließlich abgeschnittener Antworten,
+Timeouts, langer Sperrfristen und absichtlich sensibler Fehlertexte.
+
 ## Ergänzung vom 17. Oktober 2026: Joker
 
-Die sieben Werke können mit höchstens einem Joker im Vorrat unterstützt werden.
+Jeder neue Raum beginnt mit genau einem Joker; ungenutzte Joker werden nicht
+angespart, ein im selben Raum verbrauchter Joker wird beim Neuladen nicht erneuert.
 Der Browser sendet nach der Auflösung zusätzlich `room.jokerUsed` mit höchstens
 einer Werk-ID aus dem aktuellen Raum. Der Dienst validiert diese Angabe und
 weist den Kurator ausdrücklich an, die automatisch gesetzten Beschriftungen
@@ -10,7 +45,7 @@ und Fälschungsmarkierungen nicht als selbstständige Leistung zu loben.
 Stattdessen wird der Jokereinsatz freundlich benannt und die Lösung erklärt.
 Die feste Joker-Notiz der Webseite bleibt auch bei eingeschaltetem KI-Tutor
 sichtbar. Keine Joker-Vorratsdaten, Zeitstempel oder zusätzlichen persönlichen
-Angaben werden übertragen. GET `/api/feedback` meldet Dienstversion 5.
+Angaben werden übertragen. Diese Unterstützung kam mit Dienstversion 5 hinzu.
 
 Dieses Verzeichnis ist ein **separates** Vercel-Projekt. Die eigentlichen
 Webseiten bleiben auf GitHub Pages. Der Nutzer hat die Vercel-Sperre am

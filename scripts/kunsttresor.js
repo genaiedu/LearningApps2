@@ -1019,9 +1019,9 @@
     const input=ki.payload(state,playerProgress,previousWorks()), roomToken=state.roomToken, epoch=++aiDisplayEpoch;
     await aiClient.request(input,result=> {
       if (epoch!==aiDisplayEpoch || !aiAllowed || !aiEnabled || state?.roomToken!==roomToken || !$('solution-dialog').open) return;
-      if (result.status==='pending') { $('ai-status').textContent='Die KI formuliert deine persönliche Ansprache. Die redaktionellen Hinweise kannst du bereits lesen.'; return; }
+      if (result.status==='pending') { $('ai-status').textContent='Die KI formuliert deine persönliche Ansprache. Bei einer kurzen Störung versucht sie es einmal erneut. Die redaktionellen Hinweise kannst du bereits lesen.'; return; }
       if (result.status!=='ready') {
-        resetAIReading(); $('ai-status').textContent='Die KI ist gerade nicht verfügbar. Hier bleiben die vollständigen redaktionellen Kuratorenhinweise.';
+        resetAIReading(); $('ai-status').textContent=ki.failureNotice(result.reason);
         $('ai-retry').hidden=false; return;
       }
       $('ai-status').textContent='Persönliche Ansprachen mit KI formuliert · Sachhinweise und Museumsquellen bleiben redaktionell. KI kann irren.';
