@@ -2,6 +2,15 @@
  'use strict';
  if(!window.KunstWallEnabled)return;
  const $=id=>document.getElementById(id), dialog=$('image-dialog');
+ const backdrop=document.createElement('div');backdrop.className='wall-landing-background';backdrop.setAttribute('aria-hidden','true');$('start').prepend(backdrop);
+ const jump=document.createElement('button');jump.id='wall-jump';jump.className='primary';jump.type='button';jump.textContent='Direkt zum Rätsel ↓';jump.disabled=true;document.body.append(jump);
+ jump.onclick=()=>{$('start-game').click();};
+ function updateJump(){const game=$('spiel').getBoundingClientRect();jump.hidden=game.top<innerHeight*.8&&game.bottom>0;jump.disabled=$('start-game').disabled;}
+ addEventListener('scroll',updateJump,{passive:true});addEventListener('resize',updateJump);
+ new MutationObserver(updateJump).observe($('start-game'),{attributes:true,attributeFilter:['disabled']});
+ let landingIds=[];
+ function clearLanding(){backdrop.replaceChildren();landingIds=[];}
+ function landing(works){if(landingIds.length||!works.length)return;const chosen=window.KunstTresor.shuffle(works).slice(0,24);landingIds=chosen.map(w=>w.id);for(const work of chosen){const img=document.createElement('img');img.alt='';img.referrerPolicy='no-referrer';img.decoding='async';img.src=work.imageURL;img.onerror=()=>img.style.visibility='hidden';backdrop.append(img);}}
  const aside=document.createElement('aside');aside.id='wall-settings';aside.setAttribute('aria-label','Zuordnungen zum vergrößerten Werk');
  aside.innerHTML='<p class="eyebrow">Werk untersuchen</p><h3 id="wall-work-title"></h3><div id="wall-work-controls"></div><p class="wall-instructions">Bild anklicken: Lupe. Escape: zurück zur ganzen Abbildung. Noch einmal Escape: zurück zur Wand.</p><button type="button" id="wall-check">Schloss prüfen</button>';
  dialog.append(aside);
@@ -38,5 +47,5 @@
  const hint=document.createElement('p');hint.className='wall-mode-note';hint.textContent='Bilderwand · Experiment · 7 Werke, 28 Zuordnungen, 3 Prüfversuche. Bild anklicken zum Zuordnen und Vergrößern. Die klassischen Schriften bleiben erhalten. Größenverhältnisse sind angenähert; ohne belegte Werkmaße nach Bildformat.';$('art-grid').before(hint);
  const launchNotice=$('launch-ai-notice');if(launchNotice)launchNotice.textContent='In der Bilderwand begleitet dich zunächst der redaktionelle Kurator. Persönliche KI-Rückmeldungen bietet die klassische Version. Seltene KI-Nachahmungen bleiben als Spielmechanik verfügbar.';
  let scheduled=false;new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;updateCopy();layout();});}).observe(document.querySelector('main'),{subtree:true,childList:true,characterData:true});
- new ResizeObserver(layout).observe($('art-grid'));window.addEventListener('kunst-wall-layout',layout);window.KunstWall={inspect,restoreControls,layout};updateCopy();
+ new ResizeObserver(layout).observe($('art-grid'));window.addEventListener('kunst-wall-layout',layout);window.KunstWall={inspect,restoreControls,layout,landing,clearLanding};updateJump();updateCopy();
 })();

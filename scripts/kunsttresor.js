@@ -22,6 +22,7 @@
     set(key,value) { try { localStorage.setItem(key,value); return true; } catch { return false; } },
     remove(key) { try { localStorage.removeItem(key); } catch { /* The round still works in memory. */ } }
   };
+  let wallOpening=wallMode;
   let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = progress.integer(Number(store.get(keys.best))) ? Number(store.get(keys.best)) : 0;
   let artKnowledge = null, archiveReplacements = [], pendingImport = null, transferBusy = false, fileEpoch = 0;
   // Renew permission because relevant earlier mistakes, not just wins, are now sent.
@@ -258,10 +259,11 @@
     imageTimers.forEach(clearTimeout); imageTimers.clear();
     document.querySelectorAll('.mini-frame img, #art-grid img, #solutions img, #zoom-image').forEach(img => { img.removeAttribute('src'); if (img.id !== 'zoom-image') img.remove(); });
     ready.clear(); failed.clear(); close('image-dialog'); close('solution-dialog'); close('art-glossary-dialog');
-    if(!imagesAllowed)galleryUI?.stopImages();
+    if(!imagesAllowed){galleryUI?.stopImages();window.KunstWall?.clearLanding();}
   }
   function heroImages() {
     if (!imagesAllowed || !pool.length) return;
+    if(wallMode){window.KunstWall?.landing(pool.filter(core.isIntroImage));return;}
     if (!heroWorks.length) {
       let recent = [];
       try { const saved=JSON.parse(store.get(keys.hero)); if (Array.isArray(saved)) recent=saved; } catch { /* No previous selection. */ }
@@ -438,6 +440,7 @@
   }
   function start() {
     if (!pool.length) return;
+    if(wallMode)void enterFullscreen();
     if (!aiChoiceConfirmed && aiEndpoint) { prepareLaunch(); return; }
     if (!imagesAllowed) { askForImages(true); return; }
     if (!state) state = core.newState(pool);
@@ -552,7 +555,7 @@
     $('art-grid').setAttribute('aria-busy','true');
     $('room-loading').hidden = !state || !imagesAllowed;
     $('art-grid').replaceChildren();
-    if(state && imagesAllowed) toGame();
+    if(state && imagesAllowed&&!wallOpening) toGame();
     if (!state || !imagesAllowed) {
       $('waiting').hidden = false; $('art-grid').hidden = true; $('lock-panel').hidden = true;
       $('start-here').textContent = 'Galerie betreten →'; update(); return;
@@ -1025,8 +1028,9 @@
       if (state) save(); else saveProgress();
       $('open-save').disabled = false;
       refreshBadges(); refreshHistory();
-      $('best').textContent = number(best); prepareLaunch(); heroImages();
+      $('best').textContent = number(best); if(!wallMode)prepareLaunch(); heroImages();
       if (state && imagesAllowed) render();
+      if(wallMode){wallOpening=false;requestAnimationFrame(()=>$('start').scrollIntoView({block:'start',behavior:'instant'}));}
     }).catch(() => {
       $('start-game').textContent = $('start-here').textContent = 'Archiv nicht erreichbar';
       $('waiting').querySelector('p').textContent = 'Das lokale Werkarchiv konnte nicht geladen werden. Bitte lade die veröffentlichte Seite erneut. Eine direkt als Datei geöffnete Kopie benötigt einen Webserver.';
