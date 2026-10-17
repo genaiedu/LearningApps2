@@ -102,6 +102,7 @@
     const recent = previous ? [...previous.recent, ...previous.ids].slice(-count*6) : [];
     const next = room(pool, recent, random, requireForgeryTarget);
     return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attemptLog: [], attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent,
+      ...(root.KunstWallEnabled ? {joker:previous?.joker ?? 1,jokerUsed:[],excluded:{}} : {}),
       ...(previous?.runToken ? {runToken:previous.runToken, parentRoomToken:previous.phase === 'unlocked' ? previous.roomToken : previous.parentRoomToken || null} : {})};
   }
   function nextForgeryCooldown(random = Math.random) {
@@ -116,12 +117,42 @@
   function choose(state, workId, field, value) {
     const fields=fieldsFor(state);
     if (state.phase !== 'playing' || !state.ids.includes(workId) || !fields.includes(field) || (value && !state.options[field].includes(value))) return state;
-    if (takenBy(state,workId,field,value)) return state;
+    if (isExcluded(state,workId,field,value) || takenBy(state,workId,field,value)) return state;
     const choices = Object.fromEntries(Object.entries(state.choices).map(([id, selection]) => [id, {...selection}]));
     choices[workId] = {...choices[workId], [field]: value};
     return {...state, choices};
   }
   function capacity(state,field,value){return (state.options[field]||[]).filter(v=>v===value).length;}
+  function isExcluded(state,id,field,value){return Boolean(value && state.excluded?.[id]?.[field]?.includes(value));}
+  function exclusions(state,pool) {
+    const byId=new Map(pool.map(work=>[work.id,work])),result={};
+    // Keep every checked snapshot, not just the most recent feedback.
+    for(const snapshot of [...(state.attemptLog||[]),...(state.review?[state.review]:[])])for(const id of state.ids)for(const field of fieldsFor(state)){
+      const value=snapshot.choices?.[id]?.[field];
+      if(value && state.options[field].includes(value) && value!==byId.get(id)?.[field]){
+        result[id] ||= {};result[id][field] ||= [];
+        if(!result[id][field].includes(value))result[id][field].push(value);
+      }
+    }
+    return result;
+  }
+  function useJoker(state,id,pool) {
+    const byId=new Map(pool.map(work=>[work.id,work])),work=byId.get(id),fields=fieldsFor(state);
+    if(state.phase!=='playing' || state.joker!==1 || state.jokerUsed?.includes(id) || !state.ids.includes(id) || !work || fields.some(field=>!state.options[field].includes(work[field])))return state;
+    let next=state;
+    for(const field of fields){
+      const value=work[field];
+      // Free only an incorrectly occupied place; repeated techniques keep their quota.
+      while(takenBy(next,id,field,value)){
+        const owner=state.ids.find(other=>other!==id && next.choices[other]?.[field]===value && byId.get(other)?.[field]!==value);
+        if(!owner)return state;
+        next=choose(next,owner,field,'');
+      }
+      next=choose(next,id,field,value);
+      if(next.choices[id]?.[field]!==value)return state;
+    }
+    return {...next,joker:0,jokerUsed:[...(state.jokerUsed||[]),id],forgeryMarks:{...state.forgeryMarks,[id]:state.forgery?.id===id}};
+  }
   // A move is explicit and atomic: an unconfirmed selection never clears an answer.
   function transferChoice(state, workId, field, value, ownerId) {
     if (!takenBy(state,workId,field,value) || ownerId===workId || !state.ids.includes(ownerId) || state.choices[ownerId]?.[field]!==value) return state;
@@ -158,13 +189,22 @@
     const unlocked = correct === count*fields.length && forgeryCorrect;
     const review = {choices:Object.fromEntries(state.ids.map(id => [id,{...state.choices[id]}]))};
     const attemptLog = [...(state.attemptLog || []), {attempt: attempts, choices: review.choices, ...(state.forgery ? {forgeryMarks:{...state.forgeryMarks}} : {})}];
-    return {checked: true, correct, forgeryCorrect, state: {...state, review, attemptLog, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === limit ? 'lost' : 'playing'}};
+    const escaped=state.escaped+(unlocked?1:0);
+    const next={...state,review,attemptLog,attempts,escaped,phase:unlocked?'unlocked':attempts===limit?'lost':'playing'};
+    if(root.KunstWallEnabled){
+      next.excluded=exclusions(next,pool);
+      next.choices=Object.fromEntries(state.ids.map(id=>[id,Object.fromEntries(fields.map(field=>[field,isExcluded(next,id,field,state.choices[id][field])?'':state.choices[id][field]]))]));
+      next.joker=unlocked && escaped%3===0 ? 1 : state.joker ?? 1;
+    }
+    return {checked:true,correct,forgeryCorrect,state:next};
   }
   function restore(saved, pool) {
     const fields=fieldsFor(saved);
     if (!saved || saved.version !== 1 || !['playing','unlocked','lost'].includes(saved.phase) || !Number.isInteger(saved.escaped) || saved.escaped < 0 || !Number.isInteger(saved.attempts) || saved.attempts < 0 || saved.attempts > limit || !Array.isArray(saved.ids) || saved.ids.length !== count || !Array.isArray(saved.recent) || (saved.choices && (typeof saved.choices !== 'object' || Array.isArray(saved.choices)))) return null;
     if (saved.forgery && (!saved.ids.includes(saved.forgery.id) || typeof saved.forgery.image !== 'string' || saved.forgery.image.length > 1800030 || !/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(saved.forgery.image))) return null;
     if (saved.forgeryMarks && (typeof saved.forgeryMarks !== 'object' || Array.isArray(saved.forgeryMarks) || Object.entries(saved.forgeryMarks).some(([id,value]) => !saved.ids.includes(id) || typeof value !== 'boolean'))) return null;
+    if(saved.joker!==undefined && ![0,1].includes(saved.joker))return null;
+    if(saved.jokerUsed!==undefined && (!Array.isArray(saved.jokerUsed) || saved.jokerUsed.length>1 || saved.jokerUsed.some(id=>!saved.ids.includes(id))))return null;
     if (saved.phase === 'unlocked' && saved.ids.some(id => Boolean(saved.forgeryMarks?.[id]) !== (saved.forgery?.id === id))) return null;
     const works = saved.ids.map(id => pool.find(work => work.id === id));
     if (works.some(work => !validWork(work))) return null;
@@ -196,7 +236,13 @@
       const last = attemptLog.at(-1);
       if (last?.attempt === saved.attempts && review && saved.ids.some(id => fields.some(field => last.choices[id][field] !== review.choices[id][field]))) attemptLog = [];
     }
-    return {...saved, choices: saved.choices || {}, review, ...(attemptLog === undefined ? {} : {attemptLog})};
+    const restored={...saved, choices: saved.choices || {}, review, ...(attemptLog === undefined ? {} : {attemptLog})};
+    if(root.KunstWallEnabled){
+      restored.joker=saved.joker ?? 1;restored.jokerUsed=saved.jokerUsed || [];
+      restored.excluded=exclusions(restored,pool);
+      restored.choices=Object.fromEntries(saved.ids.map(id=>[id,Object.fromEntries(fields.map(field=>[field,isExcluded(restored,id,field,restored.choices[id]?.[field])?'':restored.choices[id]?.[field] || '']))]));
+    }
+    return restored;
   }
   function restoreUpdated(saved, pool, replacements = []) {
     const current = restore(saved,pool);
@@ -216,6 +262,7 @@
     const migrated = {...original,ids:original.ids.map(idOf),recent:original.recent.map(idOf),
       options:Object.fromEntries(fields.map(field=>[field,original.options[field].map(value=>valueOf(field,value))])),
       choices:selections(original.choices),review:original.review ? {choices:selections(original.review.choices)} : null,
+      ...(original.jokerUsed ? {jokerUsed:original.jokerUsed.map(idOf)} : {}),
       ...(original.attemptLog ? {attemptLog:original.attemptLog.map(entry=>({...entry,choices:selections(entry.choices)}))} : {})};
     const restored = restore(migrated,pool);
     if (restored) return {state:restored,updated:true,newRoom:false};
@@ -225,7 +272,7 @@
     if (original.phase === 'lost') { next.phase='lost'; next.attempts=limit; }
     return {state:next,updated:true,newRoom:true};
   }
-  const api = {forgeryPlan,nextForgeryCooldown,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, transferChoice, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
+  const api = {forgeryPlan,nextForgeryCooldown,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, transferChoice, isExcluded, exclusions, useJoker, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

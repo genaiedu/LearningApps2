@@ -488,7 +488,7 @@ test('first failed check retains exact feedback, but changed choices are not eva
 test('personal highscore persists through a loss and automatic new round', () => {
   const vm=require('node:vm'), js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
   const values=new Map([['best','5']]);
-  const context={state:core.newState(pool,null,seeded(50)),pool,best:5,core,imagesAllowed:true,forgeryEverySeries:false,
+  const context={state:core.newState(pool,null,seeded(50)),pool,best:5,core,imagesAllowed:true,forgeryEverySeries:false,wallMode:false,
     progress:require('../scripts/kunsttresor-progress.js'),playerProgress:{version:1,record:5,events:[]},
     history:require('../scripts/kunsttresor-history.js'),workHistory:{version:1,since:Date.now(),rooms:[]},historyBlocked:false,
     keys:{game:'game',best:'best',progress:'progress'},store:{set:(key,value)=>values.set(key,value)},
@@ -532,7 +532,7 @@ test('Wikipedia is offered only after a room ends and uses the established full-
   assert.doesNotMatch(html,/href="[^"]*materialien\.html/);
   assert.ok(html.indexOf('So funktioniert dein Rundgang') < html.indexOf('id="start-game"'));
   assert.ok(html.includes('id="review-summary"'));
-  assert.ok(js.includes('option.disabled = false'));
+  assert.ok(js.includes('option.disabled=excluded'));
   assert.ok(js.includes("open('assignment-dialog')"));
   assert.ok(html.includes('id="jump-missing"'));
   assert.ok(html.includes('id="intro-skip"'));

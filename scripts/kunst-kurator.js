@@ -68,7 +68,7 @@
       const other=pool.find(item=>item.id===id), selection=state.review?.choices?.[id] || state.choices?.[id];
       return other && fields.some(field=>selection?.[field]!==other[field]);
     });
-    return {total:fields.length,fields:result,firstCount:first ? fields.filter(field=>result[field].first).length : null,
+    return {total:fields.length,jokerUsed:Boolean(state.jokerUsed?.includes(work.id)),fields:result,firstCount:first ? fields.filter(field=>result[field].first).length : null,
       finalCount:fields.filter(field=>result[field].correct).length,
       fixed:fields.filter(field=>result[field].first===false && result[field].correct),
       regressed:fields.filter(field=>result[field].first===true && !result[field].correct),
@@ -96,6 +96,7 @@
   }
   function opening(work,state,outcome,pick) {
     const artwork=quote(title(work)), who=work.artist;
+    if(outcome.jokerUsed)return `Für ${artwork} hast du den Joker eingesetzt. Die Angaben wurden automatisch richtig zugeordnet; das ist keine selbstständig gefundene Lösung. Schauen wir deshalb gemeinsam genauer hin: Welche Merkmale lassen sich mit ${quote(work.style)} und ${quote(work.technique)} verbinden? Die Hinweise und Werkquellen helfen dir, die Lösung nachzuvollziehen.`;
     if(work.attribution==='unknown'){
       const response=outcome.finalCount===outcome.total ? 'Deine letzte Zuordnung stimmt vollständig.' : outcome.soleObstacle ? 'Hier blieb die letzte Hürde des Raums.' : 'Bei deiner letzten Zuordnung blieb noch etwas offen.';
       return response+' Unbekannter Künstler: '+pick('opening-anonymous',[
@@ -328,7 +329,7 @@
       `Ein Rückblick auf deinen ersten Versuch: ${quote(conflict.style)} und ${quote(conflict.date)} konnten zeitlich nicht zusammenpassen. Diese Kombination ist in deiner letzten Antwort nicht mehr enthalten.`
     ]))+' '+conflict.origin.statement+' Als bereits bestehende Bewegung passt der Stil deshalb nicht zu dieser frühen Zeit. Einzelne ähnliche Bildmittel können älter sein als die Bewegung.' : '';
     const sources=[...new Set([...technique.sources,...style.sources,...(note?.sources || []),...(conflict?.profile.sources || [])])].map(id=>knowledge.sources[id]).filter(Boolean);
-    return {opening:opening(work,state,outcome,pick),sections,mistake,temporal,workNote:note?.text || '',sources,outcome};
+    return {opening:opening(work,state,outcome,pick),sections,mistake:outcome.jokerUsed?'':mistake,temporal:outcome.jokerUsed?'':temporal,workNote:note?.text || '',sources,outcome};
   }
   const api={explain,outcomes,dateSpan,stage,temporalConflict,roomHint,artistKey};
   if(typeof module!=='undefined' && module.exports) module.exports=api;

@@ -1,5 +1,17 @@
 # Geschützte KI-Rückmeldungen für den Kunsttresor
 
+## Ergänzung vom 17. Oktober 2026: Joker
+
+Die sieben Werke können mit höchstens einem Joker im Vorrat unterstützt werden.
+Der Browser sendet nach der Auflösung zusätzlich `room.jokerUsed` mit höchstens
+einer Werk-ID aus dem aktuellen Raum. Der Dienst validiert diese Angabe und
+weist den Kurator ausdrücklich an, die automatisch gesetzten Beschriftungen
+und Fälschungsmarkierungen nicht als selbstständige Leistung zu loben.
+Stattdessen wird der Jokereinsatz freundlich benannt und die Lösung erklärt.
+Die feste Joker-Notiz der Webseite bleibt auch bei eingeschaltetem KI-Tutor
+sichtbar. Keine Joker-Vorratsdaten, Zeitstempel oder zusätzlichen persönlichen
+Angaben werden übertragen. GET `/api/feedback` meldet Dienstversion 5.
+
 Dieses Verzeichnis ist ein **separates** Vercel-Projekt. Die eigentlichen
 Webseiten bleiben auf GitHub Pages. Der Nutzer hat die Vercel-Sperre am
 11. Oktober 2026 ausschließlich für diese Zwischenstation aufgehoben.

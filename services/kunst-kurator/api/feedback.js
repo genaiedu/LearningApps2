@@ -23,7 +23,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
     res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Vary','Origin');
     if (allowed.includes(origin)) { res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Access-Control-Allow-Methods','POST, OPTIONS');res.setHeader('Access-Control-Allow-Headers','Content-Type'); }
     const send=(status,body)=>res.status(status).json(body);
-    if (req.method==='GET') return send(200,{service:'kunst-kurator',version:4,roomSizes:[4,7],fieldCounts:[4,5],ready:Boolean(env.GROQ_API_KEY && env.AI_ENABLED==='true')});
+    if (req.method==='GET') return send(200,{service:'kunst-kurator',version:5,roomSizes:[4,7],fieldCounts:[4,5],ready:Boolean(env.GROQ_API_KEY && env.AI_ENABLED==='true')});
     if (!allowed.includes(origin)) return send(403,{error:'origin'});
     if (req.method==='OPTIONS') return res.status(204).end();
     if (req.method!=='POST') return send(405,{error:'method'});

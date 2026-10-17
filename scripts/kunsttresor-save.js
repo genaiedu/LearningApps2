@@ -58,7 +58,9 @@
       // Only known game fields survive an import. Do not retain arbitrary file data.
       state = {version:1, roomToken:state.roomToken || progress.token(), runToken:state.runToken || progress.token(), parentRoomToken:state.parentRoomToken || null, ...(state.historyToken ? {historyToken:state.historyToken} : {}), ids:state.ids, options:state.options,
         choices:Object.fromEntries(state.ids.map(id=>[id,Object.fromEntries(core.fields.filter(field=>state.choices[id]?.[field]).map(field=>[field,state.choices[id][field]]))])),
-        attemptLog:state.attemptLog || [], attempts:state.attempts, escaped:state.escaped, phase:state.phase, recent:state.recent, review:state.review};
+        attemptLog:state.attemptLog || [], attempts:state.attempts, escaped:state.escaped, phase:state.phase, recent:state.recent, review:state.review,
+        ...(state.joker!==undefined ? {joker:state.joker,jokerUsed:state.jokerUsed,excluded:state.excluded} : {}),
+        ...(state.forgery ? {forgery:{id:state.forgery.id,image:state.forgery.image},forgeryMarks:state.forgeryMarks,forgeryMode:true,forgeryPrepared:true} : {})};
       const recorded=workHistory.rooms.find(entry=>entry.id===(state.historyToken||state.roomToken));
       if(recorded && JSON.stringify(recorded.ids)!==JSON.stringify(state.ids)) {
         if(!updated)throw Error('Der gespeicherte Raum widerspricht der Bildhistorie.');

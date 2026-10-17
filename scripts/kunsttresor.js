@@ -497,6 +497,7 @@
     state = core.newState(pool, previous,Math.random,forgeryEverySeries);
     delete state.runToken; delete state.parentRoomToken;
     state.escaped = 0;
+    if(wallMode){state.joker=1;state.jokerUsed=[];}
     save(); if (imagesAllowed) { render(); toGame(); } else askForImages(true);
   }
   const pictureLetter = id => 'ABCDEFG'[state.ids.indexOf(id)];
@@ -514,6 +515,7 @@
   }
   function chooseAnswer(workId,field,value,select) {
     if(!state || state.phase!=='playing')return;
+    if(core.isExcluded(state,workId,field,value)){update();return;}
     const owner=core.takenBy(state,workId,field,value);
     if(owner){
       const label=[...select.options].find(option=>option.value===value)?.dataset.label || value;
@@ -551,6 +553,24 @@
     const select=$('answer-'+pictureLetter(id)+'-'+field);
     if(select && $('image-dialog').contains(select))select.focus({preventScroll:true});
   });
+  let jokerRoom=null,jokerOrigin=null;
+  function offerJoker(id,origin) {
+    if(!state || state.phase!=='playing' || $('open-joker').disabled)return;
+    jokerRoom=state.options;jokerOrigin=origin;
+    $('joker-work').replaceChildren(...state.ids.map(workId=>{const option=node('option',null,'Bild '+pictureLetter(workId));option.value=workId;return option;}));
+    $('joker-work').value=id || state.ids.find(workId=>core.fieldsFor(state).some(field=>!state.choices[workId]?.[field])) || state.ids[0];
+    open('joker-dialog');
+  }
+  $('open-joker').addEventListener('click',()=>offerJoker(null,$('open-joker')));
+  $('joker-cancel').addEventListener('click',()=>close('joker-dialog'));
+  $('joker-dialog').addEventListener('close',()=>{jokerRoom=null;if(jokerOrigin?.isConnected)jokerOrigin.focus({preventScroll:true});jokerOrigin=null;});
+  $('joker-confirm').addEventListener('click',()=>{
+    if(state?.options===jokerRoom){
+      const id=$('joker-work').value,next=core.useJoker(state,id,pool);
+      if(next!==state){unstartedRooms.delete(state);state=next;save();update();$('feedback').textContent='Der Joker hat Bild '+pictureLetter(id)+' vollständig gelöst. Das kostet keinen Prüfversuch. Prüfe den Raum, sobald alle Angaben zugeordnet sind.';}
+    }
+    close('joker-dialog');
+  });
   function update() {
     galleryUI?.refresh();
     const timeReady = Date.now() >= revealAt;
@@ -566,6 +586,7 @@
       $('room-kicker').textContent = 'Die Galerie wartet'; $('game-title').textContent = 'Der erste Schlüssel.';
       $('escaped').textContent = '00'; $('filled-label').textContent = '0 / '+total+' zugeordnet'; $('filled-bar').style.width = '0%';
       $('jump-missing').disabled=true;
+      $('open-joker').disabled=true;$('open-joker').textContent='Joker: 1';
       $('attempts').setAttribute('aria-label','Zwei Versuche verfügbar');
       [...$('attempts').children].forEach(dot=>dot.classList.remove('used'));
       $('review-summary').hidden = true; $('start-game').textContent = 'Galerie betreten →';
@@ -580,6 +601,11 @@
     $('jump-missing').disabled=!playing || !allPicturesReady || done===total;
     $('jump-missing').title=done===total?'Alle Angaben sind zugeordnet':'Bild mit fehlender Zuordnung öffnen';
     $('jump-missing').setAttribute('aria-label',done+' von '+total+' zugeordnet. '+(done===total?'Alle Angaben sind zugeordnet.':'Bild mit fehlender Zuordnung öffnen.'));
+    $('open-joker').textContent='Joker: '+(state.joker ?? 1);
+    $('open-joker').disabled=!playing || !allPicturesReady || state.joker!==1;
+    $('open-joker').title=state.joker===1?'Ein Bild vollständig lösen':'Nächster Joker nach Raum '+(Math.floor(state.escaped/3)+1)*3;
+    document.querySelectorAll('.joker-use').forEach(button=>{const used=state.jokerUsed?.includes(button.dataset.work);button.textContent=used?'Joker verwendet':'Mit Joker lösen';button.disabled=!playing || !allPicturesReady || state.joker!==1;});
+    document.querySelectorAll('.forgery-flag').forEach(button=>{button.setAttribute('aria-pressed',String(Boolean(state.forgeryMarks?.[button.dataset.work])));button.disabled=!playing;});
     const remaining = attemptLimit - state.attempts;
     $('attempts').setAttribute('aria-label', remaining + ' von '+attemptLimit+' Versuchen verfügbar');
     [...$('attempts').children].forEach((dot,index) => dot.classList.toggle('used', index < state.attempts));
@@ -587,7 +613,8 @@
       select.value = state.choices[select.dataset.work]?.[select.dataset.field] || '';
       select.disabled = !playing;
       [...select.options].forEach(option => {
-        option.disabled = false;
+        const excluded=core.isExcluded(state,select.dataset.work,select.dataset.field,option.value);
+        option.disabled=excluded;option.classList.toggle('is-excluded',excluded);
         if (option.dataset.label) {
           const owners=state.ids.filter(id=>state.choices[id]?.[select.dataset.field]===option.value);
           const assigned=owners.length?' · bei Bild '+owners.map(pictureLetter).join(', '):'';
@@ -596,8 +623,12 @@
             option.textContent=option.dataset.label+' · '+left+' frei'+assigned;
             option.title=left+' von '+total+' Zuordnungen noch frei'+assigned;
           }else {option.textContent=option.dataset.label+assigned;option.title=option.textContent;}
+          if(excluded){option.textContent='✕ '+option.textContent+' · ausgeschlossen';option.title=option.textContent;}
         }
       });
+      const excluded=$(select.id+'-excluded'),values=state.excluded?.[select.dataset.work]?.[select.dataset.field] || [];
+      excluded.hidden=values.length===0;excluded.replaceChildren(node('span',null,'Ausgeschlossen: '));
+      values.forEach((value,index)=>{if(index)excluded.append(document.createTextNode(' · '));const option=[...select.options].find(option=>option.value===value);excluded.append(node('s',null,option?.dataset.label || value));});
     });
     renderReview();
     document.querySelectorAll('#art-grid .art-card').forEach(card => {
@@ -614,7 +645,7 @@
     $('lock-visual').classList.toggle('is-open', state.phase === 'unlocked');
     $('lock-visual').classList.toggle('is-lost', state.phase === 'lost');
     $('technical-note').hidden = failed.size === 0;
-    if(wallMode&&playing&&state.attempts>0){$('review-help').textContent='✓ richtig, ✕ falsch, ↻ geändert und noch ungeprüft. Noch '+remaining+' Prüfversuch(e). Bereits vergebene Antworten kannst du auswählen und nach Bestätigung verschieben.';}
+    if(wallMode&&playing&&state.attempts>0){$('review-help').textContent='Richtige Angaben bleiben stehen. Falsche wurden geleert und beim jeweiligen Bild dauerhaft ausgeschlossen. Frühere Ausschlüsse bleiben erhalten. Noch '+remaining+' Prüfversuch(e). Bereits vergebene, nicht ausgeschlossene Antworten kannst du nach Bestätigung verschieben.';}
     $('start-game').textContent = state ? 'Zum aktuellen Raum →' : 'Galerie betreten →';
   }
   function renderReview() {
@@ -624,10 +655,12 @@
       const label = select.closest('label'), message = $(select.id + '-result');
       label.classList.toggle('is-incorrect',Boolean(result && !result.changed && !result.correct));
       label.classList.toggle('is-correct',Boolean(result && !result.changed && result.correct));
-      label.classList.toggle('is-revised',Boolean(result?.changed));
+      const cleared=Boolean(result && !result.correct && !select.value);
+      label.classList.toggle('is-revised',Boolean(result?.changed && !cleared));
+      label.classList.toggle('is-cleared',cleared);
       select.setAttribute('aria-invalid',result && !result.changed && !result.correct ? 'true' : 'false');
       message.hidden = !result;
-      message.textContent = !result ? '' : result.changed ? '↻ Geändert · noch nicht geprüft' : result.correct ? '✓ Richtig bei der Prüfung' : '✕ Falsch bei der Prüfung';
+      message.textContent = !result ? '' : cleared ? '✕ Falsch · entfernt und ausgeschlossen' : result.changed ? '↻ Neu gewählt · noch nicht geprüft' : result.correct ? '✓ Richtig bei der Prüfung' : '✕ Falsch bei der Prüfung';
     });
     const visible = results.length > 0 && state.phase === 'playing';
     $('review-summary').hidden = !visible;
@@ -708,15 +741,18 @@
         [...new Set(state.options[field])].forEach(value => { const display = field === 'artist' ? wikiCatalogue.artists[value]?.title || value : field==='title'?titleLabel(value):value; const option = node('option',null,display); option.value = value; option.dataset.label = display; select.append(option); });
         select.addEventListener('change',()=>chooseAnswer(id,field,select.value,select));
         const result = node('small','answer-result'); result.id = select.id + '-result'; result.hidden = true;
-        select.setAttribute('aria-describedby',result.id);
-        label.append(select,result); assignments.append(label);
+        const excluded=node('small','excluded-answers');excluded.id=select.id+'-excluded';excluded.hidden=true;
+        select.setAttribute('aria-describedby',result.id+' '+excluded.id);
+        label.append(select,result,excluded); assignments.append(label);
       }
       const flag = node('button','forgery-flag', 'Fälschung'); flag.type='button';
+      flag.dataset.work=id;
       flag.setAttribute('aria-pressed',String(Boolean(state.forgeryMarks?.[id])));
       flag.disabled = state.phase !== 'playing';
       flag.onclick = () => { unstartedRooms.delete(state); state.forgeryMarks ||= {}; state.forgeryMarks[id] = !state.forgeryMarks[id]; flag.setAttribute('aria-pressed',String(state.forgeryMarks[id])); save(); };
       flag.hidden = !state.forgeryMode && !state.forgery;
-      const actions=node('div','artwork-actions'); actions.append(flag,galleryUI.likeButton(id));
+      const actions=node('div','artwork-actions'); actions.append(flag);
+      const joker=node('button','joker-use','Mit Joker lösen');joker.type='button';joker.dataset.work=id;joker.onclick=()=>offerJoker(id,joker);actions.append(joker);
       card.append(heading,picture,actions,assignments); if(wallMode){card.dataset.wallAspect=String(work.imageWidth&&work.imageHeight?work.imageWidth/work.imageHeight:1);card.dataset.wallPhysical=String(work.widthCm&&work.heightCm?Math.sqrt(work.widthCm*work.heightCm):0);} $('art-grid').append(card); loadWorkImage(work,picture,epoch);
     });
     $('lock-title').textContent = state.phase === 'unlocked' ? 'Der Schlüssel passt.' : state.phase === 'lost' ? 'Das Schloss bleibt zu.' : 'Das Schloss wartet auf deinen Schlüssel.';
@@ -836,6 +872,7 @@
       container.append(node('p',null,'Die Kuratorenhinweise konnten nicht geladen werden. Die Werkangaben und Quellen stehen dir trotzdem zur Verfügung. Bitte lade die Seite erneut, um auch die Erklärungen zu lesen.'));
       return container;
     }
+    if(state.jokerUsed?.includes(work.id))container.append(node('p','curator-joker-note','Bei diesem Bild hast du den Joker eingesetzt. Die Beschriftungen und die Original-/Fälschungsmarkierung wurden automatisch gelöst. Lass uns die Lösung jetzt gemeinsam nachvollziehen.'));
     if(state.forgery?.id===work.id) {
       const info=ki.forgeryInfo(state);
       container.append(node('p','curator-forgery-result',ki.forgeryComment(info)),node('p',null,'Im Rätsel hast du eine KI-Nachahmung gesehen. Das Original zeigen wir dir erst jetzt im Vergleich.'),node('h4',null,'Zum Original'));
@@ -910,7 +947,7 @@
       overview.append(node('p','eyebrow','Werk ' + 'ABCDEFG'[index]),node('h3',null,core.galleryTitle(work)));
       if (core.galleryTitle(work)!==work.title) overview.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
       const list = node('dl'); core.fieldsFor(state).forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,field==='title'?core.galleryTitle(work):work[field]))); overview.append(list);
-      overview.append(galleryUI.likeButton(id));
+      if(state.phase==='unlocked')overview.append(galleryUI.likeButton(id));
       card.append(overview,renderCurator(work));
       if (state.forgery?.id === id && imagesAllowed) {
         const comparison=node('section','forgery-comparison');

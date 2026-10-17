@@ -48,6 +48,7 @@
         const note=b.querySelector('.gallery-like-note');note.hidden=!liked;
         note.textContent=unlocked?'Dein Kunstfilm ist freigeschaltet.':'Noch '+(model.UNLOCK-gallery.liked.length)+' Lieblingswerke bis zum Kunstfilm.';
         b.disabled=!winning || !getState()?.ids.includes(b.dataset.galleryLike);
+        b.hidden=b.disabled || !b.closest('#solutions');
         b.title=winning?'Ein Lieblingswerk aus deinem gewonnenen Raum.':'Als Belohnung erst nach einem gewonnenen Raum verfügbar.';
       });
       $('gallery-edit-open').disabled=!unlocked;$('gallery-play').disabled=!unlocked;
@@ -60,7 +61,7 @@
           if(change(next,null,{render:false})){$('gallery-progress').textContent=progressText();status(progressText());}
         }catch(error){$('gallery-progress').textContent=error.message;}
       },'gallery-like');
-      b.dataset.galleryLike=id;
+      b.dataset.galleryLike=id;b.hidden=true;
       const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');
       const p=document.createElementNS(svg.namespaceURI,'path');p.setAttribute('d','M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z');svg.append(p);
       const note=node('small','gallery-like-note');note.hidden=true;b.append(svg,node('span',null,'Für meine Galerie merken'),note);return b;
