@@ -355,6 +355,12 @@
       {title:'Wie weit trägt dein Blick?',text:'Alles richtig öffnet die nächste Tür. Ein zweiter Fehlversuch beendet die Runde. Nach der Auflösung kannst du weiterlesen – und freigegebene Bilder herunterladen.'},
       {title:'1000 Kunstwerke',text:'Quiz Edition'}
     ];
+    if(wallMode){
+      chapters[1]={title:'Sieben Werke. Eine Bilderwand.',text:'Sieben Werke begegnen dir gleichzeitig. Zu jedem Werk stellst du vier Fragen: Wann? Welcher Stil? Von wem? Wie gemacht? Klicke ein Bild an, um es groß zu sehen und rechts die Antworten zuzuordnen.'};
+      chapters[2]={title:'Traust du deinem Blick?',text:'Selten ist eines der sieben Bilder eine KI-Nachahmung: höchstens in jedem siebten Rätsel. Markiere es mit „Fälschung“. Die meisten Räume zeigen nur Originale.'};
+      chapters[3]={title:'Zwei Fehlurteile sind erlaubt.',text:'28 Zuordnungen. Drei Prüfversuche. Nach einer falschen Prüfung kannst du nachbessern. Erst der dritte Fehlversuch beendet deinen Rundgang. Alle Antworten und die Fälschungsmarkierung müssen stimmen.'};
+      chapters[4]={title:'Nähe verändert den Blick.',text:'Ein Klick öffnet das ganze Werk, ein weiterer die Lupe. Escape führt zum ganzen Bild und danach zurück zur Wand. Alles richtig? Die nächste Tür öffnet sich.'};
+    }
     chosen.forEach((work,index)=>{
       const finale=index===chosen.length-1;
       const slide=node('div',finale?'intro-slide intro-slide--full':'intro-slide'), image=index===0?preparation.image:node('img'); slide.dataset.id=work.id;
