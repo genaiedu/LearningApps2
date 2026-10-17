@@ -308,7 +308,7 @@
     open('launch-dialog');
   }
   async function launchGallery(withIntro = true) {
-    if(typeof wallMode!=='undefined'&&wallMode)void enterFullscreen();
+    if(typeof wallMode!=='undefined'&&wallMode){wallOpening=false;void enterFullscreen();}
     confirmLaunchAIChoice();
     close('launch-dialog');
     if (!imagesAllowed) { imagesAllowed = true; store.set(keys.images,'yes'); heroImages(); }
@@ -440,7 +440,7 @@
   }
   function start() {
     if (!pool.length) return;
-    if(wallMode)void enterFullscreen();
+    if(wallMode){wallOpening=false;void enterFullscreen();}
     if (!aiChoiceConfirmed && aiEndpoint) { prepareLaunch(); return; }
     if (!imagesAllowed) { askForImages(true); return; }
     if (!state) state = core.newState(pool);
@@ -1030,7 +1030,7 @@
       refreshBadges(); refreshHistory();
       $('best').textContent = number(best); if(!wallMode)prepareLaunch(); heroImages();
       if (state && imagesAllowed) render();
-      if(wallMode){wallOpening=false;requestAnimationFrame(()=>$('start').scrollIntoView({block:'start',behavior:'instant'}));}
+      if(wallMode){requestAnimationFrame(()=>$('start').scrollIntoView({block:'start',behavior:'instant'}));}
     }).catch(() => {
       $('start-game').textContent = $('start-here').textContent = 'Archiv nicht erreichbar';
       $('waiting').querySelector('p').textContent = 'Das lokale Werkarchiv konnte nicht geladen werden. Bitte lade die veröffentlichte Seite erneut. Eine direkt als Datei geöffnete Kopie benötigt einen Webserver.';
