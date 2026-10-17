@@ -87,18 +87,19 @@ function readyWall(app){
 }
 function selectAnswer(app,letter,field,value){const select=app.q('#answer-'+letter+'-'+field);select.value=value;select.dispatchEvent(new app.w.Event('change',{bubbles:true}));return select;}
 test('joker confirmation can be cancelled, solves the selected work and survives reload and file transfer',async t=>{
- const app=await setup(t);app.click('launch-skip');readyWall(app);const initial=roomOf(app),id=initial.ids[2];
+ const app=await setup(t);assert.equal(app.q('#open-joker').textContent,'Joker einsetzen');app.click('launch-skip');readyWall(app);const initial=roomOf(app),id=initial.ids[2];
+ assert.equal(app.q('#open-joker').textContent,'Joker einsetzen');
  assert.equal(app.q('#art-grid [data-gallery-like]'),null);app.click('open-joker');assert.equal(app.q('#joker-dialog').open,true);app.click('joker-cancel');assert.deepEqual(roomOf(app),initial);
  app.q('#art-grid [data-id="'+id+'"] .artwork-button').click();assert.equal(app.q('#wall-settings [data-gallery-like]'),null);
  app.q('#wall-settings .joker-use').click();assert.equal(app.q('#joker-work').value,id);app.click('joker-confirm');
  const used=roomOf(app),work=pool.find(w=>w.id===id);assert.equal(used.joker,0);assert.equal(used.attempts,0);assert.deepEqual(used.jokerUsed,[id]);
  for(const field of model.KunstTresor.fieldsFor(used))assert.equal(app.q('#answer-C-'+field).value,work[field]);
- assert.equal(app.q('#open-joker').disabled,true);assert.equal(app.q('#wall-settings .joker-use').textContent,'Joker verwendet');
- const again=await setup(t,{state:used});again.click('launch-skip');assert.equal(roomOf(again).joker,0);assert.deepEqual(roomOf(again).jokerUsed,[id]);
+ assert.equal(app.q('#open-joker').disabled,true);assert.equal(app.q('#open-joker').textContent,'Joker verwendet');assert.equal(app.q('#wall-settings .joker-use').textContent,'Joker verwendet');
+ const again=await setup(t,{state:used});again.click('launch-skip');assert.equal(roomOf(again).joker,0);assert.deepEqual(roomOf(again).jokerUsed,[id]);assert.equal(again.q('#open-joker').textContent,'Joker verwendet');
  const payload={app:'kunsttresor',version:1,savedAt:Date.now(),state:used,best:0,progress:model.KunstProgress.fresh(),history:model.KunstHistory.fresh(),gallery:model.KunstGallery.fresh()};
  const transfer=app.w.KunstSave.validate(await app.w.KunstSave.decode(await app.w.KunstSave.encode(payload)),pool,[],app.w.KunstTresor,app.w.KunstProgress,app.w.KunstHistory,app.w.KunstGallery);
  assert.equal(transfer.state.joker,0);assert.deepEqual(JSON.parse(JSON.stringify(transfer.state.jokerUsed)),[id]);
- again.click('restart-game');again.click('restart-confirm');assert.equal(roomOf(again).joker,1);assert.equal(roomOf(again).escaped,0);
+ again.click('restart-game');again.click('restart-confirm');assert.equal(roomOf(again).joker,1);assert.equal(roomOf(again).escaped,0);assert.equal(again.q('#open-joker').textContent,'Joker einsetzen');
 });
 test('two failed checks strike and disable both sets of wrong answers only for their artwork',async t=>{
  const app=await setup(t);app.click('launch-skip');readyWall(app);const room=roomOf(app),id=room.ids[0];

@@ -593,7 +593,7 @@
       $('room-kicker').textContent = 'Die Galerie wartet'; $('game-title').textContent = 'Der erste Schlüssel.';
       $('escaped').textContent = '00'; $('filled-label').textContent = '0 / '+total+' zugeordnet'; $('filled-bar').style.width = '0%';
       $('jump-missing').disabled=true;
-      $('open-joker').disabled=true;$('open-joker').textContent='Joker: 1';
+      $('open-joker').disabled=true;$('open-joker').textContent='Joker einsetzen';
       $('attempts').setAttribute('aria-label','Zwei Versuche verfügbar');
       [...$('attempts').children].forEach(dot=>dot.classList.remove('used'));
       $('review-summary').hidden = true; $('start-game').textContent = 'Galerie betreten →';
@@ -608,7 +608,7 @@
     $('jump-missing').disabled=!playing || !allPicturesReady || done===total;
     $('jump-missing').title=done===total?'Alle Angaben sind zugeordnet':'Bild mit fehlender Zuordnung öffnen';
     $('jump-missing').setAttribute('aria-label',done+' von '+total+' zugeordnet. '+(done===total?'Alle Angaben sind zugeordnet.':'Bild mit fehlender Zuordnung öffnen.'));
-    $('open-joker').textContent='Joker: '+(state.joker ?? 1);
+    $('open-joker').textContent=state.joker===0?'Joker verwendet':'Joker einsetzen';
     $('open-joker').disabled=!playing || !allPicturesReady || state.joker!==1;
     $('open-joker').title=state.joker===1?'Ein Bild in diesem Raum vollständig lösen':'In diesem Raum verbraucht. Im nächsten Raum erhältst du einen neuen Joker.';
     document.querySelectorAll('.joker-use').forEach(button=>{const used=state.jokerUsed?.includes(button.dataset.work);button.textContent=used?'Joker verwendet':'Mit Joker lösen';button.disabled=!playing || !allPicturesReady || state.joker!==1;});
