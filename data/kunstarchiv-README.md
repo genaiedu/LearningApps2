@@ -1,7 +1,71 @@
 # Kunsttresor: Werkpool und Vorspann
 
+## Erweiterung vom 17. Oktober 2026: 302 weitere Werke
+
+Der Bestand wächst von 1505 auf **1807 Werke**. Alle bisherigen Werk- und
+Bilddatensätze bleiben unverändert. Die Ergänzung umfasst 89 Künstler,
+darunter 56 weitere Arbeiten Manets, 22 von Toulouse-Lautrec und 26 von Klimt.
+Porträts aus der National Gallery London, den Uffizien beziehungsweise dem
+Palazzo Pitti und dem Musée d’Orsay bilden einen Schwerpunkt. Weitere
+Museumsbestände ergänzen die Auswahl. Die Zahl 302 bezeichnet nicht nur
+Porträts: Auch Genreszenen, Landschaften, Allegorien und Stillleben sind dabei.
+
+Die überprüfte Auswahl steht in `kunst-portraets-2026.json`; sie ist keine
+automatische Übernahme aller Suchtreffer. `review-kunst-portraits.mjs` sammelt
+ausschließlich öffentliche Metadaten in einem externen Arbeitsverzeichnis.
+`extend-kunst-portraits.mjs` prüft die explizite Auswahl und erzeugt einen
+Append-only-Patch. Es werden keine Bilddateien heruntergeladen oder gebündelt.
+Commons-Bildrechte, Künstlerzuschreibung, Datierung und Material werden getrennt
+behandelt. Bei mehreren widersprechenden Datierungen ist eine ausdrückliche
+Katalogentscheidung nötig; eine gerundete Dekadenangabe wird nicht als exaktes
+Jahr verwendet. Qualifizierte Zeitspannen und Näherungen bleiben erhalten.
+
+Wagner nutzt die vom Nutzer vorgeschlagene Renoir-Reproduktion. Klimts
+„Hoffnung II“ wird nach dem MoMA-Katalog 1907–1908 datiert; Öl, Gold und Platin
+bleiben vollständig genannt. Napoleons Alpenporträt ist ausdrücklich die
+Malmaison-Fassung (`Q19801071`), nicht die allgemeine Werkserie; das aktuelle
+Louvre-Verzeichnis datiert diese Fassung 1800. Der „Pfeifer“ ist nach Orsay
+1866 datiert, „Die Toilette“ nach dessen revidiertem Katalog 1889, nicht 1896.
+Die entsprechenden Kataloglinks stehen beim einzelnen Werk.
+
+Nicht alle neuen Werke besitzen eine P135-Stilangabe. Die separat ausgewählten
+redaktionellen Einordnungen sind deshalb ausdrücklich als solche markiert;
+sie werden nicht als gesicherter Wikidata-Befund oder einzig mögliche
+Stilzuweisung ausgegeben. Bei übersetzten Oberbegriffen bleiben Originalterm
+und weitere dokumentierte Stilbegriffe erhalten.
+
+Kokoschka wird ohne passende Einzelfreigabe nicht ergänzt. Das vorgeschlagene
+Elisabeth-Porträt `Elizabeth1England.jpg` bleibt wegen ausdrücklich umstrittener
+Fotorechte und konkurrierender Zuschreibungen außerhalb dieser Auswahl.
+Die Entscheidungsquellen stehen ebenfalls im Auswahlmanifest.
+
+## Bildrunden und sichtbare Originale
+
+Die Raumauswahl bevorzugt die am seltensten gezeigten Werke aus der gesamten
+gespeicherten Bildhistorie. Zunächst werden noch unbekannte Bilder gewählt;
+erst nach Durchlaufen des Bestands beginnt die nächste Stufe. Eindeutige
+Titel-, Künstler-, Stil- und Zeitzuordnungen bleiben zwingend. Falls die
+verbliebenen Werke keinen vollständigen Raum ergeben, wird mit möglichst
+wenigen bekannten Werken aufgefüllt. Technische Vielfalt ist dagegen nur eine
+Präferenz: Sie darf keine vermeidbare Bildwiederholung erzwingen. Die Suche
+ist begrenzt, um keine langen Blockaden im Browser zu erzeugen.
+
+Ein Neustart löscht die Bildhistorie nicht. Reload und verschlüsselter
+Export/Import erhalten sie; ein Import verwirft einen eventuell vorgemerkten
+Folgeraum. Vorspann, Startbild und nur vorbereitete Räume verbrauchen keine
+Werke. Nicht geladene Quizbilder zählen nicht. Eine geprüfte Nachahmung zählt
+für die Rotation des Vorbilds mit, behauptet aber nicht, dass das Original
+bereits gesehen wurde. Erst beim Laden des Originals im Kuratorenvergleich
+wird auch dessen tatsächliche Anzeige vermerkt.
+
+Nach einem gewonnenen Raum steht das Herz direkt unter dem **Original** im
+Fälschungsvergleich. Es wird erst nach erfolgreichem Laden bedienbar. Die
+Sammlung enthält ausschließlich die Archiv-ID und Originalabbildung, niemals
+die Nachahmung. Auch dieses Lieblingswerk bleibt nach Reload und Dateiübernahme
+erhalten. In Rätselansicht und verlorenen Räumen gibt es weiterhin keine Herzen.
+
 Die Edition heißt weiterhin „1000 Kunstwerke · Quiz Edition“. Ihr gezielt
-erweitertes Archiv verwendet tatsächlich 1505 spielbare Datensätze; die
+erweitertes Archiv verwendet tatsächlich 1807 spielbare Datensätze; die
 Oberfläche zeigt die tatsächliche Größe an. Die Bilder werden nicht
 im Repository gespeichert; der Browser lädt sie nach Zustimmung direkt von
 Wikimedia Commons und den beteiligten Museumsservern. Die vier Antwortfelder

@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-11",
+  "checked": "2026-10-17",
   "source": "https://www.wikidata.org/",
   "artists": {
     "Jacques Louis David": {
@@ -1470,6 +1470,146 @@
       "title": "Unbekannter Künstler",
       "language": "de",
       "unknown": true
+    },
+    "Jan van Eyck": {
+      "title": "Jan van Eyck",
+      "language": "de"
+    },
+    "Joshua Reynolds": {
+      "title": "Joshua Reynolds",
+      "language": "de"
+    },
+    "Pietro Perugino": {
+      "title": "Perugino",
+      "language": "de"
+    },
+    "Jacopo da Pontormo": {
+      "title": "Jacopo da Pontormo",
+      "language": "de"
+    },
+    "Albert Edelfelt": {
+      "title": "Albert Edelfelt",
+      "language": "de"
+    },
+    "Giovanni Boldini": {
+      "title": "Giovanni Boldini",
+      "language": "de"
+    },
+    "Antoine-Jean Gros": {
+      "title": "Antoine-Jean Gros",
+      "language": "de"
+    },
+    "Carolus-Duran": {
+      "title": "Émile Auguste Carolus-Duran",
+      "language": "de"
+    },
+    "Jules Bastien-Lepage": {
+      "title": "Jules Bastien-Lepage",
+      "language": "de"
+    },
+    "Marie Bracquemond": {
+      "title": "Marie Bracquemond",
+      "language": "de"
+    },
+    "Hans Baldung": {
+      "title": "Hans Baldung",
+      "language": "de"
+    },
+    "Andrea del Sarto": {
+      "title": "Andrea del Sarto",
+      "language": "de"
+    },
+    "Joos van Cleve": {
+      "title": "Joos van Cleve",
+      "language": "de"
+    },
+    "Giorgio Vasari": {
+      "title": "Giorgio Vasari",
+      "language": "de"
+    },
+    "Lorenzo Lotto": {
+      "title": "Lorenzo Lotto",
+      "language": "de"
+    },
+    "Jacopo Palma": {
+      "title": "Jacopo Palma (der Alte)",
+      "language": "de"
+    },
+    "Giovanni Cariani": {
+      "title": "Giovanni Cariani",
+      "language": "de"
+    },
+    "Antonello da Messina": {
+      "title": "Antonello da Messina",
+      "language": "de"
+    },
+    "Alesso Baldovinetti": {
+      "title": "Alesso Baldovinetti",
+      "language": "de"
+    },
+    "Hans Memling": {
+      "title": "Hans Memling",
+      "language": "de"
+    },
+    "Petrus Christus": {
+      "title": "Petrus Christus",
+      "language": "de"
+    },
+    "Lucas Cranach der Jüngere": {
+      "title": "Lucas Cranach der Jüngere",
+      "language": "de"
+    },
+    "Philippe de Champaigne": {
+      "title": "Philippe de Champaigne",
+      "language": "de"
+    },
+    "Giovanni Battista Gaulli": {
+      "title": "Giovanni Battista Gaulli",
+      "language": "de"
+    },
+    "Nicolaes Maes": {
+      "title": "Nicolaes Maes",
+      "language": "de"
+    },
+    "Jan Frans van Douven": {
+      "title": "Jan Frans van Douven",
+      "language": "de"
+    },
+    "Justus Sustermans": {
+      "title": "Justus Suttermans",
+      "language": "de"
+    },
+    "François-Hubert Drouais": {
+      "title": "François-Hubert Drouais",
+      "language": "de"
+    },
+    "Pompeo Batoni": {
+      "title": "Pompeo Batoni",
+      "language": "de"
+    },
+    "Léon Bonnat": {
+      "title": "Léon Bonnat",
+      "language": "de"
+    },
+    "Franz Xaver Winterhalter": {
+      "title": "Franz Xaver Winterhalter",
+      "language": "de"
+    },
+    "Amélie Beaury-Saurel": {
+      "title": "Amélie Beaury-Saurel",
+      "language": "de"
+    },
+    "Alexandre Cabanel": {
+      "title": "Alexandre Cabanel",
+      "language": "de"
+    },
+    "Eugène Emmanuel Amaury-Duval": {
+      "title": "Eugène Emmanuel Amaury-Duval",
+      "language": "de"
+    },
+    "Ernest Meissonier": {
+      "title": "Ernest Meissonier",
+      "language": "de"
     }
   },
   "works": {
@@ -3952,6 +4092,730 @@
     "wd-Q2267583": {
       "title": "Selbstbildnis im Smoking",
       "language": "de"
+    },
+    "wd-Q220859": {
+      "title": "Arnolfini-Hochzeit",
+      "language": "de"
+    },
+    "wd-Q2392901": {
+      "title": "Portrait of a Man (Self Portrait?)",
+      "language": "en"
+    },
+    "wd-Q1150782": {
+      "title": "Léal Souvenir",
+      "language": "en"
+    },
+    "wd-Q1633898": {
+      "title": "La Schiavona",
+      "language": "en"
+    },
+    "wd-Q1759759": {
+      "title": "Leonardo Loredan (Bellini)",
+      "language": "de"
+    },
+    "wd-Q3228387": {
+      "title": "Portrait of Susanna Lunden",
+      "language": "en"
+    },
+    "wd-Q4373334": {
+      "title": "Portrait of Christina of Denmark",
+      "language": "en"
+    },
+    "wd-Q1619527": {
+      "title": "Mr. und Mrs. Andrews",
+      "language": "de"
+    },
+    "wd-Q26713464": {
+      "title": "Portrait of Banastre Tarleton",
+      "language": "en"
+    },
+    "wd-Q3399429": {
+      "title": "Portrait of Jacobus Blauw",
+      "language": "en"
+    },
+    "wd-Q1328065": {
+      "title": "Eleonora von Toledo und ihr Sohn Giovanni",
+      "language": "de"
+    },
+    "wd-Q3784272": {
+      "title": "Portrait of Giovanni de' Medici as a Child",
+      "language": "en"
+    },
+    "wd-Q3625842": {
+      "title": "Portrait of Cosimo I de' Medici",
+      "language": "en"
+    },
+    "wd-Q3937511": {
+      "title": "Portrait of Eleonora Gonzaga della Rovere",
+      "language": "en"
+    },
+    "wd-Q945250": {
+      "title": "Bildnis des Francesco delle Opere",
+      "language": "de"
+    },
+    "wd-Q3013751": {
+      "title": "Portrait of Guidobaldo da Montefeltro",
+      "language": "en"
+    },
+    "wd-Q3937502": {
+      "title": "Portrait of Cosimo the Elder",
+      "language": "en"
+    },
+    "wd-Q3937472": {
+      "title": "Portrait of Bia de' Medici",
+      "language": "en"
+    },
+    "wd-Q3808227": {
+      "title": "Girls at the Piano",
+      "language": "en"
+    },
+    "wd-Q3937498": {
+      "title": "Portrait of the Painter Claude Monet",
+      "language": "en"
+    },
+    "wd-Q7142987": {
+      "title": "Pasteur's portrait by Edelfelt",
+      "language": "en"
+    },
+    "wd-Q17492870": {
+      "title": "Portrait of Robert de Montesquiou",
+      "language": "en"
+    },
+    "wd-Q17190953": {
+      "title": "Portrait of Mademoiselle L.L.",
+      "language": "en"
+    },
+    "wd-Q428985": {
+      "title": "The Corner of the Table",
+      "language": "en"
+    },
+    "wd-Q4896868": {
+      "title": "The Beautiful Angel",
+      "language": "en"
+    },
+    "wd-Q152509": {
+      "title": "Das Frühstück im Grünen (Manet)",
+      "language": "de"
+    },
+    "wd-Q737062": {
+      "title": "Olympia (Gemälde)",
+      "language": "de"
+    },
+    "wd-Q26250": {
+      "title": "The Fifer",
+      "language": "en"
+    },
+    "wd-Q2529703": {
+      "title": "Portrait of Emile Zola",
+      "language": "en"
+    },
+    "wd-Q1551926": {
+      "title": "Porträt Stéphane Mallarmé",
+      "language": "de"
+    },
+    "wd-Q775407": {
+      "title": "Der Balkon (Manet)",
+      "language": "de"
+    },
+    "wd-Q1212098": {
+      "title": "Die Eisenbahn",
+      "language": "de"
+    },
+    "wd-Q481454": {
+      "title": "Im Wintergarten",
+      "language": "de"
+    },
+    "wd-Q731639": {
+      "title": "Die Pflaume (Manet)",
+      "language": "de"
+    },
+    "wd-Q18620351": {
+      "title": "Der Frühling (Manet)",
+      "language": "de"
+    },
+    "wd-Q3824633": {
+      "title": "La Toilette (Toulouse-Lautrec)",
+      "language": "en"
+    },
+    "wd-Q19905264": {
+      "title": "The Englishman at the Moulin Rouge",
+      "language": "en"
+    },
+    "wd-Q12899487": {
+      "title": "The Hangover (Suzanne Valadon)",
+      "language": "en"
+    },
+    "wd-Q19883512": {
+      "title": "Hope II",
+      "language": "en"
+    },
+    "wd-Q2324643": {
+      "title": "Judith und Holofernes (Klimt)",
+      "language": "de"
+    },
+    "wd-Q3829156": {
+      "title": "Die drei Lebensalter der Frau",
+      "language": "de"
+    },
+    "wd-Q4311873": {
+      "title": "Die Hoffnung I",
+      "language": "de"
+    },
+    "wd-Q102320121": {
+      "title": "Portrait of Emilie Flöge",
+      "language": "en"
+    },
+    "wd-Q1313605": {
+      "title": "Der Kaiser Napoleon in seinem Arbeitszimmer im Tuilerien-Palast",
+      "language": "de"
+    },
+    "wd-Q1231009": {
+      "title": "Le Sacre de Napoléon",
+      "language": "de"
+    },
+    "wd-Q1282978": {
+      "title": "Bonaparte an der Brücke von Arcole",
+      "language": "de"
+    },
+    "wd-Q2909911": {
+      "title": "Bonaparte, First Consul",
+      "language": "en"
+    },
+    "wd-Q210277": {
+      "title": "Musik im Tuileriengarten",
+      "language": "de"
+    },
+    "wd-Q536024": {
+      "title": "Nana (Manet)",
+      "language": "de"
+    },
+    "wd-Q59815": {
+      "title": "Der alte Musikant",
+      "language": "de"
+    },
+    "wd-Q1192090": {
+      "title": "Der Absinthtrinker",
+      "language": "de"
+    },
+    "wd-Q1844748": {
+      "title": "Boy Carrying a Sword",
+      "language": "en"
+    },
+    "wd-Q3178376": {
+      "title": "The Reading (Manet)",
+      "language": "en"
+    },
+    "wd-Q1163504": {
+      "title": "Maskenball in der Oper",
+      "language": "de"
+    },
+    "wd-Q39226": {
+      "title": "The Street Singer (Manet)",
+      "language": "en"
+    },
+    "wd-Q126467": {
+      "title": "Portrait of Monsieur and Madame Manet",
+      "language": "en"
+    },
+    "wd-Q3231193": {
+      "title": "Boy Blowing Bubbles",
+      "language": "en"
+    },
+    "wd-Q18208688": {
+      "title": "Chez Tortoni",
+      "language": "de"
+    },
+    "wd-Q2494850": {
+      "title": "The Funeral (painting)",
+      "language": "en"
+    },
+    "wd-Q26689493": {
+      "title": "Corner of a Café-Concert",
+      "language": "en"
+    },
+    "wd-Q23926235": {
+      "title": "Portrait of Marguerite Gauthier-Lathuille",
+      "language": "en"
+    },
+    "wd-Q3399437": {
+      "title": "Portrait of Monsieur Pertuiset the Lion-Hunter",
+      "language": "en"
+    },
+    "wd-Q12900049": {
+      "title": "Portrait of Clemenceau (Manet, Paris)",
+      "language": "en"
+    },
+    "wd-Q30880017": {
+      "title": "Bildnis des Dichters Zacharie Astruc",
+      "language": "de"
+    },
+    "wd-Q20539197": {
+      "title": "Portrait of Victorine Meurent",
+      "language": "en"
+    },
+    "wd-Q8187529": {
+      "title": "Un atelier aux Batignolles",
+      "language": "de"
+    },
+    "wd-Q1626128": {
+      "title": "Hommage à Delacroix",
+      "language": "de"
+    },
+    "wd-Q2873059": {
+      "title": "Around the Piano",
+      "language": "en"
+    },
+    "wd-Q17492697": {
+      "title": "The Bath (Stevens)",
+      "language": "en"
+    },
+    "wd-Q2105253": {
+      "title": "Portrait der Mme***",
+      "language": "de"
+    },
+    "wd-Q17493962": {
+      "title": "Madame Charles Max",
+      "language": "en"
+    },
+    "wd-Q18625546": {
+      "title": "Herbst (Manet)",
+      "language": "de"
+    },
+    "wd-Q15973357": {
+      "title": "Der Spargel (Manet)",
+      "language": "de"
+    },
+    "wd-Q3505997": {
+      "title": "Madame Manet at the Piano",
+      "language": "en"
+    },
+    "wd-Q7720924": {
+      "title": "The Café-Concert",
+      "language": "en"
+    },
+    "wd-Q2977843": {
+      "title": "Claude Monet Painting in his Studio",
+      "language": "en"
+    },
+    "wd-Q957664": {
+      "title": "Die Krocketpartie",
+      "language": "de"
+    },
+    "wd-Q18223037": {
+      "title": "Spargelbündel",
+      "language": "de"
+    },
+    "wd-Q15917726": {
+      "title": "The Waitress (Manet)",
+      "language": "en"
+    },
+    "wd-Q17495108": {
+      "title": "Berthe Morisot with a Fan",
+      "language": "en"
+    },
+    "wd-Q23787839": {
+      "title": "Der Fliederstrauß",
+      "language": "de"
+    },
+    "wd-Q3212521": {
+      "title": "The Rue Mosnier Dressed with Flags",
+      "language": "en"
+    },
+    "wd-Q17494570": {
+      "title": "Flowers in a Crystal Vase",
+      "language": "en"
+    },
+    "wd-Q19905377": {
+      "title": "The Brioche",
+      "language": "en"
+    },
+    "wd-Q43081847": {
+      "title": "Repose (painting)",
+      "language": "en"
+    },
+    "wd-Q55422279": {
+      "title": "View of the 1867 Exposition Universelle",
+      "language": "en"
+    },
+    "wd-Q21045326": {
+      "title": "Alice Legouvé im Lehnstuhl",
+      "language": "de"
+    },
+    "wd-Q19911640": {
+      "title": "Die Familie Monet in ihrem Garten in Argenteuil",
+      "language": "de"
+    },
+    "wd-Q21050281": {
+      "title": "Frau mit kastanienbraunem Hut",
+      "language": "de"
+    },
+    "wd-Q2481954": {
+      "title": "Am Strand (Manet)",
+      "language": "de"
+    },
+    "wd-Q1451508": {
+      "title": "Frau mit Sonnenschirm (Monet)",
+      "language": "de"
+    },
+    "wd-Q11702934": {
+      "title": "Madame Georges Charpentier",
+      "language": "de"
+    },
+    "wd-Q3937675": {
+      "title": "Portrait of William Sisley",
+      "language": "en"
+    },
+    "wd-Q13575429": {
+      "title": "Une loge aux Théâtre Italiens",
+      "language": "en"
+    },
+    "wd-Q12142552": {
+      "title": "Portrait of Pierre‑Auguste Renoir",
+      "language": "en"
+    },
+    "wd-Q17491938": {
+      "title": "The Lady in White (Bracquemond)",
+      "language": "en"
+    },
+    "wd-Q17495246": {
+      "title": "Portrait of Madame Colonna Romano",
+      "language": "en"
+    },
+    "wd-Q3633443": {
+      "title": "At the Moulin Rouge, The Dance",
+      "language": "en"
+    },
+    "wd-Q3612977": {
+      "title": "Count Alphonse de Toulouse-Lautrec Driving His Mail-Coach",
+      "language": "en"
+    },
+    "wd-Q27954929": {
+      "title": "Portrait of Suzanne Valadon (Toulouse-Lautrec)",
+      "language": "en"
+    },
+    "wd-Q49869220": {
+      "title": "Der Admiral Viaud",
+      "language": "de"
+    },
+    "wd-Q56239082": {
+      "title": "Portrait of Vincent van Gogh (1887)",
+      "language": "en"
+    },
+    "wd-Q1422666": {
+      "title": "Vairumati",
+      "language": "de"
+    },
+    "wd-Q5745603": {
+      "title": "Breton Peasant Women",
+      "language": "en"
+    },
+    "wd-Q7232274": {
+      "title": "Portrait of Gustave Geffroy",
+      "language": "en"
+    },
+    "wd-Q5967091": {
+      "title": "The Maiden (Klimt)",
+      "language": "en"
+    },
+    "wd-Q28442857": {
+      "title": "Bildnis einer Frau (Klimt)",
+      "language": "de"
+    },
+    "wd-Q16917809": {
+      "title": "Birnbaum (Klimt)",
+      "language": "de"
+    },
+    "wd-Q28007512": {
+      "title": "Bildnis der Amalie Zuckerkandl",
+      "language": "de"
+    },
+    "wd-Q6058798": {
+      "title": "Pallas Athena (Klimt)",
+      "language": "en"
+    },
+    "wd-Q107619978": {
+      "title": "Schloss by the Water",
+      "language": "en"
+    },
+    "wd-Q3937666": {
+      "title": "Portrait of Sir Richard Southwell",
+      "language": "en"
+    },
+    "wd-Q18685969": {
+      "title": "Portrait of a Lady with a Squirrel and a Starling",
+      "language": "en"
+    },
+    "wd-Q3937793": {
+      "title": "Portrait of a Man (Moretto)",
+      "language": "en"
+    },
+    "wd-Q18685963": {
+      "title": "Portrait of a Man (Baldung)",
+      "language": "en"
+    },
+    "wd-Q3937680": {
+      "title": "Portrait of a Woman (Sebastiano del Piombo)",
+      "language": "en"
+    },
+    "wd-Q3937398": {
+      "title": "Portrait of a Young Senator",
+      "language": "en"
+    },
+    "wd-Q1990128": {
+      "title": "Portrait of Lucrezia Panciatichi",
+      "language": "en"
+    },
+    "wd-Q3937473": {
+      "title": "Portrait of Bartolomeo Panciatichi",
+      "language": "en"
+    },
+    "wd-Q15974356": {
+      "title": "Portrait of Iseppo da Porto and his son Adriano",
+      "language": "en"
+    },
+    "wd-Q12118453": {
+      "title": "Portrait of Lorenzo the Magnificent",
+      "language": "en"
+    },
+    "wd-Q3937765": {
+      "title": "Portrait of a Musician (Pontormo)",
+      "language": "en"
+    },
+    "wd-Q1238886": {
+      "title": "A Man with a Quilted Sleeve",
+      "language": "en"
+    },
+    "wd-Q1994442": {
+      "title": "Portrait of a Woman Inspired by Lucretia",
+      "language": "en"
+    },
+    "wd-Q1133103": {
+      "title": "Portrait of the Vendramin Family",
+      "language": "en"
+    },
+    "wd-Q18688290": {
+      "title": "A Blonde Woman",
+      "language": "en"
+    },
+    "wd-Q3937545": {
+      "title": "Portrait of Giovanni Agostino della Torre and his son Niccolò",
+      "language": "en"
+    },
+    "wd-Q3937531": {
+      "title": "Portrait of Francesco Maria della Rovere (Titian)",
+      "language": "en"
+    },
+    "wd-Q3937550": {
+      "title": "Portrait of Giovanni della Volta with his Wife and Children",
+      "language": "en"
+    },
+    "wd-Q3937418": {
+      "title": "Portrait of a Sick Man",
+      "language": "en"
+    },
+    "wd-Q3937761": {
+      "title": "Portrait of a Knight of Malta",
+      "language": "en"
+    },
+    "wd-Q3937705": {
+      "title": "Portrait of a Young Man (Lotto, Uffizi)",
+      "language": "en"
+    },
+    "wd-Q50422860": {
+      "title": "Portrait of Pope Sixtus IV",
+      "language": "en"
+    },
+    "wd-Q2713823": {
+      "title": "Young Man with an Apple (Raphael)",
+      "language": "en"
+    },
+    "wd-Q3701199": {
+      "title": "Woman with a Basket of Spindles",
+      "language": "en"
+    },
+    "wd-Q3937397": {
+      "title": "Portrait of a Man (Antonello da Messina, London)",
+      "language": "en"
+    },
+    "wd-Q7232322": {
+      "title": "Portrait of a Lady in Yellow",
+      "language": "en"
+    },
+    "wd-Q3937495": {
+      "title": "Portrait of Carlo de' Medici",
+      "language": "en"
+    },
+    "wd-Q3399473": {
+      "title": "Portrait of a Boy",
+      "language": "en"
+    },
+    "wd-Q957460": {
+      "title": "Bildnis des Don Baldassare di Antonio di Angelo",
+      "language": "de"
+    },
+    "wd-Q43284760": {
+      "title": "Benedetto Portinari Triptych",
+      "language": "en"
+    },
+    "wd-Q3937530": {
+      "title": "Portrait of Folco Portinari",
+      "language": "en"
+    },
+    "wd-Q20087549": {
+      "title": "Portrait of Edward Grimston",
+      "language": "en"
+    },
+    "wd-Q3937596": {
+      "title": "Portrait of Lucas Cranach the Elder",
+      "language": "en"
+    },
+    "wd-Q1090371": {
+      "title": "Philip IV in Brown and Silver",
+      "language": "en"
+    },
+    "wd-Q20054113": {
+      "title": "Triple Portrait of Cardinal de Richelieu",
+      "language": "en"
+    },
+    "wd-Q26492852": {
+      "title": "Portrait of Cardinal Richelieu (Champaigne, London)",
+      "language": "en"
+    },
+    "wd-Q21500197": {
+      "title": "Portrait of Hendrickje Stoffels",
+      "language": "en"
+    },
+    "wd-Q17904794": {
+      "title": "Portrait of a Woman (Marie Larp)",
+      "language": "en"
+    },
+    "wd-Q30005100": {
+      "title": "Doppelbildnis des Kurfürsten Johann Wilhelm von der Pfalz und seiner Gemahlin Anna Maria Luisa de’ Medici",
+      "language": "de"
+    },
+    "wd-Q12738203": {
+      "title": "Mr and Mrs William Hallett",
+      "language": "en"
+    },
+    "wd-Q12912886": {
+      "title": "Madame de Pompadour at her Tambour Frame",
+      "language": "en"
+    },
+    "wd-Q20429680": {
+      "title": "Portrait of Sarah Siddons (Gainsborough)",
+      "language": "en"
+    },
+    "wd-Q26708343": {
+      "title": "The House of Cards",
+      "language": "en"
+    },
+    "wd-Q5722643": {
+      "title": "Hogarth's Servants",
+      "language": "en"
+    },
+    "wd-Q28542046": {
+      "title": "Portrait of Mary Gainsborough",
+      "language": "en"
+    },
+    "wd-Q28537053": {
+      "title": "Musidora (Gainsborough)",
+      "language": "en"
+    },
+    "wd-Q28532502": {
+      "title": "Portrait of Benjamin Hoadly",
+      "language": "en"
+    },
+    "wd-Q7712851": {
+      "title": "The Age of Innocence (painting)",
+      "language": "en"
+    },
+    "wd-Q21121952": {
+      "title": "Portrait of Humphry Morice",
+      "language": "en"
+    },
+    "wd-Q21121954": {
+      "title": "Portrait of a Man (Batoni)",
+      "language": "en"
+    },
+    "wd-Q21121957": {
+      "title": "Portrait of Richard Milles",
+      "language": "en"
+    },
+    "wd-Q26708353": {
+      "title": "Portrait of Lord Heathfield",
+      "language": "en"
+    },
+    "wd-Q26524198": {
+      "title": "Portrait of Robert Orme",
+      "language": "en"
+    },
+    "wd-Q28532842": {
+      "title": "Portrait of Mary Monckton",
+      "language": "en"
+    },
+    "wd-Q7232352": {
+      "title": "Portrait of the Duke of Wellington (Goya)",
+      "language": "en"
+    },
+    "wd-Q22330065": {
+      "title": "The Red Boy",
+      "language": "en"
+    },
+    "wd-Q26706754": {
+      "title": "Portrait of Louis-Auguste Schwiter",
+      "language": "en"
+    },
+    "wd-Q26708379": {
+      "title": "Portrait of Queen Charlotte (Lawrence)",
+      "language": "en"
+    },
+    "wd-Q28533005": {
+      "title": "John Philip Kemble as Hamlet",
+      "language": "en"
+    },
+    "wd-Q28533012": {
+      "title": "Portrait of Sarah Siddons",
+      "language": "en"
+    },
+    "wd-Q28537567": {
+      "title": "Portrait of Sir Brooke Boothby",
+      "language": "en"
+    },
+    "wd-Q28533112": {
+      "title": "Portrait of Maria Constable",
+      "language": "en"
+    },
+    "wd-Q18684845": {
+      "title": "Vespertina Quies",
+      "language": "en"
+    },
+    "wd-Q7232272": {
+      "title": "Portrait of Greta Moll",
+      "language": "en"
+    },
+    "wd-Q3793584": {
+      "title": "The Little Peasant (Modigliani)",
+      "language": "en"
+    },
+    "wd-Q2024709": {
+      "title": "The Spanish Singer",
+      "language": "en"
+    },
+    "wd-Q942523": {
+      "title": "A Young Lady in 1866",
+      "language": "en"
+    },
+    "wd-Q17495330": {
+      "title": "Portrait of Victor Hugo",
+      "language": "en"
+    },
+    "wd-Q2909909": {
+      "title": "Bonaparte Before the Sphinx",
+      "language": "en"
+    },
+    "wd-Q14900433": {
+      "title": "French Campaign, 1814 (Meissonier)",
+      "language": "en"
     }
   },
   "styles": {

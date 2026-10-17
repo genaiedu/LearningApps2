@@ -16,7 +16,7 @@ const knowledge=require('../data/kunst-glossar.json');
 const plan=require('../data/kunst-erweiterung-2026.json');
 const byId=new Map(media.images.map(w=>[w.id,w]));
 const pool=archive.works.map(w=>({...w,...byId.get(w.id),titleDe:titles.titles[w.id],artistIdentity:wiki.artists[w.artist].language+':'+wiki.artists[w.artist].title}));
-const added=pool.slice(1438);
+const added=pool.slice(1438,1505);
 function rng(seed){return()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);}
 function solved(works){let state=core.newState(works,null,rng(29));state.roomToken='a'.repeat(32);state.runToken='b'.repeat(32);state.parentRoomToken=null;
   for(const id of state.ids)for(const field of core.fields)state=core.choose(state,id,field,works.find(w=>w.id===id)[field]);
@@ -24,7 +24,7 @@ function solved(works){let state=core.newState(works,null,rng(29));state.roomTok
 }
 const mixed=()=>['met-204758','cma-2019.22','aic-142570','cma-1943.279'].map(id=>pool.find(w=>w.id===id));
 test('67 reviewed modern/photo/sculptural works extend rather than replace the old archive',()=>{
-  assert.equal(archive.works.length,1505);assert.equal(added.length,67);
+  assert.ok(archive.works.length>=1505);assert.equal(added.length,67);
   assert.equal(Object.values(plan).filter(Array.isArray).reduce((n,v)=>n+v.length,0),67);
   assert.deepEqual(Object.fromEntries([...new Set(added.map(w=>w.artForm))].map(k=>[k,added.filter(w=>w.artForm===k).length])),{painting:31,collage:1,photograph:14,sculpture:18,relief:3});
   for(const w of added){assert.ok(core.validWork(w),w.id);assert.ok(core.canDownload(w),w.id);assert.equal(w.downloadRightsChecked,'2026-10-11');assert.ok(knowledge.styles[w.style]&&knowledge.techniques[w.technique]);}

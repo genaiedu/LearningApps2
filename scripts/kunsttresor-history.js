@@ -82,6 +82,15 @@
         lastChecked:last?{fieldCount:last.fieldCount??4,checks:last.checks.length,firstMask:last.checks[0]?.[at]??null,lastMask:last.checks.at(-1)[at]}:null};
     });
   }
+  function encounterCounts(profile) {
+    const result={};
+    for(const room of profile.rooms)for(const [index,id]of room.ids.entries()){
+      // A checked room also includes a shown imitation's source work. Keep this
+      // selection policy separate from AI claims about seeing the original.
+      if(room.seen&(1<<index)||room.checks.length)result[id]=(result[id]||0)+1;
+    }
+    return result;
+  }
   function note(summary) {
     if(!summary?.encounters)return '';
     const start='Dieses Werk kam in deinem gespeicherten Verlauf bereits '+summary.encounters+' Mal vor.';
@@ -92,6 +101,6 @@
     if(lastMask===full&&checks===2)return start+' Bei der letzten gespeicherten Prüfung gelangen alle '+word+' Zuordnungen nach dem zweiten Versuch.';
     return start+' Bei der letzten gespeicherten Prüfung '+(count===1?'war eine':'waren '+count)+' von '+word+' Zuordnungen richtig.';
   }
-  const api={fresh,restore,track,merge,summarize,note,fields,MAX_ROOMS};
+  const api={fresh,restore,track,merge,summarize,note,encounterCounts,fields,MAX_ROOMS};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.KunstHistory=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

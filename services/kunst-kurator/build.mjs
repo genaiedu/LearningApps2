@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 const root=new URL('./',import.meta.url);
-// Pinned public fallback; local/package sources must contain the current 1505 works.
+// Pinned public fallback; local/package sources must contain the current 1807 works.
 // Public, pinned sources only. No API key is used during the build.
 const revision='08fa17cec7970d58826c3d274bd61c5f5bcdb1fc';
 const files=['scripts/kunsttresor-core.js','scripts/kunst-kurator.js','data/kunstarchiv.json','data/kunst-glossar.json','data/kunst-titel-de.json','data/kunst-wikipedia.json'];
@@ -20,5 +20,5 @@ for (const path of files) {
   await writeFile(new URL('generated/'+path.split('/').at(-1),root),content);
 }
 const archive=JSON.parse(await readFile(new URL('generated/kunstarchiv.json',root),'utf8'));
-if (archive.works.length!==1505) throw Error('Unexpected source archive; review before deploying.');
+if (archive.works.length!==1807) throw Error('Unexpected source archive; review before deploying.');
 console.log('Prepared verified curator sources for '+archive.works.length+' works in '+fileURLToPath(new URL('generated/',root)));

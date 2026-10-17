@@ -6,7 +6,7 @@ const model=vm.createContext({KunstWallEnabled:true,crypto:webcrypto});
 for(const file of ['core','progress','history','gallery'])vm.runInContext(read('scripts/kunsttresor-'+file+'.js'),model);
 const pool=data.kunstarchiv.works.map(w=>({...w,artistIdentity:data['kunst-wikipedia'].artists[w.artist].language+':'+data['kunst-wikipedia'].artists[w.artist].title}));
 function fixture(attempts=1){
- const c=model.KunstTresor;let s=c.newState(pool);s.roomToken='a'.repeat(32);s.historyToken=s.roomToken;s.runToken='b'.repeat(32);s.parentRoomToken=null;
+ const c=model.KunstTresor;let s=c.newState(pool,null,Math.random,true);s.roomToken='a'.repeat(32);s.historyToken=s.roomToken;s.runToken='b'.repeat(32);s.parentRoomToken=null;
  let h=model.KunstHistory.fresh();for(const id of s.ids)h=model.KunstHistory.track(h,s,pool,{shownId:id});
  for(let n=1;n<=attempts;n++){
   for(const field of c.fields)for(const id of s.ids)s=c.choose(s,id,field,'');
@@ -310,18 +310,36 @@ test('title assignments use localized options without revealing the correct labe
  assert.equal(app.q('#wall-work-controls select').dataset.field,'title');
 });
 test('curator original and forgery clicks pass their own image nodes to the transition, including both comparison sides',async t=>{
- const {s,h}=fixture(),id=s.ids[0];s.forgeryPrepared=true;s.forgeryMode=true;s.forgery={id,image:'data:image/jpeg;base64,/9j/'};s.forgeryMarks={[id]:true};
+ const {s,h}=fixture(),id=s.ids.find(id=>model.KunstTresor.isIntroImage(pool.find(w=>w.id===id)));s.forgeryPrepared=true;s.forgeryMode=true;s.forgery={id,image:'data:image/jpeg;base64,/9j/'};s.forgeryMarks={[id]:true};
  const app=await setup(t,{state:s,history:h}),seen=[],inspect=app.w.KunstWall.inspect;
  app.w.KunstWall.inspect=(...args)=>{seen.push(args);inspect(...args);};app.click('launch-skip');app.click('show-solution');
  const regular=app.q('#solutions .solution-overview .solution-image');regular.click();assert.equal(seen.at(-1)[2],true);assert.equal(seen.at(-1)[3].image,regular.querySelector('img'));assert.equal(seen.at(-1)[3].context,'curator');
  app.q('[data-close="image-dialog"]').click();
- const pair=[...app.q('#solutions .forgery-comparison-pair').querySelectorAll('button')];assert.equal(pair.length,2);
+ const pair=[...app.q('#solutions .forgery-comparison-pair').querySelectorAll('button.solution-image')];assert.equal(pair.length,2);
  for(const [index,button]of pair.entries()){
   button.click();assert.equal(seen.at(-1)[2],index===0);assert.equal(seen.at(-1)[3].image,button.querySelector('img'));assert.equal(seen.at(-1)[3].context,'curator');
   assert.equal(app.q('#wall-work-controls').children.length,0);assert.equal(app.q('#wall-next').hidden,true);
   if(index===1)assert.equal(app.q('#zoom-image').getAttribute('src'),s.forgery.image);
   app.q('[data-close="image-dialog"]').click();assert.equal(app.q('#solution-dialog').open,true);
  }
+});
+test('the revealed original of a correctly detected forgery can be liked after winning and survives reload and encrypted transfer',async t=>{
+ const {s,h}=fixture(),id=s.ids.find(id=>model.KunstTresor.isIntroImage(pool.find(w=>w.id===id))),bit=1<<s.ids.indexOf(id);s.forgeryPrepared=true;s.forgeryMode=true;s.forgery={id,image:'data:image/jpeg;base64,/9j/'};s.forgeryMarks={[id]:true};h.rooms[0].seen&=~bit;
+ const app=await setup(t,{state:s,history:h});app.click('launch-skip');app.click('show-solution');
+ const figures=[...app.q('.forgery-comparison-pair').querySelectorAll('figure')],original=figures[0],fake=figures[1],heart=original.querySelector('[data-gallery-like]');
+ assert.ok(heart);assert.equal(heart.hidden,true);assert.equal(fake.querySelector('[data-gallery-like]'),null);
+ assert.equal(app.q('.solution-overview [data-gallery-like="'+id+'"]'),null);
+ original.querySelector('img').onload();assert.equal(heart.hidden,false);assert.equal(heart.disabled,false);heart.click();
+ assert.equal(heart.getAttribute('aria-pressed'),'true');const gallery=JSON.parse(app.w.localStorage.getItem('kunsttresor-wall-gallery-v1')),history=JSON.parse(app.w.localStorage.getItem('kunsttresor-history-v1-wall'));
+ assert.equal(gallery.liked.length,1);assert.equal(gallery.liked[0].id,id);assert.ok(history.rooms[0].seen&bit);
+ const again=await setup(t,{state:s,history,gallery});again.click('launch-skip');again.click('game-gallery');assert.equal(again.q('#gallery-grid .gallery-image img').getAttribute('src'),data.kunstbilder.images.find(w=>w.id===id).imageURL);
+ const progress=model.KunstProgress.recordWin(model.KunstProgress.fresh(),s,pool).profile,payload={app:'kunsttresor',version:1,savedAt:Date.now(),state:s,best:1,progress,history,gallery};
+ const restored=app.w.KunstSave.validate(await app.w.KunstSave.decode(await app.w.KunstSave.encode(payload)),pool,[],app.w.KunstTresor,app.w.KunstProgress,app.w.KunstHistory,app.w.KunstGallery);assert.equal(restored.gallery.liked[0].id,id);
+ heart.click();assert.equal(heart.getAttribute('aria-pressed'),'false');
+ // A genuine lost room is made by the engine, not by a forged phase flag.
+ const c=model.KunstTresor;let failed=c.newState(pool);failed.roomToken='c'.repeat(32);failed.runToken='d'.repeat(32);failed.parentRoomToken=null;
+ for(let n=0;n<3;n++){for(const [i,wid]of failed.ids.entries())for(const field of c.fields)failed=c.choose(failed,wid,field,pool.find(w=>w.id===failed.ids[(i+1)%7])[field]);failed=c.inspect(failed,pool).state;}
+ const other=await setup(t,{state:JSON.parse(JSON.stringify(failed))});other.click('launch-skip');other.click('show-solution');assert.equal(other.q('#solutions [data-gallery-like]'),null);
 });
 test('an older collected work opens as an original from its actual gallery thumbnail rather than a current quiz work',async t=>{
  const {s,h}=fixture(),id=s.ids[0],gallery=model.KunstGallery.like(model.KunstGallery.fresh(),id,s,pool),next=model.KunstTresor.newState(pool,s);

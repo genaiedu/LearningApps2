@@ -62,18 +62,54 @@
       return url.protocol==='https:' && (url.hostname==='upload.wikimedia.org' || Boolean(museum));
     } catch { return false; }
   }
-  function room(pool, recent = [], random = Math.random, requireForgeryTarget = false) {
+  function room(pool, recent = [], random = Math.random, requireForgeryTarget = false, encounters) {
     const eligible = pool.filter(validWork);
-    function find(candidates) {
+    const visitsOf=work=>Number.isSafeInteger(encounters?.[work.id])&&encounters[work.id]>0?encounters[work.id]:0;
+    const least=encounters?Math.min(...eligible.map(visitsOf)):0;
+    const fresh=new Set(eligible.filter(work=>visitsOf(work)===least).map(work=>work.id));
+    const artistKey = work => work.artistIdentity || work.artist;
+    function freshCapacity(candidates,slots=count,techniqueCap=count,chosen=[]) {
+      // A distinct-value count alone misses correlations: e.g. five styles all
+      // belonging to the same artist. Small bipartite matchings give safe upper
+      // bounds without exploring thousands of impossible seven-work rooms.
+      let upper=Math.min(slots,candidates.length);
+      for(const field of ['artist','date','title','technique']){
+        if(field==='title'&&!root.KunstWallEnabled)continue;
+        const graph=new Map(),owners=new Map();
+        for(const work of candidates){
+          if(!graph.has(work.style))graph.set(work.style,new Set());
+          if(field==='technique'){
+            const used=chosen.filter(other=>other.technique===work.technique).length,capacity=root.KunstWallEnabled?techniqueCap-used:1;
+            for(let i=0;i<capacity;i++)graph.get(work.style).add(work.technique+'\u0000'+i);
+          }else graph.get(work.style).add(field==='artist'?artistKey(work):field==='title'?galleryTitle(work):work[field]);
+        }
+        function match(style,visited){for(const value of graph.get(style)){if(visited.has(value))continue;visited.add(value);if(!owners.has(value)||match(owners.get(value),visited)){owners.set(value,style);return true;}}return false;}
+        let size=0;for(const style of graph.keys()){if(match(style,new Set()))size++;if(size>=upper)break;}
+        upper=Math.min(upper,size);if(!upper)break;
+      }
+      return upper;
+    }
+    function find(candidates,minimumFresh=0,techniqueCap=3) {
       let visits = 0;
-      function search(chosen, from) {
-        if (chosen.length === count) return !requireForgeryTarget || chosen.some(isIntroImage) ? chosen : null;
-        if (++visits > 15000) return null;
+      const visitLimit=encounters?120:15000;
+      const remainingFresh=Array(candidates.length+1).fill(0);
+      for(let i=candidates.length-1;i>=0;i--)remainingFresh[i]=remainingFresh[i+1]+Number(fresh.has(candidates[i].id));
+      function search(chosen, from,usedFresh=0) {
+        if(usedFresh+Math.min(count-chosen.length,remainingFresh[from])<minimumFresh)return null;
+        if (chosen.length === count) return usedFresh>=minimumFresh&&(!requireForgeryTarget || chosen.some(isIntroImage)) ? chosen : null;
+        if (++visits > visitLimit) return null;
+        if(minimumFresh>usedFresh){
+          const available=candidates.slice(from).filter(work=>fresh.has(work.id)&&compatible(chosen,work));
+          if(usedFresh+freshCapacity(available,count-chosen.length,techniqueCap,chosen)<minimumFresh)return null;
+        }
         for (let i = from; i < candidates.length; i++) {
+          if(visits>visitLimit)return null;
           if (!compatible(chosen, candidates[i])) continue;
+          const isFresh=fresh.has(candidates[i].id);
+          if(!isFresh&&count-chosen.length===minimumFresh-usedFresh)continue;
           // Keep a seven-work wall varied while allowing repeated techniques.
-          if(root.KunstWallEnabled&&chosen.filter(work=>work.technique===candidates[i].technique).length>=3)continue;
-          const result = search([...chosen, candidates[i]], i + 1);
+          if(root.KunstWallEnabled&&chosen.filter(work=>work.technique===candidates[i].technique).length>=techniqueCap)continue;
+          const result = search([...chosen, candidates[i]], i + 1,usedFresh+Number(isFresh));
           if (result) return result;
         }
         return null;
@@ -81,16 +117,32 @@
       return search([], 0);
     }
     let selected = null;
-    const artistKey = work => work.artistIdentity || work.artist;
     const byId = new Map(eligible.map(work => [work.id,work]));
+    let maximumFresh=0,variedFresh=0;
+    if(encounters){
+      const unused=eligible.filter(work=>fresh.has(work.id)),techniques=new Map();
+      for(const work of unused)techniques.set(work.technique,(techniques.get(work.technique)||0)+1);
+      variedFresh=[...techniques.values()].reduce((n,total)=>n+Math.min(root.KunstWallEnabled?3:1,total),0);
+      maximumFresh=Math.min(freshCapacity(unused),root.KunstWallEnabled?count:variedFresh);
+      if(requireForgeryTarget&&!unused.some(isIntroImage))maximumFresh=Math.min(maximumFresh,count-1);
+    }
     // First avoid all artists from the last six rooms, releasing the oldest
     // room only if four distinct answer sets cannot otherwise be assembled.
     // Fall back to work-only exclusions for small or constrained archives.
-    for (const avoidArtists of [true,false]) {
+    // First maximise the least-seen tier, releasing recent-artist preferences
+    // before repeating pictures. At the end of a constrained tier, add only the
+    // fillers needed for an unambiguous room. Counts come from loaded quiz images
+    // across all rounds and survive restart/import via the existing history.
+    for(let minimumFresh=maximumFresh;minimumFresh>=0&&!selected;minimumFresh--)for(const techniqueCap of encounters&&root.KunstWallEnabled?[3,count]:[3])for (const avoidArtists of [true,false]) {
+      if(selected)break;
+      // Technique variety is a preference, never a reason to repeat a picture.
+      if(encounters&&techniqueCap===3&&minimumFresh>variedFresh)continue;
       for (let keep = recent.length; keep >= 0 && !selected; keep = Math.max(0,keep - count)) {
         const blocked = keep ? recent.slice(-keep) : [];
         const artists = new Set(blocked.map(id=>byId.get(id)).filter(Boolean).map(artistKey));
-        selected = find(shuffle(eligible.filter(work => !blocked.includes(work.id) && (!avoidArtists || !artists.has(artistKey(work)))),random));
+        const candidates=shuffle(eligible.filter(work => !blocked.includes(work.id) && (!avoidArtists || !artists.has(artistKey(work)))),random);
+        if(encounters)candidates.sort((a,b)=>visitsOf(a)-visitsOf(b));
+        selected = find(candidates,minimumFresh,techniqueCap);
         if (keep === 0) break;
       }
       if(selected) break;
@@ -98,9 +150,9 @@
     if (!selected) throw new Error('Es gibt nicht genug eindeutig zuordenbare Werke für einen Raum.');
     return { works: shuffle(selected, random), options: Object.fromEntries(fields.map(field => [field, shuffle(selected.map(work => work[field]), random)])) };
   }
-  function newState(pool, previous = null, random = Math.random, requireForgeryTarget = false) {
+  function newState(pool, previous = null, random = Math.random, requireForgeryTarget = false,encounters) {
     const recent = previous ? [...previous.recent, ...previous.ids].slice(-count*6) : [];
-    const next = room(pool, recent, random, requireForgeryTarget);
+    const next = room(pool, recent, random, requireForgeryTarget,encounters);
     return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attemptLog: [], attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent,
       ...(root.KunstWallEnabled ? {joker:1,jokerUsed:[],excluded:{},locked:{},dateHints:{}} : {}),
       ...(previous?.runToken ? {runToken:previous.runToken, parentRoomToken:previous.phase === 'unlocked' ? previous.roomToken : previous.parentRoomToken || null} : {})};

@@ -33,14 +33,14 @@ test('the expansion preserves the original 1000 records and old saved rounds', (
   assert.equal(core.restore(saved,pool).phase,'unlocked');
   assert.equal(core.restore(saved,pool).escaped,1);
 });
-test('a seeded 10000-room run keeps the formerly frequent tempera work rare and reaches the full archive', () => {
+test('a seeded 20000-room legacy run keeps the formerly frequent tempera work rare and reaches the full archive', () => {
   function occurrences(works){
     const random=seeded(61274),seen=new Set();let state=null,count=0;
-    for(let i=0;i<10000;i++){state=core.newState(works,state,random);state.ids.forEach(id=>seen.add(id));if(state.ids.includes('aic-16169'))count++;}
+    for(let i=0;i<20000;i++){state=core.newState(works,state,random);state.ids.forEach(id=>seen.add(id));if(state.ids.includes('aic-16169'))count++;}
     return {count,seen:seen.size};
   }
   const after=occurrences(pool);
-  assert.ok(after.count<70,'under 0.7% of rooms, not the previous 3.1%');
+  assert.ok(after.count<140,'under 0.7% of rooms, not the previous 3.1%');
   assert.equal(after.seen,pool.length);
 });
 test('the edition keeps its 1000 title but shows the true expanded archive size', () => {
@@ -67,7 +67,7 @@ test('documented archive, individually free images and explicit ancient anonymou
     } else assert.ok(work.artistDeath > 1300 && work.artistDeath <= 1955,work.id);
     assert.ok(['www.artic.edu','www.wikidata.org','www.clevelandart.org','www.metmuseum.org'].includes(new URL(work.source).hostname));
     if (work.metadataProvider==='Wikidata') {
-      assert.equal(work.styleSource,'P135 am Werk, nicht vom Künstler abgeleitet');
+      assert.ok(work.styleSource==='P135 am Werk, nicht vom Künstler abgeleitet'||work.styleSource==='P135 am Werk; gegebenenfalls deutscher Oberbegriff für die dokumentierte Tradition'||work.styleSource==='Redaktionelle Einordnung dieses Einzelwerks nach Bildsprache, Datierung und dokumentiertem Werkzusammenhang; kein P135-Befund und keine einzig mögliche Stilzuweisung',work.id);
       assert.ok(work.materialIds.length>=1);
       assert.match(work.wikidata,/\/Q\d+$/);
     }
@@ -147,7 +147,7 @@ test('image download is offered only for individually verified Public Domain / C
   for (const work of pool.filter(core.canDownload)) {
     const host=new URL(work.imageOriginalURL).hostname;
     assert.ok(['upload.wikimedia.org','www.artic.edu','openaccess-cdn.clevelandart.org','images.metmuseum.org'].includes(host),work.id);
-    assert.match(work.downloadRightsChecked,/^2026-10-(09|11)$/);
+    assert.match(work.downloadRightsChecked,/^2026-10-(09|11|17)$/);
     if(host==='upload.wikimedia.org')assert.ok(work.imageBytes > 0);
     assert.ok(work.imageMime.startsWith('image/'));
   }
@@ -313,7 +313,7 @@ test('one explicit start click unlocks music and opens the film without automati
     imagesAllowed:false,state:null,pool:[],forgeryEverySeries:false,unstartedRooms:new WeakSet(),introSoundEnabled:false,introAudio:{},launchEpoch:0,keys:{images:'images'},
     confirmLaunchAIChoice:()=>events.push('ai-choice'),
     close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
-    core:{newState:()=>({})},save:()=>{},render:()=>{},$:()=>({focus:()=>events.push('focus')}),
+    core:{newState:()=>({})},createRoom:()=>({}),save:()=>{},render:()=>{},$:()=>({focus:()=>events.push('focus')}),
     startIntroAudio:()=>events.push('music'),enterFullscreen:async()=>events.push('fullscreen'),
     prepareIntro:()=>events.push('preload'),
     showIntro:options=>{events.push('film');assert.equal(options.audioPrimed,true);}
@@ -340,7 +340,7 @@ test('the smaller launch button opens the entry without film or music and preser
     const context={imagesAllowed:consent,state:saved,pool:[],forgeryEverySeries:false,unstartedRooms:new WeakSet(),introAudio:{},keys:{images:'images'},
       confirmLaunchAIChoice:()=>events.push('ai-choice'),
       close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
-      core:{newState:()=>{events.push('new');return {escaped:0};}},save:()=>events.push('save'),render:()=>events.push('render'),
+      core:{newState:()=>{events.push('new');return {escaped:0};}},createRoom:()=>{events.push('new');return {escaped:0};},save:()=>events.push('save'),render:()=>events.push('render'),
       $:()=>({focus:()=>events.push('focus')}),finishIntro:options=>{events.push('stop-film-and-music');if(options?.enterGame)events.push('landing');},
       enterFullscreen:async()=>events.push('fullscreen'),toGame:()=>events.push('game'),
       startIntroAudio:()=>events.push('music'),showIntro:()=>events.push('film')};
@@ -495,7 +495,7 @@ test('personal highscore persists through a loss and automatic new round', () =>
     $:()=>({hidden:false}),clearForgeryPresentation:()=>{},render:()=>{},toGame:()=>{}};
   context.state.escaped=3;
   vm.createContext(context);
-  vm.runInContext(js.slice(js.indexOf('function save()'),js.indexOf('function open('))+js.slice(js.indexOf('function newRound()'),js.indexOf('const pictureLetter')),context);
+  vm.runInContext(js.slice(js.indexOf('function save()'),js.indexOf('function open('))+js.slice(js.indexOf('function createRoom('),js.indexOf('const pictureLetter')),context);
   context.state=core.inspect(answer(context.state,false),pool).state;
   context.state=core.inspect(context.state,pool).state;
   assert.equal(context.state.phase,'lost');

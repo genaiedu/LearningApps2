@@ -89,7 +89,7 @@
     // Only a fresh, not yet entered room may change. Restored/examined rooms never do.
     if (state && unstartedRooms.has(state)) {
       if(forgeryEverySeries && !state.ids.some(id=>core.isIntroImage(workById(id)))) {
-        state=core.newState(pool,state,Math.random,true); unstartedRooms.add(state);
+        state=createRoom(state,true); unstartedRooms.add(state);
       }
       forgeryEpochs.set(state,(forgeryEpochs.get(state)||0)+1);
       forgeryLoading.delete(state);
@@ -282,6 +282,7 @@
       }
       finishIntro(); close('result-dialog');
       galleryUI?.stopFilm();
+      upcomingRoom=null;
       state = candidate.state; best = nextBest; playerProgress = merged; workHistory=mergedHistory;historyBlocked=false;pendingImport = null;
       personalGallery=mergedGallery;if(!candidate.legacyGallery)galleryBlocked=false;galleryUI?.refresh();
       aiClient?.clear(); refreshHistory();
@@ -353,7 +354,7 @@
     confirmLaunchAIChoice();
     close('launch-dialog');
     if (!imagesAllowed) { imagesAllowed = true; store.set(keys.images,'yes'); heroImages(); }
-    if (!state) { state = core.newState(pool,null,Math.random,forgeryEverySeries); unstartedRooms.add(state); save(); }
+    if (!state) { state = createRoom(); unstartedRooms.add(state); save(); }
     render();
     $('fullscreen').focus({preventScroll:true});
     if (withIntro === false) {
@@ -380,7 +381,7 @@
     close('intro-dialog'); $('intro-slides').replaceChildren(); $('intro-dialog').classList.remove('is-running','is-finale','is-loading');
     $('intro-slides').setAttribute('aria-busy','false'); $('intro-loading').hidden=true;
     if (enterGame && imagesAllowed && pool.length) {
-      if (!state) { state = core.newState(pool,null,Math.random,forgeryEverySeries); save(); render(); }
+      if (!state) { state = createRoom(); save(); render(); }
       window.scrollTo({top:0,behavior:'instant'});
     }
   }
@@ -485,16 +486,19 @@
     if(wallMode){wallOpening=false;void enterFullscreen();}
     if (!aiChoiceConfirmed && aiEndpoint) { prepareLaunch(); return; }
     if (!imagesAllowed) { askForImages(true); return; }
-    if (!state) state = core.newState(pool,null,Math.random,forgeryEverySeries);
+    if (!state) state = createRoom();
     unstartedRooms.delete(state);
     save(); render(); toGame();
+  }
+  function createRoom(previous=null,requireForgeryTarget=forgeryEverySeries,eligible=pool) {
+    return core.newState(eligible,previous,Math.random,requireForgeryTarget,historyBlocked?undefined:history.encounterCounts(workHistory));
   }
   function newRound() {
     upcomingRoom = null;
     clearForgeryPresentation();
     $('archive-update').hidden = true;
     const previous = state;
-    state = core.newState(pool, previous,Math.random,forgeryEverySeries);
+    state = createRoom(previous);
     delete state.runToken; delete state.parentRoomToken;
     state.escaped = 0;
     if(wallMode){state.joker=1;state.jokerUsed=[];}
@@ -790,7 +794,7 @@
     if (state?.phase !== 'unlocked') return;
     close('result-dialog'); close('solution-dialog'); close('art-glossary-dialog');
     clearForgeryPresentation();
-    state = upcomingRoom || core.newState(pool,state,Math.random,forgeryEverySeries); upcomingRoom = null; save(); render(); toGame();
+    state = upcomingRoom || createRoom(state); upcomingRoom = null; save(); render(); toGame();
   }
   function inspect() {
     if (ready.size !== workCount || failed.size || !imagesAllowed || forgeryLoading.has(state) || (state.forgeryEverySeries && !state.forgery)) return;
@@ -816,7 +820,7 @@
       $('result-action').textContent = state.phase === 'unlocked' ? 'Nächster Raum →' : 'Neue Runde beginnen ↻';
       $('result-solution').textContent = 'Mit dem Kurator noch einmal hinsehen';
       if(state.phase === 'unlocked') {
-        upcomingRoom = core.newState(pool,state,Math.random,forgeryEverySeries);
+        upcomingRoom = createRoom(state);
         void prepareForgery(upcomingRoom);
         solutions();
       } else open('result-dialog');
@@ -970,7 +974,7 @@
       overview.append(node('p','eyebrow','Werk ' + 'ABCDEFG'[index]),node('h3',null,core.galleryTitle(work)));
       if (core.galleryTitle(work)!==work.title) overview.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
       const list = node('dl'); core.fieldsFor(state).forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,field==='title'?core.galleryTitle(work):work[field]))); overview.append(list);
-      if(state.phase==='unlocked')overview.append(galleryUI.likeButton(id));
+      if(state.phase==='unlocked'&&state.forgery?.id!==id)overview.append(galleryUI.likeButton(id));
       card.append(overview,renderCurator(work));
       if (state.forgery?.id === id && imagesAllowed) {
         const comparison=node('section','forgery-comparison');
@@ -978,10 +982,15 @@
         const pair=node('div','forgery-comparison-pair');
         for(const [caption,url,original] of [['Original · '+work.artist,work.imageURL,true],['KI-Fälschung · '+(state.forgery.model || 'FLUX.1 Schnell'),state.forgery.image,false]]) {
           const figure=node('figure'),button=node('button','solution-image'),img=node('img');
+          const comparisonState=state;let originalLoaded=false;
           button.type='button'; button.setAttribute('aria-label',caption+' vergrößern');
-          img.alt=caption+': '+core.galleryTitle(work); img.referrerPolicy='no-referrer'; img.src=url;
+          img.alt=caption+': '+core.galleryTitle(work); img.referrerPolicy='no-referrer';
+          if(original)img.onload=()=>{if(state!==comparisonState)return;originalLoaded=true;rememberWork(id);galleryUI.refresh();};
+          img.src=url;
           button.append(img); button.onclick=()=>showImage(work,'ABCDEFG'[index],original,button);
-          figure.append(button,node('figcaption',null,caption)); pair.append(figure);
+          figure.append(button,node('figcaption',null,caption));
+          if(original&&state.phase==='unlocked')figure.append(galleryUI.likeButton(id,{ready:()=>originalLoaded&&state===comparisonState}));
+          pair.append(figure);
         }
         comparison.append(pair,node('p',null,'Das Vorbild ist als '+work.style+' eingeordnet; die dokumentierte Technik ist '+work.technique+'. Vergleiche Linienführung, Farbauftrag, Licht, Raum und Details. Die KI-Nachahmung ist kein Werk von '+work.artist+'.'));
         const clues=artKnowledge?.styles?.[work.style]?.clues || [];
@@ -1169,14 +1178,14 @@
   $('replace-room').onclick = () => {
     if (!failed.size || !state || state.phase !== 'playing') return;
     const failedIds = [...failed], previous = state;
-    try { state = core.newState(pool.filter(work => !failedIds.includes(work.id)),previous,Math.random,forgeryEverySeries); }
-    catch { state = core.newState(pool,previous,Math.random,forgeryEverySeries); }
+    try { state = createRoom(previous,forgeryEverySeries,pool.filter(work => !failedIds.includes(work.id))); }
+    catch { state = createRoom(previous); }
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
-  const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261011-kunstformen',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
+  const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261017-portraets-bildrunde',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
   const filmTextRequest=fetch('data/kunst-filmtexte.json?v=20261011-galeriefilm',{credentials:'same-origin'}).then(response=>response.ok?response.json():null).catch(()=>null);
-  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261011-kunstformen',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest,filmTextRequest])
+  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261017-portraets-bildrunde',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest,filmTextRequest])
     .then(([data,media,wiki,landmarks,titles,knowledge,filmTexts]) => {
       wikiCatalogue = wiki;
       archiveReplacements = data.replacements || [];

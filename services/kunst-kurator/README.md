@@ -134,7 +134,7 @@ Neue Werkformen werden ausdrücklich mitgegeben: Fotografie, Skulptur oder
 Relief sind keine Gemälde. Bei antiken Arbeiten bedeutet „Unbekannter Künstler“
 keinen gemeinsamen Urheber; die kulturelle Tradition ersetzt keine gesicherte
 Namenszuschreibung. Vollständige Material- und Katalogdatierungen bleiben im
-verifizierten Kontext. Der Stand vom 11. Oktober 2026 umfasst 1505 Werke.
+verifizierten Kontext. Der Stand vom 17. Oktober 2026 umfasst 1807 Werke, darunter 302 neue Porträts und weitere Gemälde. Die bisherigen 1505 Einträge sind unverändert.
 Erweiterungstests verwenden ausschließlich simulierte Providerantworten,
 keine echten Groq-Anfragen und keinen API-Schlüssel.
 

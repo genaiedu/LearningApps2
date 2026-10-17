@@ -6,6 +6,7 @@
     const title=work=>root.KunstTresor.galleryTitle(work);
     let loadingEpoch=0, cache=new Map(), preparations=[], raf=0, film=null, frames=[], activeFrame=null;
     let loading=false, musicReady=false, silent=false, clock=0, anchor=0, paused=true, complete=false;
+    const likeReadiness=new WeakMap();
     const audio=new Audio('../LearningApps/assets/kunst-der-fuge/fuge-orchester-suno.mp3');audio.preload='metadata';audio.volume=.65;
     const reduced=matchMedia('(prefers-reduced-motion: reduce)');
     function node(tag,cls,text) {const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
@@ -47,21 +48,22 @@
         b.querySelector('span').textContent=liked?'In deiner Galerie':'Für meine Galerie merken';
         const note=b.querySelector('.gallery-like-note');note.hidden=!liked;
         note.textContent=unlocked?'Dein Kunstfilm ist freigeschaltet.':'Noch '+(model.UNLOCK-gallery.liked.length)+' Lieblingswerke bis zum Kunstfilm.';
-        b.disabled=!winning || !getState()?.ids.includes(b.dataset.galleryLike);
+        b.disabled=!winning || !getState()?.ids.includes(b.dataset.galleryLike) || !likeReadiness.get(b)?.();
         b.hidden=b.disabled || !b.closest('#solutions');
         b.title=winning?'Ein Lieblingswerk aus deinem gewonnenen Raum.':'Als Belohnung erst nach einem gewonnenen Raum verfügbar.';
       });
       $('gallery-edit-open').disabled=!unlocked;$('gallery-play').disabled=!unlocked;
       if(!unlocked)$('gallery-editor').hidden=true;
     }
-    function likeButton(id) {
+    function likeButton(id,{ready=()=>true}={}) {
       const b=button('',()=>{
         const g=getGallery(), liked=g.liked.some(entry=>entry.id===id);
+        if(!ready())return;
         try{const next=liked?model.remove(g,id):model.like(g,id,getState(),pool);
           if(change(next,null,{render:false})){$('gallery-progress').textContent=progressText();status(progressText());}
         }catch(error){$('gallery-progress').textContent=error.message;}
       },'gallery-like');
-      b.dataset.galleryLike=id;b.hidden=true;
+      b.dataset.galleryLike=id;b.hidden=true;likeReadiness.set(b,ready);
       const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');
       const p=document.createElementNS(svg.namespaceURI,'path');p.setAttribute('d','M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z');svg.append(p);
       const note=node('small','gallery-like-note');note.hidden=true;b.append(svg,node('span',null,'Für meine Galerie merken'),note);return b;
