@@ -30,7 +30,7 @@
  const floating=document.createElement('div');floating.className='wall-floating';
  floating.innerHTML='<button type="button" id="wall-back">← Bilderwand</button><button type="button" id="wall-fit">Ganzes Bild</button><button type="button" id="wall-loupe">Lupe +</button><button type="button" id="wall-prev" aria-label="Vorheriges Werk">←</button><button type="button" id="wall-next" aria-label="Nächstes Werk">→</button>';
  dialog.append(floating);
- let current=null,home=null,drag=null,transitionEpoch=0,flight=null;
+ let current=null,home=null,drag=null,transitionEpoch=0,flight=null,returning=false;
  function reducedMotion(){return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;}
  function cancelFlight(){transitionEpoch++;flight?.remove();flight=null;$('zoom-image').style.opacity='';}
  function restoreControls(){cancelFlight();if(home){for(const child of [...$('wall-work-controls').children])home.append(child);}home=null;current=null;dialog.classList.remove('wall-zoom');}
@@ -52,13 +52,30 @@
   try{await ghost.animate([{transform:`translate(${from.left-to.left}px,${from.top-to.top}px) scale(${from.width/to.width},${from.height/to.height})`},{transform:'none'}],{duration:460,easing:'cubic-bezier(.22,.7,.2,1)'}).finished;}catch(_){}
   ghost.remove();if(epoch===transitionEpoch){image.style.opacity='';flight=null;}
  }
+ async function closeToWall(){
+  if(returning||!dialog.open)return;
+  const image=$('zoom-image'),card=[...$('art-grid').children].find(c=>c.dataset.id===current),source=card?.querySelector('.artwork-button img');
+  if(reducedMotion()||!source||!image.animate){dialog.close();return;}
+  cancelFlight();const from=image.getBoundingClientRect(),to=source.getBoundingClientRect();
+  if(!from.width||!from.height||!to.width||!to.height){dialog.close();return;}
+  returning=true;const epoch=transitionEpoch,ghost=document.createElement('img'),previousVisibility=source.style.visibility;
+  ghost.className='wall-image-flight';ghost.alt='';ghost.src=image.currentSrc||image.src;
+  Object.assign(ghost.style,{position:'fixed',left:from.left+'px',top:from.top+'px',width:from.width+'px',height:from.height+'px',objectFit:'contain',pointerEvents:'none',zIndex:'10',transformOrigin:'0 0'});
+  flight=ghost;dialog.append(ghost);source.style.visibility='hidden';dialog.classList.add('is-returning');
+  try{await ghost.animate([{transform:'none'},{transform:`translate(${to.left-from.left}px,${to.top-from.top}px) scale(${to.width/from.width},${to.height/from.height})`}],{duration:460,easing:'cubic-bezier(.22,.7,.2,1)',fill:'forwards'}).finished;}catch(_){}
+  finally{
+   source.style.visibility=previousVisibility;ghost.remove();dialog.classList.remove('is-returning');returning=false;
+   if(epoch===transitionEpoch){flight=null;dialog.close();}
+  }
+ }
  function animateZoom(action){cancelFlight();const image=$('zoom-image'),from=image.getBoundingClientRect();action();const to=image.getBoundingClientRect();if(reducedMotion()||!image.animate||!from.width||!to.width)return;image.animate([{transformOrigin:'0 0',transform:`translate(${from.left-to.left}px,${from.top-to.top}px) scale(${from.width/to.width},${from.height/to.height})`},{transformOrigin:'0 0',transform:'none'}],{duration:320,easing:'cubic-bezier(.22,.7,.2,1)'});}
  function fit(){animateZoom(()=>window.KunstWallZoom?.reset());dialog.classList.remove('wall-zoom');}
  function loupe(){animateZoom(()=>{if(window.KunstWallZoom?.zoom===100)$('zoom-in').click();$('zoom-in').click();});dialog.classList.add('wall-zoom');}
  function adjacent(direction){const cards=[...$('art-grid').children],index=cards.findIndex(c=>c.dataset.id===current);if(index<0)return;const card=cards[(index+direction+cards.length)%cards.length];restoreControls();card.querySelector('.artwork-button').click();}
- $('wall-back').onclick=()=>dialog.close();$('wall-fit').onclick=fit;$('wall-loupe').onclick=loupe;$('wall-prev').onclick=()=>adjacent(-1);$('wall-next').onclick=()=>adjacent(1);
+ $('wall-back').onclick=()=>void closeToWall();$('wall-fit').onclick=fit;$('wall-loupe').onclick=loupe;$('wall-prev').onclick=()=>adjacent(-1);$('wall-next').onclick=()=>adjacent(1);
+ dialog.querySelector('[data-close="image-dialog"]').addEventListener('click',event=>{event.preventDefault();event.stopPropagation();void closeToWall();});
  $('wall-check').onclick=()=>{dialog.close();$('check').click();};
- dialog.addEventListener('cancel',event=>{if(window.KunstWallZoom?.zoom>100){event.preventDefault();fit();}});
+ dialog.addEventListener('cancel',event=>{event.preventDefault();if(window.KunstWallZoom?.zoom>100)fit();else void closeToWall();});
  $('zoom-view').addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};});
  $('zoom-view').addEventListener('pointerup',e=>{if(drag&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<7&&window.KunstWallZoom?.zoom===100)loupe();drag=null;});
  // Shelves are fitted to the actual image ratios. Nothing is cropped. Physical
