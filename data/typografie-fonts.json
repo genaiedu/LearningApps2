@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-17",
+  "checked": "2026-10-11",
   "families": [
     {
       "name": "Poppins",
@@ -3869,9 +3869,9 @@
         "caution": "Die Schrift inszeniert einen Schreibmaschinenfund. Für längere Lektüre sind die Druckspuren oft störend. Sie ist keine echte Monospace: Wenn exakt gleiche Zeichenbreiten nötig sind, DM Mono verwenden.",
         "pairings": [
           {
-            "id": "sourcesans3",
-            "role": "Erklärung und heutige Angaben",
-            "reason": "Die offene Sans trennt den inszenierten Schreibmaschinenfund von der sachlichen Erläuterung."
+            "id": "courierprime",
+            "role": "Sauberer Schreibmaschinentext",
+            "reason": "Courier Prime übernimmt längere Texte in echter fester Zeichenbreite, Special Elite bleibt der kurze, abgenutzte Titel."
           },
           {
             "id": "dmmono",
@@ -3880,6 +3880,79 @@
           }
         ],
         "source": "https://github.com/google/fonts/blob/main/apache/specialelite/DESCRIPTION.en_us.html"
+      }
+    },
+    {
+      "name": "Courier Prime",
+      "id": "courierprime",
+      "group": "mono",
+      "classification": "Klassische Schreibmaschinenschrift",
+      "advice": "Feste Zeichenbreite und klare Serifen für Manuskripte, Drehbücher und Schreibmaschinentexte.",
+      "designer": "Alan Dague-Greene",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/courierprime",
+      "licensePath": "fonts/typografie/courierprime/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/courierprime/CourierPrime-Regular.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "72f793376f8e2841656bf21d77a5de010f2929bd6956a22ee848ad0c7eb978af"
+        },
+        {
+          "path": "fonts/typografie/courierprime/CourierPrime-Italic.woff2",
+          "weight": 400,
+          "style": "italic",
+          "axes": {},
+          "sha256": "f1b9a5829789f7e56432a9f3bc7665ef4531dbba1c112639e48bef39621a006b"
+        },
+        {
+          "path": "fonts/typografie/courierprime/CourierPrime-Bold.woff2",
+          "weight": 700,
+          "style": "normal",
+          "axes": {},
+          "sha256": "ff1f38786c849d1c41fa8e447960abdb2bd75fdfb0cfcdeb524fad65a5af3638"
+        },
+        {
+          "path": "fonts/typografie/courierprime/CourierPrime-BoldItalic.woff2",
+          "weight": 700,
+          "style": "italic",
+          "axes": {},
+          "sha256": "3355273f3ea6d6362658f9564f4e83d59e156cf1a182e3c1592b5c5943627dcc"
+        }
+      ],
+      "uses": [],
+      "features": [
+        "aalt",
+        "case",
+        "ccmp",
+        "frac",
+        "liga",
+        "locl",
+        "ordn",
+        "sups"
+      ],
+      "desktop": "fonts/typografie/courierprime/courierprime-desktop.zip",
+      "new": true,
+      "portrait": {
+        "history": "Alan Dague-Greene entwickelte Courier Prime für John August und Quote-Unquote Apps. Die 2013 veröffentlichte Familie führt die Courier-Tradition für Drehbücher weiter: feste Zeichenbreiten, kräftige Serifen und vier aufeinander abgestimmte Schnitte.",
+        "character": "Klassische Schreibmaschinenformen mit gleichmäßiger Zeichenbreite, klaren Serifen und einem sauberen, ruhigen Druckbild.",
+        "use": "Manuskripte, Drehbücher, Briefe und bewusst sachlich gesetzte Schreibmaschinentexte. Regular trägt den Text; Fett und Kursiv markieren die Hierarchie innerhalb derselben Familie.",
+        "caution": "Die feste Zeichenbreite benötigt mehr Platz als proportionale Textschriften. Zeilen eher kurz halten und ausreichend Zeilenabstand geben. Mit Special Elite nur bei bewusstem Schreibmaschinenkonzept kombinieren; deren rauen Effekt auf kurze Titel begrenzen.",
+        "pairings": [
+          {
+            "id": "specialelite",
+            "role": "Kurze Titel und Akzente",
+            "reason": "Die abgenutzt wirkende Schmuckschrift setzt den Auftakt, Courier Prime trägt den sauberen, gleichmäßigen Manuskripttext."
+          },
+          {
+            "id": "sourcesans3",
+            "role": "Überschriften und Orientierung",
+            "reason": "Die offene humanistische Sans gliedert den Schreibmaschinentext mit deutlich anderem Formprinzip und gut lesbaren Beschriftungen."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/courierprime/DESCRIPTION.en_us.html"
       }
     },
     {

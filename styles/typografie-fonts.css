@@ -87,6 +87,10 @@
 @font-face{font-family:"Great Vibes";src:url("../fonts/typografie/greatvibes/GreatVibes-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:"Monoton";src:url("../fonts/typografie/monoton/Monoton-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:"Special Elite";src:url("../fonts/typografie/specialelite/SpecialElite-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Courier Prime";src:url("../fonts/typografie/courierprime/CourierPrime-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Courier Prime";src:url("../fonts/typografie/courierprime/CourierPrime-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:"Courier Prime";src:url("../fonts/typografie/courierprime/CourierPrime-Bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:"Courier Prime";src:url("../fonts/typografie/courierprime/CourierPrime-BoldItalic.woff2") format("woff2");font-weight:700;font-style:italic;font-display:swap;}
 @font-face{font-family:"Tinos";src:url("../fonts/typografie/tinos/Tinos-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:"Tinos";src:url("../fonts/typografie/tinos/Tinos-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap;}
 @font-face{font-family:"Tinos";src:url("../fonts/typografie/tinos/Tinos-Bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}

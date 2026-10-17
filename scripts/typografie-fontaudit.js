@@ -4,6 +4,7 @@
   const count=(audit,test)=>audit.files.filter(test).length;
   const feature=(audit,test)=>count(audit,r=>r.features.some(test));
   const pairings={
+    courierprime:[['Special Elite','Abgenutzter Titel und sauberer Schreibmaschinentext'],['Source Sans 3','Manuskripttext und klare sachliche Orientierung']],
     tinos:[['Arimo','Times-naher Lesetext mit sachlicher Sans-Orientierung'],['Source Sans 3','Kompakter Dokumententext, offene humanistische Zwischentitel']],
     arimo:[['Tinos','Sachliche Grotesktitel und kompakter Antiquatext'],['EB Garamond','Nüchterne Orientierung und lebendiger Buchtext']],
     greatvibes:[['Libre Baskerville','Kalligrafischer Titel, ruhiger Einladungstext'],['Source Sans 3','Festlicher Titel, klar erfassbare Angaben']],

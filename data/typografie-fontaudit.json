@@ -3378,6 +3378,114 @@
       "licensePresent": true
     },
     {
+      "id": "courierprime",
+      "name": "Courier Prime",
+      "files": [
+        {
+          "path": "fonts/typografie/courierprime/CourierPrime-Regular.woff2",
+          "sha256": "8ebaef7e0694454f4aa6679d2b802eead6ea178760f6ab3825e23448e3ea9f85",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "case",
+            "frac",
+            "locl",
+            "ordn",
+            "sups"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/courierprime/CourierPrime-Italic.woff2",
+          "sha256": "4ce3f2ef8ffbdf57ed119ca03295a09244464ac49286e52bfcdd014d56713c5b",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "aalt",
+            "case",
+            "ccmp",
+            "frac",
+            "liga",
+            "locl",
+            "ordn",
+            "sups"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/courierprime/CourierPrime-Bold.woff2",
+          "sha256": "ad1dcdeb4ae143ef4def639fd4088ba82f91e18b8387f12f1cd472cb803bd5ae",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "case",
+            "frac",
+            "locl",
+            "ordn",
+            "sups"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/courierprime/CourierPrime-BoldItalic.woff2",
+          "sha256": "fa241d01c7b2a53c4abdd36ff72799db9ee2d2abe28e9b793f4099ad205fa11c",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            700,
+            700
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "aalt",
+            "case",
+            "ccmp",
+            "frac",
+            "liga",
+            "locl",
+            "ordn",
+            "sups"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": true,
+        "boldItalic": true
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
       "id": "tinos",
       "name": "Tinos",
       "files": [

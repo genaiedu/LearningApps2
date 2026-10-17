@@ -3320,6 +3320,92 @@
       }
     },
     {
+      "id": "courierprime",
+      "name": "Courier Prime",
+      "source": "fonts/typografie/courierprime/CourierPrime-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/courierprime/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/courierprime",
+      "copyright": "Copyright 2015 The Courier Prime Project Authors (https://github.com/quoteunquoteapps/CourierPrime).",
+      "sha256": "8ebaef7e0694454f4aa6679d2b802eead6ea178760f6ab3825e23448e3ea9f85",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            135,
+            -22,
+            1158,
+            946
+          ],
+          "advance": 1228
+        },
+        "b": {
+          "bounds": [
+            37,
+            -22,
+            1101,
+            1312
+          ],
+          "advance": 1228
+        },
+        "g": {
+          "bounds": [
+            127,
+            -410,
+            1171,
+            946
+          ],
+          "advance": 1228
+        },
+        "p": {
+          "bounds": [
+            37,
+            -388,
+            1101,
+            946
+          ],
+          "advance": 1228
+        },
+        "x": {
+          "bounds": [
+            70,
+            0,
+            1158,
+            924
+          ],
+          "advance": 1228
+        },
+        "H": {
+          "bounds": [
+            80,
+            0,
+            1148,
+            1187
+          ],
+          "advance": 1228
+        },
+        "o": {
+          "bounds": [
+            132,
+            -22,
+            1096,
+            946
+          ],
+          "advance": 1228
+        },
+        "O": {
+          "bounds": [
+            88,
+            -22,
+            1140,
+            1209
+          ],
+          "advance": 1228
+        }
+      }
+    },
+    {
       "id": "tinos",
       "name": "Tinos",
       "source": "fonts/typografie/tinos/Tinos-Regular.woff2",

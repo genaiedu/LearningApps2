@@ -50,13 +50,14 @@ FAMILIES = [
     ('Great Vibes','greatvibes','script','Kalligrafische Schreibschrift','Fließende Verbindungen und elegante Schwünge für kurze festliche Titel; Begleittext ruhig halten.'),
     ('Monoton','monoton','display','Mehrlinige Display-Sans','Grafische Parallelstriche für wenige große Titelwörter; nicht für Lesetext.'),
     ('Special Elite','specialelite','display','Schreibmaschinenoptik / Display','Unregelmäßiger Farbauftrag für bewusst gesetzte Schreibmaschinenakzente; keine echte Monospace-Schrift.'),
+    ('Courier Prime','courierprime','mono','Klassische Schreibmaschinenschrift','Feste Zeichenbreite und klare Serifen für Manuskripte, Drehbücher und Schreibmaschinentexte.'),
     ('Tinos','tinos','serif','Times-nahe Übergangsantiqua','Für kompakte Lesetexte und Dokumente; metrisch auf Times New Roman abgestimmt.'),
     ('Arimo','arimo','sans','Arial-nahe Grotesk','Sachliche Grotesk für Dokumente und Orientierung; metrisch auf Arial abgestimmt.'),
 ]
 SLUGS = {'Zilla Slab':'zilla-slab','DM Mono':'dm-mono','Bebas Neue':'bebas-neue','Dancing Script':'dancing-script','DM Sans':'dm-sans','Plus Jakarta Sans':'plus-jakarta-sans','Archivo Black':'archivo-black'}
 NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville','goudybookletter1911',
        'breeserif','robotoslab','belleza','limelight','podkova','abel','firasans',
-       'unifrakturmaguntia','pirataone','texturina','greatvibes','monoton','specialelite','tinos','arimo'}
+       'unifrakturmaguntia','pirataone','texturina','greatvibes','monoton','specialelite','courierprime','tinos','arimo'}
 RAW = 'https://raw.githubusercontent.com/google/fonts/main/ofl/'
 
 def font_upstream(directory):
