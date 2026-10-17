@@ -18,10 +18,11 @@
   const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', history:'kunsttresor-history-v1', images:'kunsttresor-images-v2', hero:'kunsttresor-hero-v1'};
   if(wallMode)for(const key of ['game','best','progress','history'])keys[key]+='-wall';
   const labels = {title:'Werktitel',date:'Entstehungszeit', style:'Stil / Tradition', artist:'Künstler', technique:'Material / Technik'};
+  let resetInProgress = false;
   const store = {
     get(key) { try { return localStorage.getItem(key); } catch { return null; } },
-    set(key,value) { try { localStorage.setItem(key,value); return true; } catch { return false; } },
-    remove(key) { try { localStorage.removeItem(key); } catch { /* The round still works in memory. */ } }
+    set(key,value) { if(resetInProgress)return true; try { localStorage.setItem(key,value); return true; } catch { return false; } },
+    remove(key) { if(resetInProgress)return; try { localStorage.removeItem(key); } catch { /* The round still works in memory. */ } }
   };
   let wallOpening=wallMode;
   let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = progress.integer(Number(store.get(keys.best))) ? Number(store.get(keys.best)) : 0;
@@ -159,6 +160,7 @@
     return element;
   }
   function save() {
+    if(resetInProgress)return;
     if (state) {
       if (!progress.tokenPattern.test(state.roomToken)) state.roomToken = progress.token();
       if (!progress.tokenPattern.test(state.runToken)) state.runToken = progress.token();
@@ -178,6 +180,7 @@
   }
   function saveProgress() { if (store.set(keys.progress,JSON.stringify(playerProgress)) === false) storageWarning(); }
   function rememberWork(shownId) {
+    if(resetInProgress)return;
     if(historyBlocked) {
       $('progress-notice').hidden=false;
       $('progress-notice').textContent='Deine vorhandene Bildhistorie konnte nicht gelesen werden und wird nicht überschrieben. Lade bitte eine gültige Spielstandsdatei; das Spiel und deine Abzeichen bleiben verfügbar.';
@@ -1173,6 +1176,32 @@
   $('play-again').onclick = newRound;
   $('restart-top').onclick = $('restart-game').onclick = () => { $('clear-best').checked = false; open('restart-dialog'); };
   $('restart-confirm').onclick = () => { if ($('clear-best').checked) { best = 0; store.remove(keys.best); } close('restart-dialog'); newRound(); };
+  const resetSequence = window.KunstReset.createSequence();
+  document.querySelectorAll('.rule-steps .rule-secret').forEach(button => button.addEventListener('click',() => {
+    if(resetSequence(Number(button.dataset.resetStep))) {
+      $('reset-status').textContent=''; open('reset-dialog');
+      $('reset-dialog').querySelector('[data-close]').focus();
+    }
+  }));
+  $('reset-confirm').onclick = () => {
+    if(resetInProgress)return;
+    resetInProgress=true;
+    try { window.KunstReset.clearAppStorage([()=>window.localStorage,()=>window.sessionStorage]); }
+    catch {
+      resetInProgress=false;
+      $('reset-status').textContent='Die App konnte nicht vollständig zurückgesetzt werden. Bitte erlaube den Browserspeicher und versuche es erneut. Möglicherweise wurden bereits einzelne App-Daten gelöscht.';
+      return;
+    }
+    // No late image, import, film or AI callback may save the old game again.
+    fileEpoch++; pendingImport=null; pendingAssignment=null; upcomingRoom=null; state=null;
+    imagesAllowed=false; aiAllowed=false; aiEnabled=false; pendingIntro=false; pendingStart=false;
+    aiDisplayEpoch++; aiClient?.clear(); clearTimeout(revealTimer); revealRoom=null;
+    finishIntro(); galleryUI?.stopFilm(); stopImages(); cancelZoomLoad();
+    $('wiki-revoke')?.click();
+    $('reset-confirm').disabled=true;
+    $('reset-status').textContent='Alle Kunsttresor-Daten wurden gelöscht. Die App startet neu …';
+    window.location.reload();
+  };
   $('fullscreen').onclick = fullscreen;
   $('retry-images').onclick = render;
   $('replace-room').onclick = () => {
@@ -1187,6 +1216,7 @@
   const filmTextRequest=fetch('data/kunst-filmtexte.json?v=20261011-galeriefilm',{credentials:'same-origin'}).then(response=>response.ok?response.json():null).catch(()=>null);
   Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261017-portraets-bildrunde',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest,filmTextRequest])
     .then(([data,media,wiki,landmarks,titles,knowledge,filmTexts]) => {
+      if(resetInProgress)return;
       wikiCatalogue = wiki;
       archiveReplacements = data.replacements || [];
       artKnowledge=knowledge;

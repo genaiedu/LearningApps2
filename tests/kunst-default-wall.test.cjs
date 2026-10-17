@@ -35,7 +35,7 @@ async function setup(t,{state,history,gallery,preferences={},forgeryResponse,url
   const input=JSON.parse(options.body);
   return{ok:true,text:async()=>JSON.stringify({intro:'Wir betrachten die sieben Werke gemeinsam und gehen ihren gestalterischen Spuren nach.',works:input.room.ids.map(id=>({id,text:'Deine Zuordnungen sind ein Ausgangspunkt für den zweiten Blick. Prüfe die beschriebenen Merkmale am Werk und vergleiche die belegte Technik mit dem sichtbaren Eindruck.'}))})};
  };
- const files=['scripts/kunsttresor-mode.js','scripts/kunsttresor-layout.js','scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor.js','scripts/kunsttresor-wall.js'];
+ const files=['scripts/kunsttresor-mode.js','scripts/kunsttresor-layout.js','scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor-reset.js','scripts/kunsttresor.js','scripts/kunsttresor-wall.js'];
  for(const file of files)w.eval(read(file));
  for(let i=0;i<30;i++)await Promise.resolve();
  assert.equal(q('#launch-dialog').open,true);t.after(()=>w.close());return{w,q,requests,click:id=>q('#'+id).click()};
@@ -44,6 +44,43 @@ const secretKey='kunsttresor-forgery-every-series-v1',gameKey='kunsttresor-game-
 const settle=async()=>{for(let i=0;i<60;i++)await Promise.resolve();};
 const generated=(image='data:image/jpeg;base64,/9j/')=>({ok:true,json:async()=>({image,model:'test model'})});
 const roomOf=app=>JSON.parse(app.w.localStorage.getItem(gameKey));
+const stored=storage=>Object.fromEntries(Array.from({length:storage.length},(_,i)=>{const key=storage.key(i);return[key,storage.getItem(key)];}));
+const pressRule=(app,n)=>app.q('.rule-steps > li:nth-child('+n+') > button').click();
+test('1 → 2 → 4 opens a safely focused reset confirmation; cancellation keeps every saved value',async t=>{
+ const app=await setup(t,{preferences:{[secretKey]:'yes','kunsttresor-best-v1-wall':'9'}});app.click('launch-read');
+ const before=stored(app.w.localStorage);pressRule(app,1);pressRule(app,4);assert.equal(app.q('#reset-dialog').open,false);
+ pressRule(app,1);pressRule(app,2);assert.equal(app.q('#reset-dialog').open,false);pressRule(app,4);
+ assert.equal(app.q('#reset-dialog').open,true);assert.equal(app.w.document.activeElement,app.q('#reset-dialog [data-close]'));
+ assert.match(app.q('#reset-description').textContent,/Spielstand, Rekord, Abzeichen, Bildverlauf/);
+ assert.deepEqual(stored(app.w.localStorage),before);app.q('#reset-dialog [data-close]').click();
+ assert.equal(app.q('#reset-dialog').open,false);assert.deepEqual(stored(app.w.localStorage),before);
+ pressRule(app,1);pressRule(app,2);pressRule(app,4);assert.equal(app.q('#reset-dialog').open,true);
+});
+test('rule 03 keeps its old forgery toggle and interrupts an incomplete reset code',async t=>{
+ const app=await setup(t);app.click('launch-read');pressRule(app,1);pressRule(app,2);pressRule(app,3);pressRule(app,4);
+ assert.equal(app.q('#reset-dialog').open,false);assert.equal(app.w.localStorage.getItem(secretKey),'yes');
+ pressRule(app,1);pressRule(app,2);pressRule(app,4);assert.equal(app.q('#reset-dialog').open,true);
+});
+test('reset reports blocked browser storage and allows cancellation or a retry without claiming success',async t=>{
+ const app=await setup(t);app.click('launch-read');const before=stored(app.w.localStorage);
+ Object.defineProperty(app.w,'sessionStorage',{configurable:true,get(){throw Error('blocked');}});
+ pressRule(app,1);pressRule(app,2);pressRule(app,4);app.click('reset-confirm');
+ assert.equal(app.q('#reset-dialog').open,true);assert.equal(app.q('#reset-confirm').disabled,false);
+ assert.match(app.q('#reset-status').textContent,/nicht vollständig zurückgesetzt/);assert.deepEqual(stored(app.w.localStorage),before);
+ app.q('#reset-dialog [data-close]').click();assert.equal(app.q('#reset-dialog').open,false);
+});
+test('confirmed reset clears both app versions, preferences and session data; a pending forgery cannot recreate them',async t=>{
+ let respond;const app=await setup(t,{preferences:{'kunsttresor-gallery-v1':'old','kunsttresor-history-v0':'old','other-app':'keep',[secretKey]:'yes'},forgeryResponse:()=>new Promise(resolve=>{respond=resolve;})});
+ app.click('launch-skip');await settle();assert.equal(typeof respond,'function');
+ app.w.sessionStorage.setItem('kunsttresor-session-v0','old');app.w.sessionStorage.setItem('other-session','keep');
+ // jsdom deliberately cannot navigate; observe the requested reload without
+ // changing or deleting any real browser data.
+ let reloaded=false;app.w._virtualConsole.removeAllListeners('jsdomError');app.w._virtualConsole.on('jsdomError',error=>{if(/navigation/.test(error.message))reloaded=true;else throw error;});
+ pressRule(app,1);pressRule(app,2);pressRule(app,4);app.click('reset-confirm');
+ assert.equal(reloaded,true);assert.equal(app.q('#reset-confirm').disabled,true);
+ assert.deepEqual(stored(app.w.localStorage),{'other-app':'keep'});assert.deepEqual(stored(app.w.sessionStorage),{'other-session':'keep'});
+ respond({ok:false,status:503});await settle();assert.deepEqual(stored(app.w.localStorage),{'other-app':'keep'});
+});
 function readyWall(app){
  app.w.Date.now=()=>Date.now()+600000;
  for(const img of app.q('#art-grid').querySelectorAll('img')){Object.defineProperty(img,'naturalWidth',{value:600,configurable:true});Object.defineProperty(img,'naturalHeight',{value:400,configurable:true});img.onload();}
