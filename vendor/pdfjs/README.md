@@ -1,0 +1,1 @@
+PDF.js / pdfjs-dist 6.4.299, unmodified official npm distribution: minified browser build and worker, CMaps, standard fonts and WASM codecs. Apache-2.0; see LICENSE and notices in asset directories. Loaded locally only when importing PDF. https://github.com/mozilla/pdf.js
