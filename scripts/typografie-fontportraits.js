@@ -38,7 +38,7 @@
  }
  function render(catalogue,options){
   if(data!==catalogue){data=catalogue;byId=new Map(data.families.map(f=>[f.id,f]));combinations();}
-  const {term='',group='all',sample='Lesen heißt weiterdenken.'}=options,list=data.families.filter(f=>(group==='all'||f.group===group)&&[f.name,f.designer,f.classification,f.advice,f.portrait.history,f.portrait.use].join(' ').toLocaleLowerCase('de').includes(term));
+  const {term='',group='all',sample='Lesen heißt weiterdenken.'}=options,list=data.families.filter(f=>(group==='all'||f.group===group)&&[f.name,f.designer,f.classification,f.advice,f.portrait.history,f.portrait.use].join(' ').toLocaleLowerCase('de').includes(term)).sort((a,b)=>a.name.localeCompare(b.name,'de',{sensitivity:'base',numeric:true}));
   $('font-grid').replaceChildren();$('catalog-status').textContent=list.length+' von '+data.families.length+' Schriftporträts · zum Öffnen anklicken';
   for(const f of list){const card=el('article','font-card font-portrait-card'),button=el('button','font-portrait-trigger');button.type='button';button.dataset.fontOpen=f.id;button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-label',f.name+' · Schriftporträt öffnen');button.append(el('span','font-portrait-name',f.name),el('span','font-category',f.classification),font(el('span','font-sample',sample),f),el('span','font-advice',f.portrait.character),el('span','font-portrait-more','Geschichte, Einsatz & Partner ↗'));button.onclick=()=>open(f.id,button);card.append(button);$('font-grid').append(card);}
   if(!list.length)$('font-grid').append(el('p','small','Keine passende Schrift gefunden. Ändere den Suchbegriff oder die Schriftgruppe.'));
