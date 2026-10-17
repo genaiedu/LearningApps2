@@ -603,7 +603,7 @@
     $('jump-missing').setAttribute('aria-label',done+' von '+total+' zugeordnet. '+(done===total?'Alle Angaben sind zugeordnet.':'Bild mit fehlender Zuordnung öffnen.'));
     $('open-joker').textContent='Joker: '+(state.joker ?? 1);
     $('open-joker').disabled=!playing || !allPicturesReady || state.joker!==1;
-    $('open-joker').title=state.joker===1?'Ein Bild vollständig lösen':'Nächster Joker nach Raum '+(Math.floor(state.escaped/3)+1)*3;
+    $('open-joker').title=state.joker===1?'Ein Bild in diesem Raum vollständig lösen':'In diesem Raum verbraucht. Im nächsten Raum erhältst du einen neuen Joker.';
     document.querySelectorAll('.joker-use').forEach(button=>{const used=state.jokerUsed?.includes(button.dataset.work);button.textContent=used?'Joker verwendet':'Mit Joker lösen';button.disabled=!playing || !allPicturesReady || state.joker!==1;});
     document.querySelectorAll('.forgery-flag').forEach(button=>{button.setAttribute('aria-pressed',String(Boolean(state.forgeryMarks?.[button.dataset.work])));button.disabled=!playing;});
     const remaining = attemptLimit - state.attempts;

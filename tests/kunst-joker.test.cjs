@@ -43,14 +43,20 @@ test('legacy reviews migrate without inventing attempts or losing prior exclusio
  const restored=core.restore(plain(state),works);assert.equal(restored.joker,1);assert.equal(restored.attempts,1);assert.equal(restored.choices[id].artist,'');assert.equal(restored.excluded[id].artist.length,1);
  assert.equal(core.restore({...plain(state),joker:2},works),null);assert.equal(core.restore({...plain(state),jokerUsed:['missing']},works),null);
 });
-test('joker refills at 3, 6 and 9 wins, never stacks and cannot be claimed by rechecking',()=>{
- let state=core.newState(works);state=core.useJoker(state,state.ids[0],works);assert.equal(state.joker,0);
+test('every room has one joker, never stacks and reloading the same room does not replace a used joker',()=>{
+ let state=core.newState(works);
  for(let n=1;n<=9;n++){
+  assert.equal(state.joker,1);assert.equal(state.jokerUsed.length,0);
+  if(n!==4){state=core.useJoker(state,state.ids[0],works);assert.equal(state.joker,0);assert.equal(core.restore(plain(state),works).joker,0);}
   state=core.inspect(fill(state),works).state;assert.equal(state.phase,'unlocked');assert.equal(state.escaped,n);
-  assert.equal(state.joker,n<3||n===7||n===8?0:1);assert.equal(core.inspect(state,works).checked,false);
+  assert.equal(state.joker,n===4?1:0);assert.equal(core.inspect(state,works).checked,false);
   assert.equal(core.restore(plain(state),works).joker,state.joker);
-  if(n<9){state=core.newState(works,state);assert.equal(state.jokerUsed.length,0);if(n===6)state=core.useJoker(state,state.ids[0],works);}
+  if(n<9)state=core.newState(works,state);
  }
+});
+test('an older empty stock from a previous room gets the current room joker without resetting choices or attempts',()=>{
+ let state=core.inspect(fill(core.newState(works),1),works).state;state.joker=0;state.jokerUsed=[];
+ const restored=core.restore(plain(state),works);assert.equal(restored.joker,1);assert.equal(restored.attempts,state.attempts);assert.deepEqual(plain(restored.choices),plain(state.choices));
 });
 test('the editorial and AI curator know exactly which work was solved with a joker',()=>{
  let state=core.newState(archive);const id=state.ids[0];state=core.useJoker(state,id,archive);

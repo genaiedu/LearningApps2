@@ -102,7 +102,7 @@
     const recent = previous ? [...previous.recent, ...previous.ids].slice(-count*6) : [];
     const next = room(pool, recent, random, requireForgeryTarget);
     return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attemptLog: [], attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent,
-      ...(root.KunstWallEnabled ? {joker:previous?.joker ?? 1,jokerUsed:[],excluded:{}} : {}),
+      ...(root.KunstWallEnabled ? {joker:1,jokerUsed:[],excluded:{}} : {}),
       ...(previous?.runToken ? {runToken:previous.runToken, parentRoomToken:previous.phase === 'unlocked' ? previous.roomToken : previous.parentRoomToken || null} : {})};
   }
   function nextForgeryCooldown(random = Math.random) {
@@ -194,7 +194,7 @@
     if(root.KunstWallEnabled){
       next.excluded=exclusions(next,pool);
       next.choices=Object.fromEntries(state.ids.map(id=>[id,Object.fromEntries(fields.map(field=>[field,isExcluded(next,id,field,state.choices[id][field])?'':state.choices[id][field]]))]));
-      next.joker=unlocked && escaped%3===0 ? 1 : state.joker ?? 1;
+      next.joker=state.joker ?? 1;
     }
     return {checked:true,correct,forgeryCorrect,state:next};
   }
@@ -238,7 +238,7 @@
     }
     const restored={...saved, choices: saved.choices || {}, review, ...(attemptLog === undefined ? {} : {attemptLog})};
     if(root.KunstWallEnabled){
-      restored.joker=saved.joker ?? 1;restored.jokerUsed=saved.jokerUsed || [];
+      restored.jokerUsed=saved.jokerUsed || [];restored.joker=restored.jokerUsed.length?0:1;
       restored.excluded=exclusions(restored,pool);
       restored.choices=Object.fromEntries(saved.ids.map(id=>[id,Object.fromEntries(fields.map(field=>[field,isExcluded(restored,id,field,restored.choices[id]?.[field])?'':restored.choices[id]?.[field] || '']))]));
     }
