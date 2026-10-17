@@ -22,7 +22,7 @@
     function layoutGallery(){
       const grid=$('gallery-grid'),cards=[...grid.querySelectorAll('.gallery-card')],width=grid.clientWidth;
       if(!$('gallery-dialog').open||!width||!cards.length){grid.style.height='';return;}
-      const gap=8,ratios=cards.map(card=>{const img=card.querySelector('img');return img?.naturalWidth?img.naturalWidth/img.naturalHeight:1;});
+      const gap=8,ratios=cards.map(card=>{const img=card.querySelector('img');return img?.naturalWidth?img.naturalWidth/img.naturalHeight:Number(card.dataset.galleryAspect)||1;});
       const rows=root.KunstWallLayout.rows(ratios,width,{gap,target:innerWidth<=760?210:320});let y=0;
       for(const row of rows){
         let height=row.height;
@@ -77,6 +77,7 @@
       $('gallery-grid').replaceChildren();
       if(!gallery.liked.length)$('gallery-grid').append(node('p','gallery-empty','Deine Galerie beginnt nach der ersten gewonnenen Tür. Markiere dann die Werke, die du behalten möchtest, mit dem Herz.'));
       for(const entry of gallery.liked){const work=byId.get(entry.id), card=node('article','gallery-card');
+        if(work.imageWidth&&work.imageHeight)card.dataset.galleryAspect=String(work.imageWidth/work.imageHeight);
         card.append(imageButton(work));
         const details=node('details','gallery-card-details'),summary=node('summary'),actions=node('div','gallery-card-actions');
         summary.title=title(work)+' · '+work.artist+' · '+work.date;summary.setAttribute('aria-label','Werkdetails & Auswahl: '+summary.title);
