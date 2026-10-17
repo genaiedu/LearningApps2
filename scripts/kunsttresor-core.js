@@ -102,7 +102,7 @@
     const recent = previous ? [...previous.recent, ...previous.ids].slice(-count*6) : [];
     const next = room(pool, recent, random, requireForgeryTarget);
     return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attemptLog: [], attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent,
-      ...(root.KunstWallEnabled ? {joker:1,jokerUsed:[],excluded:{}} : {}),
+      ...(root.KunstWallEnabled ? {joker:1,jokerUsed:[],excluded:{},locked:{},dateHints:{}} : {}),
       ...(previous?.runToken ? {runToken:previous.runToken, parentRoomToken:previous.phase === 'unlocked' ? previous.roomToken : previous.parentRoomToken || null} : {})};
   }
   function nextForgeryCooldown(random = Math.random) {
@@ -117,24 +117,113 @@
   function choose(state, workId, field, value) {
     const fields=fieldsFor(state);
     if (state.phase !== 'playing' || !state.ids.includes(workId) || !fields.includes(field) || (value && !state.options[field].includes(value))) return state;
-    if (isExcluded(state,workId,field,value) || takenBy(state,workId,field,value)) return state;
+    if (isLocked(state,workId,field) || isExcluded(state,workId,field,value) || takenBy(state,workId,field,value)) return state;
     const choices = Object.fromEntries(Object.entries(state.choices).map(([id, selection]) => [id, {...selection}]));
     choices[workId] = {...choices[workId], [field]: value};
     return {...state, choices};
   }
   function capacity(state,field,value){return (state.options[field]||[]).filter(v=>v===value).length;}
-  function isExcluded(state,id,field,value){return Boolean(value && state.excluded?.[id]?.[field]?.includes(value));}
-  function exclusions(state,pool) {
+  function isLocked(state,id,field){return Boolean(root.KunstWallEnabled && state.locked?.[id]?.[field]);}
+  function confirmedOwners(state,id,field,value) {
+    if(!root.KunstWallEnabled || !value || state.locked?.[id]?.[field]===value)return [];
+    const owners=state.ids.filter(other=>other!==id && state.locked?.[other]?.[field]===value);
+    return owners.length>=capacity(state,field,value)?owners:[];
+  }
+  function isExcluded(state,id,field,value){return Boolean(value && (state.excluded?.[id]?.[field]?.includes(value) || confirmedOwners(state,id,field,value).length));}
+  function checkedSnapshots(state){return [...(state.attemptLog||[]),...(state.review?[state.review]:[])];}
+  // Compare the displayed catalogue period, not an invented tolerance around
+  // "um/ca.". Later casts, prints, frames and reworkings are separate dates.
+  function dateWindow(value) {
+    if(typeof value!=='string')return null;
+    let text=value.split(/[;,]|\s*\(/)[0].trim(),approx=/\b(?:um|ca\.?|circa|around)\s/i.test(text);
+    const bce=/v\.\s*Chr\.|BCE|B\.C\./i.test(text);
+    const exactDay=/\b\d{1,2}\.\s*[A-Za-zÄÖÜäöü]+\s+\d{3,4}\b/.test(text),partialYear=/\b(?:early|late|spring|summer|autumn|winter|Anfang|Ende|Frühjahr|Sommer|Herbst|Winter)\b/i.test(text);
+    if(exactDay){const year=Number(text.match(/\b\d{3,4}\b/)?.[0]);return year?{start:year,end:year,precision:3,approx:false}:null;}
+    const after=/^(?:after|nach)\s+(\d{1,4})\b/i.exec(text),before=/^(?:before|vor)\s+(\d{1,4})\b/i.exec(text);
+    if(after)return {start:(bce?-1:1)*Number(after[1])+1,end:Infinity,precision:0,approx};
+    if(before)return {start:-Infinity,end:(bce?-1:1)*Number(before[1])-1,precision:0,approx};
+    const decade=/\b(\d{3,4})s\b/.exec(text);
+    if(decade)return {start:Number(decade[1]),end:Number(decade[1])+9,precision:0,approx};
+    text=text.replace(/\b(?:um|ca\.?|circa|around|Modell|model|early|late)\s*/gi,'').trim();
+    const range=/^(\d{1,4})\s*[–—/\-]\s*(\d{1,4})\b/.exec(text),single=/^(\d{1,4})(?:\s|$|\.)/.exec(text);
+    if(!range&&!single)return null;
+    let start=Number((range||single)[1]),end=range?Number(range[2]):start;
+    if(!start||!end&&!range)return null;
+    if(range&&range[2].length<range[1].length){const base=10**range[2].length;end=Math.floor(start/base)*base+end;if(!bce&&end<start)end+=base;}
+    if(bce){start=-start;end=-end;}
+    return {start:Math.min(start,end),end:Math.max(start,end),precision:range?0:approx?1:partialYear?3:2,approx};
+  }
+  function dateHint(value,actual) {
+    if(value===actual)return null;
+    const chosen=dateWindow(value),correct=dateWindow(actual);
+    if(!chosen||!correct)return null;
+    let kind,label;
+    if(chosen.end<correct.start){kind='early';label='zu früh';}
+    else if(chosen.start>correct.end){kind='late';label='zu spät';}
+    else if(chosen.start>=correct.start&&chosen.end<=correct.end&&(chosen.start>correct.start||chosen.end<correct.end||chosen.precision>correct.precision||!chosen.approx&&correct.approx)){kind='precise';label='zu genau';}
+    else if(chosen.start<=correct.start&&chosen.end>=correct.end&&(chosen.start<correct.start||chosen.end>correct.end||chosen.precision<correct.precision||chosen.approx&&!correct.approx)){kind='broad';label='zu ungenau';}
+    else {kind='overlap';label=chosen.start===correct.start&&chosen.end===correct.end?'Datierung anders angegeben':'Zeitspannen überlappen';}
+    return {value,kind,label,...(kind==='early'?{cutoff:chosen.end}:kind==='late'?{cutoff:chosen.start}:{})};
+  }
+  function dateFeedback(state,pool) {
     const byId=new Map(pool.map(work=>[work.id,work])),result={};
-    // Keep every checked snapshot, not just the most recent feedback.
-    for(const snapshot of [...(state.attemptLog||[]),...(state.review?[state.review]:[])])for(const id of state.ids)for(const field of fieldsFor(state)){
-      const value=snapshot.choices?.[id]?.[field];
-      if(value && state.options[field].includes(value) && value!==byId.get(id)?.[field]){
-        result[id] ||= {};result[id][field] ||= [];
-        if(!result[id][field].includes(value))result[id][field].push(value);
-      }
+    for(const snapshot of checkedSnapshots(state))for(const id of state.ids){
+      const value=snapshot.choices?.[id]?.date,work=byId.get(id);
+      if(!value||!work||!state.options.date.includes(value)||value===work.date)continue;
+      const hint=dateHint(value,work.date);
+      if(hint){result[id] ||= [];if(!result[id].some(item=>item.value===value))result[id].push(hint);}
     }
     return result;
+  }
+  function rulesOut(hint,value) {
+    const window=dateWindow(value);
+    return Boolean(window && (hint.kind==='early'&&window.end<=hint.cutoff || hint.kind==='late'&&window.start>=hint.cutoff));
+  }
+  function dateHintFor(state,id,value) {
+    const hints=state.dateHints?.[id] || [];
+    return hints.find(hint=>hint.value===value) || hints.find(hint=>rulesOut(hint,value)) || null;
+  }
+  function confirmations(state,pool) {
+    const byId=new Map(pool.map(work=>[work.id,work])),result={};
+    for(const id of state.ids)for(const field of fieldsFor(state)){
+      const value=byId.get(id)?.[field];
+      if(value && (state.jokerUsed?.includes(id) || checkedSnapshots(state).some(snapshot=>snapshot.choices?.[id]?.[field]===value))){result[id] ||= {};result[id][field]=value;}
+    }
+    return result;
+  }
+  function exclusions(state,pool) {
+    const byId=new Map(pool.map(work=>[work.id,work])),result={};
+    const add=(id,field,value)=>{result[id] ||= {};result[id][field] ||= [];if(!result[id][field].includes(value))result[id][field].push(value);};
+    // Keep every checked snapshot, not just the most recent feedback.
+    for(const snapshot of checkedSnapshots(state))for(const id of state.ids)for(const field of fieldsFor(state)){
+      const value=snapshot.choices?.[id]?.[field];
+      if(value && state.options[field].includes(value) && value!==byId.get(id)?.[field]){
+        add(id,field,value);
+      }
+    }
+    for(const [id,hints]of Object.entries(dateFeedback(state,pool)))for(const value of state.options.date){
+      // The real catalogue answer must remain available, also for uncertain dates.
+      if(value!==byId.get(id)?.date&&hints.some(hint=>rulesOut(hint,value)))add(id,'date',value);
+    }
+    return result;
+  }
+  function applyFeedback(state,pool) {
+    const next={...state,locked:confirmations(state,pool),dateHints:dateFeedback(state,pool),excluded:exclusions(state,pool)};
+    // Migrate older rounds that allowed moving a previously green answer:
+    // restore that confirmation and release conflicting unconfirmed choices.
+    next.choices=Object.fromEntries(state.ids.map(id=>[id,Object.fromEntries(fieldsFor(state).map(field=>{
+      const value=next.locked[id]?.[field] || state.choices[id]?.[field] || '';
+      return [field,isExcluded(next,id,field,value)?'':value];
+    }))]));
+    for(const field of fieldsFor(state))for(const value of new Set(state.options[field])){
+      const owners=state.ids.filter(id=>next.choices[id][field]===value),quota=capacity(state,field,value);
+      // An older save may have moved a confirmed repeated technique elsewhere.
+      // Reinstating it must not overfill the remaining quota.
+      while(owners.length>quota){const index=owners.findIndex(id=>!isLocked(next,id,field));if(index<0)break;
+        next.choices[owners[index]][field]='';owners.splice(index,1);
+      }
+    }
+    return next;
   }
   function useJoker(state,id,pool) {
     const byId=new Map(pool.map(work=>[work.id,work])),work=byId.get(id),fields=fieldsFor(state);
@@ -151,7 +240,7 @@
       next=choose(next,id,field,value);
       if(next.choices[id]?.[field]!==value)return state;
     }
-    return {...next,joker:0,jokerUsed:[...(state.jokerUsed||[]),id],forgeryMarks:{...state.forgeryMarks,[id]:state.forgery?.id===id}};
+    return applyFeedback({...next,joker:0,jokerUsed:[...(state.jokerUsed||[]),id],forgeryMarks:{...state.forgeryMarks,[id]:state.forgery?.id===id}},pool);
   }
   // A move is explicit and atomic: an unconfirmed selection never clears an answer.
   function transferChoice(state, workId, field, value, ownerId) {
@@ -192,9 +281,8 @@
     const escaped=state.escaped+(unlocked?1:0);
     const next={...state,review,attemptLog,attempts,escaped,phase:unlocked?'unlocked':attempts===limit?'lost':'playing'};
     if(root.KunstWallEnabled){
-      next.excluded=exclusions(next,pool);
-      next.choices=Object.fromEntries(state.ids.map(id=>[id,Object.fromEntries(fields.map(field=>[field,isExcluded(next,id,field,state.choices[id][field])?'':state.choices[id][field]]))]));
       next.joker=state.joker ?? 1;
+      return {checked:true,correct,forgeryCorrect,state:applyFeedback(next,pool)};
     }
     return {checked:true,correct,forgeryCorrect,state:next};
   }
@@ -239,8 +327,7 @@
     const restored={...saved, choices: saved.choices || {}, review, ...(attemptLog === undefined ? {} : {attemptLog})};
     if(root.KunstWallEnabled){
       restored.jokerUsed=saved.jokerUsed || [];restored.joker=restored.jokerUsed.length?0:1;
-      restored.excluded=exclusions(restored,pool);
-      restored.choices=Object.fromEntries(saved.ids.map(id=>[id,Object.fromEntries(fields.map(field=>[field,isExcluded(restored,id,field,restored.choices[id]?.[field])?'':restored.choices[id]?.[field] || '']))]));
+      return applyFeedback(restored,pool);
     }
     return restored;
   }
@@ -272,7 +359,7 @@
     if (original.phase === 'lost') { next.phase='lost'; next.attempts=limit; }
     return {state:next,updated:true,newRoom:true};
   }
-  const api = {forgeryPlan,nextForgeryCooldown,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, transferChoice, isExcluded, exclusions, useJoker, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
+  const api = {forgeryPlan,nextForgeryCooldown,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, transferChoice, isLocked, confirmedOwners, isExcluded, exclusions, dateWindow, dateHint, dateHintFor, useJoker, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

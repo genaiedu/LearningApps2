@@ -505,7 +505,7 @@
     const complete=core.filled(state)===total;
     $('feedback').textContent=state.attempts===0
       ? (complete?'Alle Antworten sind vergeben. Bereit für die erste Prüfung?':'Die Auswahl allein zählt noch nicht als Versuch. Ordne alle '+total+' Antworten zu.')
-      : (complete?'Alle Felder sind zugeordnet. Neue Antworten werden erst beim erneuten Prüfen bewertet.':'Fülle vor dem nächsten Prüfen wieder alle '+total+' Felder aus. Bereits vergebene Antworten kannst du nach Bestätigung verschieben.');
+      : (complete?'Alle Felder sind zugeordnet. Neue Antworten werden erst beim erneuten Prüfen bewertet.':'Fülle vor dem nächsten Prüfen wieder alle '+total+' Felder aus. Grün bestätigte Angaben bleiben fest; nur ungeprüfte Beschriftungen kannst du verschieben.');
   }
   function describeAssignmentMove() {
     if(!pendingAssignment)return;
@@ -515,13 +515,13 @@
   }
   function chooseAnswer(workId,field,value,select) {
     if(!state || state.phase!=='playing')return;
-    if(core.isExcluded(state,workId,field,value)){update();return;}
+    if(core.isLocked(state,workId,field)||core.isExcluded(state,workId,field,value)){update();return;}
     const owner=core.takenBy(state,workId,field,value);
     if(owner){
       const label=[...select.options].find(option=>option.value===value)?.dataset.label || value;
       select.value=state.choices[workId]?.[field] || '';
       pendingAssignment={room:state.options,workId,field,value,label,select};
-      const owners=state.ids.filter(id=>id!==workId&&state.choices[id]?.[field]===value);
+      const owners=state.ids.filter(id=>id!==workId&&state.choices[id]?.[field]===value&&!core.isLocked(state,id,field));
       $('assignment-owner').replaceChildren(...owners.map(id=>{const option=node('option',null,'Bild '+pictureLetter(id));option.value=id;return option;}));
       $('assignment-owner-label').hidden=owners.length<2;
       describeAssignmentMove();open('assignment-dialog');return;
@@ -611,24 +611,46 @@
     [...$('attempts').children].forEach((dot,index) => dot.classList.toggle('used', index < state.attempts));
     document.querySelectorAll('#art-grid select, #wall-settings select').forEach(select => {
       select.value = state.choices[select.dataset.work]?.[select.dataset.field] || '';
-      select.disabled = !playing;
+      const locked=core.isLocked(state,select.dataset.work,select.dataset.field);
+      select.disabled = !playing || locked;
       [...select.options].forEach(option => {
         const excluded=core.isExcluded(state,select.dataset.work,select.dataset.field,option.value);
         option.disabled=excluded;option.classList.toggle('is-excluded',excluded);
         if (option.dataset.label) {
           const owners=state.ids.filter(id=>state.choices[id]?.[select.dataset.field]===option.value);
-          const assigned=owners.length?' · bei Bild '+owners.map(pictureLetter).join(', '):'';
+          const assigned=owners.length?' · Bild '+owners.map(pictureLetter).join(', '):'';
           if(wallMode&&select.dataset.field==='technique'){
             const left=core.remaining(state,'technique',option.value),total=core.capacity(state,'technique',option.value);
             option.textContent=option.dataset.label+' · '+left+' frei'+assigned;
             option.title=left+' von '+total+' Zuordnungen noch frei'+assigned;
           }else {option.textContent=option.dataset.label+assigned;option.title=option.textContent;}
-          if(excluded){option.textContent='✕ '+option.textContent+' · ausgeschlossen';option.title=option.textContent;}
+          if(excluded){
+            const confirmed=core.confirmedOwners(state,select.dataset.work,select.dataset.field,option.value),hint=select.dataset.field==='date'?core.dateHintFor(state,select.dataset.work,option.value):null;
+            option.textContent='✕ '+option.textContent;
+            option.title=option.dataset.label+' · ausgeschlossen'+(confirmed.length?' · bei Bild '+confirmed.map(pictureLetter).join(', ')+' bestätigt':hint?' · '+hint.label:'');
+          }
+          // The closed field only needs its value. Ownership and quotas remain
+          // visible on the other entries in the open list, not on the chosen one.
+          if(option.value===select.value)option.textContent=option.dataset.label;
         }
       });
-      const excluded=$(select.id+'-excluded'),values=state.excluded?.[select.dataset.work]?.[select.dataset.field] || [];
-      excluded.hidden=values.length===0;excluded.replaceChildren(node('span',null,'Ausgeschlossen: '));
-      values.forEach((value,index)=>{if(index)excluded.append(document.createTextNode(' · '));const option=[...select.options].find(option=>option.value===value);excluded.append(node('s',null,option?.dataset.label || value));});
+      const excluded=$(select.id+'-excluded'),values=[...new Set(state.options[select.dataset.field])].filter(value=>core.isExcluded(state,select.dataset.work,select.dataset.field,value));
+      const priority=value=>{
+        const hint=select.dataset.field==='date'?core.dateHintFor(state,select.dataset.work,value):null;
+        return hint?(hint.value===value?0:1):state.excluded?.[select.dataset.work]?.[select.dataset.field]?.includes(value)?2:3;
+      };
+      values.sort((a,b)=>priority(a)-priority(b));
+      excluded.hidden=locked||values.length===0;excluded.replaceChildren(node('span','excluded-title','Nicht mehr möglich:'));
+      const list=node('span','excluded-list');
+      values.forEach(value=>{
+        const option=[...select.options].find(option=>option.value===value),entry=node('span','excluded-answer');
+        const hint=select.dataset.field==='date'?core.dateHintFor(state,select.dataset.work,value):null;
+        const confirmed=core.confirmedOwners(state,select.dataset.work,select.dataset.field,value);
+        if(hint)entry.append(node('span','date-feedback',hint.label));
+        else if(confirmed.length)entry.append(node('span','confirmed-elsewhere','Bild '+confirmed.map(pictureLetter).join(', ')+' bestätigt'));
+        entry.append(node('s',null,option?.dataset.label || value));list.append(entry);
+      });
+      excluded.append(list);
     });
     renderReview();
     document.querySelectorAll('#art-grid .art-card').forEach(card => {
@@ -645,22 +667,23 @@
     $('lock-visual').classList.toggle('is-open', state.phase === 'unlocked');
     $('lock-visual').classList.toggle('is-lost', state.phase === 'lost');
     $('technical-note').hidden = failed.size === 0;
-    if(wallMode&&playing&&state.attempts>0){$('review-help').textContent='Richtige Angaben bleiben stehen. Falsche wurden geleert und beim jeweiligen Bild dauerhaft ausgeschlossen. Frühere Ausschlüsse bleiben erhalten. Noch '+remaining+' Prüfversuch(e). Bereits vergebene, nicht ausgeschlossene Antworten kannst du nach Bestätigung verschieben.';}
+    if(wallMode&&playing&&state.attempts>0){$('review-help').textContent='Grüne Angaben sind bestätigt und bleiben fest. Falsche wurden geleert; ihre Ausschlüsse und Zeit-Hinweise bleiben erhalten. Noch '+remaining+' Prüfversuch(e). Nur ungeprüfte, nicht ausgeschlossene Beschriftungen lassen sich nach Bestätigung verschieben.';}
     $('start-game').textContent = state ? 'Zum aktuellen Raum →' : 'Galerie betreten →';
   }
   function renderReview() {
     const results = core.review(state,pool), byField = new Map(results.map(result => [result.id + ':' + result.field,result]));
     document.querySelectorAll('#art-grid select, #wall-settings select').forEach(select => {
       const result = byField.get(select.dataset.work + ':' + select.dataset.field);
+      const locked=core.isLocked(state,select.dataset.work,select.dataset.field);
       const label = select.closest('label'), message = $(select.id + '-result');
-      label.classList.toggle('is-incorrect',Boolean(result && !result.changed && !result.correct));
-      label.classList.toggle('is-correct',Boolean(result && !result.changed && result.correct));
+      label.classList.toggle('is-incorrect',Boolean(!locked && result && !result.changed && !result.correct));
+      label.classList.toggle('is-correct',Boolean(locked || result && !result.changed && result.correct));
       const cleared=Boolean(result && !result.correct && !select.value);
-      label.classList.toggle('is-revised',Boolean(result?.changed && !cleared));
-      label.classList.toggle('is-cleared',cleared);
-      select.setAttribute('aria-invalid',result && !result.changed && !result.correct ? 'true' : 'false');
-      message.hidden = !result;
-      message.textContent = !result ? '' : cleared ? '✕ Falsch · entfernt und ausgeschlossen' : result.changed ? '↻ Neu gewählt · noch nicht geprüft' : result.correct ? '✓ Richtig bei der Prüfung' : '✕ Falsch bei der Prüfung';
+      label.classList.toggle('is-revised',Boolean(!locked && result?.changed && !cleared));
+      label.classList.toggle('is-cleared',!locked&&cleared);
+      select.setAttribute('aria-invalid',!locked && result && !result.changed && !result.correct ? 'true' : 'false');
+      message.hidden = !locked && !result;
+      message.textContent = locked ? (state.jokerUsed?.includes(select.dataset.work)?'✓ Mit Joker gelöst · bleibt fest':'✓ Richtig bestätigt · bleibt fest') : !result ? '' : cleared ? '✕ Falsch · entfernt und ausgeschlossen' : result.changed ? '↻ Neu gewählt · noch nicht geprüft' : result.correct ? '✓ Richtig bei der Prüfung' : '✕ Falsch bei der Prüfung';
     });
     const visible = results.length > 0 && state.phase === 'playing';
     $('review-summary').hidden = !visible;

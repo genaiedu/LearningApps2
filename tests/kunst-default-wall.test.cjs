@@ -10,7 +10,7 @@ function fixture(attempts=1){
  let h=model.KunstHistory.fresh();for(const id of s.ids)h=model.KunstHistory.track(h,s,pool,{shownId:id});
  for(let n=1;n<=attempts;n++){
   for(const field of c.fields)for(const id of s.ids)s=c.choose(s,id,field,'');
-  const ids=[...s.ids];for(const [i,id]of ids.entries())for(const field of c.fields)s=c.choose(s,id,field,pool.find(w=>w.id===ids[(i+(n===attempts||field==='technique'?0:n))%7])[field]);
+  const ids=[...s.ids];for(const [i,id]of ids.entries())for(const field of c.fields)s=c.choose(s,id,field,pool.find(w=>w.id===ids[(i+(n===attempts||field!=='artist'?0:n))%7])[field]);
   s=c.inspect(s,pool).state;h=model.KunstHistory.track(h,s,pool);
  }
  return JSON.parse(JSON.stringify({s,h}));
@@ -67,10 +67,10 @@ test('two failed checks strike and disable both sets of wrong answers only for t
  const app=await setup(t);app.click('launch-skip');readyWall(app);const room=roomOf(app),id=room.ids[0];
  for(let offset=1;offset<=2;offset++){
   for(const field of model.KunstTresor.fieldsFor(room))for(let i=0;i<7;i++)selectAnswer(app,'ABCDEFG'[i],field,'');
-  for(const [i,workId]of room.ids.entries())for(const field of model.KunstTresor.fieldsFor(room))selectAnswer(app,'ABCDEFG'[i],field,pool.find(w=>w.id===(field==='technique'?workId:room.ids[(i+offset)%7]))[field]);
+  for(const [i,workId]of room.ids.entries())for(const field of model.KunstTresor.fieldsFor(room))selectAnswer(app,'ABCDEFG'[i],field,pool.find(w=>w.id===(field!=='artist'?workId:room.ids[(i+offset)%7]))[field]);
   assert.equal(app.q('#check').disabled,false);app.click('check');assert.equal(roomOf(app).attempts,offset);
   assert.equal(app.q('#answer-A-artist').value,'');assert.equal(app.q('#answer-A-artist-excluded').querySelectorAll('s').length,offset);
-  for(let n=1;n<=offset;n++){const value=pool.find(w=>w.id===room.ids[n]).artist,option=[...app.q('#answer-A-artist').options].find(o=>o.value===value);assert.equal(option.disabled,true);assert.match(option.textContent,/ausgeschlossen/);}
+  for(let n=1;n<=offset;n++){const value=pool.find(w=>w.id===room.ids[n]).artist,option=[...app.q('#answer-A-artist').options].find(o=>o.value===value);assert.equal(option.disabled,true);assert.match(option.textContent,/^✕ /);assert.match(option.title,/ausgeschlossen/);}
   assert.equal(app.q('#answer-A-technique').value,pool.find(w=>w.id===id).technique);
  }
  const saved=roomOf(app),again=await setup(t,{state:saved});again.click('launch-skip');assert.equal(again.q('#answer-A-artist-excluded').querySelectorAll('s').length,2);
@@ -86,21 +86,21 @@ test('curator hearts appear only for a won room and joker commentary stays visib
  assert.match(app.q('.curator-joker-note').textContent,/Joker eingesetzt/);assert.match(app.q('.curator-opening').textContent,/Joker eingesetzt/);
  app.q('#solution-dialog [data-ai-toggle]').click();app.click('ai-enable');await settle();assert.match(app.q('.curator-joker-note').textContent,/automatisch gelöst/);
  const request=app.requests.find(r=>r.url.endsWith('/api/feedback'));assert.deepEqual(JSON.parse(request.options.body).room.jokerUsed,[id]);
- let lost=c.newState(pool);for(let offset=1;offset<=3;offset++){for(const field of c.fieldsFor(lost))for(const workId of lost.ids)lost=c.choose(lost,workId,field,'');for(const [i,workId]of lost.ids.entries())for(const field of c.fieldsFor(lost))lost=c.choose(lost,workId,field,pool.find(w=>w.id===(field==='technique'?workId:lost.ids[(i+offset)%7]))[field]);lost=c.inspect(lost,pool).state;}
+ let lost=c.newState(pool);for(let offset=1;offset<=3;offset++){for(const field of c.fieldsFor(lost))for(const workId of lost.ids)lost=c.choose(lost,workId,field,'');for(const [i,workId]of lost.ids.entries())for(const field of c.fieldsFor(lost))lost=c.choose(lost,workId,field,pool.find(w=>w.id===(field!=='artist'?workId:lost.ids[(i+offset)%7]))[field]);lost=c.inspect(lost,pool).state;}
  assert.equal(lost.phase,'lost');const other=await setup(t,{state:JSON.parse(JSON.stringify(lost))});other.click('launch-skip');other.click('show-solution');assert.equal(other.q('#solutions [data-gallery-like]'),null);
 });
 test('taken choices stay selectable, identify their owners and only move after confirmation',async t=>{
  const app=await setup(t);app.click('launch-skip');readyWall(app);
  const room=roomOf(app),value=room.options.artist[0];selectAnswer(app,'C','artist',value);
  const select=app.q('#answer-A-artist'),option=[...select.options].find(o=>o.value===value);
- assert.equal(option.disabled,false);assert.match(option.textContent,/bei Bild C/);
+ assert.equal(option.disabled,false);assert.match(option.textContent,/Bild C/);
  const before=roomOf(app);selectAnswer(app,'A','artist',value);
  assert.equal(app.q('#assignment-dialog').open,true);assert.equal(app.q('#assignment-title').textContent,'Von Bild C entfernen?');
  assert.deepEqual(roomOf(app),before);assert.equal(select.value,'');assert.equal(app.q('#assignment-owner-label').hidden,true);
  app.click('assignment-cancel');assert.deepEqual(roomOf(app),before);assert.equal(app.w.document.activeElement,select);
  selectAnswer(app,'A','artist',value);app.click('assignment-confirm');
  const moved=roomOf(app);assert.equal(moved.choices[room.ids[2]].artist,'');assert.equal(moved.choices[room.ids[0]].artist,value);assert.equal(moved.attempts,0);
- assert.match(option.textContent,/bei Bild A/);assert.doesNotMatch(option.textContent,/Bild C/);assert.equal(app.q('#filled-label').textContent,'1 / 35 zugeordnet');
+ assert.equal(option.textContent,option.dataset.label);assert.doesNotMatch(option.textContent,/Bild C/);assert.equal(app.q('#filled-label').textContent,'1 / 35 zugeordnet');
  assert.equal(app.q('#assignment-dialog').open,false);
 });
 test('full technique quotas allow choosing exactly which owner releases a place',async t=>{
@@ -109,29 +109,47 @@ test('full technique quotas allow choosing exactly which owner releases a place'
  const count=room.options.technique.filter(v=>v===value).length;
  for(let n=0;n<count;n++)selectAnswer(app,'ABCDEFG'[n],'technique',value);
  const target='ABCDEFG'[count],select=app.q('#answer-'+target+'-technique'),option=[...select.options].find(o=>o.value===value);
- assert.match(option.textContent,/0 frei · bei Bild A, B/);assert.equal(option.disabled,false);
+ assert.match(option.textContent,/0 frei · Bild A, B/);assert.equal(option.disabled,false);
  selectAnswer(app,target,'technique',value);assert.equal(app.q('#assignment-owner-label').hidden,false);
  app.q('#assignment-owner').value=room.ids[1];app.q('#assignment-owner').dispatchEvent(new app.w.Event('change'));assert.equal(app.q('#assignment-title').textContent,'Von Bild B entfernen?');
  app.click('assignment-confirm');const moved=roomOf(app);
  assert.equal(moved.choices[room.ids[0]].technique,value);assert.equal(moved.choices[room.ids[1]].technique,'');assert.equal(moved.choices[room.ids[count]].technique,value);
  assert.equal(model.KunstTresor.remaining(moved,'technique',value),0);assert.ok(model.KunstTresor.restore(moved,pool));
 });
-test('moving an answer after a failed check retains the review and marks both changed fields untested',async t=>{
+test('confirmed green answers cannot be cleared or overwritten by moving an unchecked answer',async t=>{
  const c=model.KunstTresor;let state=c.newState(pool);
  for(const [n,id]of state.ids.entries())for(const field of c.fields)state=c.choose(state,id,field,pool.find(w=>w.id===(field==='artist'&&n<2?state.ids[1-n]:id))[field]);
  state=c.inspect(state,pool).state;assert.equal(state.phase,'playing');
  const app=await setup(t,{state:JSON.parse(JSON.stringify(state))});app.click('launch-skip');readyWall(app);
  const [a,b]=state.ids,value=pool.find(w=>w.id===a).artist,oldTarget=pool.find(w=>w.id===b).artist;
  selectAnswer(app,'A','artist',value);selectAnswer(app,'B','artist',oldTarget);const before=roomOf(app);
- // Swapped artists were excluded, so move an already owned value to an image
- // without that exclusion instead of allowing a ruled-out answer back in.
+ // A newly selected artist is still untested, but C already has a green answer.
  const target='C',oldC=app.q('#answer-C-artist').value;
- selectAnswer(app,target,'artist',value);assert.equal(app.q('#answer-C-artist').value,oldC);app.click('assignment-cancel');assert.deepEqual(roomOf(app),before);
- selectAnswer(app,target,'artist',value);app.click('assignment-confirm');const moved=roomOf(app);
- assert.equal(moved.attempts,1);assert.deepEqual(moved.review,before.review);assert.deepEqual(moved.attemptLog,before.attemptLog);
- assert.match(app.q('#answer-C-artist-result').textContent,/Neu gewählt.*noch nicht geprüft/);assert.ok(app.q('#answer-C-artist').closest('label').classList.contains('is-revised'));
- assert.match(app.q('#answer-A-artist-result').textContent,/entfernt und ausgeschlossen/);
- assert.equal(app.q('#filled-label').textContent,'34 / 35 zugeordnet');
+ assert.equal(app.q('#answer-C-artist').disabled,true);
+ selectAnswer(app,target,'artist',value);assert.equal(app.q('#answer-C-artist').value,oldC);assert.equal(app.q('#assignment-dialog').open,false);assert.deepEqual(roomOf(app),before);
+ selectAnswer(app,target,'artist','');assert.equal(app.q('#answer-C-artist').value,oldC);assert.deepEqual(roomOf(app),before);
+ assert.match(app.q('#answer-C-artist-result').textContent,/Richtig bestätigt.*bleibt fest/);assert.ok(app.q('#answer-C-artist').closest('label').classList.contains('is-correct'));
+ assert.equal(app.q('#filled-label').textContent,'35 / 35 zugeordnet');
+});
+test('date hints appear above struck entries outside the compact dropdown and survive file transfer',async t=>{
+ const c=model.KunstTresor,ids=['wd-Q3889232','wd-Q11945371','wd-Q3904392','wd-Q3842489','wd-Q18338577','wd-Q18579139','wd-Q18602436'],selected=ids.map(id=>pool.find(w=>w.id===id));
+ let state=c.newState(selected);state.ids=ids;state.roomToken='8'.repeat(32);state.runToken='9'.repeat(32);state.parentRoomToken=null;
+ for(const id of ids)for(const field of c.fieldsFor(state))state=c.choose(state,id,field,pool.find(w=>w.id===id)[field]);
+ for(const id of ids.slice(0,2))state=c.choose(state,id,'date','');state=c.choose(state,ids[0],'date',selected[1].date);state=c.choose(state,ids[1],'date',selected[0].date);
+ state=c.inspect(state,pool).state;assert.equal(state.phase,'playing');
+ const app=await setup(t,{state:JSON.parse(JSON.stringify(state))});app.click('launch-skip');readyWall(app);app.q('#art-grid .artwork-button').click();
+ const a=app.q('#answer-A-date'),b=app.q('#answer-B-date');assert.equal(a.disabled,false);assert.equal(app.q('#answer-A-artist').disabled,true);
+ const entry=[...app.q('#answer-A-date-excluded').querySelectorAll('.excluded-answer')].find(e=>e.querySelector('s').textContent==='1450');
+ assert.ok(entry);assert.equal(entry.firstElementChild.className,'date-feedback');assert.equal(entry.firstElementChild.textContent,'zu genau');assert.equal(entry.lastElementChild.tagName,'S');
+ assert.equal(app.q('#answer-B-date-excluded .date-feedback').textContent,'zu ungenau');
+ assert.equal(app.q('#answer-B-date-excluded .excluded-list').firstElementChild.querySelector('.date-feedback').textContent,'zu ungenau');
+ assert.doesNotMatch([...a.options,...b.options].map(o=>o.textContent).join(' '),/zu genau|zu ungenau|ausgeschlossen|bestätigt/);
+ const owned=[...a.options].find(o=>o.value===selected[2].date);assert.equal(owned.disabled,true);assert.match(owned.textContent,/^✕ .*Bild C$/);
+ const lockedDate=app.q('#answer-C-date');assert.equal(lockedDate.disabled,true);selectAnswer(app,'C','date','');assert.equal(lockedDate.value,selected[2].date);
+ const saved=roomOf(app),payload={app:'kunsttresor',version:1,savedAt:Date.now(),state:saved,best:0,progress:model.KunstProgress.fresh()};
+ const transfer=app.w.KunstSave.validate(await app.w.KunstSave.decode(await app.w.KunstSave.encode(payload)),pool,[],app.w.KunstTresor,app.w.KunstProgress,app.w.KunstHistory,app.w.KunstGallery);
+ assert.equal(transfer.state.locked[ids[0]].artist,selected[0].artist);assert.equal(transfer.state.dateHints[ids[0]][0].label,'zu genau');
+ const again=await setup(t,{state:JSON.parse(JSON.stringify(transfer.state))});again.click('launch-skip');assert.equal(again.q('#answer-A-date-excluded .date-feedback').textContent,'zu genau');assert.equal(again.q('#answer-A-artist').disabled,true);
 });
 test('the count opens the first incomplete artwork and focuses its missing field without a check',async t=>{
  const app=await setup(t);assert.equal(app.q('#jump-missing').disabled,true);app.click('launch-skip');assert.equal(app.q('#jump-missing').disabled,true);readyWall(app);

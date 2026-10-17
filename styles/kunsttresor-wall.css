@@ -112,7 +112,17 @@ html.kunst-wall{--paper:#24382e;--ink:#24382e;--night:#f6f6f3;--muted:#52645a;--
 .kunst-wall .curator-ai-tools{flex-wrap:wrap}
 .kunst-wall .joker-status{margin:6px 0;font-size:12px;min-height:38px;padding:6px 14px;border-color:#718b79}
 .kunst-wall .joker-use{font-size:12px;min-height:38px;padding:6px 10px}
-.kunst-wall .excluded-answers{font:12px/1.5 var(--sans);color:#69493d;overflow-wrap:anywhere}
+@font-face{font-family:Caveat;src:url('../../LearningApps/fonts/caveat-v23-latin-600.woff2') format('woff2');font-style:normal;font-weight:600;font-display:swap}
+.kunst-wall .excluded-answers{font:12px/1.5 var(--sans);color:#58635b;overflow-wrap:anywhere}
+.kunst-wall .excluded-title{display:block;margin:3px 0 5px}
+.kunst-wall .excluded-list{display:flex;flex-wrap:wrap;gap:7px 13px;align-items:flex-end}
+.kunst-wall .excluded-answer{display:inline-flex;flex-direction:column;align-items:flex-start;max-width:100%;color:#657068}
+.kunst-wall .date-feedback{font:600 23px/1.05 Caveat,cursive;color:#795230;letter-spacing:0;text-transform:none;overflow-wrap:normal}
+.kunst-wall .confirmed-elsewhere{font:11px/1.3 var(--sans);color:#4e6857}
+.kunst-wall .date-rules{margin:13px 0;padding:12px 14px;border:1px solid #cbd5cd;border-radius:8px;background:#eef2ed}
+.kunst-wall .date-rules summary{cursor:pointer;font-weight:600;color:#294b3a;min-height:32px}
+.kunst-wall .date-rules p{font-size:13px;line-height:1.6;margin:10px 0 0}
+.kunst-wall .assignments label.is-correct select:disabled{opacity:1;color:#294b3a;background:#e7f0df;border-color:#477253;cursor:default;-webkit-text-fill-color:#294b3a}
 .kunst-wall .excluded-answers s{text-decoration-thickness:1.5px}
 .kunst-wall .assignments option.is-excluded{text-decoration:line-through;color:#775d55;background:#efe9e5}
 .kunst-wall .assignments label.is-cleared select{border-color:#ad7766;background:#fff9f6}
