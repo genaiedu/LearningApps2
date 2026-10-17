@@ -4,6 +4,8 @@
   const count=(audit,test)=>audit.files.filter(test).length;
   const feature=(audit,test)=>count(audit,r=>r.features.some(test));
   const pairings={
+    tinos:[['Arimo','Times-naher Lesetext mit sachlicher Sans-Orientierung'],['Source Sans 3','Kompakter Dokumententext, offene humanistische Zwischentitel']],
+    arimo:[['Tinos','Sachliche Grotesktitel und kompakter Antiquatext'],['EB Garamond','Nüchterne Orientierung und lebendiger Buchtext']],
     greatvibes:[['Libre Baskerville','Kalligrafischer Titel, ruhiger Einladungstext'],['Source Sans 3','Festlicher Titel, klar erfassbare Angaben']],
     monoton:[['Inter','Mehrliniger Plakattitel, klarer Begleittext'],['DM Sans','Schmucktitel mit sachlichen Veranstaltungsangaben']],
     specialelite:[['Source Sans 3','Schreibmaschinenakzent mit heutiger Erläuterung'],['DM Mono','Gleich breite Zeichen für saubere Datenzeilen']],

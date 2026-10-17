@@ -50,11 +50,13 @@ FAMILIES = [
     ('Great Vibes','greatvibes','script','Kalligrafische Schreibschrift','Fließende Verbindungen und elegante Schwünge für kurze festliche Titel; Begleittext ruhig halten.'),
     ('Monoton','monoton','display','Mehrlinige Display-Sans','Grafische Parallelstriche für wenige große Titelwörter; nicht für Lesetext.'),
     ('Special Elite','specialelite','display','Schreibmaschinenoptik / Display','Unregelmäßiger Farbauftrag für bewusst gesetzte Schreibmaschinenakzente; keine echte Monospace-Schrift.'),
+    ('Tinos','tinos','serif','Times-nahe Übergangsantiqua','Für kompakte Lesetexte und Dokumente; metrisch auf Times New Roman abgestimmt.'),
+    ('Arimo','arimo','sans','Arial-nahe Grotesk','Sachliche Grotesk für Dokumente und Orientierung; metrisch auf Arial abgestimmt.'),
 ]
 SLUGS = {'Zilla Slab':'zilla-slab','DM Mono':'dm-mono','Bebas Neue':'bebas-neue','Dancing Script':'dancing-script','DM Sans':'dm-sans','Plus Jakarta Sans':'plus-jakarta-sans','Archivo Black':'archivo-black'}
 NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville','goudybookletter1911',
        'breeserif','robotoslab','belleza','limelight','podkova','abel','firasans',
-       'unifrakturmaguntia','pirataone','texturina','greatvibes','monoton','specialelite'}
+       'unifrakturmaguntia','pirataone','texturina','greatvibes','monoton','specialelite','tinos','arimo'}
 RAW = 'https://raw.githubusercontent.com/google/fonts/main/ofl/'
 
 def font_upstream(directory):
@@ -119,7 +121,7 @@ def complete_desktop_packages():
         folder=DEST/entry['id'];folder.mkdir(parents=True,exist_ok=True)
         metadata=get(base+'METADATA.pb').decode()
         (folder/'METADATA.pb').write_text(metadata)
-        (folder/license_file).write_bytes(get(base+license_file))
+        (folder/license_file).write_bytes(get('https://raw.githubusercontent.com/googlefonts/tinos/3b4482a99b80ea5fc75f187b1be3120a3f5905b3/OFL.txt' if entry['id']=='tinos' else base+license_file))
         return download_original_desktop(entry,metadata,base,folder)
     with ThreadPoolExecutor(max_workers=4) as pool:
         catalogue['families']=list(pool.map(build,catalogue['families']))
@@ -131,13 +133,15 @@ def build_family(row):
     name, directory, group, classification, advice = row
     base,branch,license_file=font_upstream(directory)
     metadata = get(base+'METADATA.pb').decode()
-    license_bytes = get(base+license_file)
+    license_url = ('https://raw.githubusercontent.com/googlefonts/tinos/3b4482a99b80ea5fc75f187b1be3120a3f5905b3/OFL.txt' if directory=='tinos' else base+license_file)
+    license_bytes = get(license_url)
     folder = DEST / directory
     folder.mkdir(parents=True,exist_ok=True)
     (folder/license_file).write_bytes(license_bytes)
     (folder/'METADATA.pb').write_text(metadata)
     designer = re.search(r'^designer: "([^"]+)"',metadata,re.M).group(1)
     entry = dict(name=name,id=directory,group=group,classification=classification,advice=advice,designer=designer,license='Apache 2.0' if branch=='apache' else 'SIL OFL 1.1',source='https://github.com/google/fonts/tree/main/'+branch+'/'+directory,licensePath='fonts/typografie/'+directory+'/'+license_file,files=[],uses=[])
+    if directory=='tinos':entry['licenseSource']=license_url
     if directory in NEW:
         # Google Fonts defines the web/CSS weight. Some unmodified originals
         # (e.g. Fira Sans Thin / ExtraLight) keep historical OS/2 values 250/275.

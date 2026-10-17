@@ -3318,6 +3318,180 @@
           "advance": 1263
         }
       }
+    },
+    {
+      "id": "tinos",
+      "name": "Tinos",
+      "source": "fonts/typografie/tinos/Tinos-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/tinos/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/tinos",
+      "copyright": "Copyright 2026 The Tinos Project Authors (https://github.com/googlefonts/tinos)",
+      "sha256": "e767c391740333ff1c686c2e18524f17e35f6cf7c10d5cd0afc275bf72fc6837",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            72,
+            -20,
+            881,
+            961
+          ],
+          "advance": 909
+        },
+        "b": {
+          "bounds": [
+            0,
+            -20,
+            946,
+            1421
+          ],
+          "advance": 1024
+        },
+        "g": {
+          "bounds": [
+            88,
+            -442,
+            985,
+            1051
+          ],
+          "advance": 1024
+        },
+        "p": {
+          "bounds": [
+            33,
+            -436,
+            944,
+            965
+          ],
+          "advance": 1024
+        },
+        "x": {
+          "bounds": [
+            18,
+            0,
+            999,
+            940
+          ],
+          "advance": 1024
+        },
+        "H": {
+          "bounds": [
+            59,
+            0,
+            1419,
+            1341
+          ],
+          "advance": 1479
+        },
+        "o": {
+          "bounds": [
+            78,
+            -20,
+            946,
+            965
+          ],
+          "advance": 1024
+        },
+        "O": {
+          "bounds": [
+            84,
+            -20,
+            1395,
+            1356
+          ],
+          "advance": 1479
+        }
+      }
+    },
+    {
+      "id": "arimo",
+      "name": "Arimo",
+      "source": "fonts/typografie/arimo/Arimo[wght].woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/arimo/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/arimo",
+      "copyright": "Copyright 2020 The Arimo Project Authors (https://github.com/googlefonts/arimo)",
+      "sha256": "43753b25cd097d4a7351634db0d379b88acf92d86b0f3b60a529f6608e413edb",
+      "unitsPerEm": 2048,
+      "axes": {
+        "wght": 400
+      },
+      "glyphs": {
+        "a": {
+          "bounds": [
+            87,
+            -20,
+            1139,
+            1102
+          ],
+          "advance": 1139.0
+        },
+        "b": {
+          "bounds": [
+            132,
+            -20,
+            1053,
+            1484
+          ],
+          "advance": 1139.0
+        },
+        "g": {
+          "bounds": [
+            86,
+            -425,
+            1007,
+            1099
+          ],
+          "advance": 1139.0
+        },
+        "p": {
+          "bounds": [
+            132,
+            -425,
+            1053,
+            1101
+          ],
+          "advance": 1139.0
+        },
+        "x": {
+          "bounds": [
+            23,
+            0,
+            1002,
+            1082
+          ],
+          "advance": 1024.0
+        },
+        "H": {
+          "bounds": [
+            168,
+            0,
+            1312,
+            1409
+          ],
+          "advance": 1479.0
+        },
+        "o": {
+          "bounds": [
+            86,
+            -20,
+            1053,
+            1102
+          ],
+          "advance": 1139.0
+        },
+        "O": {
+          "bounds": [
+            97,
+            -20,
+            1495,
+            1430
+          ],
+          "advance": 1593.0
+        }
+      }
     }
   ]
 }

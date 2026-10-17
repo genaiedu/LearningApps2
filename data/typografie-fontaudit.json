@@ -3376,6 +3376,178 @@
       "germanMissing": "",
       "optionalMissing": "ẞ",
       "licensePresent": true
+    },
+    {
+      "id": "tinos",
+      "name": "Tinos",
+      "files": [
+        {
+          "path": "fonts/typografie/tinos/Tinos-Regular.woff2",
+          "sha256": "e767c391740333ff1c686c2e18524f17e35f6cf7c10d5cd0afc275bf72fc6837",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "dlig",
+            "kern",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/tinos/Tinos-Italic.woff2",
+          "sha256": "c0aa0a07c04f0cf1f6009b303615ef27f73452307226da1a353f785938d906a9",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "dlig",
+            "kern",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/tinos/Tinos-Bold.woff2",
+          "sha256": "d6813f99d5bc382b1e57a6bfe1e0954333f476655f66f7005d63ac4c8a80a006",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            700,
+            700
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "dlig",
+            "kern",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/tinos/Tinos-BoldItalic.woff2",
+          "sha256": "3bb6a26e98c0378fe6f433e1f65517b6c41325f2907d99204e43dff958eb6032",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            700,
+            700
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "ccmp",
+            "dlig",
+            "kern",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": true,
+        "boldItalic": true
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "",
+      "licensePresent": true
+    },
+    {
+      "id": "arimo",
+      "name": "Arimo",
+      "files": [
+        {
+          "path": "fonts/typografie/arimo/Arimo[wght].woff2",
+          "sha256": "43753b25cd097d4a7351634db0d379b88acf92d86b0f3b60a529f6608e413edb",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            400,
+            700
+          ],
+          "italic": false,
+          "axes": {
+            "wght": [
+              400,
+              700
+            ]
+          },
+          "features": [
+            "aalt",
+            "ccmp",
+            "dlig",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/arimo/Arimo-Italic[wght].woff2",
+          "sha256": "8c20dfe64e608ce89ffe0bbba5213c0421710ec7a09ffbc18172f8e3da817734",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            400,
+            700
+          ],
+          "italic": true,
+          "axes": {
+            "wght": [
+              400,
+              700
+            ]
+          },
+          "features": [
+            "aalt",
+            "ccmp",
+            "dlig",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": true,
+        "italic": true,
+        "boldItalic": true
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "",
+      "licensePresent": true
     }
   ]
 }

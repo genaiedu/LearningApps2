@@ -3881,6 +3881,145 @@
         ],
         "source": "https://github.com/google/fonts/blob/main/apache/specialelite/DESCRIPTION.en_us.html"
       }
+    },
+    {
+      "name": "Tinos",
+      "id": "tinos",
+      "group": "serif",
+      "classification": "Times-nahe Übergangsantiqua",
+      "advice": "Für kompakte Lesetexte und Dokumente; metrisch auf Times New Roman abgestimmt.",
+      "designer": "Steve Matteson",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/tinos",
+      "licensePath": "fonts/typografie/tinos/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/tinos/Tinos-Regular.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "60a0e8ef0c04dd5dd69ffe91025fa2ae5836cbd35600a82ba031977557e2cb61"
+        },
+        {
+          "path": "fonts/typografie/tinos/Tinos-Italic.woff2",
+          "weight": 400,
+          "style": "italic",
+          "axes": {},
+          "sha256": "5942266ed398b155d7dc23e36833e7ec6be988f2439bdbeb8ef1bede808eaa91"
+        },
+        {
+          "path": "fonts/typografie/tinos/Tinos-Bold.woff2",
+          "weight": 700,
+          "style": "normal",
+          "axes": {},
+          "sha256": "393269dbab8899f938db19783eca5eac92eb431f7ae0ab45b8349ca895f1a06b"
+        },
+        {
+          "path": "fonts/typografie/tinos/Tinos-BoldItalic.woff2",
+          "weight": 700,
+          "style": "italic",
+          "axes": {},
+          "sha256": "a5de79f0fe863ea0954757acb3d47b3ccd0a930ce3dd5b97230cd3866790a06e"
+        }
+      ],
+      "uses": [],
+      "features": [
+        "ccmp",
+        "dlig"
+      ],
+      "desktop": "fonts/typografie/tinos/tinos-desktop.zip",
+      "new": true,
+      "portrait": {
+        "history": "Steve Matteson entwickelte Tinos als freie Serifenschrift mit auf Times New Roman abgestimmten Zeichenbreiten. Das Projekt zielt besonders auf den Dokumentenaustausch zwischen unterschiedlichen Systemen. Die aktuelle Fassung wird im offiziellen Google-Fonts-Projekt unter der SIL Open Font License geführt.",
+        "character": "Times-nahe Übergangsantiqua mit kompakten Proportionen, deutlichen Serifen und einem vertrauten, sachlichen Dokumentenbild.",
+        "use": "Berichte, wissenschaftliche Texte und vergleichende Satzstudien. Besonders nützlich, wenn eine freie Schrift die Breiten einer Times-New-Roman-Vorlage aufnehmen soll.",
+        "caution": "Die Kompatibilität der Zeichenbreiten garantiert keinen identischen Umbruch in jedem Programm. Kleine Schriftgrade und sehr lange Zeilen können trotz des kompakten Satzes anstrengend werden.",
+        "pairings": [
+          {
+            "id": "arimo",
+            "role": "Überschriften und Beschriftungen",
+            "reason": "Die sachliche Grotesk trennt Orientierung und Tabellenhinweise klar vom Times-nahen Lesetext."
+          },
+          {
+            "id": "sourcesans3",
+            "role": "Zwischentitel und Quellenangaben",
+            "reason": "Die offene humanistische Sans schafft einen deutlichen Formkontrast zur kompakten Antiqua."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/tinos/DESCRIPTION.en_us.html"
+      },
+      "licenseSource": "https://raw.githubusercontent.com/googlefonts/tinos/3b4482a99b80ea5fc75f187b1be3120a3f5905b3/OFL.txt"
+    },
+    {
+      "name": "Arimo",
+      "id": "arimo",
+      "group": "sans",
+      "classification": "Arial-nahe Grotesk",
+      "advice": "Sachliche Grotesk für Dokumente und Orientierung; metrisch auf Arial abgestimmt.",
+      "designer": "Steve Matteson",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/arimo",
+      "licensePath": "fonts/typografie/arimo/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/arimo/Arimo[wght].woff2",
+          "weight": [
+            400.0,
+            700.0
+          ],
+          "style": "normal",
+          "axes": {
+            "wght": [
+              400.0,
+              700.0
+            ]
+          },
+          "sha256": "e43898b143ec826ac8cb4034816458a7047fbe0836558de2a1f8c6223ae3e0ca"
+        },
+        {
+          "path": "fonts/typografie/arimo/Arimo-Italic[wght].woff2",
+          "weight": [
+            400.0,
+            700.0
+          ],
+          "style": "italic",
+          "axes": {
+            "wght": [
+              400.0,
+              700.0
+            ]
+          },
+          "sha256": "a80fc54fd0233c1dfe298577c4d00f5ae81d5bb83510975e473c47e699b7f4ed"
+        }
+      ],
+      "uses": [],
+      "features": [
+        "aalt",
+        "ccmp",
+        "dlig",
+        "locl"
+      ],
+      "desktop": "fonts/typografie/arimo/arimo-desktop.zip",
+      "new": true,
+      "portrait": {
+        "history": "Steve Matteson entwickelte Arimo als freie Sans Serif mit auf Arial abgestimmten Zeichenbreiten. Sie unterstützt den Austausch von Dokumenten zwischen Systemen. Im April 2026 wurde das Projekt aktualisiert und unter der SIL Open Font License neu veröffentlicht.",
+        "character": "Sachliche, Arial-nahe Grotesk mit gleichmäßigem Rhythmus und zurückhaltendem Auftritt. Sie vertritt eine andere Richtung als die bewegtere Fira Sans.",
+        "use": "Neutrale Überschriften, Formulare, Tabellenbeschriftungen und kurze sachliche Texte. Im Atelier dient sie als freie Vertreterin der Helvetica/Arial-nahen Groteskrichtung.",
+        "caution": "Arimo ist metrisch auf Arial abgestimmt, aber weder die Original-Helvetica noch eine identische Helvetica-Nachzeichnung. Für eine klare Hierarchie zuerst Größe, Gewicht und Abstand nutzen.",
+        "pairings": [
+          {
+            "id": "tinos",
+            "role": "Lesetext und Dokumente",
+            "reason": "Die kompakte Antiqua trägt längere Absätze, Arimo übernimmt die sachliche Orientierung."
+          },
+          {
+            "id": "ebgaramond",
+            "role": "Buch- und Essaytext",
+            "reason": "Die lebendige Renaissance-Antiqua bildet einen deutlichen Gegenpol zur zurückhaltenden Grotesk."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/arimo/DESCRIPTION.en_us.html"
+      }
     }
   ],
   "existingFamilies": 18,
