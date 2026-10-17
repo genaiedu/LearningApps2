@@ -6,8 +6,9 @@
   const text=(value,max)=>typeof value==='string' && value.length<=max && !/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(value);
   function fresh() { return {version:1,liked:[],film:{name:'Meine Galerie',motto:'Kunst bleibt, wenn wir genauer hinsehen.',items:[]}}; }
   function winningRoom(state,pool) {
-    return state?.phase==='unlocked' && /^[a-f0-9]{32}$/.test(state.historyToken||state.roomToken) && [1,2].includes(state.attempts)
-      && state.ids?.length===4 && new Set(state.ids).size===4 && state.ids.every(id=>{
+    const count=state?.ids?.length,limit=count===7?3:2;
+    return state?.phase==='unlocked' && /^[a-f0-9]{32}$/.test(state.historyToken||state.roomToken) && Number.isInteger(state.attempts) && state.attempts>=1 && state.attempts<=limit
+      && [4,7].includes(count) && new Set(state.ids).size===count && state.ids.every(id=>{
         const work=pool.find(w=>w.id===id);return work && fields.every(field=>state.choices?.[id]?.[field]===work[field]);
       });
   }

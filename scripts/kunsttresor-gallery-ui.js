@@ -19,6 +19,17 @@
       const n=getGallery().liked.length,left=Math.max(0,model.UNLOCK-n);
       return n+' Lieblingswerk'+(n===1?'':'e')+' · '+(left?'Noch '+left+' bis zu deinem eigenen Kunstfilm.':'Dein Kunstfilm ist freigeschaltet.');
     }
+    function layoutGallery(){
+      const grid=$('gallery-grid'),cards=[...grid.querySelectorAll('.gallery-card')],width=grid.clientWidth;
+      if(!$('gallery-dialog').open||!width||!cards.length){grid.style.height='';return;}
+      const gap=14,min=innerWidth<=760?150:240,columns=Math.max(1,Math.min(cards.length,Math.floor((width+gap)/(min+gap)))),cardWidth=(width-gap*(columns-1))/columns,heights=Array(columns).fill(0);
+      for(const card of cards){
+        const column=heights.indexOf(Math.min(...heights));card.style.width=cardWidth+'px';
+        Object.assign(card.style,{left:column*(cardWidth+gap)+'px',top:heights[column]+'px'});
+        heights[column]+=card.getBoundingClientRect().height+gap;
+      }
+      grid.style.height=Math.max(...heights)-gap+'px';
+    }
     function refresh() {
       const gallery=getGallery(), unlocked=gallery.liked.length>=model.UNLOCK;
       $('gallery-progress').textContent=progressText();$('gallery-summary').textContent=progressText();
@@ -52,7 +63,7 @@
     function imageButton(work) {
       const b=button('',()=>imagesAllowed()?showImage(work):requestImages(),'gallery-image');
       b.setAttribute('aria-label',title(work)+' vergrößern');
-      if(imagesAllowed()){const img=node('img');img.alt=title(work);img.loading='lazy';img.referrerPolicy='no-referrer';img.src=work.imageURL;b.append(img);}
+      if(imagesAllowed()){const img=node('img');img.alt=title(work);img.loading='lazy';img.referrerPolicy='no-referrer';img.onload=layoutGallery;img.onerror=layoutGallery;img.src=work.imageURL;b.append(img);}
       else b.append(node('span',null,'Kunstbilder erlauben'));
       return b;
     }
@@ -62,7 +73,8 @@
       if(!gallery.liked.length)$('gallery-grid').append(node('p','gallery-empty','Deine Galerie beginnt nach der ersten gewonnenen Tür. Markiere dann die Werke, die du behalten möchtest, mit dem Herz.'));
       for(const entry of gallery.liked){const work=byId.get(entry.id), card=node('article','gallery-card');
         card.append(imageButton(work),node('h3',null,title(work)),node('p','small',work.artist+' · '+work.date));
-        const actions=node('div','gallery-card-actions');
+        const details=node('details','gallery-card-details'),summary=node('summary',null,'Werkdetails & Auswahl'),actions=node('div','gallery-card-actions');
+        details.append(summary);details.addEventListener('toggle',layoutGallery);
         actions.append(button('Aus Galerie entfernen',()=>{if(change(model.remove(getGallery(),entry.id),null))status('Werk entfernt. '+progressText());}));
         if(gallery.liked.length>=model.UNLOCK){const add=button(selected.has(entry.id)?'Aus Film entfernen':'Zum Film hinzufügen',()=>{
           const g=getGallery();
@@ -70,11 +82,11 @@
           if(g.film.items.length>=model.MAX){status('Im Film sind höchstens 10 Werke möglich. Entferne zunächst ein Werk aus der Filmauswahl.');return;}
           change({...g,film:{...g.film,items:[...g.film.items,model.item(entry.id)]}},'Werk zum Film hinzugefügt.');
         });add.title=selected.has(entry.id)?'Nur aus dem Film entfernen. Das Werk bleibt gelikt und in deiner Galerie.':'Dieses Lieblingswerk in deinen Film aufnehmen.';actions.append(add);}
-        card.append(actions);$('gallery-grid').append(card);
+        details.append(actions);card.append(details);$('gallery-grid').append(card);
         const sources=node('p','gallery-source');
-        for(const [label,url] of [['Werkquelle',work.source],['Bildrechte: '+work.imageLicense,work.imageSource]]){const link=node('a',null,label);link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.referrerPolicy='no-referrer';sources.append(link,node('span',null,' '));}card.append(sources);
+        for(const [label,url] of [['Werkquelle',work.source],['Bildrechte: '+work.imageLicense,work.imageSource]]){const link=node('a',null,label);link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.referrerPolicy='no-referrer';sources.append(link,node('span',null,' '));}details.append(sources);
       }
-      renderEditor();refresh();
+      renderEditor();refresh();layoutGallery();
     }
     function editItem(index,patch) {
       const g=getGallery(), items=g.film.items.map((item,i)=>i===index?{...item,...patch}:item);
@@ -105,7 +117,9 @@
         card.append(label,variantLabel,ownLabel,preview);previewText();$('film-selection').append(card);
       });
     }
-    function openGallery() {renderGallery();status('');$('gallery-dialog').showModal();}
+    function openGallery() {renderGallery();status('');$('gallery-dialog').showModal();layoutGallery();}
+    addEventListener('resize',layoutGallery);
+    document.fonts?.ready.then(layoutGallery);
     function stopFilm() {
       loadingEpoch++;loading=false;cancelAnimationFrame(raf);audio.pause();paused=true;
       preparations.forEach(p=>p.cancel());preparations=[];cache.clear();film=null;

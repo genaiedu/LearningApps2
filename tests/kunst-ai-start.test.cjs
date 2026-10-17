@@ -10,7 +10,7 @@ async function setup(t,{saved={},blocked=false,forgeryEveryRoom=false}={}){
   const dom=new JSDOM(fs.readFileSync(path.join(root,'kunsttresor.html'),'utf8'),{url:'https://test.invalid/LearningApps2/kunsttresor.html',runScripts:'outside-only'}),w=dom.window,q=selector=>w.document.querySelector(selector),requests=[];
   for(const [key,value] of Object.entries(saved))w.localStorage.setItem(key,value);
   w.TextEncoder=TextEncoder;w.TextDecoder=TextDecoder;
-  w.matchMedia=()=>({matches:true,addEventListener(){}});w.requestAnimationFrame=()=>1;w.cancelAnimationFrame=()=>{};
+  w.matchMedia=()=>({matches:true,addEventListener(){}});w.requestAnimationFrame=()=>1;w.cancelAnimationFrame=()=>{};w.scrollTo=()=>{};
   w.HTMLElement.prototype.scrollIntoView=function(){};
   w.HTMLElement.prototype.requestFullscreen=async function(){Object.defineProperty(w.document,'fullscreenElement',{configurable:true,value:this});};
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
@@ -27,15 +27,15 @@ async function setup(t,{saved={},blocked=false,forgeryEveryRoom=false}={}){
   assert.equal(q('#launch-dialog').open,true,'archive loaded and launch is visible');
   t.after(()=>w.close());return{w,q,requests,click:id=>q('#'+id).click(),changeAI(value){q('#launch-ai-switch').checked=value;q('#launch-ai-switch').dispatchEvent(new w.Event('change',{bubbles:true}));}};
 }
-test('first launch preselects the tutor, names its actual server model, and sends no request before start',async t=>{
-  const s=await setup(t);assert.equal(s.q('#launch-ai-switch').checked,true);assert.equal(s.q('#launch-ai-state').textContent,'Ein');
+test('first launch keeps the tutor off, names its actual server model, and sends no request before start',async t=>{
+  const s=await setup(t);assert.equal(s.q('#launch-ai-switch').checked,false);assert.equal(s.q('#launch-ai-state').textContent,'Aus');
   assert.match(s.q('.launch-ai').textContent,/GPT-OSS 120B von OpenAI/);assert.match(s.q('.launch-ai').textContent,/Groq/);assert.match(s.q('.launch-ai').textContent,/Vercel/);
-  assert.match(s.q('#launch-start').textContent,/KI erlauben/);assert.match(s.q('#launch-skip').textContent,/KI erlauben/);assert.equal(s.requests.length,0);assert.equal(s.w.localStorage.getItem(AI_CONSENT),null);
+  assert.doesNotMatch(s.q('#launch-start').textContent,/KI erlauben/);assert.doesNotMatch(s.q('#launch-skip').textContent,/KI erlauben/);assert.equal(s.requests.length,0);assert.equal(s.w.localStorage.getItem(AI_CONSENT),null);
   const server=fs.readFileSync(path.join(root,'services/kunst-kurator/api/feedback.js'),'utf8');assert.match(server,/model:'openai\/gpt-oss-120b'/);
   assert.equal(s.q('#launch-ai-switch').getAttribute('role'),'switch');
 });
-test('starting with the default grants the displayed choice, enables game toggles, but never requests feedback during play',async t=>{
-  const s=await setup(t);s.click('launch-skip');for(let i=0;i<4;i++)await Promise.resolve();
+test('explicitly enabling the tutor grants the displayed choice but never requests feedback during play',async t=>{
+  const s=await setup(t);s.changeAI(true);s.click('launch-skip');for(let i=0;i<4;i++)await Promise.resolve();
   assert.equal(s.q('#launch-dialog').open,false);assert.equal(s.w.localStorage.getItem(AI_CONSENT),'yes');assert.equal(s.w.localStorage.getItem(AI_ENABLED),'yes');
   for(const button of s.w.document.querySelectorAll('[data-ai-toggle]'))assert.equal(button.getAttribute('aria-pressed'),'true');
   assert.equal(s.requests.length,0);assert.equal(s.q('#art-grid').hidden,false);
@@ -53,10 +53,9 @@ test('saved off choices, including old explicit pauses and withdrawals, are neve
   }
   const on=await setup(t,{saved:{[AI_ENABLED]:'yes',[AI_CONSENT]:'yes'}});assert.equal(on.q('#launch-ai-switch').checked,true);assert.equal(on.requests.length,0);
 });
-test('reading rules never grants AI; the alternate start route returns to the informed launch screen',async t=>{
+test('reading rules and starting with the default off choice never grants AI',async t=>{
   const s=await setup(t);s.click('launch-read');assert.equal(s.q('#launch-dialog').open,false);assert.equal(s.w.localStorage.getItem(AI_CONSENT),null);
-  s.click('start-game');assert.equal(s.q('#launch-dialog').open,true);assert.equal(s.w.localStorage.getItem(AI_CONSENT),null);assert.equal(s.requests.length,0);
-  s.click('launch-read');s.click('intro-replay');assert.equal(s.q('#launch-dialog').open,true);assert.equal(s.requests.length,0);
+  s.click('start-game');assert.equal(s.q('#launch-dialog').open,false);assert.equal(s.w.localStorage.getItem(AI_CONSENT),null);assert.equal(s.requests.length,0);
 });
 test('enabling a previously off choice still waits for an informed start even if the rules are opened instead',async t=>{
   const s=await setup(t,{saved:{[AI_ENABLED]:'no',[AI_CONSENT]:'no'}});s.changeAI(true);assert.equal(s.w.localStorage.getItem(AI_CONSENT),'no');
@@ -67,12 +66,12 @@ test('off then on in the start screen stays a preference change, not a new reque
   const s=await setup(t);s.changeAI(false);s.changeAI(true);assert.equal(s.q('#launch-ai-switch').checked,true);assert.equal(s.w.localStorage.getItem(AI_CONSENT),null);assert.equal(s.requests.length,0);
 });
 test('storage restrictions do not break the default switch or starting without AI',async t=>{
-  const s=await setup(t,{blocked:true});assert.equal(s.q('#launch-ai-switch').checked,true);s.changeAI(false);s.click('launch-skip');
+  const s=await setup(t,{blocked:true});assert.equal(s.q('#launch-ai-switch').checked,false);s.changeAI(false);s.click('launch-skip');
   assert.equal(s.q('#launch-dialog').open,false);assert.equal(s.requests.length,0);assert.equal(s.q('[data-ai-toggle]').getAttribute('aria-pressed'),'false');
 });
-test('the default tutor requests only after reveal and keeps complete program feedback when the service fails',async t=>{
+test('the enabled tutor requests only after reveal and keeps complete program feedback when the service fails',async t=>{
   const s=await setup(t,{saved:{'kunsttresor-game-v1':JSON.stringify(completedRoom())}});assert.equal(s.requests.length,0);
-  s.click('launch-skip');assert.equal(s.requests.length,0);s.click('show-solution');for(let i=0;i<15;i++)await Promise.resolve();
+  s.changeAI(true);s.click('launch-skip');assert.equal(s.requests.length,0);s.click('show-solution');for(let i=0;i<15;i++)await Promise.resolve();
   assert.equal(s.requests.length,1);assert.equal(s.requests[0].options.method,'POST');assert.equal(s.q('#ai-intro').hidden,true);assert.match(s.q('#ai-status').textContent,/nicht verfügbar/);
   assert.equal(s.w.document.querySelectorAll('[data-curator-work]').length,4);
   for(const text of s.w.document.querySelectorAll('[data-curator-work]'))assert.ok(text.textContent.length>30);

@@ -1,3 +1,3 @@
-/* The experiment is opt-in. The unqualified URL always remains classical. */
-window.KunstWallEnabled=new URLSearchParams(location.search).get('modus')==='wand';
-if(window.KunstWallEnabled)document.documentElement.classList.add('kunst-wall');
+/* The art wall is the sole public edition, including old bookmarked URLs. */
+window.KunstWallEnabled=true;
+document.documentElement.classList.add('kunst-wall');

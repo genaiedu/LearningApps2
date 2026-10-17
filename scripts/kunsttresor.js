@@ -27,11 +27,10 @@
   let artKnowledge = null, archiveReplacements = [], pendingImport = null, transferBusy = false, fileEpoch = 0;
   // Renew permission because relevant earlier mistakes, not just wins, are now sent.
   const ki=window.KunstKI, aiConsentKey='kunsttresor-ai-consent-v2'+(wallMode?'-wall':''), aiEnabledKey='kunsttresor-ai-enabled-v1'+(wallMode?'-wall':'');
-  const aiEndpoint=wallMode?'':window.KunstKIConfig?.endpoint || '';
+  const aiEndpoint=window.KunstKIConfig?.endpoint || '';
   const aiClient=ki?.createClient({endpoint:aiEndpoint,fetcher:(...args)=>fetch(...args)});
-  let aiAllowed=store.get(aiConsentKey)==='yes', aiEnabled=store.get(aiEnabledKey)==='yes' || (store.get(aiEnabledKey)!=='no' && store.get(aiConsentKey)!=='no'), aiDisplayEpoch=0, aiBaseline=new Map();
-  // Default to the tutor, but do not transmit results before an informed start.
-  // An earlier explicit pause or withdrawal remains an off choice.
+  let aiAllowed=store.get(aiConsentKey)==='yes', aiEnabled=store.get(aiEnabledKey)==='yes' || (store.get(aiEnabledKey)!=='no' && aiAllowed), aiDisplayEpoch=0, aiBaseline=new Map();
+  // Start with editorial guidance; the tutor can be enabled here or at the curator.
   let aiChoiceConfirmed=aiAllowed || !aiEnabled;
   let playerProgress = progress.fresh(best);
   try { playerProgress = progress.restore(JSON.parse(store.get(keys.progress))) || playerProgress; } catch { /* Older browsers have no collection yet. */ }
@@ -292,7 +291,7 @@
     $('launch-ai-switch').checked=selected;
     $('launch-ai-switch').disabled=!aiEndpoint;
     $('launch-ai-state').textContent=selected ? 'Ein' : 'Aus';
-    $('launch-ai-status').textContent=selected ? 'Voreingestellt: ein. Mit einem Startknopf erlaubst du auch die unten beschriebene KI-Rückmeldung. Du kannst sie hier ausschalten.' : 'Ausgeschaltet: Du erhältst die vollständigen redaktionellen Kuratorenhinweise. Es werden keine neuen KI-Anfragen gestellt.';
+    $('launch-ai-status').textContent=selected ? 'Eingeschaltet. Mit einem Startknopf erlaubst du auch die unten beschriebene KI-Rückmeldung. Du kannst sie hier ausschalten.' : 'Du beginnst mit den redaktionellen Kuratorenhinweisen. Den KI-Tutor kannst du auch später direkt in der Kuratoransicht einschalten.';
     $('launch-start').textContent=selected ? (imagesAllowed ? 'Mit KI · Vorspann & Musik starten →' : 'Kunstbilder & KI erlauben · starten →') : (imagesAllowed ? 'Vorspann & Musik starten →' : 'Kunstbilder erlauben & starten →');
     $('launch-skip').textContent=selected ? (imagesAllowed ? 'Mit KI · ohne Vorspann zum Einstieg →' : 'Kunstbilder & KI erlauben · ohne Vorspann →') : (imagesAllowed ? 'Ohne Vorspann zum Einstieg →' : 'Kunstbilder erlauben · ohne Vorspann →');
   }
@@ -861,7 +860,6 @@
     resetAIReading();
     if (!state || state.phase==='playing' || !$('solution-dialog').open) return;
     if (!aiAllowed || !aiEnabled) { $('ai-status').textContent='Redaktionelle Kuratorenhinweise · KI-Antworten sind ausgeschaltet.'; return; }
-    if(wallMode){$('ai-status').textContent='In der experimentellen Bilderwand begleitet dich der redaktionelle Kurator. Der KI-Kurator bleibt in der klassischen Version verfügbar.';return;}
     if (!aiClient || !aiEndpoint) { $('ai-status').textContent='Der KI-Dienst ist noch nicht freigeschaltet. Du liest die vollständigen redaktionellen Hinweise.'; return; }
     const input=ki.payload(state,playerProgress,previousWorks()), roomToken=state.roomToken, epoch=++aiDisplayEpoch;
     await aiClient.request(input,result=> {
