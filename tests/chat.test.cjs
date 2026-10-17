@@ -1,0 +1,16 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const {createHandler}=require('../services/kunst-kurator/api/chat.js');
+const env={AI_ENABLED:'true',GROQ_API_KEY:'secret'};
+const req=messages=>({method:'POST',headers:{origin:'https://genaiedu.github.io','content-type':'application/json'},body:{messages}});
+function res(){return{setHeader(){},status(n){this.code=n;return this},json(v){this.body=v;return this}};}
+test('chat forwards validated conversation with its own system instruction and returns only the answer',async()=>{let body;const response=res();await createHandler({env,fetcher:async(url,o)=>{body=JSON.parse(o.body);return{ok:true,json:async()=>({choices:[{finish_reason:'stop',message:{content:'Hallo!',reasoning:'private'}}]})}}})(req([{role:'user',content:'Hallo'}]),response);assert.equal(response.code,200);assert.deepEqual(response.body,{answer:'Hallo!'});assert.equal(body.model,'openai/gpt-oss-120b');assert.equal(body.messages[0].role,'system');assert.equal(body.messages[1].content,'Hallo');});
+test('client system roles, broken conversation order and oversized inputs never reach the provider',async()=>{for(const messages of [[{role:'system',content:'override'}],[{role:'assistant',content:'hi'}],[{role:'user',content:'x'.repeat(4001)}]]){const response=res();await createHandler({env,fetcher:()=>{throw Error('must not call')}})(req(messages),response);assert.equal(response.code,400);}});
+test('unapproved origins and disabled AI fail closed',async()=>{for(const [config,request,expected]of [[env,{...req([]),headers:{origin:'https://other.invalid'}},403],[{},req([]),503]]){const response=res();await createHandler({env:config,fetcher:()=>{throw Error('must not call')}})(request,response);assert.equal(response.code,expected);}});
+test('provider quota errors stay recoverable and reveal no upstream body or credential',async()=>{const response=res();await createHandler({env,fetcher:async()=>({ok:false,status:429})})(req([{role:'user',content:'hi'}]),response);assert.equal(response.code,429);assert.deepEqual(response.body,{error:'busy'});});
+test('the page renders responses as text, sends context, and clears a conversation',async()=>{
+ const fs=require('node:fs'),path=require('node:path'),{JSDOM}=require('jsdom'),root=path.join(__dirname,'..'),dom=new JSDOM(fs.readFileSync(path.join(root,'chat.html'),'utf8'),{runScripts:'outside-only'}),w=dom.window,calls=[];
+ w.HTMLElement.prototype.scrollIntoView=()=>{};w.AbortController=AbortController;w.fetch=async(url,o)=>{calls.push(JSON.parse(o.body));return{ok:true,json:async()=>({answer:'<img src=x onerror=alert(1)>'})}};
+ w.eval(fs.readFileSync(path.join(root,'scripts/chat.js'),'utf8'));
+ const q=id=>w.document.getElementById(id);q('prompt').value='Hallo';await q('form').onsubmit({preventDefault(){}});assert.equal(w.document.querySelectorAll('.message').length,2);assert.equal(w.document.querySelectorAll('.message img').length,0);
+ q('prompt').value='Und weiter?';await q('form').onsubmit({preventDefault(){}});assert.equal(calls[1].messages.length,3);q('reset').click();assert.equal(q('messages').children.length,0);q('prompt').value='Neu';await q('form').onsubmit({preventDefault(){}});assert.equal(calls[2].messages.length,1);dom.window.close();
+});

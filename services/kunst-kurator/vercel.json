@@ -13,6 +13,9 @@
     "api/forgery.js": {
       "maxDuration": 90,
       "includeFiles": "generated/**"
+    },
+    "api/chat.js": {
+      "maxDuration": 35
     }
   },
   "git": {
