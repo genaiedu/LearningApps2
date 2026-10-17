@@ -30,7 +30,7 @@ function createFilm({consent=true}={}) {
   const elements=new Map(),images=[],timers=new Map(),events=[];
   let timerId=0;
   const context={
-    imagesAllowed:consent,pool:works,landmarkIds:[],previousIntro:[],introPreparation:null,
+    wallMode:false,imagesAllowed:consent,pool:works,landmarkIds:[],previousIntro:[],introPreparation:null,
     introEpoch:0,launchEpoch:0,introAudioEpoch:0,introWaitTimer:null,introTimer:null,introFadeTimer:null,
     introSoundEnabled:true,introSeconds:46,state:{escaped:2,attempts:1},keys:{images:'images'},
     aiAllowed:false,aiEnabled:true,aiChoiceConfirmed:false,aiEndpoint:'',aiConsentKey:'ai-consent',
@@ -51,6 +51,13 @@ function createFilm({consent=true}={}) {
   vm.runInContext(js.slice(js.indexOf('function prepareIntro()'),js.indexOf('function start()')),context);
   return {context,elements,images,timers,events};
 }
+test('wall edition returns to the landing page after the film or skipping it',()=>{
+  const film=createFilm(),c=film.context;c.wallMode=true;
+  c.window.scrollTo=options=>film.events.push(['landing',options.top]);
+  c.finishIntro({enterGame:true});
+  assert.deepEqual(film.events.at(-1),['landing',0]);
+  assert.equal(film.events.includes('game'),false);
+});
 test('first image is prepared in the background, without an external request before image consent',()=>{
   for(const consent of [false,true]) {
     const film=createFilm({consent});film.context.prepareLaunch();

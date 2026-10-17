@@ -10,7 +10,20 @@
  new MutationObserver(updateJump).observe($('start-game'),{attributes:true,attributeFilter:['disabled']});
  let landingIds=[];
  function clearLanding(){backdrop.replaceChildren();landingIds=[];}
- function landing(works){if(landingIds.length||!works.length)return;const chosen=window.KunstTresor.shuffle(works).slice(0,24);landingIds=chosen.map(w=>w.id);for(const [index,work] of chosen.entries()){const img=document.createElement('img');img.className='wall-tile wall-tile-'+index;img.alt='';img.referrerPolicy='no-referrer';img.decoding='async';img.onload=()=>{const ratio=img.naturalWidth/img.naturalHeight;img.dataset.format=ratio<.82?'portrait':ratio>1.25?'landscape':'square';};img.src=work.imageURL;img.onerror=()=>img.style.visibility='hidden';backdrop.append(img);}}
+ function layoutLanding(){
+  const images=[...backdrop.children].filter(img=>img.naturalWidth>0),gap=10,w=backdrop.clientWidth-2*gap;
+  if(!images.length||w<=0)return;
+  const target=w/(w<700?3:4);let y=gap,index=0;
+  while(index<images.length){
+   const row=[];let sum=0;
+   do{const img=images[index++];row.push(img);sum+=img.naturalWidth/img.naturalHeight;}while(index<images.length&&sum*target+gap*(row.length-1)<w);
+   const height=(w-gap*(row.length-1))/sum;let x=gap;
+   for(const img of row){const width=height*img.naturalWidth/img.naturalHeight;Object.assign(img.style,{left:x+'px',top:y+'px',width:width+'px',height:height+'px',visibility:'visible'});x+=width+gap;}
+   y+=height+gap;
+  }
+ }
+ function landing(works){if(landingIds.length||!works.length)return;const chosen=window.KunstTresor.shuffle(works).slice(0,48);landingIds=chosen.map(w=>w.id);for(const [index,work] of chosen.entries()){const img=document.createElement('img');img.className='wall-tile wall-tile-'+index;img.alt='';img.referrerPolicy='no-referrer';img.decoding='async';img.onload=layoutLanding;img.src=work.imageURL;img.onerror=()=>{img.remove();layoutLanding();};backdrop.append(img);}}
+ new ResizeObserver(layoutLanding).observe(backdrop);
  const aside=document.createElement('aside');aside.id='wall-settings';aside.setAttribute('aria-label','Zuordnungen zum vergrößerten Werk');
  aside.innerHTML='<p class="eyebrow">Werk untersuchen</p><h3 id="wall-work-title"></h3><div id="wall-work-controls"></div><p class="wall-instructions">Bild anklicken: Lupe. Escape: zurück zur ganzen Abbildung. Noch einmal Escape: zurück zur Wand. Die Zahl hinter einer Technik zeigt die noch freien Plätze im Raum; deine aktuelle Auswahl ist bereits abgezogen.</p><button type="button" id="wall-check">Schloss prüfen</button>';
  dialog.append(aside);
