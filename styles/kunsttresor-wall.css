@@ -19,3 +19,27 @@ html.kunst-wall{--bg:#f6f6f3;--deep:#fff;--panel:#fff;--text:#202a27;--muted:#65
 .kunst-wall .hero-copy .hero-rules li::marker{color:#526e5b;font-weight:600}
 .kunst-wall .hero-copy .hero-rules>p:last-child{border-top:1px solid #d5ded6;margin-top:18px;padding-top:16px;font-size:13px;color:#52685a}
 @media(max-width:700px){.kunst-wall .hero-copy .hero-rules{padding:20px;max-width:100%}}
+/* Shared light-theme palette: text tokens must never retain dark-theme ink. */
+html.kunst-wall{--paper:#24382e;--ink:#24382e;--night:#f6f6f3;--muted:#52645a;--gold:#365b46;--panel:#f5f7f4;--deep:#eceeed}
+.kunst-wall :is(.intro-dialog,.gallery-film-dialog){--paper:#f2eee4;--ink:#192b26;--night:#11221f;--deep:#0b1816;--panel:#1b302b;--muted:#d4ded5;--gold:#e7cd96}
+.kunst-wall :is(.rules,#wiki-reader){background:#f5f7f4;color:#24382e}
+.kunst-wall .launch-dialog[open]{background:#f5f7f4;color:#24382e}
+.kunst-wall .launch-dialog .launch-skip{background:#e5ebe6;color:#24382e;border-color:#9cafa1;opacity:1}
+.kunst-wall :is(button,input,textarea,select){color:#24382e;background-color:#f7f9f7}
+.kunst-wall button:not(:disabled):hover{background:#e1e9e2;color:#24382e;border-color:#718b79}
+.kunst-wall button.primary,.kunst-wall button.primary:not(:disabled):hover{background:#294b3a;color:#fff;border-color:#294b3a}
+.kunst-wall :is(button,select,input,textarea):disabled{opacity:1;color:#526158;background-color:#e4e9e4;border-color:#a8b6ab}
+.kunst-wall :is(button,a,input,textarea,select,summary):focus-visible{outline:3px solid #365b46;outline-offset:3px}
+.kunst-wall select option{color:#24382e;background:#f7f9f7}
+.kunst-wall select option:disabled{color:#526158;background:#e4e9e4}
+.kunst-wall .review-summary{background:#f3ede3;border-color:#a48a62;border-left-color:#8c6938}
+.kunst-wall .review-summary h3{color:#5d3d1e}.kunst-wall .review-summary p{color:#594a37}
+.kunst-wall .is-incorrect .answer-result{color:#8b3024}.kunst-wall .is-correct .answer-result{color:#285b38}.kunst-wall .is-revised .answer-result{color:#70521a}
+.kunst-wall .badge-seal{background:#dce5dd;color:#294b3a}.kunst-wall .is-earned .badge-seal{background:#365b46;color:#fff}
+.kunst-wall .forgery-flag[aria-pressed="true"],.kunst-wall .forgery-flag[aria-pressed="true"]:hover{background:#71384b;color:#fff;border-color:#71384b}
+.kunst-wall .intro-dialog button,.kunst-wall .gallery-film-dialog button{color:#fff;background:#152a20;border-color:#a8b7ab}
+.kunst-wall .intro-dialog button:hover:not(:disabled),.kunst-wall .gallery-film-dialog button:hover:not(:disabled){color:#fff;background:#294b3a}
+.kunst-wall .intro-dialog button.primary,.kunst-wall .gallery-film-dialog button.primary{background:#e7cd96;color:#192b26}
+.kunst-wall .intro-dialog button.primary:hover:not(:disabled),.kunst-wall .gallery-film-dialog button.primary:hover:not(:disabled){background:#f2ddaf;color:#192b26}
+.kunst-wall :is(.intro-dialog,.gallery-film-dialog) button:disabled{opacity:1;background:#344b3e;color:#d4ded5}
+.kunst-wall :is(.wall-instructions,.wall-mode-note){color:#52645a}
