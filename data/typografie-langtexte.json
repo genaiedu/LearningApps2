@@ -1,0 +1,1155 @@
+{
+  "checked": "2026-10-17",
+  "note": "Nur gemeinfreie historische Originaltexte; redaktionelle Zusätze ausdrücklich gekennzeichnet. Englische Texte ohne Übersetzung. Bildschirm-Leseseiten sind keine historischen Faksimiles.",
+  "documents": [
+    {
+      "id": "minutes",
+      "label": "Protokoll · Verfassungsversammlung (Englisch)",
+      "lang": "en",
+      "title": "Notes of the Federal Convention",
+      "subtitle": "Philadelphia · 17 September 1787",
+      "author": "James Madison",
+      "date": "1787",
+      "source": "https://avalon.law.yale.edu/18th_century/debates_917.asp",
+      "credit": "James Madison: Notes of Debates in the Federal Convention, 17. September 1787. Historischer, gemeinfreier Text nach der Transkription des Avalon Project, Yale Law School; ohne den späteren Variantenapparat. Zwischenüberschriften, Gliederung und Abstimmungstabelle sind redaktionelle Ergänzungen. Es handelt sich um Madisons Debattenaufzeichnungen, nicht um ein modernes Ergebnisprotokoll.",
+      "note": "The section headings and the voting summary are editorial additions. “Ay” means affirmative; “divd.” indicates a divided delegation. The source’s later textual-variant notes are omitted.",
+      "sections": [
+        {
+          "title": "Franklin’s address",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "The engrossed Constitution being read,"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Docr. FRANKLIN"
+                },
+                {
+                  "text": " rose with a speech in his hand, which he had reduced to writing for his own conveniency, "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " and which Mr. Wilson read in the words following."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Mr. President"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "I confess that there are several parts of this constitution which I do not at present approve, but I am not sure I shall never approve them: For having lived long, I have experienced many instances of being obliged by better information, or fuller consideration, to change opinions even on important subjects, which I once thought right, but found to be otherwise. It is therefore that the older I grow, the more apt I am to doubt my own judgment, and to pay more respect to the judgment of others. Most men indeed as well as most sects in Religion, think themselves in possession of all truth, and that wherever others differ from them it is so far error. Steele a Protestant in a Dedication tells the Pope, that the only difference between our Churches in their opinions of the certainty of their doctrines is, the Church of Rome is infallible and the Church of England is never in the wrong. But though many private persons think almost as highly of their own infallibility as of that of their sect, few express it so naturally as a certain french lady, who in a dispute with her sister, said \"I don't know how it happens, Sister but I meet with no body but myself, that's always in the right-Il n'y a que moi qui a toujours raison.\""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Franklin’s address · continued",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "In these sentiments, Sir, I agree to this Constitution with all its faults, if they are such; because I think a general Government necessary for us, and there is no form of Government but what may be a blessing to the people if well administered, and believe farther that this is likely to be well administered for a course of years, and can only end in Despotism, as other forms have done before it, when the people shall become so corrupted as to need despotic Government, being incapable of any other. I doubt too whether any other Convention we can obtain, may be able to make a better Constitution. For when you assemble a number of men to have the advantage of their joint wisdom, you inevitably assemble with those men, all their prejudices, their passions, their errors of opinion, their local interests, and their selfish views. From such an assembly can a perfect production be expected? It therefore astonishes me, Sir, to find this system approaching so near to perfection as it does; and I think it will astonish our enemies, who are waiting with confidence to hear that our councils are confounded like those of the Builders of Babel; and that our States are on the point of separation, only to meet hereafter for the purpose of cutting one another's throats. Thus I consent, Sir, to this Constitution because I expect no better, and because I am not sure, that it is not the best. The opinions I have had of its errors, I sacrifice to the public good. I have never whispered a syllable of them abroad. Within these walls they were born, and here they shall die. If every one of us in returning to our Constituents were to report the objections he has had to it, and endeavor to gain partizans in support of them, we might prevent its being generally received, and thereby lose all the salutary effects & great advantages resulting naturally in our favor among foreign Nations as well as among ourselves, from our real or apparent unanimity. Much of the strength & efficiency of any Government in procuring and securing happiness to the people, depends, on opinion, on the general opinion of the goodness of the Government, as well as well as of the wisdom and integrity of its Governors. I hope therefore that for our own sakes as a part of the people, and for the sake of posterity, we shall act heartily and unanimously in recommending this Constitution (if approved by Congress & confirmed by the Conventions) wherever our influence may extend, and turn our future thoughts & endeavors to the means of having it well administred."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "On the whole, Sir, I can not help expressing a wish that every member of the Convention who may still have objections to it, would with me, on this occasion doubt a little of his own infallibility, and to make manifest our unanimity, put his name to this instrument.-"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Motions and deliberation",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "He then moved that the Constitution be signed by the members and offered the following as a convenient form viz. \"Done in Convention by the unanimous consent of the States present the 17th. of Sepr. &c-In Witness whereof we have hereunto subscribed our names.\""
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "This ambiguous form had been drawn up by Mr. G. M. in order to gain the dissenting members, and put into the hands of Docr. Franklin that it might have the better chance of success."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. GORHAM"
+                },
+                {
+                  "text": " said if it was not too late he could wish, for the purpose of lessening objections to the Constitution, that the clause declaring \"the number of Representatives shall not exceed one for every forty thousand\" which had produced so much discussion, might be yet reconsidered, in order to strike out 40,000 & insert \"thirty thousand.\" This would not he remarked establish that as an absolute rule, but only give Congress a greater latitude which could not be thought unreasonable."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. KING & Mr. CARROL "
+                },
+                {
+                  "text": "seconded & supported the idea of Mr. Gorham."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "When the PRESIDENT rose, for the purpose of putting the question, he said that although his situation had hitherto restrained him from offering his sentiments on questions depending in the House, and it might be thought, ought now to impose silence on him, yet he could not forbear expressing his wish that the alteration proposed might take place. It was much to be desired that the objections to the plan recommended might be made as few as possible. The smallness of the proportion of Representatives had been considered by many members of the Convention an insufficient security for the rights & interests of the people. He acknowledged that it had always appeared to himself among the exceptionable parts of the plan, and late as the present moment was for admitting amendments, he thought this of so much consequence that it would give "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " much satisfaction to see it adopted "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "No opposition was made to the proposition of Mr. Gorham and it was agreed to unanimously."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "On the question to agree to the Constitution enrolled in order to be signed. It was agreed to all the States "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " answering ay."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. RANDOLPH"
+                },
+                {
+                  "text": " then rose and with an allusion to the observations of Docr. Franklin apologized for his refusing to sign the Constitution notwithstanding the vast majority & venerable names that would give sanction to its wisdom and its worth. He said however that he did not mean by this refusal to decide that he should oppose the Constitution without doors. He meant only to keep himself free to be governed by his duty as it should be prescribed by his future judgment. He refused to sign, because he thought the object of the Convention would be frustrated by the alternative which it presented to the people. Nine States will fail to ratify the plan and confusion must ensue. With such a view of the subject he ought not, he could not, by pledging himself to support the plan, restrain himself from taking such steps as might appear to him most consistent with the public good."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Motions and deliberation · continued",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. Govr. MORRIS"
+                },
+                {
+                  "text": " said that he too had objections, but considering the present plan as the best that was to be attained, he should take it with all its faults. The majority had determined in its favor and by that determination he should abide. The moment this plan goes forth all other considerations will be laid aside, and the great question will be, shall there be a national Government or not? and this must take place or a general anarchy will be the alternative. He remarked that the signing in the form proposed related only to the fact that the "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " States present were unanimous."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. WILLIAMSON"
+                },
+                {
+                  "text": " suggested that the signing should be confined to the letter accompanying the Constitution to Congress, which might perhaps do nearly as well, and would he found be "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " satisfactory to some members "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " who disliked the Constitution. For himself he did not think a better plan was to be expected and had no scruples against putting his name to it."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. HAMILTON"
+                },
+                {
+                  "text": " expressed his anxiety that every member should sign. A few characters of consequence, by opposing or even refusing to sign the Constitution, might do infinite mischief by kindling the latent sparks which "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " lurk under an enthusiasm in favor of the Convention which may soon subside. No man's ideas were more remote from the plan than his "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " were known to be; but is it possible to deliberate between anarchy and Convulsion on one side, and the chance of good to be expected from the plan on the other."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. BLOUNT"
+                },
+                {
+                  "text": " said he had declared that he would not sign, so as to pledge himself in support of the plan, but he was relieved by the form proposed and would without committing himself attest the fact that the plan was the unanimous act of the States in Convention."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Docr. FRANKLIN"
+                },
+                {
+                  "text": " expressed his fears from what Mr. Randolph had said, that he thought himself alluded to in the remarks offered this morning to the House. He declared that when drawing up that paper he did not know that any particular member would refuse to sign his name to the instrument, and hoped to be so understood. He professed a high sense of obligation to Mr. Randolph for having brought forward the plan in the first instance, and for the assistance he had given in its progress, and hoped that he would yet lay aside his objections, and by concurring with his brethren, prevent the great mischief which the refusal of his name might produce."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. RANDOLPH"
+                },
+                {
+                  "text": " could not but regard the signing in the proposed form, as the same with signing the Constitution. The change of form therefore could make no difference with him. He repeated that in refusing to sign the Constitution, he took a step which might be the most awful of his life, but it was dictated by his conscience, and it was not possible for him to hesitate, much less, to change. He repeated also his persuasion, that the holding out this plan with a final alternative to the people, of accepting or rejecting it in toto, would really produce the anarchy & civil convulsions which were apprehended from the refusal of individuals to sign it."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Motions and deliberation · continued",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. GERRY"
+                },
+                {
+                  "text": " described the painful feelings of his situation, and the embarrassment "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " under which he rose to offer any further observations on the subject wch. had been finally decided. Whilst the plan was depending, he had treated it with all the freedom he thought it deserved. He now felt himself bound as he was disposed to treat it with the respect due to the Act of the Convention. He hoped he should not violate that respect in declaring on this occasion his fears that a Civil war may result from the present crisis of the U. S. In Massachussetts, particularly he saw the danger of this calamitous event-In that State there are two parties, one devoted to Democracy, the worst he thought of all political evils, the other as violent in the opposite extreme. From the collision of these in opposing and resisting the Constitution, confusion was greatly to be feared. He had thought it necessary, for this & other reasons that the plan should have been proposed in a more mediating shape, in order to abate the heat and opposition of parties. As it has been passed by the Convention, he was persuaded it would have a contrary effect. He could not therefore by signing the Constitution pledge himself to abide by it at all events. The proposed form made no difference with him. But if it were not otherwise apparent, the refusals to sign should never be known from him. Alluding to the remarks of Docr. Franklin, he could not he said but view them as levelled at himself and the other gentlemen who meant not to sign;"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Genl. PINKNEY"
+                },
+                {
+                  "text": ". We are not likely to gain many converts by the ambiguity of the proposed form of signing. He thought it best to be candid and let the form speak the substance. If the meaning of the signers be left in doubt, his purpose would not be answered. He should sign the Constitution with a view to support it with all his influence, and wished to pledge himself accordingly."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Docr. FRANKLIN"
+                },
+                {
+                  "text": ". It is too soon to pledge ourselves before Congress and our Constituents shall have approved the plan."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. INGERSOL"
+                },
+                {
+                  "text": " did not consider the signing, either as a mere attestation of the fact, or as pledging the signers to support the Constitution at all events; but as a recommendation, of what, all things considered, was the most eligible."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "On the motion of Docr. Franklin"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "N. H. ay. Mas. ay. Ct. ay. N. J. ay. Pa. ay. Del. ay. Md. ay. Va. ay. N. C. ay. S. C. divd. "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " Geo. ay. "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Journals and adjournment",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "Mr. KING"
+                },
+                {
+                  "text": " suggested that the Journals of the Convention should be either destroyed, or deposited in the custody of the President. He thought if suffered to be made public, a bad use would be made of them by those who would wish to prevent the adoption of the Constitution."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Mr. WILSON"
+                },
+                {
+                  "text": " prefered the second expedient, he had at one time liked the first best; but as false suggestions may be propagated it should not be made impossible to contradict them."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "A question was then put on depositing the Journals and other papers of the Convention in the hands of the President, on which,"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "N. H. ay. Mtts. ay. Ct. ay. N. J. ay. Pena. ay. Del. ay. Md. "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " no. Va. ay. N. C. ay. S. C. ay. Geo. ay. "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "The President having asked what the Convention meant should be done with the Journals &c, whether copies were to be allowed to the members if applied for. It was Resolved nem: con \"that he retain the Journal and other papers, subject to the order of the "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " Congress, if ever formed under the Constitution."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "The members then proceeded to sign the instrument. "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " Whilst the last members were signing it "
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " Doctr. FRANKLIN looking towards the Presidents Chair, at the back of which a rising sun happened to be painted, observed to a few members near him, that Painters had found it difficult to distinguish in their art a rising from a setting sun. I have said he, often and often in the course of the Session, and the vicisitudes of my hopes and fears as to its issue, looked at that behind the President without being able to tell whether it was rising or setting: But now at length I have the happiness to know that it is a rising and not a setting Sun."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " The Constitution being signed by all the members except Mr. Randolph, Mr. Mason, and Mr. Gerry who declined giving it the sanction of their names, the Convention dissolved itself by an Adjournment sine die-"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": " The few alterations and corrections made in these debates which are not in my hand writing, were dictated by me and made in my presence by John C. Payne."
+                }
+              ]
+            },
+            {
+              "kind": "table",
+              "caption": "Voting summary · editorial arrangement of the recorded votes",
+              "heads": [
+                "Question",
+                "Ay",
+                "No",
+                "Divided"
+              ],
+              "rows": [
+                [
+                  "Franklin’s motion on signing",
+                  "10",
+                  "0",
+                  "1"
+                ],
+                [
+                  "Custody of the journals",
+                  "10",
+                  "1",
+                  "0"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "article",
+      "label": "Artikel · Humboldt (Deutsch)",
+      "lang": "de",
+      "title": "Ideen zu einer Physiognomik der Gewächse",
+      "subtitle": "Naturkundlicher Essay · Auszug",
+      "author": "Alexander von Humboldt",
+      "date": "1806",
+      "source": "https://www.gutenberg.org/ebooks/22761",
+      "credit": "Alexander von Humboldt: Ideen zu einer Physiognomik der Gewächse (1806), Auszug vom Textanfang nach Project Gutenberg Nr. 22761. Gemeinfreier Originaltext, historische Schreibweise beibehalten. Zwischenüberschriften, Inhaltsverzeichnis und Quellenanmerkung sind redaktionelle Ergänzungen für die Satzprobe.",
+      "note": "Die historische Schreibweise bleibt erhalten. Die Zwischenüberschriften gliedern den Auszug für diese Satzprobe und stammen nicht von Humboldt.",
+      "sections": [
+        {
+          "title": "Die Fülle des Lebens",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Wenn der Mensch mit regsamem Sinne die Natur durchforscht, oder in seiner Phantasie die weiten Räume der organischen Schöpfung misst, so wirkt unter den vielfachen Eindrücken, die er empfängt, keiner so tief und mächtig als der, welchen die allverbreitete Fülle des Lebens erzeugt. Ueberall, selbst am beeisten Pol, ertönt die Luft von dem Gesange der Vögel, wie von dem Sumsen schwirrender Insecten. Nicht die unteren Schichten allein, in welchen die verdichteten Dünste schweben, auch die oberen ätherischreinen, sind belebt. Denn so oft man den Rücken der Peruanischen Cordilleren, oder, südlich vom Leman-See, den Gipfel des Weissen-Berges bestieg, hat man selbst in diesen Einöden noch Thiere entdeckt. Am Chimborazo, sechsmal höher als der Brocken, sahen wir Schmetterlinge und andere geflügelte Insecten. Wenn auch, von senkrechten Luftströmen getrieben, sie sich dahin, als Fremdlinge, verirrten, wohin unruhige Forschbegier des Menschen sorgsame Schritte leitet; so beweiset ihr Daseyn doch, dass die biegsamere animalische Schöpfung ausdauert, wo die vegetabilische längst ihre Grenze erreicht hat. Höher, "
+                },
+                {
+                  "text": " als der Kegelberg von Teneriffa auf den Aetna gethürmt; höher, als alle Gipfel der Andeskette, schwebte oft über uns der Cundur, der Riese unter den Geiern. Raubsucht und Nachstellung der zartwolligen Vikunnas, welche gemsenartig und heerdenweise in den beschneiten Grasebenen schwärmen, locken den mächtigen Vogel in diese Region."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Zeigt nun schon das unbewafnete Auge den ganzen Luftkreis belebt, so enthüllt noch grössere Wunder das bewafnete Auge. Räderthiere, Brachionen, und eine Schaar mikroskopischer Geschöpfe heben die Winde aus den troknenden Gewässern empor. Unbeweglich und in Scheintod versenkt, schweben sie vielleicht jahrelang in den Lüften, bis der Thau sie zur Erde zurükführt, die Hülle löst, die ihren durchsichtigen wirbelnden Körper einschliesst, und (wahrscheinlich durch den Lebensstoff, den alles Wasser enthält) den Organen neue Erregbarkeit einhaucht."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Neben den entwickelten Geschöpfen trägt der Luftkreis auch zahllose Keime künftiger Bildungen, Insecten-Eier und Eier der Pflanzen, die durch Haar- und Feder-Kronen zur langen Herbstreise geschikt sind. Selbst den belebenden Staub, den, bei getrennten Geschlechtern, die männlichen Blüthen ausstreuen, tragen Winde und geflügelte Insecten über Meer und Land den einsamen weiblichen zu. Wohin der Blick des Naturforschers dringt, ist Leben, oder Keim zum Leben, verbreitet."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Luft, Wasser und Lebensräume",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Dient aber auch das bewegliche Luftmeer, in das wir getaucht sind, und über dessen Oberfläche wir "
+                },
+                {
+                  "text": " uns nicht zu erheben vermögen, vielen organischen Geschöpfen zur nothwendigsten Nahrung; so bedürfen dieselben dabei doch noch einer gröberen Speise, welche nur der Boden dieses gasförmigen Oceans darbietet. Dieser Boden ist zwiefacher Art. Den kleineren Theil bildet die trockene Erde, unmittelbar von Luft umflossen; den gröxseren Theil bildet das Wasser, vielleicht einst vor Jahrtausenden durch elektrisches Feuer aus luftförmigen Stoffen zusammengeronnen, und jezt unaufhörlich in der Werkstatt der Wolken, wie in den pulsirenden Gefässen der Thiere und Pflanzen, zersezt."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Unentschieden ist es, wo grössere Lebensfülle verbreitet sey; ob auf dem Continent, oder in dem unergründeten Meere. In diesem erscheinen gallertartige Seegewürme, bald lebendig, bald abgestorben, als leuchtende Sterne. Ihr Phosphorlicht wandelt die grünliche Flache des unermesslichen Ozeans in ein Feuermeer um. Unauslöschlich wird mir der Eindruck jener stillen Tropen-Nachte der Südsee bleiben, wo aus der duftigen Himmelsbläue das hohe Sternbild des Schiffes und das gesenkt untergehende Kreuz ihr mildes planetarisches Licht ausgossen, und wo zugleich in der schäumenden Meeresfluth die Delphine ihre leuchtenden Furchen zogen."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Aber nicht der Ozean allein, auch die Sumpfwasser verbergen zahllose Gewürme von wunderbarer Gestalt. Unserem Auge fast unerkennbar sind die Cyclidien, die gefranzten Trichoden und das Heer der Naiden, theilbar durch Aeste, wie die Lemna, deren "
+                },
+                {
+                  "text": " Schatten sie suchen. Von mannichfaltigen Luftgemengen umgeben, und mit dem Lichte unbekannt, athmen: die geflekte Askaris, welche die Haut des Regenwurms, die silberglänzende Leukophra, welche das Innere der Ufer·Naide, und der Echynorynchus, welcher die weitzellige Lunge der tropischen Klapperschlange bewohnt. So sind auch die verborgensten Bäume der Schöpfung mit Leben erfüllt. Wir wollen hier bescheiden bei den Geschlechtern der Pflanzen verweilen; denn auf ihrem Daseyn beruht das Daseyn der thierischen Schöpfung. Unablässig sind sie bemüht, den rohen Stoff der Erde organisch an einander zu reihen, und vorbereitend, durch lebendige Kraft, zu mischen, was nach tausend Umwandlungen zur regsamen Nervenfaser veredelt wird. Derselbe Blick, den wir auf die Verbreitung der Pflanzendecke heften, enthüllt uns die Fülle des thierischen Lebens, das von jener genährt und erhalten wird."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Die Pflanzendecke der Erde",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Ungleich ist der Teppich gewebt, den die blüthenreiche Flora über den nakten Erdkörper ausbreitet; dichter, wo die Sonne höher an dem nie bewölkten Himmel emporsteigt; lockerer gegen die trägen Pole hin, wo der wiederkehrende Frost bald die entwickelte Knospe tödtet, bald die reifende Frucht erhascht. Doch überall darf der Mensch sich der nährenden Pflanzen erfreuen. Trennt im Meeresboden ein Vulkan die kochende Fluth, und schiebt plözlich (wie einst zwischen den griechischen Inseln) einen schlackigen Fels empor; oder erheben (um an eine friedlichere Naturerscheinung zu erinnern) die einträchtigen "
+                },
+                {
+                  "text": " Nereiden ihre zelligen Wohnungen, bis sie nach Jahrtausenden über den Wasserspiegel hervorragend, absterben, und ein flaches Corallen-Eiland bilden: so sind die organischen Kräfte sogleich bereit, den todten Fels zu beleben. Was den Saamen so plözlich herbeiführt: ob wandernde Vögel, oder Winde, oder die Wogen des Meeres; ist bei der grossen Entfernung der Küsten schwer zu entscheiden. Aber auf dem nakten Steine, sobald ihn zuerst die Luft berührt, bildet sich in den nordischen Ländern ein Gewebe sammtartiger Fasern, die dem unbewafneten Auge als farbige Flecken erscheinen. Einige sind durch hervorragende Linien bald einfach bald doppelt begränzt; andere sind in Furchen durchschnitten und in Fächer getheilt. Mit zunehmendem Alter verdunkelt sich ihre lichte Farbe. Das fernleuchtende Gelb wird braun, und das bläuliche Grau der Leprarien verwandelt sich nach und nach in ein staubartiges Schwarz. Die Gränzen der alternden Decke fliessen in einander, und auf dem dunkeln Grunde bilden sich neue zirkelrunde Flechten von blendender Weisse. So lagert sich schichtenweise ein organisches Gewebe auf das andere; und wie das sich ansiedelnde Menschengeschlecht bestimmte Stufen der sittlichen Kultur durchlaufen muss, so ist die allmählige Verbreitung der Pflanzen an bestimmte physische Geseze gebunden. Wo jezt hohe Waldbäume ihre Gipfel luftig erheben, da überzogen einst zarte Flechten das erdenlose Gestein. Laubmoose, Gräser, krautartige Gewächse und Sträucher, füllen die Kluft der langen aber ungemessenen "
+                },
+                {
+                  "text": " Zwischenzeit aus. Was im Norden Flechten und Moose, das bewirken in den Tropen "
+                },
+                {
+                  "text": "Portulacca"
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Gomphrenen"
+                },
+                {
+                  "text": " und andere niedrige Uferpflanzen. Die Geschichte der Pflanzendecke, und ihre allmählige Ausbreitung über die öde Erdrinde, hat ihre Epochen, wie die Geschichte des spätern Menschengeschlechts."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Klima und Gestalt",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Ist aber auch Fülle des Lebens überall verbreitet; ist der Organismus auch unablässig bemüht, die durch den Tod entfesselten Elemente zu neuen Gestalten zu verbinden: so ist diese Lebensfülle und ihre Erneuerung doch nach Verschiedenheit der Himmelsstriche verschieden. Periodisch erstarrt die Natur in der kalten Zone; denn Flüssigkeit ist Bedingniss zum Leben. Thiere und Pflanzen (Laubmoose und andre Cryptogamen abgerechnet) liegen hier viele Monate hindurch im Winterschlaf vergraben. In einem grossen Theile der Erde haben daher nur solche organische Wesen sich entwickeln können, welche einer beträchtlichen Entziehung von Wärmestoff widerstehen, oder einer langen Unterbrechung der Lebensfunctionen fähig sind. Je näher dagegen den Tropen, desto mehr nimmt Mannichfaltigkeit der Bildungen, Anmuth der Form und des Farbengemisches, ewige Jugend und Kraft des organischen Lebens zu."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Diese Zunahme kann leicht von denen bezweifelt werden, welche nie unsern Welttheil verlassen, oder das Studium der allgemeinen Erdkunde vernachlässigt haben. Wenn man aus unsern dicklaubigen Eichenwäldern über die Alpen oder Pyrenäen-Kette nach Welschland oder Spanien hinabsteigt; wenn man gar "
+                },
+                {
+                  "text": " seinen Blick auf die afrikanischen Küstenländer des Mittelmeeres richtet: so wird man leicht zu dem Fehlschlusse verleitet, als sei Baumlosigkeit der Charakter heisser Klimate. Aber man vergisst, dass das südliche Europa eine andere Gestalt hatte, als pelasgische oder carthagischc Pflanzvölker sich zuerst darinn festsezten; man vergisst, dass frühere Bildung des Menschengeschlechts die Waldungen verdrängt, und dass der umschaffende Geist der Nazionen der Erde allmählig den Schmuck raubt, der uns in dem Norden erfreut, und der (mehr, als alle Geschichte) die Jugend unserer sittlichen Kultur anzeigt. Die grosse Katastrophe, durch welche das Mittelmeer sich gebildet, indem es, ein anschwellendes Binnenwasser, die Schleusen der Dardanellen und die Säulen des Herkules durchbrochen, diese Katastrophe scheint die angränzenden Länder eines grossen Theils ihrer Dammerde beraubt zu haben. Was bei den griechischen Schriftstellern von den Samothracischen Sagen erwähnt wird, deutet die Neuheit dieser zerstörenden Naturveränderung an. Auch ist in allen Ländern, welche das Mittelmeer begränzt, und welche die Kalkformation des Jura charakterisirt, ein grosser Theil der Erdoberfläche nackter Fels, Das Mahlerische italienischer Gegenden beruht vorzüglich auf diesem lieblichen Kontraste zwischen dem unbelebten öden Gestein und der üppigen Vegetation, welche inselförmig darinn aufsprosst. Wo dieses Gestein, minder zerklüftet, die Wasser auf der Oberfläche zusammen hält, wo diese mit Erde bedeckt ist, (wie an den reizenden "
+                },
+                {
+                  "text": " Ufern des Albaner Sees) da hat selbst Italien seine Eichenwälder, so schattig und grün, als der Bewohner des Norden sie wünscht."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Natur und Wahrnehmung",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Auch die Wüsten jenseits des Atlas, und die unermesslichen Ebenen oder Steppen von Süd-Amerika, sind als blosse Lokalerscheinungen zu betrachten. Diese findet man, in der Regenzeit wenigstens, mit Gras und niedrigen, fast krautartigen, Mimosen bedeckt; jene sind Sand-Meere im Innern des alten Continents, grosse pflanzenleere Räume, mit ewiggrünen waldigen Ufern umgeben. Nur einzeln stehende Fächerpalmen erinnern den Wanderer, dass diese Einöden Theile einer belebten Schöpfung sind. Im trügerischen Lichtspiele, das die strahlende Wärme erregt, sieht man bald den Fuss dieser Palmen frei in der Luft schweben, bald ihr umgekehrtes Bild in den wogenartig-zitternden Luftschichten wiederholt. Auch westlich von der peruanischen Andeskette, an den Küsten des stillen Meeres, haben wir Wochen gebraucht, um solche wasserleere Wüsten zu durchstreichen. Der Ursprung derselben, diese Pflanzenlosigkeit grosser Erdstrecken, in Gegenden, wo umher die kraftvolleste Vegetation herrscht, ist ein wenig beachtetes geognostisches Phänomen, welches sich unstreitig in alten Naturrevoluzionen (in Ueberschwemmungen, oder vulkanischen Umwandelungen der Erdrinde) gründet. Hat eine Gegend einmal ihre Pflanzendecke verloren, ist der Sand beweglich und quellenleer, hindert die heisse, senkrecht aufsteigende Luft den Niederschlag der Wolken: so vergehen Jahrtausende, ehe von den grünen "
+                },
+                {
+                  "text": " Ufern aus organisches Leben in das Innere der Einöde dringt."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "book",
+      "label": "Buchseiten · Sherlock Holmes (Englisch)",
+      "lang": "en",
+      "title": "A Scandal in Bohemia",
+      "subtitle": "From The Adventures of Sherlock Holmes",
+      "author": "Arthur Conan Doyle",
+      "date": "1891",
+      "source": "https://www.gutenberg.org/ebooks/1661",
+      "credit": "Arthur Conan Doyle: A Scandal in Bohemia (1891), in The Adventures of Sherlock Holmes (1892). Zusammenhängender Auszug vom Anfang der Erzählung; englischer Originaltext nach Project Gutenberg Nr. 1661. Gemeinfreier Originaltext. Die Leseabschnitte, das Inhaltsverzeichnis und die Quellenanmerkung wurden als redaktionelle Struktur für diese Satzprobe ergänzt; keine historischen Seitenumbrüche.",
+      "note": "The excerpt follows the opening of the story. The reading sections and this note are editorial additions for the typography specimen.",
+      "sections": [
+        {
+          "title": "Reading section 1",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": "T"
+                },
+                {
+                  "text": "o Sherlock Holmes she is always "
+                },
+                {
+                  "text": "the",
+                  "em": true
+                },
+                {
+                  "text": " woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen, but as a lover he would have placed himself in a false position. He never spoke of the softer passions, save with a gibe and a sneer. They were admirable things for the observer—excellent for drawing the veil from men’s motives and actions. But for the trained reasoner to admit such intrusions into his own delicate and finely adjusted temperament was to introduce a distracting factor which might throw a doubt upon all his mental results. Grit in a sensitive instrument, or a crack in one of his own high-power lenses, would not be more disturbing than a strong emotion in a nature such as his. And yet there was but one woman to him, and that woman was the late Irene Adler, of dubious and questionable memory."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "I had seen little of Holmes lately. My marriage had drifted us away from each other. My own complete happiness, and the home-centred interests which rise up around the man who first finds himself master of his own establishment, were sufficient to absorb all my attention, while Holmes, who loathed every form of society with his whole Bohemian soul, remained in our lodgings in Baker Street, buried among his old books, and alternating from week to week between cocaine and ambition, the drowsiness of the drug, and the fierce energy of his own keen nature. He was still, as ever, deeply attracted by the study of crime, and occupied his immense faculties and extraordinary powers of observation in following out those clues, and clearing up those mysteries which had been abandoned as hopeless by the official police. From time to time I heard some vague account of his doings: of his summons to Odessa in the case of the Trepoff murder, of his clearing up of the singular tragedy of the Atkinson brothers at Trincomalee, and finally of the mission which he had accomplished so delicately and successfully for the reigning family of Holland. Beyond these signs of his activity, however, which I merely shared with all the readers of the daily press, I knew little of my former friend and companion."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reading section 2",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "One night—it was on the twentieth of March, 1888—I was returning from a journey to a patient (for I had now returned to civil practice), when my way led me through Baker Street. As I passed the well-remembered door, which must always be associated in my mind with my wooing, and with the dark incidents of the Study in Scarlet, I was seized with a keen desire to see Holmes again, and to know how he was employing his extraordinary powers. His rooms were brilliantly lit, and, even as I looked up, I saw his tall, spare figure pass twice in a dark silhouette against the blind. He was pacing the room swiftly, eagerly, with his head sunk upon his chest and his hands clasped behind him. To me, who knew his every mood and habit, his attitude and manner told their own story. He was at work again. He had risen out of his drug-created dreams and was hot upon the scent of some new problem. I rang the bell and was shown up to the chamber which had formerly been in part my own."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "His manner was not effusive. It seldom was; but he was glad, I think, to see me. With hardly a word spoken, but with a kindly eye, he waved me to an armchair, threw across his case of cigars, and indicated a spirit case and a gasogene in the corner. Then he stood before the fire and looked me over in his singular introspective fashion."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Wedlock suits you,” he remarked. “I think, Watson, that you have put on seven and a half pounds since I saw you.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Seven!” I answered."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Indeed, I should have thought a little more. Just a trifle more, I fancy, Watson. And in practice again, I observe. You did not tell me that you intended to go into harness.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then, how do you know?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I see it, I deduce it. How do I know that you have been getting yourself very wet lately, and that you have a most clumsy and careless servant girl?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“My dear Holmes,” said I, “this is too much. You would certainly have been burned, had you lived a few centuries ago. It is true that I had a country walk on Thursday and came home in a dreadful mess, but as I have changed my clothes I can’t imagine how you deduce it. As to Mary Jane, she is incorrigible, and my wife has given her notice, but there, again, I fail to see how you work it out.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "He chuckled to himself and rubbed his long, nervous hands together."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reading section 3",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“It is simplicity itself,” said he; “my eyes tell me that on the inside of your left shoe, just where the firelight strikes it, the leather is scored by six almost parallel cuts. Obviously they have been caused by someone who has very carelessly scraped round the edges of the sole in order to remove crusted mud from it. Hence, you see, my double deduction that you had been out in vile weather, and that you had a particularly malignant boot-slitting specimen of the London slavey. As to your practice, if a gentleman walks into my rooms smelling of iodoform, with a black mark of nitrate of silver upon his right forefinger, and a bulge on the right side of his top-hat to show where he has secreted his stethoscope, I must be dull, indeed, if I do not pronounce him to be an active member of the medical profession.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "I could not help laughing at the ease with which he explained his process of deduction. “When I hear you give your reasons,” I remarked, “the thing always appears to me to be so ridiculously simple that I could easily do it myself, though at each successive instance of your reasoning I am baffled until you explain your process. And yet I believe that my eyes are as good as yours.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Quite so,” he answered, lighting a cigarette, and throwing himself down into an armchair. “You see, but you do not observe. The distinction is clear. For example, you have frequently seen the steps which lead up from the hall to this room.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Frequently.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“How often?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Well, some hundreds of times.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then how many are there?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“How many? I don’t know.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Quite so! You have not observed. And yet you have seen. That is just my point. Now, I know that there are seventeen steps, because I have both seen and observed. By the way, since you are interested in these little problems, and since you are good enough to chronicle one or two of my trifling experiences, you may be interested in this.” He threw over a sheet of thick, pink-tinted notepaper which had been lying open upon the table. “It came by the last post,” said he. “Read it aloud.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "The note was undated, and without either signature or address."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reading section 4",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“There will call upon you to-night, at a quarter to eight o’clock,” it said, “a gentleman who desires to consult you upon a matter of the very deepest moment. Your recent services to one of the royal houses of Europe have shown that you are one who may safely be trusted with matters which are of an importance which can hardly be exaggerated. This account of you we have from all quarters received. Be in your chamber then at that hour, and do not take it amiss if your visitor wear a mask.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“This is indeed a mystery,” I remarked. “What do you imagine that it means?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I have no data yet. It is a capital mistake to theorise before one has data. Insensibly one begins to twist facts to suit theories, instead of theories to suit facts. But the note itself. What do you deduce from it?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "I carefully examined the writing, and the paper upon which it was written."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“The man who wrote it was presumably well to do,” I remarked, endeavouring to imitate my companion’s processes. “Such paper could not be bought under half a crown a packet. It is peculiarly strong and stiff.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Peculiar—that is the very word,” said Holmes. “It is not an English paper at all. Hold it up to the light.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "I did so, and saw a large “E” with a small “g,” a “P,” and a large “G” with a small “t” woven into the texture of the paper."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“What do you make of that?” asked Holmes."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“The name of the maker, no doubt; or his monogram, rather.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Not at all. The ‘G’ with the small ‘t’ stands for ‘Gesellschaft,’ which is the German for ‘Company.’ It is a customary contraction like our ‘Co.’ ‘P,’ of course, stands for ‘Papier.’ Now for the ‘Eg.’ Let us glance at our Continental Gazetteer.” He took down a heavy brown volume from his shelves. “Eglow, Eglonitz—here we are, Egria. It is in a German-speaking country—in Bohemia, not far from Carlsbad. ‘Remarkable as being the scene of the death of Wallenstein, and for its numerous glass-factories and paper-mills.’ Ha, ha, my boy, what do you make of that?” His eyes sparkled, and he sent up a great blue triumphant cloud from his cigarette."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“The paper was made in Bohemia,” I said."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reading section 5",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Precisely. And the man who wrote the note is a German. Do you note the peculiar construction of the sentence—‘This account of you we have from all quarters received.’ A Frenchman or Russian could not have written that. It is the German who is so uncourteous to his verbs. It only remains, therefore, to discover what is wanted by this German who writes upon Bohemian paper and prefers wearing a mask to showing his face. And here he comes, if I am not mistaken, to resolve all our doubts.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "As he spoke there was the sharp sound of horses’ hoofs and grating wheels against the curb, followed by a sharp pull at the bell. Holmes whistled."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“A pair, by the sound,” said he. “Yes,” he continued, glancing out of the window. “A nice little brougham and a pair of beauties. A hundred and fifty guineas apiece. There’s money in this case, Watson, if there is nothing else.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I think that I had better go, Holmes.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Not a bit, Doctor. Stay where you are. I am lost without my Boswell. And this promises to be interesting. It would be a pity to miss it.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But your client—”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Never mind him. I may want your help, and so may he. Here he comes. Sit down in that armchair, Doctor, and give us your best attention.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "A slow and heavy step, which had been heard upon the stairs and in the passage, paused immediately outside the door. Then there was a loud and authoritative tap."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Come in!” said Holmes."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "A man entered who could hardly have been less than six feet six inches in height, with the chest and limbs of a Hercules. His dress was rich with a richness which would, in England, be looked upon as akin to bad taste. Heavy bands of astrakhan were slashed across the sleeves and fronts of his double-breasted coat, while the deep blue cloak which was thrown over his shoulders was lined with flame-coloured silk and secured at the neck with a brooch which consisted of a single flaming beryl. Boots which extended halfway up his calves, and which were trimmed at the tops with rich brown fur, completed the impression of barbaric opulence which was suggested by his whole appearance. He carried a broad-brimmed hat in his hand, while he wore across the upper part of his face, extending down past the cheekbones, a black vizard mask, which he had apparently adjusted that very moment, for his hand was still raised to it as he entered. From the lower part of the face he appeared to be a man of strong character, with a thick, hanging lip, and a long, straight chin suggestive of resolution pushed to the length of obstinacy."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reading section 6",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You had my note?” he asked with a deep harsh voice and a strongly marked German accent. “I told you that I would call.” He looked from one to the other of us, as if uncertain which to address."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Pray take a seat,” said Holmes. “This is my friend and colleague, Dr. Watson, who is occasionally good enough to help me in my cases. Whom have I the honour to address?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You may address me as the Count Von Kramm, a Bohemian nobleman. I understand that this gentleman, your friend, is a man of honour and discretion, whom I may trust with a matter of the most extreme importance. If not, I should much prefer to communicate with you alone.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "I rose to go, but Holmes caught me by the wrist and pushed me back into my chair. “It is both, or none,” said he. “You may say before this gentleman anything which you may say to me.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "The Count shrugged his broad shoulders. “Then I must begin,” said he, “by binding you both to absolute secrecy for two years; at the end of that time the matter will be of no importance. At present it is not too much to say that it is of such weight it may have an influence upon European history.”"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
