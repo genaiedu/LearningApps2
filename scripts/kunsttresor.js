@@ -306,6 +306,7 @@
     open('launch-dialog');
   }
   async function launchGallery(withIntro = true) {
+    if(typeof wallMode!=='undefined'&&wallMode)void enterFullscreen();
     confirmLaunchAIChoice();
     close('launch-dialog');
     if (!imagesAllowed) { imagesAllowed = true; store.set(keys.images,'yes'); heroImages(); }
@@ -898,21 +899,23 @@
     open('ai-dialog');
   }
   function fullscreenLabel() {
-    const active = document.fullscreenElement === $('spiel') || $('spiel').classList.contains('fullscreen-fallback');
+    const active = document.fullscreenElement === $('spiel') || (typeof wallMode!=='undefined'&&wallMode&&Boolean(document.fullscreenElement)) || $('spiel').classList.contains('fullscreen-fallback');
     $('fullscreen').innerHTML = active ? '<span>Vollbild verlassen</span>' : '<span>Vollbild</span>';
     $('fullscreen').setAttribute('aria-label',active ? 'Vollbild verlassen' : 'Spiel im Vollbild öffnen');
   }
   async function enterFullscreen() {
-    if (document.fullscreenElement === $('spiel') || $('spiel').classList.contains('fullscreen-fallback')) return;
+    const automaticWall=typeof wallMode!=='undefined'&&wallMode;
+    if (document.fullscreenElement === $('spiel') || (automaticWall&&document.fullscreenElement) || (!automaticWall&&$('spiel').classList.contains('fullscreen-fallback'))) return;
     try {
-      if (!$('spiel').requestFullscreen) throw Error();
-      await $('spiel').requestFullscreen();
+      const target=automaticWall?document.documentElement:$('spiel');
+      if (!target.requestFullscreen) throw Error();
+      await target.requestFullscreen();
     }
-    catch { $('spiel').classList.add('fullscreen-fallback'); document.body.classList.add('has-fullscreen'); }
+    catch { if(!automaticWall){$('spiel').classList.add('fullscreen-fallback'); document.body.classList.add('has-fullscreen');} }
     fullscreenLabel();
   }
   async function fullscreen() {
-    if (document.fullscreenElement) { await document.exitFullscreen(); return; }
+    if (document.fullscreenElement) { if(typeof wallMode!=='undefined'&&wallMode){$('spiel').classList.remove('fullscreen-fallback');document.body.classList.remove('has-fullscreen');} await document.exitFullscreen(); return; }
     if ($('spiel').classList.contains('fullscreen-fallback')) { $('spiel').classList.remove('fullscreen-fallback'); document.body.classList.remove('has-fullscreen'); fullscreenLabel(); return; }
     await enterFullscreen();
   }
