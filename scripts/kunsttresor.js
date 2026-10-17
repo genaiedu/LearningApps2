@@ -341,8 +341,7 @@
     $('intro-slides').setAttribute('aria-busy','false'); $('intro-loading').hidden=true;
     if (enterGame && imagesAllowed && pool.length) {
       if (!state) { state = core.newState(pool); save(); render(); }
-      if (typeof wallMode !== 'undefined' && wallMode) window.scrollTo({top:0,behavior:'instant'});
-      else toGame();
+      window.scrollTo({top:0,behavior:'instant'});
     }
   }
   function showIntro({audioPrimed = false} = {}) {

@@ -38,7 +38,7 @@ function createFilm({consent=true}={}) {
     introAudio:{volume:.65,currentTime:0,pause:()=>events.push('pause')},
     $:id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);},
     core:{introSelection:()=>{events.push('selection');return works;},shuffle:a=>a,galleryTitle:w=>w.id},
-    window:{KunstIntro:{prepare:selected=>intro.prepare(selected,{createImage:()=>{const image=new ImageStub();images.push(image);return image;}})}},
+    window:{scrollTo:options=>events.push(['landing',options.top]),KunstIntro:{prepare:selected=>intro.prepare(selected,{createImage:()=>{const image=new ImageStub();images.push(image);return image;}})}},
     node:()=>new Element(),imageURL:w=>w.imageURL,
     clearTimeout:id=>timers.delete(id),setTimeout:(callback,ms)=>{const id=++timerId;timers.set(id,{callback,ms});return id;},
     clearInterval:id=>timers.delete(id),setInterval:()=>{throw Error('Unexpected fade before the finale.');},
@@ -51,12 +51,23 @@ function createFilm({consent=true}={}) {
   vm.runInContext(js.slice(js.indexOf('function prepareIntro()'),js.indexOf('function start()')),context);
   return {context,elements,images,timers,events};
 }
-test('wall edition returns to the landing page after the film or skipping it',()=>{
-  const film=createFilm(),c=film.context;c.wallMode=true;
-  c.window.scrollTo=options=>film.events.push(['landing',options.top]);
-  c.finishIntro({enterGame:true});
-  assert.deepEqual(film.events.at(-1),['landing',0]);
-  assert.equal(film.events.includes('game'),false);
+test('both editions return to the page beginning after the film or skipping it',()=>{
+  for(const wallMode of [false,true]){
+    const film=createFilm(),c=film.context;c.wallMode=wallMode;
+    c.finishIntro({enterGame:true});
+    assert.deepEqual(film.events.at(-1),['landing',0]);
+    assert.equal(film.events.includes('game'),false);
+  }
+});
+test('the last film chapter returns both editions to the page beginning automatically',async()=>{
+  for(const wallMode of [false,true]){
+    const film=createFilm(),c=film.context;c.wallMode=wallMode;c.setInterval=()=>0;
+    c.prepareLaunch();await c.launchGallery();await film.images[0].loaded();await flush();
+    for(let chapter=0;chapter<6;chapter++)film.timers.get(c.introTimer).callback();
+    assert.equal(c.$('intro-dialog').open,false);
+    assert.deepEqual(film.events.at(-1),['landing',0]);
+    assert.equal(film.events.includes('game'),false);
+  }
 });
 test('first image is prepared in the background, without an external request before image consent',()=>{
   for(const consent of [false,true]) {
@@ -124,7 +135,7 @@ test('skip during loading cancels decoding and never restarts the film on a late
   assert.equal(c.$('intro-dialog').open,false);assert.equal(c.introPreparation,null);
   assert.equal(c.introTimer,null);assert.equal(c.introWaitTimer,null);
   assert.equal(film.images[0].src,undefined);
-  assert.equal(film.events.at(-1),'game');assert.equal(c.previousIntro.length,0);
+  assert.deepEqual(film.events.at(-1),['landing',0]);assert.equal(c.previousIntro.length,0);
   assert.equal(film.events.filter(event=>event==='music').length,1); // Only the silent initial unlock.
 });
 test('direct play does not wait for the background image and preserves the saved room',async()=>{
