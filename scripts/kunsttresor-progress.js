@@ -24,12 +24,12 @@
     return Array.from({length:32},()=>Math.floor(Math.random()*16).toString(16)).join('');
   }
   function fresh(record = 0) { return {version:1, record:integer(record) ? record : 0, events:[]}; }
-  function validStrings(values) { return Array.isArray(values) && values.length === count && values.every(value => typeof value === 'string' && value.length > 0 && value.length <= 512) && new Set(values).size === count; }
+  function validStrings(values,repeat=false) { return Array.isArray(values) && values.length === count && values.every(value => typeof value === 'string' && value.length > 0 && value.length <= 512) && (repeat||new Set(values).size === count); }
   function restore(value) {
     if (!value || value.version !== 1 || !integer(value.record) || !Array.isArray(value.events) || value.events.length > MAX_EVENTS) return null;
     const ids = new Set(), events = [];
     for (const event of value.events) {
-      if (!event || !tokenPattern.test(event.id) || ids.has(event.id) || !Number.isSafeInteger(event.at) || event.at < 0 || event.at > Date.now()+300000 || !integer(event.depth) || event.depth < 1 || event.depth > value.record || typeof event.first !== 'boolean' || typeof event.corrected !== 'boolean' || (event.first && event.corrected) || !validStrings(event.styles) || !validStrings(event.techniques)) return null;
+      if (!event || !tokenPattern.test(event.id) || ids.has(event.id) || !Number.isSafeInteger(event.at) || event.at < 0 || event.at > Date.now()+300000 || !integer(event.depth) || event.depth < 1 || event.depth > value.record || typeof event.first !== 'boolean' || typeof event.corrected !== 'boolean' || (event.first && event.corrected) || !validStrings(event.styles) || !validStrings(event.techniques,Boolean(root.KunstWallEnabled))) return null;
       ids.add(event.id);
       if ((event.runToken !== undefined && !tokenPattern.test(event.runToken)) || (event.parentRoomToken !== undefined && event.parentRoomToken !== null && !tokenPattern.test(event.parentRoomToken)) || event.parentRoomToken === event.id) return null;
       events.push({id:event.id, runToken:event.runToken || event.id, parentRoomToken:event.parentRoomToken || null, at:event.at, depth:event.depth, first:event.first, corrected:event.corrected, styles:[...event.styles], techniques:[...event.techniques]});
@@ -56,7 +56,7 @@
   }
   function recordWin(profile, state, pool, at = Date.now()) {
     const works = state?.ids?.map(id=>pool.find(work=>work.id === id)) || [];
-    if (state?.phase !== 'unlocked' || !tokenPattern.test(state.roomToken) || !(state.attempts>=1&&state.attempts<=limit) || !integer(state.escaped) || state.escaped < 1 || works.length !== count || new Set(state.ids).size !== count || works.some(work=>!work || ['date','style','artist','technique'].some(field=>state.choices?.[work.id]?.[field] !== work[field])) || ['date','style','artist','technique'].some(field=>new Set(works.map(work=>work[field])).size !== count) || profile.events.some(event=>event.id === state.roomToken)) return {profile, earned:[]};
+    if (state?.phase !== 'unlocked' || !tokenPattern.test(state.roomToken) || !(state.attempts>=1&&state.attempts<=limit) || !integer(state.escaped) || state.escaped < 1 || works.length !== count || new Set(state.ids).size !== count || works.some(work=>!work || ['date','style','artist','technique'].some(field=>state.choices?.[work.id]?.[field] !== work[field])) || ['date','style','artist','technique'].some(field=>!(root.KunstWallEnabled&&field==='technique')&&new Set(works.map(work=>work[field])).size !== count) || profile.events.some(event=>event.id === state.roomToken)) return {profile, earned:[]};
     if (profile.events.length >= MAX_EVENTS) throw Error('Die Abzeichensammlung enthält bereits 5.000 gelöste Räume. Dein Spielstand und Rekord bleiben erhalten.');
     const firstTry = state.attemptLog?.find(entry=>entry.attempt === 1);
     const corrected = state.attempts >= 2 && Boolean(firstTry && works.some(work=>['date','style','artist','technique'].some(field=>firstTry.choices?.[work.id]?.[field] !== work[field])));

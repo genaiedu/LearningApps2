@@ -359,7 +359,7 @@
       {title:'1000 Kunstwerke',text:'Quiz Edition'}
     ];
     if(wallMode){
-      chapters[1]={title:'Sieben Werke. Eine Bilderwand.',text:'Sieben Werke begegnen dir gleichzeitig. Zu jedem Werk stellst du vier Fragen: Wann? Welcher Stil? Von wem? Wie gemacht? Klicke ein Bild an, um es groß zu sehen und rechts die Antworten zuzuordnen.'};
+      chapters[1]={title:'Sieben Werke. Eine Bilderwand.',text:'Sieben Werke begegnen dir gleichzeitig. Zu jedem Werk stellst du vier Fragen: Wann? Welcher Stil? Von wem? Wie gemacht? Klicke ein Bild an, um es groß zu sehen und rechts die Antworten zuzuordnen. Techniken dürfen mehrfach vorkommen; die Zahl dahinter zeigt die noch freien Plätze.'};
       chapters[2]={title:'Traust du deinem Blick?',text:'Selten ist eines der sieben Bilder eine KI-Nachahmung: höchstens in jedem siebten Rätsel. Markiere es mit „Fälschung“. Die meisten Räume zeigen nur Originale.'};
       chapters[3]={title:'Zwei Fehlurteile sind erlaubt.',text:'28 Zuordnungen. Drei Prüfversuche. Nach einer falschen Prüfung kannst du nachbessern. Erst der dritte Fehlversuch beendet deinen Rundgang. Alle Antworten und die Fälschungsmarkierung müssen stimmen.'};
       chapters[4]={title:'Nähe verändert den Blick.',text:'Ein Klick öffnet das ganze Werk, ein weiterer die Lupe. Escape führt zum ganzen Bild und danach zurück zur Wand. Alles richtig? Die nächste Tür öffnet sich.'};
@@ -488,7 +488,13 @@
       [...select.options].forEach(option => {
         const owner = core.takenBy(state,select.dataset.work,select.dataset.field,option.value);
         option.disabled = Boolean(owner);
-        if (option.dataset.label) option.textContent = option.dataset.label + (owner ? ' · bei Werk ' + 'ABCDEFG'[state.ids.indexOf(owner)] : '');
+        if (option.dataset.label) {
+          if(wallMode&&select.dataset.field==='technique'){
+            const left=core.remaining(state,'technique',option.value),total=core.capacity(state,'technique',option.value);
+            option.textContent=option.dataset.label+' · '+left;
+            option.title=left+' von '+total+' Zuordnungen noch frei';
+          }else option.textContent = option.dataset.label + (owner ? ' · bei Werk ' + 'ABCDEFG'[state.ids.indexOf(owner)] : '');
+        }
       });
     });
     renderReview();
@@ -580,7 +586,7 @@
         const select = node('select'); select.dataset.work = id; select.dataset.field = field;
         select.id = 'answer-' + letter + '-' + field; select.setAttribute('aria-label','Werk ' + letter + ': ' + labels[field]);
         const empty = node('option',null,'Zuordnen …'); empty.value = ''; select.append(empty);
-        state.options[field].forEach(value => { const display = field === 'artist' ? wikiCatalogue.artists[value]?.title || value : value; const option = node('option',null,display); option.value = value; option.dataset.label = display; select.append(option); });
+        [...new Set(state.options[field])].forEach(value => { const display = field === 'artist' ? wikiCatalogue.artists[value]?.title || value : value; const option = node('option',null,display); option.value = value; option.dataset.label = display; select.append(option); });
         select.addEventListener('change',() => {
           state = core.choose(state,id,field,select.value); save(); update();
           if (state.attempts === 0) $('feedback').textContent = core.filled(state) === total ? 'Alle Antworten sind vergeben. Bereit für die erste Prüfung?' : 'Die Auswahl allein zählt noch nicht als Versuch. Ordne alle 16 Antworten zu.';

@@ -11,7 +11,7 @@
     return result;
   }
   function compatible(works, candidate) {
-    return !works.some(work => work.id === candidate.id || fields.some(field => work[field] === candidate[field]) || (work.artistIdentity && work.artistIdentity === candidate.artistIdentity));
+    return !works.some(work => work.id === candidate.id || fields.some(field => !(root.KunstWallEnabled&&field==='technique')&&work[field] === candidate[field]) || (work.artistIdentity && work.artistIdentity === candidate.artistIdentity));
   }
   function introSelection(pool, landmarkIds, recent = [], random = Math.random) {
     // Cropped cinematic detail shots are reserved for two-dimensional works.
@@ -69,6 +69,8 @@
         if (++visits > 15000) return null;
         for (let i = from; i < candidates.length; i++) {
           if (!compatible(chosen, candidates[i])) continue;
+          // Keep a seven-work wall varied while allowing repeated techniques.
+          if(root.KunstWallEnabled&&chosen.filter(work=>work.technique===candidates[i].technique).length>=3)continue;
           const result = search([...chosen, candidates[i]], i + 1);
           if (result) return result;
         }
@@ -111,8 +113,13 @@
     choices[workId] = {...choices[workId], [field]: value};
     return {...state, choices};
   }
+  function capacity(state,field,value){return (state.options[field]||[]).filter(v=>v===value).length;}
+  function remaining(state,field,value){return Math.max(0,capacity(state,field,value)-state.ids.filter(id=>state.choices[id]?.[field]===value).length);}
+  function validValues(options,values){return values.every(v=>options.includes(v)&&values.filter(x=>x===v).length<=options.filter(x=>x===v).length);}
   function takenBy(state, workId, field, value) {
-    return value ? state.ids.find(id => id !== workId && state.choices[id]?.[field] === value) || null : null;
+    if(!value)return null;
+    const owners=state.ids.filter(id=>id!==workId&&state.choices[id]?.[field]===value);
+    return owners.length>=capacity(state,field,value)?owners[0]||null:null;
   }
   function review(state, pool) {
     if (!state.review?.choices || state.attempts < 1) return [];
@@ -145,9 +152,9 @@
     for (let i = 0; i < works.length; i++) if (!compatible(works.slice(0, i), works[i])) return null;
     for (const field of fields) {
       const options = saved.options?.[field];
-      if (!Array.isArray(options) || options.length !== count || new Set(options).size !== count || !works.every(work => options.includes(work[field]))) return null;
+      if (!Array.isArray(options) || options.length !== count || (!(root.KunstWallEnabled&&field==='technique')&&new Set(options).size !== count) || !validValues(options,works.map(work=>work[field]))) return null;
       const values = saved.ids.map(id => saved.choices?.[id]?.[field]).filter(Boolean);
-      if (new Set(values).size !== values.length || values.some(value => !options.includes(value))) return null;
+      if (!validValues(options,values)) return null;
     }
     if ((saved.phase === 'playing' && saved.attempts >= limit) || (saved.phase === 'lost' && saved.attempts !== limit)) return null;
     if (saved.phase === 'unlocked' && (saved.attempts < 1 || saved.escaped < 1 || filled(saved) !== count*4 || works.some(work => fields.some(field => saved.choices[work.id][field] !== work[field])))) return null;
@@ -157,12 +164,12 @@
       // complete assignment can still be marked without resetting an attempt.
       const choices = saved.review?.choices || saved.choices;
       const complete = saved.ids.every(id => fields.every(field => saved.options[field].includes(choices?.[id]?.[field])));
-      const unique = fields.every(field => new Set(saved.ids.map(id => choices?.[id]?.[field])).size === count);
+      const unique = fields.every(field => validValues(saved.options[field],saved.ids.map(id=>choices?.[id]?.[field])));
       if (complete && unique) review = {choices:Object.fromEntries(saved.ids.map(id => [id,{...choices[id]}]))};
     }
     // History is optional for version-1 saves. Never invent a first attempt from
     // an older save's final choices. Invalid history is discarded, not the game.
-    const validSnapshot = choices => saved.ids.every(id => fields.every(field => saved.options[field].includes(choices?.[id]?.[field]))) && fields.every(field => new Set(saved.ids.map(id => choices?.[id]?.[field])).size === count);
+    const validSnapshot = choices => saved.ids.every(id => fields.every(field => saved.options[field].includes(choices?.[id]?.[field]))) && fields.every(field => validValues(saved.options[field],saved.ids.map(id=>choices?.[id]?.[field])));
     let attemptLog = saved.attemptLog;
     if (attemptLog !== undefined) {
       if (!Array.isArray(attemptLog) || attemptLog.length > saved.attempts || attemptLog.some((entry,index) => !Number.isInteger(entry?.attempt) || entry.attempt < 1 || entry.attempt > saved.attempts || (index > 0 && entry.attempt <= attemptLog[index-1].attempt) || !validSnapshot(entry.choices))) attemptLog = [];
@@ -198,7 +205,7 @@
     if (original.phase === 'lost') { next.phase='lost'; next.attempts=limit; }
     return {state:next,updated:true,newRoom:true};
   }
-  const api = {forgeryPlan,fields, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore, restoreUpdated};
+  const api = {forgeryPlan,fields, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
