@@ -54,3 +54,14 @@ html.kunst-wall{--paper:#24382e;--ink:#24382e;--night:#f6f6f3;--muted:#52645a;--
 .kunst-wall .wall-landing-background::after{background:linear-gradient(90deg,#f4f6f3fc 0%,#f4f6f3fa 35%,#f4f6f3f2 47%,#f4f6f3c9 57%,#f4f6f34d 72%,#f4f6f314 88%)}
 .kunst-wall #wall-jump{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:900;padding:16px 24px;border-radius:40px;font-size:16px;box-shadow:0 8px 28px #17332140}
 @media(max-width:760px){.kunst-wall .hero-copy{width:100%;padding:42px 24px 100px}.kunst-wall .wall-landing-background{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr))}.kunst-wall .wall-landing-background::after{background:linear-gradient(90deg,#f4f6f3fc,#f4f6f3f5 75%,#f4f6f3ed)}.kunst-wall .wall-landing-background::before{mask-image:linear-gradient(90deg,#000,#0009);-webkit-mask-image:linear-gradient(90deg,#000,#0009)}.kunst-wall #wall-jump{right:16px;bottom:16px;font-size:14px;padding:13px 20px}}
+/* Mixed display formats: portrait, landscape and square tiles share one wall. */
+.kunst-wall .wall-landing-background{grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr));grid-auto-flow:dense;gap:10px}
+.kunst-wall .wall-landing-background img{grid-column:span 2;grid-row:span 2}
+.kunst-wall .wall-landing-background img:nth-child(6n+1){grid-column:span 2;grid-row:span 3}
+.kunst-wall .wall-landing-background img:nth-child(6n+2){grid-column:span 3;grid-row:span 2}
+.kunst-wall .wall-landing-background img:nth-child(6n+3){grid-column:span 1;grid-row:span 2}
+.kunst-wall .wall-landing-background img:nth-child(6n+4){grid-column:span 2;grid-row:span 1}
+@media(max-width:760px){.kunst-wall .wall-landing-background{grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:repeat(12,minmax(0,1fr))}}
+.kunst-wall .wall-landing-background img[data-format="portrait"]{grid-column:span 2;grid-row:span 3}
+.kunst-wall .wall-landing-background img[data-format="landscape"]{grid-column:span 3;grid-row:span 2}
+.kunst-wall .wall-landing-background img[data-format="square"]{grid-column:span 2;grid-row:span 2}

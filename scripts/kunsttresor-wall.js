@@ -10,7 +10,7 @@
  new MutationObserver(updateJump).observe($('start-game'),{attributes:true,attributeFilter:['disabled']});
  let landingIds=[];
  function clearLanding(){backdrop.replaceChildren();landingIds=[];}
- function landing(works){if(landingIds.length||!works.length)return;const chosen=window.KunstTresor.shuffle(works).slice(0,24);landingIds=chosen.map(w=>w.id);for(const work of chosen){const img=document.createElement('img');img.alt='';img.referrerPolicy='no-referrer';img.decoding='async';img.src=work.imageURL;img.onerror=()=>img.style.visibility='hidden';backdrop.append(img);}}
+ function landing(works){if(landingIds.length||!works.length)return;const chosen=window.KunstTresor.shuffle(works).slice(0,24);landingIds=chosen.map(w=>w.id);for(const [index,work] of chosen.entries()){const img=document.createElement('img');img.className='wall-tile wall-tile-'+index;img.alt='';img.referrerPolicy='no-referrer';img.decoding='async';img.onload=()=>{const ratio=img.naturalWidth/img.naturalHeight;img.dataset.format=ratio<.82?'portrait':ratio>1.25?'landscape':'square';};img.src=work.imageURL;img.onerror=()=>img.style.visibility='hidden';backdrop.append(img);}}
  const aside=document.createElement('aside');aside.id='wall-settings';aside.setAttribute('aria-label','Zuordnungen zum vergrößerten Werk');
  aside.innerHTML='<p class="eyebrow">Werk untersuchen</p><h3 id="wall-work-title"></h3><div id="wall-work-controls"></div><p class="wall-instructions">Bild anklicken: Lupe. Escape: zurück zur ganzen Abbildung. Noch einmal Escape: zurück zur Wand.</p><button type="button" id="wall-check">Schloss prüfen</button>';
  dialog.append(aside);

@@ -1028,7 +1028,7 @@
       if (state) save(); else saveProgress();
       $('open-save').disabled = false;
       refreshBadges(); refreshHistory();
-      $('best').textContent = number(best); if(!wallMode)prepareLaunch(); heroImages();
+      $('best').textContent = number(best); prepareLaunch(); heroImages();
       if (state && imagesAllowed) render();
       if(wallMode){requestAnimationFrame(()=>$('start').scrollIntoView({block:'start',behavior:'instant'}));}
     }).catch(() => {
