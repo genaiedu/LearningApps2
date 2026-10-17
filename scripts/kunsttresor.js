@@ -59,7 +59,10 @@
       .catch(()=>{ if(epoch!==introAudioEpoch)return; $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); });
   }
   const forgeryEndpoint = window.KunstKIConfig?.forgeryEndpoint || '';
-  let forgeryCooldown = Math.max(0,store.get('kunsttresor-forgery-cooldown-v3') === null ? 6 : Number(store.get('kunsttresor-forgery-cooldown-v3')) || 0);
+  const forgeryCooldownKey = 'kunsttresor-forgery-cooldown-v4';
+  const savedForgeryCooldown = store.get(forgeryCooldownKey);
+  // A fresh schedule replaces the former six-room pause plus additional lottery.
+  let forgeryCooldown = savedForgeryCooldown === null ? core.nextForgeryCooldown() : Math.min(5,Math.max(0,Math.floor(Number(savedForgeryCooldown)||0)));
   const forgeryKey = 'kunsttresor-forgery-rare-enabled-v2';
   let forgeryEnabled = store.get(forgeryKey) === 'yes' || (store.get(forgeryKey) !== 'no' && store.get('kunsttresor-forgery-every-room-enabled-v1') !== 'no');
   const everySeriesKey = 'kunsttresor-forgery-every-series-v1';
@@ -107,7 +110,7 @@
     store.set(forgeryKey, forgeryEnabled ? 'yes' : 'no');
     applyForgerySetting();
     // A setting change takes effect at the next room; never swap an examined image.
-    alert(forgeryEnabled ? 'Ab dem nächsten Raum: Gelegentlich entsteht bei Cloudflare eine KI-Nachahmung. Dafür werden Werkbeschreibungen und technische Verbindungsdaten übertragen. Markiere Fälschungen, aber keine Originale. Höchstens jedes siebte Rätsel enthält eine Nachahmung, jeweils nur ein Bild. Dazwischen liegen mindestens sechs Rätsel mit Originalen. Alle bisherigen Zuordnungen bleiben nötig.' : 'Ab dem nächsten Raum spielst du wieder ohne Fälschungen.');
+    alert(forgeryEnabled ? 'Ab dem nächsten Raum: Etwa jede fünfte bis sechste Bilderserie enthält genau eine KI-Nachahmung. Dafür werden Werkbeschreibungen und technische Verbindungsdaten über den bestehenden Dienst an Groq und Cloudflare übertragen. Markiere Fälschungen, aber keine Originale. Dazwischen liegen vier oder fünf Serien mit Originalen. Alle bisherigen Zuordnungen bleiben nötig.' : 'Ab dem nächsten Raum spielst du wieder ohne Fälschungen.');
   };
   async function prepareForgery(target = state) {
     if (!target || target.forgeryPrepared) return;
@@ -117,10 +120,11 @@
     const epoch = (forgeryEpochs.get(target)||0)+1;
     forgeryEpochs.set(target,epoch);
     const current = () => forgeryEpochs.get(target)===epoch && (target===state || target===upcomingRoom);
+    if (!target.forgeryMode || target.attempts || target.phase !== 'playing') { save(); return; }
     const plan = core.forgeryPlan(forgeryCooldown,Math.random,forgeryEverySeries);
     forgeryCooldown = plan.cooldown;
-    store.set('kunsttresor-forgery-cooldown-v3',String(forgeryCooldown));
-    if (!target.forgeryMode || !forgeryEndpoint || target.attempts || target.phase !== 'playing' || !plan.generate) { save(); return; }
+    store.set(forgeryCooldownKey,String(forgeryCooldown));
+    if (!forgeryEndpoint || !plan.generate) { save(); return; }
     const candidates = target.ids.map(workById).filter(work => core.isIntroImage(work));
     if (!candidates.length) { save(); return; }
     const selected = candidates[Math.floor(Math.random()*candidates.length)];
@@ -138,8 +142,7 @@
       if (!current()) return;
       target.forgery = {id:selected.id,image:value.image,model:value.model || 'FLUX.2 Klein 4B',prompt:typeof value.prompt === 'string' ? value.prompt.slice(0,1800) : ''};
       delete target.forgeryError;
-      if(!target.forgeryEverySeries){forgeryCooldown = 6; store.set('kunsttresor-forgery-cooldown-v3','6');}
-    } catch { if(current()) target.forgeryError = true; }
+    } catch { if(current()) { target.forgeryError = true; if(!target.forgeryEverySeries){forgeryCooldown=0;store.set(forgeryCooldownKey,'0');} } }
     finally { if(forgeryEpochs.get(target)===epoch){forgeryLoading.delete(target); if(target === state) { save(); render(); }} }
   }
   const imageURL = work => work.imageURL;
@@ -389,7 +392,7 @@
     const chapters=[
       {title:pool.length+' Werke. Unzählige Spuren.',text:'Ein Raum wird still. Farben bleiben. In dieser Galerie warten '+pool.length+' echte Kunstwerke auf deinen Blick – und hinter jeder Tür eine neue Auswahl.'},
       {title:'Vier Bilder. Vier Fragen.',text:'Wann entstand das Werk? Welcher Stil? Von wem? Wie gemacht? Ordne Zeit, Stil, Künstler und Technik zu. Jede Antwort passt genau einmal.'},
-      {title:'Traust du deinem Blick?',text:'Selten ist eines der vier Bilder eine KI-Fälschung: höchstens in jedem siebten Rätsel. Markiere es mit „Fälschung“. Die meisten Räume zeigen nur Originale.'},
+      {title:'Traust du deinem Blick?',text:'Etwa jede fünfte bis sechste Bilderserie enthält genau eine KI-Fälschung. Markiere sie mit „Fälschung“. Die übrigen Bilder sind Originale.'},
       {title:'Zwei Versuche. Eine Entscheidung.',text:'Ordne alle 16 Felder zu und markiere mögliche Fälschungen. Nur beides richtig öffnet das Schloss. Nach dem ersten Fehlversuch siehst du genau, welche Zuordnungen falsch waren. Du darfst einmal nachbessern.'},
       {title:'Wie weit trägt dein Blick?',text:'Alles richtig öffnet die nächste Tür. Ein zweiter Fehlversuch beendet die Runde. Nach der Auflösung kannst du weiterlesen – und freigegebene Bilder herunterladen.'},
       {title:'1000 Kunstwerke',text:'Quiz Edition'}
@@ -397,7 +400,7 @@
     if(wallMode){
       chapters[0]={title:'Im Museum stimmt etwas nicht.',text:'Du besuchst ein Museum. Doch die Beschriftungen sind durcheinandergeraten, und gelegentlich hängt sogar eine Fälschung zwischen den Originalen. Der Kurator bittet dich um Hilfe.'};
       chapters[1]={title:'Sieben Werke. Fünf Angaben.',text:'Bringe die Beschriftungen an ihren Platz: Welcher Titel gehört zum Werk? Von wem stammt es, wann entstand es, zu welchem Stil gehört es und wie wurde es gemacht? Klicke ein Werk an und ordne die fünf Angaben zu.'};
-      chapters[2]={title:'Traust du deinem Blick?',text:'Selten ist eines der sieben Bilder eine KI-Nachahmung: höchstens in jedem siebten Rätsel. Markiere es mit „Fälschung“. Die meisten Räume zeigen nur Originale.'};
+      chapters[2]={title:'Traust du deinem Blick?',text:'Etwa jede fünfte bis sechste Bilderserie enthält genau eine KI-Nachahmung unter den sieben Bildern. Markiere sie mit „Fälschung“. Die übrigen Bilder sind Originale.'};
       chapters[3]={title:'Zwei Fehlurteile sind erlaubt.',text:'35 Zuordnungen. Drei Prüfversuche. Nach einer falschen Prüfung kannst du nachbessern. Erst der dritte Fehlversuch beendet deinen Rundgang. Alle Antworten und die Fälschungsmarkierung müssen stimmen.'};
       chapters[4]={title:'Dein Blick. Deine eigene Galerie.',text:'Wenn alle Beschriftungen und Fälschungsmarkierungen stimmen, öffnet der Kurator den nächsten Raum. Als Dank sammelst du deine Lieblingswerke mit dem Herz für eine private digitale Galerie. Ab 20 Werken gestaltest du daraus deinen eigenen Kunstfilm.'};
     }

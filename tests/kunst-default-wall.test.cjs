@@ -55,17 +55,18 @@ test('03 is a persistent secret switch; it makes no request before a room starts
  app.click('launch-read');app.click('forgery-secret');assert.equal(app.requests.length,0);assert.equal(app.q('#forgery-secret').textContent,'03');
  assert.equal(app.q('#forgery-secret').getAttribute('aria-pressed'),'true');assert.match(app.q('#forgery-frequency').textContent,/jeder neuen Bilderserie/);
  const again=await setup(t,{preferences:{[secretKey]:app.w.localStorage.getItem(secretKey)}});assert.equal(again.q('#forgery-secret').getAttribute('aria-pressed'),'true');
- again.click('forgery-secret');assert.equal(again.w.localStorage.getItem(secretKey),'no');assert.match(again.q('#forgery-frequency').textContent,/jedem siebten/);
+ again.click('forgery-secret');assert.equal(again.w.localStorage.getItem(secretKey),'no');assert.match(again.q('#forgery-frequency').textContent,/fünfte bis sechste/);
 });
 test('a newly prepared but unentered first room gets one forgery and so does each following room',async t=>{
  const app=await setup(t,{forgeryResponse:async()=>generated()});app.click('launch-skip');assert.equal(app.requests.length,0);
+ const cooldown=app.w.localStorage.getItem('kunsttresor-forgery-cooldown-v4');
  app.click('forgery-secret');await settle();app.click('start-game');
  for(let i=0;i<3;i++){
   await settle();const room=roomOf(app);assert.equal(room.forgeryEverySeries,true);assert.ok(room.ids.includes(room.forgery.id));
   assert.equal(app.q('#art-grid').querySelectorAll('img[src^="data:"]').length,1);assert.equal(room.attempts,0);
   solveWall(app);assert.equal(roomOf(app).phase,'unlocked');app.click('solution-next');
  }
- await settle();assert.equal(app.requests.filter(r=>r.url.endsWith('/api/forgery')).length,4);assert.equal(app.w.localStorage.getItem('kunsttresor-forgery-cooldown-v3'),'5');
+ await settle();assert.equal(app.requests.filter(r=>r.url.endsWith('/api/forgery')).length,4);assert.equal(app.w.localStorage.getItem('kunsttresor-forgery-cooldown-v4'),cooldown);
 });
 test('a failed mandatory forgery waits for a successful retry without consuming a check or substituting originals',async t=>{
  let count=0;const app=await setup(t,{preferences:{[secretKey]:'yes'},forgeryResponse:async()=>++count===1?{ok:false,status:503}:generated()});
@@ -74,6 +75,23 @@ test('a failed mandatory forgery waits for a successful retry without consuming 
  assert.equal(app.q('#room-loading').hidden,true);assert.equal(roomOf(app).attempts,0);
  app.click('retry-forgery');await settle();assert.equal(app.q('#art-grid').hidden,false);assert.equal(app.q('#retry-forgery').hidden,true);
  assert.deepEqual(roomOf(app).ids,ids);assert.ok(roomOf(app).forgery);assert.equal(roomOf(app).attempts,0);assert.equal(count,2);
+});
+test('normal play really inserts a single forgery in the fifth room and five or six rooms later',async t=>{
+ const app=await setup(t,{preferences:{'kunsttresor-forgery-cooldown-v4':'4'},forgeryResponse:async()=>generated()});
+ app.click('launch-skip');app.click('start-game');const positions=[];
+ for(let i=1;i<=11;i++){
+  await settle();const room=roomOf(app);assert.equal(room.forgeryEverySeries,false);
+  const images=app.q('#art-grid').querySelectorAll('img[src^="data:"]');assert.equal(images.length,room.forgery?1:0);
+  if(room.forgery)positions.push(i);
+  if(i<11){solveWall(app);assert.equal(roomOf(app).phase,'unlocked');app.click('solution-next');}
+ }
+ assert.equal(positions[0],5);assert.equal(positions.length,2);assert.ok([5,6].includes(positions[1]-positions[0]));
+});
+test('the previous long cooldown is replaced without losing a saved room or changing the secret preference',async t=>{
+ const {s}=fixture();const app=await setup(t,{state:s,preferences:{'kunsttresor-forgery-cooldown-v3':'6'}});
+ app.click('launch-skip');assert.deepEqual(roomOf(app).ids,s.ids);assert.equal(roomOf(app).phase,'unlocked');
+ assert.equal(app.q('#forgery-secret').getAttribute('aria-pressed'),'false');
+ app.click('next-room');await settle();const remaining=Number(app.w.localStorage.getItem('kunsttresor-forgery-cooldown-v4'));assert.ok([3,4].includes(remaining));
 });
 test('switching the secret on never changes a started or restored room, even when it has no answers yet',async t=>{
  const app=await setup(t,{forgeryResponse:async()=>generated()});app.click('launch-skip');app.click('start-game');const before=roomOf(app);

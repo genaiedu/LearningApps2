@@ -104,10 +104,14 @@
     return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attemptLog: [], attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent,
       ...(previous?.runToken ? {runToken:previous.runToken, parentRoomToken:previous.phase === 'unlocked' ? previous.roomToken : previous.parentRoomToken || null} : {})};
   }
+  function nextForgeryCooldown(random = Math.random) {
+    return random() < .5 ? 4 : 5;
+  }
   function forgeryPlan(cooldown, random = Math.random, everySeries = false) {
     cooldown = Number.isInteger(cooldown) && cooldown > 0 ? cooldown : 0;
     if (everySeries) return {cooldown, generate:true};
-    return {cooldown:Math.max(0,cooldown-1), generate:cooldown === 0 && random() < 1/7};
+    // Four or five original rooms, then one forgery: intervals of five or six.
+    return {cooldown:cooldown > 0 ? cooldown-1 : nextForgeryCooldown(random), generate:cooldown === 0};
   }
   function choose(state, workId, field, value) {
     const fields=fieldsFor(state);
@@ -213,7 +217,7 @@
     if (original.phase === 'lost') { next.phase='lost'; next.attempts=limit; }
     return {state:next,updated:true,newRoom:true};
   }
-  const api = {forgeryPlan,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
+  const api = {forgeryPlan,nextForgeryCooldown,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

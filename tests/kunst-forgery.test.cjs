@@ -21,8 +21,15 @@ test('a mandatory text model writes a style-grounded prompt before multipart Kle
 });
 test('missing text credentials never silently fall back to a generic image prompt',async()=>{const res=response();await createHandler({env:{FORGERY_ENABLED:'true',CLOUDFLARE_ACCOUNT_ID:'account',CLOUDFLARE_API_TOKEN:'secret'},fetcher:()=>{throw Error('no call')}})({method:'POST',headers:{origin:'https://genaiedu.github.io'}},res);assert.equal(res.code,503);});
 
-test('even constant winning randomness cannot insert more than one forgery in any seven consecutive rooms',()=>{let cooldown=6,rooms=[];for(let i=0;i<1000;i++){const plan=core.forgeryPlan(cooldown,()=>0);rooms.push(plan.generate);cooldown=plan.generate?6:plan.cooldown;}for(let i=0;i<994;i++)assert.ok(rooms.slice(i,i+7).filter(Boolean).length<=1);assert.equal(rooms.filter(Boolean).length,142);});
-test('randomness can produce entirely original rooms even after the cooldown expires',()=>assert.equal(core.forgeryPlan(0,()=>.8).generate,false));
+test('normal mode places one forgery every five or six rooms, with no extra lottery after the pause',()=>{
+ for(const random of [()=>0,()=>.999]){
+  let cooldown=core.nextForgeryCooldown(random),positions=[];
+  for(let i=1;i<=1000;i++){const plan=core.forgeryPlan(cooldown,random);if(plan.generate)positions.push(i);cooldown=plan.cooldown;}
+  assert.equal(positions[0],random() < .5?5:6);
+  for(let i=1;i<positions.length;i++)assert.equal(positions[i]-positions[i-1],random() < .5?5:6);
+ }
+});
+test('a due normal forgery is generated even with a high random value',()=>assert.deepEqual(core.forgeryPlan(0,()=>.999),{cooldown:5,generate:true}));
 test('the secret mode always selects exactly one forgery opportunity and preserves the rare-mode cooldown',()=>{
  for(let cooldown=0;cooldown<=6;cooldown++)for(let i=0;i<25;i++)assert.deepEqual(core.forgeryPlan(cooldown,()=>{throw Error('No lottery in secret mode');},true),{cooldown,generate:true});
 });
@@ -33,7 +40,14 @@ test('secret rooms always contain an eligible two-dimensional image, even if scu
  assert.equal(core.newState(mixed,null,()=>.9999,true).ids.includes(picture.id),true);
 });
 
-test('the one-in-seven random threshold never selects larger random values',()=>{assert.equal(core.forgeryPlan(0,()=>1/7-.001).generate,true);assert.equal(core.forgeryPlan(0,()=>1/7).generate,false);});
+test('the two equally likely intervals average 5.5 rooms and preserve the spacing over a long mixed run',()=>{
+ let seed=7123;const random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);
+ let cooldown=core.nextForgeryCooldown(random),last=0,intervals=[];
+ for(let i=1;i<=100000;i++){const plan=core.forgeryPlan(cooldown,random);if(plan.generate){intervals.push(i-last);last=i;}cooldown=plan.cooldown;}
+ assert.ok(intervals.every(value=>value===5||value===6));
+ assert.ok(Math.abs(intervals.reduce((a,b)=>a+b,0)/intervals.length-5.5)<.02);
+ assert.equal(core.nextForgeryCooldown(()=>.4999),4);assert.equal(core.nextForgeryCooldown(()=>.5),5);
+});
 const ki=require('../services/kunst-kurator/lib/kunst-ki.js');
 test('forgery recognition records first and second marking independently of assignment correction and survives restore',()=>{
  let state=solved();const id=state.ids[0];state.forgery={id,image:'data:image/jpeg;base64,/9j/'};
