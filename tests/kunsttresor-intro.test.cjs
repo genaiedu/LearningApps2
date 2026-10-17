@@ -138,12 +138,16 @@ test('skip during loading cancels decoding and never restarts the film on a late
   assert.deepEqual(film.events.at(-1),['landing',0]);assert.equal(c.previousIntro.length,0);
   assert.equal(film.events.filter(event=>event==='music').length,1); // Only the silent initial unlock.
 });
-test('direct play does not wait for the background image and preserves the saved room',async()=>{
-  const film=createFilm(),c=film.context;c.prepareLaunch();const saved=c.state;
-  await c.launchGallery(false);await flush();
-  assert.equal(c.state,saved);assert.equal(saved.escaped,2);assert.equal(saved.attempts,1);
-  assert.equal(film.events.includes('game'),true);assert.equal(film.events.includes('music'),false);
-  assert.equal(c.introPreparation,null);assert.equal(c.$('intro-dialog').open,false);
+test('the no-intro launch button opens the landing page and preserves the saved room',async()=>{
+  for(const wallMode of [false,true]){
+    const film=createFilm(),c=film.context;c.wallMode=wallMode;c.prepareLaunch();const saved=c.state;
+    await c.launchGallery(false);await flush();
+    assert.equal(c.state,saved);assert.equal(saved.escaped,2);assert.equal(saved.attempts,1);
+    assert.deepEqual(film.events.at(-1),['landing',0]);assert.equal(film.events.includes('game'),false);
+    assert.equal(film.events.includes('music'),false);
+    assert.equal(c.introPreparation,null);assert.equal(c.$('intro-dialog').open,false);
+    if(wallMode)assert.equal(c.wallOpening,true); // Late image/forgery renders must keep the entry visible.
+  }
 });
 test('image failure tries the smaller original, then retains a retry/skip screen instead of a blank film',async()=>{
   const film=createFilm(),c=film.context;c.prepareLaunch();await c.launchGallery();
@@ -171,7 +175,7 @@ test('cancelling a background request settles it and ignores old load/error call
   assert.equal(image.src,undefined);
 });
 test('revocation or cancellation while fullscreen is pending must not reopen the film',async()=>{
-  const film=createFilm(),c=film.context;let fullscreenDone;
+  const film=createFilm(),c=film.context;c.wallMode=true;let fullscreenDone;
   c.enterFullscreen=()=>new Promise(resolve=>{fullscreenDone=resolve;});
   const launch=c.launchGallery();c.imagesAllowed=false;c.finishIntro();fullscreenDone();
   await launch;await flush();

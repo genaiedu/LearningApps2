@@ -294,7 +294,7 @@
     $('launch-ai-state').textContent=selected ? 'Ein' : 'Aus';
     $('launch-ai-status').textContent=selected ? 'Voreingestellt: ein. Mit einem Startknopf erlaubst du auch die unten beschriebene KI-Rückmeldung. Du kannst sie hier ausschalten.' : 'Ausgeschaltet: Du erhältst die vollständigen redaktionellen Kuratorenhinweise. Es werden keine neuen KI-Anfragen gestellt.';
     $('launch-start').textContent=selected ? (imagesAllowed ? 'Mit KI · Vorspann & Musik starten →' : 'Kunstbilder & KI erlauben · starten →') : (imagesAllowed ? 'Vorspann & Musik starten →' : 'Kunstbilder erlauben & starten →');
-    $('launch-skip').textContent=selected ? (imagesAllowed ? 'Mit KI · ohne Vorspann spielen →' : 'Kunstbilder & KI erlauben · direkt spielen →') : (imagesAllowed ? 'Ohne Vorspann direkt spielen →' : 'Kunstbilder erlauben · direkt spielen →');
+    $('launch-skip').textContent=selected ? (imagesAllowed ? 'Mit KI · ohne Vorspann zum Einstieg →' : 'Kunstbilder & KI erlauben · ohne Vorspann →') : (imagesAllowed ? 'Ohne Vorspann zum Einstieg →' : 'Kunstbilder erlauben · ohne Vorspann →');
   }
   function confirmLaunchAIChoice() {
     const allowed=$('launch-ai-switch').checked && Boolean(aiEndpoint);
@@ -308,7 +308,7 @@
     open('launch-dialog');
   }
   async function launchGallery(withIntro = true) {
-    if(typeof wallMode!=='undefined'&&wallMode){wallOpening=false;void enterFullscreen();}
+    if(typeof wallMode!=='undefined'&&wallMode){wallOpening=true;void enterFullscreen();}
     confirmLaunchAIChoice();
     close('launch-dialog');
     if (!imagesAllowed) { imagesAllowed = true; store.set(keys.images,'yes'); heroImages(); }
@@ -316,8 +316,7 @@
     render();
     $('fullscreen').focus({preventScroll:true});
     if (withIntro === false) {
-      finishIntro();
-      toGame();
+      finishIntro({enterGame:true});
       return;
     }
     introSoundEnabled = true;
@@ -417,7 +416,7 @@
     $('intro-slides').setAttribute('aria-busy','true');
     $('intro-copy').classList.remove('is-visible'); $('intro-art-caption').textContent='';
     $('intro-loading-title').textContent='Das erste Bild wird geladen …';
-    $('intro-loading-text').textContent='Der Vorspann wartet auf das Bild. Du verpasst nichts – oder gehst direkt ins Spiel.';
+    $('intro-loading-text').textContent='Der Vorspann wartet auf das Bild. Du verpasst nichts – oder überspringst den Vorspann.';
     $('intro-retry').hidden=true;
     open('intro-dialog');
     introWaitTimer=setTimeout(()=>{ if(epoch===introEpoch) $('intro-loading').hidden=false; },450);
@@ -958,7 +957,7 @@
     else { introSoundEnabled = false; introAudio.pause(); $('intro-sound').textContent='♫ Musik einschalten'; $('intro-sound').setAttribute('aria-pressed','false'); }
   };
   $('intro-dialog').addEventListener('cancel',() => finishIntro({enterGame:true}));
-  document.addEventListener('visibilitychange',() => { if (document.hidden && $('intro-dialog').open) finishIntro(); });
+  document.addEventListener('visibilitychange',() => { if (document.hidden && $('intro-dialog').open) finishIntro({enterGame:true}); });
   $('check').onclick = inspect; $('next-room').onclick = $('solution-next').onclick = $('solution-next-bottom').onclick = nextRoom;
   $('open-badges').onclick = () => { refreshBadges(); open('badges-dialog'); };
   $('open-save').onclick = () => { if (!transferBusy) { pendingImport=null; $('import-preview').hidden=true; $('save-status').textContent=''; } open('save-dialog'); };
