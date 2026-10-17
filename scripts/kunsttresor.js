@@ -26,7 +26,7 @@
   let artKnowledge = null, archiveReplacements = [], pendingImport = null, transferBusy = false, fileEpoch = 0;
   // Renew permission because relevant earlier mistakes, not just wins, are now sent.
   const ki=window.KunstKI, aiConsentKey='kunsttresor-ai-consent-v2'+(wallMode?'-wall':''), aiEnabledKey='kunsttresor-ai-enabled-v1'+(wallMode?'-wall':'');
-  const aiEndpoint=window.KunstKIConfig?.endpoint || '';
+  const aiEndpoint=wallMode?'':window.KunstKIConfig?.endpoint || '';
   const aiClient=ki?.createClient({endpoint:aiEndpoint,fetcher:(...args)=>fetch(...args)});
   let aiAllowed=store.get(aiConsentKey)==='yes', aiEnabled=store.get(aiEnabledKey)==='yes' || (store.get(aiEnabledKey)!=='no' && store.get(aiConsentKey)!=='no'), aiDisplayEpoch=0, aiBaseline=new Map();
   // Default to the tutor, but do not transmit results before an informed start.

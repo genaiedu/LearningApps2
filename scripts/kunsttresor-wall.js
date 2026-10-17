@@ -36,7 +36,7 @@
  }
  $('attempts').append(document.createElement('i'));document.title='Kunsttresor · Die Bilderwand';
  const hint=document.createElement('p');hint.className='wall-mode-note';hint.textContent='Bilderwand · Experiment · 7 Werke, 28 Zuordnungen, 3 Prüfversuche. Bild anklicken zum Zuordnen und Vergrößern. Die klassischen Schriften bleiben erhalten. Größenverhältnisse sind angenähert; ohne belegte Werkmaße nach Bildformat.';$('art-grid').before(hint);
- const launchNotice=$('launch-ai-notice');if(launchNotice)launchNotice.append(document.createTextNode(' Hinweis zur Bilderwand: Die Kuratorenhinweise werden in dieser Variante redaktionell bereitgestellt; persönliche KI-Rückmeldungen sind hier noch nicht verfügbar.'));
+ const launchNotice=$('launch-ai-notice');if(launchNotice)launchNotice.textContent='In der Bilderwand begleitet dich zunächst der redaktionelle Kurator. Persönliche KI-Rückmeldungen bietet die klassische Version. Seltene KI-Nachahmungen bleiben als Spielmechanik verfügbar.';
  let scheduled=false;new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;updateCopy();layout();});}).observe(document.querySelector('main'),{subtree:true,childList:true,characterData:true});
  new ResizeObserver(layout).observe($('art-grid'));window.addEventListener('kunst-wall-layout',layout);window.KunstWall={inspect,restoreControls,layout};updateCopy();
 })();
