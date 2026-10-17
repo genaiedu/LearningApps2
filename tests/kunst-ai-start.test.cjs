@@ -82,7 +82,7 @@ test('an off choice never sends a result, even when a completed saved room is re
   assert.equal(s.requests.length,0);assert.match(s.q('#ai-status').textContent,/ausgeschaltet/);assert.equal(s.w.document.querySelectorAll('[data-curator-work]').length,4);
 });
 
-test('a scheduled forgery attempts generation once and reports failed generation',async t=>{const s=await setup(t,{forgeryEveryRoom:true});s.click('launch-skip');for(let i=0;i<30;i++)await Promise.resolve();assert.equal(s.requests.filter(r=>r.url.endsWith('/api/forgery')).length,1);assert.equal(s.w.document.querySelectorAll('.forgery-flag').length,4);assert.match(s.q('#feedback').textContent,/vier Originale/);assert.ok(s.q('#start-here'));});
+test('a scheduled forgery attempts generation once and reports failed generation',async t=>{const s=await setup(t,{forgeryEveryRoom:true});s.click('launch-skip');for(let i=0;i<30;i++)await Promise.resolve();assert.equal(s.requests.filter(r=>r.url.endsWith('/api/forgery')).length,1);assert.equal(s.w.document.querySelectorAll('.forgery-flag').length,4);assert.match(s.q('#feedback').textContent,/4 Originale/);assert.ok(s.q('#start-here'));});
 
 test('the grid stays concealed after three loads and is revealed together only after the fourth',async t=>{const s=await setup(t);s.click('launch-skip');const grid=s.q('#art-grid'),images=[...grid.querySelectorAll('img')];assert.equal(images.length,4);assert.equal(grid.style.visibility,'hidden');assert.equal(grid.inert,true);assert.equal(s.q('#room-loading').hidden,false);for(let i=0;i<3;i++){Object.defineProperty(images[i],'naturalWidth',{value:960,configurable:true});images[i].onload();assert.equal(grid.style.visibility,'hidden');}s.w.Date.now=()=>Date.now()+11000;Object.defineProperty(images[3],'naturalWidth',{value:960,configurable:true});images[3].onload();assert.equal(grid.style.visibility,'visible');assert.equal(grid.inert,false);assert.equal(s.q('#room-loading').hidden,true);});
 
@@ -107,7 +107,7 @@ test('winning starts the next forgery during curator reading and advancing reuse
  s.click('check');assert.equal(s.q('#solution-dialog').open,true);assert.equal(calls.length,1);assert.match(calls[0].url,/forgery$/);
  const selected=JSON.parse(calls[0].options.body).id;
  s.click('solution-next');assert.equal(calls.length,1);assert.ok(JSON.parse(s.w.localStorage.getItem('kunsttresor-game-v1')).ids.includes(selected));assert.equal(s.q('#art-grid').style.visibility,'hidden');
- finish({ok:false});for(let i=0;i<20;i++)await Promise.resolve();assert.equal(calls.length,1);assert.match(s.q('#feedback').textContent,/vier Originale/);
+ finish({ok:false});for(let i=0;i<20;i++)await Promise.resolve();assert.equal(calls.length,1);assert.match(s.q('#feedback').textContent,/4 Originale/);
 });
 
 test('legacy test preferences and config cannot activate an every-room test',async t=>{

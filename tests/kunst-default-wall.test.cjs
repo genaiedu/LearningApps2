@@ -72,6 +72,7 @@ test('the tutor can be enabled for the first time from the curator after startin
 test('the feedback service accepts seven-work technique quotas and a third attempt',async()=>{
  const ki=require('../services/kunst-kurator/lib/kunst-ki.js'),curator=require('../scripts/kunst-kurator.js'),{createHandler}=require('../services/kunst-kurator/api/feedback.js');
  const {s}=fixture(3),input=ki.payload(s,{events:[]}),ctx=ki.context(input,pool,data['kunst-glossar'],curator);assert.equal(ctx.works.length,7);
+ assert.equal(input.room.fieldCount,5);assert.ok(ctx.works.every(w=>w.outcome.total===5&&w.outcome.finalCount===5&&w.currentEncounter.finalCorrectFields.includes('title')));
  const texts={intro:'Wir gehen noch einmal gemeinsam zu diesen sieben Werken und betrachten ihre gestalterischen Merkmale.',works:s.ids.map(id=>({id,text:'Die dokumentierten Werkangaben geben uns einen Ausgangspunkt. Vergleiche die Merkmale der Technik mit dem sichtbaren Eindruck und lies die Hinweise des Kurators.'}))};
  const handler=createHandler({env:{GROQ_API_KEY:'test-only',AI_ENABLED:'true'},sources:{pool,knowledge:data['kunst-glossar'],curator},fetcher:async()=>({ok:true,text:async()=>JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify(texts)}}]})})});
  const res={code:null,body:null,setHeader(){},status(n){this.code=n;return this;},json(b){this.body=b;return this;}};
@@ -79,4 +80,53 @@ test('the feedback service accepts seven-work technique quotas and a third attem
  assert.equal(res.code,200);assert.equal(res.body.works.length,7);
  const bad=structuredClone(input),ids=bad.room.ids;bad.room.choices[ids[0]].technique=bad.room.choices[ids[1]].technique;
  if(pool.find(w=>w.id===ids[0]).technique!==pool.find(w=>w.id===ids[1]).technique)assert.throws(()=>ki.validatePayload(bad,pool));
+});
+test('title assignments use localized options without revealing the correct label on the wall or in the inspector',async t=>{
+ const app=await setup(t);app.click('launch-skip');
+ assert.equal(app.q('#art-grid').querySelectorAll('select').length,35);
+ assert.equal(app.q('#art-grid').querySelectorAll('select[data-field="title"]').length,7);
+ const card=app.q('#art-grid .art-card'),work=pool.find(w=>w.id===card.dataset.id);
+ assert.equal(card.querySelector('.work-title').textContent,'Beschriftung gesucht');
+ assert.equal(card.querySelector('.work-title').title,'Beschriftung gesucht');
+ assert.equal(card.querySelector('img').alt,'Werk A · zu untersuchende Kunstabbildung');
+ assert.equal(card.querySelector('.artwork-button').getAttribute('aria-label'),'Werk A vergrößern');
+ const select=card.querySelector('select[data-field="title"]'),option=[...select.options].find(o=>o.value===work.title);
+ assert.equal(option.textContent,data['kunst-titel-de'].titles[work.id]);
+ card.querySelector('.artwork-button').disabled=false;card.querySelector('.artwork-button').click();
+ assert.equal(app.q('#zoom-image').alt,'Vergrößerte Ansicht: Werk A');
+ assert.equal(app.q('#wall-work-title').textContent,'Werk A · Beschriftung gesucht');
+ assert.equal(app.q('#wall-work-controls select').dataset.field,'title');
+});
+test('two swapped titles prevent winning and collecting, then can be corrected without losing the other 28 answers',()=>{
+ const c=model.KunstTresor;let s=c.newState(pool);s.roomToken='c'.repeat(32);s.runToken='d'.repeat(32);
+ for(const [i,id]of s.ids.entries())for(const f of c.fields)s=c.choose(s,id,f,pool.find(w=>w.id===(f==='title'&&i<2?s.ids[1-i]:id))[f]);
+ let h=model.KunstHistory.fresh();for(const id of s.ids)h=model.KunstHistory.track(h,s,pool,{shownId:id});
+ let checked=c.inspect(s,pool);s=checked.state;h=model.KunstHistory.track(h,s,pool);
+ assert.equal(checked.correct,33);assert.equal(s.phase,'playing');
+ assert.equal(model.KunstGallery.winningRoom({...s,phase:'unlocked'},pool),false);
+ assert.deepEqual(JSON.parse(JSON.stringify(h.rooms[0].checks[0])),[15,15,31,31,31,31,31]);
+ for(const id of s.ids.slice(0,2))s=c.choose(s,id,'title','');
+ for(const id of s.ids.slice(0,2))s=c.choose(s,id,'title',pool.find(w=>w.id===id).title);
+ checked=c.inspect(s,pool);s=checked.state;h=model.KunstHistory.track(h,s,pool);
+ assert.equal(checked.correct,35);assert.equal(s.phase,'unlocked');assert.equal(s.attempts,2);
+ assert.ok(c.restore(JSON.parse(JSON.stringify(s)),pool));assert.ok(model.KunstHistory.restore(JSON.parse(JSON.stringify(h))));
+ const gallery=model.KunstGallery.like(model.KunstGallery.fresh(),s.ids[0],s,pool);
+ assert.ok(model.KunstGallery.restore(gallery,pool,h));
+ assert.equal(model.KunstHistory.summarize(h,s.ids,'other')[0].lastChecked.fieldCount,5);
+ assert.match(model.KunstHistory.note(model.KunstHistory.summarize(h,s.ids,'other')[0]),/alle fünf/);
+ const save=require('../scripts/kunsttresor-save.js'),profile=model.KunstProgress.recordWin(model.KunstProgress.fresh(),s,pool).profile;
+ const restored=save.validate(JSON.parse(JSON.stringify({app:'kunsttresor',version:1,savedAt:Date.now(),state:s,best:1,progress:profile,history:h,gallery})),pool,[],c,model.KunstProgress,model.KunstHistory,model.KunstGallery);
+ assert.equal(restored.state.options.title.length,7);assert.equal(restored.history.rooms[0].fieldCount,5);assert.equal(restored.gallery.liked.length,1);
+});
+test('earlier 28-answer rooms and their collected works remain valid; the next room has 35 answers',async t=>{
+ const {s,h}=fixture(1);delete s.options.title;
+ for(const choices of [s.choices,s.review.choices,...s.attemptLog.map(e=>e.choices)])for(const id of s.ids)delete choices[id].title;
+ for(const room of h.rooms){delete room.fieldCount;room.checks=room.checks.map(check=>check?.map(mask=>mask&15));}
+ const gallery=model.KunstGallery.like(model.KunstGallery.fresh(),s.ids[0],s,pool);
+ assert.ok(model.KunstTresor.restore(s,pool));assert.ok(model.KunstGallery.restore(gallery,pool,h));
+ const app=await setup(t,{state:s,history:h,gallery});app.click('launch-skip');
+ assert.equal(app.q('#art-grid').querySelectorAll('select').length,28);
+ assert.match(app.q('#archive-update').textContent,/Ab dem nächsten Raum/);
+ app.click('next-room');assert.equal(app.q('#art-grid').querySelectorAll('select').length,35);assert.equal(app.q('#archive-update').hidden,true);
+ assert.equal(app.q('#gallery-count').textContent,'1');
 });

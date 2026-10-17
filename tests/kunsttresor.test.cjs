@@ -255,7 +255,7 @@ test('gallery headings display the documented title, without appending artist cr
   assert.ok(pool.every(work=>!core.galleryTitle(work).toLowerCase().includes(work.artist.toLowerCase())));
   const js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
   const render=js.slice(js.indexOf('function render()'),js.indexOf('function nextRoom()'));
-  assert.ok(render.includes("node('h3','work-title',core.galleryTitle(work))"));
+  assert.ok(render.includes("node('h3','work-title',concealed()?'Beschriftung gesucht':core.galleryTitle(work))"));
   assert.ok(render.includes('heading.append(marker,title)'));
   assert.doesNotMatch(render,/heading\.append\([^\n]*work\.artist/);
   assert.doesNotMatch(render,/Original · Museum/);
@@ -383,7 +383,7 @@ test('a successful image load after the warning recovers, but stale rooms do not
     let timeout,loading=null;
     const image={naturalWidth:0},button={disabled:true,querySelector:()=>loading,append:e=>{if(e!==image)loading=e;}};
     const shown=[];
-    const context={state:null,imageEpoch:5,imagesAllowed:true,imageTimers:new Set(),ready:new Set(),failed:new Set(),core,rememberWork:id=>shown.push(id),
+    const context={concealed:()=>false,state:null,imageEpoch:5,imagesAllowed:true,imageTimers:new Set(),ready:new Set(),failed:new Set(),core,rememberWork:id=>shown.push(id),
       node:tag=>tag==='img'?image:{remove:()=>{loading=null;}},update:()=>{},gameImageURL:w=>w.imageURL,
       setTimeout:fn=>{timeout=fn;return 17;},clearTimeout:()=>{}};
     vm.createContext(context);vm.runInContext(implementation,context);

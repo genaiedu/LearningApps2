@@ -1,6 +1,7 @@
 (function (root) {
   'use strict';
   const count=root.KunstWallEnabled?7:4, limit=root.KunstWallEnabled?3:2;
+  const fieldsFor=state=>['date','style','artist','technique',...(state?.options?.title?['title']:[])];
   const MAX_EVENTS = 5000;
   const tokenPattern = /^[a-f0-9]{32}$/;
   const integer = value => Number.isSafeInteger(value) && value >= 0 && value <= 1000000;
@@ -52,14 +53,15 @@
   }
   function collection(profile) {
     const stats = statistics(profile);
-    return badges.map(original=>{const badge=root.KunstWallEnabled?{...original,description:original.description.replace('16 Antworten','28 Antworten').replace('400 richtige','700 richtige').replace('2.000 untersuchte Werke und 8.000','3.500 untersuchte Werke und 14.000')}:original;return ({...badge, value:stats[badge.metric], earned:stats[badge.metric] >= badge.target});});
+    return badges.map(original=>{const badge=root.KunstWallEnabled?{...original,description:original.description.replace('16 Antworten','35 Antworten').replace('400 richtige Zuordnungen ohne Fehlprüfung.','Alle fünf Angaben zu jedem Werk ohne Fehlprüfung.').replace('2.000 untersuchte Werke und 8.000 richtige Zuordnungen am Ende der Prüfungen.','Tausende untersuchte Werke und richtig zugeordnete Beschriftungen.')}:original;return ({...badge, value:stats[badge.metric], earned:stats[badge.metric] >= badge.target});});
   }
   function recordWin(profile, state, pool, at = Date.now()) {
+    const fields=fieldsFor(state);
     const works = state?.ids?.map(id=>pool.find(work=>work.id === id)) || [];
-    if (state?.phase !== 'unlocked' || !tokenPattern.test(state.roomToken) || !(state.attempts>=1&&state.attempts<=limit) || !integer(state.escaped) || state.escaped < 1 || works.length !== count || new Set(state.ids).size !== count || works.some(work=>!work || ['date','style','artist','technique'].some(field=>state.choices?.[work.id]?.[field] !== work[field])) || ['date','style','artist','technique'].some(field=>!(root.KunstWallEnabled&&field==='technique')&&new Set(works.map(work=>work[field])).size !== count) || profile.events.some(event=>event.id === state.roomToken)) return {profile, earned:[]};
+    if (state?.phase !== 'unlocked' || !tokenPattern.test(state.roomToken) || !(state.attempts>=1&&state.attempts<=limit) || !integer(state.escaped) || state.escaped < 1 || works.length !== count || new Set(state.ids).size !== count || works.some(work=>!work || fields.some(field=>state.choices?.[work.id]?.[field] !== work[field])) || fields.some(field=>!(root.KunstWallEnabled&&field==='technique')&&new Set(works.map(work=>work[field])).size !== count) || profile.events.some(event=>event.id === state.roomToken)) return {profile, earned:[]};
     if (profile.events.length >= MAX_EVENTS) throw Error('Die Abzeichensammlung enthält bereits 5.000 gelöste Räume. Dein Spielstand und Rekord bleiben erhalten.');
     const firstTry = state.attemptLog?.find(entry=>entry.attempt === 1);
-    const corrected = state.attempts >= 2 && Boolean(firstTry && works.some(work=>['date','style','artist','technique'].some(field=>firstTry.choices?.[work.id]?.[field] !== work[field])));
+    const corrected = state.attempts >= 2 && Boolean(firstTry && works.some(work=>fields.some(field=>firstTry.choices?.[work.id]?.[field] !== work[field])));
     const next = {version:1, record:Math.max(profile.record,state.escaped), events:[...profile.events,{id:state.roomToken, runToken:state.runToken || state.roomToken, parentRoomToken:state.parentRoomToken || null, at, depth:state.escaped, first:state.attempts === 1, corrected, styles:works.map(work=>work.style), techniques:works.map(work=>work.technique)}]};
     const previous = new Set(collection(profile).filter(badge=>badge.earned).map(badge=>badge.id));
     return {profile:next, earned:collection(next).filter(badge=>badge.earned && !previous.has(badge.id))};

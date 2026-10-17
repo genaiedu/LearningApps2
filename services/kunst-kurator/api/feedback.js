@@ -23,16 +23,16 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
     res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Vary','Origin');
     if (allowed.includes(origin)) { res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Access-Control-Allow-Methods','POST, OPTIONS');res.setHeader('Access-Control-Allow-Headers','Content-Type'); }
     const send=(status,body)=>res.status(status).json(body);
-    if (req.method==='GET') return send(200,{service:'kunst-kurator',version:3,roomSizes:[4,7],ready:Boolean(env.GROQ_API_KEY && env.AI_ENABLED==='true')});
+    if (req.method==='GET') return send(200,{service:'kunst-kurator',version:4,roomSizes:[4,7],fieldCounts:[4,5],ready:Boolean(env.GROQ_API_KEY && env.AI_ENABLED==='true')});
     if (!allowed.includes(origin)) return send(403,{error:'origin'});
     if (req.method==='OPTIONS') return res.status(204).end();
     if (req.method!=='POST') return send(405,{error:'method'});
     if (env.AI_ENABLED!=='true' || !env.GROQ_API_KEY) return send(503,{error:'local_feedback_available'});
-    if (!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'] || '') || Number(req.headers['content-length'])>24000) return send(413,{error:'payload'});
+    if (!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'] || '') || Number(req.headers['content-length'])>48000) return send(413,{error:'payload'});
     let input,context;
     try {
       const raw=typeof req.body==='string' ? req.body : JSON.stringify(req.body);
-      if (!raw || Buffer.byteLength(raw)>24000) throw Error('size');
+      if (!raw || Buffer.byteLength(raw)>48000) throw Error('size');
       input=JSON.parse(raw);
       const verified=sources || loadSources(); context=ki.context(input,verified.pool,verified.knowledge,verified.curator);
       input=ki.validatePayload(input,verified.pool);

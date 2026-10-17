@@ -6,7 +6,7 @@
   const text=(value,max)=>typeof value==='string' && value.length<=max && !/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(value);
   function fresh() { return {version:1,liked:[],film:{name:'Meine Galerie',motto:'Kunst bleibt, wenn wir genauer hinsehen.',items:[]}}; }
   function winningRoom(state,pool) {
-    const count=state?.ids?.length,limit=count===7?3:2;
+    const count=state?.ids?.length,limit=count===7?3:2,fields=['date','style','artist','technique',...(state?.options?.title?['title']:[])];
     return state?.phase==='unlocked' && /^[a-f0-9]{32}$/.test(state.historyToken||state.roomToken) && Number.isInteger(state.attempts) && state.attempts>=1 && state.attempts<=limit
       && [4,7].includes(count) && new Set(state.ids).size===count && state.ids.every(id=>{
         const work=pool.find(w=>w.id===id);return work && fields.every(field=>state.choices?.[id]?.[field]===work[field]);
@@ -18,7 +18,7 @@
     for(const entry of raw.liked) {
       const room=history.rooms.find(r=>r.id===entry?.room), index=room?.ids.indexOf(entry?.id);
       if(!entry || !pool.some(w=>w.id===entry.id) || seen.has(entry.id) || !Number.isSafeInteger(entry.at) || entry.at<0 || entry.at>Date.now()+300000
-        || !room || index<0 || !(room.seen&(1<<index)) || !room.checks.at(-1)?.every(mask=>mask===15)) return null;
+        || !room || index<0 || !(room.seen&(1<<index)) || !room.checks.at(-1)?.every(mask=>mask===(room.fieldCount===5?31:15))) return null;
       seen.add(entry.id);liked.push({id:entry.id,room:entry.room,at:entry.at});
     }
     const f=raw.film;

@@ -1,7 +1,9 @@
 (function (root) {
   'use strict';
   const count = root.KunstWallEnabled ? 7 : 4, limit = root.KunstWallEnabled ? 3 : 2;
-  const fields = ['date', 'style', 'artist', 'technique'];
+  const baseFields = ['date', 'style', 'artist', 'technique'];
+  const fields = [...baseFields,...(root.KunstWallEnabled ? ['title'] : [])];
+  function fieldsFor(state) { return [...baseFields,...(state?.options?.title ? ['title'] : [])]; }
   function shuffle(items, random = Math.random) {
     const result = [...items];
     for (let i = result.length - 1; i > 0; i--) {
@@ -10,8 +12,8 @@
     }
     return result;
   }
-  function compatible(works, candidate) {
-    return !works.some(work => work.id === candidate.id || fields.some(field => !(root.KunstWallEnabled&&field==='technique')&&work[field] === candidate[field]) || (work.artistIdentity && work.artistIdentity === candidate.artistIdentity));
+  function compatible(works, candidate, activeFields=fields) {
+    return !works.some(work => work.id === candidate.id || activeFields.some(field => !(root.KunstWallEnabled&&field==='technique')&&(work[field] === candidate[field] || field==='title'&&galleryTitle(work)===galleryTitle(candidate))) || (work.artistIdentity && work.artistIdentity === candidate.artistIdentity));
   }
   function introSelection(pool, landmarkIds, recent = [], random = Math.random) {
     // Cropped cinematic detail shots are reserved for two-dimensional works.
@@ -107,6 +109,7 @@
     return {cooldown:Math.max(0,cooldown-1), generate:cooldown === 0 && random() < 1/7};
   }
   function choose(state, workId, field, value) {
+    const fields=fieldsFor(state);
     if (state.phase !== 'playing' || !state.ids.includes(workId) || !fields.includes(field) || (value && !state.options[field].includes(value))) return state;
     if (takenBy(state,workId,field,value)) return state;
     const choices = Object.fromEntries(Object.entries(state.choices).map(([id, selection]) => [id, {...selection}]));
@@ -122,6 +125,7 @@
     return owners.length>=capacity(state,field,value)?owners[0]||null:null;
   }
   function review(state, pool) {
+    const fields=fieldsFor(state);
     if (!state.review?.choices || state.attempts < 1) return [];
     const byId = new Map(pool.map(work => [work.id,work]));
     return state.ids.flatMap(id => fields.map(field => {
@@ -129,27 +133,29 @@
       return {id,field,value,correct:value === byId.get(id)?.[field],changed:value !== (state.choices[id]?.[field] || '')};
     }));
   }
-  function filled(state) { return state.ids.reduce((sum,id) => sum + fields.filter(field => Boolean(state.choices?.[id]?.[field])).length, 0); }
+  function filled(state) { const fields=fieldsFor(state);return state.ids.reduce((sum,id) => sum + fields.filter(field => Boolean(state.choices?.[id]?.[field])).length, 0); }
   function inspect(state, pool) {
+    const fields=fieldsFor(state);
     if (state.phase !== 'playing' || state.attempts >= limit) return {state, checked: false};
-    if (filled(state) !== count*4) return {state, checked: false, incomplete: true};
+    if (filled(state) !== count*fields.length) return {state, checked: false, incomplete: true};
     const byId = new Map(pool.map(work => [work.id, work]));
     const correct = state.ids.reduce((sum, id) => sum + fields.filter(field => state.choices[id][field] === byId.get(id)?.[field]).length, 0);
     const attempts = state.attempts + 1;
     const forgeryCorrect = state.ids.every(id => Boolean(state.forgeryMarks?.[id]) === (id === state.forgery?.id));
-    const unlocked = correct === count*4 && forgeryCorrect;
+    const unlocked = correct === count*fields.length && forgeryCorrect;
     const review = {choices:Object.fromEntries(state.ids.map(id => [id,{...state.choices[id]}]))};
     const attemptLog = [...(state.attemptLog || []), {attempt: attempts, choices: review.choices, ...(state.forgery ? {forgeryMarks:{...state.forgeryMarks}} : {})}];
     return {checked: true, correct, forgeryCorrect, state: {...state, review, attemptLog, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === limit ? 'lost' : 'playing'}};
   }
   function restore(saved, pool) {
+    const fields=fieldsFor(saved);
     if (!saved || saved.version !== 1 || !['playing','unlocked','lost'].includes(saved.phase) || !Number.isInteger(saved.escaped) || saved.escaped < 0 || !Number.isInteger(saved.attempts) || saved.attempts < 0 || saved.attempts > limit || !Array.isArray(saved.ids) || saved.ids.length !== count || !Array.isArray(saved.recent) || (saved.choices && (typeof saved.choices !== 'object' || Array.isArray(saved.choices)))) return null;
     if (saved.forgery && (!saved.ids.includes(saved.forgery.id) || typeof saved.forgery.image !== 'string' || saved.forgery.image.length > 1800030 || !/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(saved.forgery.image))) return null;
     if (saved.forgeryMarks && (typeof saved.forgeryMarks !== 'object' || Array.isArray(saved.forgeryMarks) || Object.entries(saved.forgeryMarks).some(([id,value]) => !saved.ids.includes(id) || typeof value !== 'boolean'))) return null;
     if (saved.phase === 'unlocked' && saved.ids.some(id => Boolean(saved.forgeryMarks?.[id]) !== (saved.forgery?.id === id))) return null;
     const works = saved.ids.map(id => pool.find(work => work.id === id));
     if (works.some(work => !validWork(work))) return null;
-    for (let i = 0; i < works.length; i++) if (!compatible(works.slice(0, i), works[i])) return null;
+    for (let i = 0; i < works.length; i++) if (!compatible(works.slice(0, i), works[i],fields)) return null;
     for (const field of fields) {
       const options = saved.options?.[field];
       if (!Array.isArray(options) || options.length !== count || (!(root.KunstWallEnabled&&field==='technique')&&new Set(options).size !== count) || !validValues(options,works.map(work=>work[field]))) return null;
@@ -157,7 +163,7 @@
       if (!validValues(options,values)) return null;
     }
     if ((saved.phase === 'playing' && saved.attempts >= limit) || (saved.phase === 'lost' && saved.attempts !== limit)) return null;
-    if (saved.phase === 'unlocked' && (saved.attempts < 1 || saved.escaped < 1 || filled(saved) !== count*4 || works.some(work => fields.some(field => saved.choices[work.id][field] !== work[field])))) return null;
+    if (saved.phase === 'unlocked' && (saved.attempts < 1 || saved.escaped < 1 || filled(saved) !== count*fields.length || works.some(work => fields.some(field => saved.choices[work.id][field] !== work[field])))) return null;
     let review = null;
     if (saved.attempts > 0) {
       // Older saved rounds did not retain a review snapshot. Their current
@@ -187,6 +193,7 @@
     // Validate the old round against its actual historical answers before migrating it.
     const original = restore(saved,[...pool,...applicable.map(entry=>entry.previous)]);
     if (!original) return {state:null,updated:false,newRoom:false};
+    const fields=fieldsFor(original);
     const idOf = id => applicable.find(entry=>entry.previous.id===id)?.id || id;
     const valueOf = (field,value) => {
       const replacement = applicable.find(entry=>entry.previous[field]===value);
@@ -205,7 +212,7 @@
     if (original.phase === 'lost') { next.phase='lost'; next.attempts=limit; }
     return {state:next,updated:true,newRoom:true};
   }
-  const api = {forgeryPlan,fields, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
+  const api = {forgeryPlan,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

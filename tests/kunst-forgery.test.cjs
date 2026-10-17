@@ -29,7 +29,7 @@ const ki=require('../services/kunst-kurator/lib/kunst-ki.js');
 test('forgery recognition records first and second marking independently of assignment correction and survives restore',()=>{
  let state=solved();const id=state.ids[0];state.forgery={id,image:'data:image/jpeg;base64,/9j/'};
  state=core.inspect(state,pool).state;state.forgeryMarks={[id]:true};state=core.inspect(state,pool).state;
- assert.equal(ki.forgeryInfo(state).firstMarked,false);assert.match(ki.forgeryComment(ki.forgeryInfo(state)),/zweiten Prüfung/);
+ assert.equal(ki.forgeryInfo(state).firstMarked,false);assert.match(ki.forgeryComment(ki.forgeryInfo(state)),/späteren Prüfung/);
  assert.equal(ki.forgeryInfo(core.restore(state,pool)).firstMarked,false);
  const input=ki.payload(state,{events:[]});assert.equal(ki.validatePayload(input,pool).room.forgery.firstMarked,false);
  assert.ok(!JSON.stringify(input).includes('data:image'));

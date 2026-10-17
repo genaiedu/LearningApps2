@@ -1,12 +1,12 @@
 (function(root) {
   'use strict';
   const count=root.KunstWallEnabled?7:4,limit=root.KunstWallEnabled?3:2;
-  const fields=['date','style','artist','technique'], MAX_ROOMS=10000;
+  const fields=['date','style','artist','technique','title'], MAX_ROOMS=10000;
+  const fieldCount=state=>state?.options?.title?5:4;
   // Museum accession numbers (e.g. cma-1943.279) legitimately contain dots.
   const roomId=/^[a-f0-9]{32}$/, workId=/^[a-zA-Z0-9_.-]{1,128}$/;
   const time=value=>Number.isSafeInteger(value)&&value>=0&&value<=Date.now()+300000;
-  const mask=value=>Number.isInteger(value)&&value>=0&&value<=15;
-  const vector=value=>Array.isArray(value)&&value.length===count&&value.every(mask);
+  const vector=(value,n)=>Array.isArray(value)&&value.length===count&&value.every(mask=>Number.isInteger(mask)&&mask>=0&&mask<(1<<n));
   const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
   function fresh(since=Date.now()) {return {version:1,since,rooms:[]};}
   function restore(raw) {
@@ -14,8 +14,9 @@
     const seen=new Set(), rooms=[];
     for(const entry of raw.rooms) {
       if(!entry||!roomId.test(entry.id)||seen.has(entry.id)||!time(entry.at)||!Array.isArray(entry.ids)||entry.ids.length!==count||new Set(entry.ids).size!==count||!entry.ids.every(id=>workId.test(id))||!(Number.isInteger(entry.seen)&&entry.seen>=0&&entry.seen<(1<<count))||!entry.seen||!Array.isArray(entry.checks)||entry.checks.length>limit)return null;
-      if(entry.checks.some((check,index)=>!vector(check)&&!(check===null&&index<entry.checks.length-1&&entry.checks.length>=2))||!root.KunstWallEnabled&&entry.checks.length===2&&entry.checks[0]?.every(value=>value===15))return null;
-      seen.add(entry.id);rooms.push({id:entry.id,at:entry.at,ids:[...entry.ids],seen:entry.seen,checks:entry.checks.map(check=>check&&[...check])});
+      const n=entry.fieldCount??4;if(![4,5].includes(n))return null;
+      if(entry.checks.some((check,index)=>!vector(check,n)&&!(check===null&&index<entry.checks.length-1&&entry.checks.length>=2))||!root.KunstWallEnabled&&entry.checks.length===2&&entry.checks[0]?.every(value=>value===15))return null;
+      seen.add(entry.id);rooms.push({id:entry.id,at:entry.at,ids:[...entry.ids],seen:entry.seen,fieldCount:n,checks:entry.checks.map(check=>check&&[...check])});
     }
     return {version:1,since:raw.since,rooms};
   }
@@ -25,7 +26,7 @@
     const snapshots=state.attemptLog||[];
     const score=choices=>state.ids.map(id=>{
       const work=pool.find(item=>item.id===id);
-      return fields.reduce((value,field,index)=>value+(work&&choices?.[id]?.[field]===work[field]?1<<index:0),0);
+      return fields.slice(0,fieldCount(state)).reduce((value,field,index)=>value+(work&&choices?.[id]?.[field]===work[field]?1<<index:0),0);
     });
     if(root.KunstWallEnabled)return Array.from({length:state.attempts},(_,i)=>{const snapshot=snapshots.find(entry=>entry.attempt===i+1);return snapshot?score(snapshot.choices):i===state.attempts-1?score(last):null;});
     const first=snapshots.find(entry=>entry.attempt===1),second=snapshots.find(entry=>entry.attempt===2);
@@ -47,10 +48,10 @@
     const index=profile.rooms.findIndex(entry=>entry.id===token), old=profile.rooms[index];
     const shown=state.ids.indexOf(shownId);
     if(!old&&shown<0)return profile; // Never count an unloaded image or the hero film.
-    if(old&&!same(old.ids,state.ids))throw Error('Der technische Ersatzraum benötigt eine eigene Bildhistorie.');
+    if(old&&(!same(old.ids,state.ids)||(old.fieldCount??4)!==fieldCount(state)))throw Error('Der technische Ersatzraum benötigt eine eigene Bildhistorie.');
     if(!old&&profile.rooms.length>=MAX_ROOMS)throw Error('Die Bildhistorie enthält bereits 10.000 Räume. Sichere deinen Verlauf als Spielstandsdatei; ältere Einträge werden nicht gelöscht.');
     const checks=checkedMasks(state,pool);
-    const next={id:token,at:old?.at??at,ids:[...state.ids],seen:(old?.seen||0)|(shown<0?0:1<<shown),checks:mergeChecks(old?.checks||[],checks)};
+    const next={id:token,at:old?.at??at,ids:[...state.ids],seen:(old?.seen||0)|(shown<0?0:1<<shown),fieldCount:fieldCount(state),checks:mergeChecks(old?.checks||[],checks)};
     if(old&&same(old,next))return profile;
     const rooms=[...profile.rooms];if(old)rooms[index]=next;else rooms.push(next);
     return {version:1,since:profile.since,rooms};
@@ -61,7 +62,7 @@
     for(const entry of b.rooms) {
       const old=records.get(entry.id);
       if(!old){records.set(entry.id,entry);continue;}
-      if(!same(old.ids,entry.ids))throw Error('Die Datei enthält widersprüchliche Werk-IDs in der Bildhistorie.');
+      if(!same(old.ids,entry.ids)||(old.fieldCount??4)!==(entry.fieldCount??4))throw Error('Die Datei enthält widersprüchliche Werk-IDs in der Bildhistorie.');
       const checks=mergeChecks(old.checks,entry.checks);
       records.set(entry.id,{...old,at:Math.min(old.at,entry.at),seen:old.seen|entry.seen,checks});
     }
@@ -76,20 +77,20 @@
       const checked=entries.filter(entry=>entry.checks.length),last=checked.at(-1);
       const at=last?.ids.indexOf(id);
       return {id,encounters:entries.length,checkedEncounters:checked.length,
-        firstFullyCorrect:checked.filter(entry=>entry.checks[0]?.[entry.ids.indexOf(id)]===15).length,
-        finalFullyCorrect:checked.filter(entry=>entry.checks.at(-1)[entry.ids.indexOf(id)]===15).length,
-        lastChecked:last?{checks:last.checks.length,firstMask:last.checks[0]?.[at]??null,lastMask:last.checks.at(-1)[at]}:null};
+        firstFullyCorrect:checked.filter(entry=>entry.checks[0]?.[entry.ids.indexOf(id)]===(entry.fieldCount===5?31:15)).length,
+        finalFullyCorrect:checked.filter(entry=>entry.checks.at(-1)[entry.ids.indexOf(id)]===(entry.fieldCount===5?31:15)).length,
+        lastChecked:last?{fieldCount:last.fieldCount??4,checks:last.checks.length,firstMask:last.checks[0]?.[at]??null,lastMask:last.checks.at(-1)[at]}:null};
     });
   }
   function note(summary) {
     if(!summary?.encounters)return '';
     const start='Dieses Werk kam in deinem gespeicherten Verlauf bereits '+summary.encounters+' Mal vor.';
     if(!summary.lastChecked)return start+' Damals ist keine Prüfung zu diesem Werk gespeichert; daraus lässt sich keine frühere Leistung ableiten.';
-    const {firstMask,lastMask,checks}=summary.lastChecked;
-    const count=fields.filter((_,index)=>lastMask&(1<<index)).length;
-    if(firstMask===15&&lastMask===15)return start+' Bei der letzten gespeicherten Prüfung waren alle vier Zuordnungen schon beim ersten Prüfen richtig.';
-    if(lastMask===15&&checks===2)return start+' Bei der letzten gespeicherten Prüfung gelangen alle vier Zuordnungen nach dem zweiten Versuch.';
-    return start+' Bei der letzten gespeicherten Prüfung '+(count===1?'war eine':'waren '+count)+' von vier Zuordnungen richtig.';
+    const {firstMask,lastMask,checks}=summary.lastChecked,n=summary.lastChecked.fieldCount??4,full=(1<<n)-1,word=n===5?'fünf':'vier';
+    const count=fields.slice(0,n).filter((_,index)=>lastMask&(1<<index)).length;
+    if(firstMask===full&&lastMask===full)return start+' Bei der letzten gespeicherten Prüfung waren alle '+word+' Zuordnungen schon beim ersten Prüfen richtig.';
+    if(lastMask===full&&checks===2)return start+' Bei der letzten gespeicherten Prüfung gelangen alle '+word+' Zuordnungen nach dem zweiten Versuch.';
+    return start+' Bei der letzten gespeicherten Prüfung '+(count===1?'war eine':'waren '+count)+' von '+word+' Zuordnungen richtig.';
   }
   const api={fresh,restore,track,merge,summarize,note,fields,MAX_ROOMS};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.KunstHistory=api;

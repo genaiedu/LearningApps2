@@ -1,7 +1,8 @@
 (function (root) {
   'use strict';
-  const fields = ['date','style','artist','technique'];
-  const fieldNames = {date:'Datierung',style:'Stilzuordnung',artist:'Künstlername',technique:'Technik'};
+  const baseFields = ['date','style','artist','technique'];
+  const fieldsFor=state=>[...baseFields,...(state?.options?.title||state?.fieldCount===5?['title']:[])];
+  const fieldNames = {title:'Werktitel',date:'Datierung',style:'Stilzuordnung',artist:'Künstlername',technique:'Technik'};
   const hash = text => { let n=2166136261; for(const character of text) n=Math.imul(n^character.codePointAt(0),16777619); return n>>>0; };
   const join = items => items.length < 2 ? items[0] || '' : items.slice(0,-1).join(', ')+' und '+items.at(-1);
   const title = work => work.titleDe || work.galleryTitle || work.title;
@@ -59,6 +60,7 @@
     return 'within';
   }
   function outcomes(work,state,pool) {
+    const fields=fieldsFor(state);
     const first=state.attemptLog?.find(entry=>entry.attempt===1)?.choices[work.id];
     const last=state.review?.choices?.[work.id] || state.choices?.[work.id] || {};
     const result=Object.fromEntries(fields.map(field=>[field,{first:first ? first[field]===work[field] : null,correct:last[field]===work[field],value:last[field] || ''}]));
@@ -66,7 +68,7 @@
       const other=pool.find(item=>item.id===id), selection=state.review?.choices?.[id] || state.choices?.[id];
       return other && fields.some(field=>selection?.[field]!==other[field]);
     });
-    return {fields:result,firstCount:first ? fields.filter(field=>result[field].first).length : null,
+    return {total:fields.length,fields:result,firstCount:first ? fields.filter(field=>result[field].first).length : null,
       finalCount:fields.filter(field=>result[field].correct).length,
       fixed:fields.filter(field=>result[field].first===false && result[field].correct),
       regressed:fields.filter(field=>result[field].first===true && !result[field].correct),
@@ -95,7 +97,7 @@
   function opening(work,state,outcome,pick) {
     const artwork=quote(title(work)), who=work.artist;
     if(work.attribution==='unknown'){
-      const response=outcome.finalCount===4 ? 'Deine letzte Zuordnung stimmt vollständig.' : outcome.soleObstacle ? 'Hier blieb die letzte Hürde des Raums.' : 'Bei deiner letzten Zuordnung blieb noch etwas offen.';
+      const response=outcome.finalCount===outcome.total ? 'Deine letzte Zuordnung stimmt vollständig.' : outcome.soleObstacle ? 'Hier blieb die letzte Hürde des Raums.' : 'Bei deiner letzten Zuordnung blieb noch etwas offen.';
       return response+' Unbekannter Künstler: '+pick('opening-anonymous',[
         `Bei ${artwork} ist der Name des Künstlers nicht überliefert. Wir schauen deshalb besonders auf Form, Material und den belegten historischen Zusammenhang.`,
         `${artwork} hat eine Geschichte, auch ohne bekannten Urheber. „Unbekannter Künstler“ ist hier die ehrliche Katalogangabe, kein Rätselname.`,
@@ -106,7 +108,7 @@
       ]);
     }
     if(['sculpture','relief'].includes(work.artForm)){
-      const response=outcome.finalCount===4 ? 'Deine letzte Zuordnung passt.' : 'Lass uns deine Zuordnung noch einmal am Werk prüfen.';
+      const response=outcome.finalCount===outcome.total ? 'Deine letzte Zuordnung passt.' : 'Lass uns deine Zuordnung noch einmal am Werk prüfen.';
       return response+' '+pick('opening-sculpture',[
         `${artwork} von ${who} lebt von Körper, Oberfläche und Raum. Die Fotografie zeigt uns davon einen Blickwinkel, nicht die ganze plastische Form.`,
         `Bei ${artwork} von ${who} schauen wir auf die räumliche Form und ihre Herstellung. Material, Modelljahr und ausgeführte Fassung sind unterschiedliche Fragen.`,
@@ -115,7 +117,7 @@
       ]);
     }
     if(work.artForm==='photograph'){
-      const response=outcome.finalCount===4 ? 'Deine letzte Zuordnung passt.' : 'Lass uns die noch offenen Zuordnungen genauer ansehen.';
+      const response=outcome.finalCount===outcome.total ? 'Deine letzte Zuordnung passt.' : 'Lass uns die noch offenen Zuordnungen genauer ansehen.';
       return response+' '+pick('opening-photograph',[
         `${artwork} von ${who} ist eine Fotografie. Bildgestaltung und fotografisches Druckverfahren sind zwei verschiedene Spuren.`,
         `Bei ${artwork} von ${who} lohnt es sich, Ausschnitt, Licht und Tonwerte getrennt von den Angaben zum Abzug zu betrachten.`,
@@ -139,27 +141,27 @@
       `Bei ${artwork} war nicht alles von Anfang an verkehrt. Deine erste Zuordnung passte in diesen Punkten: ${join(outcome.regressed.map(field=>fieldNames[field]))}. Wir betrachten das Bild von ${who} noch einmal, ohne den ersten Eindruck vorschnell zu verwerfen.`,
       `Interessant ist deine Korrektur bei ${artwork}: Eine zunächst richtige Antwort ging dabei verloren. Bei ${who} nehmen wir deshalb Bildbeobachtung und historische Kontrolle getrennt in den Blick.`
     ]);
-    if(outcome.finalCount===4 && outcome.firstCount===4) return pick('opening-clear',[
+    if(outcome.finalCount===outcome.total && outcome.firstCount===outcome.total) return pick('opening-clear',[
       `${artwork} von ${who}: Hier stimmten deine Zuordnungen schon beim ersten Prüfen. Ich zeige dir, welche Beobachtungen deine Lösung zusätzlich absichern können.`,
       `Dieses Werk hast du auf Anhieb vollständig zugeordnet. Bleiben wir noch einen Moment bei ${artwork} von ${who} und schauen, was über den richtigen Namen hinaus interessant ist.`,
       `Bei ${artwork} lagst du gleich richtig. Vielleicht hast du ${who} erkannt; vielleicht bist du über Farbe und Form gegangen. Beides lässt sich jetzt mit der historischen Einordnung verbinden.`,
       `Dein erster Schlüssel passte hier. An ${artwork} von ${who} können wir aus der richtigen Antwort eine begründete machen.`,
-      `Alle vier Antworten saßen bei diesem Bild bereits im ersten Versuch. Bei ${artwork} von ${who} lohnt sich deshalb die nächste Frage: Welche Spuren lassen sich auch auf unbekannte Werke übertragen?`,
+      `Alle ${outcome.total===5?'fünf':'vier'} Antworten saßen bei diesem Bild bereits im ersten Versuch. Bei ${artwork} von ${who} lohnt sich deshalb die nächste Frage: Welche Spuren lassen sich auch auf unbekannte Werke übertragen?`,
       `${artwork} von ${who} bereitete dir in der Prüfung keine Schwierigkeiten. Nimm aus diesem Bild dennoch mehr mit als ein Etikett – vor allem einen Weg des Hinschauens.`,
       `Hier warst du von Beginn an auf der richtigen Spur. ${artwork} von ${who} nehmen wir als Ausgangspunkt, um Material und Bildsprache auseinanderzuhalten.`,
       `Das hast du direkt richtig eingeordnet. Bei ${artwork} von ${who} möchte ich deinen Blick nun von der Antwort auf die möglichen Indizien lenken.`
     ]);
-    if(outcome.finalCount===4 && outcome.fixed.length) return pick('opening-fixed',[
+    if(outcome.finalCount===outcome.total && outcome.fixed.length) return pick('opening-fixed',[
       `Bei ${artwork} hast du nachgebessert: ${join(outcome.fixed.map(field=>fieldNames[field]))}. Am Ende passte alles. Schauen wir, was dir beim Werk von ${who} künftig die erste Zuordnung erleichtern kann.`,
       `Du hast bei ${artwork} von ${who} nachgebessert – erfolgreich. Eine veränderte Antwort kann ein guter Lernschritt sein, wenn du nun auch weißt, welche Beobachtung dahintersteht.`,
       `${artwork} war nach deiner Korrektur vollständig richtig. Wir gehen bei ${who} noch einen Schritt weiter: von der passenden Kombination zu ihren möglichen Bildspuren.`,
       `Dein zweiter Blick hat sich bei ${artwork} ausgezahlt. Jetzt nehmen wir das Werk von ${who} zum Anlass, diese Korrektur mit sichtbaren und historischen Hinweisen zu verbinden.`,
-      `Zunächst blieb bei ${artwork} etwas offen; zuletzt hast du alle vier Antworten getroffen. Lass uns bei ${who} festhalten, was beim nächsten Mal helfen kann.`,
+      `Zunächst blieb bei ${artwork} etwas offen; zuletzt hast du alle ${outcome.total===5?'fünf':'vier'} Antworten getroffen. Lass uns bei ${who} festhalten, was beim nächsten Mal helfen kann.`,
       `Du hast die Spur bei diesem Werk wiedergefunden. An ${artwork} von ${who} lässt sich gut üben, wie Beobachtung und Zeitwissen einander kontrollieren.`,
       `Bei ${artwork} führte deine Überarbeitung zur richtigen Lösung. Ich würde dir zum Werk von ${who} jetzt vor allem die Merkmale mitgeben, die du an einem neuen Bild wieder suchen kannst.`,
       `Hier hast du umgedacht und richtig zugeordnet. ${artwork} von ${who} bleibt deshalb nicht nur eine gelöste Aufgabe, sondern ein nützlicher Vergleich für den nächsten Raum.`
     ]);
-    if(outcome.finalCount===4) return pick('opening-correct',[
+    if(outcome.finalCount===outcome.total) return pick('opening-correct',[
       `Die letzten Zuordnungen zu ${artwork} waren vollständig richtig${state.phase==='lost' ? ' – auch wenn der Raum insgesamt nicht aufging' : ''}. Schauen wir genauer auf das Werk von ${who}.`,
       `Bei ${artwork} von ${who} passt deine letzte Lösung. Ich möchte dir dazu die Beobachtungen zeigen, die aus einem Treffer ein wiederverwendbares Wissen machen.`,
       `Dieses Bild hattest du zuletzt komplett richtig eingeordnet. Mit ${artwork} von ${who} können wir nun in Ruhe fragen, warum die Zuordnung plausibel ist.`,
@@ -283,7 +285,7 @@
     const technique=knowledge?.techniques?.[work.technique], style=knowledge?.styles?.[work.style];
     if(!technique || !style) return null;
     const pick=chooser(work,state), outcome=outcomes(work,state,pool), note=knowledge.workNotes?.[work.id];
-    const mistake=confusion(work,outcome,knowledge,pick);
+    const mistake=[confusion(work,outcome,knowledge,pick),outcome.fields.title&&!outcome.fields.title.correct?'Zum Werktitel: Im Katalog heißt dieses Werk '+quote(title(work))+'. Vergleiche den Titel noch einmal mit dem dargestellten Motiv. Nicht jeder Titel beschreibt das Sichtbare wörtlich; die dokumentierte Werkangabe bleibt maßgeblich.':''].filter(Boolean).join(' ');
     const techFacts=[looking(technique,'technique',pick),technique.definition];
     if(pick('tech-order',[false,true])) techFacts.reverse();
     const techContext=pick('tech-context',[
