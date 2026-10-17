@@ -1,0 +1,42 @@
+(() => {
+ 'use strict';
+ if(!window.KunstWallEnabled)return;
+ const $=id=>document.getElementById(id), dialog=$('image-dialog');
+ const aside=document.createElement('aside');aside.id='wall-settings';aside.setAttribute('aria-label','Zuordnungen zum vergrößerten Werk');
+ aside.innerHTML='<p class="eyebrow">Werk untersuchen</p><h3 id="wall-work-title"></h3><div id="wall-work-controls"></div><p class="wall-instructions">Bild anklicken: Lupe. Escape: zurück zur ganzen Abbildung. Noch einmal Escape: zurück zur Wand.</p><button type="button" id="wall-check">Schloss prüfen</button>';
+ dialog.append(aside);
+ const floating=document.createElement('div');floating.className='wall-floating';
+ floating.innerHTML='<button type="button" id="wall-back">← Bilderwand</button><button type="button" id="wall-fit">Ganzes Bild</button><button type="button" id="wall-loupe">Lupe +</button><button type="button" id="wall-prev" aria-label="Vorheriges Werk">←</button><button type="button" id="wall-next" aria-label="Nächstes Werk">→</button>';
+ dialog.append(floating);
+ let current=null,home=null,drag=null;
+ function restoreControls(){if(home){for(const child of [...$('wall-work-controls').children])home.append(child);}home=null;current=null;dialog.classList.remove('wall-zoom');}
+ function inspect(id,letter,original){restoreControls();const card=[...$('art-grid').children].find(c=>c.dataset.id===id);current=id;
+  $('wall-work-title').textContent=(letter?'Werk '+letter+' · ':'')+(card?.querySelector('.work-title')?.textContent||$('zoom-image').alt.replace('Vergrößerte Ansicht: ',''));
+  if(card&&!original){home=card;$('wall-work-controls').append(card.querySelector('.artwork-actions'),card.querySelector('.assignments'));}
+  $('wall-check').hidden=!home||$('check').hidden;$('wall-prev').hidden=$('wall-next').hidden=Boolean(original);dialog.classList.remove('wall-zoom');
+ }
+ function fit(){window.KunstWallZoom?.reset();dialog.classList.remove('wall-zoom');}
+ function loupe(){if(window.KunstWallZoom?.zoom===100)$('zoom-in').click();$('zoom-in').click();dialog.classList.add('wall-zoom');}
+ function adjacent(direction){const cards=[...$('art-grid').children],index=cards.findIndex(c=>c.dataset.id===current);if(index<0)return;const card=cards[(index+direction+cards.length)%cards.length];restoreControls();card.querySelector('.artwork-button').click();}
+ $('wall-back').onclick=()=>dialog.close();$('wall-fit').onclick=fit;$('wall-loupe').onclick=loupe;$('wall-prev').onclick=()=>adjacent(-1);$('wall-next').onclick=()=>adjacent(1);
+ $('wall-check').onclick=()=>{dialog.close();$('check').click();};
+ dialog.addEventListener('cancel',event=>{if(window.KunstWallZoom?.zoom>100){event.preventDefault();fit();}});
+ $('zoom-view').addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};});
+ $('zoom-view').addEventListener('pointerup',e=>{if(drag&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<7&&window.KunstWallZoom?.zoom===100)loupe();drag=null;});
+ // Shelves are fitted to the actual image ratios. Nothing is cropped. Physical
+ // lengths, where documented in the catalogue, are compressed by a fourth root.
+ function layout(){const grid=$('art-grid'),cards=[...grid.children];if(!cards.length||!grid.clientWidth)return;const gap=24,w=grid.clientWidth,h=grid.clientHeight,items=cards.map(c=>({c,a:Math.max(.18,Math.min(5,Number(c.dataset.wallAspect)||1)),p:Number(c.dataset.wallPhysical)||0}));const dimensions={'wd-Q699552':[19.7,29.1],'wd-Q219831':[438,363]};/* Sources: sammlungenonline.albertina.at/de/objects/40233 and rijksmuseum.nl/nl/collectie/object/De-Nachtwacht--3137deb45cd7765f9a76084a16c99544. */for(const i of items)if(dimensions[i.c.dataset.id])i.p=Math.sqrt(dimensions[i.c.dataset.id].reduce((a,b)=>a*b,1));const known=items.filter(i=>i.p>0).map(i=>i.p).sort((a,b)=>a-b),median=known.length>1?known[Math.floor(known.length/2)]:80;items.forEach(i=>i.k=i.p?Math.max(.72,Math.min(1.4,(i.p/median)**.25)):1);
+  let best=null;for(let mask=1;mask<(1<<items.length)-1;mask++){const rows=[items.filter((_,i)=>mask&(1<<i)),items.filter((_,i)=>!(mask&(1<<i)))];if(rows.some(r=>r.length<2||r.length>5))continue;const measures=rows.map(row=>{const scale=(w-gap*(row.length-1))/row.reduce((n,i)=>n+i.a*i.k,0);return {row,scale,height:Math.max(...row.map(i=>i.k))*scale+28};}),factor=Math.min(1,(h-gap-56)/measures.reduce((n,r)=>n+r.height-28,0)),area=measures.reduce((n,r)=>n+r.row.reduce((s,i)=>s+i.a*(i.k*r.scale*factor)**2,0),0);if(!best||area>best.area)best={measures,factor,area};}
+  if(!best)return;const used=best.measures.reduce((n,r)=>n+(r.height-28)*best.factor+28,0)+gap;let y=Math.max(0,(h-used)/2);for(const r of best.measures){const rh=(r.height-28)*best.factor,usedWidth=r.row.reduce((n,i)=>n+i.a*i.k*r.scale*best.factor,0)+gap*(r.row.length-1);let x=(w-usedWidth)/2;for(const i of r.row){const ih=i.k*r.scale*best.factor,iw=ih*i.a;Object.assign(i.c.style,{left:x+'px',top:(y+(rh-ih)/2)+'px',width:iw+'px',height:(ih+28)+'px'});x+=iw+gap;}y+=rh+28+gap;}
+ }
+ const copy=[['Vier Werke.','Sieben Werke.'],['vier Werke','sieben Werke'],['vier Kunstwerke','sieben Kunstwerke'],['Vier Kunstwerke','Sieben Kunstwerke'],['vier Werke','sieben Werke'],['vier Werken','sieben Werken'],['Vier Werke','Sieben Werke'],['vier Bilder','sieben Bilder'],['vier Werke','sieben Werke'],['vier Künstler','sieben Künstler'],['vier verschiedenen Antworten','sieben verschiedenen Antworten'],['vier verschiedene Antworten','sieben verschiedene Antworten'],['16','28'],['Zwei Versuche','Drei Versuche'],['Zwei Prüfversuche pro Raum','Drei Prüfversuche pro Raum'],['Alle vier Bilder','Alle sieben Bilder'],['Zwei Prüfversuche','Drei Prüfversuche'],['zwei Versuchen','drei Versuchen'],['zweite Versuch','dritte Versuch'],['zweiter Fehlversuch','dritter Fehlversuch'],['Ein zweiter Fehlversuch','Ein dritter Fehlversuch'],['Ist auch der zweite Versuch','Ist auch der dritte Versuch'],['zweiten Prüfung','nächsten Prüfung'],['zweite Prüfung','nächste Prüfung'],['Du darfst einmal nachbessern.','Du darfst zweimal nachbessern.'],['Du hast noch einen Versuch.','Du kannst erneut prüfen.'],['Du hast noch genau einen Versuch.','Du kannst erneut prüfen.'],['Du hast noch genau einen Prüfversuch.','Du kannst erneut prüfen.'],['Erste Prüfung:','Letzte Prüfung:'],['Rückmeldung zur ersten Prüfung','Rückmeldung zur letzten Prüfung']];
+ function updateCopy(){const roots=[document.querySelector('.hero-copy'),$('regeln'),$('lock-panel'),$('review-summary'),$('result-dialog'),$('intro-copy'),document.querySelector('.archive-note'),$('launch-dialog'),$('room-loading')];for(const root of roots){if(!root)continue;const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);while(walk.nextNode()){const n=walk.currentNode;if(['SCRIPT','STYLE','BUTTON','SELECT','OPTION'].includes(n.parentElement?.tagName))continue;let value=n.nodeValue;for(const [a,b]of copy)value=value.replaceAll(a,b);if(value!==n.nodeValue)n.nodeValue=value;}}
+  const stats=document.querySelectorAll('.hero-stats b');if(stats[1]&&stats[1].textContent!=='28')stats[1].textContent='28';if(stats[2]&&stats[2].textContent!=='03')stats[2].textContent='03';
+  $('wall-check').disabled=$('check').disabled;if($('wall-check').textContent!==$('check').textContent)$('wall-check').textContent=$('check').textContent;
+ }
+ $('attempts').append(document.createElement('i'));document.title='Kunsttresor · Die Bilderwand';
+ const hint=document.createElement('p');hint.className='wall-mode-note';hint.textContent='Bilderwand · Experiment · 7 Werke, 28 Zuordnungen, 3 Prüfversuche. Bild anklicken zum Zuordnen und Vergrößern. Die klassischen Schriften bleiben erhalten. Größenverhältnisse sind angenähert; ohne belegte Werkmaße nach Bildformat.';$('art-grid').before(hint);
+ const launchNotice=$('launch-ai-notice');if(launchNotice)launchNotice.append(document.createTextNode(' Hinweis zur Bilderwand: Die Kuratorenhinweise werden in dieser Variante redaktionell bereitgestellt; persönliche KI-Rückmeldungen sind hier noch nicht verfügbar.'));
+ let scheduled=false;new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;updateCopy();layout();});}).observe(document.querySelector('main'),{subtree:true,childList:true,characterData:true});
+ new ResizeObserver(layout).observe($('art-grid'));window.addEventListener('kunst-wall-layout',layout);window.KunstWall={inspect,restoreControls,layout};updateCopy();
+})();

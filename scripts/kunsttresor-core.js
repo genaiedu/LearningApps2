@@ -1,5 +1,6 @@
 (function (root) {
   'use strict';
+  const count = root.KunstWallEnabled ? 7 : 4, limit = root.KunstWallEnabled ? 3 : 2;
   const fields = ['date', 'style', 'artist', 'technique'];
   function shuffle(items, random = Math.random) {
     const result = [...items];
@@ -64,7 +65,7 @@
     function find(candidates) {
       let visits = 0;
       function search(chosen, from) {
-        if (chosen.length === 4) return chosen;
+        if (chosen.length === count) return chosen;
         if (++visits > 15000) return null;
         for (let i = from; i < candidates.length; i++) {
           if (!compatible(chosen, candidates[i])) continue;
@@ -82,7 +83,7 @@
     // room only if four distinct answer sets cannot otherwise be assembled.
     // Fall back to work-only exclusions for small or constrained archives.
     for (const avoidArtists of [true,false]) {
-      for (let keep = recent.length; keep >= 0 && !selected; keep = Math.max(0,keep - 4)) {
+      for (let keep = recent.length; keep >= 0 && !selected; keep = Math.max(0,keep - count)) {
         const blocked = keep ? recent.slice(-keep) : [];
         const artists = new Set(blocked.map(id=>byId.get(id)).filter(Boolean).map(artistKey));
         selected = find(shuffle(eligible.filter(work => !blocked.includes(work.id) && (!avoidArtists || !artists.has(artistKey(work)))),random));
@@ -94,7 +95,7 @@
     return { works: shuffle(selected, random), options: Object.fromEntries(fields.map(field => [field, shuffle(selected.map(work => work[field]), random)])) };
   }
   function newState(pool, previous = null, random = Math.random) {
-    const recent = previous ? [...previous.recent, ...previous.ids].slice(-24) : [];
+    const recent = previous ? [...previous.recent, ...previous.ids].slice(-count*6) : [];
     const next = room(pool, recent, random);
     return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attemptLog: [], attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent,
       ...(previous?.runToken ? {runToken:previous.runToken, parentRoomToken:previous.phase === 'unlocked' ? previous.roomToken : previous.parentRoomToken || null} : {})};
@@ -123,19 +124,19 @@
   }
   function filled(state) { return state.ids.reduce((sum,id) => sum + fields.filter(field => Boolean(state.choices?.[id]?.[field])).length, 0); }
   function inspect(state, pool) {
-    if (state.phase !== 'playing' || state.attempts >= 2) return {state, checked: false};
-    if (filled(state) !== 16) return {state, checked: false, incomplete: true};
+    if (state.phase !== 'playing' || state.attempts >= limit) return {state, checked: false};
+    if (filled(state) !== count*4) return {state, checked: false, incomplete: true};
     const byId = new Map(pool.map(work => [work.id, work]));
     const correct = state.ids.reduce((sum, id) => sum + fields.filter(field => state.choices[id][field] === byId.get(id)?.[field]).length, 0);
     const attempts = state.attempts + 1;
     const forgeryCorrect = state.ids.every(id => Boolean(state.forgeryMarks?.[id]) === (id === state.forgery?.id));
-    const unlocked = correct === 16 && forgeryCorrect;
+    const unlocked = correct === count*4 && forgeryCorrect;
     const review = {choices:Object.fromEntries(state.ids.map(id => [id,{...state.choices[id]}]))};
     const attemptLog = [...(state.attemptLog || []), {attempt: attempts, choices: review.choices, ...(state.forgery ? {forgeryMarks:{...state.forgeryMarks}} : {})}];
-    return {checked: true, correct, forgeryCorrect, state: {...state, review, attemptLog, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === 2 ? 'lost' : 'playing'}};
+    return {checked: true, correct, forgeryCorrect, state: {...state, review, attemptLog, attempts, escaped: state.escaped + (unlocked ? 1 : 0), phase: unlocked ? 'unlocked' : attempts === limit ? 'lost' : 'playing'}};
   }
   function restore(saved, pool) {
-    if (!saved || saved.version !== 1 || !['playing','unlocked','lost'].includes(saved.phase) || !Number.isInteger(saved.escaped) || saved.escaped < 0 || !Number.isInteger(saved.attempts) || saved.attempts < 0 || saved.attempts > 2 || !Array.isArray(saved.ids) || saved.ids.length !== 4 || !Array.isArray(saved.recent) || (saved.choices && (typeof saved.choices !== 'object' || Array.isArray(saved.choices)))) return null;
+    if (!saved || saved.version !== 1 || !['playing','unlocked','lost'].includes(saved.phase) || !Number.isInteger(saved.escaped) || saved.escaped < 0 || !Number.isInteger(saved.attempts) || saved.attempts < 0 || saved.attempts > limit || !Array.isArray(saved.ids) || saved.ids.length !== count || !Array.isArray(saved.recent) || (saved.choices && (typeof saved.choices !== 'object' || Array.isArray(saved.choices)))) return null;
     if (saved.forgery && (!saved.ids.includes(saved.forgery.id) || typeof saved.forgery.image !== 'string' || saved.forgery.image.length > 1800030 || !/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(saved.forgery.image))) return null;
     if (saved.forgeryMarks && (typeof saved.forgeryMarks !== 'object' || Array.isArray(saved.forgeryMarks) || Object.entries(saved.forgeryMarks).some(([id,value]) => !saved.ids.includes(id) || typeof value !== 'boolean'))) return null;
     if (saved.phase === 'unlocked' && saved.ids.some(id => Boolean(saved.forgeryMarks?.[id]) !== (saved.forgery?.id === id))) return null;
@@ -144,24 +145,24 @@
     for (let i = 0; i < works.length; i++) if (!compatible(works.slice(0, i), works[i])) return null;
     for (const field of fields) {
       const options = saved.options?.[field];
-      if (!Array.isArray(options) || options.length !== 4 || new Set(options).size !== 4 || !works.every(work => options.includes(work[field]))) return null;
+      if (!Array.isArray(options) || options.length !== count || new Set(options).size !== count || !works.every(work => options.includes(work[field]))) return null;
       const values = saved.ids.map(id => saved.choices?.[id]?.[field]).filter(Boolean);
       if (new Set(values).size !== values.length || values.some(value => !options.includes(value))) return null;
     }
-    if ((saved.phase === 'playing' && saved.attempts > 1) || (saved.phase === 'lost' && saved.attempts !== 2)) return null;
-    if (saved.phase === 'unlocked' && (saved.attempts < 1 || saved.escaped < 1 || filled(saved) !== 16 || works.some(work => fields.some(field => saved.choices[work.id][field] !== work[field])))) return null;
+    if ((saved.phase === 'playing' && saved.attempts >= limit) || (saved.phase === 'lost' && saved.attempts !== limit)) return null;
+    if (saved.phase === 'unlocked' && (saved.attempts < 1 || saved.escaped < 1 || filled(saved) !== count*4 || works.some(work => fields.some(field => saved.choices[work.id][field] !== work[field])))) return null;
     let review = null;
     if (saved.attempts > 0) {
       // Older saved rounds did not retain a review snapshot. Their current
       // complete assignment can still be marked without resetting an attempt.
       const choices = saved.review?.choices || saved.choices;
       const complete = saved.ids.every(id => fields.every(field => saved.options[field].includes(choices?.[id]?.[field])));
-      const unique = fields.every(field => new Set(saved.ids.map(id => choices?.[id]?.[field])).size === 4);
+      const unique = fields.every(field => new Set(saved.ids.map(id => choices?.[id]?.[field])).size === count);
       if (complete && unique) review = {choices:Object.fromEntries(saved.ids.map(id => [id,{...choices[id]}]))};
     }
     // History is optional for version-1 saves. Never invent a first attempt from
     // an older save's final choices. Invalid history is discarded, not the game.
-    const validSnapshot = choices => saved.ids.every(id => fields.every(field => saved.options[field].includes(choices?.[id]?.[field]))) && fields.every(field => new Set(saved.ids.map(id => choices?.[id]?.[field])).size === 4);
+    const validSnapshot = choices => saved.ids.every(id => fields.every(field => saved.options[field].includes(choices?.[id]?.[field]))) && fields.every(field => new Set(saved.ids.map(id => choices?.[id]?.[field])).size === count);
     let attemptLog = saved.attemptLog;
     if (attemptLog !== undefined) {
       if (!Array.isArray(attemptLog) || attemptLog.length > saved.attempts || attemptLog.some((entry,index) => !Number.isInteger(entry?.attempt) || entry.attempt < 1 || entry.attempt > saved.attempts || (index > 0 && entry.attempt <= attemptLog[index-1].attempt) || !validSnapshot(entry.choices))) attemptLog = [];
@@ -194,7 +195,7 @@
     // A new date might duplicate a neighbour's answer. Use a fair, unique replacement
     // room instead: retain escaped rooms, and do not charge attempts for new questions.
     const next = newState(pool,original);
-    if (original.phase === 'lost') { next.phase='lost'; next.attempts=2; }
+    if (original.phase === 'lost') { next.phase='lost'; next.attempts=limit; }
     return {state:next,updated:true,newRoom:true};
   }
   const api = {forgeryPlan,fields, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, takenBy, review, filled, inspect, restore, restoreUpdated};

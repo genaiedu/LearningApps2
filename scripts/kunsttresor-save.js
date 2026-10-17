@@ -51,7 +51,7 @@
       const saved = payload.state;
       if ((saved?.runToken !== undefined && !progress.tokenPattern.test(saved.runToken)) || (saved?.parentRoomToken !== undefined && saved.parentRoomToken !== null && !progress.tokenPattern.test(saved.parentRoomToken))) throw Error('Die Angaben zum Rundgang sind ungültig.');
       if(saved?.historyToken!==undefined&&!progress.tokenPattern.test(saved.historyToken))throw Error('Die Kennung der Bildhistorie ist ungültig.');
-      if (!saved || !progress.tokenPattern.test(saved.roomToken) || !progress.integer(saved.escaped) || payload.best < saved.escaped || !Array.isArray(saved.recent) || saved.recent.length > 24 || saved.recent.some(id=>typeof id !== 'string' || id.length > 128)) throw Error('Der gespeicherte Raum ist ungültig.');
+      if (!saved || !progress.tokenPattern.test(saved.roomToken) || !progress.integer(saved.escaped) || payload.best < saved.escaped || !Array.isArray(saved.recent) || saved.recent.length > (root.KunstWallEnabled?42:24) || saved.recent.some(id=>typeof id !== 'string' || id.length > 128)) throw Error('Der gespeicherte Raum ist ungültig.');
       const restored = core.restoreUpdated(saved,pool,replacements);
       if (!restored.state) throw Error('Der gespeicherte Raum passt nicht zum Werkarchiv.');
       state = restored.state; updated = restored.updated; newRoom = restored.newRoom;

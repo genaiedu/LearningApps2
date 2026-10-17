@@ -1,19 +1,20 @@
 (function(root) {
   'use strict';
+  const count=root.KunstWallEnabled?7:4,limit=root.KunstWallEnabled?3:2;
   const fields=['date','style','artist','technique'], MAX_ROOMS=10000;
   // Museum accession numbers (e.g. cma-1943.279) legitimately contain dots.
   const roomId=/^[a-f0-9]{32}$/, workId=/^[a-zA-Z0-9_.-]{1,128}$/;
   const time=value=>Number.isSafeInteger(value)&&value>=0&&value<=Date.now()+300000;
   const mask=value=>Number.isInteger(value)&&value>=0&&value<=15;
-  const vector=value=>Array.isArray(value)&&value.length===4&&value.every(mask);
+  const vector=value=>Array.isArray(value)&&value.length===count&&value.every(mask);
   const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
   function fresh(since=Date.now()) {return {version:1,since,rooms:[]};}
   function restore(raw) {
     if(!raw||raw.version!==1||!time(raw.since)||!Array.isArray(raw.rooms)||raw.rooms.length>MAX_ROOMS)return null;
     const seen=new Set(), rooms=[];
     for(const entry of raw.rooms) {
-      if(!entry||!roomId.test(entry.id)||seen.has(entry.id)||!time(entry.at)||!Array.isArray(entry.ids)||entry.ids.length!==4||new Set(entry.ids).size!==4||!entry.ids.every(id=>workId.test(id))||!mask(entry.seen)||!entry.seen||!Array.isArray(entry.checks)||entry.checks.length>2)return null;
-      if(entry.checks.some((check,index)=>!vector(check)&&!(check===null&&index===0&&entry.checks.length===2))||entry.checks.length===2&&entry.checks[0]?.every(value=>value===15))return null;
+      if(!entry||!roomId.test(entry.id)||seen.has(entry.id)||!time(entry.at)||!Array.isArray(entry.ids)||entry.ids.length!==count||new Set(entry.ids).size!==count||!entry.ids.every(id=>workId.test(id))||!(Number.isInteger(entry.seen)&&entry.seen>=0&&entry.seen<(1<<count))||!entry.seen||!Array.isArray(entry.checks)||entry.checks.length>limit)return null;
+      if(entry.checks.some((check,index)=>!vector(check)&&!(check===null&&index<entry.checks.length-1&&entry.checks.length>=2))||!root.KunstWallEnabled&&entry.checks.length===2&&entry.checks[0]?.every(value=>value===15))return null;
       seen.add(entry.id);rooms.push({id:entry.id,at:entry.at,ids:[...entry.ids],seen:entry.seen,checks:entry.checks.map(check=>check&&[...check])});
     }
     return {version:1,since:raw.since,rooms};
@@ -26,6 +27,7 @@
       const work=pool.find(item=>item.id===id);
       return fields.reduce((value,field,index)=>value+(work&&choices?.[id]?.[field]===work[field]?1<<index:0),0);
     });
+    if(root.KunstWallEnabled)return Array.from({length:state.attempts},(_,i)=>{const snapshot=snapshots.find(entry=>entry.attempt===i+1);return snapshot?score(snapshot.choices):i===state.attempts-1?score(last):null;});
     const first=snapshots.find(entry=>entry.attempt===1),second=snapshots.find(entry=>entry.attempt===2);
     if(state.attempts===1)return [score(first?.choices||last)];
     return [first?.choices?score(first.choices):null,score(second?.choices||last)];
@@ -41,7 +43,7 @@
   }
   function track(profile,state,pool,{shownId,at=Date.now()}={}) {
     const token=state?.historyToken||state?.roomToken;
-    if(!state||!roomId.test(token)||state.ids?.length!==4)return profile;
+    if(!state||!roomId.test(token)||state.ids?.length!==count)return profile;
     const index=profile.rooms.findIndex(entry=>entry.id===token), old=profile.rooms[index];
     const shown=state.ids.indexOf(shownId);
     if(!old&&shown<0)return profile; // Never count an unloaded image or the hero film.

@@ -1,8 +1,9 @@
 (() => {
   'use strict';
+  const wallMode=Boolean(window.KunstWallEnabled), workCount=wallMode?7:4, total=workCount*4, attemptLimit=wallMode?3:2;
   const $ = id => document.getElementById(id), core = window.KunstTresor, curator = window.KunstKurator;
   const progress = window.KunstProgress, transfers = window.KunstSave, history = window.KunstHistory;
-  const galleryModel=window.KunstGallery, galleryKey='kunsttresor-gallery-v1';
+  const galleryModel=window.KunstGallery, galleryKey=wallMode?'kunsttresor-wall-gallery-v1':'kunsttresor-gallery-v1';
   let personalGallery=galleryModel.fresh(), galleryUI=null, galleryBlocked=false;
   function saveGallery(value) {
     if(galleryBlocked)throw Error('Die gespeicherte Galerie konnte nicht gelesen werden. Sie wird nicht überschrieben; lade bitte eine gültige Spielstandsdatei.');
@@ -14,6 +15,7 @@
   }
   // Renew image consent: new CC0 photographs are served by the museums, too.
   const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', history:'kunsttresor-history-v1', images:'kunsttresor-images-v2', hero:'kunsttresor-hero-v1'};
+  if(wallMode)for(const key of ['game','best','progress','history'])keys[key]+='-wall';
   const labels = {date:'Entstehungszeit', style:'Stil / Tradition', artist:'Künstler', technique:'Material / Technik'};
   const store = {
     get(key) { try { return localStorage.getItem(key); } catch { return null; } },
@@ -23,7 +25,7 @@
   let pool = [], landmarkIds = [], heroWorks = [], wikiCatalogue = {artists:{},works:{}}, state = null, best = progress.integer(Number(store.get(keys.best))) ? Number(store.get(keys.best)) : 0;
   let artKnowledge = null, archiveReplacements = [], pendingImport = null, transferBusy = false, fileEpoch = 0;
   // Renew permission because relevant earlier mistakes, not just wins, are now sent.
-  const ki=window.KunstKI, aiConsentKey='kunsttresor-ai-consent-v2', aiEnabledKey='kunsttresor-ai-enabled-v1';
+  const ki=window.KunstKI, aiConsentKey='kunsttresor-ai-consent-v2'+(wallMode?'-wall':''), aiEnabledKey='kunsttresor-ai-enabled-v1'+(wallMode?'-wall':'');
   const aiEndpoint=window.KunstKIConfig?.endpoint || '';
   const aiClient=ki?.createClient({endpoint:aiEndpoint,fetcher:(...args)=>fetch(...args)});
   let aiAllowed=store.get(aiConsentKey)==='yes', aiEnabled=store.get(aiEnabledKey)==='yes' || (store.get(aiEnabledKey)!=='no' && store.get(aiConsentKey)!=='no'), aiDisplayEpoch=0, aiBaseline=new Map();
@@ -211,7 +213,7 @@
       history.merge(workHistory,candidate.history);
       if (epoch !== fileEpoch) return;
       pendingImport = candidate;
-      const phase = !candidate.state ? 'Kein laufender Raum' : candidate.state.phase === 'playing' ? 'Laufender Raum · ' + candidate.state.attempts + ' von 2 Versuchen verbraucht' : candidate.state.phase === 'unlocked' ? 'Gelöster Raum' : 'Beendete Runde';
+      const phase = !candidate.state ? 'Kein laufender Raum' : candidate.state.phase === 'playing' ? 'Laufender Raum · ' + candidate.state.attempts + ' von '+attemptLimit+' Versuchen verbraucht' : candidate.state.phase === 'unlocked' ? 'Gelöster Raum' : 'Beendete Runde';
       const earned = progress.collection(candidate.progress).filter(badge=>badge.earned).length;
       $('import-description').textContent = new Date(candidate.savedAt).toLocaleString('de-DE') + ' · ' + phase + ' · ' + (candidate.state?.escaped || 0) + ' geöffnete Räume · Rekord ' + candidate.best + ' · ' + earned + ' Abzeichen · ' + candidate.history.rooms.length + ' Räume in der Bildhistorie.' + (candidate.legacyHistory ? ' Diese ältere Datei enthält noch keine Bildhistorie; dein vorhandener Verlauf bleibt erhalten.' : '') + (candidate.updated ? ' Der Raum wird an das aktualisierte Werkarchiv angepasst.' : '');
       $('save-status').textContent = 'Datei und Inhalt sind geprüft. Übernehmen wird erst mit deiner Bestätigung wirksam.';
@@ -448,7 +450,7 @@
     galleryUI?.refresh();
     const timeReady = Date.now() >= revealAt;
     if (!timeReady && imagesAllowed && state && !revealTimer) revealTimer = setTimeout(() => { revealTimer = null; update(); }, Math.max(1,revealAt-Date.now()));
-    const allPicturesReady = imagesAllowed && ready.size === 4 && failed.size === 0 && !forgeryLoading.has(state) && timeReady;
+    const allPicturesReady = imagesAllowed && ready.size === workCount && failed.size === 0 && !forgeryLoading.has(state) && timeReady;
     $('art-grid').style.visibility = allPicturesReady ? 'visible' : 'hidden';
     $('art-grid').inert = !allPicturesReady;
     $('art-grid').setAttribute('aria-busy',String(!allPicturesReady));
@@ -456,7 +458,7 @@
     $('best').textContent = number(best);
     if (!state) {
       $('room-kicker').textContent = 'Die Galerie wartet'; $('game-title').textContent = 'Der erste Schlüssel.';
-      $('escaped').textContent = '00'; $('filled-label').textContent = '0 / 16 zugeordnet'; $('filled-bar').style.width = '0%';
+      $('escaped').textContent = '00'; $('filled-label').textContent = '0 / '+total+' zugeordnet'; $('filled-bar').style.width = '0%';
       $('attempts').setAttribute('aria-label','Zwei Versuche verfügbar');
       [...$('attempts').children].forEach(dot=>dot.classList.remove('used'));
       $('review-summary').hidden = true; $('start-game').textContent = 'Galerie betreten →';
@@ -466,35 +468,36 @@
     $('room-kicker').textContent = 'Raum ' + number(state.phase === 'unlocked' ? state.escaped : state.escaped + 1) + ' · Vier Spuren pro Werk';
     $('game-title').textContent = state.phase === 'unlocked' ? 'Die Tür ist offen.' : state.phase === 'lost' ? 'Hier endet dein Rundgang.' : 'Lies die Bilder.';
     $('escaped').textContent = number(state.escaped);
-    $('filled-label').textContent = done + ' / 16 zugeordnet'; $('filled-bar').style.width = done / 16 * 100 + '%';
-    const remaining = 2 - state.attempts;
-    $('attempts').setAttribute('aria-label', remaining + ' von zwei Versuchen verfügbar');
+    $('filled-label').textContent = done + ' / '+total+' zugeordnet'; $('filled-bar').style.width = done / total * 100 + '%';
+    const remaining = attemptLimit - state.attempts;
+    $('attempts').setAttribute('aria-label', remaining + ' von '+attemptLimit+' Versuchen verfügbar');
     [...$('attempts').children].forEach((dot,index) => dot.classList.toggle('used', index < state.attempts));
-    document.querySelectorAll('#art-grid select').forEach(select => {
+    document.querySelectorAll('#art-grid select, #wall-settings select').forEach(select => {
       select.value = state.choices[select.dataset.work]?.[select.dataset.field] || '';
       select.disabled = !playing;
       [...select.options].forEach(option => {
         const owner = core.takenBy(state,select.dataset.work,select.dataset.field,option.value);
         option.disabled = Boolean(owner);
-        if (option.dataset.label) option.textContent = option.dataset.label + (owner ? ' · bei Werk ' + 'ABCD'[state.ids.indexOf(owner)] : '');
+        if (option.dataset.label) option.textContent = option.dataset.label + (owner ? ' · bei Werk ' + 'ABCDEFG'[state.ids.indexOf(owner)] : '');
       });
     });
     renderReview();
     document.querySelectorAll('.art-card').forEach(card => card.classList.toggle('is-solved', state.phase === 'unlocked'));
     $('check').hidden = !playing;
-    $('check').disabled = !imagesAllowed || done !== 16 || ready.size !== 4 || failed.size > 0;
-    $('check').textContent = 'Schloss prüfen · Versuch ' + (state.attempts + 1) + ' von 2';
+    $('check').disabled = !imagesAllowed || done !== total || ready.size !== workCount || failed.size > 0;
+    $('check').textContent = 'Schloss prüfen · Versuch ' + (state.attempts + 1) + ' von '+attemptLimit;
     $('next-room').hidden = state.phase !== 'unlocked'; $('play-again').hidden = state.phase !== 'lost';
     $('show-solution').hidden = playing;
     $('show-solution').textContent = 'Mit dem Kurator zu den Lösungen';
     $('lock-visual').classList.toggle('is-open', state.phase === 'unlocked');
     $('lock-visual').classList.toggle('is-lost', state.phase === 'lost');
     $('technical-note').hidden = failed.size === 0;
+    if(wallMode&&playing&&state.attempts>0){$('review-help').textContent='✓ richtig, ✕ falsch, ↻ geändert und noch ungeprüft. Noch '+remaining+' Prüfversuch(e). Zum Tauschen zuerst die bisherige Zuordnung auf „Zuordnen …“ setzen.';}
     $('start-game').textContent = state ? 'Zum aktuellen Raum →' : 'Galerie betreten →';
   }
   function renderReview() {
     const results = core.review(state,pool), byField = new Map(results.map(result => [result.id + ':' + result.field,result]));
-    document.querySelectorAll('#art-grid select').forEach(select => {
+    document.querySelectorAll('#art-grid select, #wall-settings select').forEach(select => {
       const result = byField.get(select.dataset.work + ':' + select.dataset.field);
       const label = select.closest('label'), message = $(select.id + '-result');
       label.classList.toggle('is-incorrect',Boolean(result && !result.changed && !result.correct));
@@ -511,7 +514,7 @@
     $('chronology-hint').textContent = chronologyHint;
     if (visible) {
       const wrong = results.filter(result => !result.correct).length, changed = results.filter(result => result.changed).length;
-      $('review-title').textContent = 'Erste Prüfung: ' + wrong + ' von 16 Zuordnungen waren falsch.';
+      $('review-title').textContent = 'Prüfung '+state.attempts+': ' + wrong + ' von '+total+' Zuordnungen waren falsch.';
       $('review-help').textContent = (changed ? changed + ' Zuordnungen geändert, aber noch nicht erneut geprüft. ' : '') + 'Rückmeldung zur ersten Prüfung: ✕ falsch, ✓ richtig, ↻ geändert und noch ungeprüft. Du hast noch einen Versuch. Zum Tauschen zuerst eine bisherige Zuordnung auf „Zuordnen …“ setzen; danach ist die Antwort wieder frei.';
     }
   }
@@ -524,7 +527,7 @@
       clearTimeout(timer); imageTimers.delete(timer);
       if (epoch !== imageEpoch || !imagesAllowed) return;
       button.querySelector('.image-loading')?.remove();
-      if (ok) { loaded = true; ready.add(work.id); failed.delete(work.id); button.disabled = false; if(state?.forgery?.id !== work.id) rememberWork(work.id); }
+      if (ok) { if(typeof wallMode!=='undefined'&&wallMode){const card=button.closest('.art-card');card.dataset.wallAspect=String(img.naturalWidth/img.naturalHeight);window.dispatchEvent(new Event('kunst-wall-layout'));} loaded = true; ready.add(work.id); failed.delete(work.id); button.disabled = false; if(state?.forgery?.id !== work.id) rememberWork(work.id); }
       else { failed.add(work.id); button.append(node('div','image-loading',slow ? 'Bild lädt ungewöhnlich lange …' : 'Bild nicht erreichbar')); button.disabled = true; }
       update();
     };
@@ -551,7 +554,7 @@
     const epoch = imageEpoch;
     $('waiting').hidden = true; $('art-grid').hidden = false; $('lock-panel').hidden = false;
     state.ids.forEach((id,index) => {
-      const work = workById(id), letter = 'ABCD'[index];
+      const work = workById(id), letter = 'ABCDEFG'[index];
       const card = node('article','art-card'); card.dataset.id = id;
       const heading = node('div','work-heading');
       const marker=node('span','work-marker',letter); marker.setAttribute('aria-label','Werk '+letter);
@@ -570,8 +573,8 @@
         state.options[field].forEach(value => { const display = field === 'artist' ? wikiCatalogue.artists[value]?.title || value : value; const option = node('option',null,display); option.value = value; option.dataset.label = display; select.append(option); });
         select.addEventListener('change',() => {
           state = core.choose(state,id,field,select.value); save(); update();
-          if (state.attempts === 0) $('feedback').textContent = core.filled(state) === 16 ? 'Alle Antworten sind vergeben. Bereit für die erste Prüfung?' : 'Die Auswahl allein zählt noch nicht als Versuch. Ordne alle 16 Antworten zu.';
-          else $('feedback').textContent = core.filled(state) === 16 ? 'Alle Felder sind zugeordnet. Neue Antworten werden erst bei der zweiten Prüfung bewertet.' : 'Zum Tauschen sind Antworten vorübergehend frei. Fülle vor der zweiten Prüfung wieder alle 16 Felder aus.';
+          if (state.attempts === 0) $('feedback').textContent = core.filled(state) === total ? 'Alle Antworten sind vergeben. Bereit für die erste Prüfung?' : 'Die Auswahl allein zählt noch nicht als Versuch. Ordne alle 16 Antworten zu.';
+          else $('feedback').textContent = core.filled(state) === total ? 'Alle Felder sind zugeordnet. Neue Antworten werden erst bei der zweiten Prüfung bewertet.' : 'Zum Tauschen sind Antworten vorübergehend frei. Fülle vor der zweiten Prüfung wieder alle 16 Felder aus.';
         });
         const result = node('small','answer-result'); result.id = select.id + '-result'; result.hidden = true;
         select.setAttribute('aria-describedby',result.id);
@@ -583,10 +586,10 @@
       flag.onclick = () => { state.forgeryMarks ||= {}; state.forgeryMarks[id] = !state.forgeryMarks[id]; flag.setAttribute('aria-pressed',String(state.forgeryMarks[id])); save(); };
       flag.hidden = !state.forgeryMode && !state.forgery;
       const actions=node('div','artwork-actions'); actions.append(flag,galleryUI.likeButton(id));
-      card.append(heading,picture,actions,assignments); $('art-grid').append(card); loadWorkImage(work,picture,epoch);
+      card.append(heading,picture,actions,assignments); if(wallMode){card.dataset.wallAspect=String(work.imageWidth&&work.imageHeight?work.imageWidth/work.imageHeight:1);card.dataset.wallPhysical=String(work.widthCm&&work.heightCm?Math.sqrt(work.widthCm*work.heightCm):0);} $('art-grid').append(card); loadWorkImage(work,picture,epoch);
     });
     $('lock-title').textContent = state.phase === 'unlocked' ? 'Der Schlüssel passt.' : state.phase === 'lost' ? 'Das Schloss bleibt zu.' : 'Das Schloss wartet auf deinen Schlüssel.';
-    $('feedback').textContent = state.phase === 'unlocked' ? 'Alle 16 Zuordnungen stimmen. Erfahre mehr über die Werke – oder gehe in den nächsten Raum.' : state.phase === 'lost' ? 'Auch der zweite Versuch war nicht vollständig richtig. Die Runde ist beendet. Du kannst jetzt alle Zuordnungen nachlesen.' : state.attempts === 1 ? 'Der erste Prüfversuch war nicht vollständig richtig. Du hast noch genau einen Versuch. Prüfe deine Zuordnungen sorgfältig.' : 'Ordne erst alle 16 Antworten zu. Die Auswahl allein zählt noch nicht als Versuch.';
+    $('feedback').textContent = state.phase === 'unlocked' ? 'Alle '+total+' Zuordnungen stimmen. Erfahre mehr über die Werke – oder gehe in den nächsten Raum.' : state.phase === 'lost' ? 'Auch der zweite Versuch war nicht vollständig richtig. Die Runde ist beendet. Du kannst jetzt alle Zuordnungen nachlesen.' : state.attempts === 1 ? 'Der erste Prüfversuch war nicht vollständig richtig. Du hast noch genau einen Versuch. Prüfe deine Zuordnungen sorgfältig.' : 'Ordne erst alle '+total+' Antworten zu. Die Auswahl allein zählt noch nicht als Versuch.';
     if (state.forgeryError && state.forgeryMode) $('feedback').textContent = 'Die KI-Bilderzeugung ist ausgefallen. Dieser Raum enthält vier Originale und zählt nicht als Fälschungstest.';
     update();
   }
@@ -601,7 +604,7 @@
     state = upcomingRoom || core.newState(pool,state); upcomingRoom = null; save(); render(); toGame();
   }
   function inspect() {
-    if (ready.size !== 4 || failed.size || !imagesAllowed) return;
+    if (ready.size !== workCount || failed.size || !imagesAllowed) return;
     const checked = core.inspect(state,pool);
     if (!checked.checked) return;
     state = checked.state;
@@ -609,15 +612,15 @@
     const earned = awardProgress(); save(); update();
     if (state.phase === 'playing') {
       $('lock-visual').classList.remove('shake'); void $('lock-visual').offsetWidth; $('lock-visual').classList.add('shake');
-      $('feedback').textContent = checked.correct + ' von 16 Zuordnungen passen. ' + (checked.forgeryCorrect ? '' : 'Die Fälschungsmarkierung stimmt noch nicht. ') + ' Das Schloss bleibt zu. Du hast noch genau einen Prüfversuch.';
+      $('feedback').textContent = checked.correct + ' von '+total+' Zuordnungen passen. ' + (checked.forgeryCorrect ? '' : 'Die Fälschungsmarkierung stimmt noch nicht. ') + ' Das Schloss bleibt zu. Du hast noch '+(attemptLimit-state.attempts)+' Prüfversuch(e).';
       $('review-summary').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'start'});
     } else {
       $('lock-title').textContent = state.phase === 'unlocked' ? 'Der Schlüssel passt.' : 'Das Schloss bleibt zu.';
-      $('feedback').textContent = state.phase === 'unlocked' ? 'Alle 16 Zuordnungen sind richtig. Ein neuer Raum wartet – vorher kannst du mit dem Kurator die Spuren in den Bildern erkunden.' : 'Der zweite Prüfversuch war nicht vollständig richtig. Die Runde ist beendet.';
+      $('feedback').textContent = state.phase === 'unlocked' ? 'Alle '+total+' Zuordnungen sind richtig. Ein neuer Raum wartet – vorher kannst du mit dem Kurator die Spuren in den Bildern erkunden.' : 'Der zweite Prüfversuch war nicht vollständig richtig. Die Runde ist beendet.';
       $('result-kicker').textContent = state.phase === 'unlocked' ? 'Raum gelöst · Das Schloss öffnet sich' : 'Zwei Versuche · Spiel beendet';
       $('result-title').textContent = state.phase === 'unlocked' ? 'Eine Tür weiter.' : 'Bis hierher. Und beim nächsten Mal?';
-      $('result-text').textContent = state.phase === 'unlocked' ? 'Vier Werke, 16 richtige Spuren. Geh noch einmal mit dem Kurator zu den Bildern: Welche Beobachtungen stützen deine Lösung? Oder wagst du den nächsten Raum?' : checked.correct + ' von 16 Zuordnungen waren im letzten Versuch richtig. Der Kurator begleitet dich noch einmal zu den Bildern – mit Hinweisen, die dir beim nächsten Rundgang helfen können.';
-      $('result-text').textContent += state.forgery ? ' KI-Nachahmung: Werk ' + 'ABCD'[state.ids.indexOf(state.forgery.id)] + '. In der Auflösung siehst du das Original.' : ' In diesem Raum waren alle Bilder Originale.';
+      $('result-text').textContent = state.phase === 'unlocked' ? (wallMode?'Sieben Werke, 28 richtige Spuren.':'Vier Werke, 16 richtige Spuren.')+' Geh noch einmal mit dem Kurator zu den Bildern: Welche Beobachtungen stützen deine Lösung? Oder wagst du den nächsten Raum?' : checked.correct + ' von '+total+' Zuordnungen waren im letzten Versuch richtig. Der Kurator begleitet dich noch einmal zu den Bildern – mit Hinweisen, die dir beim nächsten Rundgang helfen können.';
+      $('result-text').textContent += state.forgery ? ' KI-Nachahmung: Werk ' + 'ABCDEFG'[state.ids.indexOf(state.forgery.id)] + '. In der Auflösung siehst du das Original.' : ' In diesem Raum waren alle Bilder Originale.';
       $('result-number').textContent = number(state.escaped);
       $('result-badges').hidden = !earned.length;
       $('result-badges').textContent = earned.length ? 'Neu in deiner Sammlung: ' + earned.map(badge=>badge.title).join(' · ') : '';
@@ -638,7 +641,7 @@
     $('zoom-image').alt = 'Vergrößerte Ansicht: ' + core.galleryTitle(work);
     $('zoom-image').onload = () => imageViewer.layout();
     $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = original ? imageURL(work) : gameImageURL(work);
-    open('image-dialog'); imageViewer.reset();
+    open('image-dialog'); imageViewer.reset(); if(wallMode)window.KunstWall?.inspect(work.id,letter,original);
     const large = !original && state?.forgery?.id === work.id ? gameImageURL(work) : work.imageLargeURL || imageURL(work);
     if (large !== gameImageURL(work)) {
       zoomLoad = new Image(); zoomLoad.referrerPolicy = 'no-referrer';
@@ -653,7 +656,8 @@
   const imageViewer = window.KunstTresorZoom.create({view:$('zoom-view'),image:$('zoom-image'),stage:$('zoom-stage'),label:$('zoom-label'),zoomIn:$('zoom-in'),zoomOut:$('zoom-out')});
   window.addEventListener('resize',() => { if ($('image-dialog').open) imageViewer.layout(); });
   window.addEventListener('blur',() => imageViewer.cancel());
-  $('image-dialog').addEventListener('close',() => { imageViewer.cancel(); cancelZoomLoad(); });
+  $('image-dialog').addEventListener('close',() => { imageViewer.cancel(); cancelZoomLoad();window.KunstWall?.restoreControls(); });
+  if(wallMode)window.KunstWallZoom=imageViewer;
   const techniqueArticle = {
     'Öl auf Leinwand':'Ölmalerei', 'Öl auf Holz':'Tafelmalerei', 'Öl auf Papier / Karton':'Ölmalerei', 'Öl und Metallauflage':'Blattgold',
     Tempera:'Temperamalerei', Pastell:'Pastellmalerei', Aquarell:'Aquarell', Radierung:'Radierung',
@@ -766,12 +770,12 @@
       const work = workById(id), card = node('article','solution-card'), overview=node('div','solution-overview'), sources=node('footer','solution-sources');
       if (imagesAllowed && state.forgery?.id !== id) {
         const imageButton = node('button','solution-image'); imageButton.type = 'button';
-        imageButton.setAttribute('aria-label','Werk ' + 'ABCD'[index] + ' in der Lösung vergrößern');
+        imageButton.setAttribute('aria-label','Werk ' + 'ABCDEFG'[index] + ' in der Lösung vergrößern');
         const img = node('img'); img.alt = core.galleryTitle(work); img.referrerPolicy = 'no-referrer'; img.src = work.imageURL;
         imageButton.append(img,node('span',null,'⤢ Bild vergrößern'));
-        imageButton.onclick = () => showImage(work,'ABCD'[index],true); overview.append(imageButton);
+        imageButton.onclick = () => showImage(work,'ABCDEFG'[index],true); overview.append(imageButton);
       }
-      overview.append(node('p','eyebrow','Werk ' + 'ABCD'[index]),node('h3',null,core.galleryTitle(work)));
+      overview.append(node('p','eyebrow','Werk ' + 'ABCDEFG'[index]),node('h3',null,core.galleryTitle(work)));
       if (core.galleryTitle(work)!==work.title) overview.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
       const list = node('dl'); core.fields.forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,work[field]))); overview.append(list);
       overview.append(galleryUI.likeButton(id));
@@ -784,7 +788,7 @@
           const figure=node('figure'),button=node('button','solution-image'),img=node('img');
           button.type='button'; button.setAttribute('aria-label',caption+' vergrößern');
           img.alt=caption+': '+core.galleryTitle(work); img.referrerPolicy='no-referrer'; img.src=url;
-          button.append(img); button.onclick=()=>showImage(work,'ABCD'[index],original);
+          button.append(img); button.onclick=()=>showImage(work,'ABCDEFG'[index],original);
           figure.append(button,node('figcaption',null,caption)); pair.append(figure);
         }
         comparison.append(pair,node('p',null,'Das Vorbild ist als '+work.style+' eingeordnet; die dokumentierte Technik ist '+work.technique+'. Vergleiche Linienführung, Farbauftrag, Licht, Raum und Details. Die KI-Nachahmung ist kein Werk von '+work.artist+'.'));
@@ -808,7 +812,7 @@
       sources.append(node('p','small','Bild: ' + work.imageCredit + ' · ' + work.imageLicense + '.'));
       if (core.canDownload(work)) {
         const actions = node('div','image-download'), button = node('button',null,'↓ Bild herunterladen' + (work.imageBytes ? ' · ' + (work.imageBytes/1048576).toLocaleString('de-DE',{maximumFractionDigits:1}) + ' MB' : ''));
-        button.type='button'; button.setAttribute('aria-label','Originalbild von Werk ' + 'ABCD'[index] + ' herunterladen');
+        button.type='button'; button.setAttribute('aria-label','Originalbild von Werk ' + 'ABCDEFG'[index] + ' herunterladen');
         const status = node('p','small'); status.setAttribute('role','status');
         button.onclick = () => downloadImage(work,button,status);
         actions.append(button,node('p','small','Download erlaubt: Die Bildquelle weist diese konkrete Abbildung als ' + work.imageLicense + ' aus. Freigegebene Hochauflösung; Datei kann groß sein.'),status); sources.append(actions);
@@ -842,6 +846,7 @@
     resetAIReading();
     if (!state || state.phase==='playing' || !$('solution-dialog').open) return;
     if (!aiAllowed || !aiEnabled) { $('ai-status').textContent='Redaktionelle Kuratorenhinweise · KI-Antworten sind ausgeschaltet.'; return; }
+    if(wallMode){$('ai-status').textContent='In der experimentellen Bilderwand begleitet dich der redaktionelle Kurator. Der KI-Kurator bleibt in der klassischen Version verfügbar.';return;}
     if (!aiClient || !aiEndpoint) { $('ai-status').textContent='Der KI-Dienst ist noch nicht freigeschaltet. Du liest die vollständigen redaktionellen Hinweise.'; return; }
     const input=ki.payload(state,playerProgress,previousWorks()), roomToken=state.roomToken, epoch=++aiDisplayEpoch;
     await aiClient.request(input,result=> {
