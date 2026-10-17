@@ -4,6 +4,9 @@
   const count=(audit,test)=>audit.files.filter(test).length;
   const feature=(audit,test)=>count(audit,r=>r.features.some(test));
   const pairings={
+    greatvibes:[['Libre Baskerville','Kalligrafischer Titel, ruhiger Einladungstext'],['Source Sans 3','Festlicher Titel, klar erfassbare Angaben']],
+    monoton:[['Inter','Mehrliniger Plakattitel, klarer Begleittext'],['DM Sans','Schmucktitel mit sachlichen Veranstaltungsangaben']],
+    specialelite:[['Source Sans 3','Schreibmaschinenakzent mit heutiger Erläuterung'],['DM Mono','Gleich breite Zeichen für saubere Datenzeilen']],
     poppins:[['Source Sans 3','Poppins für Titel, Source Sans 3 für Erklärtexte'],['EB Garamond','Geometrischer Titel über einem literarischen Lesetext']],
     outfit:[['Libre Baskerville','Outfit für kurze Titel, Antiqua für den Lesetext'],['Source Sans 3','Outfit für Titel, humanistische Sans für längere Erklärungen']],
     bangers:[['Source Sans 3','Comic-Titel mit ruhigem Begleittext'],['Inter','Markanter Titel, sachliche Hinweise']],

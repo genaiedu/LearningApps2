@@ -3247,6 +3247,135 @@
       "germanMissing": "",
       "optionalMissing": "",
       "licensePresent": true
+    },
+    {
+      "id": "greatvibes",
+      "name": "Great Vibes",
+      "files": [
+        {
+          "path": "fonts/typografie/greatvibes/GreatVibes-Regular.woff2",
+          "sha256": "13ed211cd909f92614cf4e10e45728f18da77596f9a9b4789e856c8c2614bb41",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": false,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "calt",
+            "case",
+            "ccmp",
+            "dlig",
+            "dnom",
+            "fina",
+            "frac",
+            "init",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "onum",
+            "ordn",
+            "salt",
+            "sinf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "subs",
+            "sups"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "",
+      "licensePresent": true
+    },
+    {
+      "id": "monoton",
+      "name": "Monoton",
+      "files": [
+        {
+          "path": "fonts/typografie/monoton/Monoton-Regular.woff2",
+          "sha256": "bfd6bb23d05044f792344d812b3694384df0764fb0202e61127f976e3548b8f3",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "kern"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
+    },
+    {
+      "id": "specialelite",
+      "name": "Special Elite",
+      "files": [
+        {
+          "path": "fonts/typografie/specialelite/SpecialElite-Regular.woff2",
+          "sha256": "d42cceae30f546982923795d56a6f53d3ad4fa27b2ff1ec95de8af45b7027eb8",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "frac",
+            "kern",
+            "liga",
+            "ordn",
+            "sups"
+          ],
+          "kernTable": true
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": false,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
+      "licensePresent": true
     }
   ]
 }

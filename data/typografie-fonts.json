@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-11",
+  "checked": "2026-10-17",
   "families": [
     {
       "name": "Poppins",
@@ -3722,12 +3722,170 @@
         ],
         "source": "https://github.com/google/fonts/blob/main/ofl/texturina/DESCRIPTION.en_us.html"
       }
+    },
+    {
+      "name": "Great Vibes",
+      "id": "greatvibes",
+      "group": "script",
+      "classification": "Kalligrafische Schreibschrift",
+      "advice": "Fließende Verbindungen und elegante Schwünge für kurze festliche Titel; Begleittext ruhig halten.",
+      "designer": "Robert Leuschke",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/greatvibes",
+      "licensePath": "fonts/typografie/greatvibes/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/greatvibes/GreatVibes-Regular.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "8d509802186f1b51572531ecf313e8098f9a5bfdfaca93f0c9b34467f9982d15"
+        }
+      ],
+      "uses": [],
+      "features": [
+        "aalt",
+        "calt",
+        "case",
+        "ccmp",
+        "dlig",
+        "dnom",
+        "fina",
+        "frac",
+        "init",
+        "liga",
+        "lnum",
+        "locl",
+        "numr",
+        "onum",
+        "ordn",
+        "salt",
+        "sinf",
+        "ss01",
+        "ss02",
+        "ss03",
+        "ss04",
+        "subs",
+        "sups"
+      ],
+      "desktop": "fonts/typografie/greatvibes/greatvibes-desktop.zip",
+      "new": true,
+      "portrait": {
+        "history": "Robert E. Leuschke entwickelte Great Vibes als fließende Schreibschrift. Lockerere Großbuchstaben verbinden sich mit förmlicheren Kleinbuchstaben. Das Projekt bietet verbundene Formen und zahlreiche Alternativen; 2024 wurde die Sprachunterstützung unter anderem um weitere lateinische und kyrillische Zeichen erweitert.",
+        "character": "Elegante Verbindungen, deutlicher Strichkontrast und weit ausschwingende Ober- und Unterlängen.",
+        "use": "Kurze Titel für Einladungen, Festprogramme und persönliche Grußzeilen. Ein kalligrafischer Auftakt, während Zeit, Ort und längere Texte ruhig gesetzt bleiben.",
+        "caution": "Nicht in durchgehenden Versalien setzen oder künstlich sperren: Das stört die Verbindungen. Schwünge brauchen Platz; für kleine Angaben und lange Erklärungen eine Leseschrift wählen.",
+        "pairings": [
+          {
+            "id": "librebaskerville",
+            "role": "Einladungstext",
+            "reason": "Die ruhige Antiqua trägt den Inhalt unter dem fließenden kalligrafischen Titel."
+          },
+          {
+            "id": "sourcesans3",
+            "role": "Datum, Ort und Rückmeldung",
+            "reason": "Die offene Sans macht die praktischen Informationen sofort erfassbar."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/greatvibes/DESCRIPTION.en_us.html"
+      }
+    },
+    {
+      "name": "Monoton",
+      "id": "monoton",
+      "group": "display",
+      "classification": "Mehrlinige Display-Sans",
+      "advice": "Grafische Parallelstriche für wenige große Titelwörter; nicht für Lesetext.",
+      "designer": "Vernon Adams",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/monoton",
+      "licensePath": "fonts/typografie/monoton/OFL.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/monoton/Monoton-Regular.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "951c4cea65ffede784a7c9672feec5d329a7e1e12216c42d53ecf36c90d04dea"
+        }
+      ],
+      "uses": [],
+      "features": [],
+      "desktop": "fonts/typografie/monoton/monoton-desktop.zip",
+      "new": true,
+      "portrait": {
+        "history": "Vernon Adams entwarf Monoton als zeitgenössische Interpretation mehrliniger Metallsatz-Schmuckschriften. Als Bezugspunkt nennt das Projekt Rudolf Kochs Prisma von 1931. Die Familie ist ausdrücklich für große Displaydarstellungen gedacht.",
+        "character": "Parallele Linien bauen die Buchstaben wie grafische Bänder auf. Die Innenstruktur ist selbst Teil des Motivs.",
+        "use": "Wenige große Titelwörter auf Musik-, Bühnen- und Veranstaltungsplakaten. Die offizielle Projektbeschreibung empfiehlt Schriftgrößen über 30 Punkt.",
+        "caution": "Nicht für Absätze, Kleingedrucktes oder lange Aufgabenstellungen. Kleine Darstellung und unruhige Hintergründe lassen die parallelen Linien ineinanderlaufen; keine künstliche Fettung.",
+        "pairings": [
+          {
+            "id": "inter",
+            "role": "Begleittext und Orientierung",
+            "reason": "Die klare Sans lässt dem mehrlinigen Titel die Bühne und hält die übrige Information ruhig."
+          },
+          {
+            "id": "dmsans",
+            "role": "Datum, Ort und Programm",
+            "reason": "Die zurückhaltenden Formen schaffen eine lesbare zweite Ebene neben der Schmuckschrift."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/monoton/DESCRIPTION.en_us.html"
+      }
+    },
+    {
+      "name": "Special Elite",
+      "id": "specialelite",
+      "group": "display",
+      "classification": "Schreibmaschinenoptik / Display",
+      "advice": "Unregelmäßiger Farbauftrag für bewusst gesetzte Schreibmaschinenakzente; keine echte Monospace-Schrift.",
+      "designer": "Astigmatic",
+      "license": "Apache 2.0",
+      "source": "https://github.com/google/fonts/tree/main/apache/specialelite",
+      "licensePath": "fonts/typografie/specialelite/LICENSE.txt",
+      "files": [
+        {
+          "path": "fonts/typografie/specialelite/SpecialElite-Regular.woff2",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "a776fcb4ceb8bdf03e2967688ebdad42680de5b91a7e62c17e718ae212d14bc4"
+        }
+      ],
+      "uses": [],
+      "features": [
+        "aalt",
+        "frac",
+        "liga",
+        "ordn",
+        "sups"
+      ],
+      "desktop": "fonts/typografie/specialelite/specialelite-desktop.zip",
+      "new": true,
+      "portrait": {
+        "history": "Astigmatic entwickelte Special Elite nach den Schreibmaschinenmodellen Smith Corona Special Elite Type Number NR6 und Remington Noiseless. Unregelmäßiger Farbauftrag und kleine Formstörungen sind bewusst Teil des digitalen Entwurfs.",
+        "character": "Antiquaformen mit absichtlich ungleichmäßigem Farbauftrag. Trotz der Schreibmaschinenoptik sind die Zeichen unterschiedlich breit.",
+        "use": "Dokumentarische Akzente, Krimirätsel, Fundstücktitel und kurze fiktive Schreibmaschinenpassagen. Die Schrift gibt dem Text eine deutlich inszenierte Materialwirkung.",
+        "caution": "Die Schrift inszeniert einen Schreibmaschinenfund. Für längere Lektüre sind die Druckspuren oft störend. Sie ist keine echte Monospace: Wenn exakt gleiche Zeichenbreiten nötig sind, DM Mono verwenden.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Erklärung und heutige Angaben",
+            "reason": "Die offene Sans trennt den inszenierten Schreibmaschinenfund von der sachlichen Erläuterung."
+          },
+          {
+            "id": "dmmono",
+            "role": "Saubere Code- und Datenzeilen",
+            "reason": "DM Mono bietet tatsächlich gleich breite Zeichen und eine saubere Zeichnung – ein funktionaler Gegenpol zur inszenierten Schreibmaschinenoptik."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/apache/specialelite/DESCRIPTION.en_us.html"
+      }
     }
   ],
   "existingFamilies": 18,
   "existingFiles": 46,
   "method": "Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.",
-  "desktopCollection": "fonts/typografie/alle-schriftfamilien-desktop.zip",
   "combinations": [
     {
       "title": "Ruhig lesen, klar orientieren",
@@ -3791,5 +3949,6 @@
     }
   ],
   "portraitNote": "Unsere Kombinationen folgen klaren Gestaltungsmaßstäben: Lesbarkeit, eine erkennbare Rangordnung, bewusster Formkontrast und wenige gut begründete Mittel. Sie sind Ausgangspunkte für eigene Entwürfe. Prüfe sie mit deinem Text und in der vorgesehenen Größe.",
-  "portraitChecked": "2026-10-17"
+  "portraitChecked": "2026-10-17",
+  "desktopCollection": "fonts/typografie/alle-schriftfamilien-desktop.zip"
 }

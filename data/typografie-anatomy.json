@@ -3060,6 +3060,264 @@
           "advance": 743.952392578125
         }
       }
+    },
+    {
+      "id": "greatvibes",
+      "name": "Great Vibes",
+      "source": "fonts/typografie/greatvibes/GreatVibes-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/greatvibes/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/greatvibes",
+      "copyright": "Copyright 2010 The Great Vibes Pro Project Authors (https://github.com/googlefonts/great-vibes)",
+      "sha256": "13ed211cd909f92614cf4e10e45728f18da77596f9a9b4789e856c8c2614bb41",
+      "unitsPerEm": 1000,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            30,
+            -3,
+            429,
+            358
+          ],
+          "advance": 358
+        },
+        "b": {
+          "bounds": [
+            45,
+            -5,
+            387,
+            621
+          ],
+          "advance": 327
+        },
+        "g": {
+          "bounds": [
+            -105,
+            -319,
+            467,
+            357
+          ],
+          "advance": 396
+        },
+        "p": {
+          "bounds": [
+            -148,
+            -273,
+            357,
+            353
+          ],
+          "advance": 336
+        },
+        "x": {
+          "bounds": [
+            -7,
+            -34,
+            405,
+            357
+          ],
+          "advance": 334
+        },
+        "H": {
+          "bounds": [
+            -8,
+            -173,
+            1544,
+            807
+          ],
+          "advance": 1395
+        },
+        "o": {
+          "bounds": [
+            39,
+            0,
+            409,
+            351
+          ],
+          "advance": 338
+        },
+        "O": {
+          "bounds": [
+            50,
+            -61,
+            910.7647058823529,
+            780
+          ],
+          "advance": 730
+        }
+      }
+    },
+    {
+      "id": "monoton",
+      "name": "Monoton",
+      "source": "fonts/typografie/monoton/Monoton-Regular.woff2",
+      "license": "SIL OFL 1.1",
+      "licensePath": "fonts/typografie/monoton/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/monoton",
+      "copyright": "Copyright (c) 2011 by vernon adams. All rights reserved.",
+      "sha256": "bfd6bb23d05044f792344d812b3694384df0764fb0202e61127f976e3548b8f3",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            55,
+            -39,
+            1619,
+            1482
+          ],
+          "advance": 1704
+        },
+        "b": {
+          "bounds": [
+            93,
+            0,
+            1404,
+            1440
+          ],
+          "advance": 1476
+        },
+        "g": {
+          "bounds": [
+            55.0,
+            -72,
+            1610,
+            1512
+          ],
+          "advance": 1694
+        },
+        "p": {
+          "bounds": [
+            93,
+            0,
+            1533,
+            1440
+          ],
+          "advance": 1601
+        },
+        "x": {
+          "bounds": [
+            39,
+            0,
+            1579,
+            1440
+          ],
+          "advance": 1618
+        },
+        "H": {
+          "bounds": [
+            93,
+            0,
+            1749,
+            1656
+          ],
+          "advance": 1846
+        },
+        "o": {
+          "bounds": [
+            55.0,
+            -72.0,
+            1639.0,
+            1512.0
+          ],
+          "advance": 1707
+        },
+        "O": {
+          "bounds": [
+            56.0,
+            -72.0,
+            1856.0,
+            1728.0
+          ],
+          "advance": 1912
+        }
+      }
+    },
+    {
+      "id": "specialelite",
+      "name": "Special Elite",
+      "source": "fonts/typografie/specialelite/SpecialElite-Regular.woff2",
+      "license": "Apache 2.0",
+      "licensePath": "fonts/typografie/specialelite/LICENSE.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/apache/specialelite",
+      "copyright": "Copyright (c) 2010 by Brian J. Bonislawsky DBA Astigmatic (AOETI). All rights reserved. Available under the Apache 2.0 licence.\rhttp://www.apache.org/licenses/LICENSE-2.0.html",
+      "sha256": "d42cceae30f546982923795d56a6f53d3ad4fa27b2ff1ec95de8af45b7027eb8",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            78,
+            -12,
+            1148,
+            1027
+          ],
+          "advance": 1158
+        },
+        "b": {
+          "bounds": [
+            -55,
+            -32,
+            1079,
+            1404
+          ],
+          "advance": 1158
+        },
+        "g": {
+          "bounds": [
+            87,
+            -458,
+            1150,
+            1001
+          ],
+          "advance": 1194
+        },
+        "p": {
+          "bounds": [
+            5,
+            -452,
+            1119,
+            956
+          ],
+          "advance": 1203
+        },
+        "x": {
+          "bounds": [
+            29,
+            -79,
+            1296,
+            986
+          ],
+          "advance": 1353
+        },
+        "H": {
+          "bounds": [
+            82,
+            -39,
+            1273,
+            1412
+          ],
+          "advance": 1337
+        },
+        "o": {
+          "bounds": [
+            82,
+            -69,
+            1112,
+            998
+          ],
+          "advance": 1195
+        },
+        "O": {
+          "bounds": [
+            88,
+            -61,
+            1174.2,
+            1437
+          ],
+          "advance": 1263
+        }
+      }
     }
   ]
 }

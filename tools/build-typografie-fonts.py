@@ -47,15 +47,18 @@ FAMILIES = [
     ('UnifrakturMaguntia','unifrakturmaguntia','blackletter','Fraktur nach Mainzer Vorbild','Gebrochene Rundungen und historische Buchstabenformen. Für bewusst gewählte kurze Texte; langes ſ und rundes s nach Wortstruktur unterscheiden. Nur ein echter Regular-Schnitt.'),
     ('Pirata One','pirataone','blackletter','Vereinfachte Textura / Display','Für Bildschirme vereinfachte Textura mit schmalen, kantigen Formen. Für markante Titel und kurze Passagen; keine historische Fraktur und kein neutraler Lesefont.'),
     ('Texturina','texturina','blackletter','Zeitgenössische Mischform mit gebrochenen Zügen','Verbindet gebrochene und weichere Rundungen. Variable Gewichte und echte Kursive; trotz des Namens keine reine historische Textura. Lesbarkeit in der konkreten Textgröße prüfen.'),
+    ('Great Vibes','greatvibes','script','Kalligrafische Schreibschrift','Fließende Verbindungen und elegante Schwünge für kurze festliche Titel; Begleittext ruhig halten.'),
+    ('Monoton','monoton','display','Mehrlinige Display-Sans','Grafische Parallelstriche für wenige große Titelwörter; nicht für Lesetext.'),
+    ('Special Elite','specialelite','display','Schreibmaschinenoptik / Display','Unregelmäßiger Farbauftrag für bewusst gesetzte Schreibmaschinenakzente; keine echte Monospace-Schrift.'),
 ]
 SLUGS = {'Zilla Slab':'zilla-slab','DM Mono':'dm-mono','Bebas Neue':'bebas-neue','Dancing Script':'dancing-script','DM Sans':'dm-sans','Plus Jakarta Sans':'plus-jakarta-sans','Archivo Black':'archivo-black'}
 NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville','goudybookletter1911',
        'breeserif','robotoslab','belleza','limelight','podkova','abel','firasans',
-       'unifrakturmaguntia','pirataone','texturina'}
+       'unifrakturmaguntia','pirataone','texturina','greatvibes','monoton','specialelite'}
 RAW = 'https://raw.githubusercontent.com/google/fonts/main/ofl/'
 
 def font_upstream(directory):
-    branch='apache' if directory=='robotoslab' else 'ofl'
+    branch='apache' if directory in {'robotoslab','specialelite'} else 'ofl'
     license_file='LICENSE.txt' if branch=='apache' else 'OFL.txt'
     return 'https://raw.githubusercontent.com/google/fonts/main/'+branch+'/'+directory+'/', branch, license_file
 
@@ -192,10 +195,13 @@ def main(selected=None):
     if selected and set(selected)-{row[1] for row in rows}:
         raise ValueError('Unknown font family')
     catalogue_path=ROOT/'data'/'typografie-fonts.json'
-    previous=json.loads(catalogue_path.read_text()) if selected else None
+    previous=json.loads(catalogue_path.read_text()) if catalogue_path.exists() else None
     with ThreadPoolExecutor(max_workers=5) as pool:
         updated=list(pool.map(build_family,rows))
     if previous:
+        old_by_id={entry['id']:entry for entry in previous['families']}
+        for entry in updated:
+            if old_by_id.get(entry['id'],{}).get('portrait'):entry['portrait']=old_by_id[entry['id']]['portrait']
         by_id={entry['id']:entry for entry in previous['families']}
         by_id.update({entry['id']:entry for entry in updated})
         entries=[by_id[row[1]] for row in FAMILIES]
@@ -212,6 +218,10 @@ def main(selected=None):
                     rel=str(path.relative_to(repo))
                     entry['uses'].append(dict(repo=repo.name,path=rel,url='https://genaiedu.github.io/'+repo.name+'/'+rel))
     out={'checked':'2026-10-11','families':entries,'existingFamilies':sum(not e['new'] for e in entries),'existingFiles':sum(len(e['files']) for e in entries if not e['new']),'method':'Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.'}
+    if previous:
+        for key in ['combinations','portraitNote','portraitChecked']:
+            if key in previous:out[key]=previous[key]
+    out['desktopCollection']=write_collection(entries)
     (ROOT/'data'/'typografie-fonts.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
     css=[]
     for e in entries:
