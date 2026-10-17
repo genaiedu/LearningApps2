@@ -1,3 +1,16 @@
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-Thin.woff2") format("woff2");font-weight:100;font-style:normal;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-ThinItalic.woff2") format("woff2");font-weight:100;font-style:italic;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-ExtraLight.woff2") format("woff2");font-weight:200;font-style:normal;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-ExtraLightItalic.woff2") format("woff2");font-weight:200;font-style:italic;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-Light.woff2") format("woff2");font-weight:300;font-style:normal;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-LightItalic.woff2") format("woff2");font-weight:300;font-style:italic;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-Medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-MediumItalic.woff2") format("woff2");font-weight:500;font-style:italic;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-SemiBoldItalic.woff2") format("woff2");font-weight:600;font-style:italic;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-BoldItalic.woff2") format("woff2");font-weight:700;font-style:italic;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-ExtraBoldItalic.woff2") format("woff2");font-weight:800;font-style:italic;font-display:swap;}
+@font-face{font-family:"Poppins";src:url("../fonts/typografie/poppins/Poppins-BlackItalic.woff2") format("woff2");font-weight:900;font-style:italic;font-display:swap;}
 @font-face{font-family:"Poppins";src:url("../../LearningApps/fonts/poppins-v24-latin-600.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap;}
 @font-face{font-family:"Poppins";src:url("../../LearningApps/fonts/poppins-v24-latin-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}
 @font-face{font-family:"Poppins";src:url("../../LearningApps/fonts/poppins-v24-latin-800.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap;}
@@ -10,10 +23,22 @@
 @font-face{font-family:"Outfit";src:url("../../LearningApps/fonts/outfit-v15-latin-900.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap;}
 @font-face{font-family:"Outfit";src:url("../../LearningApps/fonts/outfit-v15-latin-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:"Bangers";src:url("../../LearningApps/fonts/bangers-v25-latin-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Zilla Slab";src:url("../fonts/typografie/zillaslab/ZillaSlab-Light.woff2") format("woff2");font-weight:300;font-style:normal;font-display:swap;}
+@font-face{font-family:"Zilla Slab";src:url("../fonts/typografie/zillaslab/ZillaSlab-LightItalic.woff2") format("woff2");font-weight:300;font-style:italic;font-display:swap;}
+@font-face{font-family:"Zilla Slab";src:url("../fonts/typografie/zillaslab/ZillaSlab-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:"Zilla Slab";src:url("../fonts/typografie/zillaslab/ZillaSlab-Medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:"Zilla Slab";src:url("../fonts/typografie/zillaslab/ZillaSlab-MediumItalic.woff2") format("woff2");font-weight:500;font-style:italic;font-display:swap;}
+@font-face{font-family:"Zilla Slab";src:url("../fonts/typografie/zillaslab/ZillaSlab-SemiBold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:"Zilla Slab";src:url("../fonts/typografie/zillaslab/ZillaSlab-SemiBoldItalic.woff2") format("woff2");font-weight:600;font-style:italic;font-display:swap;}
+@font-face{font-family:"Zilla Slab";src:url("../fonts/typografie/zillaslab/ZillaSlab-BoldItalic.woff2") format("woff2");font-weight:700;font-style:italic;font-display:swap;}
 @font-face{font-family:"Zilla Slab";src:url("../../LearningApps/fonts/zilla-slab-v12-latin-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}
 @font-face{font-family:"Zilla Slab";src:url("../../LearningApps/fonts/zilla-slab-v12-latin-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Lora";src:url("../fonts/typografie/lora/Lora[wght].woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap;}
+@font-face{font-family:"Lora";src:url("../fonts/typografie/lora/Lora-Italic[wght].woff2") format("woff2");font-weight:400 700;font-style:italic;font-display:swap;}
 @font-face{font-family:"Lora";src:url("../../LearningApps/fonts/lora-v37-latin-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}
 @font-face{font-family:"Lora";src:url("../../LearningApps/fonts/lora-v37-latin-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Montserrat";src:url("../fonts/typografie/montserrat/Montserrat[wght].woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap;}
+@font-face{font-family:"Montserrat";src:url("../fonts/typografie/montserrat/Montserrat-Italic[wght].woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap;}
 @font-face{font-family:"Montserrat";src:url("../../LearningApps/fonts/montserrat-v31-latin-900.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap;}
 @font-face{font-family:"Montserrat";src:url("../../LearningApps/fonts/montserrat-v31-latin-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:"DM Mono";src:url("../../LearningApps/fonts/dm-mono-v16-latin-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;}
@@ -39,6 +64,8 @@
 @font-face{font-family:"Caveat";src:url("../../LearningApps/fonts/caveat-v23-latin-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:"Nunito";src:url("../../LearningApps/fonts/nunito-v32-latin-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}
 @font-face{font-family:"Nunito";src:url("../../LearningApps/fonts/nunito-v32-latin-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Inter";src:url("../fonts/typografie/inter/Inter[opsz,wght].woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap;}
+@font-face{font-family:"Inter";src:url("../fonts/typografie/inter/Inter-Italic[opsz,wght].woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap;}
 @font-face{font-family:"Inter";src:url("../../LearningApps/fonts/inter-v20-latin-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;}
 @font-face{font-family:"Inter";src:url("../../LearningApps/fonts/inter-v20-latin-600.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap;}
 @font-face{font-family:"Inter";src:url("../../LearningApps/fonts/inter-v20-latin-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}

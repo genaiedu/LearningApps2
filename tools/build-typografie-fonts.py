@@ -58,6 +58,7 @@ SLUGS = {'Zilla Slab':'zilla-slab','DM Mono':'dm-mono','Bebas Neue':'bebas-neue'
 NEW = {'cardo','ebgaramond','librebodoni','sourcesans3','librebaskerville','goudybookletter1911',
        'breeserif','robotoslab','belleza','limelight','podkova','abel','firasans',
        'unifrakturmaguntia','pirataone','texturina','greatvibes','monoton','specialelite','courierprime','tinos','arimo'}
+EXTENDED = {'lora','zillaslab','montserrat','poppins','inter'}
 RAW = 'https://raw.githubusercontent.com/google/fonts/main/ofl/'
 
 def font_upstream(directory):
@@ -143,7 +144,7 @@ def build_family(row):
     designer = re.search(r'^designer: "([^"]+)"',metadata,re.M).group(1)
     entry = dict(name=name,id=directory,group=group,classification=classification,advice=advice,designer=designer,license='Apache 2.0' if branch=='apache' else 'SIL OFL 1.1',source='https://github.com/google/fonts/tree/main/'+branch+'/'+directory,licensePath='fonts/typografie/'+directory+'/'+license_file,files=[],uses=[])
     if directory=='tinos':entry['licenseSource']=license_url
-    if directory in NEW:
+    if directory in NEW or directory in EXTENDED:
         # Google Fonts defines the web/CSS weight. Some unmodified originals
         # (e.g. Fira Sans Thin / ExtraLight) keep historical OS/2 values 250/275.
         # Preserve the files; map them to Google's public CSS values 100/200.
@@ -181,7 +182,7 @@ def build_family(row):
             entry['documentStatic']={'source':'https://github.com/adobe-fonts/source-sans/tree/release/TTF','files':['fonts/typografie/sourcesans3/static/'+f for f in ttf_names],'licensePath':'fonts/typografie/sourcesans3/static/LICENSE.txt'}
             extra_note='Zusätzlich: vollständige statische Original-OTFs von Adobe, dem ursprünglichen freien Source-Sans-Projekt (kein Adobe-Abo erforderlich). Quelle: '+entry['desktopStatic']['source']+'\nDie modernen Wordvorlagen betten die statischen TrueType-Originale derselben Familie ein, damit auch Onlinebetrachter ohne CFF-Unterstützung die Schrift verwenden können. Die statischen und variablen Fassungen nicht gleichzeitig installieren. Für Word bei Kompatibilitätsproblemen die Dateien im Unterordner static verwenden. Lizenz: static/LICENSE.txt.\n'
         write_desktop_package(entry,folder,desktop_files,extra_note)
-        entry['new']=True
+        entry['new']=directory in NEW
     else:
         slug = SLUGS.get(name,name.lower())
         for path in sorted((SIBLING/'fonts').glob(slug+'-v*-latin-*.woff2')):
@@ -207,6 +208,11 @@ def main(selected=None):
         old_by_id={entry['id']:entry for entry in previous['families']}
         for entry in updated:
             if old_by_id.get(entry['id'],{}).get('portrait'):entry['portrait']=old_by_id[entry['id']]['portrait']
+            if entry['id'] in EXTENDED:
+                old=old_by_id[entry['id']]
+                # Keep shared webfonts; add only uncovered static styles or variable ranges.
+                entry['files']=[f for f in entry['files'] if isinstance(f['weight'],list) or not any(o['style']==f['style'] and o['weight']==f['weight'] for o in old['files'] if o['path'].startswith('../'))]+[f for f in old['files'] if f['path'].startswith('../')]
+                entry['uses']=old['uses']
         by_id={entry['id']:entry for entry in previous['families']}
         by_id.update({entry['id']:entry for entry in updated})
         entries=[by_id[row[1]] for row in FAMILIES]
@@ -222,7 +228,7 @@ def main(selected=None):
                 if any(Path(f['path']).name in text for f in entry['files']):
                     rel=str(path.relative_to(repo))
                     entry['uses'].append(dict(repo=repo.name,path=rel,url='https://genaiedu.github.io/'+repo.name+'/'+rel))
-    out={'checked':'2026-10-11','families':entries,'existingFamilies':sum(not e['new'] for e in entries),'existingFiles':sum(len(e['files']) for e in entries if not e['new']),'method':'Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.'}
+    out={'checked':'2026-10-11','families':entries,'existingFamilies':sum(not e['new'] for e in entries),'existingFiles':sum(1 for e in entries for f in e['files'] if f['path'].startswith('../')),'method':'Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.'}
     if previous:
         for key in ['combinations','portraitNote','portraitChecked']:
             if key in previous:out[key]=previous[key]

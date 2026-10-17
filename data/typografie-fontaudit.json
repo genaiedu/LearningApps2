@@ -9,6 +9,448 @@
       "name": "Poppins",
       "files": [
         {
+          "path": "fonts/typografie/poppins/Poppins-Thin.woff2",
+          "sha256": "a5665046c4c8543d0312ed2d9fbb27f466e14c5e1838b1114798cdaf660177ad",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            250,
+            250
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ThinItalic.woff2",
+          "sha256": "ce36135660223d350849c40f1a0a187a37d8aa7311e614e70bd1cbee3d875f18",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            250,
+            250
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraLight.woff2",
+          "sha256": "16b5e2fa21dbc16c86e7256a3a20d8aa8a56af648acf457e769a50d73f7318b0",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            275,
+            275
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraLightItalic.woff2",
+          "sha256": "f6d8021fbba11e2a86620b0999e79358de3b6a121ac7182610d3fc4b11359042",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            275,
+            275
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Light.woff2",
+          "sha256": "6927de4cf868119bfe79601055dad356b910531692dbe6f680a822a8213c47a9",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            300,
+            300
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-LightItalic.woff2",
+          "sha256": "063fb68e58b28499cf10ac8511c4e219b04ea3aeb0c79fa73195d2f291a07066",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            300,
+            300
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Italic.woff2",
+          "sha256": "d8be9f7a1a844730771b84760d2077829f3bb361bb4a7c583a2251071d8e4229",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Medium.woff2",
+          "sha256": "94891be05d123c806ad91f41e61db0f5b4c63ce97e82e2e57df39175203bfdce",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            500,
+            500
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-MediumItalic.woff2",
+          "sha256": "eea5ccd8fc2547c4f9e6a645426256919d642d47b4f471767e3c5cf2b6f6cd5c",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            500,
+            500
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-SemiBoldItalic.woff2",
+          "sha256": "c63b11ad19fb92276043356a9085642815a4707b42c14c81bde52c70b45f4c12",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            600,
+            600
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-BoldItalic.woff2",
+          "sha256": "74090c7c54ca455cee046624d13909eee70af5c5be3ee5e40258b8f24e4f0d77",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            700,
+            700
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraBoldItalic.woff2",
+          "sha256": "e9bcdee5c3d829a188d0d54edd3d88f3b9ab9089ca9cf7f301da7c85f6a74140",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            800,
+            800
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-BlackItalic.woff2",
+          "sha256": "52876417fac8a98bc148731db1c958c470dc421e12824e16f66e0cfcbc288800",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            900,
+            900
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "abvm",
+            "abvs",
+            "akhn",
+            "blwf",
+            "blwm",
+            "blws",
+            "half",
+            "haln",
+            "nukt",
+            "pres",
+            "psts",
+            "rkrf",
+            "rphf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "vatu"
+          ],
+          "kernTable": false
+        },
+        {
           "path": "../LearningApps/fonts/poppins-v24-latin-600.woff2",
           "sha256": "f4e80d9dfd374d02989b87a27b5ed4cb78fbb177c27f1478e9a8b0afb7513149",
           "germanMissing": "",
@@ -87,8 +529,8 @@
       "cuts": {
         "regular": true,
         "bold": true,
-        "italic": false,
-        "boldItalic": false
+        "italic": true,
+        "boldItalic": true
       },
       "opticalFiles": [],
       "germanMissing": "",
@@ -302,6 +744,294 @@
       "name": "Zilla Slab",
       "files": [
         {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Light.woff2",
+          "sha256": "badcde41691fc7b728f655a3886adbf645727b18085ca152be477d1bcc9e6d17",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            300,
+            300
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "crcy",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "onum",
+            "ordn",
+            "ornm",
+            "pnum",
+            "sinf",
+            "smcp",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-LightItalic.woff2",
+          "sha256": "da8b5eb3e268ed5744df413bc2a50ba45c69b44fe82747d98bf06d4c51770525",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            300,
+            300
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "crcy",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "onum",
+            "ordn",
+            "ornm",
+            "pnum",
+            "sinf",
+            "smcp",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Italic.woff2",
+          "sha256": "049a2c5d0eb2c69ba2a72dbd19138a8e36bdfeb2a8d1b9f99a7fd81e3a6257ea",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "crcy",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "onum",
+            "ordn",
+            "ornm",
+            "pnum",
+            "sinf",
+            "smcp",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Medium.woff2",
+          "sha256": "7dbdc1d38ead348cb26f34a6f62e9f67efb72cd1439086a3beeed19e2681a135",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            500,
+            500
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "crcy",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "onum",
+            "ordn",
+            "ornm",
+            "pnum",
+            "sinf",
+            "smcp",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-MediumItalic.woff2",
+          "sha256": "8d6db9ac6d2198f51a3c6aea99932a0d98ac75a33b7e87b6f425b35b769f3440",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            500,
+            500
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "crcy",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "onum",
+            "ordn",
+            "ornm",
+            "pnum",
+            "sinf",
+            "smcp",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-SemiBold.woff2",
+          "sha256": "9dd86695b43e772007fba9eeb0f3ea48a1f0b6471b64f62b5285b2bfe62b2263",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            600,
+            600
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "crcy",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "onum",
+            "ordn",
+            "ornm",
+            "pnum",
+            "sinf",
+            "smcp",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-SemiBoldItalic.woff2",
+          "sha256": "76cd6a73b4f872cceb9158d1e2f500fea4d070f89016bf734720095ae3bf64e1",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            600,
+            600
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "crcy",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "onum",
+            "ordn",
+            "ornm",
+            "pnum",
+            "sinf",
+            "smcp",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-BoldItalic.woff2",
+          "sha256": "fc8acab472bbe22f85049ea42fbdc421871f81f717647306f4b5dd891aff0885",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            700,
+            700
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "crcy",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "numr",
+            "onum",
+            "ordn",
+            "ornm",
+            "pnum",
+            "sinf",
+            "smcp",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
           "path": "../LearningApps/fonts/zilla-slab-v12-latin-700.woff2",
           "sha256": "896b6ebb8cd10aca90bdff88a5a1b648cbc0d50751740bd5a6d012007aef9ebe",
           "germanMissing": "",
@@ -355,8 +1085,8 @@
       "cuts": {
         "regular": true,
         "bold": true,
-        "italic": false,
-        "boldItalic": false
+        "italic": true,
+        "boldItalic": true
       },
       "opticalFiles": [],
       "germanMissing": "",
@@ -367,6 +1097,78 @@
       "id": "lora",
       "name": "Lora",
       "files": [
+        {
+          "path": "fonts/typografie/lora/Lora[wght].woff2",
+          "sha256": "68d8f768284fc4b652c872310b6c90530d1c0df7bcbf7019d3967c1942db54c3",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            400,
+            700
+          ],
+          "italic": false,
+          "axes": {
+            "wght": [
+              400,
+              700
+            ]
+          },
+          "features": [
+            "aalt",
+            "calt",
+            "case",
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "ordn",
+            "pnum",
+            "rvrn",
+            "sups",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/lora/Lora-Italic[wght].woff2",
+          "sha256": "c6ab945bc222455890455d67f0904b3f483a6a8de13a2fcf8a7111722c5ed6c7",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            400,
+            700
+          ],
+          "italic": true,
+          "axes": {
+            "wght": [
+              400,
+              700
+            ]
+          },
+          "features": [
+            "aalt",
+            "calt",
+            "case",
+            "ccmp",
+            "frac",
+            "kern",
+            "liga",
+            "locl",
+            "mark",
+            "mkmk",
+            "ordn",
+            "pnum",
+            "rvrn",
+            "sups",
+            "tnum"
+          ],
+          "kernTable": false
+        },
         {
           "path": "../LearningApps/fonts/lora-v37-latin-700.woff2",
           "sha256": "c05fd5289492ed310ed882259b944ca5287e76e572a65d92d3941f9f44f0342a",
@@ -423,8 +1225,8 @@
       "cuts": {
         "regular": true,
         "bold": true,
-        "italic": false,
-        "boldItalic": false
+        "italic": true,
+        "boldItalic": true
       },
       "opticalFiles": [],
       "germanMissing": "",
@@ -435,6 +1237,96 @@
       "id": "montserrat",
       "name": "Montserrat",
       "files": [
+        {
+          "path": "fonts/typografie/montserrat/Montserrat[wght].woff2",
+          "sha256": "3bc66aa24a810d15286bcacce1c3bd9d3d165aea1e476b3a725a3fbfbee36324",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            100,
+            900
+          ],
+          "italic": false,
+          "axes": {
+            "wght": [
+              100,
+              900
+            ]
+          },
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "ccmp",
+            "dlig",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "onum",
+            "ordn",
+            "pnum",
+            "rvrn",
+            "sinf",
+            "smcp",
+            "ss01",
+            "subs",
+            "sups",
+            "tnum"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/montserrat/Montserrat-Italic[wght].woff2",
+          "sha256": "862b1b3db60c6f7165f2fd35c673fb14304eb7bcc4697131662c1b066a57468f",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            100,
+            900
+          ],
+          "italic": true,
+          "axes": {
+            "wght": [
+              100,
+              900
+            ]
+          },
+          "features": [
+            "aalt",
+            "c2sc",
+            "case",
+            "ccmp",
+            "dlig",
+            "dnom",
+            "frac",
+            "kern",
+            "liga",
+            "lnum",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "onum",
+            "ordn",
+            "pnum",
+            "rvrn",
+            "sinf",
+            "smcp",
+            "ss01",
+            "subs",
+            "sups",
+            "tnum"
+          ],
+          "kernTable": false
+        },
         {
           "path": "../LearningApps/fonts/montserrat-v31-latin-900.woff2",
           "sha256": "5b6958520638bb8609f9eacb17c4d189563efeae96d5da49f7c2043988697205",
@@ -493,9 +1385,9 @@
       ],
       "cuts": {
         "regular": true,
-        "bold": false,
-        "italic": false,
-        "boldItalic": false
+        "bold": true,
+        "italic": true,
+        "boldItalic": true
       },
       "opticalFiles": [],
       "germanMissing": "",
@@ -1225,6 +2117,141 @@
       "name": "Inter",
       "files": [
         {
+          "path": "fonts/typografie/inter/Inter[opsz,wght].woff2",
+          "sha256": "59908c6bfd7c1a565f6802ea6f89a8be12d15e48335c79536da8f1dfbc984430",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            100,
+            900
+          ],
+          "italic": false,
+          "axes": {
+            "opsz": [
+              14,
+              32
+            ],
+            "wght": [
+              100,
+              900
+            ]
+          },
+          "features": [
+            "aalt",
+            "calt",
+            "case",
+            "ccmp",
+            "cpsp",
+            "cv01",
+            "cv02",
+            "cv03",
+            "cv04",
+            "cv05",
+            "cv06",
+            "cv07",
+            "cv08",
+            "cv09",
+            "cv10",
+            "cv11",
+            "cv12",
+            "cv13",
+            "cv14",
+            "dlig",
+            "dnom",
+            "frac",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "ordn",
+            "pnum",
+            "salt",
+            "sinf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "ss08",
+            "subs",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "fonts/typografie/inter/Inter-Italic[opsz,wght].woff2",
+          "sha256": "dfc12fd7c01dd9c66d75df5e277f4d6f6dd6d57a2f39ea1288f6bc10eb2892fc",
+          "germanMissing": "",
+          "optionalMissing": "",
+          "longSPresent": true,
+          "weight": [
+            100,
+            900
+          ],
+          "italic": true,
+          "axes": {
+            "opsz": [
+              14,
+              32
+            ],
+            "wght": [
+              100,
+              900
+            ]
+          },
+          "features": [
+            "aalt",
+            "calt",
+            "case",
+            "ccmp",
+            "cpsp",
+            "cv01",
+            "cv02",
+            "cv03",
+            "cv04",
+            "cv05",
+            "cv06",
+            "cv07",
+            "cv08",
+            "cv09",
+            "cv10",
+            "cv12",
+            "cv13",
+            "cv14",
+            "dlig",
+            "dnom",
+            "frac",
+            "kern",
+            "locl",
+            "mark",
+            "mkmk",
+            "numr",
+            "ordn",
+            "pnum",
+            "salt",
+            "sinf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "ss08",
+            "subs",
+            "sups",
+            "tnum",
+            "zero"
+          ],
+          "kernTable": false
+        },
+        {
           "path": "../LearningApps/fonts/inter-v20-latin-500.woff2",
           "sha256": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f",
           "germanMissing": "",
@@ -1336,8 +2363,8 @@
       "cuts": {
         "regular": true,
         "bold": true,
-        "italic": false,
-        "boldItalic": false
+        "italic": true,
+        "boldItalic": true
       },
       "opticalFiles": [
         {

@@ -13,6 +13,97 @@
       "licensePath": "fonts/typografie/poppins/OFL.txt",
       "files": [
         {
+          "path": "fonts/typografie/poppins/Poppins-Thin.woff2",
+          "weight": 100,
+          "style": "normal",
+          "axes": {},
+          "sha256": "6d8e5d9d29140cc93e321745fa1243c67889e6bc3639ec34db64f3da7a496352"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ThinItalic.woff2",
+          "weight": 100,
+          "style": "italic",
+          "axes": {},
+          "sha256": "46df80ac970f5e84829b868d283878b4d97e289c7b1245541d8bbf66b5d670a8"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraLight.woff2",
+          "weight": 200,
+          "style": "normal",
+          "axes": {},
+          "sha256": "55c03314cc754e26f741f97890e5e9cbe3b3278fe3abcecfecafd60111b2643d"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraLightItalic.woff2",
+          "weight": 200,
+          "style": "italic",
+          "axes": {},
+          "sha256": "7171a17e4cda8f6ded78a7a931f9b7f38987057f3ffd1fe07a71528ad0f01e49"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Light.woff2",
+          "weight": 300,
+          "style": "normal",
+          "axes": {},
+          "sha256": "650ba57fa99d12ec40c31ccfb680be656be4497fbe14164617d67e32ffe9cd46"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-LightItalic.woff2",
+          "weight": 300,
+          "style": "italic",
+          "axes": {},
+          "sha256": "b8f9c5be59723fadf8e5447fa1245c2c53b60a3464a24d6ece9ee3c283d8917b"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Italic.woff2",
+          "weight": 400,
+          "style": "italic",
+          "axes": {},
+          "sha256": "4fa76ae75b40f926420514044722cb97f32186cafd3b38263cc34dad7174d46d"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-Medium.woff2",
+          "weight": 500,
+          "style": "normal",
+          "axes": {},
+          "sha256": "90373e7d838d32468438fc3e152dca0bdb12edcab99ea639f158790b1ba1fd05"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-MediumItalic.woff2",
+          "weight": 500,
+          "style": "italic",
+          "axes": {},
+          "sha256": "765addf6c7c11ec3c54325cacd68cabd05df8e4b6455302d812a9b9bafd1c614"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-SemiBoldItalic.woff2",
+          "weight": 600,
+          "style": "italic",
+          "axes": {},
+          "sha256": "16bb118aa232c9a13fa238027d24d7854dd1a1d9cbaf99b17fec4388d56b432c"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-BoldItalic.woff2",
+          "weight": 700,
+          "style": "italic",
+          "axes": {},
+          "sha256": "3572ac8116a0ac7317d342262b29937bcbaf94d8f03f90df6fe666fa7e2fb43a"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-ExtraBoldItalic.woff2",
+          "weight": 800,
+          "style": "italic",
+          "axes": {},
+          "sha256": "dc00a2eb988373e9f4e99bf8ff76c6315ee21d36b341cbbff024e4c18cc7ac03"
+        },
+        {
+          "path": "fonts/typografie/poppins/Poppins-BlackItalic.woff2",
+          "weight": 900,
+          "style": "italic",
+          "axes": {},
+          "sha256": "f4852ca89c29f69d800e14f097ed4d1f0a0cc454e9f77d73bfd6db1f71c287a0"
+        },
+        {
           "path": "../LearningApps/fonts/poppins-v24-latin-600.woff2",
           "weight": 600,
           "style": "normal",
@@ -378,103 +469,318 @@
           "repo": "LearningApps2",
           "path": "styles/shared.css",
           "url": "https://genaiedu.github.io/LearningApps2/styles/shared.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Julikrise_1914_Interaktives_Arbeitsblatt.html",
+          "url": "https://genaiedu.github.io/LearningApps/Julikrise_1914_Interaktives_Arbeitsblatt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "LearningApps_mit_Wechselstromlabor.html",
+          "url": "https://genaiedu.github.io/LearningApps/LearningApps_mit_Wechselstromlabor.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Mathematische_Entdeckungsaufgaben_mit_KI.html",
+          "url": "https://genaiedu.github.io/LearningApps/Mathematische_Entdeckungsaufgaben_mit_KI.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Mathematische_Entdeckungsaufgaben_mit_KI_Teil_2.html",
+          "url": "https://genaiedu.github.io/LearningApps/Mathematische_Entdeckungsaufgaben_mit_KI_Teil_2.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Nomenklaturquiz.html",
+          "url": "https://genaiedu.github.io/LearningApps/Nomenklaturquiz.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Physikalische_Entdeckungsaufgaben_mit_KI.html",
+          "url": "https://genaiedu.github.io/LearningApps/Physikalische_Entdeckungsaufgaben_mit_KI.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Physikalische_Entdeckungsaufgaben_mit_KI_Teil_2.html",
+          "url": "https://genaiedu.github.io/LearningApps/Physikalische_Entdeckungsaufgaben_mit_KI_Teil_2.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Schaltplan.html",
+          "url": "https://genaiedu.github.io/LearningApps/Schaltplan.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "bewegungslabor.css",
+          "url": "https://genaiedu.github.io/LearningApps/bewegungslabor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "bohr-mission.css",
+          "url": "https://genaiedu.github.io/LearningApps/bohr-mission.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "bohr-selbstlernen.html",
+          "url": "https://genaiedu.github.io/LearningApps/bohr-selbstlernen.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "chemie-klausurtraining.css",
+          "url": "https://genaiedu.github.io/LearningApps/chemie-klausurtraining.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "coin_rotation_arbeitsblatt.html",
+          "url": "https://genaiedu.github.io/LearningApps/coin_rotation_arbeitsblatt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "datenschutz.html",
+          "url": "https://genaiedu.github.io/LearningApps/datenschutz.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "doppelspalt_arbeitsblatt.html",
+          "url": "https://genaiedu.github.io/LearningApps/doppelspalt_arbeitsblatt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "druck-auftrieb.css",
+          "url": "https://genaiedu.github.io/LearningApps/druck-auftrieb.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "entropie-selbstlernen.html",
+          "url": "https://genaiedu.github.io/LearningApps/entropie-selbstlernen.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "finsternis-auslegungslabor.html",
+          "url": "https://genaiedu.github.io/LearningApps/finsternis-auslegungslabor.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "heft65wl2.html",
+          "url": "https://genaiedu.github.io/LearningApps/heft65wl2.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "if-clause-quest.css",
+          "url": "https://genaiedu.github.io/LearningApps/if-clause-quest.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "impressum.html",
+          "url": "https://genaiedu.github.io/LearningApps/impressum.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "interaktives_arbeitsblatt_neuronale_netze.html",
+          "url": "https://genaiedu.github.io/LearningApps/interaktives_arbeitsblatt_neuronale_netze.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "ki-unterrichtsentwicklung.css",
+          "url": "https://genaiedu.github.io/LearningApps/ki-unterrichtsentwicklung.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "learningapps_bersicht.html",
+          "url": "https://genaiedu.github.io/LearningApps/learningapps_bersicht.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "lochkamera-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/lochkamera-labor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "mandala-atelier.css",
+          "url": "https://genaiedu.github.io/LearningApps/mandala-atelier.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "materialien.html",
+          "url": "https://genaiedu.github.io/LearningApps/materialien.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "maxwells-lichtlabor.html",
+          "url": "https://genaiedu.github.io/LearningApps/maxwells-lichtlabor.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "methodenwerkstatt-lehrkraefte.css",
+          "url": "https://genaiedu.github.io/LearningApps/methodenwerkstatt-lehrkraefte.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "minkowski.html",
+          "url": "https://genaiedu.github.io/LearningApps/minkowski.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "minkowskialt.html",
+          "url": "https://genaiedu.github.io/LearningApps/minkowskialt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "mol-mission.css",
+          "url": "https://genaiedu.github.io/LearningApps/mol-mission.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "optik-schatten-lochkamera-tafelshow.css",
+          "url": "https://genaiedu.github.io/LearningApps/optik-schatten-lochkamera-tafelshow.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "photoeffekt-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/photoeffekt-labor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "physik-formelsammlung.css",
+          "url": "https://genaiedu.github.io/LearningApps/physik-formelsammlung.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "physik-q1-bootcamp.css",
+          "url": "https://genaiedu.github.io/LearningApps/physik-q1-bootcamp.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "physik_mythencheck_ef.html",
+          "url": "https://genaiedu.github.io/LearningApps/physik_mythencheck_ef.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "physik_mythencheck_q1.html",
+          "url": "https://genaiedu.github.io/LearningApps/physik_mythencheck_q1.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schach-ag-verwaltung.css",
+          "url": "https://genaiedu.github.io/LearningApps/schach-ag-verwaltung.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schach-ag.css",
+          "url": "https://genaiedu.github.io/LearningApps/schach-ag.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schachuhr.css",
+          "url": "https://genaiedu.github.io/LearningApps/schachuhr.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schall_arbeitsblatt.html",
+          "url": "https://genaiedu.github.io/LearningApps/schall_arbeitsblatt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schwingkreis_simulator.html",
+          "url": "https://genaiedu.github.io/LearningApps/schwingkreis_simulator.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schwingkreis_simulator_v8_fenster.html",
+          "url": "https://genaiedu.github.io/LearningApps/schwingkreis_simulator_v8_fenster.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schwingkreis_simulator_v9_fenster_fit.html",
+          "url": "https://genaiedu.github.io/LearningApps/schwingkreis_simulator_v9_fenster_fit.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "sudoku-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/sudoku-labor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "thermochemie-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/thermochemie-labor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "veritasium-formel.css",
+          "url": "https://genaiedu.github.io/LearningApps/veritasium-formel.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "wechselstrom_labor_app.html",
+          "url": "https://genaiedu.github.io/LearningApps/wechselstrom_labor_app.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "wellenoptik_gitter_aufgaben.html",
+          "url": "https://genaiedu.github.io/LearningApps/wellenoptik_gitter_aufgaben.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "wellenoptik_gitter_aufgaben_ergebnisse_einklappbar.html",
+          "url": "https://genaiedu.github.io/LearningApps/wellenoptik_gitter_aufgaben_ergebnisse_einklappbar.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "wetter-klima-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/wetter-klima-labor.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "kurslisten.html",
+          "url": "https://genaiedu.github.io/LearningApps2/kurslisten.html"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "musterloesung-photoeffekt-ph-gk-q2.html",
+          "url": "https://genaiedu.github.io/LearningApps2/musterloesung-photoeffekt-ph-gk-q2.html"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/orbital-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/orbital-labor.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/saeuren-basen-mission.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/saeuren-basen-mission.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/schroedinger-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/schroedinger-labor.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/shared.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/shared.css"
         }
       ],
-      "features": [],
-      "new": false,
-      "desktopFiles": [
-        {
-          "path": "fonts/typografie/poppins/Poppins-Thin.ttf",
-          "sha256": "6d8e5d9d29140cc93e321745fa1243c67889e6bc3639ec34db64f3da7a496352",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-ThinItalic.ttf",
-          "sha256": "46df80ac970f5e84829b868d283878b4d97e289c7b1245541d8bbf66b5d670a8",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-ExtraLight.ttf",
-          "sha256": "55c03314cc754e26f741f97890e5e9cbe3b3278fe3abcecfecafd60111b2643d",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-ExtraLightItalic.ttf",
-          "sha256": "7171a17e4cda8f6ded78a7a931f9b7f38987057f3ffd1fe07a71528ad0f01e49",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-Light.ttf",
-          "sha256": "650ba57fa99d12ec40c31ccfb680be656be4497fbe14164617d67e32ffe9cd46",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-LightItalic.ttf",
-          "sha256": "b8f9c5be59723fadf8e5447fa1245c2c53b60a3464a24d6ece9ee3c283d8917b",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-Regular.ttf",
-          "sha256": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-Italic.ttf",
-          "sha256": "4fa76ae75b40f926420514044722cb97f32186cafd3b38263cc34dad7174d46d",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-Medium.ttf",
-          "sha256": "90373e7d838d32468438fc3e152dca0bdb12edcab99ea639f158790b1ba1fd05",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-MediumItalic.ttf",
-          "sha256": "765addf6c7c11ec3c54325cacd68cabd05df8e4b6455302d812a9b9bafd1c614",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-SemiBold.ttf",
-          "sha256": "d3bf1bdaf0550e83da9ac0b1d1d9fe6db086835a83aa28578e609a394b9a0286",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-SemiBoldItalic.ttf",
-          "sha256": "16bb118aa232c9a13fa238027d24d7854dd1a1d9cbaf99b17fec4388d56b432c",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-Bold.ttf",
-          "sha256": "983676516167748b74de6f4771fb384c664fd913acb8b471122ecacf5da5ea6c",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-BoldItalic.ttf",
-          "sha256": "3572ac8116a0ac7317d342262b29937bcbaf94d8f03f90df6fe666fa7e2fb43a",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-ExtraBold.ttf",
-          "sha256": "f2ab17c1a63a0ecc12c2461848fc8a469395e3cd2d641803e889c643d9f958e1",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-ExtraBoldItalic.ttf",
-          "sha256": "dc00a2eb988373e9f4e99bf8ff76c6315ee21d36b341cbbff024e4c18cc7ac03",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-Black.ttf",
-          "sha256": "d82aaaf98a9283f9a8edd24e51173337d8eaf09e25cd3d98831f8ec8461748a1",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/poppins/Poppins-BlackItalic.ttf",
-          "sha256": "f4852ca89c29f69d800e14f097ed4d1f0a0cc454e9f77d73bfd6db1f71c287a0",
-          "axes": {}
-        }
+      "features": [
+        "abvs",
+        "akhn",
+        "blwf",
+        "blws",
+        "half",
+        "haln",
+        "nukt",
+        "pres",
+        "psts",
+        "rkrf",
+        "rphf",
+        "ss01",
+        "ss02",
+        "ss03",
+        "ss04",
+        "vatu"
       ],
       "desktop": "fonts/typografie/poppins/poppins-desktop.zip",
+      "new": false,
       "portrait": {
         "history": "Indian Type Foundry veröffentlichte Poppins 2015 als geometrische Familie für lateinische Schrift und Devanagari. Jonny Pinhorn entwarf zunächst die lateinischen Formen, Ninad Kale die Devanagari. Kreisformen und optisch korrigierte Strichverbindungen prägen beide Schriftsysteme.",
         "character": "Kreisnahe Rundungen, hohe x-Höhe und ein konstruiertes, gleichmäßiges Schriftbild.",
@@ -747,6 +1053,62 @@
       "licensePath": "fonts/typografie/zillaslab/OFL.txt",
       "files": [
         {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Light.woff2",
+          "weight": 300,
+          "style": "normal",
+          "axes": {},
+          "sha256": "4c3dfcd4a5bb71ee28b6c2ec8e8bfec720f619bc00e12a13a88f0f233af7f851"
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-LightItalic.woff2",
+          "weight": 300,
+          "style": "italic",
+          "axes": {},
+          "sha256": "899c8f381f7b82a78fd5ac458405b6c212ad25bc11447f235aa097f3faf34b9e"
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Italic.woff2",
+          "weight": 400,
+          "style": "italic",
+          "axes": {},
+          "sha256": "ff0cd7a2f0db59d017d51b4ed9003f58bf21ae218ab2a965aa3bc1dd894c152b"
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-Medium.woff2",
+          "weight": 500,
+          "style": "normal",
+          "axes": {},
+          "sha256": "d344b0f60cd5fb2d34c4168d2811ba684163e5665e20cccbcfb6ac822d84a500"
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-MediumItalic.woff2",
+          "weight": 500,
+          "style": "italic",
+          "axes": {},
+          "sha256": "de6be2985329891035a3b3863a325a82a918a2018650c3b43fa5c4ae14815f58"
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-SemiBold.woff2",
+          "weight": 600,
+          "style": "normal",
+          "axes": {},
+          "sha256": "aafcb295b88d520357db1ecf9a1c3167055e87e9ddf5f63e560cbd139ec2805e"
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-SemiBoldItalic.woff2",
+          "weight": 600,
+          "style": "italic",
+          "axes": {},
+          "sha256": "23815b73da57186d64adc71cdab4cd2bbd9be21f71efdce60d9676638f070e2f"
+        },
+        {
+          "path": "fonts/typografie/zillaslab/ZillaSlab-BoldItalic.woff2",
+          "weight": 700,
+          "style": "italic",
+          "axes": {},
+          "sha256": "7951036c92de71e3c88ea01abe031d5bdaddf4639022a3e1cb92322f2e88d2cf"
+        },
+        {
           "path": "../LearningApps/fonts/zilla-slab-v12-latin-700.woff2",
           "weight": 700,
           "style": "normal",
@@ -761,69 +1123,28 @@
       ],
       "uses": [],
       "features": [
+        "aalt",
+        "c2sc",
+        "case",
+        "crcy",
         "dnom",
         "frac",
         "liga",
         "lnum",
         "locl",
         "numr",
+        "onum",
+        "ordn",
+        "ornm",
         "pnum",
-        "tnum"
-      ],
-      "new": false,
-      "desktopFiles": [
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-Light.ttf",
-          "sha256": "4c3dfcd4a5bb71ee28b6c2ec8e8bfec720f619bc00e12a13a88f0f233af7f851",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-LightItalic.ttf",
-          "sha256": "899c8f381f7b82a78fd5ac458405b6c212ad25bc11447f235aa097f3faf34b9e",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-Regular.ttf",
-          "sha256": "41a4626844da9216b031308d4423045c765fe4231d99862d85d7d74509d37703",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-Italic.ttf",
-          "sha256": "ff0cd7a2f0db59d017d51b4ed9003f58bf21ae218ab2a965aa3bc1dd894c152b",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-Medium.ttf",
-          "sha256": "d344b0f60cd5fb2d34c4168d2811ba684163e5665e20cccbcfb6ac822d84a500",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-MediumItalic.ttf",
-          "sha256": "de6be2985329891035a3b3863a325a82a918a2018650c3b43fa5c4ae14815f58",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-SemiBold.ttf",
-          "sha256": "aafcb295b88d520357db1ecf9a1c3167055e87e9ddf5f63e560cbd139ec2805e",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-SemiBoldItalic.ttf",
-          "sha256": "23815b73da57186d64adc71cdab4cd2bbd9be21f71efdce60d9676638f070e2f",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-Bold.ttf",
-          "sha256": "4ec3a04a4eef37074b42ef542e4d874e13646668cfe65256e0bf100441cf8719",
-          "axes": {}
-        },
-        {
-          "path": "fonts/typografie/zillaslab/ZillaSlab-BoldItalic.ttf",
-          "sha256": "7951036c92de71e3c88ea01abe031d5bdaddf4639022a3e1cb92322f2e88d2cf",
-          "axes": {}
-        }
+        "sinf",
+        "smcp",
+        "sups",
+        "tnum",
+        "zero"
       ],
       "desktop": "fonts/typografie/zillaslab/zillaslab-desktop.zip",
+      "new": false,
       "portrait": {
         "history": "Typotheque entwickelte Zilla Slab für Mozilla. Die Familie wurde als zentrale Markenschrift einschließlich des Mozilla-Schriftzugs eingesetzt und baut auf Typotheques Tesla auf. Kräftige Serifen verbinden sich mit weichen Kurven und einer eigenständigen Kursividee.",
         "character": "Zeitgenössische Slab Serif mit robusten Füßen, weichen Rundungen und freundlichem, leicht industriellem Ton.",
@@ -855,6 +1176,36 @@
       "source": "https://github.com/google/fonts/tree/main/ofl/lora",
       "licensePath": "fonts/typografie/lora/OFL.txt",
       "files": [
+        {
+          "path": "fonts/typografie/lora/Lora[wght].woff2",
+          "weight": [
+            400.0,
+            700.0
+          ],
+          "style": "normal",
+          "axes": {
+            "wght": [
+              400.0,
+              700.0
+            ]
+          },
+          "sha256": "822a6621ccbe8d97d20ac88c1c41f5615c9c2c202eaa75f272cd452aac6475a7"
+        },
+        {
+          "path": "fonts/typografie/lora/Lora-Italic[wght].woff2",
+          "weight": [
+            400.0,
+            700.0
+          ],
+          "style": "italic",
+          "axes": {
+            "wght": [
+              400.0,
+              700.0
+            ]
+          },
+          "sha256": "22d8d8854b53807aa664ca34f2031a9ed57a1d0dea296b8b96cdd3aad937a2b3"
+        },
         {
           "path": "../LearningApps/fonts/lora-v37-latin-700.woff2",
           "weight": 700,
@@ -918,41 +1269,64 @@
           "repo": "LearningApps2",
           "path": "styles/spiegelwelt.css",
           "url": "https://genaiedu.github.io/LearningApps2/styles/spiegelwelt.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "kunst-der-fuge.css",
+          "url": "https://genaiedu.github.io/LearningApps/kunst-der-fuge.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schach-ag.css",
+          "url": "https://genaiedu.github.io/LearningApps/schach-ag.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schach-urkundenwerkstatt.css",
+          "url": "https://genaiedu.github.io/LearningApps/schach-urkundenwerkstatt.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/deeper-learning-praxis.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/deeper-learning-praxis.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/gkl-praxis.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/gkl-praxis.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/revolutionsfaeden.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/revolutionsfaeden.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/saeuren-basen-mission.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/saeuren-basen-mission.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/seuchengeschichte.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/seuchengeschichte.css"
         }
       ],
       "features": [
+        "aalt",
         "calt",
+        "case",
         "ccmp",
         "frac",
         "liga",
         "locl",
+        "ordn",
         "pnum",
+        "rvrn",
+        "sups",
         "tnum"
       ],
-      "new": false,
-      "desktopFiles": [
-        {
-          "path": "fonts/typografie/lora/Lora[wght].ttf",
-          "sha256": "822a6621ccbe8d97d20ac88c1c41f5615c9c2c202eaa75f272cd452aac6475a7",
-          "axes": {
-            "wght": [
-              400.0,
-              700.0
-            ]
-          }
-        },
-        {
-          "path": "fonts/typografie/lora/Lora-Italic[wght].ttf",
-          "sha256": "22d8d8854b53807aa664ca34f2031a9ed57a1d0dea296b8b96cdd3aad937a2b3",
-          "axes": {
-            "wght": [
-              400.0,
-              700.0
-            ]
-          }
-        }
-      ],
       "desktop": "fonts/typografie/lora/lora-desktop.zip",
+      "new": false,
       "portrait": {
         "history": "Cyreal entwarf Lora als zeitgenössische Leseschrift mit kalligrafischen Wurzeln. Die Projektbeschreibung nennt Bildschirm und Druck als Einsatzfelder; 2019 wurde die Familie um eine variable Fassung erweitert. Die geschwungenen Formen erinnern an Pinselbewegungen.",
         "character": "Mäßiger Kontrast, weiche Kurven und deutlich gezeichnete Serifen. Literarisch, ohne eine historische Kopie sein zu wollen.",
@@ -985,6 +1359,36 @@
       "licensePath": "fonts/typografie/montserrat/OFL.txt",
       "files": [
         {
+          "path": "fonts/typografie/montserrat/Montserrat[wght].woff2",
+          "weight": [
+            100.0,
+            900.0
+          ],
+          "style": "normal",
+          "axes": {
+            "wght": [
+              100.0,
+              900.0
+            ]
+          },
+          "sha256": "0f7b311b2f3279e4eef9b2f968bcdbab6e28f4daeb1f049f4f278a902bcd82f7"
+        },
+        {
+          "path": "fonts/typografie/montserrat/Montserrat-Italic[wght].woff2",
+          "weight": [
+            100.0,
+            900.0
+          ],
+          "style": "italic",
+          "axes": {
+            "wght": [
+              100.0,
+              900.0
+            ]
+          },
+          "sha256": "51607f316bc020e59f03cbf51543eecffbea501c0b31d73e5b82927c5cca442c"
+        },
+        {
           "path": "../LearningApps/fonts/montserrat-v31-latin-900.woff2",
           "weight": 900,
           "style": "normal",
@@ -999,40 +1403,30 @@
       ],
       "uses": [],
       "features": [
+        "aalt",
+        "c2sc",
+        "case",
         "ccmp",
+        "dlig",
         "dnom",
         "frac",
         "liga",
+        "lnum",
         "locl",
         "numr",
+        "onum",
+        "ordn",
         "pnum",
         "rvrn",
+        "sinf",
+        "smcp",
+        "ss01",
+        "subs",
+        "sups",
         "tnum"
       ],
-      "new": false,
-      "desktopFiles": [
-        {
-          "path": "fonts/typografie/montserrat/Montserrat[wght].ttf",
-          "sha256": "0f7b311b2f3279e4eef9b2f968bcdbab6e28f4daeb1f049f4f278a902bcd82f7",
-          "axes": {
-            "wght": [
-              100.0,
-              900.0
-            ]
-          }
-        },
-        {
-          "path": "fonts/typografie/montserrat/Montserrat-Italic[wght].ttf",
-          "sha256": "51607f316bc020e59f03cbf51543eecffbea501c0b31d73e5b82927c5cca442c",
-          "axes": {
-            "wght": [
-              100.0,
-              900.0
-            ]
-          }
-        }
-      ],
       "desktop": "fonts/typografie/montserrat/montserrat-desktop.zip",
+      "new": false,
       "portrait": {
         "history": "Julieta Ulanovsky ließ sich von Plakaten und Beschriftungen des Stadtteils Montserrat in Buenos Aires aus der ersten Hälfte des 20. Jahrhunderts anregen. Das freie Projekt bewahrt diese urbane Formensprache. Jacques Le Bailly überarbeitete die Familie 2017.",
         "character": "Breite geometrische Formen, präsente Versalien und ein selbstbewusster, städtischer Ton.",
@@ -1964,6 +2358,44 @@
       "licensePath": "fonts/typografie/inter/OFL.txt",
       "files": [
         {
+          "path": "fonts/typografie/inter/Inter[opsz,wght].woff2",
+          "weight": [
+            100.0,
+            900.0
+          ],
+          "style": "normal",
+          "axes": {
+            "opsz": [
+              14.0,
+              32.0
+            ],
+            "wght": [
+              100.0,
+              900.0
+            ]
+          },
+          "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+        },
+        {
+          "path": "fonts/typografie/inter/Inter-Italic[opsz,wght].woff2",
+          "weight": [
+            100.0,
+            900.0
+          ],
+          "style": "italic",
+          "axes": {
+            "opsz": [
+              14.0,
+              32.0
+            ],
+            "wght": [
+              100.0,
+              900.0
+            ]
+          },
+          "sha256": "acd98e64795781b2058f07b18475e0ecee2a0fe2b42a49e2f9e37d0d6bf66ce6"
+        },
+        {
           "path": "../LearningApps/fonts/inter-v20-latin-500.woff2",
           "weight": 500,
           "style": "normal",
@@ -2398,50 +2830,426 @@
           "repo": "LearningApps2",
           "path": "styles/shared.css",
           "url": "https://genaiedu.github.io/LearningApps2/styles/shared.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Julikrise_1914_Interaktives_Arbeitsblatt.html",
+          "url": "https://genaiedu.github.io/LearningApps/Julikrise_1914_Interaktives_Arbeitsblatt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "LearningApps_mit_Wechselstromlabor.html",
+          "url": "https://genaiedu.github.io/LearningApps/LearningApps_mit_Wechselstromlabor.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Mathematische_Entdeckungsaufgaben_mit_KI.html",
+          "url": "https://genaiedu.github.io/LearningApps/Mathematische_Entdeckungsaufgaben_mit_KI.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Mathematische_Entdeckungsaufgaben_mit_KI_Teil_2.html",
+          "url": "https://genaiedu.github.io/LearningApps/Mathematische_Entdeckungsaufgaben_mit_KI_Teil_2.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Nomenklaturquiz.html",
+          "url": "https://genaiedu.github.io/LearningApps/Nomenklaturquiz.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Physikalische_Entdeckungsaufgaben_mit_KI.html",
+          "url": "https://genaiedu.github.io/LearningApps/Physikalische_Entdeckungsaufgaben_mit_KI.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Physikalische_Entdeckungsaufgaben_mit_KI_Teil_2.html",
+          "url": "https://genaiedu.github.io/LearningApps/Physikalische_Entdeckungsaufgaben_mit_KI_Teil_2.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Schaltplan.html",
+          "url": "https://genaiedu.github.io/LearningApps/Schaltplan.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Stereochemietrainer.html",
+          "url": "https://genaiedu.github.io/LearningApps/Stereochemietrainer.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "Stereochemietrainer_lokal.html",
+          "url": "https://genaiedu.github.io/LearningApps/Stereochemietrainer_lokal.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "bewegungslabor.css",
+          "url": "https://genaiedu.github.io/LearningApps/bewegungslabor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "bohr-mission.css",
+          "url": "https://genaiedu.github.io/LearningApps/bohr-mission.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "bohr-selbstlernen.html",
+          "url": "https://genaiedu.github.io/LearningApps/bohr-selbstlernen.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "brechung-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/brechung-labor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "chemie-klausurtraining.css",
+          "url": "https://genaiedu.github.io/LearningApps/chemie-klausurtraining.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "coin_rotation_arbeitsblatt.html",
+          "url": "https://genaiedu.github.io/LearningApps/coin_rotation_arbeitsblatt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "datenschutz.html",
+          "url": "https://genaiedu.github.io/LearningApps/datenschutz.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "doppelspalt_arbeitsblatt.html",
+          "url": "https://genaiedu.github.io/LearningApps/doppelspalt_arbeitsblatt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "druck-auftrieb.css",
+          "url": "https://genaiedu.github.io/LearningApps/druck-auftrieb.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "entropie-selbstlernen.html",
+          "url": "https://genaiedu.github.io/LearningApps/entropie-selbstlernen.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "finsternis-auslegungslabor.html",
+          "url": "https://genaiedu.github.io/LearningApps/finsternis-auslegungslabor.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "heft65wl2.html",
+          "url": "https://genaiedu.github.io/LearningApps/heft65wl2.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "if-clause-quest.css",
+          "url": "https://genaiedu.github.io/LearningApps/if-clause-quest.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "impressum.html",
+          "url": "https://genaiedu.github.io/LearningApps/impressum.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "index.html",
+          "url": "https://genaiedu.github.io/LearningApps/index.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "interaktives_arbeitsblatt_neuronale_netze.html",
+          "url": "https://genaiedu.github.io/LearningApps/interaktives_arbeitsblatt_neuronale_netze.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "ki-unterrichtsentwicklung.css",
+          "url": "https://genaiedu.github.io/LearningApps/ki-unterrichtsentwicklung.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "kunst-der-fuge.css",
+          "url": "https://genaiedu.github.io/LearningApps/kunst-der-fuge.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "learningapps_bersicht.html",
+          "url": "https://genaiedu.github.io/LearningApps/learningapps_bersicht.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "learningapps_mit_chatgpt_github.html",
+          "url": "https://genaiedu.github.io/LearningApps/learningapps_mit_chatgpt_github.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "lochkamera-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/lochkamera-labor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "mandala-atelier.css",
+          "url": "https://genaiedu.github.io/LearningApps/mandala-atelier.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "materialien.html",
+          "url": "https://genaiedu.github.io/LearningApps/materialien.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "maxwells-lichtlabor.html",
+          "url": "https://genaiedu.github.io/LearningApps/maxwells-lichtlabor.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "methodenwerkstatt-lehrkraefte.css",
+          "url": "https://genaiedu.github.io/LearningApps/methodenwerkstatt-lehrkraefte.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "minkowski.html",
+          "url": "https://genaiedu.github.io/LearningApps/minkowski.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "minkowskialt.html",
+          "url": "https://genaiedu.github.io/LearningApps/minkowskialt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "mol-mission.css",
+          "url": "https://genaiedu.github.io/LearningApps/mol-mission.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "optik-schatten-lochkamera-tafelshow.css",
+          "url": "https://genaiedu.github.io/LearningApps/optik-schatten-lochkamera-tafelshow.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "photoeffekt-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/photoeffekt-labor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "physik-formelsammlung.css",
+          "url": "https://genaiedu.github.io/LearningApps/physik-formelsammlung.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "physik-q1-bootcamp.css",
+          "url": "https://genaiedu.github.io/LearningApps/physik-q1-bootcamp.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "physik_mythencheck_ef.html",
+          "url": "https://genaiedu.github.io/LearningApps/physik_mythencheck_ef.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "physik_mythencheck_q1.html",
+          "url": "https://genaiedu.github.io/LearningApps/physik_mythencheck_q1.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "protected-materials.css",
+          "url": "https://genaiedu.github.io/LearningApps/protected-materials.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schach-ag-verwaltung.css",
+          "url": "https://genaiedu.github.io/LearningApps/schach-ag-verwaltung.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schach-ag.css",
+          "url": "https://genaiedu.github.io/LearningApps/schach-ag.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schach-urkundenwerkstatt.css",
+          "url": "https://genaiedu.github.io/LearningApps/schach-urkundenwerkstatt.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schachuhr.css",
+          "url": "https://genaiedu.github.io/LearningApps/schachuhr.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schall_arbeitsblatt.html",
+          "url": "https://genaiedu.github.io/LearningApps/schall_arbeitsblatt.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schwingkreis_simulator.html",
+          "url": "https://genaiedu.github.io/LearningApps/schwingkreis_simulator.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schwingkreis_simulator_v8_fenster.html",
+          "url": "https://genaiedu.github.io/LearningApps/schwingkreis_simulator_v8_fenster.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "schwingkreis_simulator_v9_fenster_fit.html",
+          "url": "https://genaiedu.github.io/LearningApps/schwingkreis_simulator_v9_fenster_fit.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "sudoku-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/sudoku-labor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "thermochemie-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/thermochemie-labor.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "veritasium-formel.css",
+          "url": "https://genaiedu.github.io/LearningApps/veritasium-formel.css"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "wechselstrom_labor_app.html",
+          "url": "https://genaiedu.github.io/LearningApps/wechselstrom_labor_app.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "wellenoptik_gitter_aufgaben.html",
+          "url": "https://genaiedu.github.io/LearningApps/wellenoptik_gitter_aufgaben.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "wellenoptik_gitter_aufgaben_ergebnisse_einklappbar.html",
+          "url": "https://genaiedu.github.io/LearningApps/wellenoptik_gitter_aufgaben_ergebnisse_einklappbar.html"
+        },
+        {
+          "repo": "LearningApps",
+          "path": "wetter-klima-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps/wetter-klima-labor.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "assets/huggingface-fall/films/01-intro-der-schwarm.html",
+          "url": "https://genaiedu.github.io/LearningApps2/assets/huggingface-fall/films/01-intro-der-schwarm.html"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "assets/huggingface-fall/films/02-folie-25-die-spuren.html",
+          "url": "https://genaiedu.github.io/LearningApps2/assets/huggingface-fall/films/02-folie-25-die-spuren.html"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "assets/huggingface-fall/films/02b-folie-25-die-voegel-fliehen.html",
+          "url": "https://genaiedu.github.io/LearningApps2/assets/huggingface-fall/films/02b-folie-25-die-voegel-fliehen.html"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "assets/huggingface-fall/films/03-abschluss-voegel-auf-dem-draht.html",
+          "url": "https://genaiedu.github.io/LearningApps2/assets/huggingface-fall/films/03-abschluss-voegel-auf-dem-draht.html"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "huggingface-fall.css",
+          "url": "https://genaiedu.github.io/LearningApps2/huggingface-fall.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "kurslisten.html",
+          "url": "https://genaiedu.github.io/LearningApps2/kurslisten.html"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "musterloesung-photoeffekt-ph-gk-q2.html",
+          "url": "https://genaiedu.github.io/LearningApps2/musterloesung-photoeffekt-ph-gk-q2.html"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/chat.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/chat.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/deeper-learning-praxis.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/deeper-learning-praxis.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/gkl-praxis.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/gkl-praxis.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/klausurassistent.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/klausurassistent.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/orbital-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/orbital-labor.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/saeuren-basen-mission.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/saeuren-basen-mission.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/schroedinger-labor.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/schroedinger-labor.css"
+        },
+        {
+          "repo": "LearningApps2",
+          "path": "styles/shared.css",
+          "url": "https://genaiedu.github.io/LearningApps2/styles/shared.css"
         }
       ],
       "features": [
+        "aalt",
         "calt",
+        "case",
         "ccmp",
+        "cv01",
+        "cv02",
+        "cv03",
+        "cv04",
+        "cv05",
+        "cv06",
+        "cv07",
+        "cv08",
+        "cv09",
+        "cv10",
+        "cv11",
+        "cv12",
+        "cv13",
+        "cv14",
+        "dlig",
         "dnom",
         "frac",
         "locl",
         "numr",
+        "ordn",
         "pnum",
-        "tnum"
-      ],
-      "new": false,
-      "desktopFiles": [
-        {
-          "path": "fonts/typografie/inter/Inter[opsz,wght].ttf",
-          "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
-          "axes": {
-            "opsz": [
-              14.0,
-              32.0
-            ],
-            "wght": [
-              100.0,
-              900.0
-            ]
-          }
-        },
-        {
-          "path": "fonts/typografie/inter/Inter-Italic[opsz,wght].ttf",
-          "sha256": "acd98e64795781b2058f07b18475e0ecee2a0fe2b42a49e2f9e37d0d6bf66ce6",
-          "axes": {
-            "opsz": [
-              14.0,
-              32.0
-            ],
-            "wght": [
-              100.0,
-              900.0
-            ]
-          }
-        }
+        "salt",
+        "sinf",
+        "ss01",
+        "ss02",
+        "ss03",
+        "ss04",
+        "ss05",
+        "ss06",
+        "ss07",
+        "ss08",
+        "subs",
+        "sups",
+        "tnum",
+        "zero"
       ],
       "desktop": "fonts/typografie/inter/inter-desktop.zip",
+      "new": false,
       "portrait": {
         "history": "Rasmus Andersson entwickelte Inter gezielt für Computerbildschirme. Eine hohe x-Höhe und Details für Benutzeroberflächen prägen die Familie. Das offene Projekt bietet unter anderem kontextabhängige Zeichenanpassungen und Ziffernfunktionen.",
         "character": "Offene, klare Sans mit großer x-Höhe und nüchterner, gut strukturierbarer Wirkung.",

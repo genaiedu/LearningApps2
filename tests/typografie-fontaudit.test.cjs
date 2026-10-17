@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'..'),A=require('../scripts/typografie-fontaudit.js'),catalogue=require('../data/typografie-fonts.json'),audit=require('../data/typografie-fontaudit.json');
 test('all 40 font audits refer to unchanged real local font files',()=>{
- assert.equal(audit.families.length,40);assert.equal(audit.families.reduce((n,f)=>n+f.files.length,0),99);
+ assert.equal(audit.families.length,40);assert.equal(audit.families.reduce((n,f)=>n+f.files.length,0),126);
  for(const f of catalogue.families){const a=audit.families.find(a=>a.id===f.id);assert.equal(a.name,f.name);assert.deepEqual(a.files.map(x=>x.path),f.files.map(x=>x.path));
   for(const file of [...a.files,...a.opticalFiles])assert.equal(file.sha256,crypto.createHash('sha256').update(fs.readFileSync(path.resolve(root,file.path))).digest('hex'));
  }
@@ -27,9 +27,9 @@ test('Fira Sans has all 18 real static cuts with German characters and local sou
  for(const id of ['anatomy-font','overshoot-font','body-font','heading-font'])assert.ok(html.match(new RegExp('id="'+id+'"[\\s\\S]*?<\/select>'))[0].includes('<option>Fira Sans</option>'));
 });
 test('available cuts, optional capital sharp S, and optical files are not conflated',()=>{
- const pop=audit.families.find(f=>f.id==='poppins');assert.equal(pop.germanMissing,'');assert.ok(pop.optionalMissing.includes('ẞ'));assert.equal(pop.cuts.italic,false);
+ const pop=audit.families.find(f=>f.id==='poppins');assert.equal(pop.germanMissing,'');assert.ok(pop.optionalMissing.includes('ẞ'));assert.equal(pop.cuts.italic,true);
  const eb=audit.families.find(f=>f.id==='ebgaramond');assert.ok(Object.values(eb.cuts).every(Boolean));assert.equal(eb.optionalMissing,'');
- for(const id of ['inter','dmsans']){const a=audit.families.find(a=>a.id===id),f=catalogue.families.find(f=>f.id===id),item=A.checks(f,a).flatMap(c=>c.items).find(c=>c.label==='Optische Größen');assert.equal(item.state,'pass');assert.ok(item.text.includes('zusätzlichen lokalen Datei'));assert.ok(a.opticalFiles[0].axes.opsz);}
+ for(const id of ['inter','dmsans']){const a=audit.families.find(a=>a.id===id),f=catalogue.families.find(f=>f.id===id),item=A.checks(f,a).flatMap(c=>c.items).find(c=>c.label==='Optische Größen');assert.equal(item.state,'pass');assert.ok(item.text.includes(id==='inter'?'opsz-Achse in den Archivdateien':'zusätzlichen lokalen Datei'));assert.ok(a.opticalFiles[0].axes.opsz);}
 });
 test('every family has two valid, non-self partner suggestions, never a passed harmony test',()=>{
  const names=new Set(catalogue.families.map(f=>f.name));
