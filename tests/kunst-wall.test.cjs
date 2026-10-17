@@ -2,6 +2,13 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const root=path.resolve(__dirname,'..');
 function mode(wall){const ctx=vm.createContext({KunstWallEnabled:wall,console});for(const name of ['core','progress','history'])vm.runInContext(fs.readFileSync(path.join(root,'scripts/kunsttresor-'+name+'.js'),'utf8'),ctx);return ctx;}
 const pool=require('../data/kunstarchiv.json').works;
+test('wall copy updates answer counts but never rewrites artwork dates',t=>{
+ const {JSDOM}=require('jsdom'),dom=new JSDOM(fs.readFileSync(path.join(root,'kunsttresor.html'),'utf8'),{runScripts:'outside-only'}),w=dom.window;t.after(()=>w.close());
+ w.KunstWallEnabled=true;w.ResizeObserver=class{observe(){}};w.requestAnimationFrame=()=>0;
+ const p=w.document.createElement('p');p.textContent='Caravaggio · 1610 · 1616 · 1916';w.document.getElementById('gallery-dialog').append(p);
+ w.eval(fs.readFileSync(path.join(root,'scripts/kunsttresor-layout.js'),'utf8'));w.eval(fs.readFileSync(path.join(root,'scripts/kunsttresor-wall.js'),'utf8'));
+ assert.equal(p.textContent,'Caravaggio · 1610 · 1616 · 1916');assert.match(w.document.querySelector('.hero-rules').textContent,/28 Felder/);
+});
 function answer(core,state,correct){for(const f of core.fields)for(const id of state.ids)state=core.choose(state,id,f,'');for(const f of core.fields)state.ids.forEach((id,i)=>{state=core.choose(state,id,f,pool.find(w=>w.id===state.ids[(i+(correct?0:1))%state.ids.length])[f]);});return state;}
 test('wall rooms have seven unique answers, permit two errors and restore on the final attempt',()=>{const w=mode(true),c=w.KunstTresor;let s=c.newState(pool);assert.equal(s.ids.length,7);assert.equal(c.inspect(s,pool).incomplete,true);for(let n=1;n<=2;n++){s=c.inspect(answer(c,s,false),pool).state;assert.equal(s.phase,'playing');assert.equal(s.attempts,n);assert.ok(c.restore(s,pool));}s=c.inspect(answer(c,s,true),pool).state;assert.equal(s.phase,'unlocked');assert.equal(c.filled(s),28);assert.ok(c.restore(s,pool));assert.equal(mode(false).KunstTresor.restore(s,pool),null);});
 test('third wrong inspection loses while classic still loses on its second',()=>{for(const [wall,limit]of [[true,3],[false,2]]){const c=mode(wall).KunstTresor;let s=c.newState(pool);for(let n=1;n<=limit;n++)s=c.inspect(answer(c,s,false),pool).state;assert.equal(s.phase,'lost');assert.equal(s.attempts,limit);assert.ok(c.restore(s,pool));}});
