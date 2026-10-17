@@ -8,3 +8,7 @@
 .reader-paging.reader-zoomed #print-pages{display:block;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y}.reader-navigation output{min-width:48px;text-align:center;font-variant-numeric:lining-nums tabular-nums}html:fullscreen{width:100%;height:100%;background:#e5e5df}.reader-navigation{flex-shrink:0}#print-pages{scrollbar-gutter:stable}.reader-paging.reader-zoomed .pagedjs_pages{margin-block:0}@media print{.reader-paging.reader-zoomed #print-pages{overflow:visible;display:block;scrollbar-gutter:auto}}
 
 .reader-expanded .print-toolbar{display:none}
+
+.reader-leaf-stage{position:fixed;z-index:9;pointer-events:none;perspective:1800px}.reader-turning-leaf{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}.reader-leaf-face{position:absolute;inset:0;background:#fff;backface-visibility:hidden;overflow:hidden;box-shadow:0 5px 22px #0004}.reader-leaf-face::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#0002,transparent 12%,transparent 85%,#0001);pointer-events:none}.reader-leaf-back{transform:rotateY(180deg)}.reader-paging .pagedjs_page{box-shadow:0 3px 14px #0002,inset 0 0 12px #0001}@media print{.reader-leaf-stage{display:none!important}}
+
+.reader-blank-page{background:white;grid-column:1;box-shadow:0 3px 14px #0002,inset -8px 0 15px #0001}.reader-blank-page[hidden]{display:none}@media print{.reader-blank-page{display:none!important}}
