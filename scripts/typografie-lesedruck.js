@@ -2,7 +2,7 @@
 (()=>{'use strict';
  const $=id=>document.getElementById(id),el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;},query=new URLSearchParams(location.search),embedded=query.get('embedded')==='1';
  let pending=null,busy=false,activePreviewer=null,currentSettings=null,renderId=0;
- const defaults={body:'ebgaramond',heading:'ebgaramond',contents:'firasans',quote:'lora',note:'firasans',data:'firasans'};
+ const defaults={body:'ebgaramond',heading:'ebgaramond',contents:'ebgaramond',quote:'ebgaramond',note:'ebgaramond',data:'ebgaramond'};
  const weights=(f,style='normal')=>{const set=new Set();for(const file of f.files.filter(r=>r.style===style)){if(Array.isArray(file.weight)){for(let w=Math.ceil(file.weight[0]/100)*100;w<=file.weight[1];w+=100)set.add(w);}else set.add(file.weight);}return [...set].sort((a,b)=>a-b);};
  const closest=(list,w)=>[...list].sort((a,b)=>Math.abs(a-w)-Math.abs(b-w)||a-b)[0];
  function send(data){if(embedded)parent.postMessage(data,location.origin);}
