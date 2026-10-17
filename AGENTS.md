@@ -20,3 +20,6 @@
   checkout and on GitHub Pages.
 - Preserve unrelated user changes. Do not commit test screenshots or local
   output files.
+
+- Do not list or link applications in `index.html`. The user explicitly wants
+  application discovery exclusively in the main hub `../LearningApps/heft65wl2.html`.
