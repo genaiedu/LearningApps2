@@ -70,6 +70,7 @@
   const forgeryLoading = new WeakSet();
   const forgeryEpochs = new WeakMap(), unstartedRooms = new WeakSet();
   let upcomingRoom = null;
+  let pendingAssignment = null;
   const forgerySwitch = document.createElement('button');
   forgerySwitch.type = 'button';
   const rareForgeryText = $('forgery-frequency').textContent;
@@ -498,6 +499,58 @@
     state.escaped = 0;
     save(); if (imagesAllowed) { render(); toGame(); } else askForImages(true);
   }
+  const pictureLetter = id => 'ABCDEFG'[state.ids.indexOf(id)];
+  function assignmentFeedback() {
+    const complete=core.filled(state)===total;
+    $('feedback').textContent=state.attempts===0
+      ? (complete?'Alle Antworten sind vergeben. Bereit für die erste Prüfung?':'Die Auswahl allein zählt noch nicht als Versuch. Ordne alle '+total+' Antworten zu.')
+      : (complete?'Alle Felder sind zugeordnet. Neue Antworten werden erst beim erneuten Prüfen bewertet.':'Fülle vor dem nächsten Prüfen wieder alle '+total+' Felder aus. Bereits vergebene Antworten kannst du nach Bestätigung verschieben.');
+  }
+  function describeAssignmentMove() {
+    if(!pendingAssignment)return;
+    const owner=$('assignment-owner').value;
+    $('assignment-title').textContent='Von Bild '+pictureLetter(owner)+' entfernen?';
+    $('assignment-description').textContent='„'+pendingAssignment.label+'“ ist bereits vergeben. Die Zuordnung wird von Bild '+pictureLetter(owner)+' entfernt und für Bild '+pictureLetter(pendingAssignment.workId)+' übernommen. Die übrigen Angaben bleiben erhalten.';
+  }
+  function chooseAnswer(workId,field,value,select) {
+    if(!state || state.phase!=='playing')return;
+    const owner=core.takenBy(state,workId,field,value);
+    if(owner){
+      const label=[...select.options].find(option=>option.value===value)?.dataset.label || value;
+      select.value=state.choices[workId]?.[field] || '';
+      pendingAssignment={room:state.options,workId,field,value,label,select};
+      const owners=state.ids.filter(id=>id!==workId&&state.choices[id]?.[field]===value);
+      $('assignment-owner').replaceChildren(...owners.map(id=>{const option=node('option',null,'Bild '+pictureLetter(id));option.value=id;return option;}));
+      $('assignment-owner-label').hidden=owners.length<2;
+      describeAssignmentMove();open('assignment-dialog');return;
+    }
+    unstartedRooms.delete(state);
+    state=core.choose(state,workId,field,value);save();update();assignmentFeedback();
+  }
+  $('assignment-owner').addEventListener('change',describeAssignmentMove);
+  $('assignment-cancel').addEventListener('click',()=>close('assignment-dialog'));
+  $('assignment-dialog').addEventListener('close',()=>{
+    const select=pendingAssignment?.select;pendingAssignment=null;
+    if(select?.isConnected)select.focus({preventScroll:true});
+  });
+  $('assignment-confirm').addEventListener('click',()=>{
+    const pending=pendingAssignment;
+    if(pending && state?.options===pending.room && state.phase==='playing' && pending.select.isConnected){
+      const moved=core.transferChoice(state,pending.workId,pending.field,pending.value,$('assignment-owner').value);
+      if(moved!==state){unstartedRooms.delete(state);state=moved;save();update();assignmentFeedback();}
+    }
+    close('assignment-dialog');
+  });
+  $('jump-missing').addEventListener('click',()=>{
+    if($('jump-missing').disabled || !state || state.phase!=='playing')return;
+    const fields=core.fieldsFor(state),id=state.ids.find(id=>fields.some(field=>!state.choices[id]?.[field]));
+    if(!id)return;
+    const card=[...$('art-grid').children].find(card=>card.dataset.id===id);
+    card?.querySelector('.artwork-button')?.click();
+    const field=fields.find(field=>!state.choices[id]?.[field]);
+    const select=$('answer-'+pictureLetter(id)+'-'+field);
+    if(select && $('image-dialog').contains(select))select.focus({preventScroll:true});
+  });
   function update() {
     galleryUI?.refresh();
     const timeReady = Date.now() >= revealAt;
@@ -512,6 +565,7 @@
     if (!state) {
       $('room-kicker').textContent = 'Die Galerie wartet'; $('game-title').textContent = 'Der erste Schlüssel.';
       $('escaped').textContent = '00'; $('filled-label').textContent = '0 / '+total+' zugeordnet'; $('filled-bar').style.width = '0%';
+      $('jump-missing').disabled=true;
       $('attempts').setAttribute('aria-label','Zwei Versuche verfügbar');
       [...$('attempts').children].forEach(dot=>dot.classList.remove('used'));
       $('review-summary').hidden = true; $('start-game').textContent = 'Galerie betreten →';
@@ -523,6 +577,9 @@
     $('game-title').textContent = state.phase === 'unlocked' ? 'Die Tür ist offen.' : state.phase === 'lost' ? 'Hier endet dein Rundgang.' : 'Lies die Bilder.';
     $('escaped').textContent = number(state.escaped);
     $('filled-label').textContent = done + ' / '+total+' zugeordnet'; $('filled-bar').style.width = done / total * 100 + '%';
+    $('jump-missing').disabled=!playing || !allPicturesReady || done===total;
+    $('jump-missing').title=done===total?'Alle Angaben sind zugeordnet':'Bild mit fehlender Zuordnung öffnen';
+    $('jump-missing').setAttribute('aria-label',done+' von '+total+' zugeordnet. '+(done===total?'Alle Angaben sind zugeordnet.':'Bild mit fehlender Zuordnung öffnen.'));
     const remaining = attemptLimit - state.attempts;
     $('attempts').setAttribute('aria-label', remaining + ' von '+attemptLimit+' Versuchen verfügbar');
     [...$('attempts').children].forEach((dot,index) => dot.classList.toggle('used', index < state.attempts));
@@ -530,14 +587,15 @@
       select.value = state.choices[select.dataset.work]?.[select.dataset.field] || '';
       select.disabled = !playing;
       [...select.options].forEach(option => {
-        const owner = core.takenBy(state,select.dataset.work,select.dataset.field,option.value);
-        option.disabled = Boolean(owner);
+        option.disabled = false;
         if (option.dataset.label) {
+          const owners=state.ids.filter(id=>state.choices[id]?.[select.dataset.field]===option.value);
+          const assigned=owners.length?' · bei Bild '+owners.map(pictureLetter).join(', '):'';
           if(wallMode&&select.dataset.field==='technique'){
             const left=core.remaining(state,'technique',option.value),total=core.capacity(state,'technique',option.value);
-            option.textContent=option.dataset.label+' · '+left;
-            option.title=left+' von '+total+' Zuordnungen noch frei';
-          }else option.textContent = option.dataset.label + (owner ? ' · bei Werk ' + 'ABCDEFG'[state.ids.indexOf(owner)] : '');
+            option.textContent=option.dataset.label+' · '+left+' frei'+assigned;
+            option.title=left+' von '+total+' Zuordnungen noch frei'+assigned;
+          }else {option.textContent=option.dataset.label+assigned;option.title=option.textContent;}
         }
       });
     });
@@ -556,7 +614,7 @@
     $('lock-visual').classList.toggle('is-open', state.phase === 'unlocked');
     $('lock-visual').classList.toggle('is-lost', state.phase === 'lost');
     $('technical-note').hidden = failed.size === 0;
-    if(wallMode&&playing&&state.attempts>0){$('review-help').textContent='✓ richtig, ✕ falsch, ↻ geändert und noch ungeprüft. Noch '+remaining+' Prüfversuch(e). Zum Tauschen zuerst die bisherige Zuordnung auf „Zuordnen …“ setzen.';}
+    if(wallMode&&playing&&state.attempts>0){$('review-help').textContent='✓ richtig, ✕ falsch, ↻ geändert und noch ungeprüft. Noch '+remaining+' Prüfversuch(e). Bereits vergebene Antworten kannst du auswählen und nach Bestätigung verschieben.';}
     $('start-game').textContent = state ? 'Zum aktuellen Raum →' : 'Galerie betreten →';
   }
   function renderReview() {
@@ -579,7 +637,7 @@
     if (visible) {
       const wrong = results.filter(result => !result.correct).length, changed = results.filter(result => result.changed).length;
       $('review-title').textContent = 'Prüfung '+state.attempts+': ' + wrong + ' von '+total+' Zuordnungen waren falsch.';
-      $('review-help').textContent = (changed ? changed + ' Zuordnungen geändert, aber noch nicht erneut geprüft. ' : '') + 'Rückmeldung zur ersten Prüfung: ✕ falsch, ✓ richtig, ↻ geändert und noch ungeprüft. Du hast noch einen Versuch. Zum Tauschen zuerst eine bisherige Zuordnung auf „Zuordnen …“ setzen; danach ist die Antwort wieder frei.';
+      $('review-help').textContent = (changed ? changed + ' Zuordnungen geändert, aber noch nicht erneut geprüft. ' : '') + 'Rückmeldung zur ersten Prüfung: ✕ falsch, ✓ richtig, ↻ geändert und noch ungeprüft. Du hast noch einen Versuch. Bereits vergebene Antworten kannst du auswählen und nach Bestätigung verschieben.';
     }
   }
   function loadWorkImage(work, button, epoch) {
@@ -621,8 +679,9 @@
     if (!state.forgeryPrepared) void prepareForgery();
     if (forgeryLoading.has(state) || (state.phase==='playing' && state.forgeryEverySeries && !state.forgery)) {
       const loading = forgeryLoading.has(state);
-      $('waiting').hidden=false; $('waiting').querySelector('h3').textContent=loading?'Deine Bilderserie entsteht.':'Die Fälschung konnte noch nicht erzeugt werden.';
-      $('waiting').querySelector('p').textContent=loading?'Die KI-Nachahmung wird vorbereitet. Das kann einen Moment dauern.': 'Im Geheimmodus beginnt eine neue Serie erst, wenn ihre eine Fälschung bereit ist. Versuche es erneut; das kostet keinen Prüfversuch.';
+      // The same loading indicator is used for originals and mixed series.
+      $('waiting').hidden=loading; $('waiting').querySelector('h3').textContent='Die Bilderserie konnte noch nicht vorbereitet werden.';
+      $('waiting').querySelector('p').textContent='Bitte versuche es erneut. Das kostet keinen Prüfversuch.';
       $('start-here').hidden=true; $('retry-forgery').hidden=loading;
       $('art-grid').hidden=true; $('lock-panel').hidden=true;
       update(); return;
@@ -647,12 +706,7 @@
         select.id = 'answer-' + letter + '-' + field; select.setAttribute('aria-label','Werk ' + letter + ': ' + labels[field]);
         const empty = node('option',null,'Zuordnen …'); empty.value = ''; select.append(empty);
         [...new Set(state.options[field])].forEach(value => { const display = field === 'artist' ? wikiCatalogue.artists[value]?.title || value : field==='title'?titleLabel(value):value; const option = node('option',null,display); option.value = value; option.dataset.label = display; select.append(option); });
-        select.addEventListener('change',() => {
-          unstartedRooms.delete(state);
-          state = core.choose(state,id,field,select.value); save(); update();
-          if (state.attempts === 0) $('feedback').textContent = core.filled(state) === total ? 'Alle Antworten sind vergeben. Bereit für die erste Prüfung?' : 'Die Auswahl allein zählt noch nicht als Versuch. Ordne alle '+total+' Antworten zu.';
-          else $('feedback').textContent = core.filled(state) === total ? 'Alle Felder sind zugeordnet. Neue Antworten werden erst beim erneuten Prüfen bewertet.' : 'Zum Tauschen sind Antworten vorübergehend frei. Fülle vor dem nächsten Prüfen wieder alle '+total+' Felder aus.';
-        });
+        select.addEventListener('change',()=>chooseAnswer(id,field,select.value,select));
         const result = node('small','answer-result'); result.id = select.id + '-result'; result.hidden = true;
         select.setAttribute('aria-describedby',result.id);
         label.append(select,result); assignments.append(label);
@@ -667,7 +721,6 @@
     });
     $('lock-title').textContent = state.phase === 'unlocked' ? 'Der Schlüssel passt.' : state.phase === 'lost' ? 'Das Schloss bleibt zu.' : 'Das Schloss wartet auf deinen Schlüssel.';
     $('feedback').textContent = state.phase === 'unlocked' ? 'Alle '+total+' Zuordnungen stimmen. Erfahre mehr über die Werke – oder gehe in den nächsten Raum.' : state.phase === 'lost' ? 'Auch der letzte Versuch war nicht vollständig richtig. Die Runde ist beendet. Du kannst jetzt alle Zuordnungen nachlesen.' : state.attempts === 1 ? 'Die letzte Prüfung war nicht vollständig richtig. Du hast noch '+(attemptLimit-state.attempts)+' Prüfversuch(e). Prüfe deine Zuordnungen sorgfältig.' : 'Ordne erst alle '+total+' Antworten zu. Die Auswahl allein zählt noch nicht als Versuch.';
-    if (state.forgeryError && state.forgeryMode) $('feedback').textContent = 'Die KI-Bilderzeugung ist ausgefallen. Dieser Raum enthält '+workCount+' Originale und zählt nicht als Fälschungstest.';
     update();
   }
   function clearForgeryPresentation() {
@@ -732,7 +785,7 @@
     zoomEpoch++;
     if (zoomLoad) { zoomLoad.onload = null; zoomLoad.removeAttribute('src'); zoomLoad = null; }
   }
-  const imageViewer = window.KunstTresorZoom.create({view:$('zoom-view'),image:$('zoom-image'),stage:$('zoom-stage'),label:$('zoom-label'),zoomIn:$('zoom-in'),zoomOut:$('zoom-out')});
+  const imageViewer = window.KunstTresorZoom.create({view:$('zoom-view'),image:$('zoom-image'),stage:$('zoom-stage'),label:$('zoom-label'),zoomIn:$('zoom-in'),zoomOut:$('zoom-out'),onInteraction:()=>window.KunstWall?.interruptOpening?.()});
   window.addEventListener('resize',() => { if ($('image-dialog').open) imageViewer.layout(); });
   window.addEventListener('blur',() => imageViewer.cancel());
   $('image-dialog').addEventListener('close',() => { imageViewer.cancel(); cancelZoomLoad();window.KunstWall?.restoreControls(); });

@@ -79,10 +79,13 @@ test('visible AI toggles distinguish pausing answers from withdrawing permission
   assert.match(pause,/aiClient\?\.cancel\(\)/);assert.match(pause,/resetAIReading\(\)/);
   assert.doesNotMatch(pause,/remove\(aiConsentKey\)/);
   const css=fs.readFileSync(require.resolve('../styles/kunsttresor.css'),'utf8');
-  assert.match(css,/\.ai-toggle\[aria-pressed="true"\]\{background:#[a-f0-9]+;color:var\(--paper\);font-weight:600\}/);
-  assert.match(css,/\.ai-toggle\[aria-pressed="true"\]:hover:not\(:disabled\)\{background:#[a-f0-9]+;color:var\(--paper\)\}/);
+  assert.match(css,/\.ai-toggle\[aria-pressed="true"\]\{background:#294b3a;color:#fff;font-weight:600\}/);
+  assert.match(css,/\.ai-toggle\[aria-pressed="true"\]:hover:not\(:disabled\)\{background:#365b46;color:#fff\}/);
+  const wallCss=fs.readFileSync(require.resolve('../styles/kunsttresor-wall.css'),'utf8');
+  assert.match(wallCss,/\.kunst-wall \.ai-toggle\[aria-pressed="true"\]\{background:#294b3a;color:#fff;border-color:#294b3a\}/);
+  assert.match(wallCss,/\.kunst-wall \.ai-toggle\{background:#f7f9f7;color:#24382e;/);
   const luminance=hex=>{const channels=hex.match(/[a-f0-9]{2}/gi).map(value=>parseInt(value,16)/255).map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4);return channels[0]*.2126+channels[1]*.7152+channels[2]*.0722;};
-  for (const background of ['655023','766030']) assert.ok((luminance('f2eee4')+.05)/(luminance(background)+.05)>=4.5);
+  for (const background of ['294b3a','365b46']) assert.ok((luminance('ffffff')+.05)/(luminance(background)+.05)>=4.5);
 });
 test('network errors, quota, malformed JSON and incomplete output all retain fallback',async()=>{
   const input=ki.payload(room(),progress.fresh());

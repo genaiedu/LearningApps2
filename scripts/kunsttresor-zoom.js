@@ -1,7 +1,7 @@
 (function (root) {
   'use strict';
-  function create({view, image, stage, label, zoomIn, zoomOut}) {
-    let zoom = 100, gesture = null;
+  function create({view, image, stage, label, zoomIn, zoomOut,onInteraction=()=>{}}) {
+    let zoom = 100, gesture = null, trackpadGesture = null;
     const pointers = new Map();
     function point(event) {
       const rect = view.getBoundingClientRect();
@@ -36,6 +36,7 @@
     }
     function rebase() {
       if (pointers.size >= 2) {
+        trackpadGesture=null; // Prefer real touch points if Safari also emits gestures.
         const {x,y,distance} = pair();
         gesture = {kind:'pinch',distance,zoom,anchor:anchorAt(x,y)};
       } else if (pointers.size === 1) {
@@ -46,6 +47,7 @@
     }
     function down(event) {
       if (event.pointerType === 'mouse' && event.button !== 0) return;
+      onInteraction();
       // Remember the first finger even at 100%: the next one can start a pinch.
       pointers.set(event.pointerId,point(event));
       try { view.setPointerCapture(event.pointerId); } catch { /* Capture can be lost when a dialog closes. */ }
@@ -71,9 +73,37 @@
       // Re-anchor remaining fingers so lifting one never jumps the image.
       rebase();
     }
+    function eventAnchor(event) {
+      const at=Number.isFinite(event.clientX)&&Number.isFinite(event.clientY)?point(event):{x:view.clientWidth/2,y:view.clientHeight/2};
+      return anchorAt(at.x,at.y);
+    }
+    function wheel(event) {
+      // Chromium and Firefox deliver a trackpad pinch as Ctrl+wheel.
+      if(!event.ctrlKey)return;
+      event.preventDefault();
+      if(trackpadGesture||pointers.size>=2||!Number.isFinite(event.deltaY))return;
+      onInteraction();
+      const unit=event.deltaMode===1?16:event.deltaMode===2?view.clientHeight:1;
+      const delta=Math.max(-200,Math.min(200,event.deltaY*unit));
+      applyZoom(zoom*Math.exp(-delta*.01),eventAnchor(event));
+    }
+    function gestureStart(event) {
+      // Safari exposes native trackpad gestures instead of Ctrl+wheel.
+      event.preventDefault();
+      if(pointers.size>=2){trackpadGesture=null;return;}
+      onInteraction();
+      trackpadGesture={zoom,scale:Number.isFinite(event.scale)&&event.scale>0?event.scale:1,anchor:eventAnchor(event)};
+    }
+    function gestureChange(event) {
+      event.preventDefault();if(!trackpadGesture||pointers.size>=2)return;
+      if(!Number.isFinite(event.scale)||event.scale<=0)return;
+      const at=eventAnchor(event);
+      applyZoom(trackpadGesture.zoom*event.scale/trackpadGesture.scale,{...trackpadGesture.anchor,x:at.x,y:at.y});
+    }
+    function gestureEnd(event) {event.preventDefault();trackpadGesture=null;}
     function cancel() {
       const captured = [...pointers.keys()];
-      pointers.clear(); gesture = null; view.classList.remove('is-panning');
+      pointers.clear(); gesture = null; trackpadGesture=null; view.classList.remove('is-panning');
       for (const id of captured) {
         try { view.releasePointerCapture(id); } catch { /* The browser may have released it already. */ }
       }
@@ -85,8 +115,12 @@
     view.addEventListener('pointerdown',down);
     view.addEventListener('pointermove',move);
     for (const type of ['pointerup','pointercancel','lostpointercapture']) view.addEventListener(type,end);
-    zoomOut.onclick = () => { cancel(); applyZoom(zoom-25); };
-    zoomIn.onclick = () => { cancel(); applyZoom(zoom+25); };
+    view.addEventListener('wheel',wheel,{passive:false});
+    view.addEventListener('gesturestart',gestureStart,{passive:false});
+    view.addEventListener('gesturechange',gestureChange,{passive:false});
+    view.addEventListener('gestureend',gestureEnd,{passive:false});
+    zoomOut.onclick = () => { onInteraction(); cancel(); applyZoom(zoom-25); };
+    zoomIn.onclick = () => { onInteraction(); cancel(); applyZoom(zoom+25); };
     reset();
     return {layout,reset,cancel,get zoom() { return zoom; }};
   }

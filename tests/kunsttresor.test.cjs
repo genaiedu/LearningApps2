@@ -450,6 +450,17 @@ test('taken answers are blocked, never silently erase another assignment, and ar
   state = core.choose(state,state.ids[1],'artist',value);
   assert.equal(state.choices[state.ids[1]].artist,value);
 });
+test('explicit transfers are atomic, validate ownership and preserve checks and other fields',()=>{
+  let state=core.newState(pool,null,seeded(30));const [owner,target,other]=state.ids,value=state.options.artist[0];
+  state=core.choose(state,owner,'artist',value);state=core.choose(state,owner,'date',state.options.date[0]);
+  const before=JSON.stringify(state);
+  for(const args of [[target,'artist',value,other],[owner,'artist',value,owner],['missing','artist',value,owner],[target,'invalid',value,owner],[target,'artist','invalid',owner]])assert.equal(core.transferChoice(state,...args),state);
+  const moved=core.transferChoice(state,target,'artist',value,owner);
+  assert.equal(moved.choices[owner].artist,'');assert.equal(moved.choices[target].artist,value);
+  assert.equal(moved.choices[owner].date,state.choices[owner].date);assert.equal(moved.attempts,state.attempts);
+  assert.equal(moved.attemptLog,state.attemptLog);assert.equal(JSON.stringify(state),before);assert.ok(core.restore(moved,pool));
+  const locked={...state,phase:'lost'};assert.equal(core.transferChoice(locked,target,'artist',value,owner),locked);
+});
 test('first failed check retains exact feedback, but changed choices are not evaluated early', () => {
   let state = answer(core.newState(pool,null,seeded(94)));
   const [a,b] = state.ids, first = state.choices[a].date, second = state.choices[b].date;
@@ -484,7 +495,7 @@ test('personal highscore persists through a loss and automatic new round', () =>
     $:()=>({hidden:false}),clearForgeryPresentation:()=>{},render:()=>{},toGame:()=>{}};
   context.state.escaped=3;
   vm.createContext(context);
-  vm.runInContext(js.slice(js.indexOf('function save()'),js.indexOf('function open('))+js.slice(js.indexOf('function newRound()'),js.indexOf('function update()')),context);
+  vm.runInContext(js.slice(js.indexOf('function save()'),js.indexOf('function open('))+js.slice(js.indexOf('function newRound()'),js.indexOf('const pictureLetter')),context);
   context.state=core.inspect(answer(context.state,false),pool).state;
   context.state=core.inspect(context.state,pool).state;
   assert.equal(context.state.phase,'lost');
@@ -521,7 +532,9 @@ test('Wikipedia is offered only after a room ends and uses the established full-
   assert.doesNotMatch(html,/href="[^"]*materialien\.html/);
   assert.ok(html.indexOf('So funktioniert dein Rundgang') < html.indexOf('id="start-game"'));
   assert.ok(html.includes('id="review-summary"'));
-  assert.ok(js.includes('option.disabled = Boolean(owner)'));
+  assert.ok(js.includes('option.disabled = false'));
+  assert.ok(js.includes("open('assignment-dialog')"));
+  assert.ok(html.includes('id="jump-missing"'));
   assert.ok(html.includes('id="intro-skip"'));
   assert.ok(html.includes('id="intro-count"'));
   assert.ok(js.includes('previousIntro=chosen.map(work=>work.id)'));

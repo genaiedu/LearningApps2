@@ -31,6 +31,7 @@
  floating.innerHTML='<button type="button" id="wall-back">← Bilderwand</button><button type="button" id="wall-fit">Ganzes Bild</button><button type="button" id="wall-loupe">Lupe +</button><button type="button" id="wall-prev" aria-label="Vorheriges Werk">←</button><button type="button" id="wall-next" aria-label="Nächstes Werk">→</button>';
  dialog.append(floating);
  let current=null,home=null,drag=null,transitionEpoch=0,flight=null,flightAnimation=null,hiddenOrigin=null,returning=false,returnOrigin=null;
+ const contacts=new Set();
  function reducedMotion(){return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;}
  // Measure the painted pixels, not the letterbox around an object-fit image.
  function imageRect(image){
@@ -55,7 +56,8 @@
   $('zoom-image').style.opacity='';dialog.classList.remove('is-returning');returning=false;
  }
  function cancelFlight(){transitionEpoch++;clearFlight();}
- function restoreControls(){cancelFlight();if(home){for(const child of [...$('wall-work-controls').children])home.append(child);}home=null;current=null;returnOrigin=null;dialog.classList.remove('wall-zoom');}
+ function interruptOpening(){if(!returning)cancelFlight();}
+ function restoreControls(){cancelFlight();if(home){for(const child of [...$('wall-work-controls').children])home.append(child);}home=null;current=null;returnOrigin=null;drag=null;contacts.clear();dialog.classList.remove('wall-zoom');}
  function inspect(id,letter,original,source){restoreControls();const card=[...$('art-grid').children].find(c=>c.dataset.id===id);current=id;
   returnOrigin=source===undefined?captureOrigin(card?.querySelector('.artwork-button')):source;
   const wall=returnOrigin?.context==='wall'||(source===undefined&&Boolean(card));
@@ -65,7 +67,7 @@
   $('wall-back').textContent=returnOrigin?.context==='gallery'?'← Meine Galerie':returnOrigin?.context==='curator'?'← Kuratoransicht':'← Bilderwand';
   const destination=returnOrigin?.context==='gallery'?'Galerie':returnOrigin?.context==='curator'?'Kuratoransicht':'Bilderwand';
   aside.setAttribute('aria-label',home?'Zuordnungen zum vergrößerten Werk':'Informationen zum vergrößerten Werk');aside.querySelector('.eyebrow').textContent=home?'Werk untersuchen':'Werk betrachten';
-  aside.querySelector('.wall-instructions').textContent='Bild anklicken: Lupe. Escape: zurück zur ganzen Abbildung. Noch einmal Escape: zurück zur '+destination+'.'+(home?' Die Zahl hinter einer Technik zeigt die noch freien Plätze im Raum; deine aktuelle Auswahl ist bereits abgezogen.':'');
+  aside.querySelector('.wall-instructions').textContent='Zwei Finger oder Trackpad: zoomen. Bild anklicken: Lupe. Escape: zurück zur ganzen Abbildung. Noch einmal Escape: zurück zur '+destination+'.'+(home?' Die Zahl hinter einer Technik zeigt die noch freien Plätze im Raum; deine aktuelle Auswahl ist bereits abgezogen.':'');
   dialog.classList.remove('wall-zoom');if(returnOrigin)void animateOpen(returnOrigin);
  }
  function ghostAt(rect){
@@ -112,8 +114,9 @@
  dialog.querySelector('[data-close="image-dialog"]').addEventListener('click',event=>{event.preventDefault();event.stopPropagation();void closeToWall();});
  $('wall-check').onclick=()=>{dialog.close();$('check').click();};
  dialog.addEventListener('cancel',event=>{event.preventDefault();if(window.KunstWallZoom?.zoom>100)fit();else void closeToWall();});
- $('zoom-view').addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};});
- $('zoom-view').addEventListener('pointerup',e=>{if(drag&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<7&&window.KunstWallZoom?.zoom===100)loupe();drag=null;});
+ $('zoom-view').addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;contacts.add(e.pointerId);drag=contacts.size===1?{id:e.pointerId,x:e.clientX,y:e.clientY}:null;});
+ $('zoom-view').addEventListener('pointerup',e=>{const tap=contacts.size===1&&drag?.id===e.pointerId&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<7;contacts.delete(e.pointerId);drag=null;if(tap&&window.KunstWallZoom?.zoom===100)loupe();});
+ for(const type of ['pointercancel','lostpointercapture'])$('zoom-view').addEventListener(type,e=>{contacts.delete(e.pointerId);drag=null;});
  function layout(){
   const grid=$('art-grid'),cards=[...grid.children],width=grid.clientWidth;if(!cards.length||!width)return;
   const gap=8,caption=30,ratios=cards.map(c=>Number(c.dataset.wallAspect)||1);
@@ -128,5 +131,5 @@
  $('attempts').append(document.createElement('i'));document.title='Kunsttresor · Die Bilderwand';
  const hint=document.createElement('p');hint.className='wall-mode-note';hint.textContent='7 Werke · Titel, Künstler, Zeit, Stil und Technik zuordnen · 3 Prüfversuche. Bild anklicken zum Untersuchen. Nach einem gewonnenen Raum sammelst du Lieblingswerke mit dem Herz.';$('art-grid').before(hint);
  let scheduled=false;new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;updateCopy();layout();});}).observe(document.querySelector('main'),{subtree:true,childList:true,characterData:true});
- new ResizeObserver(layout).observe($('art-grid'));window.addEventListener('kunst-wall-layout',layout);window.KunstWall={captureOrigin,inspect,restoreControls,layout,landing,clearLanding};updateJump();updateCopy();
+ new ResizeObserver(layout).observe($('art-grid'));window.addEventListener('kunst-wall-layout',layout);window.KunstWall={captureOrigin,inspect,restoreControls,interruptOpening,layout,landing,clearLanding};updateJump();updateCopy();
 })();

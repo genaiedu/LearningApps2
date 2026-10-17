@@ -43,6 +43,61 @@ const secretKey='kunsttresor-forgery-every-series-v1',gameKey='kunsttresor-game-
 const settle=async()=>{for(let i=0;i<60;i++)await Promise.resolve();};
 const generated=(image='data:image/jpeg;base64,/9j/')=>({ok:true,json:async()=>({image,model:'test model'})});
 const roomOf=app=>JSON.parse(app.w.localStorage.getItem(gameKey));
+function readyWall(app){
+ app.w.Date.now=()=>Date.now()+600000;
+ for(const img of app.q('#art-grid').querySelectorAll('img')){Object.defineProperty(img,'naturalWidth',{value:600,configurable:true});Object.defineProperty(img,'naturalHeight',{value:400,configurable:true});img.onload();}
+}
+function selectAnswer(app,letter,field,value){const select=app.q('#answer-'+letter+'-'+field);select.value=value;select.dispatchEvent(new app.w.Event('change',{bubbles:true}));return select;}
+test('taken choices stay selectable, identify their owners and only move after confirmation',async t=>{
+ const app=await setup(t);app.click('launch-skip');readyWall(app);
+ const room=roomOf(app),value=room.options.artist[0];selectAnswer(app,'C','artist',value);
+ const select=app.q('#answer-A-artist'),option=[...select.options].find(o=>o.value===value);
+ assert.equal(option.disabled,false);assert.match(option.textContent,/bei Bild C/);
+ const before=roomOf(app);selectAnswer(app,'A','artist',value);
+ assert.equal(app.q('#assignment-dialog').open,true);assert.equal(app.q('#assignment-title').textContent,'Von Bild C entfernen?');
+ assert.deepEqual(roomOf(app),before);assert.equal(select.value,'');assert.equal(app.q('#assignment-owner-label').hidden,true);
+ app.click('assignment-cancel');assert.deepEqual(roomOf(app),before);assert.equal(app.w.document.activeElement,select);
+ selectAnswer(app,'A','artist',value);app.click('assignment-confirm');
+ const moved=roomOf(app);assert.equal(moved.choices[room.ids[2]].artist,'');assert.equal(moved.choices[room.ids[0]].artist,value);assert.equal(moved.attempts,0);
+ assert.match(option.textContent,/bei Bild A/);assert.doesNotMatch(option.textContent,/Bild C/);assert.equal(app.q('#filled-label').textContent,'1 / 35 zugeordnet');
+ assert.equal(app.q('#assignment-dialog').open,false);
+});
+test('full technique quotas allow choosing exactly which owner releases a place',async t=>{
+ let room,value;for(let n=0;n<100;n++){room=model.KunstTresor.newState(pool);value=room.options.technique.find(v=>{const count=room.options.technique.filter(x=>x===v).length;return count>1&&count<7;});if(value)break;}
+ assert.ok(value);const app=await setup(t,{state:JSON.parse(JSON.stringify(room))});app.click('launch-skip');readyWall(app);
+ const count=room.options.technique.filter(v=>v===value).length;
+ for(let n=0;n<count;n++)selectAnswer(app,'ABCDEFG'[n],'technique',value);
+ const target='ABCDEFG'[count],select=app.q('#answer-'+target+'-technique'),option=[...select.options].find(o=>o.value===value);
+ assert.match(option.textContent,/0 frei · bei Bild A, B/);assert.equal(option.disabled,false);
+ selectAnswer(app,target,'technique',value);assert.equal(app.q('#assignment-owner-label').hidden,false);
+ app.q('#assignment-owner').value=room.ids[1];app.q('#assignment-owner').dispatchEvent(new app.w.Event('change'));assert.equal(app.q('#assignment-title').textContent,'Von Bild B entfernen?');
+ app.click('assignment-confirm');const moved=roomOf(app);
+ assert.equal(moved.choices[room.ids[0]].technique,value);assert.equal(moved.choices[room.ids[1]].technique,'');assert.equal(moved.choices[room.ids[count]].technique,value);
+ assert.equal(model.KunstTresor.remaining(moved,'technique',value),0);assert.ok(model.KunstTresor.restore(moved,pool));
+});
+test('moving an answer after a failed check retains the review and marks both changed fields untested',async t=>{
+ const c=model.KunstTresor;let state=c.newState(pool);
+ for(const [n,id]of state.ids.entries())for(const field of c.fields)state=c.choose(state,id,field,pool.find(w=>w.id===state.ids[(n+1)%7])[field]);
+ state=c.inspect(state,pool).state;assert.equal(state.phase,'playing');
+ const app=await setup(t,{state:JSON.parse(JSON.stringify(state))});app.click('launch-skip');readyWall(app);
+ const [a,b]=state.ids,value=state.choices[a].artist,oldTarget=state.choices[b].artist,before=roomOf(app);
+ selectAnswer(app,'B','artist',value);assert.equal(app.q('#answer-B-artist').value,oldTarget);app.click('assignment-cancel');assert.deepEqual(roomOf(app),before);
+ selectAnswer(app,'B','artist',value);app.click('assignment-confirm');const moved=roomOf(app);
+ assert.equal(moved.attempts,1);assert.deepEqual(moved.review,before.review);assert.deepEqual(moved.attemptLog,before.attemptLog);
+ for(const letter of ['A','B']){assert.match(app.q('#answer-'+letter+'-artist-result').textContent,/Geändert.*noch nicht geprüft/);assert.ok(app.q('#answer-'+letter+'-artist').closest('label').classList.contains('is-revised'));}
+ assert.equal(app.q('#filled-label').textContent,'34 / 35 zugeordnet');
+});
+test('the count opens the first incomplete artwork and focuses its missing field without a check',async t=>{
+ const app=await setup(t);assert.equal(app.q('#jump-missing').disabled,true);app.click('launch-skip');assert.equal(app.q('#jump-missing').disabled,true);readyWall(app);
+ const room=roomOf(app),first=pool.find(w=>w.id===room.ids[0]);for(const field of model.KunstTresor.fields)selectAnswer(app,'A',field,first[field]);
+ assert.equal(app.q('#jump-missing').disabled,false);const before=roomOf(app);app.click('jump-missing');
+ assert.equal(app.q('#image-dialog').open,true);assert.match(app.q('#wall-work-title').textContent,/Werk B/);
+ const missing=model.KunstTresor.fieldsFor(before)[0];assert.equal(app.w.document.activeElement,app.q('#answer-B-'+missing));assert.deepEqual(roomOf(app),before);
+ app.q('#image-dialog').close();
+ for(const field of model.KunstTresor.fields)for(const id of room.ids)selectAnswer(app,'ABCDEFG'[room.ids.indexOf(id)],field,'');
+ for(const [i,id]of room.ids.entries())for(const field of model.KunstTresor.fields)selectAnswer(app,'ABCDEFG'[i],field,pool.find(w=>w.id===id)[field]);
+ assert.equal(app.q('#filled-label').textContent,'35 / 35 zugeordnet');assert.equal(app.q('#jump-missing').disabled,true);app.click('jump-missing');assert.equal(app.q('#image-dialog').open,false);
+});
 function solveWall(app){
  const elapsed=60000*(roomOf(app).escaped+1);app.w.Date.now=()=>Date.now()+elapsed;
  for(const img of app.q('#art-grid').querySelectorAll('img')){Object.defineProperty(img,'naturalWidth',{value:600,configurable:true});Object.defineProperty(img,'naturalHeight',{value:400,configurable:true});img.onload();}
@@ -86,6 +141,18 @@ test('normal play really inserts a single forgery in the fifth room and five or 
   if(i<11){solveWall(app);assert.equal(roomOf(app).phase,'unlocked');app.click('solution-next');}
  }
  assert.equal(positions[0],5);assert.equal(positions.length,2);assert.ok([5,6].includes(positions[1]-positions[0]));
+});
+test('the waiting screen and retry never disclose whether a generated image is being prepared',async t=>{
+ for(const forced of [false,true]){
+  let finish;const app=await setup(t,{preferences:{[secretKey]:forced?'yes':'no','kunsttresor-forgery-cooldown-v4':'0'},forgeryResponse:()=>new Promise(resolve=>{finish=resolve;})});
+  app.click('launch-skip');await settle();assert.equal(typeof finish,'function');
+  assert.equal(app.q('#waiting').hidden,true);assert.equal(app.q('#room-loading').hidden,false);
+  assert.equal(app.q('#room-loading').textContent,'Deine Bilderserie wird vorbereitet. Das kann einen Moment dauern …');
+  for(const id of ['waiting','room-loading','retry-forgery'])assert.doesNotMatch(app.q('#'+id).textContent,/KI|Fälschung|Nachahmung|Geheimmodus/);
+  finish({ok:false,status:503});await settle();
+  if(forced){assert.equal(app.q('#waiting').hidden,false);assert.equal(app.q('#retry-forgery').hidden,false);assert.match(app.q('#waiting').textContent,/Bilderserie/);}
+  else assert.doesNotMatch(app.q('#feedback').textContent,/KI|Fälschung|Nachahmung|Originale/);
+ }
 });
 test('the previous long cooldown is replaced without losing a saved room or changing the secret preference',async t=>{
  const {s}=fixture();const app=await setup(t,{state:s,preferences:{'kunsttresor-forgery-cooldown-v3':'6'}});

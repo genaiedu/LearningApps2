@@ -121,3 +121,38 @@ test('the viewer is loaded before the app and confines touch handling to the pic
   assert.doesNotMatch(html,/user-scalable=no|maximum-scale=1/);
   assert.ok(html.includes('Zwei Finger'));
 });
+test('trackpad pinch and Ctrl+wheel zoom the image continuously around the gesture position',()=>{
+ const f=fixture(),before=f.pointAt(350,250);
+ const event=f.emit('wheel',0,350,250,{ctrlKey:true,deltaY:-Math.log(2)*100,deltaMode:0});
+ assert.equal(event.prevented,true);near(f.viewer.zoom,200);near(f.pointAt(350,250).u,before.u);near(f.pointAt(350,250).v,before.v);
+ f.emit('wheel',0,350,250,{ctrlKey:true,deltaY:Math.log(2)*100,deltaMode:0});near(f.viewer.zoom,100);
+});
+test('ordinary two-finger scrolling stays available and trackpad zoom stays within 100–300 percent',()=>{
+ const f=fixture();const plain=f.emit('wheel',0,500,400,{ctrlKey:false,deltaY:-80});assert.equal(plain.prevented,undefined);assert.equal(f.viewer.zoom,100);
+ f.emit('wheel',0,500,400,{ctrlKey:true,deltaY:-1000});assert.equal(f.viewer.zoom,300);
+ const end=f.emit('wheel',0,500,400,{ctrlKey:true,deltaY:1000});assert.equal(f.viewer.zoom,100);assert.equal(end.prevented,true);
+ f.emit('wheel',0,500,400,{ctrlKey:true,deltaY:NaN});assert.equal(f.viewer.zoom,100);
+});
+test('wheel line and page units are normalized rather than treated as raw pixels',()=>{
+ const f=fixture();f.emit('wheel',0,500,400,{ctrlKey:true,deltaY:-Math.log(2)*100/16,deltaMode:1});near(f.viewer.zoom,200);
+ f.viewer.reset();f.emit('wheel',0,500,400,{ctrlKey:true,deltaY:-Math.log(2)*100/800,deltaMode:2});near(f.viewer.zoom,200);
+});
+test('Safari native pinch keeps an off-centre detail fixed and does not double-count concurrent wheel events',()=>{
+ const f=fixture(),before=f.pointAt(350,250);
+ assert.equal(f.emit('gesturestart',0,350,250,{scale:1}).prevented,true);
+ f.emit('gesturechange',0,350,250,{scale:2});near(f.viewer.zoom,200);near(f.pointAt(350,250).u,before.u);near(f.pointAt(350,250).v,before.v);
+ f.emit('wheel',0,350,250,{ctrlKey:true,deltaY:-Math.log(2)*100});near(f.viewer.zoom,200);
+ f.emit('gesturechange',0,350,250,{scale:1});near(f.viewer.zoom,100);f.emit('gestureend',0,350,250,{});
+ f.emit('wheel',0,350,250,{ctrlKey:true,deltaY:-Math.log(2)*100});near(f.viewer.zoom,200);
+});
+test('closing or resetting the viewer cancels a Safari gesture and ignores invalid late changes',()=>{
+ const f=fixture();f.emit('gesturestart',0,350,250,{scale:1});f.emit('gesturechange',0,350,250,{scale:2});f.viewer.reset();
+ f.emit('gesturechange',0,350,250,{scale:3});assert.equal(f.viewer.zoom,100);
+ f.emit('gesturestart',0,350,250,{scale:0});for(const scale of [0,NaN,Infinity])f.emit('gesturechange',0,350,250,{scale});assert.equal(f.viewer.zoom,100);
+});
+test('mobile touch points take precedence over duplicate Safari gesture events',()=>{
+ const f=fixture();pinchOut(f);near(f.viewer.zoom,200);
+ f.emit('gesturestart',0,350,200,{scale:1});f.emit('gesturechange',0,350,200,{scale:2});near(f.viewer.zoom,200);
+ f.emit('wheel',0,350,200,{ctrlKey:true,deltaY:-70});near(f.viewer.zoom,200);
+ f.emit('pointermove',1,300,200);f.emit('pointermove',2,400,200);near(f.viewer.zoom,100);
+});

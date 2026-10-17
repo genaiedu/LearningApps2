@@ -72,3 +72,14 @@ test('reduced motion skips flying but returns to the clicked gallery control',as
  const app=setup(t),button=app.source('gallery-dialog','reduced',box(200,250,180,240));app.w.matchMedia=()=>({matches:true});await app.open(button);await app.close();
  assert.equal(app.calls.length,0);assert.equal(app.w.document.activeElement,button);assert.equal(app.$('image-dialog').open,false);
 });
+test('ending a two-finger touch is never mistaken for a tap on the loupe',t=>{
+ const app=setup(t);let clicks=0;app.$('zoom-in').onclick=()=>{clicks++;};
+ function emit(type,id){const event=new app.w.Event(type);Object.assign(event,{pointerId:id,pointerType:'touch',clientX:200,clientY:200,button:0});app.$('zoom-view').dispatchEvent(event);}
+ emit('pointerdown',1);emit('pointerdown',2);emit('pointerup',2);emit('pointerup',1);assert.equal(clicks,0);
+ emit('pointerdown',3);emit('pointerup',3);assert.equal(clicks,2);
+});
+test('a pinch can take over an opening animation immediately without closing or leaving a hidden image',async t=>{
+ const app=setup(t),button=app.source('gallery-dialog','pinch',box(200,250,180,240));app.defer();await app.open(button);
+ assert.ok(app.w.document.querySelector('.wall-image-flight'));app.w.KunstWall.interruptOpening();await flush();
+ assert.equal(app.w.document.querySelector('.wall-image-flight'),null);assert.equal(app.image.style.opacity,'');assert.equal(app.$('image-dialog').open,true);
+});

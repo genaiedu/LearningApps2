@@ -122,6 +122,14 @@
     return {...state, choices};
   }
   function capacity(state,field,value){return (state.options[field]||[]).filter(v=>v===value).length;}
+  // A move is explicit and atomic: an unconfirmed selection never clears an answer.
+  function transferChoice(state, workId, field, value, ownerId) {
+    if (!takenBy(state,workId,field,value) || ownerId===workId || !state.ids.includes(ownerId) || state.choices[ownerId]?.[field]!==value) return state;
+    const released=choose(state,ownerId,field,'');
+    if (released===state) return state;
+    const moved=choose(released,workId,field,value);
+    return moved.choices[workId]?.[field]===value ? moved : state;
+  }
   function remaining(state,field,value){return Math.max(0,capacity(state,field,value)-state.ids.filter(id=>state.choices[id]?.[field]===value).length);}
   function validValues(options,values){return values.every(v=>options.includes(v)&&values.filter(x=>x===v).length<=options.filter(x=>x===v).length);}
   function takenBy(state, workId, field, value) {
@@ -217,7 +225,7 @@
     if (original.phase === 'lost') { next.phase='lost'; next.attempts=limit; }
     return {state:next,updated:true,newRoom:true};
   }
-  const api = {forgeryPlan,nextForgeryCooldown,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
+  const api = {forgeryPlan,nextForgeryCooldown,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, transferChoice, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
