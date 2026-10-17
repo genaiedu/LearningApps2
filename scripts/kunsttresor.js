@@ -574,7 +574,7 @@
       const card = node('article','art-card'); card.dataset.id = id;
       const heading = node('div','work-heading');
       const marker=node('span','work-marker',letter); marker.setAttribute('aria-label','Werk '+letter);
-      const title=node('h3','work-title',core.galleryTitle(work)); title.id='work-title-'+letter;
+      const title=node('h3','work-title',core.galleryTitle(work)); title.id='work-title-'+letter;title.title=core.galleryTitle(work);
       heading.append(marker,title);
       const picture = node('button','artwork-button'); picture.type = 'button'; picture.dataset.letter = letter;
       picture.disabled = true; picture.setAttribute('aria-label',core.galleryTitle(work) + ' vergrößern');

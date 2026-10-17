@@ -67,3 +67,8 @@ html.kunst-wall{--paper:#24382e;--ink:#24382e;--night:#f6f6f3;--muted:#52645a;--
 .kunst-wall .wall-landing-background img[data-format="square"]{grid-column:span 2;grid-row:span 2}
 .kunst-wall .wall-landing-background{grid-template-rows:none;grid-auto-rows:clamp(90px,12vw,240px);align-content:start}
 @media(max-width:760px){.kunst-wall .wall-landing-background{grid-template-rows:none;grid-auto-rows:16vw}}
+/* Captions have their own reserved space, independent of the image rectangle. */
+.kunst-wall .art-card .work-heading{height:68px;min-height:68px;flex:0 0 68px;align-items:flex-start;padding:8px 1px 0;overflow:hidden;gap:8px}
+.kunst-wall .art-card .work-title{font-size:13px;line-height:18px;white-space:normal;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;margin:0}
+.kunst-wall .art-card .work-marker{flex:0 0 20px;margin-top:1px}
+.kunst-wall .image-dialog .wall-image-flight{display:block;max-width:none;max-height:none;margin:0;border:0;border-radius:0}
