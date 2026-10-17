@@ -178,6 +178,28 @@ test('title assignments use localized options without revealing the correct labe
  assert.equal(app.q('#wall-work-title').textContent,'Werk A · Beschriftung gesucht');
  assert.equal(app.q('#wall-work-controls select').dataset.field,'title');
 });
+test('curator original and forgery clicks pass their own image nodes to the transition, including both comparison sides',async t=>{
+ const {s,h}=fixture(),id=s.ids[0];s.forgeryPrepared=true;s.forgeryMode=true;s.forgery={id,image:'data:image/jpeg;base64,/9j/'};s.forgeryMarks={[id]:true};
+ const app=await setup(t,{state:s,history:h}),seen=[],inspect=app.w.KunstWall.inspect;
+ app.w.KunstWall.inspect=(...args)=>{seen.push(args);inspect(...args);};app.click('launch-skip');app.click('show-solution');
+ const regular=app.q('#solutions .solution-overview .solution-image');regular.click();assert.equal(seen.at(-1)[2],true);assert.equal(seen.at(-1)[3].image,regular.querySelector('img'));assert.equal(seen.at(-1)[3].context,'curator');
+ app.q('[data-close="image-dialog"]').click();
+ const pair=[...app.q('#solutions .forgery-comparison-pair').querySelectorAll('button')];assert.equal(pair.length,2);
+ for(const [index,button]of pair.entries()){
+  button.click();assert.equal(seen.at(-1)[2],index===0);assert.equal(seen.at(-1)[3].image,button.querySelector('img'));assert.equal(seen.at(-1)[3].context,'curator');
+  assert.equal(app.q('#wall-work-controls').children.length,0);assert.equal(app.q('#wall-next').hidden,true);
+  if(index===1)assert.equal(app.q('#zoom-image').getAttribute('src'),s.forgery.image);
+  app.q('[data-close="image-dialog"]').click();assert.equal(app.q('#solution-dialog').open,true);
+ }
+});
+test('an older collected work opens as an original from its actual gallery thumbnail rather than a current quiz work',async t=>{
+ const {s,h}=fixture(),id=s.ids[0],gallery=model.KunstGallery.like(model.KunstGallery.fresh(),id,s,pool),next=model.KunstTresor.newState(pool,s);
+ assert.equal(next.ids.includes(id),false);const app=await setup(t,{state:JSON.parse(JSON.stringify(next)),history:h,gallery:JSON.parse(JSON.stringify(gallery))}),seen=[],inspect=app.w.KunstWall.inspect;
+ app.w.KunstWall.inspect=(...args)=>{seen.push(args);inspect(...args);};app.click('launch-skip');app.click('game-gallery');
+ const button=app.q('#gallery-grid .gallery-image');button.click();assert.equal(seen.at(-1)[0],id);assert.equal(seen.at(-1)[2],true);assert.equal(seen.at(-1)[3].image,button.querySelector('img'));assert.equal(seen.at(-1)[3].context,'gallery');
+ assert.equal(app.q('#zoom-image').getAttribute('src'),button.querySelector('img').getAttribute('src'));assert.equal(app.q('#wall-work-controls').children.length,0);
+ app.q('[data-close="image-dialog"]').click();assert.equal(app.q('#gallery-dialog').open,true);assert.equal(app.w.document.activeElement,button);
+});
 test('two swapped titles prevent winning and collecting, then can be corrected without losing the other 28 answers',()=>{
  const c=model.KunstTresor;let s=c.newState(pool);s.roomToken='c'.repeat(32);s.runToken='d'.repeat(32);
  for(const [i,id]of s.ids.entries())for(const f of c.fields)s=c.choose(s,id,f,pool.find(w=>w.id===(f==='title'&&i<2?s.ids[1-i]:id))[f]);

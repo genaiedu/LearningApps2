@@ -66,7 +66,7 @@
       const note=node('small','gallery-like-note');note.hidden=true;b.append(svg,node('span',null,'Für meine Galerie merken'),note);return b;
     }
     function imageButton(work) {
-      const b=button('',()=>imagesAllowed()?showImage(work):requestImages(),'gallery-image');
+      const b=button('',()=>imagesAllowed()?showImage(work,b):requestImages(),'gallery-image');
       b.setAttribute('aria-label',title(work)+' vergrößern');
       if(imagesAllowed()){const img=node('img');img.alt=title(work);img.loading='lazy';img.referrerPolicy='no-referrer';img.onload=layoutGallery;img.onerror=layoutGallery;img.src=work.imageURL;b.append(img);}
       else b.append(node('span',null,'Kunstbilder erlauben'));

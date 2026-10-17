@@ -639,7 +639,7 @@
       const picture = node('button','artwork-button'); picture.type = 'button'; picture.dataset.letter = letter;
       picture.disabled = true; picture.setAttribute('aria-label',(concealed()?'Werk '+letter:core.galleryTitle(work)) + ' vergrößern');
       picture.append(node('div','image-loading','Museumsbild wird geladen …'),node('span',null,'⤢ Bild vergrößern'));
-      picture.addEventListener('click',() => showImage(work,letter));
+      picture.addEventListener('click',() => showImage(work,letter,false,picture));
       const assignments = node('div','assignments');
       for (const field of (state.options.title?['title',...core.fieldsFor(state).filter(f=>f!=='title')]:core.fieldsFor(state))) {
         const label = node('label'); label.append(node('span',null,labels[field]));
@@ -710,16 +710,17 @@
       } else open('result-dialog');
     }
   }
-  function showImage(work,letter,original = false) {
+  function showImage(work,letter,original = false,origin = null) {
     unstartedRooms.delete(state);
     if (!imagesAllowed) return;
+    const source = wallMode ? window.KunstWall?.captureOrigin(origin) : null;
     cancelZoomLoad();
     const epoch = zoomEpoch;
     $('image-title').textContent = 'Vergrößerte Kunstansicht';
     $('zoom-image').alt = 'Vergrößerte Ansicht: ' + (concealed()&&letter&&!original?'Werk '+letter:core.galleryTitle(work));
     $('zoom-image').onload = () => imageViewer.layout();
     $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = original ? imageURL(work) : gameImageURL(work);
-    open('image-dialog'); imageViewer.reset(); if(wallMode)window.KunstWall?.inspect(work.id,letter,original);
+    open('image-dialog'); imageViewer.reset(); if(wallMode)window.KunstWall?.inspect(work.id,letter,original,source);
     const large = !original && state?.forgery?.id === work.id ? gameImageURL(work) : work.imageLargeURL || imageURL(work);
     if (large !== gameImageURL(work)) {
       zoomLoad = new Image(); zoomLoad.referrerPolicy = 'no-referrer';
@@ -851,7 +852,7 @@
         imageButton.setAttribute('aria-label','Werk ' + 'ABCDEFG'[index] + ' in der Lösung vergrößern');
         const img = node('img'); img.alt = core.galleryTitle(work); img.referrerPolicy = 'no-referrer'; img.src = work.imageURL;
         imageButton.append(img,node('span',null,'⤢ Bild vergrößern'));
-        imageButton.onclick = () => showImage(work,'ABCDEFG'[index],true); overview.append(imageButton);
+        imageButton.onclick = () => showImage(work,'ABCDEFG'[index],true,imageButton); overview.append(imageButton);
       }
       overview.append(node('p','eyebrow','Werk ' + 'ABCDEFG'[index]),node('h3',null,core.galleryTitle(work)));
       if (core.galleryTitle(work)!==work.title) overview.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
@@ -866,7 +867,7 @@
           const figure=node('figure'),button=node('button','solution-image'),img=node('img');
           button.type='button'; button.setAttribute('aria-label',caption+' vergrößern');
           img.alt=caption+': '+core.galleryTitle(work); img.referrerPolicy='no-referrer'; img.src=url;
-          button.append(img); button.onclick=()=>showImage(work,'ABCDEFG'[index],original);
+          button.append(img); button.onclick=()=>showImage(work,'ABCDEFG'[index],original,button);
           figure.append(button,node('figcaption',null,caption)); pair.append(figure);
         }
         comparison.append(pair,node('p',null,'Das Vorbild ist als '+work.style+' eingeordnet; die dokumentierte Technik ist '+work.technique+'. Vergleiche Linienführung, Farbauftrag, Licht, Raum und Details. Die KI-Nachahmung ist kein Werk von '+work.artist+'.'));
@@ -1087,7 +1088,7 @@
       if (!state) store.remove(keys.game);
       const storedGallery=store.get(galleryKey);
       if(storedGallery!==null){try{const restored=galleryModel.restore(JSON.parse(storedGallery),pool,workHistory);if(!restored)throw Error();personalGallery=restored;}catch{galleryBlocked=true;storageWarning();$('progress-notice').textContent='Deine gespeicherte Galerie konnte nicht gelesen werden und wird nicht überschrieben. Lade bitte eine gültige Spielstandsdatei.';}}
-      galleryUI=window.KunstGalleryUI.create({pool,getGallery:()=>personalGallery,setGallery:saveGallery,getState:()=>state,imagesAllowed:()=>imagesAllowed,requestImages:()=>askForImages(false),showImage:work=>showImage(work),stopIntro:finishIntro,saveFile:async()=>{await exportSave();return $('save-status').textContent;},texts:filmTexts});
+      galleryUI=window.KunstGalleryUI.create({pool,getGallery:()=>personalGallery,setGallery:saveGallery,getState:()=>state,imagesAllowed:()=>imagesAllowed,requestImages:()=>askForImages(false),showImage:(work,origin)=>showImage(work,undefined,true,origin),stopIntro:finishIntro,saveFile:async()=>{await exportSave();return $('save-status').textContent;},texts:filmTexts});
       galleryUI.refresh();$('open-gallery').disabled=false;
       $('save-dialog').querySelector(':scope > p').textContent='Der Browser merkt sich deinen Raum automatisch. Als JSON-Datei nimmst du Zuordnungen, verbrauchte Versuche, Rekord, Abzeichen, Bildhistorie, Lieblingswerke und deine vollständige Filmgestaltung mit auf ein anderes Gerät.';
       $('pool-count').textContent = pool.length;
