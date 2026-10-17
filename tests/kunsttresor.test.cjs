@@ -310,7 +310,7 @@ test('one explicit start click unlocks music and opens the film without automati
   const html=fs.readFileSync(path.join(__dirname,'../kunsttresor.html'),'utf8');
   const launch=js.slice(js.indexOf('async function launchGallery('),js.indexOf('function finishIntro('));
   const events=[],context={
-    imagesAllowed:false,state:null,pool:[],introSoundEnabled:false,introAudio:{},launchEpoch:0,keys:{images:'images'},
+    imagesAllowed:false,state:null,pool:[],forgeryEverySeries:false,unstartedRooms:new WeakSet(),introSoundEnabled:false,introAudio:{},launchEpoch:0,keys:{images:'images'},
     confirmLaunchAIChoice:()=>events.push('ai-choice'),
     close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
     core:{newState:()=>({})},save:()=>{},render:()=>{},$:()=>({focus:()=>events.push('focus')}),
@@ -337,7 +337,7 @@ test('the smaller launch button opens the entry without film or music and preser
   const launch=js.slice(js.indexOf('async function launchGallery('),js.indexOf('function finishIntro('));
   for(const consent of [false,true])for(const existing of [false,true]){
     const events=[],saved=existing?{escaped:3,attempts:1,choices:{retained:true}}:null;
-    const context={imagesAllowed:consent,state:saved,pool:[],introAudio:{},keys:{images:'images'},
+    const context={imagesAllowed:consent,state:saved,pool:[],forgeryEverySeries:false,unstartedRooms:new WeakSet(),introAudio:{},keys:{images:'images'},
       confirmLaunchAIChoice:()=>events.push('ai-choice'),
       close:id=>events.push('close:'+id),store:{set:()=>events.push('consent')},heroImages:()=>events.push('images'),
       core:{newState:()=>{events.push('new');return {escaped:0};}},save:()=>events.push('save'),render:()=>events.push('render'),
@@ -477,7 +477,7 @@ test('first failed check retains exact feedback, but changed choices are not eva
 test('personal highscore persists through a loss and automatic new round', () => {
   const vm=require('node:vm'), js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
   const values=new Map([['best','5']]);
-  const context={state:core.newState(pool,null,seeded(50)),pool,best:5,core,imagesAllowed:true,
+  const context={state:core.newState(pool,null,seeded(50)),pool,best:5,core,imagesAllowed:true,forgeryEverySeries:false,
     progress:require('../scripts/kunsttresor-progress.js'),playerProgress:{version:1,record:5,events:[]},
     history:require('../scripts/kunsttresor-history.js'),workHistory:{version:1,since:Date.now(),rooms:[]},historyBlocked:false,
     keys:{game:'game',best:'best',progress:'progress'},store:{set:(key,value)=>values.set(key,value)},

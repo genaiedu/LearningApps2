@@ -23,6 +23,15 @@ test('missing text credentials never silently fall back to a generic image promp
 
 test('even constant winning randomness cannot insert more than one forgery in any seven consecutive rooms',()=>{let cooldown=6,rooms=[];for(let i=0;i<1000;i++){const plan=core.forgeryPlan(cooldown,()=>0);rooms.push(plan.generate);cooldown=plan.generate?6:plan.cooldown;}for(let i=0;i<994;i++)assert.ok(rooms.slice(i,i+7).filter(Boolean).length<=1);assert.equal(rooms.filter(Boolean).length,142);});
 test('randomness can produce entirely original rooms even after the cooldown expires',()=>assert.equal(core.forgeryPlan(0,()=>.8).generate,false));
+test('the secret mode always selects exactly one forgery opportunity and preserves the rare-mode cooldown',()=>{
+ for(let cooldown=0;cooldown<=6;cooldown++)for(let i=0;i<25;i++)assert.deepEqual(core.forgeryPlan(cooldown,()=>{throw Error('No lottery in secret mode');},true),{cooldown,generate:true});
+});
+test('secret rooms always contain an eligible two-dimensional image, even if sculptures are selected first',()=>{
+ const physical=core.newState(pool).ids.map(id=>({...pool.find(w=>w.id===id),artForm:'sculpture'}));
+ const picture={...physical[0],id:'test-picture',artForm:'painting',introEligible:true},mixed=[...physical,picture];
+ assert.equal(core.newState(mixed,null,()=>.9999).ids.includes(picture.id),false);
+ assert.equal(core.newState(mixed,null,()=>.9999,true).ids.includes(picture.id),true);
+});
 
 test('the one-in-seven random threshold never selects larger random values',()=>{assert.equal(core.forgeryPlan(0,()=>1/7-.001).generate,true);assert.equal(core.forgeryPlan(0,()=>1/7).generate,false);});
 const ki=require('../services/kunst-kurator/lib/kunst-ki.js');

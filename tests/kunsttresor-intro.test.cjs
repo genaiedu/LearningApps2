@@ -30,7 +30,7 @@ function createFilm({consent=true}={}) {
   const elements=new Map(),images=[],timers=new Map(),events=[];
   let timerId=0;
   const context={
-    wallMode:false,imagesAllowed:consent,pool:works,landmarkIds:[],previousIntro:[],introPreparation:null,
+    wallMode:false,forgeryEverySeries:false,unstartedRooms:new WeakSet(),imagesAllowed:consent,pool:works,landmarkIds:[],previousIntro:[],introPreparation:null,
     introEpoch:0,launchEpoch:0,introAudioEpoch:0,introWaitTimer:null,introTimer:null,introFadeTimer:null,
     introSoundEnabled:true,introSeconds:46,state:{escaped:2,attempts:1},keys:{images:'images'},
     aiAllowed:false,aiEnabled:true,aiChoiceConfirmed:false,aiEndpoint:'',aiConsentKey:'ai-consent',

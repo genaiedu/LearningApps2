@@ -62,12 +62,12 @@
       return url.protocol==='https:' && (url.hostname==='upload.wikimedia.org' || Boolean(museum));
     } catch { return false; }
   }
-  function room(pool, recent = [], random = Math.random) {
+  function room(pool, recent = [], random = Math.random, requireForgeryTarget = false) {
     const eligible = pool.filter(validWork);
     function find(candidates) {
       let visits = 0;
       function search(chosen, from) {
-        if (chosen.length === count) return chosen;
+        if (chosen.length === count) return !requireForgeryTarget || chosen.some(isIntroImage) ? chosen : null;
         if (++visits > 15000) return null;
         for (let i = from; i < candidates.length; i++) {
           if (!compatible(chosen, candidates[i])) continue;
@@ -98,14 +98,15 @@
     if (!selected) throw new Error('Es gibt nicht genug eindeutig zuordenbare Werke für einen Raum.');
     return { works: shuffle(selected, random), options: Object.fromEntries(fields.map(field => [field, shuffle(selected.map(work => work[field]), random)])) };
   }
-  function newState(pool, previous = null, random = Math.random) {
+  function newState(pool, previous = null, random = Math.random, requireForgeryTarget = false) {
     const recent = previous ? [...previous.recent, ...previous.ids].slice(-count*6) : [];
-    const next = room(pool, recent, random);
+    const next = room(pool, recent, random, requireForgeryTarget);
     return {version: 1, ids: next.works.map(work => work.id), options: next.options, choices: {}, attemptLog: [], attempts: 0, escaped: previous?.escaped || 0, phase: 'playing', recent,
       ...(previous?.runToken ? {runToken:previous.runToken, parentRoomToken:previous.phase === 'unlocked' ? previous.roomToken : previous.parentRoomToken || null} : {})};
   }
-  function forgeryPlan(cooldown, random = Math.random) {
+  function forgeryPlan(cooldown, random = Math.random, everySeries = false) {
     cooldown = Number.isInteger(cooldown) && cooldown > 0 ? cooldown : 0;
+    if (everySeries) return {cooldown, generate:true};
     return {cooldown:Math.max(0,cooldown-1), generate:cooldown === 0 && random() < 1/7};
   }
   function choose(state, workId, field, value) {

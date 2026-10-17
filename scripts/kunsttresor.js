@@ -62,31 +62,65 @@
   let forgeryCooldown = Math.max(0,store.get('kunsttresor-forgery-cooldown-v3') === null ? 6 : Number(store.get('kunsttresor-forgery-cooldown-v3')) || 0);
   const forgeryKey = 'kunsttresor-forgery-rare-enabled-v2';
   let forgeryEnabled = store.get(forgeryKey) === 'yes' || (store.get(forgeryKey) !== 'no' && store.get('kunsttresor-forgery-every-room-enabled-v1') !== 'no');
+  const everySeriesKey = 'kunsttresor-forgery-every-series-v1';
+  let forgeryEverySeries = store.get(everySeriesKey) === 'yes';
   const forgeryLoading = new WeakSet();
+  const forgeryEpochs = new WeakMap(), unstartedRooms = new WeakSet();
   let upcomingRoom = null;
   const forgerySwitch = document.createElement('button');
   forgerySwitch.type = 'button';
+  const rareForgeryText = $('forgery-frequency').textContent;
+  const rareLaunchText = document.querySelector('.launch-forgery-note').innerHTML;
   function refreshForgerySwitch() {
-    forgerySwitch.textContent = 'Fälschungen: ' + (forgeryEnabled ? 'Ein' : 'Aus');
-    forgerySwitch.setAttribute('aria-pressed', String(forgeryEnabled));
+    const enabled = forgeryEnabled || forgeryEverySeries;
+    forgerySwitch.textContent = 'Fälschungen: ' + (enabled ? 'Ein' : 'Aus');
+    forgerySwitch.setAttribute('aria-pressed', String(enabled));
+    $('forgery-secret').setAttribute('aria-pressed',String(forgeryEverySeries));
+    $('forgery-secret').setAttribute('aria-label','Geheimmodus: eine Fälschung in jeder neuen Bilderserie. '+(forgeryEverySeries?'Eingeschaltet. Ausschalten.':'Ausgeschaltet. Einschalten.'));
+    $('forgery-frequency').textContent = forgeryEverySeries ? 'In jeder neuen Bilderserie ist genau eines der sieben Bilder eine KI-Nachahmung. Markiere nur diese mit „Fälschung“, niemals die Originale. Bereits begonnene Serien bleiben unverändert.' : rareForgeryText;
+    document.querySelector('.launch-forgery-note').innerHTML = forgeryEverySeries ? '<strong>In jeder neuen Serie eine Fälschung.</strong> Genau eines der sieben Bilder ist eine KI-Nachahmung. Markiere es mit „Fälschung“ und ordne alle 35 Angaben zum Vorbild richtig zu. Bereits begonnene Serien bleiben unverändert.' : rareLaunchText;
+  }
+  function applyForgerySetting() {
+    upcomingRoom = null;
+    // Only a fresh, not yet entered room may change. Restored/examined rooms never do.
+    if (state && unstartedRooms.has(state)) {
+      if(forgeryEverySeries && !state.ids.some(id=>core.isIntroImage(workById(id)))) {
+        state=core.newState(pool,state,Math.random,true); unstartedRooms.add(state);
+      }
+      forgeryEpochs.set(state,(forgeryEpochs.get(state)||0)+1);
+      forgeryLoading.delete(state);
+      for (const field of ['forgery','forgeryPrepared','forgeryMode','forgeryEverySeries','forgeryError','forgeryMarks']) delete state[field];
+      save(); if(imagesAllowed) render();
+    }
+    refreshForgerySwitch();
   }
   refreshForgerySwitch();
   $('restart-top').before(forgerySwitch);
+  $('forgery-secret').onclick = () => {
+    forgeryEverySeries = !forgeryEverySeries;
+    store.set(everySeriesKey,forgeryEverySeries?'yes':'no');
+    applyForgerySetting();
+  };
   forgerySwitch.onclick = () => {
-    forgeryEnabled = !forgeryEnabled; store.set(forgeryKey, forgeryEnabled ? 'yes' : 'no');
-    refreshForgerySwitch();
-    upcomingRoom = null;
+    forgeryEnabled = !(forgeryEnabled || forgeryEverySeries);
+    forgeryEverySeries = false; store.set(everySeriesKey,'no');
+    store.set(forgeryKey, forgeryEnabled ? 'yes' : 'no');
+    applyForgerySetting();
     // A setting change takes effect at the next room; never swap an examined image.
     alert(forgeryEnabled ? 'Ab dem nächsten Raum: Gelegentlich entsteht bei Cloudflare eine KI-Nachahmung. Dafür werden Werkbeschreibungen und technische Verbindungsdaten übertragen. Markiere Fälschungen, aber keine Originale. Höchstens jedes siebte Rätsel enthält eine Nachahmung, jeweils nur ein Bild. Dazwischen liegen mindestens sechs Rätsel mit Originalen. Alle bisherigen Zuordnungen bleiben nötig.' : 'Ab dem nächsten Raum spielst du wieder ohne Fälschungen.');
   };
   async function prepareForgery(target = state) {
     if (!target || target.forgeryPrepared) return;
     target.forgeryPrepared = true;
-    target.forgeryMode = forgeryEnabled;
-    const plan = core.forgeryPlan(forgeryCooldown);
+    target.forgeryEverySeries = forgeryEverySeries;
+    target.forgeryMode = forgeryEnabled || forgeryEverySeries;
+    const epoch = (forgeryEpochs.get(target)||0)+1;
+    forgeryEpochs.set(target,epoch);
+    const current = () => forgeryEpochs.get(target)===epoch && (target===state || target===upcomingRoom);
+    const plan = core.forgeryPlan(forgeryCooldown,Math.random,forgeryEverySeries);
     forgeryCooldown = plan.cooldown;
     store.set('kunsttresor-forgery-cooldown-v3',String(forgeryCooldown));
-    if (!forgeryEnabled || !forgeryEndpoint || target.attempts || target.phase !== 'playing' || !plan.generate) { save(); return; }
+    if (!target.forgeryMode || !forgeryEndpoint || target.attempts || target.phase !== 'playing' || !plan.generate) { save(); return; }
     const candidates = target.ids.map(workById).filter(work => core.isIntroImage(work));
     if (!candidates.length) { save(); return; }
     const selected = candidates[Math.floor(Math.random()*candidates.length)];
@@ -101,11 +135,12 @@
       // Detailed brushwork can make the upstream JPEG unusually large. Keep a high-quality, full-resolution room copy.
       if(value.image.length>1700000) { const canvas=document.createElement('canvas'); canvas.width=generatedImage.naturalWidth; canvas.height=generatedImage.naturalHeight; canvas.getContext('2d').drawImage(generatedImage,0,0); value.image=canvas.toDataURL('image/jpeg',.94); }
       if(value.image.length>1800000) throw Error('Image too large for the room save');
-      if (target !== state && target !== upcomingRoom) return;
+      if (!current()) return;
       target.forgery = {id:selected.id,image:value.image,model:value.model || 'FLUX.2 Klein 4B',prompt:typeof value.prompt === 'string' ? value.prompt.slice(0,1800) : ''};
-      forgeryCooldown = 6; store.set('kunsttresor-forgery-cooldown-v3','6');
-    } catch { if(target === state || target === upcomingRoom) target.forgeryError = true; }
-    finally { forgeryLoading.delete(target); if(target === state) { save(); render(); } }
+      delete target.forgeryError;
+      if(!target.forgeryEverySeries){forgeryCooldown = 6; store.set('kunsttresor-forgery-cooldown-v3','6');}
+    } catch { if(current()) target.forgeryError = true; }
+    finally { if(forgeryEpochs.get(target)===epoch){forgeryLoading.delete(target); if(target === state) { save(); render(); }} }
   }
   const imageURL = work => work.imageURL;
   const gameImageURL = work => state?.forgery?.id === work.id ? state.forgery.image : imageURL(work);
@@ -314,7 +349,7 @@
     confirmLaunchAIChoice();
     close('launch-dialog');
     if (!imagesAllowed) { imagesAllowed = true; store.set(keys.images,'yes'); heroImages(); }
-    if (!state) { state = core.newState(pool); save(); }
+    if (!state) { state = core.newState(pool,null,Math.random,forgeryEverySeries); unstartedRooms.add(state); save(); }
     render();
     $('fullscreen').focus({preventScroll:true});
     if (withIntro === false) {
@@ -341,7 +376,7 @@
     close('intro-dialog'); $('intro-slides').replaceChildren(); $('intro-dialog').classList.remove('is-running','is-finale','is-loading');
     $('intro-slides').setAttribute('aria-busy','false'); $('intro-loading').hidden=true;
     if (enterGame && imagesAllowed && pool.length) {
-      if (!state) { state = core.newState(pool); save(); render(); }
+      if (!state) { state = core.newState(pool,null,Math.random,forgeryEverySeries); save(); render(); }
       window.scrollTo({top:0,behavior:'instant'});
     }
   }
@@ -366,6 +401,7 @@
       chapters[3]={title:'Zwei Fehlurteile sind erlaubt.',text:'35 Zuordnungen. Drei Prüfversuche. Nach einer falschen Prüfung kannst du nachbessern. Erst der dritte Fehlversuch beendet deinen Rundgang. Alle Antworten und die Fälschungsmarkierung müssen stimmen.'};
       chapters[4]={title:'Dein Blick. Deine eigene Galerie.',text:'Wenn alle Beschriftungen und Fälschungsmarkierungen stimmen, öffnet der Kurator den nächsten Raum. Als Dank sammelst du deine Lieblingswerke mit dem Herz für eine private digitale Galerie. Ab 20 Werken gestaltest du daraus deinen eigenen Kunstfilm.'};
     }
+    if(forgeryEverySeries) chapters[2]={title:'Traust du deinem Blick?',text:'In jeder neuen Bilderserie ist genau eines der '+(wallMode?'sieben':'vier')+' Bilder eine KI-Nachahmung. Markiere es mit „Fälschung“ und ordne alle Angaben zum historischen Vorbild zu.'};
     chosen.forEach((work,index)=>{
       const finale=index===chosen.length-1;
       const slide=node('div',finale?'intro-slide intro-slide--full':'intro-slide'), image=index===0?preparation.image:node('img'); slide.dataset.id=work.id;
@@ -445,7 +481,8 @@
     if(wallMode){wallOpening=false;void enterFullscreen();}
     if (!aiChoiceConfirmed && aiEndpoint) { prepareLaunch(); return; }
     if (!imagesAllowed) { askForImages(true); return; }
-    if (!state) state = core.newState(pool);
+    if (!state) state = core.newState(pool,null,Math.random,forgeryEverySeries);
+    unstartedRooms.delete(state);
     save(); render(); toGame();
   }
   function newRound() {
@@ -453,7 +490,7 @@
     clearForgeryPresentation();
     $('archive-update').hidden = true;
     const previous = state;
-    state = core.newState(pool, previous);
+    state = core.newState(pool, previous,Math.random,forgeryEverySeries);
     delete state.runToken; delete state.parentRoomToken;
     state.escaped = 0;
     save(); if (imagesAllowed) { render(); toGame(); } else askForImages(true);
@@ -462,11 +499,12 @@
     galleryUI?.refresh();
     const timeReady = Date.now() >= revealAt;
     if (!timeReady && imagesAllowed && state && !revealTimer) revealTimer = setTimeout(() => { revealTimer = null; update(); }, Math.max(1,revealAt-Date.now()));
-    const allPicturesReady = imagesAllowed && ready.size === workCount && failed.size === 0 && !forgeryLoading.has(state) && timeReady;
+    const requiredForgeryMissing = state?.phase==='playing' && state.forgeryEverySeries && !state.forgery;
+    const allPicturesReady = imagesAllowed && ready.size === workCount && failed.size === 0 && !forgeryLoading.has(state) && !requiredForgeryMissing && timeReady;
     $('art-grid').style.visibility = allPicturesReady ? 'visible' : 'hidden';
     $('art-grid').inert = !allPicturesReady;
     $('art-grid').setAttribute('aria-busy',String(!allPicturesReady));
-    $('room-loading').hidden = !state || !imagesAllowed || allPicturesReady;
+    $('room-loading').hidden = !state || !imagesAllowed || allPicturesReady || (requiredForgeryMissing && !forgeryLoading.has(state));
     $('best').textContent = number(best);
     if (!state) {
       $('room-kicker').textContent = 'Die Galerie wartet'; $('game-title').textContent = 'Der erste Schlüssel.';
@@ -570,12 +608,22 @@
     $('art-grid').setAttribute('aria-busy','true');
     $('room-loading').hidden = !state || !imagesAllowed;
     $('art-grid').replaceChildren();
+    $('retry-forgery').hidden = true;
+    $('start-here').hidden = false;
     if(state && imagesAllowed&&!wallOpening) toGame();
     if (!state || !imagesAllowed) {
       $('waiting').hidden = false; $('art-grid').hidden = true; $('lock-panel').hidden = true;
       $('start-here').textContent = 'Galerie betreten →'; update(); return;
     }
-    if (!state.forgeryPrepared) { void prepareForgery(); if (forgeryLoading.has(state)) { $('waiting').hidden=false; $('waiting').querySelector('p').textContent='Der nächste Raum wird vorbereitet …'; $('art-grid').hidden=true; $('lock-panel').hidden=true; return; } }
+    if (!state.forgeryPrepared) void prepareForgery();
+    if (forgeryLoading.has(state) || (state.phase==='playing' && state.forgeryEverySeries && !state.forgery)) {
+      const loading = forgeryLoading.has(state);
+      $('waiting').hidden=false; $('waiting').querySelector('h3').textContent=loading?'Deine Bilderserie entsteht.':'Die Fälschung konnte noch nicht erzeugt werden.';
+      $('waiting').querySelector('p').textContent=loading?'Die KI-Nachahmung wird vorbereitet. Das kann einen Moment dauern.': 'Im Geheimmodus beginnt eine neue Serie erst, wenn ihre eine Fälschung bereit ist. Versuche es erneut; das kostet keinen Prüfversuch.';
+      $('start-here').hidden=true; $('retry-forgery').hidden=loading;
+      $('art-grid').hidden=true; $('lock-panel').hidden=true;
+      update(); return;
+    }
     const epoch = imageEpoch;
     $('waiting').hidden = true; $('art-grid').hidden = false; $('lock-panel').hidden = false;
     state.ids.forEach((id,index) => {
@@ -597,6 +645,7 @@
         const empty = node('option',null,'Zuordnen …'); empty.value = ''; select.append(empty);
         [...new Set(state.options[field])].forEach(value => { const display = field === 'artist' ? wikiCatalogue.artists[value]?.title || value : field==='title'?titleLabel(value):value; const option = node('option',null,display); option.value = value; option.dataset.label = display; select.append(option); });
         select.addEventListener('change',() => {
+          unstartedRooms.delete(state);
           state = core.choose(state,id,field,select.value); save(); update();
           if (state.attempts === 0) $('feedback').textContent = core.filled(state) === total ? 'Alle Antworten sind vergeben. Bereit für die erste Prüfung?' : 'Die Auswahl allein zählt noch nicht als Versuch. Ordne alle '+total+' Antworten zu.';
           else $('feedback').textContent = core.filled(state) === total ? 'Alle Felder sind zugeordnet. Neue Antworten werden erst beim erneuten Prüfen bewertet.' : 'Zum Tauschen sind Antworten vorübergehend frei. Fülle vor dem nächsten Prüfen wieder alle '+total+' Felder aus.';
@@ -608,7 +657,7 @@
       const flag = node('button','forgery-flag', 'Fälschung'); flag.type='button';
       flag.setAttribute('aria-pressed',String(Boolean(state.forgeryMarks?.[id])));
       flag.disabled = state.phase !== 'playing';
-      flag.onclick = () => { state.forgeryMarks ||= {}; state.forgeryMarks[id] = !state.forgeryMarks[id]; flag.setAttribute('aria-pressed',String(state.forgeryMarks[id])); save(); };
+      flag.onclick = () => { unstartedRooms.delete(state); state.forgeryMarks ||= {}; state.forgeryMarks[id] = !state.forgeryMarks[id]; flag.setAttribute('aria-pressed',String(state.forgeryMarks[id])); save(); };
       flag.hidden = !state.forgeryMode && !state.forgery;
       const actions=node('div','artwork-actions'); actions.append(flag,galleryUI.likeButton(id));
       card.append(heading,picture,actions,assignments); if(wallMode){card.dataset.wallAspect=String(work.imageWidth&&work.imageHeight?work.imageWidth/work.imageHeight:1);card.dataset.wallPhysical=String(work.widthCm&&work.heightCm?Math.sqrt(work.widthCm*work.heightCm):0);} $('art-grid').append(card); loadWorkImage(work,picture,epoch);
@@ -626,10 +675,10 @@
     if (state?.phase !== 'unlocked') return;
     close('result-dialog'); close('solution-dialog'); close('art-glossary-dialog');
     clearForgeryPresentation();
-    state = upcomingRoom || core.newState(pool,state); upcomingRoom = null; save(); render(); toGame();
+    state = upcomingRoom || core.newState(pool,state,Math.random,forgeryEverySeries); upcomingRoom = null; save(); render(); toGame();
   }
   function inspect() {
-    if (ready.size !== workCount || failed.size || !imagesAllowed) return;
+    if (ready.size !== workCount || failed.size || !imagesAllowed || forgeryLoading.has(state) || (state.forgeryEverySeries && !state.forgery)) return;
     const checked = core.inspect(state,pool);
     if (!checked.checked) return;
     state = checked.state;
@@ -652,13 +701,14 @@
       $('result-action').textContent = state.phase === 'unlocked' ? 'Nächster Raum →' : 'Neue Runde beginnen ↻';
       $('result-solution').textContent = 'Mit dem Kurator noch einmal hinsehen';
       if(state.phase === 'unlocked') {
-        upcomingRoom = core.newState(pool,state);
+        upcomingRoom = core.newState(pool,state,Math.random,forgeryEverySeries);
         void prepareForgery(upcomingRoom);
         solutions();
       } else open('result-dialog');
     }
   }
   function showImage(work,letter,original = false) {
+    unstartedRooms.delete(state);
     if (!imagesAllowed) return;
     cancelZoomLoad();
     const epoch = zoomEpoch;
@@ -942,6 +992,11 @@
   });
   document.addEventListener('click',event => { const button = event.target.closest('[data-close]'); if (button) close(button.dataset.close); });
   $('start-game').onclick = $('start-here').onclick = start;
+  $('retry-forgery').onclick = () => {
+    if(!imagesAllowed || !state || state.phase!=='playing' || state.forgery || forgeryLoading.has(state))return;
+    delete state.forgeryPrepared; delete state.forgeryError;
+    render();
+  };
   $('consent-yes').onclick = () => {
     imagesAllowed = true; store.set(keys.images,'yes'); close('consent-dialog'); heroImages();
     if (pendingStart) { pendingStart = false; start(); } else if (state) render();
@@ -997,8 +1052,8 @@
   $('replace-room').onclick = () => {
     if (!failed.size || !state || state.phase !== 'playing') return;
     const failedIds = [...failed], previous = state;
-    try { state = core.newState(pool.filter(work => !failedIds.includes(work.id)),previous); }
-    catch { state = core.newState(pool,previous); }
+    try { state = core.newState(pool.filter(work => !failedIds.includes(work.id)),previous,Math.random,forgeryEverySeries); }
+    catch { state = core.newState(pool,previous,Math.random,forgeryEverySeries); }
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
