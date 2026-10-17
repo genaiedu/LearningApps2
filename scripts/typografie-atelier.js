@@ -4,7 +4,7 @@
   const node=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
   const on=(ids,fn,event='input')=>ids.forEach(id=>$(id).addEventListener(event,fn));
   const dec=(value,digits=2)=>Number(value).toLocaleString('de-DE',{minimumFractionDigits:digits,maximumFractionDigits:digits});
-  const fonts=new Map();let catalogue,fontAudits=new Map(),artAllowed=false,artEpoch=0,artImage=null;
+  const fonts=new Map();let catalogue,artAllowed=false,artEpoch=0,artImage=null;
   const initialHash=location.hash;let initialAnchorCancelled=false;
   for(const event of ['wheel','touchstart','pointerdown','keydown'])addEventListener(event,()=>{initialAnchorCancelled=true;},{once:true,passive:true});
   addEventListener('hashchange',()=>{initialAnchorCancelled=true;},{once:true});
@@ -98,37 +98,15 @@
   $('optical-reset').onclick=()=>updateOptical(true);updateOptical(true);
 
   async function loadFonts(){
-    try{const r=await fetch('data/typografie-fonts.json?v=20261011-gebrochene-schriften',{credentials:'omit'});if(!r.ok)throw Error();catalogue=await r.json();catalogue.families.forEach(f=>fonts.set(f.name,f));$('catalog-count').textContent=fonts.size;$('hero-count').textContent=fonts.size;renderFonts();updateBook();
-      try{const audit=await fetch('data/typografie-fontaudit.json?v=20261011-gebrochene-schriften',{credentials:'omit'});if(!audit.ok)throw Error();const data=await audit.json();fontAudits=new Map(data.families.map(f=>[f.id,f]));renderFonts();}catch(_){/* The catalogue remains usable; each disclosure states missing audit data. */}
+    try{const r=await fetch('data/typografie-fonts.json?v=20261017-schriftportraets',{credentials:'omit'});if(!r.ok)throw Error();catalogue=await r.json();catalogue.families.forEach(f=>fonts.set(f.name,f));$('catalog-count').textContent=fonts.size;$('hero-count').textContent=fonts.size;renderFonts();updateBook();
+
     }
     catch(_){$('catalog-status').textContent='Das Schriftverzeichnis konnte nicht geladen werden. Die übrigen Werkstätten und Downloads bleiben nutzbar.';const retry=node('button',null,'Verzeichnis erneut laden');retry.onclick=()=>{retry.remove();loadFonts();};$('catalog-status').after(retry);}
   }
   const groupLabels={serif:'Serif / Antiqua',sans:'Sans Serif',blackletter:'Gebrochene Schriften',script:'Hand- und Schreibschrift',display:'Display / Schmuck',mono:'Monospace'};
   function renderFonts(){
     if(!catalogue)return;
-    const term=$('font-search').value.toLocaleLowerCase('de'),group=$('font-group').value;
-    const list=catalogue.families.filter(f=>(group==='all'||f.group===group)&&[f.name,f.designer,f.classification,f.advice].join(' ').toLocaleLowerCase('de').includes(term));
-    $('font-grid').replaceChildren();$('catalog-status').textContent=list.length+' von '+catalogue.families.length+' Familien · Stand '+catalogue.checked;
-    for(const f of list){
-      const card=node('article','font-card'),title=node('h3',null,f.name);card.append(title,node('p','font-category',groupLabels[f.group]+' · '+f.classification));
-      const sample=node('p','font-sample',$('specimen-input').value||'Lesen heißt weiterdenken.');sample.style.fontFamily='"'+f.name+'"';card.append(sample);
-      const label=node('label','font-cuts','Vorhandener Schnitt');const select=node('select');select.setAttribute('aria-label',f.name+' · vorhandenen Schnitt auswählen');
-      const cuts=[];
-      for(const file of f.files){const weights=Array.isArray(file.weight)?[file.weight[0],400,500,600,700,file.weight[1]].filter(w=>w>=file.weight[0]&&w<=file.weight[1]):[file.weight];for(const weight of weights){const key=weight+'-'+file.style;if(cuts.some(c=>c.key===key))continue;cuts.push({key,weight,style:file.style});}}
-      cuts.sort((a,b)=>a.style.localeCompare(b.style)||a.weight-b.weight);
-      cuts.forEach(c=>{const option=node('option',null,c.weight+(c.style==='italic'?' · echte Kursive':''));option.value=c.key;option.selected=c.weight===400&&c.style==='normal';select.append(option);});
-      select.onchange=()=>{const cut=cuts.find(c=>c.key===select.value);sample.style.fontWeight=cut.weight;sample.style.fontStyle=cut.style;};label.append(select);card.append(label,node('p','font-advice',f.advice));
-      const info=node('details'),summary=node('summary',null,'Dateien, Gestalter & Verwendung');info.append(summary,node('p',null,'Gestaltung: '+f.designer+'. Lizenz: '+f.license+'.'));
-      const links=node('p');const licence=node('a',null,'Lokaler Lizenztext');licence.href=f.licensePath;const source=node('a',null,'Offizielles Fontprojekt ↗');source.href=f.source;source.target='_blank';source.rel='noopener noreferrer';links.append(licence,document.createTextNode(' · '),source);info.append(links);
-      for(const file of f.files){const description=node('span','font-file',file.path.split('/').pop()+' · '+(file.axes&&Object.keys(file.axes).length?'variabel '+Object.keys(file.axes).join(', '):'statischer Schnitt'));info.append(description);}
-      if(f.features?.length)info.append(node('p','small','OpenType-Tags im vorhandenen Bestand: '+f.features.join(', ')+'. Tags allein garantieren nicht jede Kombination für jedes Zeichen.'));
-      const download=node('a','font-google-download');window.TypoFontLinks.link(download,f.name);card.append(download);
-      window.TypoFontAudit.attach(card,f,fontAudits.get(f.id));
-      if(f.uses.length)info.append(node('p','small','Direkte Dateireferenzen in '+f.uses.length+' HTML-/CSS-Dateien. Kein Laufzeit-Nachweis.'));
-      const ul=node('ul');f.uses.slice(0,8).forEach(use=>{const li=node('li'),a=node('a',null,use.repo+'/'+use.path);a.href=use.url;a.target='_blank';a.rel='noopener noreferrer';li.append(a);ul.append(li);});if(f.uses.length>8)ul.append(node('li',null,'Weitere '+(f.uses.length-8)+' Referenzen im vollständigen Bestandsdatensatz.'));info.append(ul);
-      if(f.uses.length>8){const a=node('a',null,'Vollständigen Bestandsdatensatz ansehen');a.href='data/typografie-fonts.json';info.append(a);}
-      card.append(info);$('font-grid').append(card);
-    }
+    window.TypoFontPortraits.render(catalogue,{term:$('font-search').value.toLocaleLowerCase('de'),group:$('font-group').value,sample:$('specimen-input').value||'Lesen heißt weiterdenken.'});
   }
   on(['font-search','font-group'],renderFonts);$('specimen-input').oninput=()=>document.querySelectorAll('.font-sample').forEach(p=>p.textContent=$('specimen-input').value||'Lesen heißt weiterdenken.');const fontsReady=loadFonts();
 

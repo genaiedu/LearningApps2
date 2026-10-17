@@ -474,7 +474,26 @@
           "axes": {}
         }
       ],
-      "desktop": "fonts/typografie/poppins/poppins-desktop.zip"
+      "desktop": "fonts/typografie/poppins/poppins-desktop.zip",
+      "portrait": {
+        "history": "Indian Type Foundry veröffentlichte Poppins 2015 als geometrische Familie für lateinische Schrift und Devanagari. Jonny Pinhorn entwarf zunächst die lateinischen Formen, Ninad Kale die Devanagari. Kreisformen und optisch korrigierte Strichverbindungen prägen beide Schriftsysteme.",
+        "character": "Kreisnahe Rundungen, hohe x-Höhe und ein konstruiertes, gleichmäßiges Schriftbild.",
+        "use": "Titel, kurze Einleitungen und prägnante Zwischenüberschriften. Für lange Lesetexte lieber eine ruhigere Partnerin einsetzen.",
+        "caution": "Nicht jede Zeile fett setzen: Die großen Binnenformen brauchen Platz. Zwei geometrische Sans mit ähnlichem Gewicht erzeugen meist zu wenig Rollenunterschied.",
+        "pairings": [
+          {
+            "id": "ebgaramond",
+            "role": "Lesetext",
+            "reason": "Die lebendige Renaissance-Antiqua setzt einen klaren Gegenpol zur Geometrie."
+          },
+          {
+            "id": "lora",
+            "role": "Lesetext",
+            "reason": "Die weicheren, kalligrafischen Formen bringen Bewegung unter einen sachlichen Titel."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/poppins/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Outfit",
@@ -642,7 +661,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/outfit/outfit-desktop.zip"
+      "desktop": "fonts/typografie/outfit/outfit-desktop.zip",
+      "portrait": {
+        "history": "Outfit entstand für die Markenidentität von outfit.io. Die geometrische Schriftfamilie übersetzt die Formensprache der Wortmarke in ein System für Texte und Kommunikation. Die offizielle Projektbeschreibung dokumentiert eine Erweiterung der Sprachunterstützung 2023.",
+        "character": "Geradlinige Geometrie, große Rundungen und ein ruhiger, zeitgenössischer Auftritt.",
+        "use": "Titel, Navigation und kurze Informationstexte. Als gleichbleibende Ordnungsstimme in einer Gestaltung verwenden.",
+        "caution": "Für literarische Langtexte erst eine längere Probeseite prüfen. Nicht zusätzlich mit einer ähnlich geometrischen Sans dekorieren.",
+        "pairings": [
+          {
+            "id": "cardo",
+            "role": "Lesetext",
+            "reason": "Die klassische Antiqua liefert historischen Formkontrast und einen ruhigen Lesefluss."
+          },
+          {
+            "id": "librebaskerville",
+            "role": "Lesetext",
+            "reason": "Offene Binnenräume und Serifen ergänzen die klare Titelgeometrie."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/outfit/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Bangers",
@@ -676,7 +714,26 @@
           "axes": {}
         }
       ],
-      "desktop": "fonts/typografie/bangers/bangers-desktop.zip"
+      "desktop": "fonts/typografie/bangers/bangers-desktop.zip",
+      "portrait": {
+        "history": "Vernon Adams orientierte sich an der Titelbeschriftung amerikanischer Superheldencomics aus der Mitte des 20. Jahrhunderts. Bangers ist eine digitale Interpretation dieser lauten, gezeichneten Coverstimme, keine neutrale Schreib- oder Leseschrift.",
+        "character": "Gedrängte, geneigte, kräftige Versalien mit bewusst unruhiger Zeichnung.",
+        "use": "Sehr kurze Titel, Sprechblasen und einzelne Ausrufe. Eine einzige laute Ebene reicht.",
+        "caution": "Nicht für Arbeitsaufträge oder längere Erklärungen. Kleine Schriftgrade und durchgehende Großbuchstaben in Absätzen erschweren das Lesen.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Erklärtext und Angaben",
+            "reason": "Die offene, sachliche Sans fängt die Comicenergie auf."
+          },
+          {
+            "id": "inter",
+            "role": "Navigation und Begleittext",
+            "reason": "Ein deutlich ruhigeres System für alles, was schnell erfasst werden muss."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/bangers/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Zilla Slab",
@@ -766,7 +823,26 @@
           "axes": {}
         }
       ],
-      "desktop": "fonts/typografie/zillaslab/zillaslab-desktop.zip"
+      "desktop": "fonts/typografie/zillaslab/zillaslab-desktop.zip",
+      "portrait": {
+        "history": "Typotheque entwickelte Zilla Slab für Mozilla. Die Familie wurde als zentrale Markenschrift einschließlich des Mozilla-Schriftzugs eingesetzt und baut auf Typotheques Tesla auf. Kräftige Serifen verbinden sich mit weichen Kurven und einer eigenständigen Kursividee.",
+        "character": "Zeitgenössische Slab Serif mit robusten Füßen, weichen Rundungen und freundlichem, leicht industriellem Ton.",
+        "use": "Markante Titel, kurze Essays und redaktionelle Zwischenüberschriften. Auch für längere Texte an einer ganzen Probeseite testen.",
+        "caution": "Die starken Serifen nicht mit einer zweiten ebenso charaktervollen Slab Serif konkurrieren lassen.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Begleittext und Navigation",
+            "reason": "Die leichte humanistische Sans trennt Information von der markanten Titelstimme."
+          },
+          {
+            "id": "inter",
+            "role": "Bildunterschriften und Bedienung",
+            "reason": "Eine nüchterne Systemebene hält das Layout zusammen."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/zillaslab/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Lora",
@@ -876,7 +952,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/lora/lora-desktop.zip"
+      "desktop": "fonts/typografie/lora/lora-desktop.zip",
+      "portrait": {
+        "history": "Cyreal entwarf Lora als zeitgenössische Leseschrift mit kalligrafischen Wurzeln. Die Projektbeschreibung nennt Bildschirm und Druck als Einsatzfelder; 2019 wurde die Familie um eine variable Fassung erweitert. Die geschwungenen Formen erinnern an Pinselbewegungen.",
+        "character": "Mäßiger Kontrast, weiche Kurven und deutlich gezeichnete Serifen. Literarisch, ohne eine historische Kopie sein zu wollen.",
+        "use": "Lesetexte, Essays und längere Einleitungen. Mit genügend Zeilenabstand und überschaubarer Zeilenlänge setzen.",
+        "caution": "Für eine streng technische Oberfläche kann die persönliche Textur zu präsent sein. Nicht mit einer weiteren kalligrafischen Leseschrift mischen.",
+        "pairings": [
+          {
+            "id": "poppins",
+            "role": "Titel",
+            "reason": "Die geometrische Sans schafft einen deutlich anderen Rhythmus."
+          },
+          {
+            "id": "sourcesans3",
+            "role": "Navigation und Bildunterschriften",
+            "reason": "Eine zurückhaltende Sans hält Zusatzinformationen aus dem Lesetext heraus."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/lora/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Montserrat",
@@ -937,7 +1032,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/montserrat/montserrat-desktop.zip"
+      "desktop": "fonts/typografie/montserrat/montserrat-desktop.zip",
+      "portrait": {
+        "history": "Julieta Ulanovsky ließ sich von Plakaten und Beschriftungen des Stadtteils Montserrat in Buenos Aires aus der ersten Hälfte des 20. Jahrhunderts anregen. Das freie Projekt bewahrt diese urbane Formensprache. Jacques Le Bailly überarbeitete die Familie 2017.",
+        "character": "Breite geometrische Formen, präsente Versalien und ein selbstbewusster, städtischer Ton.",
+        "use": "Titel, Plakate und kurze Navigations- oder Orientierungsebenen. Bei wenig Platz nicht einfach enger quetschen.",
+        "caution": "Lange Absätze in kräftigen Gewichten werden schnell zu einer dunklen Fläche. Keine zweite breite geometrische Sans danebenstellen.",
+        "pairings": [
+          {
+            "id": "librebaskerville",
+            "role": "Lesetext",
+            "reason": "Der deutliche Serifenkontrast ordnet Titel und Argumentation."
+          },
+          {
+            "id": "ebgaramond",
+            "role": "Langer Lesetext",
+            "reason": "Die schmaleren, bewegteren Formen ergänzen die breiten Titel."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/montserrat/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "DM Mono",
@@ -1048,7 +1162,26 @@
           "axes": {}
         }
       ],
-      "desktop": "fonts/typografie/dmmono/dmmono-desktop.zip"
+      "desktop": "fonts/typografie/dmmono/dmmono-desktop.zip",
+      "portrait": {
+        "history": "Colophon Foundry entwickelte DM Mono im Auftrag von DeepMind. Sie ist locker von DM Sans abgeleitet, mit weniger geometrischen Proportionen. Wie bei einer Schreibmaschine besitzt jedes Zeichen dieselbe Vorbreite.",
+        "character": "Feste Zeichenbreite, gleichmäßiger Takt und eine erkennbare technische Stimme.",
+        "use": "Code, kurze Messwerte, Kennungen und kleine Metadaten. Eine funktionale Sonderrolle statt der Hauptleseschrift.",
+        "caution": "Nicht für ganze Aufsätze: Die feste Vorbreite unterbricht den natürlichen Wortrhythmus. Tabellenspalten trotzdem bewusst ausrichten.",
+        "pairings": [
+          {
+            "id": "dmsans",
+            "role": "Titel und allgemeiner Text",
+            "reason": "Die verwandte Sans übernimmt die flüssigere Kommunikation."
+          },
+          {
+            "id": "inter",
+            "role": "Bedienung und Beschriftung",
+            "reason": "Ein offenes Interface begleitet die präzisen Datenzeilen."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/dmmono/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Oswald",
@@ -1094,7 +1227,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/oswald/oswald-desktop.zip"
+      "desktop": "fonts/typografie/oswald/oswald-desktop.zip",
+      "portrait": {
+        "history": "Oswald überträgt die schmale amerikanische Grotesktradition der Alternate Gothic in eine digitale Familie. Vernon Adams startete das Projekt 2011; später arbeiteten unter anderem Kalapi Gajjar und Cyreal daran weiter. Die Formen wurden auch für die Darstellung auf Bildschirmen überarbeitet.",
+        "character": "Schmale Proportionen, hohe Vertikale und ein kompakter, plakativer Rhythmus.",
+        "use": "Kurze Überschriften, Plakattitel und knappe Beschriftungen bei begrenzter Breite.",
+        "caution": "Nicht ganze Textspalten damit füllen. Große Mengen gesperrter Versalien machen die schmale Form nicht automatisch besser lesbar.",
+        "pairings": [
+          {
+            "id": "lora",
+            "role": "Lesetext",
+            "reason": "Die weichere Antiqua bringt Breite und Ruhe unter den schmalen Titel."
+          },
+          {
+            "id": "sourcesans3",
+            "role": "Erklärtext",
+            "reason": "Die offenen Formen schaffen einen deutlichen Wechsel vom Titel zum Inhalt."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/oswald/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Righteous",
@@ -1124,7 +1276,26 @@
           "axes": {}
         }
       ],
-      "desktop": "fonts/typografie/righteous/righteous-desktop.zip"
+      "desktop": "fonts/typografie/righteous/righteous-desktop.zip",
+      "portrait": {
+        "history": "Righteous nimmt Anregungen aus Art-déco-Plakaten des ungarischen Gestalters Robert Berény für Modiano auf. Astigmatic übertrug die geometrischen Großbuchstabenideen in eine digitale Schrift und ergänzte Kleinbuchstaben. Sie zitiert eine Epoche, ohne eine historische Druckschrift zu reproduzieren.",
+        "character": "Rasterhafte Rundungen und auffällige geometrische Details; retro und betont eigenständig.",
+        "use": "Wenige große Wörter auf Plakaten, Veranstaltungstitel oder spielerische Kapitelauftakte.",
+        "caution": "Nicht als neutrale Standardschrift für Erklärungen verwenden. Weitere dekorative Schriften nehmen ihr die klare Hauptrolle.",
+        "pairings": [
+          {
+            "id": "dmsans",
+            "role": "Begleittext",
+            "reason": "Die geometrische Verwandtschaft verbindet, die ruhigere Zeichnung trennt die Rollen."
+          },
+          {
+            "id": "lora",
+            "role": "Kurzer Lesetext",
+            "reason": "Serifen und kalligrafische Bewegung schaffen einen klaren Kontrast."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/righteous/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Bebas Neue",
@@ -1162,7 +1333,26 @@
           "axes": {}
         }
       ],
-      "desktop": "fonts/typografie/bebasneue/bebasneue-desktop.zip"
+      "desktop": "fonts/typografie/bebasneue/bebasneue-desktop.zip",
+      "portrait": {
+        "history": "Ryoichi Tsunekawa entwickelte Bebas Neue auf Grundlage seiner ursprünglichen Bebas. Die Familie ist ausdrücklich auf Titel, Beschriftungen und Verpackungsgestaltung ausgerichtet. Ihre schmale Versalform gehört zur Tradition kompakter Plakatschriften.",
+        "character": "Hohe, schmale Versalien mit knappem, gleichmäßigem Rhythmus.",
+        "use": "Kurze Haupttitel, Zahlen und große Signalwörter. Begleitinformationen in einer anderen, gut lesbaren Schrift setzen.",
+        "caution": "Keine langen Absätze oder komplizierten Arbeitsanweisungen. Die kompakte Form benötigt trotz ihrer Schmalheit genügend Weißraum.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Erklärtext und Kleingedrucktes",
+            "reason": "Die offene Sans unterscheidet sich klar vom schmalen Versaltitel."
+          },
+          {
+            "id": "librebaskerville",
+            "role": "Lesetext",
+            "reason": "Der Wechsel zur Antiqua schafft eine unmissverständliche Hierarchie."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/bebasneue/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Dancing Script",
@@ -1286,7 +1476,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/dancingscript/dancingscript-desktop.zip"
+      "desktop": "fonts/typografie/dancingscript/dancingscript-desktop.zip",
+      "portrait": {
+        "history": "Pablo Impallaris Dancing Script knüpft an lockere Schreibschriften der 1950er-Jahre an. Die offizielle Beschreibung nennt Murray Hill und Mistral als Bezugspunkte. Die schwankende Grundlinie und wechselnden Größen sollen spontan und informell wirken.",
+        "character": "Verbundene, federnde Buchstaben und große, bewegte Anfangsbuchstaben.",
+        "use": "Einladungsüberschrift, Gruß oder wenige persönliche Akzentwörter.",
+        "caution": "Nicht in durchgehenden Versalien, nicht künstlich sperren und nicht für Ort, Datum oder lange Absätze verwenden.",
+        "pairings": [
+          {
+            "id": "librebaskerville",
+            "role": "Einladungstext",
+            "reason": "Eine ruhige Antiqua sorgt unter der lebhaften Überschrift für Haltung."
+          },
+          {
+            "id": "sourcesans3",
+            "role": "Datum, Ort und Rückmeldung",
+            "reason": "Sachliche Informationen bleiben sofort erfassbar."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/dancingscript/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "DM Sans",
@@ -1407,7 +1616,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/dmsans/dmsans-desktop.zip"
+      "desktop": "fonts/typografie/dmsans/dmsans-desktop.zip",
+      "portrait": {
+        "history": "Colophon Foundry entwickelte DM Sans ausgehend vom lateinischen Teil der Poppins. Ziel war eine kontrastarme geometrische Sans für kleinere Textgrößen. 2023 wurde das Projekt unter anderem um einen größeren Gewichtsbereich und eine optische Größenachse erweitert.",
+        "character": "Geometrischer Grundton mit zurückhaltender Zeichnung und vergleichsweise ruhigem Textbild.",
+        "use": "Bedienoberflächen, kurze Lesetexte und sachliche Begleitinformationen. Auch als einzige Familie für ein einfaches System geeignet.",
+        "caution": "Nicht jede Hierarchieebene durch eine weitere Schrift lösen. Zuerst Größe, Gewicht und Abstand innerhalb der Familie nutzen.",
+        "pairings": [
+          {
+            "id": "librebodoni",
+            "role": "Großer Titel",
+            "reason": "Die kontrastreiche Antiqua übernimmt die repräsentative Rolle."
+          },
+          {
+            "id": "dmmono",
+            "role": "Code und Kennungen",
+            "reason": "Die verwandte Monospace macht Daten als eigene Ebene kenntlich."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/dmsans/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Plus Jakarta Sans",
@@ -1468,7 +1696,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/plusjakartasans/plusjakartasans-desktop.zip"
+      "desktop": "fonts/typografie/plusjakartasans/plusjakartasans-desktop.zip",
+      "portrait": {
+        "history": "Gumpita Rahayu und Tokotype entwickelten Plus Jakarta Sans für die 2020 beauftragte Identität „+Jakarta City of Collaboration“. Die Familie greift Anregungen aus Futura, Neuzeit Grotesk und Groteskschriften der 1930er-Jahre auf und verbindet sie mit eigenen Zeichenformen.",
+        "character": "Geometrische Sans mit hohen Mittellängen, offenen Innenräumen und prägnanten Details.",
+        "use": "Digitale Titel, Navigation und kurze Informationstexte. Innerhalb einer Seite konsequent als Ordnungsstimme verwenden.",
+        "caution": "Markante Formen nicht durch übermäßige Sperrung zusätzlich aufladen. Lange Lesestrecken in Originalgröße prüfen.",
+        "pairings": [
+          {
+            "id": "lora",
+            "role": "Lesetext",
+            "reason": "Weiche Serifenkurven setzen einen lesbaren Gegenpol."
+          },
+          {
+            "id": "librebaskerville",
+            "role": "Artikel und Berichte",
+            "reason": "Die ruhigere Antiqua trennt die sachliche Oberfläche vom längeren Inhalt."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/plusjakartasans/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Forum",
@@ -1498,7 +1745,26 @@
           "axes": {}
         }
       ],
-      "desktop": "fonts/typografie/forum/forum-desktop.zip"
+      "desktop": "fonts/typografie/forum/forum-desktop.zip",
+      "portrait": {
+        "history": "Denis Masharovs Forum orientiert sich an antik-römischen Proportionen. Die Familie ist ein moderner Entwurf mit klassischer Anmutung und breiter Sprachunterstützung, keine Reproduktion einer bestimmten römischen Inschrift.",
+        "character": "Schlanke, offene Antiquaformen mit einem leichten, inschriftlichen Ton.",
+        "use": "Ruhige Titel für Programme, Ausstellungen und Einladungen; kurze feierliche Textpassagen.",
+        "caution": "Bei kleinen Graden und schwachem Kontrast kann die zarte Zeichnung verschwinden. Nicht mit weiteren dekorativen Antiken-Zitaten überladen.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Programmtext und Angaben",
+            "reason": "Die Sans stellt eine klare, unaufdringliche Informationsebene bereit."
+          },
+          {
+            "id": "inter",
+            "role": "Navigation und Datum",
+            "reason": "Ein sachlicher Rahmen lässt dem klassischen Titel seinen Raum."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/forum/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Caveat",
@@ -1587,7 +1853,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/caveat/caveat-desktop.zip"
+      "desktop": "fonts/typografie/caveat/caveat-desktop.zip",
+      "portrait": {
+        "history": "Caveat wurde von Pablo Impallari im Auftrag von Google als Handschriftfamilie entworfen. Kontextabhängige Buchstabenvarianten sollen den Eindruck mechanischer Wiederholung mildern. Cyreal erweiterte später unter anderem die kyrillische Unterstützung.",
+        "character": "Offene, locker geschriebene Buchstaben und eine lebhafte, persönliche Zeile.",
+        "use": "Randnotizen, handschriftlich wirkende Anmerkungen und kurze Kommentare.",
+        "caution": "Nicht sämtliche Arbeitsaufträge als Handschrift tarnen. Für lange Erklärtexte und kleine Fußnoten ist eine ruhige Leseschrift meist geeigneter.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Haupttext",
+            "reason": "Eine sachliche Basis lässt die Randnotiz wirklich als Notiz wirken."
+          },
+          {
+            "id": "cardo",
+            "role": "Lesetext",
+            "reason": "Die klassische Antiqua setzt einen ruhigen Rahmen um persönliche Anmerkungen."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/caveat/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Nunito",
@@ -1646,7 +1931,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/nunito/nunito-desktop.zip"
+      "desktop": "fonts/typografie/nunito/nunito-desktop.zip",
+      "portrait": {
+        "history": "Vernon Adams begann Nunito als Sans mit gerundeten Endungen für Displaytypografie. Jacques Le Bailly baute die Familie später aus; daneben entstand mit Nunito Sans eine nicht gerundete Schwester. Rundung und weicher Duktus sind bewusste Gestaltungsentscheidungen.",
+        "character": "Gerundete Endungen, ausgeglichene Proportionen und eine freundliche Stimme.",
+        "use": "Kurze Lerntexte, zugängliche Navigation und freundliche Zwischentitel.",
+        "caution": "Freundlich bedeutet nicht automatisch für jedes Kind besser lesbar. In kleinen Graden und für längere Aufgaben konkret testen.",
+        "pairings": [
+          {
+            "id": "lora",
+            "role": "Längere Lesetexte",
+            "reason": "Die Serifenschrift ergänzt die weichen Bedien- und Überschriftsebenen."
+          },
+          {
+            "id": "robotoslab",
+            "role": "Titel",
+            "reason": "Kräftige Serifen setzen einen sachlicheren Akzent über der runden Sans."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/nunito/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Inter",
@@ -2137,7 +2441,26 @@
           }
         }
       ],
-      "desktop": "fonts/typografie/inter/inter-desktop.zip"
+      "desktop": "fonts/typografie/inter/inter-desktop.zip",
+      "portrait": {
+        "history": "Rasmus Andersson entwickelte Inter gezielt für Computerbildschirme. Eine hohe x-Höhe und Details für Benutzeroberflächen prägen die Familie. Das offene Projekt bietet unter anderem kontextabhängige Zeichenanpassungen und Ziffernfunktionen.",
+        "character": "Offene, klare Sans mit großer x-Höhe und nüchterner, gut strukturierbarer Wirkung.",
+        "use": "Navigation, Formulare, Bildunterschriften und sachliche Bildschirmtexte. Eine gute Basis für eine zurückhaltende Hierarchie.",
+        "caution": "Nicht alles in kleine graue Interface-Schrift verwandeln. Lesetext braucht ausreichend Größe, Zeilenabstand und begrenzte Zeilenlänge.",
+        "pairings": [
+          {
+            "id": "ebgaramond",
+            "role": "Lesetext",
+            "reason": "Die historische Antiqua macht längere Texte als andere Ebene erkennbar."
+          },
+          {
+            "id": "librebodoni",
+            "role": "Großer Titel",
+            "reason": "Ein starker Formkontrast, während Inter die Orientierung übernimmt."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/inter/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Archivo Black",
@@ -2171,7 +2494,26 @@
           "axes": {}
         }
       ],
-      "desktop": "fonts/typografie/archivoblack/archivoblack-desktop.zip"
+      "desktop": "fonts/typografie/archivoblack/archivoblack-desktop.zip",
+      "portrait": {
+        "history": "Omnibus-Type entwickelte Archivo als Groteskfamilie mit Anklängen an amerikanische Schriften des späten 19. Jahrhunderts. Archivo Black ist die besonders kräftige Titelstimme dieses Umfelds. Das Projekt ist mit Chivo verwandt und für Druck und Bildschirm angelegt.",
+        "character": "Sehr dunkles Schriftbild, kräftige Rundungen und ein ausgesprochen gewichtiger Auftritt.",
+        "use": "Wenige große Titelwörter, Plakataussagen und einzelne Hervorhebungen.",
+        "caution": "Kein Ersatz für einen normalen Fettschnitt im Fließtext. Zu viele dunkle Zeilen lassen die Seite schwer und unruhig werden.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Erklärtext",
+            "reason": "Eine offene Sans sorgt unter dem schweren Titel für Luft."
+          },
+          {
+            "id": "librebaskerville",
+            "role": "Lesetext",
+            "reason": "Die Serifenschrift schafft einen deutlich anderen Rhythmus."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/archivoblack/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Cardo",
@@ -2235,7 +2577,26 @@
         "sups"
       ],
       "desktop": "fonts/typografie/cardo/cardo-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "David Perry entwickelte Cardo besonders für Altertumswissenschaft, Bibelwissenschaft, Mediävistik und Sprachwissenschaft. Der umfangreiche Zeichenvorrat und texttypografische Funktionen verbinden wissenschaftliche Anforderungen mit dem Erscheinungsbild einer klassischen Antiqua.",
+        "character": "Klassische Proportionen, bewegte Serifen und ein ruhiges, buchnahes Textbild.",
+        "use": "Lesetext, Quellenzitate und geisteswissenschaftliche Dokumente. Sonderzeichen für den konkreten Text dennoch vorab prüfen.",
+        "caution": "Nicht allein aufgrund des historischen Tons jede Überschrift ebenfalls historisierend gestalten. Kleine Schriftgrade brauchen sorgfältige Kontrolle.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Titel, Randangaben und Bildunterschriften",
+            "reason": "Die sachliche Sans organisiert, ohne mit dem Buchtext zu konkurrieren."
+          },
+          {
+            "id": "outfit",
+            "role": "Kurze Titel",
+            "reason": "Ein geometrischer Kontrast macht den Wechsel zwischen Überschrift und Lesetext deutlich."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/cardo/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "EB Garamond",
@@ -2316,7 +2677,26 @@
         "tnum"
       ],
       "desktop": "fonts/typografie/ebgaramond/ebgaramond-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Das Gemeinschaftsprojekt von Georg Duffner und später Octavio Pardo belebt Garamonts Antiqua und Granjons Kursive aus dem 16. Jahrhundert neu. Wichtige Vorlage ist die 1592 von Conrad Berner veröffentlichte Schriftprobe. EB steht für Egenolff–Berner.",
+        "character": "Feine Renaissance-Antiqua mit bewegtem Duktus, kleineren Mittellängen und eleganten Übergängen.",
+        "use": "Buchtext, Essays, Briefe und längere Lektüre. In der Probe eher ausreichend groß als zu zart setzen.",
+        "caution": "Nicht die Größenangabe einer Sans unverändert übernehmen: Die sichtbare Buchstabenhöhe fällt anders aus. Lange Zeilen und knapper Durchschuss schwächen den Lesefluss.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Zwischentitel und Metadaten",
+            "reason": "Die offene Sans ordnet den klassischen Text ohne Stilkopie."
+          },
+          {
+            "id": "poppins",
+            "role": "Kurzer Haupttitel",
+            "reason": "Die geometrische Gegenform schafft bewusst zeitgenössische Spannung."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/ebgaramond/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Libre Bodoni",
@@ -2376,7 +2756,26 @@
         "sups"
       ],
       "desktop": "fonts/typografie/librebodoni/librebodoni-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Libre Bodoni führt die klassizistische Bodoni-Tradition als freie digitale Interpretation weiter. Die offizielle Projektbeschreibung verweist besonders auf die ATF-Zeichnung von Morris Fuller Benton. Gemeint ist eine spätere Vermittlung dieser Tradition, keine direkte Digitalisierung originaler Bodoni-Lettern.",
+        "character": "Starker Wechsel zwischen Haar- und Grundstrichen, strenge Achsen und feine Serifen.",
+        "use": "Große repräsentative Titel, Kulturprogramme und kurze elegante Akzente.",
+        "caution": "Feine Haarlinien nicht in kleine, kontrastarme Bildschirmtexte zwingen. Für dichten Lesetext eine robustere Partnerin wählen.",
+        "pairings": [
+          {
+            "id": "dmsans",
+            "role": "Begleittext und Navigation",
+            "reason": "Die kontrastarme Sans hält die Information ruhig und klar."
+          },
+          {
+            "id": "inter",
+            "role": "Angaben und Bedienung",
+            "reason": "Die funktionale Oberfläche lässt den Titel glänzen, ohne selbst zu konkurrieren."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/librebodoni/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Source Sans 3",
@@ -2494,7 +2893,26 @@
         "licensePath": "fonts/typografie/sourcesans3/static/LICENSE.txt"
       },
       "desktop": "fonts/typografie/sourcesans3/sourcesans3-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Paul D. Hunt entwickelte Source Sans bei Adobe als erste quelloffene Schriftfamilie des Unternehmens. Das Projekt ist besonders auf Benutzeroberflächen ausgerichtet. Source Sans 3 führt diese humanistische Sans-Tradition als weiterentwickelte Familie fort.",
+        "character": "Offene Innenräume, humanistischer Rhythmus und eine zurückhaltende, klare Zeichnung.",
+        "use": "Lesetext, Arbeitsaufträge, Navigation, Bildunterschriften und sachliche Titel. Eine vielseitige Ordnungsstimme.",
+        "caution": "Nicht jede Überschrift durch eine weitere Schrift ersetzen. Auch eine einzelne Familie kann mit Größe, Abstand und Gewicht eine vollständige Hierarchie bilden.",
+        "pairings": [
+          {
+            "id": "ebgaramond",
+            "role": "Lesetext",
+            "reason": "Die Renaissance-Antiqua ergänzt sachliche Titel und Quellenangaben."
+          },
+          {
+            "id": "zillaslab",
+            "role": "Titel",
+            "reason": "Die robusten Serifen geben dem Auftakt Charakter, während Source Sans den Inhalt ruhig trägt."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/sourcesans3/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Libre Baskerville",
@@ -2554,7 +2972,26 @@
         "sups"
       ],
       "desktop": "fonts/typografie/librebaskerville/librebaskerville-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Impallari Type entwickelte Libre Baskerville für Lesetext im Web. Sie nimmt ATFs Baskerville von 1941 zum Ausgangspunkt, mit höherer x-Höhe, offeneren Innenräumen und geringerem Strichkontrast. Die historische Baskerville-Tradition wird dadurch für heutige Bildschirme angepasst.",
+        "character": "Übergangsantiqua mit deutlichen, aber nicht extremen Kontrasten und offenen Formen.",
+        "use": "Berichte, Artikel, Briefe und konzentrierte Lesetexte. Auch als einzige Familie für klassische Dokumente einsetzbar.",
+        "caution": "Für enge Tabellenspalten wird die breite Zeichnung schnell platzbedürftig. Nicht durch zu kleine Grade kompensieren.",
+        "pairings": [
+          {
+            "id": "montserrat",
+            "role": "Titel",
+            "reason": "Breite geometrische Titel und eine lesbare Antiqua ergeben eine klare Rangfolge."
+          },
+          {
+            "id": "sourcesans3",
+            "role": "Navigation und Bildunterschriften",
+            "reason": "Die sachliche Sans übernimmt die ergänzenden Informationen."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/librebaskerville/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Goudy Bookletter 1911",
@@ -2581,7 +3018,26 @@
         "ss01"
       ],
       "desktop": "fonts/typografie/goudybookletter1911/goudybookletter1911-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Barry Schwartz entwickelte Goudy Bookletter 1911 auf Grundlage von Frederic Goudys Kennerley Oldstyle. Es ist eine freie digitale Neuinterpretation dieser Buchschrifttradition. Charakteristisch ist das enge, gleichmäßige Zusammenstehen der Buchstaben innerhalb der Wörter.",
+        "character": "Warme, organische Antiquaformen mit eigenwilligen Details, etwa an v und w.",
+        "use": "Buchnahe Texte, literarische Zitate und ruhige Titelseiten. Die Wortbilder in zusammenhängenden Absätzen betrachten.",
+        "caution": "Nicht durch künstliche Sperrung auseinanderziehen. Ihre historischen Formen sind kein Grund, eine ganze Seite mit Schmuck zu füllen.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Sachliche Zwischentitel",
+            "reason": "Eine klare Sans hält den historischen Ton auf die Textebene begrenzt."
+          },
+          {
+            "id": "inter",
+            "role": "Beschriftungen und Navigation",
+            "reason": "Die nüchterne Bedienebene trennt Inhalt und Orientierung."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/goudybookletter1911/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Bree Serif",
@@ -2605,7 +3061,26 @@
       "uses": [],
       "features": [],
       "desktop": "fonts/typografie/breeserif/breeserif-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Bree Serif ist die Serifenschwester von TypeTogethers Bree. Veronika Burian und José Scaglione entwickelten die ursprüngliche Bree, die 2008 erschien. Bree Serif übernimmt deren freundliche, von aufrechter Kursive geprägte Formensprache in eine eigene Serifenausprägung.",
+        "character": "Weiche Serifen, lebhafte Details und ein deutlich persönlicher Ton.",
+        "use": "Freundliche Titel, kurze Einleitungen und markante Zwischentitel.",
+        "caution": "Für einen langen wissenschaftlichen Text kann die eigenwillige Zeichnung zu präsent sein. Nicht mit einer zweiten verspielten Schrift auf derselben Ebene kombinieren.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Lesetext",
+            "reason": "Die offene Sans beruhigt die persönlichere Titelstimme."
+          },
+          {
+            "id": "dmsans",
+            "role": "Begleittext und Navigation",
+            "reason": "Die zurückhaltende Geometrie schafft einen klaren Informationsrahmen."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/breeserif/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Roboto Slab",
@@ -2655,7 +3130,26 @@
         "sups"
       ],
       "desktop": "fonts/typografie/robotoslab/robotoslab-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Christian Robertsons Roboto Slab gehört zum Roboto-Umfeld. Sie verbindet ein geometrisch-mechanisches Grundgerüst mit offenen Rundungen und lässt den Zeichen ihre natürlichen Breiten. Die Familie wurde 2019 um eine variable Gewichtsausprägung erweitert.",
+        "character": "Blockartige Serifen und robuste Formen, weniger streng mechanisch als die Bezeichnung vermuten lässt.",
+        "use": "Sachliche Titel, technische Erklärungen und kurze redaktionelle Texte.",
+        "caution": "Keine zweite Slab Serif mit ähnlicher Wirkung danebenstellen. Für lange Lesetexte Zeilenlänge und dunkles Textbild prüfen.",
+        "pairings": [
+          {
+            "id": "inter",
+            "role": "Bedienung und Begleittext",
+            "reason": "Die nüchterne Sans trennt Systeminformation von der Serifentitelstimme."
+          },
+          {
+            "id": "nunito",
+            "role": "Kurze Erklärtexte",
+            "reason": "Die runde Sans bietet einen weicheren Gegenpol zu den kräftigen Serifen."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/apache/robotoslab/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Belleza",
@@ -2688,7 +3182,26 @@
         "sups"
       ],
       "desktop": "fonts/typografie/belleza/belleza-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Eduardo Tunni entwickelte Belleza als humanistische Sans mit Anregungen aus der Modewelt. Klassische Proportionen, hoher Strichkontrast und besondere Binnenräume stehen im Zentrum. Das Projekt wurde später unter anderem sprachlich erweitert.",
+        "character": "Schlanke, kontrastreiche Sans mit eleganter, deutlich gezeichneter Formensprache.",
+        "use": "Einladungs- und Ausstellungstitel, kurze elegante Einleitungen.",
+        "caution": "Nicht als neutrale Ersatzschrift für alle Aufgaben einsetzen. Zarte Details können klein und kontrastarm an Klarheit verlieren.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Begleittext und Angaben",
+            "reason": "Die robuste, offene Sans trägt die Information unter dem eleganten Titel."
+          },
+          {
+            "id": "librebaskerville",
+            "role": "Kurzer Lesetext",
+            "reason": "Eine ruhigere Antiqua schafft eine zweite Ebene ohne zusätzliche Dekoration."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/belleza/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Limelight",
@@ -2712,7 +3225,26 @@
       "uses": [],
       "features": [],
       "desktop": "fonts/typografie/limelight/limelight-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Nicole Fally und Sorkin Type interpretieren mit Limelight die kontrastreiche geometrische Art-déco-Sans. Die Formensprache erinnert bewusst an die 1920er-Jahre, Theater und frühe Hollywood-Plakate. Es handelt sich um einen modernen Entwurf mit historischem Zitat.",
+        "character": "Extreme Strichkontraste, geometrische Kurven und ein bühnenhafter Rhythmus.",
+        "use": "Große Veranstaltungstitel, Kino- und Konzertplakate mit wenigen Wörtern.",
+        "caution": "Nicht in kleinen Graden setzen: Dünne Teile verlieren sich schnell. Weitere dekorative Schriften machen den Auftritt unklar.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Datum, Ort und Programm",
+            "reason": "Eine sachliche Informationsebene lässt der Titelstimme den Vortritt."
+          },
+          {
+            "id": "dmsans",
+            "role": "Kurzer Begleittext",
+            "reason": "Die kontrastarme Sans schafft Ruhe neben den starken Haarlinien."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/limelight/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Podkova",
@@ -2758,7 +3290,26 @@
         "sups"
       ],
       "desktop": "fonts/typografie/podkova/podkova-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Ilya Yudin entwarf Podkova 2010. Alexei Vanyashin überarbeitete und erweiterte die Familie 2017; 2019 folgte eine variable Fassung. Der russische Name bedeutet Hufeisen und verweist auf die charakteristischen Formen der Slab Serif.",
+        "character": "Breite, annähernd gleichmäßige Striche und markante diagonale Abschlüsse.",
+        "use": "Eigenständige Titel, kurze Sachtexte und prägnante Kapitelnummern.",
+        "caution": "Die breiten Formen brauchen Raum. Nicht durch enge Spalten oder eine zweite kräftige Slab Serif zusätzlich verdichten.",
+        "pairings": [
+          {
+            "id": "inter",
+            "role": "Lesetext und Bedienung",
+            "reason": "Die offenere Sans ordnet die stärker gezeichneten Titel."
+          },
+          {
+            "id": "sourcesans3",
+            "role": "Erklärtext",
+            "reason": "Der humanistische Rhythmus ergänzt die breiten, kantigeren Formen."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/podkova/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Abel",
@@ -2782,7 +3333,26 @@
       "uses": [],
       "features": [],
       "desktop": "fonts/typografie/abel/abel-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "MADType entwickelte Abel als moderne Interpretation schmaler, seitlich abgeflachter Groteskschriften. Der Formtyp stammt aus Zeitungsüberschriften und Plakaten; der digitale Entwurf ist auch für Bildschirmtexte vorgesehen.",
+        "character": "Schmale Proportionen, abgeflachte Rundungen und schräg angeschnittene Details.",
+        "use": "Kompakte Titel, kurze Beschriftungen und knappe Orientierungstexte.",
+        "caution": "Nicht die schmale Form als Lösung für überfüllte Seiten missbrauchen. Umfangreiche Lektüre braucht mehr Buchstabenraum.",
+        "pairings": [
+          {
+            "id": "lora",
+            "role": "Lesetext",
+            "reason": "Breitere, weichere Serifenkurven wechseln den Rhythmus deutlich."
+          },
+          {
+            "id": "librebaskerville",
+            "role": "Lesetext",
+            "reason": "Die offene Antiqua übernimmt den längeren Inhalt."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/abel/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Fira Sans",
@@ -2952,7 +3522,26 @@
         "zero"
       ],
       "desktop": "fonts/typografie/firasans/firasans-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Carrois entwickelte Fira für Mozilla Firefox OS. Die Familie sollte auf Mobilgeräten mit sehr unterschiedlicher Bildschirmqualität lesbar bleiben. Daraus entstand ein umfangreiches humanistisches Sans-System mit verwandten Breiten und einer Monospace-Variante.",
+        "character": "Offene Formen, humanistischer Duktus und gut unterscheidbare, lebendige Details.",
+        "use": "Lesetext, Arbeitsaufträge, Navigation und sachliche Beschriftungen. Bei einem einfachen Dokument reicht häufig diese eine Familie.",
+        "caution": "Nicht automatisch mehrere Sans mischen, nur weil sie vorhanden sind. Größe, Gewicht und Abstand können die Hierarchie bereits tragen.",
+        "pairings": [
+          {
+            "id": "ebgaramond",
+            "role": "Längere Literaturtexte",
+            "reason": "Die Antiqua erhält die Lektürerolle, Fira organisiert und kommentiert."
+          },
+          {
+            "id": "zillaslab",
+            "role": "Titel",
+            "reason": "Beide gehören zum Mozilla-Umfeld, unterscheiden sich aber klar durch die Serifen."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/firasans/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "UnifrakturMaguntia",
@@ -2980,7 +3569,26 @@
         "rlig"
       ],
       "desktop": "fonts/typografie/unifrakturmaguntia/unifrakturmaguntia-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "UnifrakturMaguntia wurde 2010 erstmals veröffentlicht. Sie beruht auf Peter Wiegels Berthold Mainzer Fraktur, die wiederum auf eine Schrift Carl Albert Fahrenwaldts von 1901 zurückgeht. Das Projekt ergänzt moderne Satztechnik für historisch geprägte Buchstaben und Ligaturen.",
+        "character": "Gebrochene Rundungen, dichte Wortbilder und deutlich historische Frakturformen.",
+        "use": "Historische Titel, quellenbezogene Akzente und kurze bewusst gesetzte Textpassagen.",
+        "caution": "Langes ſ und rundes s nicht beliebig austauschen. Keine künstliche Fettschrift oder Kursive; keine pauschale Gleichsetzung gebrochener Schrift mit einer politischen Epoche.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Erklärung und Quellenangaben",
+            "reason": "Die offene Sans trennt historische Darstellung von heutiger Erläuterung."
+          },
+          {
+            "id": "librebaskerville",
+            "role": "Heutiger Lesetext",
+            "reason": "Eine zurückhaltende Antiqua schafft Abstand zur historischen Titelrolle."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/unifrakturmaguntia/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Pirata One",
@@ -3004,7 +3612,26 @@
       "uses": [],
       "features": [],
       "desktop": "fonts/typografie/pirataone/pirataone-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Rodrigo Fuenzalida und Nicolas Massi entwickelten Pirata One als vereinfachte, für Bildschirme angepasste Textura. Schmale Formen und enger Rhythmus nehmen gebrochene Schrift auf, sind aber ein zeitgenössischer Entwurf und keine historische Fraktur-Rekonstruktion.",
+        "character": "Schmale, kantige, gebrochene Formen und ein markantes, dichtes Schriftbild.",
+        "use": "Kurze Themenüberschriften und bewusste historische oder spielerische Akzente.",
+        "caution": "Nicht für neutrale Erklärtexte und nicht als historische Quellenwiedergabe ausgeben. In kleinen Graden werden Details schnell undeutlich.",
+        "pairings": [
+          {
+            "id": "inter",
+            "role": "Begleittext und Navigation",
+            "reason": "Die moderne Sans hält den Gegenwartsrahmen klar erkennbar."
+          },
+          {
+            "id": "sourcesans3",
+            "role": "Erklärtext",
+            "reason": "Die offene Form erleichtert den Wechsel vom markanten Titel zur Information."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/pirataone/DESCRIPTION.en_us.html"
+      }
     },
     {
       "name": "Texturina",
@@ -3075,11 +3702,94 @@
         "zero"
       ],
       "desktop": "fonts/typografie/texturina/texturina-desktop.zip",
-      "new": true
+      "new": true,
+      "portrait": {
+        "history": "Guillermo Torres entwickelte Texturina bei Omnibus-Type. Sie verbindet die formale Dichte gebrochener Schriften mit weicheren Rundungen und einem fließenderen Rhythmus. Sie ist eine heutige Neuinterpretation, keine reine historische Textura.",
+        "character": "Gebrochene und weiche Kurven stehen nebeneinander; historisch angeregt, aber beweglich und zeitgenössisch.",
+        "use": "Charaktervolle Titel, Kapitelauftakte und kurze literarische Passagen.",
+        "caution": "Nicht mit einer weiteren gebrochenen Schrift um dieselbe Hauptrolle konkurrieren lassen. Lange Texte in der tatsächlichen Größe prüfen.",
+        "pairings": [
+          {
+            "id": "sourcesans3",
+            "role": "Lesetext und Orientierung",
+            "reason": "Die sachliche Sans macht den markanten Titel zu einer klar begrenzten Ebene."
+          },
+          {
+            "id": "dmsans",
+            "role": "Begleittext",
+            "reason": "Ruhige Geometrie ergänzt die gebrochenen Kurven."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/texturina/DESCRIPTION.en_us.html"
+      }
     }
   ],
   "existingFamilies": 18,
   "existingFiles": 46,
   "method": "Direkte Dateinamen-Referenzen in HTML/CSS; kein Laufzeit-Nachweis. MathJax, Icon- und Schachfonts sind keine Textschriftfamilien dieses Katalogs.",
-  "desktopCollection": "fonts/typografie/alle-schriftfamilien-desktop.zip"
+  "desktopCollection": "fonts/typografie/alle-schriftfamilien-desktop.zip",
+  "combinations": [
+    {
+      "title": "Ruhig lesen, klar orientieren",
+      "context": "Essay · Quellenheft · längere Lektüre",
+      "heading": "sourcesans3",
+      "body": "ebgaramond",
+      "accent": "sourcesans3",
+      "why": "Eine lebendige Renaissance-Antiqua trägt den Text. Die offene Sans markiert Überschriften und Quellen, ohne den Buchcharakter nachzuahmen.",
+      "tip": "Lesetext etwa 18–21 px, Zeilenabstand um 1,5; Überschriften über Abstand und Gewicht ordnen.",
+      "sample": "Ein Gedanke braucht Raum."
+    },
+    {
+      "title": "Ein sachlicher Bericht",
+      "context": "Arbeitsblatt · Bericht · Erläuterung",
+      "heading": "firasans",
+      "body": "librebaskerville",
+      "accent": "firasans",
+      "why": "Die humanistische Sans gliedert die Seite; die offene Übergangsantiqua trägt zusammenhängende Argumente. Der Formkontrast macht die Rollen sichtbar.",
+      "tip": "Mit zwei Familien auskommen. Quellen kleiner, aber gut lesbar; keine zusätzliche Schmuckschrift.",
+      "sample": "Beobachten. Prüfen. Verstehen."
+    },
+    {
+      "title": "Ein zeitgenössischer Artikel",
+      "context": "Magazin · Webartikel · Kulturvermittlung",
+      "heading": "poppins",
+      "body": "lora",
+      "accent": "poppins",
+      "why": "Geometrische Titel stehen gegen die weicheren, kalligrafisch geprägten Textformen. Der Kontrast entsteht aus der Zeichnung, nicht aus vielen Effekten.",
+      "tip": "Titel kurz halten. Poppins sparsam kräftig, Lora mit genügend Zeilenraum.",
+      "sample": "Die Stadt zwischen den Zeilen."
+    },
+    {
+      "title": "Eine persönliche Einladung",
+      "context": "Fest · Lesung · privater Anlass",
+      "heading": "dancingscript",
+      "body": "librebaskerville",
+      "accent": "sourcesans3",
+      "why": "Die Schreibschrift setzt einen persönlichen Auftakt. Eine ruhige Antiqua trägt die Einladung, die Sans hält Datum und Ort eindeutig erfassbar.",
+      "tip": "Die dritte Familie hat nur die kleine Informationsrolle. Wer es ruhiger möchte, setzt auch die Angaben in Libre Baskerville.",
+      "sample": "Ein Abend zum Weiterdenken."
+    },
+    {
+      "title": "Eine Bühne für den Titel",
+      "context": "Konzert · Kinoabend · Ausstellung",
+      "heading": "limelight",
+      "body": "sourcesans3",
+      "accent": "sourcesans3",
+      "why": "Ein Art-déco-Zitat genügt als Hauptstimme. Der gesamte übrige Text bleibt sachlich und gut lesbar.",
+      "tip": "Limelight groß und auf wenige Wörter begrenzen; den Rest weder sperren noch dekorieren.",
+      "sample": "Licht. Bühne. Begegnung."
+    },
+    {
+      "title": "Digital und präzise",
+      "context": "Interface · technische Notiz · Datenansicht",
+      "heading": "dmsans",
+      "body": "dmsans",
+      "accent": "dmmono",
+      "why": "Eine Sans übernimmt fast die ganze Hierarchie. Nur Code und Kennungen wechseln in die verwandte Monospace: weniger Familien, klare Funktion.",
+      "tip": "Zunächst Größe, Gewicht und Abstand nutzen. DM Mono ausschließlich dort, wo die feste Vorbreite tatsächlich hilft.",
+      "sample": "Klarheit im Detail."
+    }
+  ],
+  "portraitNote": "Unsere Kombinationen folgen klaren Gestaltungsmaßstäben: Lesbarkeit, eine erkennbare Rangordnung, bewusster Formkontrast und wenige gut begründete Mittel. Sie sind Ausgangspunkte für eigene Entwürfe. Prüfe sie mit deinem Text und in der vorgesehenen Größe.",
+  "portraitChecked": "2026-10-17"
 }

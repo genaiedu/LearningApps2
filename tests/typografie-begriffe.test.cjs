@@ -7,8 +7,10 @@ test('font catalogue omits author-facing addition notices',()=>{
   assert.ok(!catalogue.includes('Für das Atelier ergänzt'));
   assert.ok(!catalogue.includes('Für dieses Atelier ergänzt'));
   assert.ok(!catalogue.includes('new-tag'));
-  assert.ok(catalogue.includes('window.TypoFontLinks.link(download,f.name)'));
-  assert.ok(catalogue.includes('window.TypoFontAudit.attach(card,f,fontAudits.get(f.id))'));
+  assert.ok(catalogue.includes('window.TypoFontPortraits.render'));
+  const portraits=read('scripts/typografie-fontportraits.js');
+  assert.ok(portraits.includes('window.TypoFontLinks.link(download,f.name)'));
+  assert.ok(!portraits.includes('Vorhandener Schnitt'));
 });
 
 test('Sans comparison initializes named fonts and covers every pair of the four positions',()=>{

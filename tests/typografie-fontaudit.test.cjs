@@ -39,5 +39,5 @@ test('every family has two valid, non-self partner suggestions, never a passed h
 test('checklist disclosures and source attribution accompany each font',()=>{
  const source=fs.readFileSync(path.join(root,'scripts/typografie-fontaudit.js'),'utf8'),app=fs.readFileSync(path.join(root,'scripts/typografie-atelier.js'),'utf8'),html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8');
  assert.ok(source.includes("make('details','font-checklist')"));assert.ok(source.includes('Elliot Jay Stocks'));assert.ok(source.includes('a_checklist_for_choosing_type?preview.script=Latn'));
- assert.ok(source.includes('Prüfdaten nicht verfügbar'));assert.ok(app.includes('window.TypoFontAudit.attach(card,f,fontAudits.get(f.id))'));assert.ok(html.includes('creativecommons.org/licenses/by-sa/4.0/'));
+ assert.ok(source.includes('Prüfdaten nicht verfügbar'));assert.ok(app.includes('window.TypoFontPortraits.render'));assert.ok(html.includes('creativecommons.org/licenses/by-sa/4.0/'));
 });

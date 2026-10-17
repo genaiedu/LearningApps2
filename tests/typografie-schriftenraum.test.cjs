@@ -80,7 +80,7 @@ test('new families appear in catalogue and official Google links, correct Apache
  const css=fs.readFileSync(path.join(root,'styles/typografie-schriftenraum.css'),'utf8');assert.ok(css.includes('max-width:600px'));assert.ok(!/https?:\/\//.test(css));
 });
 test('all font download offers use Google with one explicit first-opening notice',()=>{
- const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),ui=fs.readFileSync(path.join(root,'scripts/typografie-schriftenraum.js'),'utf8'),archive=fs.readFileSync(path.join(root,'scripts/typografie-atelier.js'),'utf8'),gate=fs.readFileSync(path.join(root,'scripts/typografie-fontlinks.js'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-schriftenraum.css'),'utf8');
+ const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8'),ui=fs.readFileSync(path.join(root,'scripts/typografie-schriftenraum.js'),'utf8'),archive=fs.readFileSync(path.join(root,'scripts/typografie-fontportraits.js'),'utf8'),gate=fs.readFileSync(path.join(root,'scripts/typografie-fontlinks.js'),'utf8'),css=fs.readFileSync(path.join(root,'styles/typografie-schriftenraum.css'),'utf8');
  assert.ok(!/<a\b[^>]*href="fonts\/[^\"]+\.(?:zip|ttf|woff2|otf)"/i.test(html));assert.ok(!/a\.href=(?:f\.desktop(?!Static)|file\.path)/.test(archive));
  assert.ok(ui.includes('space-field-download'));assert.ok(ui.includes('space-quadrant-download'));assert.ok(archive.includes('font-google-download'));
  assert.ok(gate.includes("if(!anchor||acknowledged)return"));assert.ok(gate.includes('dialog.showModal()'));assert.ok(gate.includes('open.href=pending'));assert.ok(html.includes('id="font-external-open" class="primary" target="_blank" rel="noopener noreferrer"'));assert.ok(!gate.includes('window.open('));

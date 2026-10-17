@@ -141,7 +141,7 @@ test('three parts keep characters, print and screen in a continuous reading orde
   const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8');
   const parts=[...html.matchAll(/<div class="atelier-part" data-part="([^"]+)">([\s\S]*?)(?=<div class="atelier-part"|<section class="chapter wrap" id="entscheidungen")/g)];
   assert.deepEqual(parts.map(p=>p[1]),['zeichen','papier','bildschirm']);
-  assert.deepEqual([...parts[0][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['buchstabengeschichte','schriftformen','details','lucide','mathematiksatz','beginn','lokal','katalog','schrift-downloads']);
+  assert.deepEqual([...parts[0][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['buchstabengeschichte','schriftformen','details','lucide','mathematiksatz','beginn','lokal','katalog','font-combinations','schrift-downloads']);
   assert.deepEqual([...parts[1][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['tschichold','haltung','satzlabor','buchsatz','word','richtung','druckfarbe','komposition','bild-und-text','seitenstudien','latex','texatelier']);
   assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['webtext','bildschirmformate','webrichtung','farbe','hintergrund','weblayout','webgrafik','herobereiche','bewegte-grafik','interaktiv','websteuerung','webwerkstatt','webstudien']);
   assert.equal((html.match(/data-part-link=/g)||[]).length,3);
