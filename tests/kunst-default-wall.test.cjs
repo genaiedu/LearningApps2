@@ -31,7 +31,7 @@ async function setup(t,{state,history,gallery,url='https://example.test/kunsttre
   requests.push({url,options});const input=JSON.parse(options.body);
   return{ok:true,text:async()=>JSON.stringify({intro:'Wir betrachten die sieben Werke gemeinsam und gehen ihren gestalterischen Spuren nach.',works:input.room.ids.map(id=>({id,text:'Deine Zuordnungen sind ein Ausgangspunkt für den zweiten Blick. Prüfe die beschriebenen Merkmale am Werk und vergleiche die belegte Technik mit dem sichtbaren Eindruck.'}))})};
  };
- const files=['scripts/kunsttresor-mode.js','scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor.js','scripts/kunsttresor-wall.js'];
+ const files=['scripts/kunsttresor-mode.js','scripts/kunsttresor-layout.js','scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor.js','scripts/kunsttresor-wall.js'];
  for(const file of files)w.eval(read(file));
  for(let i=0;i<30;i++)await Promise.resolve();
  assert.equal(q('#launch-dialog').open,true);t.after(()=>w.close());return{w,q,requests,click:id=>q('#'+id).click()};
@@ -53,7 +53,7 @@ test('all seven works can be liked after a third-attempt win, stored and restore
  assert.equal(app.q('#gallery-grid').querySelectorAll('.gallery-card-details').length,7);
  const grid=app.q('#gallery-grid'),cards=[...grid.children];Object.defineProperty(grid,'clientWidth',{value:1200});
  cards.forEach((card,i)=>{card.getBoundingClientRect=()=>({height:180+i*37});});app.w.dispatchEvent(new app.w.Event('resize'));
- const boxes=cards.map((card,i)=>({x:parseFloat(card.style.left),y:parseFloat(card.style.top),w:parseFloat(card.style.width),h:180+i*37}));
+ const boxes=cards.map((card,i)=>({x:parseFloat(card.style.left),y:parseFloat(card.style.top),w:parseFloat(card.style.width),h:Math.max(180+i*37,parseFloat(card.querySelector('.gallery-image').style.height))}));
  assert.ok(Math.abs(Math.max(...boxes.map(b=>b.x+b.w))-1200)<.01,'collection fills the complete width');
  for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++){const a=boxes[i],b=boxes[j];assert.ok(a.x+a.w<=b.x+.01||b.x+b.w<=a.x+.01||a.y+a.h<=b.y+.01||b.y+b.h<=a.y+.01,'pictures never overlap');}
  const again=await setup(t,{state:s,history:h,gallery:saved});again.click('launch-skip');again.click('game-gallery');assert.equal(again.q('#gallery-grid').children.length,7);

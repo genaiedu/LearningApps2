@@ -22,13 +22,18 @@
     function layoutGallery(){
       const grid=$('gallery-grid'),cards=[...grid.querySelectorAll('.gallery-card')],width=grid.clientWidth;
       if(!$('gallery-dialog').open||!width||!cards.length){grid.style.height='';return;}
-      const gap=14,min=innerWidth<=760?150:240,columns=Math.max(1,Math.min(cards.length,Math.floor((width+gap)/(min+gap)))),cardWidth=(width-gap*(columns-1))/columns,heights=Array(columns).fill(0);
-      for(const card of cards){
-        const column=heights.indexOf(Math.min(...heights));card.style.width=cardWidth+'px';
-        Object.assign(card.style,{left:column*(cardWidth+gap)+'px',top:heights[column]+'px'});
-        heights[column]+=card.getBoundingClientRect().height+gap;
+      const gap=8,ratios=cards.map(card=>{const img=card.querySelector('img');return img?.naturalWidth?img.naturalWidth/img.naturalHeight:1;});
+      const rows=root.KunstWallLayout.rows(ratios,width,{gap,target:innerWidth<=760?210:320});let y=0;
+      for(const row of rows){
+        let height=row.height;
+        for(const item of row.items){const card=cards[item.index];
+          Object.assign(card.style,{left:item.x+'px',top:y+'px',width:item.width+'px'});
+          card.querySelector('.gallery-image').style.height=row.height+'px';
+          height=Math.max(height,card.getBoundingClientRect().height);
+        }
+        y+=height+gap;
       }
-      grid.style.height=Math.max(...heights)-gap+'px';
+      grid.style.height=y-gap+'px';
     }
     function refresh() {
       const gallery=getGallery(), unlocked=gallery.liked.length>=model.UNLOCK;
@@ -72,8 +77,10 @@
       $('gallery-grid').replaceChildren();
       if(!gallery.liked.length)$('gallery-grid').append(node('p','gallery-empty','Deine Galerie beginnt nach der ersten gewonnenen Tür. Markiere dann die Werke, die du behalten möchtest, mit dem Herz.'));
       for(const entry of gallery.liked){const work=byId.get(entry.id), card=node('article','gallery-card');
-        card.append(imageButton(work),node('h3',null,title(work)),node('p','small',work.artist+' · '+work.date));
-        const details=node('details','gallery-card-details'),summary=node('summary',null,'Werkdetails & Auswahl'),actions=node('div','gallery-card-actions');
+        card.append(imageButton(work));
+        const details=node('details','gallery-card-details'),summary=node('summary'),actions=node('div','gallery-card-actions');
+        summary.title=title(work)+' · '+work.artist+' · '+work.date;summary.setAttribute('aria-label','Werkdetails & Auswahl: '+summary.title);
+        summary.append(node('h3',null,title(work)),node('span','gallery-artist',work.artist+' · '+work.date));
         details.append(summary);details.addEventListener('toggle',layoutGallery);
         actions.append(button('Aus Galerie entfernen',()=>{if(change(model.remove(getGallery(),entry.id),null))status('Werk entfernt. '+progressText());}));
         if(gallery.liked.length>=model.UNLOCK){const add=button(selected.has(entry.id)?'Aus Film entfernen':'Zum Film hinzufügen',()=>{
