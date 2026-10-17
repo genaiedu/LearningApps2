@@ -2,6 +2,16 @@
 <html lang="de" data-palette="atelier" data-theme="light">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>
+    // Do not restore an old reading position when opening the atelier.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.addEventListener('pageshow', () => {
+      if (!location.hash) {
+        window.scrollTo({top:0,left:0,behavior:'instant'});
+        requestAnimationFrame(() => window.scrollTo({top:0,left:0,behavior:'instant'}));
+      }
+    });
+  </script>
   <meta name="description" content="Typografie-Atelier: Ein interaktives Studienbuch über Schrift, Satz und Gestaltung. In drei Teilen: Zeichen verstehen, gedruckte Dokumente bewusst setzen und Texte am Bildschirm gestalten. Mit lokalen Fonts, Lucide, Tschichold, Wordvorlagen und LaTeX.">
   <title>Typografie-Atelier · Ein interaktives Studienbuch über Schrift, Satz und Gestaltung</title>
   <link rel="preload" href="fonts/typografie/ebgaramond/EBGaramond[wght].woff2" as="font" type="font/woff2" crossorigin>
