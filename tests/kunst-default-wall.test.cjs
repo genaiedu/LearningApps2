@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'..'),read=file=>fs.readFileSync(path.join(roo
 const data=Object.fromEntries(['kunstarchiv','kunstbilder','kunst-wikipedia','kunst-hauptwerke','kunst-titel-de','kunst-glossar','kunst-filmtexte'].map(name=>[name,JSON.parse(read('data/'+name+'.json'))]));
 const model=vm.createContext({KunstWallEnabled:true,crypto:webcrypto});
 for(const file of ['core','progress','history','gallery'])vm.runInContext(read('scripts/kunsttresor-'+file+'.js'),model);
-const pool=data.kunstarchiv.works.map(w=>({...w,artistIdentity:data['kunst-wikipedia'].artists[w.artist].language+':'+data['kunst-wikipedia'].artists[w.artist].title}));
+const pool=data.kunstarchiv.works.map(w=>model.KunstTresor.normalizeArtistWork({...w,artistIdentity:data['kunst-wikipedia'].artists[w.artist].language+':'+data['kunst-wikipedia'].artists[w.artist].title}));
 function fixture(attempts=1){
  const c=model.KunstTresor;let s=c.newState(pool,null,Math.random,true);s.roomToken='a'.repeat(32);s.historyToken=s.roomToken;s.runToken='b'.repeat(32);s.parentRoomToken=null;
  let h=model.KunstHistory.fresh();for(const id of s.ids)h=model.KunstHistory.track(h,s,pool,{shownId:id});
@@ -16,7 +16,7 @@ function fixture(attempts=1){
  return JSON.parse(JSON.stringify({s,h}));
 }
 async function setup(t,{state,history,gallery,preferences={},forgeryResponse,url='https://example.test/kunsttresor.html'}={}){
- const dom=new JSDOM(read('kunsttresor.html'),{url,runScripts:'outside-only'}),w=dom.window,q=s=>w.document.querySelector(s),requests=[];
+ const dom=new JSDOM(read('kunsttresor.html'),{url,runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,q=s=>w.document.querySelector(s),requests=[];
  w.localStorage.setItem('kunsttresor-images-v2','yes');
  for(const [key,value]of Object.entries(preferences))w.localStorage.setItem(key,value);
  if(state)w.localStorage.setItem('kunsttresor-game-v1-wall',JSON.stringify(state));
@@ -35,11 +35,21 @@ async function setup(t,{state,history,gallery,preferences={},forgeryResponse,url
   const input=JSON.parse(options.body);
   return{ok:true,text:async()=>JSON.stringify({intro:'Wir betrachten die sieben Werke gemeinsam und gehen ihren gestalterischen Spuren nach.',works:input.room.ids.map(id=>({id,text:'Deine Zuordnungen sind ein Ausgangspunkt für den zweiten Blick. Prüfe die beschriebenen Merkmale am Werk und vergleiche die belegte Technik mit dem sichtbaren Eindruck.'}))})};
  };
- const files=['scripts/kunsttresor-mode.js','scripts/kunsttresor-layout.js','scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-artist-order.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor-reset.js','scripts/kunsttresor.js','scripts/kunsttresor-wall.js'];
+ const files=['scripts/kunsttresor-mode.js','scripts/kunsttresor-layout.js','scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-artist-order.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor-reset.js','scripts/kunsttresor-badge-awards.js','scripts/kunsttresor.js','scripts/kunsttresor-wall.js'];
  for(const file of files)w.eval(read(file));
  for(let i=0;i<30;i++)await Promise.resolve();
  assert.equal(q('#launch-dialog').open,true);t.after(()=>w.close());return{w,q,requests,click:id=>q('#'+id).click()};
 }
+test('a real first-check win announces both new badges above the curator and opens the collection without changing the win',async t=>{
+ const c=model.KunstTresor;let state=c.newState(pool,null,Math.random,false,{});state.roomToken='3'.repeat(32);state.runToken='4'.repeat(32);state.parentRoomToken=null;
+ for(const id of state.ids)for(const field of c.fieldsFor(state))state=c.choose(state,id,field,pool.find(work=>work.id===id)[field]);
+ const app=await setup(t,{state:JSON.parse(JSON.stringify(state))});app.click('launch-read');readyWall(app);app.w.Date.now=Date.now;app.click('check');
+ assert.equal(app.q('#solution-dialog').open,true);assert.equal(app.q('#badge-award').hidden,false);assert.equal(app.q('#badge-award-title').textContent,'2 neue Abzeichen');assert.match(app.q('#badge-award-live').textContent,/Die erste Tür/);assert.match(app.q('#badge-award-live').textContent,/Sicherer Blick/);
+ assert.equal(app.q('.badge-award-list').children.length,2);assert.equal(app.q('#badge-count').textContent,'2 / 12');assert.equal(app.q('#badge-award').tagName,'DIV');assert.equal(app.q('#badge-award').contains(app.w.document.activeElement),false);
+ const saved=roomOf(app),profile=app.w.localStorage.getItem('kunsttresor-progress-v1-wall');assert.equal(saved.phase,'unlocked');assert.equal(saved.attempts,1);
+ app.q('.badge-award-open').click();assert.equal(app.q('#badges-dialog').open,true);assert.equal(app.q('#badge-award').hidden,true);assert.deepEqual(roomOf(app),saved);
+ const again=await setup(t,{state:saved,preferences:{'kunsttresor-progress-v1-wall':profile}});again.click('launch-read');again.click('show-solution');assert.equal(again.q('#badge-award').hidden,true);assert.equal(again.q('#badge-award-live').textContent,'');assert.equal(again.q('#badge-count').textContent,'2 / 12');
+});
 const secretKey='kunsttresor-forgery-every-series-v1',gameKey='kunsttresor-game-v1-wall';
 const settle=async()=>{for(let i=0;i<60;i++)await Promise.resolve();};
 const generated=(image='data:image/jpeg;base64,/9j/')=>({ok:true,json:async()=>({image,model:'test model'})});
@@ -174,7 +184,7 @@ test('gallery information retains attribution notes and source links for the ano
 test('gallery combines all El Greco works under one name and uses it in picture information',async t=>{
  const at=Date.now(),works=pool.filter(w=>/El Greco/.test(w.artist)),gallery={...model.KunstGallery.fresh(),liked:works.map(w=>({id:w.id,source:'curated',at}))};
  const app=await setup(t,{gallery});app.click('launch-read');app.click('game-gallery');const options=[...app.q('#gallery-filter-artist').options];assert.equal(options.length,2);assert.equal(options[1].textContent,'El Greco · 24');assert.equal(app.q('#gallery-dialog').textContent.includes('Domenico Theotokópoulos'),false);
- const id=works.find(w=>w.artist.startsWith('Domenico')).id;openCollectedInfo(app,'#gallery-grid [data-work="'+id+'"] .gallery-image');assert.equal(app.q('#gallery-info-dialog').textContent.includes('Domenico Theotokópoulos'),false);assert.match(app.q('#gallery-info-metadata')?.textContent||app.q('.gallery-info-metadata').textContent,/El Greco/);
+ const id=works.find(w=>w.artistOriginal?.startsWith('Domenico')).id;openCollectedInfo(app,'#gallery-grid [data-work="'+id+'"] .gallery-image');assert.equal(app.q('#gallery-info-dialog').textContent.includes('Domenico Theotokópoulos'),false);assert.match(app.q('#gallery-info-metadata')?.textContent||app.q('.gallery-info-metadata').textContent,/El Greco/);
 });
 test('revoking image permission closes gallery information and clears its image',async t=>{
  const at=Date.now(),id='wd-Q252485',app=await setup(t,{gallery:{...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]}});app.click('launch-read');app.click('game-gallery');openCollectedInfo(app);assert.ok(app.q('#gallery-info-content img'));

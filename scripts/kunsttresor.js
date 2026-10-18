@@ -18,6 +18,7 @@
   const keys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', history:'kunsttresor-history-v1', images:'kunsttresor-images-v2', hero:'kunsttresor-hero-v1'};
   if(wallMode)for(const key of ['game','best','progress','history'])keys[key]+='-wall';
   const labels = {title:'Werktitel',date:'Entstehungszeit', style:'Stil / Tradition', artist:'Künstler', technique:'Material / Technik'};
+  const badgeAwards=window.KunstBadgeAwards.create({element:$('badge-award'),live:$('badge-award-live'),targets:[$('solution-badges'),$('open-badges')],onOpenCollection:()=>showBadges()});
   let resetInProgress = false;
   const store = {
     get(key) { try { return localStorage.getItem(key); } catch { return null; } },
@@ -198,20 +199,19 @@
     $('history-summary').textContent=seen.size+(seen.size===1?' verschiedenes Werk in ':' verschiedene Werke in ')+rooms+(rooms===1?' gespeichertem Raum.':' gespeicherten Räumen.')+' Die Bildhistorie beginnt mit dieser Funktion; ältere Begegnungen sind nicht rekonstruierbar.';
   }
   function previousWorks() { return historyBlocked ? undefined : history.summarize(workHistory,state.ids,state.historyToken||state.roomToken); }
+  function showBadges(){badgeAwards.clear();refreshBadges();open('badges-dialog');}
   function refreshBadges() {
     const collection = progress.collection(playerProgress), stats = progress.statistics(playerProgress);
     $('badge-count').textContent = collection.filter(badge=>badge.earned).length + ' / ' + collection.length;
     $('badge-summary').textContent = stats.wins + (stats.wins === 1 ? ' gelöster Raum' : ' gelöste Räume') + ' · ' + stats.first + ' im ersten Versuch · ' + stats.styles + ' Stilrichtungen · ' + stats.techniques + ' Techniken';
     $('badge-grid').replaceChildren();
-    const paths = {door:'M8 20V4h8v16M4 20h16M12 12h.01', eye:'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0', return:'M7 7H3V3M3 7a9 9 0 1 1-1 9M8 12l3 3 5-6', route:'M5 3v14a4 4 0 0 0 8 0V7a4 4 0 0 1 8 0v14', key:'M14 4a6 6 0 1 1-4 10l-7 7H1v-3l7-7a6 6 0 0 1 6-7M16 8h.01', gallery:'M3 3h18v18H3zM7 7h10v10H7z', search:'M16 10a6 6 0 1 1-12 0 6 6 0 0 1 12 0M15 15l6 6M7 10l2 2 3-4'};
     const levelTitles = ['Einsteigen','Dranbleiben','Vertiefen','Meisterklasse'];
     let currentLevel = -1;
     for (const badge of collection) {
       if (badge.level !== currentLevel) { currentLevel = badge.level; $('badge-grid').append(node('h3','badge-tier-heading',levelTitles[badge.level])); }
       const card = node('article','badge-card' + (badge.earned ? ' is-earned' : ''));
       const seal = node('div','badge-seal'); seal.setAttribute('aria-hidden','true');
-      const svg = document.createElementNS('http://www.w3.org/2000/svg','svg'), path = document.createElementNS(svg.namespaceURI,'path');
-      svg.setAttribute('viewBox','0 0 24 24'); path.setAttribute('d',paths[badge.symbol]); svg.append(path); seal.append(svg);
+      seal.append(window.KunstBadgeAwards.icon(badge.symbol));
       const copy = node('div','badge-copy'); copy.append(node('p','badge-state',badge.earned ? '✓ Erworben' : 'Noch zu entdecken'),node('h3','',badge.title),node('p','',badge.description));
       const meter = node('progress'); meter.max = badge.target; meter.value = Math.min(badge.value,badge.target); meter.setAttribute('aria-label',badge.title + ': ' + meter.value + ' von ' + badge.target);
       copy.append(meter,node('span','badge-value',(badge.metric === 'perfectStreak' ? 'Beste Serie: ' : '') + meter.value + ' / ' + badge.target)); card.append(seal,copy); $('badge-grid').append(card);
@@ -864,6 +864,7 @@
         void prepareForgery(upcomingRoom);
         solutions();
       } else open('result-dialog');
+      if(earned.length)badgeAwards.show(earned);
     }
   }
   function showImage(work,letter,original = false,origin = null) {
@@ -1269,8 +1270,8 @@
   $('intro-dialog').addEventListener('cancel',() => finishIntro({enterGame:true}));
   document.addEventListener('visibilitychange',() => { if (document.hidden && $('intro-dialog').open) finishIntro({enterGame:true}); });
   $('check').onclick = inspect; $('next-room').onclick = $('solution-next').onclick = $('solution-next-bottom').onclick = nextRoom;
-  $('open-badges').onclick = () => { refreshBadges(); open('badges-dialog'); };
-  $('open-save').onclick = () => { if (!transferBusy) { pendingImport=null; $('import-preview').hidden=true; $('save-status').textContent=''; } open('save-dialog'); };
+  $('open-badges').onclick = $('solution-badges').onclick = showBadges;
+  $('open-save').onclick = () => { badgeAwards.clear();if (!transferBusy) { pendingImport=null; $('import-preview').hidden=true; $('save-status').textContent=''; } open('save-dialog'); };
   $('export-save').onclick = exportSave;
   $('choose-save').onclick = () => { if (!transferBusy) $('save-file').click(); };
   $('save-file').onchange = readSaveFile;
@@ -1291,7 +1292,7 @@
   $('art-glossary-category').onchange=()=>renderArtGlossary();
   $('result-action').onclick = () => { close('result-dialog'); state.phase === 'unlocked' ? nextRoom() : newRound(); };
   $('play-again').onclick = newRound;
-  $('restart-top').onclick = $('restart-game').onclick = () => { $('clear-best').checked = false; open('restart-dialog'); };
+  $('restart-top').onclick = $('restart-game').onclick = () => { badgeAwards.clear();$('clear-best').checked = false; open('restart-dialog'); };
   $('restart-confirm').onclick = () => { if ($('clear-best').checked) { best = 0; store.remove(keys.best); } close('restart-dialog'); newRound(); };
   const resetSequence = window.KunstReset.createSequence();
   document.querySelectorAll('.rule-steps .rule-secret').forEach(button => button.addEventListener('click',() => {
@@ -1302,7 +1303,7 @@
   }));
   $('reset-confirm').onclick = () => {
     if(resetInProgress)return;
-    resetInProgress=true;
+    resetInProgress=true;badgeAwards.clear();
     try { window.KunstReset.clearAppStorage([()=>window.localStorage,()=>window.sessionStorage]); }
     catch {
       resetInProgress=false;
