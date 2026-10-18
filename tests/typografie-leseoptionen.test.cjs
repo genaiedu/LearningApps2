@@ -16,7 +16,7 @@ function setup(t,{stored,preview=false}={}){
 test('appearance initializes without any standalone glyph switch',t=>{
  const s=setup(t);assert.equal(s.q('#page-glyph-toggle'),null);assert.equal(s.q('[data-page-glyphs]'),null);
  assert.equal(s.w.document.querySelectorAll('.page-glyph-window').length,20);
- assert.equal(s.q('#appearance-glyphs').checked,true);assert.equal(s.q('#appearance-alignment').value,'left');
+ assert.equal(s.q('#appearance-glyphs').checked,true);assert.equal(s.q('#appearance-alignment').value,'justify');
 });
 test('repeated hide/show restores every glyph without a new intersection callback',t=>{
  const s=setup(t),layers=[...s.w.document.querySelectorAll('.page-glyph-window')],glyphs=layers.map(e=>e.firstElementChild),texts=glyphs.map(e=>e.textContent);
@@ -39,15 +39,38 @@ test('saved hidden glyphs can be shown again, and motion pause only stops their 
  s.reduced.matches=true;s.w.TypoAppearance.apply({glyphInset:10});s.flush();assert.equal(s.q('.page-glyph').style.getPropertyValue('--page-drift'),'0px');
 });
 test('reading alignment is validated, remembered and inherited by previews without overwriting storage',t=>{
- for(const bad of ['center','url(evil)',{},null])assert.equal(A.settings({readingAlignment:bad}).readingAlignment,'left');
+ for(const bad of ['center','url(evil)',{},null])assert.equal(A.settings({readingAlignment:bad}).readingAlignment,'justify');
  const s=setup(t),control=s.q('#appearance-alignment');control.value='justify';control.dispatchEvent(new s.w.Event('change'));
  assert.equal(s.q('html').dataset.readingAlignment,'justify');assert.match(s.q('#reader-appearance-state').textContent,/Blocksatz/);
  const stored=s.w.localStorage.getItem('typografie-atelier-appearance'),again=setup(t,{stored});
  assert.equal(again.q('#appearance-alignment').value,'justify');assert.equal(again.q('html').dataset.readingAlignment,'justify');
- const preview=setup(t,{stored,preview:true});assert.equal(preview.q('#appearance-alignment').value,'left');
- preview.w.TypoAppearance.apply({readingAlignment:'justify'},false);assert.equal(preview.q('html').dataset.readingAlignment,'justify');assert.equal(preview.w.localStorage.getItem('typografie-atelier-appearance'),stored);
+ const preview=setup(t,{stored,preview:true});assert.equal(preview.q('#appearance-alignment').value,'justify');
+ preview.w.TypoAppearance.apply({readingAlignment:'left'},false);assert.equal(preview.q('html').dataset.readingAlignment,'left');assert.equal(preview.w.localStorage.getItem('typografie-atelier-appearance'),stored);
  const css=read('styles/typografie-ansicht.css');assert.ok(css.includes('text-align:justify;text-align-last:left;hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:6 3 3'));
  assert.match(s.q('#appearance-alignment-help').textContent,/Trennwörterbücher hängen vom Browser ab/);
+});
+test('the new default replaces the legacy alignment once, but preserves all other preferences and later choices',t=>{
+ const stored=JSON.stringify({readingAlignment:'left',palette:'plum',theme:'dark',glyphs:false,sansFont:'sourcesans3',serifFont:'librebaskerville'}),s=setup(t,{stored});
+ const current=s.w.TypoAppearance.current();assert.equal(current.readingAlignment,'justify');
+ for(const [key,value]of Object.entries(JSON.parse(stored)))if(key!=='readingAlignment')assert.equal(current[key],value);
+ assert.equal(JSON.parse(s.w.localStorage.getItem('typografie-atelier-appearance')).readingLayoutVersion,2);
+ const control=s.q('#appearance-alignment');control.value='left';control.dispatchEvent(new s.w.Event('change'));
+ const again=setup(t,{stored:s.w.localStorage.getItem('typografie-atelier-appearance')});assert.equal(again.q('html').dataset.readingAlignment,'left');
+});
+test('justified reading copy includes deeply nested explanations, but never rewrites fixed type studies',t=>{
+ const s=setup(t),css=read('styles/typografie-ansicht.css'),selector=css.match(/(html\[data-reading-alignment="justify"\][\s\S]*?)\{text-align:justify;/)[1];
+ const copy=[...s.w.document.querySelectorAll(selector)];
+ for(const target of ['#fira-height-title+p','#fira-height-title~p','.history-raster-study>div>p:not(.eyebrow,.small)','.fondamento-portrait>p:not(.fondamento-cut)','.history-copy>p:not(.history-era)','.author-comment>p']){
+  const paragraphs=[...s.w.document.querySelectorAll(target)];assert.ok(paragraphs.length,target);
+  for(const paragraph of paragraphs)assert.ok(copy.includes(paragraph),target+' '+paragraph.textContent.slice(0,45));
+ }
+ for(const target of ['.text-proof p','.book-body p','.study-sheet p','.grauwert-sample','.classification-sample','.fondamento-cut','.kerning-proof','.serif-example','.sans-example','.ligature-proof']){
+  for(const paragraph of s.w.document.querySelectorAll(target))assert.ok(!copy.includes(paragraph),'Fixed specimen: '+target);
+ }
+ const host=s.w.document.createElement('div');host.dataset.readingFixed='';host.innerHTML='<p>A later-created designed document stays independent.</p>';s.q('main').append(host);
+ assert.equal(host.firstElementChild.matches(selector),false);
+ assert.ok(copy.length>500,'Reading copy must not depend on a handful of parent classes');
+ assert.ok(css.includes('.part-heading>div:has(>h2){display:contents}'),'Phone introductions receive the full available reading width');
 });
 test('kerning is explicit on real text, while its teaching switch remains genuinely reversible',()=>{
  const css=read('styles/typografie-ansicht.css'),source=read('scripts/typografie-atelier.js');

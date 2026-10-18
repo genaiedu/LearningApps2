@@ -10,7 +10,7 @@ test('twenty chapter-specific local glyphs alternate cropped left and right',()=
   assert.ok(css.includes('left:var(--page-glyph-x,5%)'));assert.ok(css.includes('left:var(--page-glyph-x,95%)'));assert.ok(css.includes('overflow:hidden'));assert.ok(css.includes('pointer-events:none'));
 });
 test('appearance accepts only known settings and never fetches external files',()=>{
-  const positionDefaults={glyphPosition:'alternating',glyphInset:5,glyphHeight:34,sansFont:'firasans',serifFont:'original',readingAlignment:'left'};
+  const positionDefaults={glyphPosition:'alternating',glyphInset:5,glyphHeight:34,sansFont:'firasans',serifFont:'original',readingAlignment:'justify'};
   assert.deepEqual(A.settings(),{palette:'graphite',theme:'light',glyphs:true,...positionDefaults});assert.deepEqual(A.settings({palette:'slate',theme:'dark',glyphs:false}),{palette:'slate',theme:'dark',glyphs:false,...positionDefaults});
   assert.deepEqual(A.settings({palette:'url(evil)',theme:'url(evil)',glyphs:'false'}),A.settings());
   assert.deepEqual(A.settings(null),A.settings());assert.deepEqual(A.settings({palette:'constructor'}),A.settings());
@@ -159,7 +159,7 @@ test('every author voice follows the reading palette, including the font-choice 
   for(const id of ['schriftwahl-randstimme','word-randstimme']){
     assert.match(html,new RegExp('<aside[^>]*class="[^"]*author-comment[^"]*font-choice-voice[^"]*"[^>]*id="'+id+'"'));
   }
-  assert.ok(html.includes('styles/typografie-ansicht.css?v=20261018-lesesatz'));
+  assert.ok(html.includes('styles/typografie-ansicht.css?v=20261018-blocksatz2'));
 });
 test('device previews inherit validated theme and glyph settings from the same-origin parent',()=>{
   const formats=read('scripts/typografie-formate.js');

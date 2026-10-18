@@ -4,9 +4,12 @@
   if(!A||!$('theme-toggle')||!$('appearance-dialog'))return;
   const root=document.documentElement,reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const dialog=$('appearance-dialog'),openers=document.querySelectorAll('#theme-toggle,[data-page-theme]');
-  const appearanceKey='typografie-atelier-appearance',preview=new URLSearchParams(location.search).get('format-preview')==='1';
+  const appearanceKey='typografie-atelier-appearance',readingLayoutVersion=2,preview=new URLSearchParams(location.search).get('format-preview')==='1';
   let saved=null;
   if(!preview)try{saved=JSON.parse(localStorage.getItem(appearanceKey));}catch(_){}
+  // Apply the newly requested default once without changing fonts, colors or
+  // glyph preferences. Explicit alignment choices made after this stay saved.
+  if(saved&&typeof saved==='object'&&saved.readingLayoutVersion!==readingLayoutVersion)saved={...saved,readingAlignment:'justify'};
   let current=A.settings(saved),pending=0,lastOpener=null,refreshAll=false;
   for(const palette of A.palettes){
     const card=document.createElement('section'),title=document.createElement('h3'),note=document.createElement('p'),choices=document.createElement('div');
@@ -58,7 +61,7 @@
   addEventListener('typography-motion-change',readerStatus);
   function apply(o={},announce=true){
     const next=A.settings({...current,...o}),changed=Object.keys(next).some(key=>next[key]!==current[key]);current=next;
-    if(changed&&!preview)try{localStorage.setItem(appearanceKey,JSON.stringify(current));}catch(_){}
+    if(!preview)try{localStorage.setItem(appearanceKey,JSON.stringify({...current,readingLayoutVersion}));}catch(_){}
     const palette=A.palettes.find(p=>p.id===current.palette),description=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell');
     const fonts=A.fontPair(current),fontDescription=fonts.sans.name+' und '+fonts.serif.name;
     root.style.setProperty('--sans',fonts.sans.stack);root.style.setProperty('--serif',fonts.serif.stack);

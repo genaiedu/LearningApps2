@@ -61,9 +61,28 @@ body.prose-typography{font-variant-ligatures:common-ligatures; font-variant-nume
    Leave formula renderers and SVG lettering to their own layout engines. */
 html[data-palette] body.prose-typography :where(h1,h2,h3,h4,h5,h6,p,li,blockquote,figcaption,dt,dd,a,span,label,button,input,select,textarea,output,summary,legend,small,strong,b,em,i,th,td):not(:where(mjx-container *,math *,svg *)){font-kerning:normal}
 body.prose-typography :is(#longtext-recommendation-toggle,#longtext-feature-status,#longtext-status,#longtext-page-info,#appearance-title,#history-image-title){font-kerning:normal}
-/* Only explanatory reading copy follows this preference. Designed specimens,
-   navigation, formulas and independently typeset book pages keep their setting. */
-html[data-reading-alignment="justify"] body.prose-typography main :is(.chapter>p,.chapter>.wrap>p,.reading-station>p,.history-copy>p,.margin-context>p,.author-comment>p,.reading-cards article>p,.note>p,.interaction-distinction article>p,.interaction-examples article>p,.web-principles article>p,.reader-appearance>div>p):not(.eyebrow,.small,.source-note,.section-label,.reading-station-number,.font-sample,.classification-sample,.character-pair,.ligature-proof,.ligature-typesample,.kerning-proof,.figure-line,.origin-model,.origin-glyph,.caps-proof,.script-proof){text-align:justify;text-align-last:left;hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:6 3 3}
+/* Reading copy is the default at every nesting depth. Opt out designed documents,
+   actual type specimens and interface labels, not whole explanation panels.
+   The same rule covers later-created font advice without a DOM rewrite. */
+html[data-reading-alignment="justify"] body.prose-typography main :is(p,blockquote,li,dd,figcaption):not(:where(
+  [data-reading-fixed],[data-reading-fixed] *,nav *,button *,label *,summary *,
+  .controls *,.panel-top *,.hero-meta *,.reading-next *,.reader-appearance-controls *,
+  .text-proof,.text-proof *,.book-proof,.book-proof *,.poster,.poster *,
+  .page-proof,.page-proof *,.study-sheet,.study-sheet *,.gi-page,.gi-page *,
+  .wt-root,.wt-root *,.web-color-example,.web-color-example *,.web-stamp,.web-stamp *,
+  .hero-example-shell,.hero-example-shell *,.editorial-sheet,.editorial-sheet *,
+  .longdoc-page-body,.longdoc-page-body *,.bg-document,.bg-document *,.nav-demo,.nav-demo *,
+  .compare-strip,.compare-strip *,.micro-compare,.micro-compare *,.figure-proof,.figure-proof *,
+  .grauwert-sample,.grauwert-sample *,.font-sample,.classification-sample,.character-pair,
+  .ligature-proof,.ligature-typesample,.kerning-proof,.figure-line,.origin-model,.origin-glyph,
+  .caps-proof,.script-proof,.serif-example,.sans-example,.sans-type-sample,
+  .blackletter-glyphs,.blackletter-phrase,.blackletter-fraktur,.blackletter-antiqua,.blackletter-s-words,
+  .stroke-word,.font-choice-signs,.optical-glyphline,.optical-wordline,.fondamento-cut,
+  .space-detail-form,.space-detail-alphabet,.space-detail-sentence,.space-quadrant-sample,
+  .icon-text-demo,.eyebrow,.history-era,.section-label,.reading-station-number,
+  .font-category,.font-cuts,.font-file,.space-axis-title,.space-quadrant-label,
+  .grauwert-index,.kinetic-duration,.overshoot-values,.satz-legend,.satz-recipe
+)){text-align:justify;text-align-last:left;hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:6 3 3}
 body.prose-typography main :is(p,li,figcaption):not(:where(.font-sample,.classification-sample,.character-pair,.ligature-proof,.ligature-typesample,.kerning-proof,.figure-line,.origin-model,.origin-glyph,.caps-proof,.script-proof)){
   font-variant-ligatures:common-ligatures;font-variant-numeric:oldstyle-nums proportional-nums
 }
@@ -119,6 +138,15 @@ body.prose-typography .micro-compare p.micro-composed{font-variant-numeric:oldst
 @media(max-width:1200px){.masthead-note{display:none}}
 @media(max-width:760px){.appearance-tools button{font-size:14px;width:44px;height:44px;padding:10px}.appearance-tools button span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.appearance-tools{gap:6px}.masthead{gap:12px}.page-glyph{font-size:clamp(380px,120vw,620px)}}
 @media(max-width:480px){#appearance-dialog{padding:22px}.appearance-choices{grid-template-columns:1fr;gap:20px}.appearance-palette>p{min-height:0}.appearance-heading{gap:12px}.appearance-position{padding:14px}.appearance-position-ranges,.appearance-font-grid{grid-template-columns:1fr;gap:18px}}
+/* Give justified introductions a useful measure on phones rather than squeezing
+   them into the narrow column beside the Roman chapter numeral. */
+@media(max-width:550px){
+ html[data-reading-alignment="justify"] .part-heading>div:has(>h2){display:contents}
+ html[data-reading-alignment="justify"] .part-heading h2{grid-column:2;margin-bottom:8px}
+ html[data-reading-alignment="justify"] .part-heading .lead{grid-column:1/-1;font-size:21px}
+ html[data-reading-alignment="justify"] .author-comment{padding-left:54px;padding-right:16px;font-size:20px}
+ html[data-reading-alignment="justify"] .author-comment .comment-opening{font-size:112px;left:7px;top:-51px}
+}
 @media(max-width:400px){.masthead{padding-inline:16px}.brand>span:first-child{margin-right:7px}.appearance-tools{gap:4px}.appearance-tools button{width:42px;height:44px}.masthead .brand{gap:5px}}
 @media(prefers-reduced-motion:reduce){.page-glyph{--page-drift:0px!important}}
 @media print{html[data-palette][data-theme]{color-scheme:light;--paper:#fff;--white:#fff;--ink:#202823;--muted:#56635b;--red:#a83424;--line:#c9c8ba;--dark:#18251f;--cream:#f4ead5;--surface:#eae6dc;--button-bg:#a83424;--button-ink:#fff;--button-hover:#862719;--hero-bg:#fff;--quote-bg:#e2e8dd;--quote-mark:#718367}.page-glyph-window,.appearance-tools,#appearance-dialog{display:none!important}}
