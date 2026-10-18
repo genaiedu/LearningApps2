@@ -22,7 +22,7 @@ test('exactly two facsimiles introduce the examples, all twelve files have check
  for(const img of sources.images){const bytes=fs.readFileSync(path.join(root,img.file));assert.equal(bytes.readUInt16BE(0),0xffd8);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),img.sha256);assert.match(img.rights,/gemeinfrei|Public Domain/i);assert.ok(img.creator&&img.publication&&img.source&&img.download);}
  assert.match(data.historicalPages[0].credit,/ETH-Bibliothek Zürich, Rar 6000/);assert.match(data.historicalPages[1].comment,/keiner Tageszeitung/);
  const script=read('scripts/typografie-langtext.js');assert.match(script,/originalPages\(data.historicalPages\)/);assert.match(script,/pages.slice\(0,2\)/);assert.match(script,/Originalseite vergrößern/);assert.doesNotMatch(script,/innerHTML/);
- for(const file of ['schriftsetzer.html','typografie-atelier.html']){assert.match(read(file),/scripts\/typografie-langtext.js\?v=20261018-volltexte/);assert.match(read(file),/styles\/typografie-langtext.css\?v=20261018-volltexte/);}
+ const versions=[];for(const file of ['schriftsetzer.html','typografie-atelier.html']){versions.push(read(file).match(/scripts\/typografie-langtext.js\?v=([^"&]+)/)[1]);assert.match(read(file),/styles\/typografie-langtext.css\?v=20261018-volltexte/);}assert.equal(versions[0],versions[1]);
 });
 async function render(t,id,settings={}){
  const dom=new JSDOM(read('typografie-lesedruck.html'),{runScripts:'outside-only',url:'https://example.test/LearningApps2/typografie-lesedruck.html?embedded=1'}),w=dom.window;t.after(()=>w.close());
