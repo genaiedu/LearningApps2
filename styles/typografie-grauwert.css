@@ -1,0 +1,26 @@
+/* A text-colour comparison, not a change to the reader's colour palette. */
+.grauwert-study{scroll-margin-top:130px}
+.grauwert-principle{padding:22px 26px;border-left:3px solid var(--red);background:var(--surface);color:var(--ink)}
+.grauwert-principle strong{display:block;margin-bottom:8px}
+.grauwert-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 12px}
+.grauwert-toolbar button{min-height:44px;font-family:var(--sans);font-size:15px}
+html[data-palette] .grauwert-toolbar button[aria-pressed=true]{background:var(--button-bg);color:var(--button-ink);border-color:var(--button-bg)}
+.grauwert-toolbar button:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.grauwert-proofs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:24px 0}
+.grauwert-example{display:flex;flex-direction:column;min-width:0;padding:26px;background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:4px}
+.grauwert-index{font:500 12px/1.5 var(--sans);font-variant-numeric:lining-nums tabular-nums;letter-spacing:.04em;color:var(--muted)}
+.grauwert-example h4{font:600 22px/1.3 var(--sans);margin:8px 0 24px;letter-spacing:0}
+.grauwert-example .grauwert-sample{font-family:"EB Garamond",Georgia,serif;font-size:22px;font-weight:400;font-style:normal;line-height:1.5;font-kerning:normal;font-variant-ligatures:common-ligatures;font-variant-numeric:oldstyle-nums proportional-nums;font-synthesis:none;letter-spacing:normal;word-spacing:normal;text-align:left;hyphens:auto;overflow-wrap:break-word}
+.grauwert-sample p{font:inherit;margin:0;text-indent:1em}
+.grauwert-sample p:first-child{text-indent:0}
+.grauwert-sample .grauwert-heavy{font-weight:700}
+.grauwert-sample .grauwert-wide{word-spacing:.42em}
+.grauwert-sample .grauwert-tight{word-spacing:-.08em;letter-spacing:-.025em}
+.grauwert-example .grauwert-caption{font:400 14px/1.5 var(--sans);color:var(--muted);margin:24px 0 0;padding-top:16px;border-top:1px solid var(--line)}
+.grauwert-proofs.is-distance .grauwert-sample{filter:blur(1.25px)}
+.grauwert-book-note{padding:16px 20px;border-left:2px solid var(--red);background:var(--surface);color:var(--ink)}
+.book-body.loud .grauwert-book-emphasis{font-weight:700}
+.grauwert-color-note h3{font:600 24px/1.3 var(--sans);margin-top:0}
+.grauwert-color-note p:last-child{margin-bottom:0}
+@media(max-width:760px){.grauwert-proofs{grid-template-columns:1fr;gap:18px}.grauwert-example{padding:23px}.grauwert-principle{padding:18px 20px}.grauwert-example .grauwert-sample{font-size:21px}}
+@media print{.grauwert-toolbar{display:none}.grauwert-proofs .grauwert-sample{filter:none!important}.grauwert-example{break-inside:avoid}}
