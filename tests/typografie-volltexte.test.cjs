@@ -43,3 +43,11 @@ test('book and A4 picture blocks keep image and caption together and adapt to la
 test('the full unillustrated Humboldt has no invented section titles or automatically invented quotation',async t=>{
  const {source,css}=await render(t,'article');assert.equal(source.querySelectorAll('.print-paragraph').length,36);assert.equal(source.querySelectorAll('figure,.print-contents,.print-quote').length,0);assert.equal(source.querySelectorAll('.print-footnote').length,1);assert.match(css,/\.print-cover\{[^}]*break-after:page/);
 });
+test('the compact twelve-part choice reaches real print CSS for Humboldt and illustrated Holmes',async t=>{
+ for(const id of ['article','book'])for(const format of ['book','a4']){const {source,css}=await render(t,id,{format,layout:'raster12'});assert.match(css,format==='book'?/margin:18.75mm 25mm 37.5mm 12.5mm/:/margin:24.75mm 35mm 49.5mm 17.5mm/);assert.equal(source.querySelectorAll('figure').length,id==='book'?10:0);}
+ assert.match(read('scripts/typografie-langtext.js'),/Satzspiegel → Zwölferteilung · kompakter Teilungskanon/);assert.match(read('scripts/typografie-langtext.js'),/keine Rekonstruktion der Humboldt-Seite/);
+});
+test('optional Holmes plates take a whole text area on separate pages, retain all ten images and do not change other works',async t=>{
+ for(const format of ['book','a4']){const {source,css}=await render(t,'book',{format,layout:'raster12',illustrations:'pages'});assert.equal(source.querySelectorAll('figure.print-illustration').length,10);assert.equal(source.querySelectorAll('figcaption').length,10);assert.match(css,/\.print-illustration\{[^}]*margin:0;[^}]*break-before:page;break-after:page/);assert.match(css,/object-fit:contain/);const lines=Number(css.match(/\.print-illustration\{[^}]*?height:calc\(var\(--baseline\) \* (\d+)/)[1]);assert.ok(lines>=30);}
+ const {css}=await render(t,'article',{illustrations:'pages'});assert.doesNotMatch(css,/break-before:page;break-after:page/);
+});
