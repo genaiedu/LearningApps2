@@ -4,7 +4,7 @@ const M=require('../scripts/typografie-bewegung-core.js'),root=path.resolve(__di
 const read=name=>fs.readFileSync(path.join(root,name),'utf8'),html=read('typografie-atelier.html'),ui=read('scripts/typografie-bewegung.js');
 test('margin voices share one constrained format, with a centered closing exception',()=>{
   const css=read('styles/typografie-atelier.css');
-  assert.equal((html.match(/<aside class="author-essay author-comment/g)||[]).length,14);
+  assert.equal((html.match(/<aside class="author-essay author-comment/g)||[]).length,16); // Includes the font-choice and Word voices.
   assert.match(css,/\.author-comment\{[^}]*width:min\(100%,850px\);margin:35px 0 30px auto;/);
   assert.match(css,/\.margin-conversation\{[^}]*grid-template-columns:minmax\(0,1fr\) minmax\(0,850px\)/);
   assert.match(css,/\.margin-conversation>\.author-comment\{justify-self:end;margin:0\}/);
@@ -70,8 +70,9 @@ test('static alternatives, keyboard seeking, reset and controls are retained und
 test('interaction chapter uses the actual labs and live page appearance rather than screenshots',()=>{
   const chapter=html.match(/<section[^>]*id="interaktiv"[^>]*>([\s\S]*?)<\/section>/)[1];
   for(const target of ['details','satzlabor','farbe','bildschirmformate','texatelier','entscheidungen','webwerkstatt'])assert.ok(chapter.includes('href="#'+target+'"'));
-  for(const term of ['Vermuten','Verändern','Beobachten','Begründen','Hell und Dunkel','Browserzoom','Tastaturfokus','nicht dauerhaft gespeichert'])assert.ok(chapter.includes(term));
-  for(const control of ['data-page-theme','data-page-glyphs','data-page-motion'])assert.ok(chapter.includes(control));
+  for(const term of ['Vermuten','Verändern','Beobachten','Begründen','Hell und Dunkel','Browserzoom','Tastaturfokus','lokal in diesem Browser gemerkt'])assert.ok(chapter.includes(term));
+  for(const control of ['data-page-theme','data-page-motion'])assert.ok(chapter.includes(control));
+  assert.ok(!chapter.includes('data-page-glyphs'),'The glyph switch lives only in the appearance dialog');
   assert.ok(read('scripts/typografie-atelier.js').includes("querySelectorAll('#motion-toggle,[data-page-motion]')"));
   assert.ok(read('scripts/typografie-ansicht.js').includes("$('reader-appearance-state')"));
   for(const source of ['keyboard.html','on-input.html','contrast-minimum.html'])assert.ok(chapter.includes(source));

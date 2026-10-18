@@ -1,13 +1,13 @@
 (function(){
   'use strict';
   const A=window.TypoAppearance,$=id=>document.getElementById(id);
-  if(!A||!$('theme-toggle')||!$('page-glyph-toggle')||!$('appearance-dialog'))return;
+  if(!A||!$('theme-toggle')||!$('appearance-dialog'))return;
   const root=document.documentElement,reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const dialog=$('appearance-dialog'),openers=document.querySelectorAll('#theme-toggle,[data-page-theme]');
   const appearanceKey='typografie-atelier-appearance',preview=new URLSearchParams(location.search).get('format-preview')==='1';
   let saved=null;
   if(!preview)try{saved=JSON.parse(localStorage.getItem(appearanceKey));}catch(_){}
-  let current=A.settings(saved),pending=0,lastOpener=null;
+  let current=A.settings(saved),pending=0,lastOpener=null,refreshAll=false;
   for(const palette of A.palettes){
     const card=document.createElement('section'),title=document.createElement('h3'),note=document.createElement('p'),choices=document.createElement('div');
     card.className='appearance-palette';title.textContent=palette.name;note.textContent=palette.note;
@@ -42,16 +42,17 @@
   function draw(){
     pending=0;const enabled=current.glyphs&&!reduced.matches&&!document.body.classList.contains('motion-paused');
     for(const {layer,glyph} of layers){
-      if(!enabled||active.has(layer))glyph.style.setProperty('--page-drift',A.shift(layer.getBoundingClientRect().top,innerHeight,enabled)+'px');
+      if(refreshAll||!enabled||active.has(layer))glyph.style.setProperty('--page-drift',A.shift(layer.getBoundingClientRect().top,innerHeight,enabled)+'px');
     }
+    refreshAll=false;
   }
-  function schedule(){if(!pending)pending=requestAnimationFrame(draw);}
+  function schedule(all=false){if(all===true)refreshAll=true;if(!pending)pending=requestAnimationFrame(draw);}
   function readerStatus(){
     const target=$('reader-appearance-state');if(!target)return;
     const palette=A.palettes.find(p=>p.id===current.palette);
     const position=A.positions.find(p=>p.id===current.glyphPosition).name;
     const fonts=A.fontPair(current);
-    const text=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell')+'. Schriften: '+fonts.sans.name+' und '+fonts.serif.name+'. Randzeichen '+(current.glyphs?'sichtbar: '+position:'ausgeblendet')+'. Animation '+(document.body.classList.contains('motion-paused')?'pausiert':'freigegeben')+'.';
+    const text=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell')+'. Schriften: '+fonts.sans.name+' und '+fonts.serif.name+'. Lesetext: '+(current.readingAlignment==='justify'?'Blocksatz mit automatischer Silbentrennung':'linksbündig')+'. Randzeichen '+(current.glyphs?'sichtbar: '+position:'ausgeblendet')+'. Animation '+(document.body.classList.contains('motion-paused')?'pausiert':'freigegeben')+'.';
     if(target.textContent!==text)target.textContent=text;
   }
   addEventListener('typography-motion-change',readerStatus);
@@ -63,12 +64,12 @@
     root.style.setProperty('--sans',fonts.sans.stack);root.style.setProperty('--serif',fonts.serif.stack);
     root.style.setProperty('--editorial-serif',fonts.serif.editorialStack);
     $('appearance-sans').value=current.sansFont;$('appearance-serif').value=current.serifFont;
+    $('appearance-alignment').value=current.readingAlignment;root.dataset.readingAlignment=current.readingAlignment;
     $('appearance-sans-name').textContent=fonts.sans.name;$('appearance-serif-name').textContent=fonts.serif.name;
     root.dataset.palette=current.palette;root.dataset.theme=current.theme;root.classList.toggle('page-glyphs-off',!current.glyphs);
-    for(const button of openers){button.setAttribute('aria-label','Darstellung wählen, aktuell: '+description+', '+fontDescription);button.title='Schriften, Farbschema und Randzeichen · '+description;}
+    for(const button of openers){button.setAttribute('aria-label','Darstellung wählen, aktuell: '+description+', '+fontDescription);button.title='Schriften, Lesesatz, Farbschema und Randzeichen · '+description;}
     for(const button of dialog.querySelectorAll('[data-palette-choice]'))button.setAttribute('aria-pressed',String(button.dataset.paletteChoice===current.palette&&button.dataset.themeChoice===current.theme));
     $('appearance-current').textContent='Aktuell: '+description+'. Schriften: '+fontDescription+'.';
-    for(const button of document.querySelectorAll('#page-glyph-toggle,[data-page-glyphs]'))button.setAttribute('aria-pressed',String(current.glyphs));
     for(const {layer,chapter} of layers){
       const place=A.placement(chapter.side,current);layer.dataset.side=place.side;
       layer.style.setProperty('--page-glyph-x',place.x+'%');layer.style.setProperty('--page-glyph-y',place.y+'%');
@@ -80,19 +81,21 @@
     $('appearance-inset-value').textContent=current.glyphInset+' %';$('appearance-height-value').textContent=current.glyphHeight+' %';
     $('appearance-inset').setAttribute('aria-valuetext',current.glyphInset+' Prozent Abstand zur Seitenkante');
     $('appearance-height').setAttribute('aria-valuetext',current.glyphHeight+' Prozent der Kapitel-Dekorationshöhe');
-    schedule();
-    if(changed&&announce){$('appearance-status').textContent=description+'. Schriften: '+fontDescription+'. Randzeichen '+(current.glyphs?'eingeblendet.':'ausgeblendet.');}
+    // Refresh even offscreen layers after showing or repositioning them; do not
+    // depend on the timing of a subsequent IntersectionObserver notification.
+    schedule(true);
+    if(changed&&announce){$('appearance-status').textContent=description+'. Schriften: '+fontDescription+'. Lesetext: '+(current.readingAlignment==='justify'?'Blocksatz mit automatischer Silbentrennung.':'linksbündig.')+' Randzeichen '+(current.glyphs?'eingeblendet.':'ausgeblendet.');}
     readerStatus();
     if(changed)dispatchEvent(new Event('typography-appearance-change'));
   }
-  function resize(){root.style.setProperty('--page-width',root.clientWidth+'px');schedule();}
+  function resize(){root.style.setProperty('--page-width',root.clientWidth+'px');schedule(true);}
   for(const button of openers)button.addEventListener('click',()=>{
     lastOpener=button;dialog.showModal();for(const opener of openers)opener.setAttribute('aria-expanded','true');
     $('appearance-sans').focus();
   });
   $('appearance-close').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('close',()=>{for(const opener of openers)opener.setAttribute('aria-expanded','false');lastOpener?.focus();});
-  for(const button of document.querySelectorAll('#page-glyph-toggle,[data-page-glyphs]'))button.addEventListener('click',()=>apply({glyphs:!current.glyphs}));
+  $('appearance-alignment').addEventListener('change',()=>apply({readingAlignment:$('appearance-alignment').value}));
   $('appearance-sans').addEventListener('change',()=>apply({sansFont:$('appearance-sans').value}));
   $('appearance-serif').addEventListener('change',()=>apply({serifFont:$('appearance-serif').value}));
   for(const [id,key] of [['appearance-sans-reset','sansFont'],['appearance-serif-reset','serifFont']]){

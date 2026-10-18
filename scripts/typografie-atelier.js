@@ -144,7 +144,8 @@
     $('ligature-font-note').textContent=family+' · '+(style==='italic'?'kursiv':'aufrecht')+': '+forms+' sind in der lokalen Fontdatei als Standardligaturen vorhanden.'+(family==='Lora'?' Die ffi-Gruppe hat keinen eigenen Standardersatz; darin kann sich nur fi verbinden.':'');
   }
   $('ligature-toggle').onchange=updateLigatures;$('ligature-font').onchange=updateLigatures;updateLigatures();
-  $('kerning-toggle').onchange=()=>$('kerning-proof').style.fontKerning=$('kerning-toggle').checked?'normal':'none';
+  const updateKerning=()=>$('kerning-proof').style.fontKerning=$('kerning-toggle').checked?'normal':'none';
+  $('kerning-toggle').onchange=updateKerning;updateKerning();
 
   const palettes={paper:['#202823','#f5f1e8'],night:['#f4ead5','#18251f'],sage:['#263e31','#e6ecdf'],blue:['#18364c','#e8eff4'],bad:['#b2b7a6','#e6e9df']};
   function updateColor(){const fg=$('foreground').value,bg=$('background').value,ratio=C.contrast(fg,bg);const proof=$('color-proof');Object.assign(proof.style,{color:fg,backgroundColor:bg});Object.assign(proof.querySelector('.color-text').style,{color:fg,backgroundColor:bg});proof.dataset.texture=$('texture').value;

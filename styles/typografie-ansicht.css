@@ -8,7 +8,8 @@
 .page-glyph{--page-drift:0px;position:absolute;top:var(--page-glyph-y,34%);left:var(--page-glyph-x,5%);transform:translate(-50%,calc(-50% + var(--page-drift)));font-size:clamp(460px,74vw,1080px);font-weight:400;font-style:normal;line-height:1;color:var(--page-mark);white-space:nowrap;font-synthesis:none}
 .page-glyph-window[data-side=right] .page-glyph{left:var(--page-glyph-x,95%)}
 .page-glyph-window[data-side=center] .page-glyph{left:var(--page-glyph-x,50%)}
-.page-glyphs-off .page-glyph-window{display:none}
+/* Keep the decorative layer's geometry and observation stable while hidden. */
+.page-glyphs-off .page-glyph-window{visibility:hidden}
 
 /* All reading surfaces use palette roles, not an image inversion or a global filter. */
 html[data-palette] .chapter-nav{background:var(--paper);background:color-mix(in srgb,var(--paper) 96%,transparent)}
@@ -55,6 +56,14 @@ html[data-palette] .image-hero a:hover{color:#fffaf0}
 /* Explicit prose defaults also survive component font shorthands. Named glyph
    specimens and intentional on/off/lining comparisons retain their own settings. */
 body.prose-typography{font-variant-ligatures:common-ligatures; font-variant-numeric:oldstyle-nums proportional-nums;font-kerning:normal}
+/* Set the longhand on actual text elements: component font shorthands otherwise
+   reset it to auto. Inline on/off teaching controls still take precedence.
+   Leave formula renderers and SVG lettering to their own layout engines. */
+html[data-palette] body.prose-typography :where(h1,h2,h3,h4,h5,h6,p,li,blockquote,figcaption,dt,dd,a,span,label,button,input,select,textarea,output,summary,legend,small,strong,b,em,i,th,td):not(:where(mjx-container *,math *,svg *)){font-kerning:normal}
+body.prose-typography :is(#longtext-recommendation-toggle,#longtext-feature-status,#longtext-status,#longtext-page-info,#appearance-title,#history-image-title){font-kerning:normal}
+/* Only explanatory reading copy follows this preference. Designed specimens,
+   navigation, formulas and independently typeset book pages keep their setting. */
+html[data-reading-alignment="justify"] body.prose-typography main :is(.chapter>p,.chapter>.wrap>p,.reading-station>p,.history-copy>p,.margin-context>p,.author-comment>p,.reading-cards article>p,.note>p,.interaction-distinction article>p,.interaction-examples article>p,.web-principles article>p,.reader-appearance>div>p):not(.eyebrow,.small,.source-note,.section-label,.reading-station-number,.font-sample,.classification-sample,.character-pair,.ligature-proof,.ligature-typesample,.kerning-proof,.figure-line,.origin-model,.origin-glyph,.caps-proof,.script-proof){text-align:justify;text-align-last:left;hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:6 3 3}
 body.prose-typography main :is(p,li,figcaption):not(:where(.font-sample,.classification-sample,.character-pair,.ligature-proof,.ligature-typesample,.kerning-proof,.figure-line,.origin-model,.origin-glyph,.caps-proof,.script-proof)){
   font-variant-ligatures:common-ligatures;font-variant-numeric:oldstyle-nums proportional-nums
 }

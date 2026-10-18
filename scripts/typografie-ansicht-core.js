@@ -67,7 +67,7 @@
   }
   function settings(o={}){
     if(!o||typeof o!=='object')o={};
-    return {palette:palettes.some(p=>p.id===o.palette)?o.palette:'graphite',theme:o.theme==='dark'?'dark':'light',glyphs:typeof o.glyphs==='boolean'?o.glyphs:true,
+    return {palette:palettes.some(p=>p.id===o.palette)?o.palette:'graphite',theme:o.theme==='dark'?'dark':'light',glyphs:typeof o.glyphs==='boolean'?o.glyphs:true,readingAlignment:o.readingAlignment==='justify'?'justify':'left',
       sansFont:readingFonts.sans.some(f=>f.id===o.sansFont)?o.sansFont:'firasans',serifFont:readingFonts.serif.some(f=>f.id===o.serifFont)?o.serifFont:'original',
       glyphPosition:positions.some(p=>p.id===o.glyphPosition)?o.glyphPosition:'alternating',glyphInset:bounded(o.glyphInset,0,40,5),glyphHeight:bounded(o.glyphHeight,10,90,34)};
   }
