@@ -1,54 +1,105 @@
 {
-  "checked": "2026-10-11",
+  "checked": "2026-10-18",
   "note": "All images are served locally. Commons thumbnail reductions were retained without additional edits. Each image retains its stated licence. Surrounding original app code is not a derivative of the photographs.",
   "images": [
     {
-      "file": "griechisches-alphabet.jpg", "width": 1280, "height": 1118,
+      "file": "griechisches-alphabet.jpg",
+      "width": 1280,
+      "height": 1118,
       "title": "Greek alphabet on an Attic vessel, around 420 BCE",
       "creator": "Marsyas; processing: 1970gemini (existing Commons version)",
       "source": "https://commons.wikimedia.org/wiki/File:NAMA_Alphabet_grec.jpg",
-      "license": "CC BY 2.5", "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
+      "license": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
       "sha256": "107c1dada4e14bd874e259d478317d6730ce47a1b25bb0bf58583b5ce89bae92"
     },
     {
-      "file": "trajan-inschrift.jpg", "width": 1280, "height": 720,
+      "file": "trajan-inschrift.jpg",
+      "width": 1280,
+      "height": 720,
       "title": "Trajan's Column inscription, Rome, 113 CE",
       "creator": "Jamie Heath / MumblerJamie, 2017",
       "source": "https://commons.wikimedia.org/wiki/File:Inscription,_Trajan%27s_Column.jpg",
-      "license": "CC BY-SA 2.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
       "sha256": "701f976abc792231701ca0af93c26e0f38c15daf251e30b4973ee0f7cbf5a910"
     },
     {
-      "file": "karolingische-minuskel.jpg", "width": 1280, "height": 434,
+      "file": "karolingische-minuskel.jpg",
+      "width": 1280,
+      "height": 434,
       "title": "Alcuin Bible detail, Burgerbibliothek Bern, Cod. 4, fol. 27v",
       "creator": "Historical manuscript; reproduction from Wikimedia Commons; photographer not specified",
       "source": "https://commons.wikimedia.org/wiki/File:Bern_Burgerbibliothek_Cod_4_fol_27v_detail.jpg",
-      "license": "Public domain (Commons image metadata)", "licenseUrl": "https://commons.wikimedia.org/wiki/File:Bern_Burgerbibliothek_Cod_4_fol_27v_detail.jpg",
+      "license": "Public domain (Commons image metadata)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Bern_Burgerbibliothek_Cod_4_fol_27v_detail.jpg",
       "sha256": "0d7f89e0d462a3a5122e7cc3a3db2ec82d9371973cb47960732095735658bb9a"
     },
     {
-      "file": "gutenberg-bibel.jpg", "width": 960, "height": 1349,
+      "file": "gutenberg-bibel.jpg",
+      "width": 960,
+      "height": 1349,
       "title": "Gutenberg Bible, Genesis, around 1455; Staatsbibliothek Berlin, volume I, fol. 5r",
       "creator": "Historical print by Johannes Gutenberg; scan: Jossi",
       "source": "https://commons.wikimedia.org/wiki/File:Gutenberg_Bible_B42_Genesis.JPG",
-      "license": "Public domain (faithful reproduction / PD-Art)", "licenseUrl": "https://commons.wikimedia.org/wiki/File:Gutenberg_Bible_B42_Genesis.JPG",
+      "license": "Public domain (faithful reproduction / PD-Art)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Gutenberg_Bible_B42_Genesis.JPG",
       "sha256": "0e012c09b7e18259d556838cc830f4da38c2cbfdbb84a002ebb4e33daada6c26"
     },
     {
-      "file": "zeitung-linotype.jpg", "width": 1280, "height": 953,
+      "file": "zeitung-linotype.jpg",
+      "width": 1280,
+      "height": 953,
       "title": "Linotype machine, printing room, New York World, 1909",
       "creator": "New York World (catalogue attribution); George Grantham Bain Collection, Library of Congress, LCCN 2004667832",
       "source": "https://commons.wikimedia.org/wiki/File:Linotype_machine,_printing_room,_N.Y._World_LCCN2004667832.jpg",
-      "license": "Public domain / PD-old-70-expired; Library of Congress: no known restrictions on publication", "licenseUrl": "https://commons.wikimedia.org/wiki/File:Linotype_machine,_printing_room,_N.Y._World_LCCN2004667832.jpg",
+      "license": "Public domain / PD-old-70-expired; Library of Congress: no known restrictions on publication",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Linotype_machine,_printing_room,_N.Y._World_LCCN2004667832.jpg",
       "sha256": "035a443c35cfcf2916fdb6ab34f5de6a798632a9c5d2898f0a0688be165c5933"
     },
     {
-      "file": "computer-vt100.jpg", "width": 1280, "height": 1071,
+      "file": "computer-vt100.jpg",
+      "width": 1280,
+      "height": 1071,
       "title": "Text on a DEC VT100-family terminal (device badge: VT101); photograph from 2008",
       "creator": "Dave Fischer / Shieldforyoureyes; collection of the Retro-Computing Society of Rhode Island",
       "source": "https://commons.wikimedia.org/wiki/File:Vt100-adventure.jpg",
-      "license": "CC BY-SA 3.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
       "sha256": "0b336e037d7d9869b51bce220be988692532dee4a9a7839bdb8391b83718d4ee"
+    },
+    {
+      "file": "cuthbert-evangeliar.jpg",
+      "width": 990,
+      "height": 1480,
+      "title": "St Cuthbert Gospel, fol. 1r, Northumbria, around 700, BL Add MS 89000",
+      "creator": "Manuscript: anonymous; reproduction: British Library",
+      "source": "https://commons.wikimedia.org/wiki/File:St_Cuthbert_Gospel_-_f.1.jpg",
+      "license": "Public domain / PD-Art (Commons metadata)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:St_Cuthbert_Gospel_-_f.1.jpg",
+      "sha256": "4863a448edc7e21c77e4fa35ca2997af1eb87b0a95fae79d34d6b8841716dbd5"
+    },
+    {
+      "file": "gutenberg-schlichter-rand.jpg",
+      "width": 894,
+      "height": 1222,
+      "title": "Gutenberg Bible, Deuteronomy 6:16–7:16",
+      "creator": "Printer: Johannes Gutenberg; reproduction from Southern Methodist University according to Commons",
+      "source": "https://commons.wikimedia.org/wiki/File:Gutenberg_bible.jpg",
+      "license": "Public domain / PD-Art (Commons metadata)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Gutenberg_bible.jpg",
+      "sha256": "5321c64d7883b06720c5785c53e6d33bf7af8d32034657682016c4d9b2fb38c8"
+    },
+    {
+      "file": "zweder-stundenbuch.jpg",
+      "width": 3994,
+      "height": 2900,
+      "title": "Book of Hours, Masters of Zweder van Culemborg, around 1430–1435; KB 79 K 2, fol. 12v–13r",
+      "creator": "Masters of Zweder van Culemborg; reproduction: Koninklijke Bibliotheek, The Hague",
+      "source": "https://commons.wikimedia.org/wiki/File:Book_of_hours_by_the_Master_of_Zweder_van_Culemborg_-_KB_79_K_2_-_folios_012v_(left)_and_013r_(right).jpg",
+      "license": "Public domain / PD-Art (Commons metadata)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Book_of_hours_by_the_Master_of_Zweder_van_Culemborg_-_KB_79_K_2_-_folios_012v_(left)_and_013r_(right).jpg",
+      "sha256": "88749397d6bf541c6eacd16f6bd0c20a5a01f770b213e7df5066633da183c789"
     }
   ]
 }

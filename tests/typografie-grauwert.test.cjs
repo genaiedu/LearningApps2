@@ -11,13 +11,13 @@ function setup(t,execute=true){
   if(execute)w.eval(script);
   return{w,q};
 }
-test('grey value is introduced before the live typesetting lab, without renumbering part II',t=>{
+test('grey value is introduced before the live typesetting lab, following the page-layout chapter',t=>{
   const {q}=setup(t,false),section=q('#satzlabor');
   assert.ok(section.contains(q('#grauwert')));
   assert.ok(section.innerHTML.indexOf('id="grauwert"')<section.innerHTML.indexOf('id="body-font"'));
   for(const term of ['Grauwert des Satzes','Wortabstände','Zeilenabstand','ausreichenden Kontrast','weder möglichst dicht noch möglichst hell','keine Grauwert-Messung'])assert.ok(section.textContent.includes(term),term);
   const chapters=[...q('[aria-label="Inhalt von Teil II"]').querySelectorAll('a')];
-  assert.equal(chapters.length,12);assert.ok(chapters[2].href.endsWith('#satzlabor'));
+  assert.equal(chapters.length,12);assert.ok(chapters[2].href.endsWith('#buchsatz'));assert.ok(chapters[3].href.endsWith('#satzlabor'));
   assert.equal(q('#glossar-grauwert a').getAttribute('href'),'#grauwert');
   assert.ok(q('#druckfarbe .grauwert-color-note').textContent.includes('keine graue Schriftfarbe'));
   assert.equal(q('#grauwert .source-note a').hostname,'learn.microsoft.com');

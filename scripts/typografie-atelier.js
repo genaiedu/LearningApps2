@@ -125,8 +125,6 @@
   $('reset-typesetting').onclick=()=>{Object.entries({'body-font':'EB Garamond','heading-font':'Source Sans 3','text-size':20,'text-leading':150,'text-measure':56,'text-align':'left','paragraph-mode':'indent'}).forEach(([id,v])=>$(id).value=v);$('hyphen-toggle').checked=true;updateProof();};updateProof();
   function poster(classic){$('tschichold-poster').classList.toggle('classic',classic);$('tschichold-poster').classList.toggle('modern',!classic);$('layout-classic').setAttribute('aria-pressed',String(classic));$('layout-modern').setAttribute('aria-pressed',String(!classic));}
   $('layout-classic').onclick=()=>poster(true);$('layout-modern').onclick=()=>poster(false);
-  function updateCanon(){const [w,h]=$('page-format').value==='classic'?[150,225]:[210,297],v=C.canon(w,h);document.querySelectorAll('.book-page').forEach(p=>p.style.aspectRatio=w+'/'+h);$('spread').classList.toggle('hide-grid',!$('show-grid').checked);$('canon-values').textContent='Innen '+dec(v.inner,1)+' mm · außen '+dec(v.outer,1)+' mm · Kopf '+dec(v.top,1)+' mm · Fuß '+dec(v.bottom,1)+' mm. Textblock '+dec(v.textWidth,1)+' × '+dec(v.textHeight,1)+' mm.';}
-  on(['page-format','show-grid'],updateCanon);updateCanon();
   function updateBook(){
     const name=$('book-font').value,font=fonts.get(name),hasCaps=font?font.features?.includes('smcp'):name==='EB Garamond';
     $('book-proof').style.fontFamily='"'+name+'"';$('book-body').classList.toggle('spaced',$('book-paragraphs').value==='space');$('book-body').classList.toggle('loud',$('book-headings').value==='loud');

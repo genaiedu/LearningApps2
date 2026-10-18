@@ -29,7 +29,7 @@ test('history really opens the characters part and all nine labels match its nav
 
 test('every station has an actual local picture, intact proportions and verified image credits',()=>{
   const images=[...chapter.matchAll(/<img src="([^"]+)" width="(\d+)" height="(\d+)"[^>]+alt="([^"]+)"/g)];
-  assert.equal(images.length,6);assert.equal(credits.images.length,6);
+  assert.equal(images.length,6);assert.equal(credits.images.length,9);
   for(const [i,image] of images.entries()){
     const credit=credits.images[i];
     assert.equal(image[1],history.base+credit.file);
