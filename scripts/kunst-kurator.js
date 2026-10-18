@@ -81,6 +81,21 @@
     if(!origin || !span || !Number.isFinite(span.max) || span.max>origin.year-40) return null;
     return {style:selection.style,date:selection.date,origin,profile};
   }
+  function failureReview(state,pool=[]) {
+    if(state?.phase!=='lost')return [];
+    const last=state.attemptLog?.find(entry=>entry.attempt===state.attempts);
+    const choices=state.review?.choices || last?.choices || state.choices || {};
+    const marks=last?.forgeryMarks || state.forgeryMarks || {};
+    return state.ids.flatMap((id,index)=>{
+      const work=pool.find(item=>item.id===id);
+      if(!work)return [];
+      const fields=fieldsFor(state).filter(field=>choices[id]?.[field]!==work[field])
+        .map(field=>({field,chosen:choices[id]?.[field] || '',expected:work[field]}));
+      const chosen=Boolean(marks[id]),expected=state.forgery?.id===id;
+      const marking=chosen===expected?null:{chosen,expected};
+      return fields.length||marking?[{id,index,fields,marking}]:[];
+    });
+  }
   function roomHint(state,knowledge) {
     if(state?.phase!=='playing' || state.attempts!==1 || !state.review?.choices) return '';
     if(!state.ids.some(id=>temporalConflict(state.review.choices[id],knowledge))) return '';
@@ -331,7 +346,7 @@
     const sources=[...new Set([...technique.sources,...style.sources,...(note?.sources || []),...(conflict?.profile.sources || [])])].map(id=>knowledge.sources[id]).filter(Boolean);
     return {opening:opening(work,state,outcome,pick),sections,mistake:outcome.jokerUsed?'':mistake,temporal:outcome.jokerUsed?'':temporal,workNote:note?.text || '',sources,outcome};
   }
-  const api={explain,outcomes,dateSpan,stage,temporalConflict,roomHint,artistKey};
+  const api={explain,outcomes,dateSpan,stage,temporalConflict,roomHint,artistKey,failureReview};
   if(typeof module!=='undefined' && module.exports) module.exports=api;
   else root.KunstKurator=api;
 })(typeof globalThis!=='undefined' ? globalThis : this);

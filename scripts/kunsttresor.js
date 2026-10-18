@@ -254,14 +254,27 @@
     try {
       if (file.size > transfers.MAX_FILE_BYTES) throw Error('Die Datei ist zu groß. Erlaubt sind höchstens 8 MB.');
       const decoded = await transfers.decode(await file.text()), candidate = transfers.validate(decoded,pool,archiveReplacements,core,progress,history);
+      if(candidate.galleryOnly) {
+        if(epoch!==fileEpoch)return;
+        pendingImport=candidate;
+        $('import-title').textContent='Diese Galerie übernehmen?';
+        $('import-description').textContent='Die vorgefertigte Galerie „'+candidate.gallery.film.name+'“ enthält '+candidate.gallery.liked.length+' Lieblingswerke und eine vorbereitete Filmgestaltung. Deine vorhandenen Lieblingswerke bleiben erhalten; die Filmgestaltung wird übernommen. Dein laufender Raum, Rekord, Abzeichen und Bildverlauf bleiben unverändert. Es werden keine Spielerfolge eingetragen.';
+        $('save-status').textContent='Galerie-Datei geprüft. Erst „Galerie übernehmen“ fügt die Werke hinzu.';
+        $('import-preview').querySelector(':scope > p:not(#import-description)').hidden=true;
+        $('confirm-import').textContent='Galerie übernehmen';
+        $('import-preview').hidden=false;return;
+      }
       progress.merge(playerProgress,candidate.progress); // Check conflicts before offering replacement.
       history.merge(workHistory,candidate.history);
       if (epoch !== fileEpoch) return;
       pendingImport = candidate;
+      $('import-title').textContent='Diesen Spielstand übernehmen?';
       const phase = !candidate.state ? 'Kein laufender Raum' : candidate.state.phase === 'playing' ? 'Laufender Raum · ' + candidate.state.attempts + ' von '+attemptLimit+' Versuchen verbraucht' : candidate.state.phase === 'unlocked' ? 'Gelöster Raum' : 'Beendete Runde';
       const earned = progress.collection(candidate.progress).filter(badge=>badge.earned).length;
       $('import-description').textContent = new Date(candidate.savedAt).toLocaleString('de-DE') + ' · ' + phase + ' · ' + (candidate.state?.escaped || 0) + ' geöffnete Räume · Rekord ' + candidate.best + ' · ' + earned + ' Abzeichen · ' + candidate.history.rooms.length + ' Räume in der Bildhistorie.' + (candidate.legacyHistory ? ' Diese ältere Datei enthält noch keine Bildhistorie; dein vorhandener Verlauf bleibt erhalten.' : '') + (candidate.updated ? ' Der Raum wird an das aktualisierte Werkarchiv angepasst.' : '');
       $('save-status').textContent = 'Datei und Inhalt sind geprüft. Übernehmen wird erst mit deiner Bestätigung wirksam.';
+      $('import-preview').querySelector(':scope > p:not(#import-description)').hidden=false;
+      $('confirm-import').textContent='Spielstand übernehmen';
       $('import-description').textContent+=' '+candidate.gallery.liked.length+' Lieblingswerke.'+(candidate.legacyGallery?' Diese ältere Datei enthält keine Galerie; deine vorhandene Sammlung und Filmgestaltung bleiben erhalten.':' Deine Lieblingswerke werden zusammengeführt; die Filmgestaltung dieser Datei wird übernommen.');
       $('import-preview').hidden = false;
     } catch (error) { if (epoch === fileEpoch) $('save-status').textContent = error.message; }
@@ -270,6 +283,16 @@
   function confirmImport() {
     if (!pendingImport || transferBusy) return;
     try {
+      if(pendingImport.galleryOnly) {
+        if(galleryBlocked)throw Error('Deine gespeicherte Galerie konnte nicht gelesen werden und wird nicht überschrieben. Sichere sie zuerst oder lade eine vollständige gültige Spielstandsdatei.');
+        const merged=galleryModel.merge(personalGallery,pendingImport.gallery);
+        if(!galleryModel.restore(merged,pool,workHistory))throw Error('Die Galerie passt nicht zum Werkarchiv.');
+        if(!store.set(galleryKey,JSON.stringify(merged)))throw Error('Die Galerie konnte nicht dauerhaft gespeichert werden. Bitte erlaube den Browserspeicher.');
+        personalGallery=merged;galleryBlocked=false;pendingImport=null;galleryUI?.stopFilm();galleryUI?.refresh();
+        $('import-preview').hidden=true;close('save-dialog');
+        $('progress-notice').hidden=false;$('progress-notice').textContent='Galerie übernommen. Dein laufender Raum, Rekord, Abzeichen und Bildverlauf bleiben unverändert.';
+        return;
+      }
       const candidate = pendingImport, merged = progress.merge(playerProgress,candidate.progress), mergedHistory=history.merge(workHistory,candidate.history), nextBest = Math.max(best,candidate.best);
       const mergedGallery=candidate.legacyGallery?personalGallery:galleryBlocked?candidate.gallery:galleryModel.merge(personalGallery,candidate.gallery);
       if(!galleryModel.restore(mergedGallery,pool,mergedHistory))throw Error('Die zusammengeführte Galerie ist ungültig.');
@@ -896,7 +919,23 @@
   function referenceLink(reference) {
     const link=node('a',null,reference.title+' ↗'); link.href=reference.url; link.target='_blank'; link.rel='noopener noreferrer'; link.referrerPolicy='no-referrer'; return link;
   }
-  function renderCurator(work) {
+  function renderFailureDetails(entry) {
+    const block=node('section','curator-corrections');
+    block.append(node('h4',null,'Das passte bei der letzten Prüfung noch nicht'));
+    const list=node('ul','curator-correction-list');
+    for(const {field,chosen,expected} of entry.fields) {
+      const display=value=>field==='title'?titleLabel(value):value;
+      const item=node('li');
+      item.append(node('strong',null,labels[field]),node('span',null,'Deine Wahl: '+(chosen?'„'+display(chosen)+'“':'keine gespeicherte Angabe')),node('span',null,'Richtig: „'+display(expected)+'“'));
+      if(field==='date') { const hint=core.dateHint(chosen,expected);if(hint)item.append(node('small','correction-date-hint','Hinweis zur Datierung: '+hint.label+'. Maßgeblich ist die angegebene Katalogdatierung.')); }
+      list.append(item);
+    }
+    if(entry.marking) {
+      const item=node('li');item.append(node('strong',null,'Original oder Fälschung?'),node('span',null,entry.marking.chosen?'Du hast dieses Original als Fälschung markiert.':'Du hast die KI-Fälschung nicht als solche markiert.'),node('span',null,entry.marking.expected?'Richtig: Fälschung markieren. Im Vergleich unten siehst du die Nachahmung neben ihrem Original.':'Richtig: Dieses Bild ist ein Original; es darf keine Fälschungsmarkierung tragen.'));list.append(item);
+    }
+    block.append(list);return block;
+  }
+  function renderCurator(work,failure) {
     const container=node('div','curator-reading'), explanation=curator?.explain(work,state,artKnowledge,pool);
     if(!explanation) {
       container.append(node('p',null,'Die Kuratorenhinweise konnten nicht geladen werden. Die Werkangaben und Quellen stehen dir trotzdem zur Verfügung. Bitte lade die Seite erneut, um auch die Erklärungen zu lesen.'));
@@ -911,12 +950,14 @@
       for(const [label,profile] of [['Stil',artKnowledge?.styles?.[work.style]],['Technik',artKnowledge?.techniques?.[work.technique]]]) if(profile)container.append(node('h4',null,label+' des Originals'),node('p',null,profile.definition));
       return container;
     }
+    if(failure && explanation.temporal)container.append(node('p','curator-time',explanation.temporal));
+    if(failure && explanation.mistake)container.append(node('p','curator-comparison',explanation.mistake));
     const opening=node('p','curator-opening',explanation.opening); opening.dataset.curatorWork=work.id;
     aiBaseline.set(work.id,explanation.opening); container.append(opening);
     const previous=previousWorks()?.find(entry=>entry.id===work.id), historyNote=history.note(previous);
     if(historyNote) container.append(node('p','curator-history',historyNote));
-    if(explanation.temporal) container.append(node('p','curator-time',explanation.temporal));
-    if(explanation.mistake) container.append(node('p','curator-comparison',explanation.mistake));
+    if(!failure && explanation.temporal) container.append(node('p','curator-time',explanation.temporal));
+    if(!failure && explanation.mistake) container.append(node('p','curator-comparison',explanation.mistake));
     if(explanation.workNote) container.append(node('p','curator-work-note',explanation.workNote));
     explanation.sections.forEach(section => {
       const block=node('section','curator-section');
@@ -965,8 +1006,28 @@
     if (!state || state.phase === 'playing') return;
     aiClient?.cancel(); aiDisplayEpoch++; aiBaseline=new Map();
     close('result-dialog'); $('solutions').replaceChildren();
-    state.ids.forEach((id,index) => {
+    const failures=curator.failureReview(state,pool),byFailure=new Map(failures.map(entry=>[entry.id,entry]));
+    const review=$('solution-review');review.replaceChildren();review.hidden=!failures.length;
+    $('solution-title').textContent=failures.length?'Warum die Tür geschlossen blieb.':'Ein zweiter Blick.';
+    document.querySelector('.solution-lede').textContent=failures.length?'Zuerst besprechen wir, was bei deiner letzten Prüfung noch nicht stimmte. Danach kommen die bereits richtigen Zuordnungen und der weitere Rundgang durch die Werke.':'Komm noch einmal mit zu den Werken. Hier geht es nicht nur um die richtige Antwort, sondern darum, welche Spuren dich zu ihr führen können.';
+    if(failures.length) {
+      review.append(node('h3',null,'Hier lagen die letzten Hürden'));
+      const wrong=failures.reduce((sum,entry)=>sum+entry.fields.length,0),marks=failures.filter(entry=>entry.marking).length;
+      const counts=[wrong?wrong+(wrong===1?' falsche Zuordnung':' falsche Zuordnungen'):'',marks?marks+(marks===1?' falsche Original-/Fälschungsmarkierung':' falsche Original-/Fälschungsmarkierungen'):''].filter(Boolean);
+      review.append(node('p',null,'Bei der abschließenden Prüfung: '+counts.join(' und ')+'. Wir beginnen mit '+(failures.length===1?'diesem Werk:':'diesen Werken:')));
+      const links=node('div','curator-review-links');
+      for(const entry of failures) {
+        const names=[...entry.fields.map(item=>labels[item.field]),...(entry.marking?['Original / Fälschung']:[])];
+        const link=node('button',null,'Werk '+'ABCDEFG'[entry.index]+' · '+names.join(', '));link.type='button';
+        link.onclick=()=>{const card=$('solutions').querySelector('[data-solution-work="'+entry.index+'"]');card?.scrollIntoView({block:'start',behavior:'instant'});card?.focus({preventScroll:true});};
+        links.append(link);
+      }
+      review.append(links);
+    }
+    const ordered=state.ids.map((id,index)=>({id,index})).sort((a,b)=>Number(byFailure.has(b.id))-Number(byFailure.has(a.id)));
+    ordered.forEach(({id,index}) => {
       const work = workById(id), card = node('article','solution-card'), overview=node('div','solution-overview'), sources=node('footer','solution-sources');
+      card.dataset.solutionWork=String(index);card.tabIndex=-1;
       if (imagesAllowed && state.forgery?.id !== id) {
         const imageButton = node('button','solution-image'); imageButton.type = 'button';
         imageButton.setAttribute('aria-label','Werk ' + 'ABCDEFG'[index] + ' in der Lösung vergrößern');
@@ -978,7 +1039,8 @@
       if (core.galleryTitle(work)!==work.title) overview.append(node('p','small title-origin','Originaltitel der Werkquelle: ' + work.title + (work.titleDeTranslated ? ' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.' : '')));
       const list = node('dl'); core.fieldsFor(state).forEach(field => list.append(node('dt',null,labels[field]),node('dd',null,field==='title'?core.galleryTitle(work):work[field]))); overview.append(list);
       if(state.phase==='unlocked'&&state.forgery?.id!==id)overview.append(galleryUI.likeButton(id));
-      card.append(overview,renderCurator(work));
+      if(byFailure.has(id))card.append(renderFailureDetails(byFailure.get(id)));
+      card.append(overview,renderCurator(work,byFailure.get(id)));
       if (state.forgery?.id === id && imagesAllowed) {
         const comparison=node('section','forgery-comparison');
         comparison.append(node('h3',null,'Kuratorenvergleich: Original und KI-Fälschung'));

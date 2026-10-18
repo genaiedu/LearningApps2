@@ -8,6 +8,14 @@ function fixture(count=24){let g=gallery.fresh(),h=history.fresh(),p=progress.fr
   s=win(room(i));for(const id of s.ids)h=history.track(h,s,pool,{shownId:id});p=progress.recordWin(p,s,pool).profile;
   for(const id of s.ids)g=gallery.like(g,id,s,pool);
 }return {g,h,p,s};}
+test('curated gallery imports need no fictional winning history and survive complete save exports',async()=>{
+ const at=Date.now(),ids=pool.slice(0,24).map(w=>w.id),g={...gallery.fresh(),liked:ids.map(id=>({id,source:'curated',at}))};g.film.items=ids.slice(0,10).map(gallery.item);
+ const h=history.fresh(),p=progress.fresh(),payload={app:save.APP,version:save.VERSION,kind:'gallery',savedAt:at,gallery:g};
+ const decoded=save.validate(await save.decode(await save.encode(payload)),pool,[],core,progress,history,gallery);assert.equal(decoded.galleryOnly,true);assert.deepEqual(decoded.gallery,g);
+ const full=save.validate({app:save.APP,version:1,savedAt:at,state:null,best:0,progress:p,history:h,gallery:g},pool,[],core,progress,history,gallery);
+ assert.deepEqual(full.gallery,g);assert.equal(full.history.rooms.length,0);assert.equal(full.progress.events.length,0);
+ for(const mutate of [x=>x.gallery.liked[0].id='unknown',x=>x.gallery.liked[0].source='pretend-won',x=>x.gallery.liked.push(x.gallery.liked[0]),x=>x.gallery.film.items[0].id='outside']){const bad=structuredClone(payload);mutate(bad);assert.throws(()=>save.validate(bad,pool,[],core,progress,history,gallery));}
+});
 test('liking is a reward only after every assignment in a room is correct',()=>{
   const initial=room(),won=win(initial),g=gallery.fresh();
   assert.throws(()=>gallery.like(g,initial.ids[0],initial,pool),/gewonnenen/);

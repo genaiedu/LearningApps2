@@ -16,6 +16,10 @@
     if(!raw || raw.version!==1 || !Array.isArray(raw.liked) || raw.liked.length>pool.length || !raw.film) return null;
     const seen=new Set(), liked=[];
     for(const entry of raw.liked) {
+      if(entry?.source==='curated') {
+        if(!pool.some(w=>w.id===entry.id)||seen.has(entry.id)||!Number.isSafeInteger(entry.at)||entry.at<0||entry.at>Date.now()+300000)return null;
+        seen.add(entry.id);liked.push({id:entry.id,source:'curated',at:entry.at});continue;
+      }
       const room=history.rooms.find(r=>r.id===entry?.room), index=room?.ids.indexOf(entry?.id);
       if(!entry || !pool.some(w=>w.id===entry.id) || seen.has(entry.id) || !Number.isSafeInteger(entry.at) || entry.at<0 || entry.at>Date.now()+300000
         || !room || index<0 || !(room.seen&(1<<index)) || !room.checks.at(-1)?.every(mask=>mask===(room.fieldCount===5?31:15))) return null;

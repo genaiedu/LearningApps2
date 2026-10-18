@@ -38,7 +38,13 @@
     catch { throw Error('Der gespeicherte Inhalt ist ungültig.'); }
   }
   function validate(payload, pool, replacements, core, progress, history=root.KunstHistory || (typeof require==='function' ? require('./kunsttresor-history.js') : null), gallery=root.KunstGallery || (typeof require==='function' ? require('./kunsttresor-gallery.js') : null)) {
-    if (!payload || payload.app !== APP || payload.version !== VERSION || !Number.isSafeInteger(payload.savedAt) || payload.savedAt < 0 || payload.savedAt > Date.now()+300000 || !progress.integer(payload.best)) throw Error('Die Spielstandsdaten sind ungültig.');
+    if (!payload || payload.app !== APP || payload.version !== VERSION || !Number.isSafeInteger(payload.savedAt) || payload.savedAt < 0 || payload.savedAt > Date.now()+300000) throw Error('Die Spielstandsdaten sind ungültig.');
+    if(payload.kind==='gallery') {
+      const collection=gallery.restore(payload.gallery,pool,history.fresh());
+      if(!collection || !collection.liked.length || collection.liked.some(entry=>entry.source!=='curated'))throw Error('Diese Galerie-Datei ist ungültig oder passt nicht zum Werkarchiv.');
+      return {galleryOnly:true,gallery:collection,savedAt:payload.savedAt};
+    }
+    if(payload.kind!==undefined || !progress.integer(payload.best))throw Error('Die Spielstandsdaten sind ungültig.');
     const profile = progress.restore(payload.progress);
     const knownStyles = new Set([...pool,...replacements.map(entry=>entry.previous)].map(work=>work.style));
     const knownTechniques = new Set([...pool,...replacements.map(entry=>entry.previous)].map(work=>work.technique));

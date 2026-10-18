@@ -164,6 +164,14 @@ dialog{color-scheme:dark;color:var(--paper);background:var(--panel);border:1px s
 #ai-intro{font-size:1.08rem;line-height:1.7;max-width:72ch;margin:18px 0 0}
 #ai-retry{margin-top:16px}
 .curator-opening.is-ai{border-left:2px solid var(--gold);padding-left:16px}
+.curator-failure-review,.curator-corrections{padding:18px 20px;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:5px;background:var(--panel);color:var(--paper);margin:0 0 25px;overflow-wrap:anywhere}
+.curator-failure-review h3,.curator-corrections h4{font:600 18px/1.4 var(--sans);letter-spacing:0;margin:0 0 12px;color:var(--paper)}
+.curator-review-links{display:flex;flex-wrap:wrap;gap:8px}.curator-review-links button{max-width:100%;font-size:13px;text-align:left;white-space:normal;line-height:1.5}
+.curator-correction-list{list-style:none;margin:0;padding:0;display:grid;gap:16px;font:15px/1.6 var(--sans);font-variant-numeric:lining-nums tabular-nums}
+.curator-correction-list li{display:grid;gap:4px;min-width:0}.curator-correction-list strong{font-weight:600}.curator-correction-list small{font-size:13px;color:var(--muted)}
+.solution-card>.curator-corrections{grid-column:1/-1;margin-bottom:0}
+.solution-card{scroll-margin-top:20px}.solution-card:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+@media(max-width:600px){.curator-failure-review,.curator-corrections{padding:15px}.curator-review-links{flex-direction:column}.curator-review-links button{width:100%}}
 .ai-dialog{width:min(720px,94vw)}
 .ai-dialog p{max-width:65ch}
 .ai-privacy{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin:20px 0}

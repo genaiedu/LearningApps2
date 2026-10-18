@@ -22,7 +22,7 @@ async function setup(t,{state,history,gallery,preferences={},forgeryResponse,url
  if(state)w.localStorage.setItem('kunsttresor-game-v1-wall',JSON.stringify(state));
  if(history)w.localStorage.setItem('kunsttresor-history-v1-wall',JSON.stringify(history));
  if(gallery)w.localStorage.setItem('kunsttresor-wall-gallery-v1',JSON.stringify(gallery));
- w.TextEncoder=TextEncoder;w.TextDecoder=TextDecoder;w.scrollTo=()=>{};
+ w.TextEncoder=TextEncoder;w.TextDecoder=TextDecoder;w.structuredClone=structuredClone;w.scrollTo=()=>{};
  Object.defineProperty(w,'crypto',{value:webcrypto});
  w.matchMedia=()=>({matches:true,addEventListener(){}});w.ResizeObserver=class{observe(){}};w.requestAnimationFrame=()=>0;w.cancelAnimationFrame=()=>{};
  w.HTMLElement.prototype.scrollIntoView=function(){};w.HTMLElement.prototype.requestFullscreen=async()=>{};
@@ -44,6 +44,46 @@ const secretKey='kunsttresor-forgery-every-series-v1',gameKey='kunsttresor-game-
 const settle=async()=>{for(let i=0;i<60;i++)await Promise.resolve();};
 const generated=(image='data:image/jpeg;base64,/9j/')=>({ok:true,json:async()=>({image,model:'test model'})});
 const roomOf=app=>JSON.parse(app.w.localStorage.getItem(gameKey));
+function lostFixture(markingOnly=false) {
+ const c=model.KunstTresor;let s=c.newState(pool);s.roomToken='c'.repeat(32);s.runToken='d'.repeat(32);s.parentRoomToken=null;
+ for(const id of s.ids)for(const field of c.fieldsFor(s))s=c.choose(s,id,field,pool.find(w=>w.id===id)[field]);
+ if(markingOnly){s.forgery={id:s.ids[4],image:'data:image/jpeg;base64,/9j/'};s.forgeryMarks={[s.ids[1]]:true};}
+ else {const b=s.ids[1],e=s.ids[4];s=c.choose(s,b,'title','');s=c.choose(s,e,'title','');s=c.choose(s,b,'title',pool.find(w=>w.id===e).title);s=c.choose(s,e,'title',pool.find(w=>w.id===b).title);}
+ s=c.inspect({...s,attempts:2},pool).state;assert.equal(s.phase,'lost');return JSON.parse(JSON.stringify(s));
+}
+test('lost curator starts with final errors, keeps original work letters and prioritizes the affected works even with AI',async t=>{
+ const state=lostFixture(),app=await setup(t,{state,preferences:{'kunsttresor-ai-consent-v2-wall':'yes','kunsttresor-ai-enabled-v1-wall':'yes'}});app.click('launch-read');app.click('show-solution');await settle();
+ const summary=app.q('#solution-review');assert.equal(summary.hidden,false);assert.match(summary.textContent,/2 falsche Zuordnungen/);assert.match(app.q('#solution-title').textContent,/Warum die Tür/);
+ assert.ok(summary.compareDocumentPosition(app.q('.curator-ai'))&app.w.Node.DOCUMENT_POSITION_FOLLOWING);
+ assert.deepEqual([...app.q('#solutions').children].map(card=>card.dataset.solutionWork),['1','4','0','2','3','5','6']);
+ assert.match(app.q('#solutions .solution-overview .eyebrow').textContent,/Werk B/);
+ const correction=app.q('#solutions .solution-card').firstElementChild;assert.equal(correction.className,'curator-corrections');
+ assert.match(correction.textContent,/Werktitel.*Deine Wahl:.*Richtig:/);assert.doesNotMatch(correction.textContent,/\[object Object\]|undefined/);
+ assert.equal(app.q('#ai-intro').hidden,false);app.q('.curator-review-links button').click();assert.equal(app.w.document.activeElement,app.q('#solutions .solution-card'));
+ const before=summary.textContent;app.q('#solution-dialog [data-ai-toggle]').click();assert.equal(summary.textContent,before);
+ assert.equal(app.q('#solutions [data-gallery-like]'),null);
+});
+test('lost curator explains missed forgeries and falsely marked originals even when every label was correct',async t=>{
+ const app=await setup(t,{state:lostFixture(true)});app.click('launch-read');app.click('show-solution');
+ assert.match(app.q('#solution-review').textContent,/2 falsche Original-\/Fälschungsmarkierungen/);assert.doesNotMatch(app.q('#solution-review').textContent,/falsche Zuordnungen/);
+ const blocks=[...app.q('#solutions').querySelectorAll('.curator-corrections')];assert.equal(blocks.length,2);
+ assert.match(blocks[0].textContent,/Original als Fälschung markiert/);assert.match(blocks[1].textContent,/KI-Fälschung nicht als solche markiert/);
+});
+test('won curator keeps normal order and does not show a failure review',async t=>{
+ const {s}=fixture(),app=await setup(t,{state:s});app.click('launch-read');app.click('show-solution');
+ assert.equal(app.q('#solution-review').hidden,true);assert.equal(app.q('.curator-corrections'),null);
+ assert.deepEqual([...app.q('#solutions').children].map(card=>card.dataset.solutionWork),['0','1','2','3','4','5','6']);
+});
+test('gallery-only import previews and merges curated works without changing game, badges, record or history',async t=>{
+ const app=await setup(t);app.click('launch-skip');const before=stored(app.w.localStorage),ids=pool.slice(0,24).map(w=>w.id),at=Date.now();
+ const gallery={...app.w.KunstGallery.fresh(),liked:ids.map(id=>({id,source:'curated',at})),film:{name:'Testgalerie',motto:'Test',items:ids.slice(0,10).map(app.w.KunstGallery.item)}};
+ const payload={app:'kunsttresor',version:1,kind:'gallery',savedAt:at,gallery},encoded=await app.w.KunstSave.encode(payload);
+ app.click('open-save');Object.defineProperty(app.q('#save-file'),'files',{configurable:true,value:[{size:encoded.length,text:async()=>encoded}]});await app.q('#save-file').onchange();
+ assert.equal(app.q('#import-preview').hidden,false);assert.match(app.q('#import-description').textContent,/keine Spielerfolge/);assert.equal(app.q('#confirm-import').textContent,'Galerie übernehmen');
+ assert.deepEqual(stored(app.w.localStorage),before);app.click('confirm-import');assert.equal(app.q('#save-dialog').open,false,app.q('#save-status').textContent);
+ const after=stored(app.w.localStorage);assert.equal(JSON.parse(after['kunsttresor-wall-gallery-v1']).liked.length,24);delete after['kunsttresor-wall-gallery-v1'];delete before['kunsttresor-wall-gallery-v1'];assert.deepEqual(after,before);
+ const restored=await setup(t,{state:roomOf(app),gallery:JSON.parse(app.w.localStorage.getItem('kunsttresor-wall-gallery-v1'))});assert.equal(JSON.parse(restored.w.localStorage.getItem('kunsttresor-wall-gallery-v1')).liked.length,24);
+});
 const stored=storage=>Object.fromEntries(Array.from({length:storage.length},(_,i)=>{const key=storage.key(i);return[key,storage.getItem(key)];}));
 const pressRule=(app,n)=>app.q('.rule-steps > li:nth-child('+n+') > button').click();
 test('1 → 2 → 4 opens a safely focused reset confirmation; cancellation keeps every saved value',async t=>{

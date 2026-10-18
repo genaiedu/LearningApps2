@@ -26,6 +26,16 @@ function swapDates(state) {
   state=core.choose(state,'point','date','1500');return core.choose(state,'ren','date','1890');
 }
 function allText(explanation) { return [explanation.opening,explanation.temporal,explanation.mistake,explanation.workNote,...explanation.sections.flatMap(section=>section.paragraphs)].join(' '); }
+test('failure review uses the last checked answers, preserves letters and distinguishes marking mistakes',()=>{
+ const choices=Object.fromEntries(fixtures.map(w=>[w.id,Object.fromEntries(core.fields.map(f=>[f,w[f]]))]));
+ choices.ren.artist=fixtures[0].artist;
+ const state={...initial(),phase:'lost',attempts:2,review:{choices},choices:{},forgery:{id:'blue'},forgeryMarks:{point:true},attemptLog:[{attempt:1,choices:{}}]};
+ const before=JSON.stringify(state),review=curator.failureReview(state,fixtures);
+ assert.deepEqual(review.map(e=>[e.id,e.index]),[['point',0],['ren',1],['blue',3]]);
+ assert.deepEqual(review[1].fields,[{field:'artist',chosen:fixtures[0].artist,expected:fixtures[1].artist}]);
+ assert.deepEqual(review[0].marking,{chosen:true,expected:false});assert.deepEqual(review[2].marking,{chosen:false,expected:true});
+ assert.equal(JSON.stringify(state),before);assert.deepEqual(curator.failureReview({...state,phase:'playing'},fixtures),[]);assert.deepEqual(curator.failureReview({...state,phase:'unlocked'},fixtures),[]);
+});
 test('the 81 sourced profiles cover every technique and style of the full archive',()=>{
   assert.equal(Object.keys(knowledge.techniques).length,26);assert.equal(Object.keys(knowledge.styles).length,55);
   for(const group of ['techniques','styles']) for(const [name,profile] of Object.entries(knowledge[group])) {
