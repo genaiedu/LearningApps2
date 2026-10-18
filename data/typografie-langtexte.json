@@ -565,27 +565,24 @@
     },
     {
       "id": "article",
-      "label": "Artikel · Humboldt (Deutsch)",
+      "label": "Essay · Humboldt · vollständig (Deutsch)",
       "lang": "de",
       "title": "Ideen zu einer Physiognomik der Gewächse",
-      "subtitle": "Naturkundlicher Essay · Auszug",
+      "subtitle": "Naturkundlicher Essay · vollständiger Text von 1806",
       "author": "Alexander von Humboldt",
       "date": "1806",
       "source": "https://www.gutenberg.org/ebooks/22761",
-      "credit": "Alexander von Humboldt: Ideen zu einer Physiognomik der Gewächse (1806), Auszug vom Textanfang nach Project Gutenberg Nr. 22761. Gemeinfreier Originaltext, historische Schreibweise beibehalten. Zwischenüberschriften, Inhaltsverzeichnis und Quellenanmerkung sind redaktionelle Ergänzungen für die Satzprobe.",
-      "note": "Die historische Schreibweise bleibt erhalten. Die Zwischenüberschriften gliedern den Auszug für diese Satzprobe und stammen nicht von Humboldt.",
+      "credit": "Alexander von Humboldt: Ideen zu einer Physiognomik der Gewächse. Tübingen: J. G. Cotta, 1806. Vollständiger Originaltext nach Project Gutenberg Nr. 22761; historische Schreibweise beibehalten. Die unbebilderte Schrift hat keine Zwischenüberschriften. Titelblatt und Quellenanmerkung sind redaktionell für diese heutige Satzprobe eingerichtet; keine historischen Seitenumbrüche.",
+      "note": "Vollständiger Text der Schrift von 1806, ohne nachträglich erfundene Zwischenüberschriften oder Illustrationen. Historische Schreibweise und naturkundliche Aussagen gehören zum damaligen Wissensstand; sie werden hier nicht als heutige Fachauskunft wiedergegeben.",
       "sections": [
         {
-          "title": "Die Fülle des Lebens",
+          "title": "",
           "blocks": [
             {
               "kind": "p",
               "runs": [
                 {
-                  "text": "Wenn der Mensch mit regsamem Sinne die Natur durchforscht, oder in seiner Phantasie die weiten Räume der organischen Schöpfung misst, so wirkt unter den vielfachen Eindrücken, die er empfängt, keiner so tief und mächtig als der, welchen die allverbreitete Fülle des Lebens erzeugt. Ueberall, selbst am beeisten Pol, ertönt die Luft von dem Gesange der Vögel, wie von dem Sumsen schwirrender Insecten. Nicht die unteren Schichten allein, in welchen die verdichteten Dünste schweben, auch die oberen ätherischreinen, sind belebt. Denn so oft man den Rücken der Peruanischen Cordilleren, oder, südlich vom Leman-See, den Gipfel des Weissen-Berges bestieg, hat man selbst in diesen Einöden noch Thiere entdeckt. Am Chimborazo, sechsmal höher als der Brocken, sahen wir Schmetterlinge und andere geflügelte Insecten. Wenn auch, von senkrechten Luftströmen getrieben, sie sich dahin, als Fremdlinge, verirrten, wohin unruhige Forschbegier des Menschen sorgsame Schritte leitet; so beweiset ihr Daseyn doch, dass die biegsamere animalische Schöpfung ausdauert, wo die vegetabilische längst ihre Grenze erreicht hat. Höher, "
-                },
-                {
-                  "text": " als der Kegelberg von Teneriffa auf den Aetna gethürmt; höher, als alle Gipfel der Andeskette, schwebte oft über uns der Cundur, der Riese unter den Geiern. Raubsucht und Nachstellung der zartwolligen Vikunnas, welche gemsenartig und heerdenweise in den beschneiten Grasebenen schwärmen, locken den mächtigen Vogel in diese Region."
+                  "text": "Wenn der Mensch mit regsamem Sinne die Natur durchforscht, oder in seiner Phantasie die weiten Räume der organischen Schöpfung misst, so wirkt unter den vielfachen Eindrücken, die er empfängt, keiner so tief und mächtig als der, welchen die allverbreitete Fülle des Lebens erzeugt. Ueberall, selbst am beeisten Pol, ertönt die Luft von dem Gesange der Vögel, wie von dem Sumsen schwirrender Insecten. Nicht die unteren Schichten allein, in welchen die verdichteten Dünste schweben, auch die oberen ätherischreinen, sind belebt. Denn so oft man den Rücken der Peruanischen Cordilleren, oder, südlich vom Leman-See, den Gipfel des Weissen-Berges bestieg, hat man selbst in diesen Einöden noch Thiere entdeckt. Am Chimborazo, sechsmal höher als der Brocken, sahen wir Schmetterlinge und andere geflügelte Insecten. Wenn auch, von senkrechten Luftströmen getrieben, sie sich dahin, als Fremdlinge, verirrten, wohin unruhige Forschbegier des Menschen sorgsame Schritte leitet; so beweiset ihr Daseyn doch, dass die biegsamere animalische Schöpfung ausdauert, wo die vegetabilische längst ihre Grenze erreicht hat. Höher, als der Kegelberg von Teneriffa auf den Aetna gethürmt; höher, als alle Gipfel der Andeskette, schwebte oft über uns der Cundur, der Riese unter den Geiern. Raubsucht und Nachstellung der zartwolligen Vikunnas, welche gemsenartig und heerdenweise in den beschneiten Grasebenen schwärmen, locken den mächtigen Vogel in diese Region."
                 }
               ]
             },
@@ -604,20 +601,12 @@
                   "text": "Neben den entwickelten Geschöpfen trägt der Luftkreis auch zahllose Keime künftiger Bildungen, Insecten-Eier und Eier der Pflanzen, die durch Haar- und Feder-Kronen zur langen Herbstreise geschikt sind. Selbst den belebenden Staub, den, bei getrennten Geschlechtern, die männlichen Blüthen ausstreuen, tragen Winde und geflügelte Insecten über Meer und Land den einsamen weiblichen zu. Wohin der Blick des Naturforschers dringt, ist Leben, oder Keim zum Leben, verbreitet."
                 }
               ]
-            }
-          ]
-        },
-        {
-          "title": "Luft, Wasser und Lebensräume",
-          "blocks": [
+            },
             {
               "kind": "p",
               "runs": [
                 {
-                  "text": "Dient aber auch das bewegliche Luftmeer, in das wir getaucht sind, und über dessen Oberfläche wir "
-                },
-                {
-                  "text": " uns nicht zu erheben vermögen, vielen organischen Geschöpfen zur nothwendigsten Nahrung; so bedürfen dieselben dabei doch noch einer gröberen Speise, welche nur der Boden dieses gasförmigen Oceans darbietet. Dieser Boden ist zwiefacher Art. Den kleineren Theil bildet die trockene Erde, unmittelbar von Luft umflossen; den gröxseren Theil bildet das Wasser, vielleicht einst vor Jahrtausenden durch elektrisches Feuer aus luftförmigen Stoffen zusammengeronnen, und jezt unaufhörlich in der Werkstatt der Wolken, wie in den pulsirenden Gefässen der Thiere und Pflanzen, zersezt."
+                  "text": "Dient aber auch das bewegliche Luftmeer, in das wir getaucht sind, und über dessen Oberfläche wir uns nicht zu erheben vermögen, vielen organischen Geschöpfen zur nothwendigsten Nahrung; so bedürfen dieselben dabei doch noch einer gröberen Speise, welche nur der Boden dieses gasförmigen Oceans darbietet. Dieser Boden ist zwiefacher Art. Den kleineren Theil bildet die trockene Erde, unmittelbar von Luft umflossen; den gröxseren Theil bildet das Wasser, vielleicht einst vor Jahrtausenden durch elektrisches Feuer aus luftförmigen Stoffen zusammengeronnen, und jezt unaufhörlich in der Werkstatt der Wolken, wie in den pulsirenden Gefässen der Thiere und Pflanzen, zersezt."
                 }
               ]
             },
@@ -633,49 +622,32 @@
               "kind": "p",
               "runs": [
                 {
-                  "text": "Aber nicht der Ozean allein, auch die Sumpfwasser verbergen zahllose Gewürme von wunderbarer Gestalt. Unserem Auge fast unerkennbar sind die Cyclidien, die gefranzten Trichoden und das Heer der Naiden, theilbar durch Aeste, wie die Lemna, deren "
-                },
-                {
-                  "text": " Schatten sie suchen. Von mannichfaltigen Luftgemengen umgeben, und mit dem Lichte unbekannt, athmen: die geflekte Askaris, welche die Haut des Regenwurms, die silberglänzende Leukophra, welche das Innere der Ufer·Naide, und der Echynorynchus, welcher die weitzellige Lunge der tropischen Klapperschlange bewohnt. So sind auch die verborgensten Bäume der Schöpfung mit Leben erfüllt. Wir wollen hier bescheiden bei den Geschlechtern der Pflanzen verweilen; denn auf ihrem Daseyn beruht das Daseyn der thierischen Schöpfung. Unablässig sind sie bemüht, den rohen Stoff der Erde organisch an einander zu reihen, und vorbereitend, durch lebendige Kraft, zu mischen, was nach tausend Umwandlungen zur regsamen Nervenfaser veredelt wird. Derselbe Blick, den wir auf die Verbreitung der Pflanzendecke heften, enthüllt uns die Fülle des thierischen Lebens, das von jener genährt und erhalten wird."
+                  "text": "Aber nicht der Ozean allein, auch die Sumpfwasser verbergen zahllose Gewürme von wunderbarer Gestalt. Unserem Auge fast unerkennbar sind die Cyclidien, die gefranzten Trichoden und das Heer der Naiden, theilbar durch Aeste, wie die Lemna, deren Schatten sie suchen. Von mannichfaltigen Luftgemengen umgeben, und mit dem Lichte unbekannt, athmen: die geflekte Askaris, welche die Haut des Regenwurms, die silberglänzende Leukophra, welche das Innere der Ufer·Naide, und der Echynorynchus, welcher die weitzellige Lunge der tropischen Klapperschlange bewohnt. So sind auch die verborgensten Bäume der Schöpfung mit Leben erfüllt. Wir wollen hier bescheiden bei den Geschlechtern der Pflanzen verweilen; denn auf ihrem Daseyn beruht das Daseyn der thierischen Schöpfung. Unablässig sind sie bemüht, den rohen Stoff der Erde organisch an einander zu reihen, und vorbereitend, durch lebendige Kraft, zu mischen, was nach tausend Umwandlungen zur regsamen Nervenfaser veredelt wird. Derselbe Blick, den wir auf die Verbreitung der Pflanzendecke heften, enthüllt uns die Fülle des thierischen Lebens, das von jener genährt und erhalten wird."
                 }
               ]
-            }
-          ]
-        },
-        {
-          "title": "Die Pflanzendecke der Erde",
-          "blocks": [
+            },
             {
               "kind": "p",
               "runs": [
                 {
-                  "text": "Ungleich ist der Teppich gewebt, den die blüthenreiche Flora über den nakten Erdkörper ausbreitet; dichter, wo die Sonne höher an dem nie bewölkten Himmel emporsteigt; lockerer gegen die trägen Pole hin, wo der wiederkehrende Frost bald die entwickelte Knospe tödtet, bald die reifende Frucht erhascht. Doch überall darf der Mensch sich der nährenden Pflanzen erfreuen. Trennt im Meeresboden ein Vulkan die kochende Fluth, und schiebt plözlich (wie einst zwischen den griechischen Inseln) einen schlackigen Fels empor; oder erheben (um an eine friedlichere Naturerscheinung zu erinnern) die einträchtigen "
+                  "text": "Ungleich ist der Teppich gewebt, den die blüthenreiche Flora über den nakten Erdkörper ausbreitet; dichter, wo die Sonne höher an dem nie bewölkten Himmel emporsteigt; lockerer gegen die trägen Pole hin, wo der wiederkehrende Frost bald die entwickelte Knospe tödtet, bald die reifende Frucht erhascht. Doch überall darf der Mensch sich der nährenden Pflanzen erfreuen. Trennt im Meeresboden ein Vulkan die kochende Fluth, und schiebt plözlich (wie einst zwischen den griechischen Inseln) einen schlackigen Fels empor; oder erheben (um an eine friedlichere Naturerscheinung zu erinnern) die einträchtigen Nereiden ihre zelligen Wohnungen, bis sie nach Jahrtausenden über den Wasserspiegel hervorragend, absterben, und ein flaches Corallen-Eiland bilden: so sind die organischen Kräfte sogleich bereit, den todten Fels zu beleben. Was den Saamen so plözlich herbeiführt: ob wandernde Vögel, oder Winde, oder die Wogen des Meeres; ist bei der grossen Entfernung der Küsten schwer zu entscheiden. Aber auf dem nakten Steine, sobald ihn zuerst die Luft berührt, bildet sich in den nordischen Ländern ein Gewebe sammtartiger Fasern, die dem unbewafneten Auge als farbige Flecken erscheinen. Einige sind durch hervorragende Linien bald einfach bald doppelt begränzt; andere sind in Furchen durchschnitten und in Fächer getheilt. Mit zunehmendem Alter verdunkelt sich ihre lichte Farbe. Das fernleuchtende Gelb wird braun, und das bläuliche Grau der Leprarien verwandelt sich nach und nach in ein staubartiges Schwarz. Die Gränzen der alternden Decke fliessen in einander, und auf dem dunkeln Grunde bilden sich neue zirkelrunde Flechten von blendender Weisse. So lagert sich schichtenweise ein organisches Gewebe auf das andere; und wie das sich ansiedelnde Menschengeschlecht bestimmte Stufen der sittlichen Kultur durchlaufen muss, so ist die allmählige Verbreitung der Pflanzen an bestimmte physische Geseze gebunden. Wo jezt hohe Waldbäume ihre Gipfel luftig erheben, da überzogen einst zarte Flechten das erdenlose Gestein. Laubmoose, Gräser, krautartige Gewächse und Sträucher, füllen die Kluft der langen aber ungemessenen Zwischenzeit aus. Was im Norden Flechten und Moose, das bewirken in den Tropen "
                 },
                 {
-                  "text": " Nereiden ihre zelligen Wohnungen, bis sie nach Jahrtausenden über den Wasserspiegel hervorragend, absterben, und ein flaches Corallen-Eiland bilden: so sind die organischen Kräfte sogleich bereit, den todten Fels zu beleben. Was den Saamen so plözlich herbeiführt: ob wandernde Vögel, oder Winde, oder die Wogen des Meeres; ist bei der grossen Entfernung der Küsten schwer zu entscheiden. Aber auf dem nakten Steine, sobald ihn zuerst die Luft berührt, bildet sich in den nordischen Ländern ein Gewebe sammtartiger Fasern, die dem unbewafneten Auge als farbige Flecken erscheinen. Einige sind durch hervorragende Linien bald einfach bald doppelt begränzt; andere sind in Furchen durchschnitten und in Fächer getheilt. Mit zunehmendem Alter verdunkelt sich ihre lichte Farbe. Das fernleuchtende Gelb wird braun, und das bläuliche Grau der Leprarien verwandelt sich nach und nach in ein staubartiges Schwarz. Die Gränzen der alternden Decke fliessen in einander, und auf dem dunkeln Grunde bilden sich neue zirkelrunde Flechten von blendender Weisse. So lagert sich schichtenweise ein organisches Gewebe auf das andere; und wie das sich ansiedelnde Menschengeschlecht bestimmte Stufen der sittlichen Kultur durchlaufen muss, so ist die allmählige Verbreitung der Pflanzen an bestimmte physische Geseze gebunden. Wo jezt hohe Waldbäume ihre Gipfel luftig erheben, da überzogen einst zarte Flechten das erdenlose Gestein. Laubmoose, Gräser, krautartige Gewächse und Sträucher, füllen die Kluft der langen aber ungemessenen "
-                },
-                {
-                  "text": " Zwischenzeit aus. Was im Norden Flechten und Moose, das bewirken in den Tropen "
-                },
-                {
-                  "text": "Portulacca"
+                  "text": "Portulacca",
+                  "em": true
                 },
                 {
                   "text": ", "
                 },
                 {
-                  "text": "Gomphrenen"
+                  "text": "Gomphrenen",
+                  "em": true
                 },
                 {
                   "text": " und andere niedrige Uferpflanzen. Die Geschichte der Pflanzendecke, und ihre allmählige Ausbreitung über die öde Erdrinde, hat ihre Epochen, wie die Geschichte des spätern Menschengeschlechts."
                 }
               ]
-            }
-          ]
-        },
-        {
-          "title": "Klima und Gestalt",
-          "blocks": [
+            },
             {
               "kind": "p",
               "runs": [
@@ -688,62 +660,517 @@
               "kind": "p",
               "runs": [
                 {
-                  "text": "Diese Zunahme kann leicht von denen bezweifelt werden, welche nie unsern Welttheil verlassen, oder das Studium der allgemeinen Erdkunde vernachlässigt haben. Wenn man aus unsern dicklaubigen Eichenwäldern über die Alpen oder Pyrenäen-Kette nach Welschland oder Spanien hinabsteigt; wenn man gar "
-                },
-                {
-                  "text": " seinen Blick auf die afrikanischen Küstenländer des Mittelmeeres richtet: so wird man leicht zu dem Fehlschlusse verleitet, als sei Baumlosigkeit der Charakter heisser Klimate. Aber man vergisst, dass das südliche Europa eine andere Gestalt hatte, als pelasgische oder carthagischc Pflanzvölker sich zuerst darinn festsezten; man vergisst, dass frühere Bildung des Menschengeschlechts die Waldungen verdrängt, und dass der umschaffende Geist der Nazionen der Erde allmählig den Schmuck raubt, der uns in dem Norden erfreut, und der (mehr, als alle Geschichte) die Jugend unserer sittlichen Kultur anzeigt. Die grosse Katastrophe, durch welche das Mittelmeer sich gebildet, indem es, ein anschwellendes Binnenwasser, die Schleusen der Dardanellen und die Säulen des Herkules durchbrochen, diese Katastrophe scheint die angränzenden Länder eines grossen Theils ihrer Dammerde beraubt zu haben. Was bei den griechischen Schriftstellern von den Samothracischen Sagen erwähnt wird, deutet die Neuheit dieser zerstörenden Naturveränderung an. Auch ist in allen Ländern, welche das Mittelmeer begränzt, und welche die Kalkformation des Jura charakterisirt, ein grosser Theil der Erdoberfläche nackter Fels, Das Mahlerische italienischer Gegenden beruht vorzüglich auf diesem lieblichen Kontraste zwischen dem unbelebten öden Gestein und der üppigen Vegetation, welche inselförmig darinn aufsprosst. Wo dieses Gestein, minder zerklüftet, die Wasser auf der Oberfläche zusammen hält, wo diese mit Erde bedeckt ist, (wie an den reizenden "
-                },
-                {
-                  "text": " Ufern des Albaner Sees) da hat selbst Italien seine Eichenwälder, so schattig und grün, als der Bewohner des Norden sie wünscht."
+                  "text": "Diese Zunahme kann leicht von denen bezweifelt werden, welche nie unsern Welttheil verlassen, oder das Studium der allgemeinen Erdkunde vernachlässigt haben. Wenn man aus unsern dicklaubigen Eichenwäldern über die Alpen oder Pyrenäen-Kette nach Welschland oder Spanien hinabsteigt; wenn man gar seinen Blick auf die afrikanischen Küstenländer des Mittelmeeres richtet: so wird man leicht zu dem Fehlschlusse verleitet, als sei Baumlosigkeit der Charakter heisser Klimate. Aber man vergisst, dass das südliche Europa eine andere Gestalt hatte, als pelasgische oder carthagischc Pflanzvölker sich zuerst darinn festsezten; man vergisst, dass frühere Bildung des Menschengeschlechts die Waldungen verdrängt, und dass der umschaffende Geist der Nazionen der Erde allmählig den Schmuck raubt, der uns in dem Norden erfreut, und der (mehr, als alle Geschichte) die Jugend unserer sittlichen Kultur anzeigt. Die grosse Katastrophe, durch welche das Mittelmeer sich gebildet, indem es, ein anschwellendes Binnenwasser, die Schleusen der Dardanellen und die Säulen des Herkules durchbrochen, diese Katastrophe scheint die angränzenden Länder eines grossen Theils ihrer Dammerde beraubt zu haben. Was bei den griechischen Schriftstellern von den Samothracischen Sagen erwähnt wird, deutet die Neuheit dieser zerstörenden Naturveränderung an. Auch ist in allen Ländern, welche das Mittelmeer begränzt, und welche die Kalkformation des Jura charakterisirt, ein grosser Theil der Erdoberfläche nackter Fels, Das Mahlerische italienischer Gegenden beruht vorzüglich auf diesem lieblichen Kontraste zwischen dem unbelebten öden Gestein und der üppigen Vegetation, welche inselförmig darinn aufsprosst. Wo dieses Gestein, minder zerklüftet, die Wasser auf der Oberfläche zusammen hält, wo diese mit Erde bedeckt ist, (wie an den reizenden Ufern des Albaner Sees) da hat selbst Italien seine Eichenwälder, so schattig und grün, als der Bewohner des Norden sie wünscht."
                 }
               ]
-            }
-          ]
-        },
-        {
-          "title": "Natur und Wahrnehmung",
-          "blocks": [
+            },
             {
               "kind": "p",
               "runs": [
                 {
-                  "text": "Auch die Wüsten jenseits des Atlas, und die unermesslichen Ebenen oder Steppen von Süd-Amerika, sind als blosse Lokalerscheinungen zu betrachten. Diese findet man, in der Regenzeit wenigstens, mit Gras und niedrigen, fast krautartigen, Mimosen bedeckt; jene sind Sand-Meere im Innern des alten Continents, grosse pflanzenleere Räume, mit ewiggrünen waldigen Ufern umgeben. Nur einzeln stehende Fächerpalmen erinnern den Wanderer, dass diese Einöden Theile einer belebten Schöpfung sind. Im trügerischen Lichtspiele, das die strahlende Wärme erregt, sieht man bald den Fuss dieser Palmen frei in der Luft schweben, bald ihr umgekehrtes Bild in den wogenartig-zitternden Luftschichten wiederholt. Auch westlich von der peruanischen Andeskette, an den Küsten des stillen Meeres, haben wir Wochen gebraucht, um solche wasserleere Wüsten zu durchstreichen. Der Ursprung derselben, diese Pflanzenlosigkeit grosser Erdstrecken, in Gegenden, wo umher die kraftvolleste Vegetation herrscht, ist ein wenig beachtetes geognostisches Phänomen, welches sich unstreitig in alten Naturrevoluzionen (in Ueberschwemmungen, oder vulkanischen Umwandelungen der Erdrinde) gründet. Hat eine Gegend einmal ihre Pflanzendecke verloren, ist der Sand beweglich und quellenleer, hindert die heisse, senkrecht aufsteigende Luft den Niederschlag der Wolken: so vergehen Jahrtausende, ehe von den grünen "
+                  "text": "Auch die Wüsten jenseits des Atlas, und die unermesslichen Ebenen oder Steppen von Süd-Amerika, sind als blosse Lokalerscheinungen zu betrachten. Diese findet man, in der Regenzeit wenigstens, mit Gras und niedrigen, fast krautartigen, Mimosen bedeckt; jene sind Sand-Meere im Innern des alten Continents, grosse pflanzenleere Räume, mit ewiggrünen waldigen Ufern umgeben. Nur einzeln stehende Fächerpalmen erinnern den Wanderer, dass diese Einöden Theile einer belebten Schöpfung sind. Im trügerischen Lichtspiele, das die strahlende Wärme erregt, sieht man bald den Fuss dieser Palmen frei in der Luft schweben, bald ihr umgekehrtes Bild in den wogenartig-zitternden Luftschichten wiederholt. Auch westlich von der peruanischen Andeskette, an den Küsten des stillen Meeres, haben wir Wochen gebraucht, um solche wasserleere Wüsten zu durchstreichen. Der Ursprung derselben, diese Pflanzenlosigkeit grosser Erdstrecken, in Gegenden, wo umher die kraftvolleste Vegetation herrscht, ist ein wenig beachtetes geognostisches Phänomen, welches sich unstreitig in alten Naturrevoluzionen (in Ueberschwemmungen, oder vulkanischen Umwandelungen der Erdrinde) gründet. Hat eine Gegend einmal ihre Pflanzendecke verloren, ist der Sand beweglich und quellenleer, hindert die heisse, senkrecht aufsteigende Luft den Niederschlag der Wolken: so vergehen Jahrtausende, ehe von den grünen Ufern aus organisches Leben in das Innere der Einöde dringt."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Wer demnach die Natur mit Einem Blicke zu umfassen, und von Lokalphänomenen zu abstrahiren weiss, der sieht, wie mit Zunahme der belebenden Wärme, von den Polen zum Aequator hin, sich auch allmählig organische Kraft und Lebensfülle vermehren. Aber bei dieser Vermehrung sind doch jedem Erdstriche besondere Schönheiten vorbehalten: den Tropen Mannichfaltigkeit und Grösse der Pflanzenformen; dem Norden der Anblick der Wiesen, und das periodische Wiedererwachen der Natur beim ersten Wehen der Frühlingslüfte. Jede Zone hat ausser den ihr eigenen Vorzügen auch ihren eigenthümlichen Character. So wie man an einzelnen organischen Wesen eine bestimmte Physiognomie erkennt; wie beschreibende Botanik und Zoologie, im engern Sinne des Worts, fast nichts als Zergliederung der Thier- und Pflanzenformen ist: so giebt es auch eine gewisse Naturphysiognomie, welche jedem Himmelsstriche ausschliesslich zukommt."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Was der Mahler mit den Ausdrücken schweizer Natur, italienischer Himmel, bezeichnet, gründet sich auf das dunkle Gefühl dieses lokalen Naturcharakters. Himmelsbläue, Beleuchtung, Duft, der auf der Ferne ruht, Gestalt der Thiere, Saftfülle der Kräuter, Glanz des Laubes, Umriss der Berge — alle diese Elemente bestimmen den Totaleindruck einer Gegend. Zwar bilden unter allen Zonen dieselben Gebirgsarten Felsgruppen, von einerlei Physiognomie. Die Grünsteinklippen in Süd-Amerika und Mexiko gleichen denen des deutschen Fichtelgebirges, wie unter den Thieren die Form des Alco oder der ursprünglichen Hunderace des neuen Continents, mit der der europäischen Race genau übereinstimmt. Denn die unorganische Rinde der Erde ist gleichsam unabhängig von klimatischen Einflüssen; sey es, dass der Unterschied der Klimate neuer als das Gestein ist; sei es, dass die erhärtende, Wärme-entbindende Erdmasse sich selbst ihre Temperatur gab, statt sie von aussen zu empfangen. Alle Formationen sind daher allen Weltgegenden eigen, und in allen gleichgestaltet. Ueberall bildet der Basalt Zwillings-Berge und abgestumpfte Kegel; überall erscheint der Trapporphyr in grotesken Felsmassen, der Granit in sanftrundlichen Kuppen. Auch ähnliche Pflanzenformen, Tannen und Eichen, bekränzen die Berggehänge in Schweden, wie die des südlichsten Theils von Mexiko. Und bei aller dieser Uebereinstimmung in den Gestalten, bei dieser Gleichheit der einzelnen Umrisse, nimmt die Gruppirung derselben zu einem Ganzen doch den verschiedensten Charakter an."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "So wie die Kenntniss der Fossilien sich von der Gebirgslehre unterscheidet; so ist von der individuellen Naturbeschreibung die allgemeine, oder die Physiognomik der Natur, verschieden. Georg Forster in seinen Reisen und in seinen kleinen Schriften; Göthe in den Naturschilderungen, welche so manche seiner unsterblichen Werke enthalten; Herder, Büffon, Bernardin de St. Pierre, und selbst Chateaubriand, haben mit unnachahmlicher Wahrheit den Charakter einzelner Himmelsstriche geschildert. Solche Schilderungen sind aber nicht blos dazu geeignet, dem Gemüthe einen Genuss der edelsten Art zu verschaffen; nein, die Kenntniss von dem Naturcharakter verschiedener Weltgegenden ist mit der Geschichte des Menschengeschlechtes, und mit der seiner Kultur, aufs innigste verknüpft, Denn wenn auch der Anfang dieser Kultur nicht durch physische Einflüsse allein bestimmt wird; so hängt doch die Richtung derselben, so hängen Volkscharacter, düstere oder heitere Stimmung der Menschheit, grossentheils von klimatischen Verhältnissen ab. Wie mächtig hat der griechische Himmel auf Seine Bewohner gewirkt! Wie sind nicht in dem schönen und glücklichen Erdstriche zwischen dem Oxus, dem Tigris, und dem ägeischen Meere, die sich ansiedelnden Völker zuerst zu sittlicher Anmuth und zarteren Gefühlen erwacht? Und haben nicht, als Europa in neue Barbarei versank, und religiöse Begeisterung plözlich den heiligen Orient öfnete, unsere Vorältern aus jenen milden Thälern von neuem mildere Sitten heimgebracht! Die Dichterwerke der Griechen und die rauheren, Gesänge der nordischen Urvölker verdankten grösstentheils ihren eigenthümlichen Charakter der Gestalt der Pflanzen und Thiere, den Gebirgsthälern, die den Dichter umgaben, und der Luft, die ihn umwehte. Wer fühlt sich nicht, um selbst nur an nahe Gegenstände zu erinnern, anders gestimmt, in dem dunkeln Schatten der Buchen, oder auf Hügeln, die mit einzeln stehenden Tannen bekränzt sind; oder auf der Grasflur, wo der Wind in dem zitternden Laube der Birken säuselt! Melancholische, ernsterhebende, oder fröhliche Bilder rufen diese vaterländische Pflanzengestalten in uns hervor. Der Einfluss der physischen Welt auf die moralische, dies geheimnissvolle Ineinander-Wirken des Sinnlichen und Aussersinnlichen, giebt dem Naturstudium, wenn man es zu höheren Gesichtspunkten erhebt, einen eigenen, noch zu wenig gekannten Reiz."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Wenn aber auch der Charakter verschiedener Weltgegenden von allen äusseren Erscheinungen zugleich abhängt; wenn Umriss der Gebirge, Physiognomie der Pflanzen und Thiere, wenn Himmelsbläue, Wolkengestalt und Durchsichtigkeit des Luftkreises, den Totaleindruk bewirken; so ist doch nicht zu läugnen, dass das Hauptbestimmende dieses Eindrucks die Pflanzendecke ist. Dem thierischen Organismus fehlt es an Masse, und die Beweglichkeit der Individuen entzieht sie oft unsern Blicken. Die Pflanzenschöpfung dagegen wirkt durch stetige Grösse auf unsere Einbildungskraft. Ihre Masse bezeichnete ihr Alter, und in den Gewächsen allein ist Alter und Ausdruck stets sich erneuernder Kraft mit einander gepaart. Der riesenförmige Drachenbaum, den ich auf den kanarischen Inseln sah, und der 16 Schuh im Durchmesser hat, trägt noch immerdar (gleichsam in ewiger Jugend) Blüthe und Frucht. Als französische Abentheurer, die Bethencourts, im vierzehnten Jahrhundert die glücklichen Inseln eroberten, war der Drachenbaum von Oratava (den Eingeborenen heilig wie der Oelbaum in der Burg zu Athen, oder die nordische Esche, unter der Odin und Asi zusammenkamen) von eben der kolossalen Stärke als jezt. In den Tropen ist ein Wald von Hymeneen und Caesalpinien vielleicht das Denkmal von einem Jahrtausend."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Umfasst man die verschiedenen Pflanzenarten, welche bereits auf dem Erdboden entdeckt sind, und von denen Willdenow's grosses Werk allein über 20,000 genau zergliedert, mit Einem Blick; so erkennt man in dieser wundervollen Menge wenige Hauptformen, auf welche sich alle andere zurückführen lassen. Zur Bestimmung dieser Formen, von deren individueller Schönheit, Vertheilung und Gruppirung die Physiognomie der Vegetation eines Landes abhängt, muss man nicht (wie in den botanischen Systemen aus andern Beweggründen geschieht) auf die kleinsten Theile der Blüthen und Früchte, sondern nur auf das Rücksicht nehmen, was durch Masse den Totaleindruck einer Gegend individualisirt. Unter den Hauptformen der Vegetation giebt es allerdings ganze Familien der sogenannten natürlichen Systeme. Bananengewächse und Palmen werden auch in diesen einzeln aufgeführt. Aber der botanische Systematiker trennt eine Menge von Pflanzengruppen, welche der Physiognomiker sich gezwungen sieht, mit einander zu verbinden. Wo die Gewächse sich als Massen darstellen, fliessen Umrisse und Vertheilung der Blätter, Gestalt der Stämme und Zweige, in einander. Der Mahler (und gerade dem feinen Naturgefühle des Künstlers kommt hier der Ausspruch zu!) unterscheidet in dem Mittel- und Hintergrunde einer Landschaft Tannen- oder Palmengebüsehe von Buchen, nicht aber diese von andern Laubholzwäldern!"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Sechszehn Pflanzenformen bestimmen hauptsächlich die Physiognomie der Natur. Ich zähle nur diejenigen auf, welche ich bei meinen Reisen durch beide Welttheile, und bei einer vieljährigen Aufmerksamkeit auf die Vegetation der verschiedenen Himmelsstriche zwischen dem 55sten Grade nördlicher und dem 12ten Grade südlicher Breite, beobachtet habe. Die Zahl dieser Formen wird gewiss ansehnlich vermehrt werden, wenn man einst in das Innere der Continente tiefer eindringt, und neue Pflanzengattungen entdeckt. Im südöstlichen Asien, im Inneren von Afrika und Neuholland, in Süd-Amerika vom Amazonenstrome bis zum Gebirge Chiquitos hin, ist uns die Vegetation noch völlig unbekannt. Wie, wenn man gar ein Land entdeckte, in welchem holzige Schwämme, z. B. Calvarien oder Moose, hohe Bäume bildeten? Nekera dendroïdes, ein deutsches Laubmoos, ist in der That baumartig, und die tropischen Farrenkräuter, oft höher als unsere Linden und Erlen, sind für den Europäer noch jezt ein eben so überraschender Anblick, als dem ersten Entdecker ein Wald hoher Laubmoose seyn würde! Grösse und Entwickelung der Organe hängt von der Begünstigung klimatischer Verhältnisse ab. Die kleine, aber schlanke Form unserer Eidechse dehnt sich im Süden zu dem kolossalen und gepanzerten Körper furchtbarer Crocodyle aus. In den ungeheuern Katzen von Afrika und Amerika, im Tiger, im Löwen und Jaguar, ist die Gestalt eines unserer kleinsten Hausthiere nach einem grösseren Maasstabe wiederholt. Dringen wir gar in das Innere der Erde, durchwühlen wir die Grabstätte der Pflanzen und Thiere, so verkündigen uns die Versteinerungen nicht bloss eine Vertheilung der Formen, die mit den jetzigen Klimaten in Widerspruch steht; nein, sie zeigen uns auch kolossale Gestalten, welche mit den kleinlichen, die uns gegenwärtig umgeben, nicht minder contrastiren, als die einfache Heldennatur der Griechen gegen die Charaktergrösse neuerer Zeit. Hat die Temperatur des Erdkörpers beträchtliche, vielleicht periodisch wiederkehrende Veränderungen erlitten; ist das Verhältniss zwischen Meer und Land, ja selbst die Höhe des Luftozeans und sein Druck nicht immer derselbe gewesen: so muss die Physiognomie der Natur, so müssen Grösse und Gestalt des Organismus, ebenfalls schon manchem Wechsel unterworfen gewesen sein. Unfähig, diese Physiognomie des alternden Planeten nach ihren gegenwärtigen Zügen vollständig zu schildern, wage ich nur diejenigen Charaktere auszuheben, welche jeder Pflanzengruppe vorzüglich zukommen. Bei allem Reichthum und aller Biegsamkeit unserer vaterländischen Sprache, ist es ein schwieriges Unternehmen, mit Worten zu bezeichnen, was eigentlich nur der nachahmenden Kunst des Malers darzustellen geziemt. Auch wünschte ich, das Ermüdende des Eindrucks zu vermeiden, das jede Aufzählung einzelner Formen unausbleiblich erregen muss."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Wir beginnen mit den Palmen, der höchsten und edelsten aller Pflanzengestalten. Denn ihr haben stets die Völker (und die früheste Menschenbildung war in der asiatischen Palmenwelt, oder in dem Erdstriche, der zunächst an die Palmenwelt gränzt) den Preis der Schönheit zuerkannt. Hohe, schlanke, geringelte, bisweilen stachliche Schäfte mit anstrebendem, glänzendem, bald gefächertem, bald gefiedertem Laube. Die Blatter sind oft grasartig gekräuselt. Der glatte Stamm erreicht bis 180 Fuss Höhe. Die Palmenform nimmt an Pracht und Grösse ab, vom Aequator gegen die gemässigte Zone hin. Europa hat unter seinen einheimischen Gewächsen nur einen Repräsentanten dieser Form, die zwergartige Küstenpalme, den Chamaerops, der in Spanien und Italien sich nördlich bis zum 44sten Breitengrade erstreckt. Das eigentliche Palmenklima der Erde hat 21°. mittlerer Wärme. Aber die aus Afrika zu uns gebrachte Dattelpalme, welche minder schön als andere Arten dieser Gruppen ist, vegetirt noch im südlichen Europa in Gegenden, deren mittlere Temperatur 14°. also mehr als doppelt grösser, als die von Berlin, ist. Palmenstämme und Elephantengerippe liegen im nördlichen Deutschlande im Inneren der Erde vergraben, und ihre Lage macht es wahrscheinlich, dass sie nicht von den Tropen her gegen Norden geschwemmt wurden; sondern, dass in den grossen Revoluzionen unseres Planeten die Klimate, wie die durch sie bestimmte Physiognomie der Natur, vielfach verändert worden sind."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Zu den Palmen gesellt sich in allen Welttheilen die Pisang oder Bananenform, die Scitamineen der Botaniker, "
                 },
                 {
-                  "text": " Ufern aus organisches Leben in das Innere der Einöde dringt."
+                  "text": "Heliconia",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Amomum",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Strelitzia",
+                  "em": true
+                },
+                {
+                  "text": ". Ein niedriger aber saftreicher, fast krautartiger Stamm, an dessen Spitze sich dünn und lokkergewebte, zartgestreifte, seidenartig-glänzende Blätter erheben. Pisanggebüsche sind der Schmuck feuchter Gegenden. Auf ihrer Frucht beruht die Nahrung aller Bewohner des heissen Erdgürtels. Wie die mehlreichen Cerealien oder Getreidearten des Nordens, so begleiten Pisangstämme den Menschen seit der frühesten Kindheit seiner Kultur. Asiatische Mythen setzen die ursprüngliche Heimath dieser nährenden Tropenpflanze an den Euphrat, oder an den Fuss des Himalus in Indien. Griechische Sagen nennen die Gefilde von Enna als das glückliche Vaterland der Cerealien. Wenn diese, durch die Kultur über die nördliche Erde verbreitet, und dort einförmige weitgedehnte Grasfluren bildend, wenig den Anblick der Natur verschönern, so vervielfacht dagegen der sich ansiedelnde Tropenbewohner durch Pisangpflanzungen eine der herrlichsten und edelsten Gestalten."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Malvenform, "
+                },
+                {
+                  "text": "Sterculia",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Hibiscus",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Lavatera",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Ochroma",
+                  "em": true
+                },
+                {
+                  "text": ". Kurze aber kolossalisch dikke Stämme mit zartwolligen, grossen, herzförmigen, oft eingeschnittenen Blättern, und prachtvollen oft purpurrothen Blüthen. Zu dieser Pflanzengruppe gehört der Affenbrodbaum, "
+                },
+                {
+                  "text": "Adansonia digitata",
+                  "em": true
+                },
+                {
+                  "text": ", der bei 32 Fuss Höhe 30 Fuss Durchmesser hat, und der wahrscheinlich das grösste und älteste organische Denkmahl auf unserm Planeten ist. in Italien fängt die Malvenform bereits an, der Vegetation einen eigenthümlichen südlichen Charakter zu geben."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Dagegen entbehret unsere gemässigte Zone im alten Continent leider ganz die zartgefiederten Blätter, die Form der Mimosen, "
+                },
+                {
+                  "text": "Gleditsia",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Porleria",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Tamarindus",
+                  "em": true
+                },
+                {
+                  "text": ". Den vereinigten Staaten von Nord-Amerika, in denen unter gleicher Breite die Vegetation mannichfaltiger und üppiger als in Europa ist, fehlt diese schöne Form nicht. Bei den Mimosen ist eine schirmartige Verbreitung der Zweige, fast wie bei den italienischen Pinien, gewöhnlich. Die tiefe Himmelsbläue des Tropenklimas durch die zartgefiederten Blätter schimmernd, ist von überaus malerischem Effekte."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Eine meist afrikanische Pflanzengruppe sind die Heidekräuter; dahin gehören auch die "
+                },
+                {
+                  "text": "Andromeda",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Passerinen",
+                  "em": true
+                },
+                {
+                  "text": " und "
+                },
+                {
+                  "text": "Gnidien",
+                  "em": true
+                },
+                {
+                  "text": ", eine Gruppe, die mit der der Nadelhölzer einige Aehnlichkeit hat, und eben deshalb mit dieser durch die Fülle glokkenförmiger Blüthen, desto reizender contrastirt. Die baumartigen Heidekräuter, wie einige andere afrikanische Gewächse, erreichen das nördliche Ufer des Mittelmeers. Sie schmükken Welschland und die Cistus-Gebüsche des südlichen Spaniens. Am üppigsten wachsend habe ich sie auf den afrikanischen Inseln, am Abhange des Pics von Teyde gesehen. Bei uns in den baltischen Ländern, und noch nördlicher hin, ist diese Pflanzenform gefürchtet, Dürre und Unfruchtbarkeit verkündigend. Unsere Heidekräuter, "
+                },
+                {
+                  "text": "Erica vulgaris",
+                  "em": true
+                },
+                {
+                  "text": " und "
+                },
+                {
+                  "text": "tetralix",
+                  "em": true
+                },
+                {
+                  "text": " sind gesellschaftlich lebende Gewächse, gegen deren fortschreitenden Zug die ackerbauenden Völker seit Jahrhunderten mit wenigem Glükke ankämpfen. Sonderbar, dass der Hauptrepräsentant dieser Form blos einer Seite unsers Planeten eigen ist. Von den 137 jezt bekannten Arten von "
+                },
+                {
+                  "text": "Erica",
+                  "em": true
+                },
+                {
+                  "text": " findet sich auch nicht eine einzige im neuen Continent von Pensilvanien und Labrador bis gegen Nootka und Alaschka hin."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Dagegen ist bloss dem neuen Continent eigenthümlich die Cactusform, bald kugelförmig, bald gegliedert, bald in hohen, vielekkigen Säulen, wie Orgelpfeifen, aufrechtstehend. Diese Gruppe bildet den höchsten Contrast mit der Gestalt der Liliengewächse und der Bananen. Sie gehört zu den Pflanzen, welche Bernardin de St. Pierre sehr glücklich die vegetabilischen Quellen der Wüste nennt. In den wasserleeren Ebenen von Südamerika suchen die von Durst geängsteten Thiere den "
+                },
+                {
+                  "text": "Melonen-Cactus",
+                  "em": true
+                },
+                {
+                  "text": ", eine kugelförmige, halb im dürren Sande verborgene Pflanze, deren saftreiches Innere unter furchtbaren Stacheln versteckt ist. Die säulenförmigen Cactus-Stämme erreichen bis 30 Fuss Höhe und candelaberartig getheilt, haben sie eine auffallende Aehnlichkeit der Physiognomie mit einigen afrikanischen Euphorbien."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Wie diese grüne Wasen in den pflanzenleeren Wüsten bilden, so beleben die Orchideen den vom Licht verkohlten Stamm der Tropenbäume und die ödesten Felsenritzen. Die Vanillenform zeichnet sich durch hellgrüne saftvolle Blätter und durch vielfarbige Blüthen von wunderbarem Baue aus. Diese Blüthen gleichen bald den geflügelten Insekten, bald den zarten Vögeln, welche der Duft der Honiggefässe anlokket. Das Leben eines Malers wäre nicht hinlänglich, um alle die prachtvollen Orchideen abzubilden, welche die tiefausgefurchten Gebirgsthäler der peruanischen Andeskette zieren."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Blattlos, wie fast alle Cactusarten, ist die Form der Casuarinen, einer Pflanzengestalt, bloss der Südsee und Ostindien eigen. Bäume mit schachtelhalmähnlichen Zweigen. Doch finden sich auch in andern Weltgegenden Spuren dieses mehr sonderbaren als schönen Typus. Plumier's "
+                },
+                {
+                  "text": "Equisetum altissimum",
+                  "em": true
+                },
+                {
+                  "text": ", die Ephedra aus Nord-Afrika, die peruanischen Colletien und das sibirische Calligonum Pallasia, sind der Casuarinenform nahe verwandt."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "So wie in den Pisanggewächsen die höchste Ausdehnung, so ist in den Casuarinen und in den Nadelhölzern die höchste Zusammenziehung der Blattgefässe. Tannen, Thuja und Cypressen bilden eine nordische Form, die in den Tropen selten ist. Ihr ewig-frisches Grün erheitert die öde Winter-Landschaft. Es verkündigt gleichsam den Polarvölkern, dass, wenn Schnee und Eis den Boden bedekken, das innere Leben der Pflanzen, wie das Prometheische Feuer, nie auf unserm Planeten erlischt."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Parasitisch wie bei uns Moose und Flechten, überziehen in der Tropenwelt ausser den Orchideen auch die Pothosgewächse den alternden Stamm der Waldbäume. Saftige, krautartige Stengel mit grossen, bald pfeilförmigen, bald gefingerten, bald länglichen aber stets dik-adrigen Blättern. Blumen in Scheiden. "
+                },
+                {
+                  "text": "Pothos",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Dracontium",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Arum",
+                  "em": true
+                },
+                {
+                  "text": ", leztere dem Norden fehlend, aber in Spanien und Italien mit saftvollem Huflattig, hohen Distelstauden und "
+                },
+                {
+                  "text": "Acanthus",
+                  "em": true
+                },
+                {
+                  "text": ", die Ueppigkeit des südlichen Pflanzenwuchses bezeichnend."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Zu dieser Arumform gesellt sich die Form der Lianen, beide in heissen Erdstrichen von Süd-Amerika in vorzüglicher Kraft der Vegetation. "
+                },
+                {
+                  "text": "Paullinia",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Banisteria",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Bignonien",
+                  "em": true
+                },
+                {
+                  "text": ". Unser rankender Hopfen und unsere Weinreben erinnern an diese Pflanzengestalt der Tropenwelt. Am Orinoco haben die blattlosen Zweige der "
+                },
+                {
+                  "text": "Bauhinien",
+                  "em": true
+                },
+                {
+                  "text": " oft 40 Fuss Länge. Sie fallen theils senkrecht aus dem Gipfel hoher Swietenien herab; theils sind sie schräg wie Masttaue ausgespannt, und die Tigerkatze hat eine bewundernswürdige Geschiklichkeit, daran auf- und abzuklettern."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Mit den biegsamen sich rankenden Lianen, mit ihrem frischen und leichten Grün, kontrastirt die selbstständige Form der bläulichen Aloegewächse; Stämme, wenn sie vorhanden sind, fast ungetheilt, enggeringelt und schlangenartig gewunden. An dem Gipfel sind saftreiche, fleischige, lang·zugespitzte Blätter stralenartig zusammengehäuft. Die hochstämmigen Aloegewächse bilden nicht Gebüsche, wie andere gesellschaftlich lebende Pflanzen. Sie stehen einzeln in dürren Ebenen, und geben der Tropengegend dadurch oft einen eigenen melancholischen (man möchte sagen afrikanischen) Charakter."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Wie die Aloeform sich durch ernste Ruhe und Festigkeit, so charakterisirt sich die Grasform, besonders die Physiognomie der baumartigen Gräser, durch den Ausdruck fröhlicher Leichtigkeit und beweglicher Schlankheit. Bambusgebüsche bilden schattige Bogengänge in beiden Indien. Der glatte, oft geneigt-hinschwebende Stamm der Tropen-Gräser übertrift die Höhe unserer Erlen und Eichen. Schon in Italien fängt im "
+                },
+                {
+                  "text": "Arundo Donax",
+                  "em": true
+                },
+                {
+                  "text": " diese Form an, sich vom Boden zu erheben, und durch Höhe und Masse den Naturcharakter des Landes zu bestimmen."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Mit der Gestalt der Gräser ist auch die der Farrenkräuter in den heissen Erdstrichen veredelt. Baumartige, oft 35 Fuss hohe Farrenkräuter haben ein palmenartiges Ansehen; aber ihr Stamm ist minder schlank, kürzer, schuppig-rauher als der der Palmen. Das Laub ist zarter, lokker gewebt, durchscheinend, und an den Rändern sauber ausgezakt. Diese kolossalen Farrenkräuter sind fast ausschliesslich den Tropen eigen, aber in diesen ziehen sie ein gemässigtes Klima dem ganz heissen vor. Da nun die Milderung der Hitze bloss eine Folge der Höhe ist; so darf man Gebirge, die 2 bis 3000 Fuss über dem Meere erhaben sind, oder die Höhe unsers deutschen Brokkens, als den Hauptsiz dieser Form nennen. Hochstämmige Farrenkräuter begleiten in Süd-Amerika den wohlthätigen Baum, der die heilende Fieberrinde darbietet. Beide bezeichnen die glükliche Region der Erde, in der ewige Milde des Frühlings herrscht."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Noch nenne ich die Form der Liliengewächse, ("
+                },
+                {
+                  "text": "Amaryllis",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Pancratium",
+                  "em": true
+                },
+                {
+                  "text": ") mit schilfartigen Blättern und prachtvollen Blüthen, eine Form, deren Hauptvaterland das südliche Afrika ist; ferner die Weidenform, in allen Welttheilen einheimisch; und wo "
+                },
+                {
+                  "text": "Salix",
+                  "em": true
+                },
+                {
+                  "text": " fehlt, in den "
+                },
+                {
+                  "text": "Banksien",
+                  "em": true
+                },
+                {
+                  "text": " und einigen "
+                },
+                {
+                  "text": "Proteen",
+                  "em": true
+                },
+                {
+                  "text": " wiederholt; Myrthengewächse, ("
+                },
+                {
+                  "text": "Metrosideros",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Eucalyptus",
+                  "em": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "Escallonia",
+                  "em": true
+                },
+                {
+                  "text": ") Melastomen- und Lorbeerform."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Es wäre ein Unternehmen, eines grossen Künstlers werth, den Charakter aller dieser Pflanzengruppen nicht in Treibhäusern oder in den Beschreibungen der Botaniker, sondern in der grossen Tropen-Natur selbst, zu studiren. Wie interessant und lehrreich für den Landschaftsmaler ware ein Werk, welches dem Auge die aufgezählten sechszehn Hauptformen, erst einzeln, und dann in ihrem Contraste gegen einander, darstellte. Was ist malerischer, als baumartige Farrenkräuter, die ihre zartgewebten Blätter über die Mexikanischen Lorbeereichen ausbreiten! Was reizender, als Pisanggebüsche von hohen Bambusgräsern umschattet! Dem Künstler ist es gegeben, die Gruppen zu zergliedern, und unter seiner Hand löst sich (wenn ich den Ausdruk wagen darf) das grosse Zauberbild der Natur, gleich den geschriebenen Werken der Menschen, in wenige einfache Züge auf!"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Am glühenden Sonnenstral des tropischen Himmels gedeihen die herrlichsten Gestalten der Pflanzen. Wie im kalten Norden die Baumrinde mit dürren Flechten und Laubmoosen bedekt ist, so beleben dort Cymbidium und duftende Vanille den Stamm der Anacardien und der riesenmässigen Feigenbäume. Das frische Grün der Pothosblätter und der Dracontien kontrastirt mit den vielfarbigen Blüthen der Orchideen. Rankende Bauhinien, Passifloren und gelbblühende Banisterien umschlingen den Stamm der Waldbäume. Zarte Blumen entfalten sich aus den Wurzeln der "
+                },
+                {
+                  "text": "Theobroma",
+                  "em": true
+                },
+                {
+                  "text": ", wie aus der dichten und rauhen Rinde der Crescentien und der "
+                },
+                {
+                  "text": "Gustavia",
+                  "em": true
+                },
+                {
+                  "text": ". Bei dieser Fülle von Blüthen und Blättern, bei diesem üppigen Wuchse und der Verwirrung rankender Gewächse, wird es dem Naturforscher oft schwer zu erkennen, welchem Stamme Blüthen und Blätter zugehören. Ein einziger Baum mit Paullinien, Bignonien und Dendrobium geschmükt, bildet eine Gruppe von Pflanzen, welche, von einander getrennt, einen beträchtlichen Erdraum bedekken würden."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "In den Tropen sind die Gewächse saftstrotzender, von frischerem Grün, mit grösseren und glänzenderen Blättern geziert, als in den nördlichern Erdstrichen. Gesellschaftlich lebende Pflanzen, welche die europäische Vegetation so einförmig machen, fehlen am Aequator beinah gänzlich. Bäume, fast zweimal so hoch als unsere Eichen, prangen dort mit Blüthen, welche gross und prachtvoll wie unsere Lilien sind. An den schattigen Ufern des Madalenenflusses in Süd-Amerika wächst eine rankende Aristolochia, deren Blume, von vier Fuss Umfang, sich die indischen Knaben in ihren Spielen über den Scheitel ziehen."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Die ausserordentliche Höhe, zu welcher sich unter den Wendekreisen nicht blos einzelne Berge, sondern ganze Länder erheben, und die Kälte, welche Folge dieser Höhe ist, gewähren dem Tropen-Bewohner einen seltsamen Anblik. Ausser den Palmen und Pisanggebüschen umgeben ihn auch die Pflanzenformen, welche nur den nordischen Ländern anzugehören scheinen. Cypressen, Tannen und Eichen, Berberissträucher und Erlen (nahe mit den unsrigen verwandt) bedekken die Gebirgsebenen im südlichen Mexiko, wie die Andeskette unter dem Aequator. So hat die Natur dem Menschen in der heissen Zone verliehen, ohne seine Heimath zu verlassen, alle Pflanzengestalten der Erde zu sehen; wie das Himmelsgewölbe von Pol zu Pol ihm keine seiner leuchtenden Welten verbirgt."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Diesen und so manchen andern Naturgenuss entbehren die nordischen Völker. Viele Gestirne und viele Pflanzenformen, von diesen gerade die schönsten, (Palmen und Pisanggewächse, baumartige Gräser und feingefiederte Mimosen) bleiben ihnen ewig unbekannt. Die krankenden Gewächse, welche unsere Treibhäuser einschliessen, gewähren nur ein schwaches Bild von der Majestät der Tropenvegetation. Aber in der Ausbildung unserer Sprache, in der glühenden Phantasie des Dichters, in der darstellenden Kunst der Maler, ist uns eine reiche Quelle des Ersatzes geöfnet. Aus ihr schöpft unsere Einbildungskraft die lebendigen Bilder einer exotischen Natur. Im kalten Norden, in der öden Heide, kann der einsame Mensch sich aneignen, was in den fernsten Erdstrichen erforscht wird, und so in seinem Innern eine Welt sich schaffen, welche das Werk seines Geistes, frei und unvergänglich, wie dieser, ist."
                 }
               ]
             }
           ]
         }
-      ]
+      ],
+      "complete": true
     },
     {
       "id": "book",
-      "label": "Buchseiten · Sherlock Holmes (Englisch)",
+      "label": "Buch · Sherlock Holmes · vollständig illustriert (Englisch)",
       "lang": "en-GB",
       "title": "A Scandal in Bohemia",
-      "subtitle": "From The Adventures of Sherlock Holmes",
+      "subtitle": "The complete story · with ten illustrations by Sidney Paget",
       "author": "Arthur Conan Doyle",
       "date": "1891",
       "source": "https://www.gutenberg.org/ebooks/1661",
-      "credit": "Arthur Conan Doyle: A Scandal in Bohemia (1891), in The Adventures of Sherlock Holmes (1892). Zusammenhängender Auszug vom Anfang der Erzählung; englischer Originaltext nach Project Gutenberg Nr. 1661. Gemeinfreier Originaltext. Die Leseabschnitte, das Inhaltsverzeichnis und die Quellenanmerkung wurden als redaktionelle Struktur für diese Satzprobe ergänzt; keine historischen Seitenumbrüche.",
-      "note": "The excerpt follows the opening of the story. The reading sections and this note are editorial additions for the typography specimen.",
+      "credit": "Arthur Conan Doyle: A Scandal in Bohemia (1891). Vollständige Erzählung nach Project Gutenberg Nr. 1661, mit den drei originalen Abschnitten I–III. Zehn Illustrationen von Sidney Paget aus The Strand Magazine, Juli 1891, S. 62–74, nach gemeinfreien Scans auf Wikimedia Commons. Titelblatt, Inhaltsverzeichnis, Bildanordnung und Quellenanmerkung sind redaktionell für diese heutige Satzprobe eingerichtet; kein Faksimile und keine historischen Seitenumbrüche.",
+      "note": "Vollständiger englischer Originaltext. Die drei Abschnitte I–III stammen aus der Erzählung. Pagets Illustrationen von 1891 sind den zugehörigen Szenen zugeordnet; ihre Größe und der Seitenumbruch folgen dem hier gewählten Satz.",
       "sections": [
         {
-          "title": "Reading section 1",
+          "title": "I.",
           "blocks": [
             {
               "kind": "p",
               "runs": [
                 {
-                  "text": ""
-                },
-                {
-                  "text": "T"
-                },
-                {
-                  "text": "o Sherlock Holmes she is always "
+                  "text": "To Sherlock Holmes she is always "
                 },
                 {
                   "text": "the",
@@ -761,12 +1188,7 @@
                   "text": "I had seen little of Holmes lately. My marriage had drifted us away from each other. My own complete happiness, and the home-centred interests which rise up around the man who first finds himself master of his own establishment, were sufficient to absorb all my attention, while Holmes, who loathed every form of society with his whole Bohemian soul, remained in our lodgings in Baker Street, buried among his old books, and alternating from week to week between cocaine and ambition, the drowsiness of the drug, and the fierce energy of his own keen nature. He was still, as ever, deeply attracted by the study of crime, and occupied his immense faculties and extraordinary powers of observation in following out those clues, and clearing up those mysteries which had been abandoned as hopeless by the official police. From time to time I heard some vague account of his doings: of his summons to Odessa in the case of the Trepoff murder, of his clearing up of the singular tragedy of the Atkinson brothers at Trincomalee, and finally of the mission which he had accomplished so delicately and successfully for the reigning family of Holland. Beyond these signs of his activity, however, which I merely shared with all the readers of the daily press, I knew little of my former friend and companion."
                 }
               ]
-            }
-          ]
-        },
-        {
-          "title": "Reading section 2",
-          "blocks": [
+            },
             {
               "kind": "p",
               "runs": [
@@ -782,6 +1204,16 @@
                   "text": "His manner was not effusive. It seldom was; but he was glad, I think, to see me. With hardly a word spoken, but with a kindly eye, he waved me to an armchair, threw across his case of cigars, and indicated a spirit case and a gasogene in the corner. Then he stood before the fire and looked me over in his singular introspective fashion."
                 }
               ]
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s62.jpg",
+              "width": 1104,
+              "height": 1593,
+              "alt": "Holmes steht am Kamin, während Watson im Sessel sitzt.",
+              "caption": "Then he stood before the fire.",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-062-ThenHeStoodBeforeTheFire.jpg"
             },
             {
               "kind": "p",
@@ -838,12 +1270,7 @@
                   "text": "He chuckled to himself and rubbed his long, nervous hands together."
                 }
               ]
-            }
-          ]
-        },
-        {
-          "title": "Reading section 3",
-          "blocks": [
+            },
             {
               "kind": "p",
               "runs": [
@@ -923,12 +1350,7 @@
                   "text": "The note was undated, and without either signature or address."
                 }
               ]
-            }
-          ]
-        },
-        {
-          "title": "Reading section 4",
-          "blocks": [
+            },
             {
               "kind": "p",
               "runs": [
@@ -960,6 +1382,16 @@
                   "text": "I carefully examined the writing, and the paper upon which it was written."
                 }
               ]
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s63.jpg",
+              "width": 1000,
+              "height": 1145,
+              "alt": "Watson und Holmes untersuchen den Brief.",
+              "caption": "I carefully examined the writing.",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-063-ICarefullyExaminedTheWriting.jpg"
             },
             {
               "kind": "p",
@@ -1016,12 +1448,7 @@
                   "text": "“The paper was made in Bohemia,” I said."
                 }
               ]
-            }
-          ]
-        },
-        {
-          "title": "Reading section 5",
-          "blocks": [
+            },
             {
               "kind": "p",
               "runs": [
@@ -1101,12 +1528,17 @@
                   "text": "A man entered who could hardly have been less than six feet six inches in height, with the chest and limbs of a Hercules. His dress was rich with a richness which would, in England, be looked upon as akin to bad taste. Heavy bands of astrakhan were slashed across the sleeves and fronts of his double-breasted coat, while the deep blue cloak which was thrown over his shoulders was lined with flame-coloured silk and secured at the neck with a brooch which consisted of a single flaming beryl. Boots which extended halfway up his calves, and which were trimmed at the tops with rich brown fur, completed the impression of barbaric opulence which was suggested by his whole appearance. He carried a broad-brimmed hat in his hand, while he wore across the upper part of his face, extending down past the cheekbones, a black vizard mask, which he had apparently adjusted that very moment, for his hand was still raised to it as he entered. From the lower part of the face he appeared to be a man of strong character, with a thick, hanging lip, and a long, straight chin suggestive of resolution pushed to the length of obstinacy."
                 }
               ]
-            }
-          ]
-        },
-        {
-          "title": "Reading section 6",
-          "blocks": [
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s64.jpg",
+              "width": 738,
+              "height": 1539,
+              "alt": "Der maskierte Besucher tritt ein.",
+              "caption": "A man entered.",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-064-AManEntered.jpg"
+            },
             {
               "kind": "p",
               "runs": [
@@ -1146,10 +1578,1823 @@
                   "text": "The Count shrugged his broad shoulders. “Then I must begin,” said he, “by binding you both to absolute secrecy for two years; at the end of that time the matter will be of no importance. At present it is not too much to say that it is of such weight it may have an influence upon European history.”"
                 }
               ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I promise,” said Holmes."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And I.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You will excuse this mask,” continued our strange visitor. “The august person who employs me wishes his agent to be unknown to you, and I may confess at once that the title by which I have just called myself is not exactly my own.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I was aware of it,” said Holmes dryly."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“The circumstances are of great delicacy, and every precaution has to be taken to quench what might grow to be an immense scandal and seriously compromise one of the reigning families of Europe. To speak plainly, the matter implicates the great House of Ormstein, hereditary kings of Bohemia.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I was also aware of that,” murmured Holmes, settling himself down in his armchair and closing his eyes."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Our visitor glanced with some apparent surprise at the languid, lounging figure of the man who had been no doubt depicted to him as the most incisive reasoner and most energetic agent in Europe. Holmes slowly reopened his eyes and looked impatiently at his gigantic client."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“If your Majesty would condescend to state your case,” he remarked, “I should be better able to advise you.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "The man sprang from his chair and paced up and down the room in uncontrollable agitation. Then, with a gesture of desperation, he tore the mask from his face and hurled it upon the ground. “You are right,” he cried; “I am the King. Why should I attempt to conceal it?”"
+                }
+              ]
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s65.jpg",
+              "width": 1144,
+              "height": 1246,
+              "alt": "Der König nimmt seine Maske ab.",
+              "caption": "He tore the mask from his face.",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-065-HeToreTheMaskFromHisFace.jpg"
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Why, indeed?” murmured Holmes. “Your Majesty had not spoken before I was aware that I was addressing Wilhelm Gottsreich Sigismond von Ormstein, Grand Duke of Cassel-Felstein, and hereditary King of Bohemia.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But you can understand,” said our strange visitor, sitting down once more and passing his hand over his high white forehead, “you can understand that I am not accustomed to doing such business in my own person. Yet the matter was so delicate that I could not confide it to an agent without putting myself in his power. I have come "
+                },
+                {
+                  "text": "incognito",
+                  "em": true
+                },
+                {
+                  "text": " from Prague for the purpose of consulting you.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then, pray consult,” said Holmes, shutting his eyes once more."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“The facts are briefly these: Some five years ago, during a lengthy visit to Warsaw, I made the acquaintance of the well-known adventuress, Irene Adler. The name is no doubt familiar to you.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Kindly look her up in my index, Doctor,” murmured Holmes without opening his eyes. For many years he had adopted a system of docketing all paragraphs concerning men and things, so that it was difficult to name a subject or a person on which he could not at once furnish information. In this case I found her biography sandwiched in between that of a Hebrew rabbi and that of a staff-commander who had written a monograph upon the deep-sea fishes."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Let me see!” said Holmes. “Hum! Born in New Jersey in the year 1858. Contralto—hum! La Scala, hum! Prima donna Imperial Opera of Warsaw—yes! Retired from operatic stage—ha! Living in London—quite so! Your Majesty, as I understand, became entangled with this young person, wrote her some compromising letters, and is now desirous of getting those letters back.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Precisely so. But how—”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Was there a secret marriage?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“None.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“No legal papers or certificates?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“None.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then I fail to follow your Majesty. If this young person should produce her letters for blackmailing or other purposes, how is she to prove their authenticity?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“There is the writing.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Pooh, pooh! Forgery.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“My private note-paper.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Stolen.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“My own seal.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Imitated.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“My photograph.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Bought.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“We were both in the photograph.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Oh, dear! That is very bad! Your Majesty has indeed committed an indiscretion.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I was mad—insane.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You have compromised yourself seriously.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I was only Crown Prince then. I was young. I am but thirty now.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“It must be recovered.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“We have tried and failed.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Your Majesty must pay. It must be bought.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“She will not sell.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Stolen, then.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Five attempts have been made. Twice burglars in my pay ransacked her house. Once we diverted her luggage when she travelled. Twice she has been waylaid. There has been no result.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“No sign of it?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Absolutely none.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Holmes laughed. “It is quite a pretty little problem,” said he."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But a very serious one to me,” returned the King reproachfully."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Very, indeed. And what does she propose to do with the photograph?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“To ruin me.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But how?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am about to be married.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“So I have heard.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“To Clotilde Lothman von Saxe-Meningen, second daughter of the King of Scandinavia. You may know the strict principles of her family. She is herself the very soul of delicacy. A shadow of a doubt as to my conduct would bring the matter to an end.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And Irene Adler?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Threatens to send them the photograph. And she will do it. I know that she will do it. You do not know her, but she has a soul of steel. She has the face of the most beautiful of women, and the mind of the most resolute of men. Rather than I should marry another woman, there are no lengths to which she would not go—none.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You are sure that she has not sent it yet?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am sure.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And why?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Because she has said that she would send it on the day when the betrothal was publicly proclaimed. That will be next Monday.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Oh, then we have three days yet,” said Holmes with a yawn. “That is very fortunate, as I have one or two matters of importance to look into just at present. Your Majesty will, of course, stay in London for the present?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Certainly. You will find me at the Langham under the name of the Count Von Kramm.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then I shall drop you a line to let you know how we progress.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Pray do so. I shall be all anxiety.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then, as to money?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You have "
+                },
+                {
+                  "text": "carte blanche",
+                  "em": true
+                },
+                {
+                  "text": ".”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Absolutely?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I tell you that I would give one of the provinces of my kingdom to have that photograph.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And for present expenses?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "The King took a heavy chamois leather bag from under his cloak and laid it on the table."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“There are three hundred pounds in gold and seven hundred in notes,” he said."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Holmes scribbled a receipt upon a sheet of his note-book and handed it to him."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And Mademoiselle’s address?” he asked."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Is Briony Lodge, Serpentine Avenue, St. John’s Wood.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Holmes took a note of it. “One other question,” said he. “Was the photograph a cabinet?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“It was.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then, good-night, your Majesty, and I trust that we shall soon have some good news for you. And good-night, Watson,” he added, as the wheels of the royal brougham rolled down the street. “If you will be good enough to call to-morrow afternoon at three o’clock I should like to chat this little matter over with you.”"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "II.",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "At three o’clock precisely I was at Baker Street, but Holmes had not yet returned. The landlady informed me that he had left the house shortly after eight o’clock in the morning. I sat down beside the fire, however, with the intention of awaiting him, however long he might be. I was already deeply interested in his inquiry, for, though it was surrounded by none of the grim and strange features which were associated with the two crimes which I have already recorded, still, the nature of the case and the exalted station of his client gave it a character of its own. Indeed, apart from the nature of the investigation which my friend had on hand, there was something in his masterly grasp of a situation, and his keen, incisive reasoning, which made it a pleasure to me to study his system of work, and to follow the quick, subtle methods by which he disentangled the most inextricable mysteries. So accustomed was I to his invariable success that the very possibility of his failing had ceased to enter into my head."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "It was close upon four before the door opened, and a drunken-looking groom, ill-kempt and side-whiskered, with an inflamed face and disreputable clothes, walked into the room. Accustomed as I was to my friend’s amazing powers in the use of disguises, I had to look three times before I was certain that it was indeed he. With a nod he vanished into the bedroom, whence he emerged in five minutes tweed-suited and respectable, as of old. Putting his hands into his pockets, he stretched out his legs in front of the fire and laughed heartily for some minutes."
+                }
+              ]
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s67.jpg",
+              "width": 727,
+              "height": 1317,
+              "alt": "Holmes ist als heruntergekommener Pferdeknecht verkleidet.",
+              "caption": "A drunken-looking groom.",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-067-ADrunkenLookingGroom.jpg"
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Well, really!” he cried, and then he choked and laughed again until he was obliged to lie back, limp and helpless, in the chair."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“What is it?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“It’s quite too funny. I am sure you could never guess how I employed my morning, or what I ended by doing.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I can’t imagine. I suppose that you have been watching the habits, and perhaps the house, of Miss Irene Adler.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Quite so; but the sequel was rather unusual. I will tell you, however. I left the house a little after eight o’clock this morning in the character of a groom out of work. There is a wonderful sympathy and freemasonry among horsey men. Be one of them, and you will know all that there is to know. I soon found Briony Lodge. It is a "
+                },
+                {
+                  "text": "bijou",
+                  "em": true
+                },
+                {
+                  "text": " villa, with a garden at the back, but built out in front right up to the road, two stories. Chubb lock to the door. Large sitting-room on the right side, well furnished, with long windows almost to the floor, and those preposterous English window fasteners which a child could open. Behind there was nothing remarkable, save that the passage window could be reached from the top of the coach-house. I walked round it and examined it closely from every point of view, but without noting anything else of interest."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I then lounged down the street and found, as I expected, that there was a mews in a lane which runs down by one wall of the garden. I lent the ostlers a hand in rubbing down their horses, and received in exchange twopence, a glass of half-and-half, two fills of shag tobacco, and as much information as I could desire about Miss Adler, to say nothing of half a dozen other people in the neighbourhood in whom I was not in the least interested, but whose biographies I was compelled to listen to.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And what of Irene Adler?” I asked."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Oh, she has turned all the men’s heads down in that part. She is the daintiest thing under a bonnet on this planet. So say the Serpentine-mews, to a man. She lives quietly, sings at concerts, drives out at five every day, and returns at seven sharp for dinner. Seldom goes out at other times, except when she sings. Has only one male visitor, but a good deal of him. He is dark, handsome, and dashing, never calls less than once a day, and often twice. He is a Mr. Godfrey Norton, of the Inner Temple. See the advantages of a cabman as a confidant. They had driven him home a dozen times from Serpentine-mews, and knew all about him. When I had listened to all they had to tell, I began to walk up and down near Briony Lodge once more, and to think over my plan of campaign."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“This Godfrey Norton was evidently an important factor in the matter. He was a lawyer. That sounded ominous. What was the relation between them, and what the object of his repeated visits? Was she his client, his friend, or his mistress? If the former, she had probably transferred the photograph to his keeping. If the latter, it was less likely. On the issue of this question depended whether I should continue my work at Briony Lodge, or turn my attention to the gentleman’s chambers in the Temple. It was a delicate point, and it widened the field of my inquiry. I fear that I bore you with these details, but I have to let you see my little difficulties, if you are to understand the situation.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am following you closely,” I answered."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I was still balancing the matter in my mind when a hansom cab drove up to Briony Lodge, and a gentleman sprang out. He was a remarkably handsome man, dark, aquiline, and moustached—evidently the man of whom I had heard. He appeared to be in a great hurry, shouted to the cabman to wait, and brushed past the maid who opened the door with the air of a man who was thoroughly at home."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“He was in the house about half an hour, and I could catch glimpses of him in the windows of the sitting-room, pacing up and down, talking excitedly, and waving his arms. Of her I could see nothing. Presently he emerged, looking even more flurried than before. As he stepped up to the cab, he pulled a gold watch from his pocket and looked at it earnestly, ‘Drive like the devil,’ he shouted, ‘first to Gross & Hankey’s in Regent Street, and then to the Church of St. Monica in the Edgeware Road. Half a guinea if you do it in twenty minutes!’"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Away they went, and I was just wondering whether I should not do well to follow them when up the lane came a neat little landau, the coachman with his coat only half-buttoned, and his tie under his ear, while all the tags of his harness were sticking out of the buckles. It hadn’t pulled up before she shot out of the hall door and into it. I only caught a glimpse of her at the moment, but she was a lovely woman, with a face that a man might die for."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“‘The Church of St. Monica, John,’ she cried, ‘and half a sovereign if you reach it in twenty minutes.’"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“This was quite too good to lose, Watson. I was just balancing whether I should run for it, or whether I should perch behind her landau when a cab came through the street. The driver looked twice at such a shabby fare, but I jumped in before he could object. ‘The Church of St. Monica,’ said I, ‘and half a sovereign if you reach it in twenty minutes.’ It was twenty-five minutes to twelve, and of course it was clear enough what was in the wind."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“My cabby drove fast. I don’t think I ever drove faster, but the others were there before us. The cab and the landau with their steaming horses were in front of the door when I arrived. I paid the man and hurried into the church. There was not a soul there save the two whom I had followed and a surpliced clergyman, who seemed to be expostulating with them. They were all three standing in a knot in front of the altar. I lounged up the side aisle like any other idler who has dropped into a church. Suddenly, to my surprise, the three at the altar faced round to me, and Godfrey Norton came running as hard as he could towards me."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“‘Thank God,’ he cried. ‘You’ll do. Come! Come!’"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“‘What then?’ I asked."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“‘Come, man, come, only three minutes, or it won’t be legal.’"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I was half-dragged up to the altar, and before I knew where I was I found myself mumbling responses which were whispered in my ear, and vouching for things of which I knew nothing, and generally assisting in the secure tying up of Irene Adler, spinster, to Godfrey Norton, bachelor. It was all done in an instant, and there was the gentleman thanking me on the one side and the lady on the other, while the clergyman beamed on me in front. It was the most preposterous position in which I ever found myself in my life, and it was the thought of it that started me laughing just now. It seems that there had been some informality about their license, that the clergyman absolutely refused to marry them without a witness of some sort, and that my lucky appearance saved the bridegroom from having to sally out into the streets in search of a best man. The bride gave me a sovereign, and I mean to wear it on my watch chain in memory of the occasion.”"
+                }
+              ]
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s69.jpg",
+              "width": 933,
+              "height": 1186,
+              "alt": "Holmes steht als Trauzeuge vor dem Altar.",
+              "caption": "I found myself mumbling responses.",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-069-IFoundMyselfMumblingResponses.jpg"
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“This is a very unexpected turn of affairs,” said I; “and what then?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Well, I found my plans very seriously menaced. It looked as if the pair might take an immediate departure, and so necessitate very prompt and energetic measures on my part. At the church door, however, they separated, he driving back to the Temple, and she to her own house. ‘I shall drive out in the park at five as usual,’ she said as she left him. I heard no more. They drove away in different directions, and I went off to make my own arrangements.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Which are?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Some cold beef and a glass of beer,” he answered, ringing the bell. “I have been too busy to think of food, and I am likely to be busier still this evening. By the way, Doctor, I shall want your co-operation.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I shall be delighted.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You don’t mind breaking the law?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Not in the least.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Nor running a chance of arrest?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Not in a good cause.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Oh, the cause is excellent!”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then I am your man.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I was sure that I might rely on you.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But what is it you wish?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“When Mrs. Turner has brought in the tray I will make it clear to you. Now,” he said as he turned hungrily on the simple fare that our landlady had provided, “I must discuss it while I eat, for I have not much time. It is nearly five now. In two hours we must be on the scene of action. Miss Irene, or Madame, rather, returns from her drive at seven. We must be at Briony Lodge to meet her.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And what then?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You must leave that to me. I have already arranged what is to occur. There is only one point on which I must insist. You must not interfere, come what may. You understand?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am to be neutral?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“To do nothing whatever. There will probably be some small unpleasantness. Do not join in it. It will end in my being conveyed into the house. Four or five minutes afterwards the sitting-room window will open. You are to station yourself close to that open window.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Yes.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You are to watch me, for I will be visible to you.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Yes.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And when I raise my hand—so—you will throw into the room what I give you to throw, and will, at the same time, raise the cry of fire. You quite follow me?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Entirely.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“It is nothing very formidable,” he said, taking a long cigar-shaped roll from his pocket. “It is an ordinary plumber’s smoke-rocket, fitted with a cap at either end to make it self-lighting. Your task is confined to that. When you raise your cry of fire, it will be taken up by quite a number of people. You may then walk to the end of the street, and I will rejoin you in ten minutes. I hope that I have made myself clear?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am to remain neutral, to get near the window, to watch you, and at the signal to throw in this object, then to raise the cry of fire, and to wait you at the corner of the street.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Precisely.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then you may entirely rely on me.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“That is excellent. I think, perhaps, it is almost time that I prepare for the new role I have to play.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "He disappeared into his bedroom and returned in a few minutes in the character of an amiable and simple-minded Nonconformist clergyman. His broad black hat, his baggy trousers, his white tie, his sympathetic smile, and general look of peering and benevolent curiosity were such as Mr. John Hare alone could have equalled. It was not merely that Holmes changed his costume. His expression, his manner, his very soul seemed to vary with every fresh part that he assumed. The stage lost a fine actor, even as science lost an acute reasoner, when he became a specialist in crime."
+                }
+              ]
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s70.jpg",
+              "width": 722,
+              "height": 1232,
+              "alt": "Holmes trägt die Verkleidung eines Geistlichen.",
+              "caption": "A simple-minded clergyman.",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-070-ASimpleMindedClergyman.jpg"
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "It was a quarter past six when we left Baker Street, and it still wanted ten minutes to the hour when we found ourselves in Serpentine Avenue. It was already dusk, and the lamps were just being lighted as we paced up and down in front of Briony Lodge, waiting for the coming of its occupant. The house was just such as I had pictured it from Sherlock Holmes’ succinct description, but the locality appeared to be less private than I expected. On the contrary, for a small street in a quiet neighbourhood, it was remarkably animated. There was a group of shabbily dressed men smoking and laughing in a corner, a scissors-grinder with his wheel, two guardsmen who were flirting with a nurse-girl, and several well-dressed young men who were lounging up and down with cigars in their mouths."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You see,” remarked Holmes, as we paced to and fro in front of the house, “this marriage rather simplifies matters. The photograph becomes a double-edged weapon now. The chances are that she would be as averse to its being seen by Mr. Godfrey Norton, as our client is to its coming to the eyes of his princess. Now the question is, Where are we to find the photograph?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Where, indeed?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“It is most unlikely that she carries it about with her. It is cabinet size. Too large for easy concealment about a woman’s dress. She knows that the King is capable of having her waylaid and searched. Two attempts of the sort have already been made. We may take it, then, that she does not carry it about with her.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Where, then?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Her banker or her lawyer. There is that double possibility. But I am inclined to think neither. Women are naturally secretive, and they like to do their own secreting. Why should she hand it over to anyone else? She could trust her own guardianship, but she could not tell what indirect or political influence might be brought to bear upon a business man. Besides, remember that she had resolved to use it within a few days. It must be where she can lay her hands upon it. It must be in her own house.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But it has twice been burgled.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Pshaw! They did not know how to look.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But how will you look?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I will not look.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“What then?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I will get her to show me.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But she will refuse.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“She will not be able to. But I hear the rumble of wheels. It is her carriage. Now carry out my orders to the letter.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "As he spoke the gleam of the sidelights of a carriage came round the curve of the avenue. It was a smart little landau which rattled up to the door of Briony Lodge. As it pulled up, one of the loafing men at the corner dashed forward to open the door in the hope of earning a copper, but was elbowed away by another loafer, who had rushed up with the same intention. A fierce quarrel broke out, which was increased by the two guardsmen, who took sides with one of the loungers, and by the scissors-grinder, who was equally hot upon the other side. A blow was struck, and in an instant the lady, who had stepped from her carriage, was the centre of a little knot of flushed and struggling men, who struck savagely at each other with their fists and sticks. Holmes dashed into the crowd to protect the lady; but, just as he reached her, he gave a cry and dropped to the ground, with the blood running freely down his face. At his fall the guardsmen took to their heels in one direction and the loungers in the other, while a number of better dressed people, who had watched the scuffle without taking part in it, crowded in to help the lady and to attend to the injured man. Irene Adler, as I will still call her, had hurried up the steps; but she stood at the top with her superb figure outlined against the lights of the hall, looking back into the street."
+                }
+              ]
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s71.jpg",
+              "width": 1192,
+              "height": 1369,
+              "alt": "Der verkleidete Holmes fällt vor Briony Lodge zu Boden.",
+              "caption": "He gave a cry and dropped.",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-071-HeGaveACryAndDropped.jpg"
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Is the poor gentleman much hurt?” she asked."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“He is dead,” cried several voices."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“No, no, there’s life in him!” shouted another. “But he’ll be gone before you can get him to hospital.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“He’s a brave fellow,” said a woman. “They would have had the lady’s purse and watch if it hadn’t been for him. They were a gang, and a rough one, too. Ah, he’s breathing now.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“He can’t lie in the street. May we bring him in, marm?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Surely. Bring him into the sitting-room. There is a comfortable sofa. This way, please!”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Slowly and solemnly he was borne into Briony Lodge and laid out in the principal room, while I still observed the proceedings from my post by the window. The lamps had been lit, but the blinds had not been drawn, so that I could see Holmes as he lay upon the couch. I do not know whether he was seized with compunction at that moment for the part he was playing, but I know that I never felt more heartily ashamed of myself in my life than when I saw the beautiful creature against whom I was conspiring, or the grace and kindliness with which she waited upon the injured man. And yet it would be the blackest treachery to Holmes to draw back now from the part which he had intrusted to me. I hardened my heart, and took the smoke-rocket from under my ulster. After all, I thought, we are not injuring her. We are but preventing her from injuring another."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "Holmes had sat up upon the couch, and I saw him motion like a man who is in need of air. A maid rushed across and threw open the window. At the same instant I saw him raise his hand and at the signal I tossed my rocket into the room with a cry of “Fire!” The word was no sooner out of my mouth than the whole crowd of spectators, well dressed and ill—gentlemen, ostlers, and servant maids—joined in a general shriek of “Fire!” Thick clouds of smoke curled through the room and out at the open window. I caught a glimpse of rushing figures, and a moment later the voice of Holmes from within assuring them that it was a false alarm. Slipping through the shouting crowd I made my way to the corner of the street, and in ten minutes was rejoiced to find my friend’s arm in mine, and to get away from the scene of uproar. He walked swiftly and in silence for some few minutes until we had turned down one of the quiet streets which lead towards the Edgeware Road."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You did it very nicely, Doctor,” he remarked. “Nothing could have been better. It is all right.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You have the photograph?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I know where it is.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And how did you find out?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“She showed me, as I told you she would.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am still in the dark.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I do not wish to make a mystery,” said he, laughing. “The matter was perfectly simple. You, of course, saw that everyone in the street was an accomplice. They were all engaged for the evening.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I guessed as much.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then, when the row broke out, I had a little moist red paint in the palm of my hand. I rushed forward, fell down, clapped my hand to my face, and became a piteous spectacle. It is an old trick.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“That also I could fathom.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then they carried me in. She was bound to have me in. What else could she do? And into her sitting-room, which was the very room which I suspected. It lay between that and her bedroom, and I was determined to see which. They laid me on a couch, I motioned for air, they were compelled to open the window, and you had your chance.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“How did that help you?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“It was all-important. When a woman thinks that her house is on fire, her instinct is at once to rush to the thing which she values most. It is a perfectly overpowering impulse, and I have more than once taken advantage of it. In the case of the Darlington Substitution Scandal it was of use to me, and also in the Arnsworth Castle business. A married woman grabs at her baby; an unmarried one reaches for her jewel-box. Now it was clear to me that our lady of to-day had nothing in the house more precious to her than what we are in quest of. She would rush to secure it. The alarm of fire was admirably done. The smoke and shouting were enough to shake nerves of steel. She responded beautifully. The photograph is in a recess behind a sliding panel just above the right bell-pull. She was there in an instant, and I caught a glimpse of it as she half drew it out. When I cried out that it was a false alarm, she replaced it, glanced at the rocket, rushed from the room, and I have not seen her since. I rose, and, making my excuses, escaped from the house. I hesitated whether to attempt to secure the photograph at once; but the coachman had come in, and as he was watching me narrowly, it seemed safer to wait. A little over-precipitance may ruin all.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And now?” I asked."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Our quest is practically finished. I shall call with the King to-morrow, and with you, if you care to come with us. We will be shown into the sitting-room to wait for the lady, but it is probable that when she comes she may find neither us nor the photograph. It might be a satisfaction to his Majesty to regain it with his own hands.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And when will you call?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“At eight in the morning. She will not be up, so that we shall have a clear field. Besides, we must be prompt, for this marriage may mean a complete change in her life and habits. I must wire to the King without delay.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "We had reached Baker Street and had stopped at the door. He was searching his pockets for the key when someone passing said:"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Good-night, Mister Sherlock Holmes.”"
+                }
+              ]
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s73.jpg",
+              "width": 852,
+              "height": 1328,
+              "alt": "Eine junge Gestalt wünscht Holmes einen guten Abend.",
+              "caption": "Good night, Mr. Sherlock Holmes.",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-073-GoodnightMrSherlockHolmes.jpg"
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "There were several people on the pavement at the time, but the greeting appeared to come from a slim youth in an ulster who had hurried by."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I’ve heard that voice before,” said Holmes, staring down the dimly lit street. “Now, I wonder who the deuce that could have been.”"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "III.",
+          "blocks": [
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "I slept at Baker Street that night, and we were engaged upon our toast and coffee in the morning when the King of Bohemia rushed into the room."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You have really got it!” he cried, grasping Sherlock Holmes by either shoulder and looking eagerly into his face."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Not yet.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But you have hopes?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I have hopes.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then, come. I am all impatience to be gone.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“We must have a cab.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“No, my brougham is waiting.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Then that will simplify matters.” We descended and started off once more for Briony Lodge."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Irene Adler is married,” remarked Holmes."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Married! When?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Yesterday.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But to whom?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“To an English lawyer named Norton.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“But she could not love him.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am in hopes that she does.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And why in hopes?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Because it would spare your Majesty all fear of future annoyance. If the lady loves her husband, she does not love your Majesty. If she does not love your Majesty, there is no reason why she should interfere with your Majesty’s plan.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“It is true. And yet—! Well! I wish she had been of my own station! What a queen she would have made!” He relapsed into a moody silence, which was not broken until we drew up in Serpentine Avenue."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "The door of Briony Lodge was open, and an elderly woman stood upon the steps. She watched us with a sardonic eye as we stepped from the brougham."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Mr. Sherlock Holmes, I believe?” said she."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am Mr. Holmes,” answered my companion, looking at her with a questioning and rather startled gaze."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Indeed! My mistress told me that you were likely to call. She left this morning with her husband by the 5:15 train from Charing Cross for the Continent.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“What!” Sherlock Holmes staggered back, white with chagrin and surprise. “Do you mean that she has left England?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Never to return.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“And the papers?” asked the King hoarsely. “All is lost.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“We shall see.” He pushed past the servant and rushed into the drawing-room, followed by the King and myself. The furniture was scattered about in every direction, with dismantled shelves and open drawers, as if the lady had hurriedly ransacked them before her flight. Holmes rushed at the bell-pull, tore back a small sliding shutter, and, plunging in his hand, pulled out a photograph and a letter. The photograph was of Irene Adler herself in evening dress, the letter was superscribed to “Sherlock Holmes, Esq. To be left till called for.” My friend tore it open, and we all three read it together. It was dated at midnight of the preceding night and ran in this way:"
+                }
+              ]
+            },
+            {
+              "kind": "quote",
+              "runs": [
+                {
+                  "text": "“MY DEAR MR. SHERLOCK HOLMES,—You really did it very well. You took me in completely. Until after the alarm of fire, I had not a suspicion. But then, when I found how I had betrayed myself, I began to think. I had been warned against you months ago. I had been told that, if the King employed an agent, it would certainly be you. And your address had been given me. Yet, with all this, you made me reveal what you wanted to know. Even after I became suspicious, I found it hard to think evil of such a dear, kind old clergyman. But, you know, I have been trained as an actress myself. Male costume is nothing new to me. I often take advantage of the freedom which it gives. I sent John, the coachman, to watch you, ran upstairs, got into my walking clothes, as I call them, and came down just as you departed. “Well, I followed you to your door, and so made sure that I was really an object of interest to the celebrated Mr. Sherlock Holmes. Then I, rather imprudently, wished you good-night, and started for the Temple to see my husband. “We both thought the best resource was flight, when pursued by so formidable an antagonist; so you will find the nest empty when you call to-morrow. As to the photograph, your client may rest in peace. I love and am loved by a better man than he. The King may do what he will without hindrance from one whom he has cruelly wronged. I keep it only to safeguard myself, and to preserve a weapon which will always secure me from any steps which he might take in the future. I leave a photograph which he might care to possess; and I remain, dear Mr. Sherlock Holmes,"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Very truly yours, “IRENE NORTON, "
+                },
+                {
+                  "text": "née",
+                  "em": true
+                },
+                {
+                  "text": " ADLER.”"
+                }
+              ],
+              "align": "right"
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“What a woman—oh, what a woman!” cried the King of Bohemia, when we had all three read this epistle. “Did I not tell you how quick and resolute she was? Would she not have made an admirable queen? Is it not a pity that she was not on my level?”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“From what I have seen of the lady, she seems, indeed, to be on a very different level to your Majesty,” said Holmes coldly. “I am sorry that I have not been able to bring your Majesty’s business to a more successful conclusion.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“On the contrary, my dear sir,” cried the King; “nothing could be more successful. I know that her word is inviolate. The photograph is now as safe as if it were in the fire.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am glad to hear your Majesty say so.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I am immensely indebted to you. Pray tell me in what way I can reward you. This ring—” He slipped an emerald snake ring from his finger and held it out upon the palm of his hand."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Your Majesty has something which I should value even more highly,” said Holmes."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“You have but to name it.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“This photograph!”"
+                }
+              ]
+            },
+            {
+              "kind": "figure",
+              "src": "assets/typografie/originale/holmes-1891-s74.jpg",
+              "width": 984,
+              "height": 1254,
+              "alt": "Der König betrachtet das zurückgelassene Porträt.",
+              "caption": "This photograph!",
+              "credit": "Sidney Paget · 1891",
+              "source": "https://commons.wikimedia.org/wiki/File:Strand2-074-ThisPhotograph.jpg"
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "The King stared at him in amazement."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“Irene’s photograph!” he cried. “Certainly, if you wish it.”"
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "“I thank your Majesty. Then there is no more to be done in the matter. I have the honour to wish you a very good morning.” He bowed, and, turning away without observing the hand which the King had stretched out to him, he set off in my company for his chambers."
+                }
+              ]
+            },
+            {
+              "kind": "p",
+              "runs": [
+                {
+                  "text": "And that was how a great scandal threatened to affect the kingdom of Bohemia, and how the best plans of Mr. Sherlock Holmes were beaten by a woman’s wit. He used to make merry over the cleverness of women, but I have not heard him do it of late. And when he speaks of Irene Adler, or when he refers to her photograph, it is always under the honourable title of "
+                },
+                {
+                  "text": "the",
+                  "em": true
+                },
+                {
+                  "text": " woman."
+                }
+              ]
             }
           ]
         }
-      ]
+      ],
+      "complete": true
+    }
+  ],
+  "historicalPages": [
+    {
+      "title": "Humboldt · 1806",
+      "src": "assets/typografie/originale/humboldt-1806-s3.jpg",
+      "width": 1000,
+      "height": 1580,
+      "sha256": "ab9fbc5062329915427c7c968b76169e5e51d835120d92611b707f0979337533",
+      "alt": "Erste Textseite der Humboldt-Schrift von 1806 mit einspaltigem Antiquasatz und großem Freiraum über dem Text.",
+      "comment": "Die erste Textseite der unbebilderten Schrift: einspaltige Antiqua, deutliche Ränder und ein großer Freiraum über dem Beginn. Dieser große Kopfsteg gehört zur Eröffnungsseite – nicht jede Folgeseite sieht so aus. Ruhe entsteht hier aus dem Verhältnis von Schrift, Zeilenlänge und freier Fläche.",
+      "credit": "Alexander von Humboldt: Ideen zu einer Physiognomik der Gewächse, Tübingen 1806, S. 3. ETH-Bibliothek Zürich, Rar 6000 · Public Domain Mark.",
+      "source": "https://doi.org/10.3931/e-rara-22999"
+    },
+    {
+      "title": "Sherlock Holmes · 1891",
+      "src": "assets/typografie/originale/strand-1891-s62.jpg",
+      "width": 960,
+      "height": 1452,
+      "sha256": "f14a3499ad16555cb1329e6f0a4ddaef16cb04c7094e2d4ed7a5798788d7679b",
+      "alt": "Originalseite 62 des Strand Magazine mit zweispaltigem Text, der um Sidney Pagets Illustration von Holmes und Watson herumläuft.",
+      "comment": "Eine Seite der Erstveröffentlichung in der illustrierten Monatszeitschrift The Strand Magazine, keiner Tageszeitung. Pagets Bild greift in den zweispaltigen Text ein. Das wirkt lebendig, erzeugt links aber sehr kurze Zeilen. Im neuen Satz unten erhalten die Bilder einen eigenen Platz mit zusammengehaltener Bildunterschrift.",
+      "credit": "Arthur Conan Doyle / Sidney Paget: A Scandal in Bohemia, The Strand Magazine, Juli 1891, S. 62. Scan: Internet Archive / Wikimedia Commons · gemeinfrei.",
+      "source": "https://en.wikisource.org/wiki/Page:The_Strand_Magazine_(Volume_2).djvu/63"
     }
   ]
 }

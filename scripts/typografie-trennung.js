@@ -35,10 +35,24 @@
   let count=0;for(const p of article.querySelectorAll('.print-paragraph,.print-quote')){count+=paragraph(p,language);p.dataset.hyphenation=key(p.closest('[lang]')?.lang||language)||'off';}
   const id=key(language);article.dataset.hyphenation=id||'off';return {label:id?labels[id]:'Keine Trennmuster für diese Sprache',points:count};
  }
+ // The bundled Paged.js sometimes picks the first letter after the real line
+ // break (e.g. hims-elf instead of him-self). Before it extracts overflow, move
+ // that boundary back to an explicit, language-checked discretionary point or
+ // the start of the word. Never create a new unverified hyphenation point.
+ function pageBreak(overflow){
+  const node=overflow?.startContainer,at=overflow?.startOffset;if(node?.nodeType!==3||!at||at>=node.data.length)return overflow;
+  const parent=node.parentElement,paragraph=parent.closest('.print-paragraph[data-hyphenation],.print-quote[data-hyphenation]');
+  if(!paragraph||paragraph.dataset.hyphenation==='off'||parent.closest('a,code,kbd,samp,[data-no-hyphenate]'))return overflow;
+  const value=node.data,letter=c=>c&&/[\p{L}\p{M}\u200c]/u.test(c);if(!letter(value[at-1])||!letter(value[at]))return overflow;
+  let start=at;while(start>0&&(letter(value[start-1])||value[start-1]===SHY))start--;
+  const discretionary=value.lastIndexOf(SHY,at-1)+1,safe=discretionary>start?discretionary:start;
+  if(safe>0&&safe<at)overflow.setStart(node,safe);return overflow;
+ }
+ function protectPagination(previewer){const hook=previewer?.chunker?.hooks?.onOverflow;if(!hook?.register)return false;hook.register(pageBreak);return true;}
  // Paged.js adds a hard U+2011 at a word split across pages. Keep its visible glyph,
  // but move it into generated content so it does not become part of copied source text.
  function finish(host){let count=0;for(const parent of host.querySelectorAll('.pagedjs_hyphen')){if(!parent.closest('.print-paragraph[data-hyphenation],.print-quote[data-hyphenation]'))continue;const walker=parent.ownerDocument.createTreeWalker(parent,4);let node,last;while((node=walker.nextNode()))if(node.data)last=node;if(!last?.data.endsWith('\u2011'))continue;last.data=last.data.slice(0,-1);const marker=parent.ownerDocument.createElement('span');marker.className='print-discretionary-hyphen';marker.setAttribute('aria-hidden','true');last.after(marker);count++;}return count;}
  function copy(event){const selection=root.getSelection?.();if(!event.clipboardData||!selection?.rangeCount)return;const node=selection.getRangeAt(0).commonAncestorContainer,element=node.nodeType===1?node:node.parentElement;if(!element?.closest('#print-pages'))return;const plain=selection.toString();if(!plain.includes(SHY))return;event.clipboardData.setData('text/plain',plain.replace(/\u00ad/g,''));event.preventDefault();}
  root.document?.addEventListener('copy',copy);
- return {key,labels,register,prepare,breaks,text,apply,finish,copy};
+ return {key,labels,register,prepare,breaks,text,apply,pageBreak,protectPagination,finish,copy};
 });
