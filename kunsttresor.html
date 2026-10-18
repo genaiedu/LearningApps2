@@ -16,7 +16,8 @@
   <script defer src="scripts/kunsttresor-ki-config.js?v=20261016-kurator-automatisch"></script>
   <script defer src="scripts/kunsttresor-progress.js?v=20261017-museumsauftrag"></script>
   <script defer src="scripts/kunsttresor-history.js?v=20261017-portraets-bildrunde"></script>
-  <script defer src="scripts/kunsttresor-gallery.js?v=20261018-filmfilter"></script>
+  <script defer src="scripts/kunsttresor-artist-order.js?v=20261018-nachnamen"></script>
+  <script defer src="scripts/kunsttresor-gallery.js?v=20261018-nachnamen"></script>
   <script defer src="scripts/kunsttresor-layout.js?v=20261017-wall18"></script>
   <script defer src="scripts/kunsttresor-gallery-ui.js?v=20261018-bildinfos-grossansicht"></script>
   <script defer src="scripts/kunsttresor-save.js?v=20261018-galerie-dateien"></script>
@@ -74,10 +75,10 @@
         <div class="dialog-head gallery-toolbar"><div><h2 id="gallery-title">Deine persönliche Galerie.</h2><p id="gallery-summary" class="gallery-summary"></p></div><div class="gallery-actions"><button id="gallery-edit-open" type="button" disabled>Film gestalten</button><button id="gallery-play" class="primary" type="button" disabled>Kunstfilm vorbereiten</button><button id="gallery-export" type="button">Galerie &amp; Film sichern</button><button type="button" data-close="gallery-dialog">Schließen ×</button></div></div>
         <div class="gallery-filters" role="search" aria-label="Galerie filtern und sortieren">
           <label>Werke suchen<input id="gallery-search" type="search" placeholder="Titel, Künstler, Stil …" autocomplete="off" aria-controls="gallery-grid"></label>
-          <label>Künstler<select id="gallery-filter-artist" aria-controls="gallery-grid"><option value="">Alle Künstler</option></select></label>
+          <label>Künstler<select id="gallery-filter-artist" aria-controls="gallery-grid" title="Nach Nachnamen sortiert, ohne Namensvorsätze; eindeutige Künstlernamen bleiben zusammen, etwa El Greco unter E."><option value="">Alle Künstler</option></select></label>
           <label>Stil<select id="gallery-filter-style" aria-controls="gallery-grid"><option value="">Alle Stile</option></select></label>
           <label>Technik<select id="gallery-filter-technique" aria-controls="gallery-grid"><option value="">Alle Techniken</option></select></label>
-          <label>Sortieren nach<select id="gallery-sort" aria-controls="gallery-grid"><option value="collection">Sammlungsreihenfolge</option><option value="artist">Künstler · A–Z</option><option value="style">Stil · A–Z</option><option value="technique">Technik · A–Z</option><option value="title">Werktitel · A–Z</option><option value="date-asc">Entstehung · älteste zuerst</option><option value="date-desc">Entstehung · neueste zuerst</option></select></label>
+          <label>Sortieren nach<select id="gallery-sort" aria-controls="gallery-grid"><option value="collection">Sammlungsreihenfolge</option><option value="artist">Künstler · Nachname A–Z</option><option value="style">Stil · A–Z</option><option value="technique">Technik · A–Z</option><option value="title">Werktitel · A–Z</option><option value="date-asc">Entstehung · älteste zuerst</option><option value="date-desc">Entstehung · neueste zuerst</option></select></label>
           <button id="gallery-filter-reset" type="button" disabled>Ansicht zurücksetzen</button>
         </div><div class="gallery-film-selection-tools"><label class="gallery-film-toggle"><input id="gallery-filter-film" type="checkbox" aria-controls="gallery-grid">Nur Bilder im Film <span id="gallery-film-filter-count">(0)</span></label><button id="gallery-clear-film" type="button" aria-haspopup="dialog" disabled>Filmauswahl leeren</button></div><p id="gallery-results" role="status" aria-live="polite" class="gallery-results"></p>
         <p class="visually-hidden">Nach gewonnenen Räumen sammelst du hier deine Lieblingswerke. Deine Galerie bleibt über neue Runden hinweg erhalten.</p><p id="gallery-status" role="status" aria-live="polite" class="small"></p><div id="gallery-grid" class="gallery-grid"></div>

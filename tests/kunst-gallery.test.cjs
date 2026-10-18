@@ -18,7 +18,8 @@ test('gallery sorts every requested field, keeps ties deterministic and counts c
  const works=pool.slice(0,100),before=structuredClone(works),collator=new Intl.Collator('de',{sensitivity:'base',numeric:true});
  for(const field of ['artist','style','technique','title']){
   const sorted=gallery.viewWorks(works,{sort:field});
-  for(let i=1;i<sorted.length;i++)assert.ok(collator.compare(sorted[i-1][field],sorted[i][field])<=0,field);
+  const compare=field==='artist'?require('../scripts/kunsttresor-artist-order.js').compare:(a,b)=>collator.compare(a,b);
+  for(let i=1;i<sorted.length;i++)assert.ok(compare(sorted[i-1][field],sorted[i][field])<=0,field);
  }
  for(const sort of ['date-asc','date-desc']){
   const sorted=gallery.viewWorks(works,{sort}),year=w=>w.dateStart??core.dateWindow(w.date)?.start;for(let i=1;i<sorted.length;i++)assert.ok((sort==='date-desc'?-1:1)*(year(sorted[i])-year(sorted[i-1]))>=0);

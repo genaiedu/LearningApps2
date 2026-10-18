@@ -35,7 +35,7 @@ async function setup(t,{state,history,gallery,preferences={},forgeryResponse,url
   const input=JSON.parse(options.body);
   return{ok:true,text:async()=>JSON.stringify({intro:'Wir betrachten die sieben Werke gemeinsam und gehen ihren gestalterischen Spuren nach.',works:input.room.ids.map(id=>({id,text:'Deine Zuordnungen sind ein Ausgangspunkt für den zweiten Blick. Prüfe die beschriebenen Merkmale am Werk und vergleiche die belegte Technik mit dem sichtbaren Eindruck.'}))})};
  };
- const files=['scripts/kunsttresor-mode.js','scripts/kunsttresor-layout.js','scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor-reset.js','scripts/kunsttresor.js','scripts/kunsttresor-wall.js'];
+ const files=['scripts/kunsttresor-mode.js','scripts/kunsttresor-layout.js','scripts/kunsttresor-core.js','scripts/kunst-kurator.js','services/kunst-kurator/lib/kunst-ki.js','scripts/kunsttresor-ki-config.js','scripts/kunsttresor-progress.js','scripts/kunsttresor-history.js','scripts/kunsttresor-artist-order.js','scripts/kunsttresor-gallery.js','scripts/kunsttresor-gallery-ui.js','scripts/kunsttresor-save.js','scripts/kunsttresor-zoom.js','scripts/kunsttresor-intro.js','scripts/kunsttresor-reset.js','scripts/kunsttresor.js','scripts/kunsttresor-wall.js'];
  for(const file of files)w.eval(read(file));
  for(let i=0;i<30;i++)await Promise.resolve();
  assert.equal(q('#launch-dialog').open,true);t.after(()=>w.close());return{w,q,requests,click:id=>q('#'+id).click()};
@@ -108,6 +108,16 @@ test('gallery filter controls combine, count, sort and reset without changing li
  choose('gallery-sort','date-desc');const dates=cards().map(id=>{const w=pool.find(w=>w.id===id);return w.dateStart??model.KunstTresor.dateWindow(w.date)?.start;}).filter(Number.isFinite);assert.ok(dates.every((date,i)=>!i||date<=dates[i-1]));
  app.q('#gallery-dialog').close();app.click('game-gallery');assert.equal(app.q('#gallery-sort').value,'date-desc');
  assert.deepEqual(stored(app.w.localStorage),before);assert.equal(app.q('#art-grid [data-gallery-like]'),null);
+});
+test('gallery artist list and image sorting use the same surnames, ignore particles and keep El Greco under E',async t=>{
+ const names=['Vincent van Gogh','El Greco','Claude Monet','Albrecht Dürer','Franz von Stuck','Georges de la Tour','Henri de Toulouse-Lautrec','Lucas Cranach der Ältere','Caspar David Friedrich'];
+ const works=names.map(name=>pool.find(work=>work.artist===name)),at=Date.now(),gallery={...model.KunstGallery.fresh(),liked:works.map(work=>({id:work.id,source:'curated',at}))};
+ const app=await setup(t,{gallery});app.click('launch-read');app.click('game-gallery');const before=stored(app.w.localStorage);
+ const expected=['Lucas Cranach der Ältere','Albrecht Dürer','El Greco','Caspar David Friedrich','Vincent van Gogh','Claude Monet','Franz von Stuck','Henri de Toulouse-Lautrec','Georges de la Tour'];
+ assert.deepEqual([...app.q('#gallery-filter-artist').options].slice(1).map(option=>option.value),expected);
+ app.q('#gallery-sort').value='artist';app.q('#gallery-sort').dispatchEvent(new app.w.Event('change'));
+ assert.deepEqual([...app.q('#gallery-grid').children].map(card=>works.find(work=>work.id===card.dataset.work).artist),expected);
+ assert.deepEqual(stored(app.w.localStorage),before);assert.match(app.q('#gallery-sort option[value="artist"]').textContent,/Nachname/);
 });
 test('only-film checkbox combines with gallery filters, updates after removal and resets without altering progress',async t=>{
  const works=[...new Map(pool.map(work=>[work.artist,work])).values()].slice(0,24),at=Date.now();

@@ -48,6 +48,8 @@
   const viewFields=['artist','style','technique'];
   const dateCore=root.KunstTresor||(typeof require==='function'?require('./kunsttresor-core.js'):null);
   const collator=new Intl.Collator('de',{sensitivity:'base',numeric:true});
+  const artistOrder=root.KunstArtistOrder||(typeof require==='function'?require('./kunsttresor-artist-order.js'):null);
+  const compareArtists=(left,right)=>artistOrder?artistOrder.compare(left,right):collator.compare(left,right);
   function viewYear(work){
     if(Number.isFinite(work.dateStart))return work.dateStart;
     const period=dateCore?.dateWindow(work.date);
@@ -67,7 +69,7 @@
     const title=work=>work.titleDe||work.title;
     const compare=(a,b)=>collator.compare(a,b);
     const secondary=(a,b)=>compare(title(a),title(b))||compare(a.artist,b.artist)||compare(a.id,b.id);
-    if(viewFields.includes(view.sort))result.sort((a,b)=>compare(a[view.sort],b[view.sort])||secondary(a,b));
+    if(viewFields.includes(view.sort))result.sort((a,b)=>(view.sort==='artist'?compareArtists(a.artist,b.artist):compare(a[view.sort],b[view.sort]))||secondary(a,b));
     else if(view.sort==='title')result.sort(secondary);
     else if(['date-asc','date-desc'].includes(view.sort))result.sort((a,b)=>{
       const left=viewYear(a),right=viewYear(b);
@@ -79,7 +81,7 @@
     if(!viewFields.includes(field))return [];
     const counts=new Map(works.map(work=>[work[field],0]));
     for(const work of works)if(matchesView(work,view,field))counts.set(work[field],counts.get(work[field])+1);
-    return [...counts].sort((a,b)=>collator.compare(a[0],b[0])).map(([value,count])=>({value,count}));
+    return [...counts].sort((a,b)=>field==='artist'?compareArtists(a[0],b[0]):collator.compare(a[0],b[0])).map(([value,count])=>({value,count}));
   }
   function merge(left,right) {
     const liked=new Map(left.liked.map(entry=>[entry.id,entry]));
