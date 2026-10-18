@@ -2,3 +2,24 @@
 
 .document-import{border-block:1px solid var(--line);padding:22px 0;margin:24px 0}.document-import h2{font:600 24px/1.3 var(--sans)}.document-import>p{max-width:85ch;font-size:15px}.import-controls{display:flex;flex-wrap:wrap;align-items:end;gap:18px}.import-controls label{font-size:13px;flex:1;min-width:180px}.import-controls input,.import-controls select{display:block;margin-top:6px}.import-controls input[type=checkbox]{display:inline;width:auto}.file-label{padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:5px}#import-status{font-size:14px;margin:16px 0}#import-summary{font-weight:600;margin:18px 0}#import-warnings{font-size:13px;line-height:1.6;padding-left:20px;max-height:180px;overflow:auto}.document-import details{margin-top:18px}.document-import summary{cursor:pointer;font-weight:600;padding:12px 0}.import-review-item{border-top:1px solid var(--line);padding:15px 0}.import-review-item h4{font-size:14px}.import-review-item p{font-size:14px;white-space:pre-wrap}.import-review-item img{max-height:180px;max-width:100%;object-fit:contain}.import-review-item label{display:block;max-width:700px;font-size:13px;margin:8px 0}.import-review-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px}@media print{.document-import{display:none}}
 .schriftsetzer-design{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:4px;min-width:0}.schriftsetzer-design legend{font:600 14px/1.4 var(--sans);padding:0 5px}.schriftsetzer-design label{display:block;font-size:14px;font-weight:500;margin:10px 0}.schriftsetzer-design select{display:block;margin-top:6px;font-weight:400}.schriftsetzer-design input[type=color]{display:block;width:100%;height:44px;padding:3px;margin-top:6px}.schriftsetzer-design .initial-check{display:flex;align-items:center;gap:9px}.schriftsetzer-design p.small{font-weight:400;margin-top:12px}
+
+/* Book controls use the same functional sans and semantic reading colors. */
+body{font-kerning:normal;font-variant-ligatures:common-ligatures;font-variant-numeric:oldstyle-nums proportional-nums}
+button,input,select,textarea,output{font-variant-numeric:lining-nums tabular-nums}
+button.primary{background:var(--button-bg,var(--red));color:var(--button-ink,#fff)}
+input,select,textarea{border-color:var(--line)}
+.book-appearance{display:flex;gap:16px;flex-wrap:wrap;align-items:end;margin:24px 0}
+.book-appearance label{font-size:13px;min-width:140px}.book-appearance select{display:block;margin-top:5px}.book-appearance .small{flex-basis:100%;margin:0}
+.book-editor{margin:20px 0;border:1px solid var(--line);border-radius:5px;background:var(--white);padding:14px;min-width:0}
+.book-editor>summary{font:600 15px/1.4 var(--sans);color:var(--red);cursor:pointer}
+.book-editor fieldset{min-width:0;margin:12px 0;padding:0;border:0}.book-editor legend{font:600 13px/1.4 var(--sans);margin-bottom:10px}
+.book-editor details{border-top:1px solid var(--line);margin-top:15px;padding-top:12px}.book-editor details>summary{font:600 14px/1.4 var(--sans);cursor:pointer;padding:4px 0}
+.book-editor label{display:block;font-size:13px;line-height:1.5;margin:13px 0;font-weight:500}.book-editor input,.book-editor select,.book-editor textarea{display:block;font-weight:400;margin-top:5px;min-height:40px}
+.book-editor p.small{font-size:12px;margin:10px 0;line-height:1.6}
+.book-editor button{font-size:13px}.book-editor output{float:right;font-weight:400;color:var(--muted)}
+.book-editor .book-check,.book-chapter-label{display:flex;align-items:start;gap:9px}.book-editor input[type=checkbox]{display:inline-block;flex:none;min-height:0;margin:5px 0 0;width:17px;height:17px;accent-color:var(--red)}
+.book-two-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.book-chapters{max-height:380px;overflow:auto;scrollbar-gutter:stable;padding:0 4px}
+.book-chapter-row{border-top:1px solid var(--line);padding:10px 0}.book-chapter-row .book-chapter-label{display:flex;overflow-wrap:anywhere}.book-chapter-row .book-chapter-start{margin-left:26px;font-size:12px}
+.book-editor fieldset:disabled{opacity:.65}.book-editor :disabled{cursor:not-allowed}
+@media(max-width:400px){.book-two-fields{grid-template-columns:1fr}.book-appearance label{flex:1;min-width:120px}}
