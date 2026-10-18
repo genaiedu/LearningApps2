@@ -7,7 +7,8 @@ const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
 const cache=path.resolve(process.argv[2]||'/private/tmp/kunst-portrait-cache');
 const read=async file=>JSON.parse(await fs.readFile(file,'utf8'));
 const sourceText=async name=>process.argv.includes('--review-unpublished')?execFileSync('git',['show','20751be1e3d8f79fe14af41084614dd0f0bd5c0b:data/'+name+'.json'],{cwd:root,maxBuffer:12*1024*1024}).toString():fs.readFile(root+'/data/'+name+'.json','utf8');
-const plan=await read(root+'/data/kunst-portraets-2026.json');
+const planArg=process.argv.find(arg=>arg.startsWith('--plan='));
+const plan=await read(planArg?path.resolve(planArg.slice(7)):root+'/data/kunst-portraets-2026.json');
 const entities=await read(cache+'/entities.json'),commons=await read(cache+'/commons.json'),requested=await read(cache+'/requested.json');
 const pages=new Map([...commons.pages,...requested.query.pages].map(page=>[page.title,page]));
 for(const alias of [...commons.aliases,...requested.query.normalized||[],...requested.query.redirects||[]])if(pages.has(alias.to))pages.set(alias.from,pages.get(alias.to));
@@ -49,26 +50,33 @@ if(process.argv.includes('--inventory')){
 }
 const reviewed=[...plan.works,...Object.entries(plan.supplement||{}).flatMap(([style,ids])=>ids.map(id=>[id,plan.supplementTitles?.[id]||entities[id]?.labels?.de?.value||label(id),style]))];
 const errors=[];
-for(const [qid,titleDe,style]of reviewed){
+for(const [qid,titleDe,style,museum]of reviewed){
  try{
   if(knownIds.has('wd-'+qid))continue;
-  const e=entities[qid],makers=val(e,'P170'),maker=entities[makers[0]?.id],death=year(val(maker,'P570')[0]),override=plan.overrides?.[qid]||{};
-  if(!e||makers.length!==1||claims(e,'P170').some(s=>s.qualifiers?.P5102)||!death||death>1955||!article(maker))throw Error('Unklare Künstlerangabe '+qid);
+  const e=entities[qid],makers=val(e,'P170'),override=plan.overrides?.[qid]||{};
+  // One museum-documented anonymous exception, not a general relaxation of attribution.
+  const anonymous=qid==='Q1195610'&&override.artist==='Unbekannter Künstler'&&override.attribution==='unknown'&&override.artistDeath===null&&override.catalogueSource==='https://search.smb.museum/object/obj-865524';
+  const verified=override.verifiedArtistId&&override.catalogueSource&&makers.some(m=>m.id===override.verifiedArtistId);
+  const maker=entities[verified?override.verifiedArtistId:makers[0]?.id],death=year(val(maker,'P570')[0]);
+  if(!e||!anonymous&&((makers.length!==1&&!verified)||claims(e,'P170').some(s=>s.qualifiers?.P5102)||!death||death>1955||!article(maker)))throw Error('Unklare Künstlerangabe '+qid);
   const dated=override.date?{date:override.date,dateStart:override.dateStart,dateEnd:override.dateEnd}:dating(e);
   const materials=override.materialIds||val(e,'P186').map(x=>x.id);
   const technique=override.technique||(materials.includes('Q296955')?(materials.some(x=>['Q897','Q880','Q929186'].includes(x))?'Öl und Metallauflage':materials.some(x=>['Q106857709','Q106857823','Q106857865','Q134621705','Q239788','Q287','Q291034'].includes(x))?'Öl auf Holz':materials.includes('Q12321255')||materials.includes('Q4259259')?'Öl auf Leinwand':materials.some(x=>['Q389782','Q18668582','Q11472'].includes(x))?'Öl auf Papier / Karton':null):materials.includes('Q175166')||materials.includes('Q1321267')?'Tempera':materials.includes('Q189085')?'Pastell':null);
   const file=pages.get(plan.requestedFiles?.[qid]||'File:'+val(e,'P18')[0]?.replace(/_/g,' ')),info=file?.imageinfo?.[0],m=info?.extmetadata;
   if(!info||!/^image\/(jpeg|png|webp)$/.test(info.mime)||!/^(?:Public domain|CC0)$/i.test(m?.LicenseShortName?.value||'')||file.categories?.some(c=>/deletion request|copyright violation|permission pending|in the UK with copyright claims/i.test(c.title)))throw Error('Bildrechte nicht verifiziert '+qid+' '+file?.title);
-  if(!knowledge.styles[style]||!knowledge.techniques[technique]||!materials.length||!titleDe?.trim()||dated.dateEnd>death)throw Error('Ungeklärte Angaben '+qid+' '+technique);
+  if(!knowledge.styles[style]||!knowledge.techniques[technique]||!materials.length||!titleDe?.trim()||!anonymous&&dated.dateEnd>death)throw Error('Ungeklärte Angaben '+qid+' '+technique);
   if(knownImages.has(info.url)||knownIdentities.has('https://www.wikidata.org/wiki/'+qid))throw Error('Doppeltes Werk '+qid);
   const styles=val(e,'P135').map(x=>label(x.id)),documented=styles.includes(style)||plan.styleAliases?.[style]?.some(term=>styles.includes(term));
   const originalStyle=documented?(styles.includes(style)?style:styles.find(term=>plan.styleAliases?.[style]?.includes(term))):style;
-  const work={id:'wd-'+qid,title:e.labels.de?.value||e.labels.en?.value||titleDe,artist:label(maker.id),artistDeath:death,...dated,style,styleOriginal:originalStyle,styleTerms:documented?styles:[style],technique,medium:override.medium||materials.map(label).join(' · '),materialIds:materials,imageId:qid,source:'https://www.wikidata.org/wiki/'+qid,museum:val(e,'P195').map(x=>label(x.id)).join(' · '),metadataProvider:'Wikidata',styleSource:documented?'P135 am Werk; gegebenenfalls deutscher Oberbegriff für die dokumentierte Tradition':'Redaktionelle Einordnung dieses Einzelwerks nach Bildsprache, Datierung und dokumentiertem Werkzusammenhang; kein P135-Befund und keine einzig mögliche Stilzuweisung',rights:'CC0 / Public Domain',publicDomain:true,wikidata:'https://www.wikidata.org/wiki/'+qid,artistWikidata:'https://www.wikidata.org/wiki/'+maker.id,artForm:'painting',introEligible:true,...override};
+  const work={id:'wd-'+qid,title:e.labels.de?.value||e.labels.en?.value||titleDe,artist:label(maker?.id),artistDeath:death,...dated,style,styleOriginal:originalStyle,styleTerms:documented?styles:[style],technique,medium:override.medium||materials.map(label).join(' · '),materialIds:materials,imageId:qid,source:'https://www.wikidata.org/wiki/'+qid,museum:val(e,'P195').map(x=>label(x.id)).join(' · '),metadataProvider:'Wikidata',styleSource:documented?'P135 am Werk; gegebenenfalls deutscher Oberbegriff für die dokumentierte Tradition':'Redaktionelle Einordnung dieses Einzelwerks nach Bildsprache, Datierung und dokumentiertem Werkzusammenhang; kein P135-Befund und keine einzig mögliche Stilzuweisung',rights:'CC0 / Public Domain',publicDomain:true,wikidata:'https://www.wikidata.org/wiki/'+qid,artistWikidata:maker?'https://www.wikidata.org/wiki/'+maker.id:undefined,artForm:'painting',introEligible:true,...override};
+  if(museum)work.museum=museum;
+  if(anonymous)delete work.artistWikidata;
+  delete work.verifiedArtistId;
   if(!work.museum||/^Q\d+$/.test(work.museum)||work.medium.split(' · ').some(s=>/^Q\d+$/.test(s)))throw Error('Unübersetzte Katalogangaben '+qid+' '+work.medium);
   const image={id:work.id,wikidata:work.wikidata,imageURL:info.thumburl||info.url,imageLargeURL:info.thumburl||info.url,imageOriginalURL:info.url,imageSource:info.descriptionurl,imageLicense:m.LicenseShortName.value,imageLicenseURL:m.LicenseUrl?.value||'https://commons.wikimedia.org/wiki/Commons:Reuse_of_PD-Art_photographs',imageCredit:clean(m.Artist?.value)||work.artist,imageWidth:info.width,imageHeight:info.height,imageMime:info.mime,imageBytes:info.size,imageDownloadAllowed:true,downloadRightsChecked:plan.reviewed};
   additions.push(work);images.push(image);knownIds.add(work.id);knownImages.add(info.url);knownIdentities.add(work.wikidata);
   titles.titles[work.id]=titleDe;(titleDe===work.title?titles.retainedTitles:titles.ownTranslations).push(work.id);
-  if(!wiki.artists[work.artist])wiki.artists[work.artist]=article(maker);
+  if(!wiki.artists[work.artist])wiki.artists[work.artist]=anonymous?{title:'Unbekannter Künstler',language:'de',unknown:true}:article(maker);
   const entry=article(e);if(entry)wiki.works[work.id]=entry;
  }catch(error){errors.push({id:qid,error:error.message});}
 }
@@ -77,7 +85,7 @@ if(!additions.length){console.log('Reviewed works already present.');process.exi
 if(archive.works.length!==plan.baseline)throw Error('Unexpected baseline');
 archive.works.push(...additions);media.images.push(...images);
 archive.expansion.addedIds.push(...additions.map(w=>w.id));archive.expansion.added=archive.expansion.addedIds.length;
-archive.expansion.reason='Unterrepräsentierte Techniken, frühe Moderne, Fotografie und plastische Kunst sowie Porträts aus europäischen Sammlungen; alle bisherigen Werkdaten bleiben erhalten.';
+archive.expansion.reason=plan.expansionReason||'Unterrepräsentierte Techniken, frühe Moderne, Fotografie und plastische Kunst sowie Porträts aus europäischen Sammlungen; alle bisherigen Werkdaten bleiben erhalten.';
 archive.checked=media.checked=wiki.checked=titles.checked=plan.reviewed;
 const patches=[];
 function bounds(text,key){let first=text.indexOf(':',text.indexOf(JSON.stringify(key)))+1;while(/\s/.test(text[first]))first++;let depth=0,quoted=false,escape=false;for(let end=first;end<text.length;end++){const c=text[end];if(quoted){if(escape)escape=false;else if(c==='\\')escape=true;else if(c==='"')quoted=false;continue;}if(c==='"'){quoted=true;continue;}if(c==='{'||c==='[')depth++;if(c==='}'||c===']')if(--depth===0)return[first,end];}throw Error('Missing '+key);}

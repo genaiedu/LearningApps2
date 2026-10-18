@@ -2,9 +2,9 @@ const test=require('node:test'),assert=require('node:assert/strict'),crypto=requ
 const archive=require('../data/kunstarchiv.json'),media=require('../data/kunstbilder.json'),wiki=require('../data/kunst-wikipedia.json'),titles=require('../data/kunst-titel-de.json'),knowledge=require('../data/kunst-glossar.json'),plan=require('../data/kunst-portraets-2026.json');
 const imageById=new Map(media.images.map(w=>[w.id,w])),pool=archive.works.map(w=>({...w,...imageById.get(w.id),titleDe:titles.titles[w.id],artistIdentity:wiki.artists[w.artist].language+':'+wiki.artists[w.artist].title}));
 const ctx={KunstWallEnabled:true,URL};vm.runInNewContext(fs.readFileSync(require.resolve('../scripts/kunsttresor-core.js'),'utf8'),ctx);const core=ctx.KunstTresor;
-const added=pool.slice(1505),hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
+const added=pool.slice(1505,1807),hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
 test('302 additions from 89 artists preserve all 1505 published works and images exactly',()=>{
-  assert.equal(pool.length,1807);assert.equal(added.length,302);assert.equal(new Set(added.map(w=>w.artist)).size,89);
+  assert.ok(pool.length>=1807);assert.equal(added.length,302);assert.equal(new Set(added.map(w=>w.artist)).size,89);
   assert.equal(hash(archive.works.slice(0,1505)),'c5820f89b44ffcc671c8fe9c3a6edea4651ae8e90fb1ce7739279328f4be0087');
   assert.equal(hash(media.images.slice(0,1505)),'a74906e6ae3e24984e8ddce51d66ef8406b35a9f3566aed099980d107021b2f8');
   const planned=[...plan.works.map(w=>'wd-'+w[0]),...Object.values(plan.supplement).flat().map(id=>'wd-'+id)];assert.equal(new Set(planned).size,302);assert.deepEqual(new Set(added.map(w=>w.id)),new Set(planned));

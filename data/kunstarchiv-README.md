@@ -1,5 +1,32 @@
 # Kunsttresor: Werkpool und Vorspann
 
+## Erweiterung vom 18. Oktober 2026: gesicherte Hauptwerke
+
+114 Werke ergänzen den unveränderten Bestand von 1807 auf **1921 Werke**:
+13 von Leonardo, 24 von Turner, 20 von Rembrandt, 23 von Rubens und 33 von
+Vermeer sowie eine ausdrückliche anonyme Ausnahme. Damit enthält das Archiv
+18 Leonardo-, je 30 Turner-, Rembrandt- und Rubens- sowie 34 Vermeer-Werke.
+Die Auswahl und einzelne belegte Katalogkorrekturen der neuen Einträge stehen
+in `kunst-leonardo-turner-2026.json`. Umstrittene Zuschreibungen wie Praxedis,
+Mädchen mit Flöte und Salvator Mundi werden nicht neu aufgenommen.
+
+**Der Mann mit dem Goldhelm** (`wd-Q1195610`) ist die einzige zusätzliche
+anonyme Ausnahme: Künstler „Unbekannter Künstler“, Datierung 1650–1660,
+Gemäldegalerie Berlin. Das ist kein Rembrandt-Werk und keine KI-Fälschung.
+Der dauerhaft sichtbare, quellenverlinkte Kuratorhinweis erklärt die 1986
+zurückgezogene Zuschreibung. Die Spielvalidierung erlaubt genau diesen
+belegten Sonderfall, keine beliebigen neuzeitlichen anonymen Werke.
+
+Die Mona Lisa folgt der Louvre-Datierung 1503–1519. Das Abendmahl wird
+ausdrücklich als Secco-Wandmalerei statt Fresko erklärt. Bei übertragenen
+Gemälden bleibt der ursprüngliche Holzträger in der Materialbeschreibung
+erhalten. Die gegenteilige zweite Künstlerangabe bei Wikidatas Weinbild
+(`Q782639`) wird durch die eindeutige Vermeer-Zuschreibung der Berliner
+Gemäldegalerie überstimmt; das geschieht nur mit Einzelbeleg im Manifest.
+Alle 114 konkreten Commons-Abbildungen wurden auf Public Domain/CC0 geprüft.
+Die vollständige Galerie-Datei und der separate KI-Dienst erhalten denselben
+Bestand; der frühere Werkpool und bestehende gespeicherte Räume bleiben gültig.
+
 ## Erweiterung vom 17. Oktober 2026: 302 weitere Werke
 
 Der Bestand wächst von 1505 auf **1807 Werke**. Alle bisherigen Werk- und
@@ -65,7 +92,7 @@ die Nachahmung. Auch dieses Lieblingswerk bleibt nach Reload und Dateiübernahme
 erhalten. In Rätselansicht und verlorenen Räumen gibt es weiterhin keine Herzen.
 
 Die Edition heißt weiterhin „1000 Kunstwerke · Quiz Edition“. Ihr gezielt
-erweitertes Archiv verwendet tatsächlich 1807 spielbare Datensätze; die
+erweitertes Archiv verwendet tatsächlich 1921 spielbare Datensätze; die
 Oberfläche zeigt die tatsächliche Größe an. Die Bilder werden nicht
 im Repository gespeichert; der Browser lädt sie nach Zustimmung direkt von
 Wikimedia Commons und den beteiligten Museumsservern. Die vier Antwortfelder
@@ -259,9 +286,9 @@ erscheinen über `textContent`, niemals als ausgeführtes HTML.
 ## Wartung des Werkbestands
 
 Die ursprünglichen 1000 Werkdatensätze bleiben vollständig und unverändert
-erhalten. `expansion` dokumentiert die 505 zusätzlichen IDs und den SHA-256
-der ursprünglichen Werkdaten. Die feste Auswahl der 100 Schlussbilder bleibt
-ebenfalls unverändert. Neue Räume können alle 1505 Werke verwenden.
+erhalten. `expansion` dokumentiert die zusätzlichen IDs und den SHA-256
+der ursprünglichen Werkdaten. Die Auswahl umfasst weiterhin 100 Schlussbilder; sie wurde am 18. Oktober 2026 um Mona Lisa, Abendmahl, Perlenohrring und Nachtwache ergänzt. Die Gesamtzahl bleibt
+ebenfalls unverändert. Neue Räume können alle 1921 Werke verwenden.
 
 Die Ergänzungen stammen aus ausdrücklich dokumentierten Werkmaterialien und
 Stilzuordnungen: 222 weitere Temperabilder, 99 Holzschnitte, 46 Aquarelle,

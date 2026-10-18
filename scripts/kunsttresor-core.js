@@ -46,7 +46,11 @@
       && work.artistDeath === null && Number.isInteger(work.dateStart) && Number.isInteger(work.dateEnd)
       && work.dateStart >= -10000 && work.dateEnd <= 600 && work.dateStart <= work.dateEnd
       && work.rightsBasis === 'Ancient work; museum Open Access';
-    return Boolean(work.id && work.title && work.imageId && work.source && work.medium && work.styleOriginal && work.publicDomain === true && (named || anonymousAncient) && fields.every(field => typeof work[field] === 'string' && work[field].trim()));
+    const anonymousGoldhelm = work.id === 'wd-Q1195610' && work.artist === 'Unbekannter Künstler'
+      && work.attribution === 'unknown' && work.artistDeath === null && work.dateStart === 1650 && work.dateEnd === 1660
+      && work.rightsBasis === 'Reviewed anonymous 17th-century painting; museum attribution and PD image'
+      && work.catalogueSource === 'https://search.smb.museum/object/obj-865524';
+    return Boolean(work.id && work.title && work.imageId && work.source && work.medium && work.styleOriginal && work.publicDomain === true && (named || anonymousAncient || anonymousGoldhelm) && fields.every(field => typeof work[field] === 'string' && work[field].trim()));
   }
   function isIntroImage(work) {
     return work.introEligible !== false && !['sculpture','relief','object'].includes(work.artForm);

@@ -134,7 +134,7 @@ Neue Werkformen werden ausdrücklich mitgegeben: Fotografie, Skulptur oder
 Relief sind keine Gemälde. Bei antiken Arbeiten bedeutet „Unbekannter Künstler“
 keinen gemeinsamen Urheber; die kulturelle Tradition ersetzt keine gesicherte
 Namenszuschreibung. Vollständige Material- und Katalogdatierungen bleiben im
-verifizierten Kontext. Der Stand vom 17. Oktober 2026 umfasst 1807 Werke, darunter 302 neue Porträts und weitere Gemälde. Die bisherigen 1505 Einträge sind unverändert.
+verifizierten Kontext. Der Stand vom 18. Oktober 2026 umfasst 1921 Werke. Die bisherigen 1807 Einträge sind unverändert; 114 Hauptwerke ergänzen Leonardo, Turner, Rembrandt, Rubens und Vermeer. Der Mann mit dem Goldhelm ist als einziges zusätzliches anonymes Gemälde ausdrücklich Unbekannt; sein fester Kuratorhinweis zur abgeschriebenen Rembrandt-Zuschreibung bleibt auch bei KI-Antworten sichtbar.
 Erweiterungstests verwenden ausschließlich simulierte Providerantworten,
 keine echten Groq-Anfragen und keinen API-Schlüssel.
 

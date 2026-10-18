@@ -49,7 +49,7 @@ test('every runtime generation path uses the same persisted history and import i
   const js=fs.readFileSync(require.resolve('../scripts/kunsttresor.js'),'utf8');assert.equal((js.match(/core\.newState\(/g)||[]).length,1);assert.match(js,/history\.encounterCounts\(workHistory\)/);
   const importer=js.slice(js.indexOf('function confirmImport'),js.indexOf('function confirmImport')+6000);assert.match(importer,/upcomingRoom=null;[\s\S]*workHistory=mergedHistory/);
 });
-test('the complete 1807-work archive progresses through every least-seen tier, including strongly correlated remaining categories',()=>{
+test('the complete archive progresses through every least-seen tier, including strongly correlated remaining categories',()=>{
   const pool=require('../data/kunstarchiv.json').works,counts={},random=rng(999);let state=null;
   for(let i=0;i<450;i++){
     const minimum=Math.min(...pool.map(w=>counts[w.id]||0));state=c.newState(pool,state,random,false,counts);

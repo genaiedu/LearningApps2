@@ -4,6 +4,10 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 const cache=process.argv[2]||'/private/tmp/kunst-portrait-cache';await fs.mkdir(cache,{recursive:true});
+const option=name=>process.argv.find(arg=>arg.startsWith(name+'='))?.slice(name.length+1);
+const artistIds=option('--artists')?.split(',');
+if(artistIds?.some(id=>!/^Q\d+$/.test(id)))throw Error('Invalid artist IDs');
+const plan=option('--plan')?JSON.parse(await fs.readFile(path.resolve(option('--plan')),'utf8')):null;
 const headers={'User-Agent':'LearningApps-Kunsttresor/3.0 (educational; public metadata review)','Accept':'application/json'};
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function request(url,name){
@@ -17,9 +21,9 @@ async function request(url,name){
 const wiki=params=>'https://www.wikidata.org/w/api.php?'+new URLSearchParams({format:'json',...params});
 const commons=params=>'https://commons.wikimedia.org/w/api.php?'+new URLSearchParams({format:'json',formatversion:'2',...params});
 if(process.argv.includes('--discover')){
- const refs=await request(wiki({action:'wbgetentities',ids:'Q40599|Q82445|Q34661|Q39931|Q180788|Q23402|Q51252|Q19675|Q134307|Q517|Q1511',props:'labels|claims',languages:'de|en'}),'references-v2');
+ const refs=await request(wiki({action:'wbgetentities',ids:artistIds?.join('|')||'Q40599|Q82445|Q34661|Q39931|Q180788|Q23402|Q51252|Q19675|Q134307|Q517|Q1511',props:'labels|claims',languages:'de|en'}),'references-v2');
  console.log(Object.values(refs.entities).map(e=>e.id+' '+(e.labels.de?.value||e.labels.en?.value)).join('\n'));
- const queries={
+ const queries=artistIds?{masters:`SELECT DISTINCT ?item ?links WHERE { VALUES ?artist {${artistIds.map(id=>'wd:'+id).join(' ')}} ?item wdt:P170 ?artist; wdt:P18 ?image; wdt:P571 ?date; wdt:P186 ?material; wikibase:sitelinks ?links. } ORDER BY DESC(?links) LIMIT 120`}:{
   artists:'SELECT DISTINCT ?item ?links WHERE { VALUES ?artist {wd:Q40599 wd:Q82445 wd:Q34661} ?item wdt:P170 ?artist; wdt:P18 ?image; wdt:P571 ?date; wdt:P186 ?material; wikibase:sitelinks ?links. } ORDER BY DESC(?links) LIMIT 200',
   'portraits-500':'SELECT DISTINCT ?item ?links WHERE { VALUES ?collection {wd:Q180788 wd:Q23402 wd:Q51252 wd:Q19675} ?item wdt:P195 ?collection; wdt:P136 wd:Q134307; wdt:P170 ?artist; wdt:P18 ?image; wdt:P571 ?date; wdt:P186 ?material; wikibase:sitelinks ?links. ?artist wdt:P570 ?death. FILTER(YEAR(?death)<=1955) } ORDER BY DESC(?links) LIMIT 500',
   'napoleon-v2':'SELECT DISTINCT ?item ?links WHERE { VALUES ?person {wd:Q517 wd:Q1511} ?item wdt:P180 ?person; wdt:P170 ?artist; wdt:P18 ?image; wdt:P571 ?date; wdt:P186 ?material; wikibase:sitelinks ?links. ?artist wdt:P570 ?death. FILTER(YEAR(?death)<=1955) } ORDER BY DESC(?links) LIMIT 55'
@@ -32,16 +36,16 @@ if(process.argv.includes('--discover')){
  }
  const baseline=JSON.parse(await fs.readFile(new URL('../data/kunstarchiv.json',import.meta.url),'utf8'));
  const known=new Set(baseline.works.flatMap(w=>[w.wikidata?.split('/').at(-1),w.id.startsWith('wd-')?w.id.slice(3):null]).filter(Boolean));
- for(const id of ['Q19883512','Q19801071'])if(!known.has(id))found.set(id,{id,links:0,groups:['requested']});
+ for(const id of plan?.works?.map(w=>w[0])||(!artistIds?['Q19883512','Q19801071']:[]))if(!known.has(id))found.set(id,{id,links:0,groups:['requested']});
  const candidates=[...found.values()].filter(row=>!known.has(row.id));await fs.writeFile(path.join(cache,'candidates.json'),JSON.stringify(candidates,null,2));
  console.log('new candidates',candidates.length);
 }
 if(process.argv.includes('--requested')){
  const rows=JSON.parse(await fs.readFile(path.join(cache,'candidates.json'),'utf8'));
- for(const id of ['Q19883512','Q19801071'])if(!rows.some(row=>row.id===id))rows.push({id,links:0,groups:['requested']});
+ for(const id of plan?.works?.map(w=>w[0])||['Q19883512','Q19801071'])if(!rows.some(row=>row.id===id))rows.push({id,links:0,groups:['requested']});
  await fs.writeFile(path.join(cache,'candidates.json'),JSON.stringify(rows,null,2));
- const files=['File:Richard Wagner (Auguste Renoir, 1882).jpg','File:Gustav Klimt - Hope, II - Google Art Project.jpg','File:David - Napoleon crossing the Alps - Malmaison1.jpg'];
- const value=await request(commons({action:'query',titles:files.join('|'),redirects:'1',prop:'imageinfo|categories',cllimit:'max',iiprop:'url|extmetadata|mime|size',iiurlwidth:'960'}),'requested-files');
+ const files=plan?Object.values(plan.requestedFiles||{}):['File:Richard Wagner (Auguste Renoir, 1882).jpg','File:Gustav Klimt - Hope, II - Google Art Project.jpg','File:David - Napoleon crossing the Alps - Malmaison1.jpg'];
+ const value=files.length?await request(commons({action:'query',titles:files.join('|'),redirects:'1',prop:'imageinfo|categories',cllimit:'max',iiprop:'url|extmetadata|mime|size',iiurlwidth:'960'}),'requested-files'):{query:{pages:[]}};
  await fs.writeFile(path.join(cache,'requested.json'),JSON.stringify(value));
 }
 if(process.argv.includes('--metadata')){

@@ -1,8 +1,52 @@
 {
   "version": 1,
-  "checked": "2026-10-09",
+  "checked": "2026-10-18",
   "selection": "100 bekannte Hauptwerke mit eigenem Wikipediaartikel und breiter Wikimedia-Rezeption; ausgewählt und auf die vier Quizangaben und eine gemeinfreie Commons-Bildfassung geprüft.",
   "works": [
+    {
+      "id": "wd-Q219831",
+      "title": "Die Nachtwache",
+      "artist": "Rembrandt van Rijn",
+      "source": "https://www.wikidata.org/wiki/Q219831",
+      "wikipedia": {
+        "title": "Die Nachtwache",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 58
+    },
+    {
+      "id": "wd-Q185372",
+      "title": "Das Mädchen mit dem Perlenohrgehänge",
+      "artist": "Jan Vermeer",
+      "source": "https://www.wikidata.org/wiki/Q185372",
+      "wikipedia": {
+        "title": "Das Mädchen mit dem Perlenohrring",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 72
+    },
+    {
+      "id": "wd-Q128910",
+      "title": "Das Abendmahl",
+      "artist": "Leonardo da Vinci",
+      "source": "https://www.wikidata.org/wiki/Q128910",
+      "wikipedia": {
+        "title": "Das Abendmahl (Leonardo da Vinci)",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 88
+    },
+    {
+      "id": "wd-Q12418",
+      "title": "Mona Lisa",
+      "artist": "Leonardo da Vinci",
+      "source": "https://www.wikidata.org/wiki/Q12418",
+      "wikipedia": {
+        "title": "Mona Lisa",
+        "language": "de"
+      },
+      "wikimediaSitelinks": 146
+    },
     {
       "id": "wd-Q45585",
       "title": "Sternennacht",
@@ -1056,50 +1100,6 @@
       "wikipedia": {
         "title": "Laocoön (El Greco)",
         "language": "en"
-      },
-      "wikimediaSitelinks": 17
-    },
-    {
-      "id": "wd-Q977777",
-      "title": "Proserpine",
-      "artist": "Dante Gabriel Rossetti",
-      "source": "https://www.wikidata.org/wiki/Q977777",
-      "wikipedia": {
-        "title": "Proserpine (Rossetti)",
-        "language": "en"
-      },
-      "wikimediaSitelinks": 17
-    },
-    {
-      "id": "wd-Q2273890",
-      "title": "Der heilige Markus befreit den gefesselten Sklaven",
-      "artist": "Jacopo Tintoretto",
-      "source": "https://www.wikidata.org/wiki/Q2273890",
-      "wikipedia": {
-        "title": "Sklavenwunder",
-        "language": "de"
-      },
-      "wikimediaSitelinks": 17
-    },
-    {
-      "id": "wd-Q2393412",
-      "title": "Vulkan überrascht Venus und Mars",
-      "artist": "Jacopo Tintoretto",
-      "source": "https://www.wikidata.org/wiki/Q2393412",
-      "wikipedia": {
-        "title": "Vulkan überrascht Venus und Mars",
-        "language": "de"
-      },
-      "wikimediaSitelinks": 17
-    },
-    {
-      "id": "wd-Q1167912",
-      "title": "Das Frühstück im Grünen",
-      "artist": "Claude Monet",
-      "source": "https://www.wikidata.org/wiki/Q1167912",
-      "wikipedia": {
-        "title": "Das Frühstück im Grünen (Monet)",
-        "language": "de"
       },
       "wikimediaSitelinks": 17
     }

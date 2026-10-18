@@ -36,8 +36,8 @@ test('failure review uses the last checked answers, preserves letters and distin
  assert.deepEqual(review[0].marking,{chosen:true,expected:false});assert.deepEqual(review[2].marking,{chosen:false,expected:true});
  assert.equal(JSON.stringify(state),before);assert.deepEqual(curator.failureReview({...state,phase:'playing'},fixtures),[]);assert.deepEqual(curator.failureReview({...state,phase:'unlocked'},fixtures),[]);
 });
-test('the 81 sourced profiles cover every technique and style of the full archive',()=>{
-  assert.equal(Object.keys(knowledge.techniques).length,26);assert.equal(Object.keys(knowledge.styles).length,55);
+test('the 82 sourced profiles cover every technique and style of the full archive',()=>{
+  assert.equal(Object.keys(knowledge.techniques).length,27);assert.equal(Object.keys(knowledge.styles).length,55);
   for(const group of ['techniques','styles']) for(const [name,profile] of Object.entries(knowledge[group])) {
     assert.ok(profile.definition&&profile.period&&profile.caution,name);assert.equal(profile.clues.length,3,name);
     assert.ok(profile.artists.length>=1,name);assert.ok(profile.sources.length>=1,name);

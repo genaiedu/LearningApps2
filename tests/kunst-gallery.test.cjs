@@ -36,7 +36,7 @@ test('a gallery-only file can contain the complete archive with no duplicate wor
  const at=Date.now(),g={...gallery.fresh(),liked:pool.map(w=>({id:w.id,source:'curated',at}))};g.film.items=pool.slice(0,10).map(w=>gallery.item(w.id));
  const payload={app:save.APP,version:save.VERSION,kind:'gallery',savedAt:at,gallery:g};
  const decoded=save.validate(await save.decode(await save.encode(payload)),pool,[],core,progress,history,gallery);
- assert.equal(decoded.gallery.liked.length,1807);assert.equal(new Set(decoded.gallery.liked.map(e=>e.id)).size,pool.length);assert.equal(decoded.galleryOnly,true);assert.equal(decoded.state,undefined);
+ assert.equal(decoded.gallery.liked.length,pool.length);assert.equal(new Set(decoded.gallery.liked.map(e=>e.id)).size,pool.length);assert.equal(decoded.galleryOnly,true);assert.equal(decoded.state,undefined);
  assert.equal(gallery.validateFilm(decoded.gallery),true);
 });
 function room(seed=8){return {...core.newState(pool,null,seeded(seed)),roomToken:progress.token(),runToken:progress.token(),parentRoomToken:null};}

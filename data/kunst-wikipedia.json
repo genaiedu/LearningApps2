@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-17",
+  "checked": "2026-10-18",
   "source": "https://www.wikidata.org/",
   "artists": {
     "Jacques Louis David": {
@@ -4816,6 +4816,454 @@
     "wd-Q14900433": {
       "title": "French Campaign, 1814 (Meissonier)",
       "language": "en"
+    },
+    "wd-Q12418": {
+      "title": "Mona Lisa",
+      "language": "de"
+    },
+    "wd-Q128910": {
+      "title": "Das Abendmahl (Leonardo da Vinci)",
+      "language": "de"
+    },
+    "wd-Q474338": {
+      "title": "Dame mit dem Hermelin",
+      "language": "de"
+    },
+    "wd-Q1267893": {
+      "title": "Bildnis der Ginevra de’ Benci",
+      "language": "de"
+    },
+    "wd-Q563727": {
+      "title": "Anna selbdritt (Leonardo da Vinci)",
+      "language": "de"
+    },
+    "wd-Q1142058": {
+      "title": "Madonna Benois",
+      "language": "de"
+    },
+    "wd-Q656434": {
+      "title": "La Belle Ferronnière",
+      "language": "de"
+    },
+    "wd-Q783215": {
+      "title": "Johannes der Täufer (Leonardo da Vinci)",
+      "language": "de"
+    },
+    "wd-Q1217213": {
+      "title": "Die Verkündigung (Leonardo da Vinci)",
+      "language": "de"
+    },
+    "wd-Q698015": {
+      "title": "Madonna mit der Nelke",
+      "language": "de"
+    },
+    "wd-Q2338404": {
+      "title": "Bildnis eines Musikers",
+      "language": "de"
+    },
+    "wd-Q972196": {
+      "title": "Der heilige Hieronymus (Leonardo da Vinci)",
+      "language": "de"
+    },
+    "wd-Q3027255": {
+      "title": "Dido building Carthage",
+      "language": "en"
+    },
+    "wd-Q1772871": {
+      "title": "The Battle of Trafalgar (Turner)",
+      "language": "en"
+    },
+    "wd-Q3412132": {
+      "title": "Fishermen at Sea",
+      "language": "en"
+    },
+    "wd-Q3646554": {
+      "title": "Snow Storm: Hannibal and his Army Crossing the Alps",
+      "language": "en"
+    },
+    "wd-Q22977128": {
+      "title": "Dolbadarn Castle (Turner)",
+      "language": "en"
+    },
+    "wd-Q1652056": {
+      "title": "Sunrise with Sea Monsters",
+      "language": "de"
+    },
+    "wd-Q6888851": {
+      "title": "Modern Rome – Campo Vaccino",
+      "language": "en"
+    },
+    "wd-Q15149679": {
+      "title": "Chichester Canal (painting)",
+      "language": "en"
+    },
+    "wd-Q28537062": {
+      "title": "The Golden Bough (painting)",
+      "language": "en"
+    },
+    "wd-Q7733769": {
+      "title": "The Fifth Plague of Egypt",
+      "language": "en"
+    },
+    "wd-Q27410621": {
+      "title": "Peace – Burial at Sea",
+      "language": "en"
+    },
+    "wd-Q3794814": {
+      "title": "Calais Pier",
+      "language": "en"
+    },
+    "wd-Q16038417": {
+      "title": "Dutch Boats in a Gale",
+      "language": "en"
+    },
+    "wd-Q28540935": {
+      "title": "Apollo and Python",
+      "language": "en"
+    },
+    "wd-Q28539779": {
+      "title": "Norham Castle, Sunrise",
+      "language": "en"
+    },
+    "wd-Q2843869": {
+      "title": "Ancient Rome – Agrippina Landing with the Ashes of Germanicus",
+      "language": "en"
+    },
+    "wd-Q3213272": {
+      "title": "Crossing the Brook",
+      "language": "en"
+    },
+    "wd-Q4009608": {
+      "title": "Venice from the Giudecca",
+      "language": "en"
+    },
+    "wd-Q18687275": {
+      "title": "The Shipwreck (Turner)",
+      "language": "en"
+    },
+    "wd-Q22329821": {
+      "title": "Dort or Dordrecht: The Dort Packet-boat from Rotterdam Becalmed",
+      "language": "en"
+    },
+    "wd-Q25445073": {
+      "title": "The Wreck of a Transport Ship",
+      "language": "en"
+    },
+    "wd-Q25445077": {
+      "title": "Quillebeuf, Mouth of the Seine",
+      "language": "en"
+    },
+    "wd-Q26706280": {
+      "title": "The Evening Star (painting)",
+      "language": "en"
+    },
+    "wd-Q219831": {
+      "title": "Die Nachtwache",
+      "language": "de"
+    },
+    "wd-Q661378": {
+      "title": "Die Anatomie des Dr. Tulp",
+      "language": "de"
+    },
+    "wd-Q766782": {
+      "title": "Die Judenbraut",
+      "language": "de"
+    },
+    "wd-Q2246489": {
+      "title": "Christus im Sturm auf dem See Genezareth (Rembrandt)",
+      "language": "de"
+    },
+    "wd-Q512755": {
+      "title": "Die Rückkehr des verlorenen Sohnes (Rembrandt)",
+      "language": "de"
+    },
+    "wd-Q2294441": {
+      "title": "Danaë (Rembrandt)",
+      "language": "en"
+    },
+    "wd-Q1167932": {
+      "title": "Das Gastmahl des Belsazar",
+      "language": "de"
+    },
+    "wd-Q2404992": {
+      "title": "Aristotle with a Bust of Homer",
+      "language": "en"
+    },
+    "wd-Q1170480": {
+      "title": "Die Vorsteher der Tuchmacherzunft",
+      "language": "de"
+    },
+    "wd-Q32496": {
+      "title": "Bathsheba at Her Bath (Rembrandt)",
+      "language": "en"
+    },
+    "wd-Q325267": {
+      "title": "Moses zerschmettert die Gesetzestafeln",
+      "language": "de"
+    },
+    "wd-Q1111394": {
+      "title": "Rembrandt und Saskia im Gleichnis vom verlorenen Sohn",
+      "language": "de"
+    },
+    "wd-Q1243299": {
+      "title": "The Abduction of Europa (Rembrandt)",
+      "language": "en"
+    },
+    "wd-Q2225699": {
+      "title": "Saskia als Flora",
+      "language": "de"
+    },
+    "wd-Q3630751": {
+      "title": "Self-Portrait at the Age of 34",
+      "language": "en"
+    },
+    "wd-Q3646498": {
+      "title": "Slaughtered Ox",
+      "language": "en"
+    },
+    "wd-Q3874247": {
+      "title": "The Denial of Saint Peter (Rembrandt)",
+      "language": "en"
+    },
+    "wd-Q740212": {
+      "title": "Jeremia beklagt die Zerstörung Jerusalems",
+      "language": "de"
+    },
+    "wd-Q2267759": {
+      "title": "Selbstporträt als Apostel Paulus",
+      "language": "de"
+    },
+    "wd-Q3630743": {
+      "title": "Self-Portrait at the Age of 63",
+      "language": "en"
+    },
+    "wd-Q571416": {
+      "title": "Rubens und Isabella Brant in der Geißblattlaube",
+      "language": "de"
+    },
+    "wd-Q2268524": {
+      "title": "The Three Graces (Rubens, Madrid)",
+      "language": "en"
+    },
+    "wd-Q2667782": {
+      "title": "The Descent from the Cross (Rubens, 1612–1614)",
+      "language": "en"
+    },
+    "wd-Q3940915": {
+      "title": "Romulus and Remus (Rubens)",
+      "language": "en"
+    },
+    "wd-Q3788158": {
+      "title": "Das Pelzchen",
+      "language": "de"
+    },
+    "wd-Q203259": {
+      "title": "Der Höllensturz der Verdammten",
+      "language": "de"
+    },
+    "wd-Q3885854": {
+      "title": "The Birth of the Milky Way",
+      "language": "en"
+    },
+    "wd-Q3930498": {
+      "title": "The Rape of Ganymede (Rubens)",
+      "language": "en"
+    },
+    "wd-Q3636299": {
+      "title": "The Battle of the Amazons (Rubens)",
+      "language": "en"
+    },
+    "wd-Q6122115": {
+      "title": "Saturn (Rubens)",
+      "language": "en"
+    },
+    "wd-Q1134060": {
+      "title": "Susanna and the Elders (Rubens)",
+      "language": "en"
+    },
+    "wd-Q2894005": {
+      "title": "The Four Philosophers",
+      "language": "en"
+    },
+    "wd-Q544488": {
+      "title": "The Tiger Hunt",
+      "language": "en"
+    },
+    "wd-Q2529962": {
+      "title": "Perseus Freeing Andromeda (Rubens)",
+      "language": "en"
+    },
+    "wd-Q3399422": {
+      "title": "Marchesa Brigida Spinola-Doria",
+      "language": "en"
+    },
+    "wd-Q3630731": {
+      "title": "Self-Portrait (Rubens, Vienna)",
+      "language": "en"
+    },
+    "wd-Q3900153": {
+      "title": "Perseus and Andromeda (Rubens)",
+      "language": "en"
+    },
+    "wd-Q5961888": {
+      "title": "Adoration of the Magi (Rubens, Madrid)",
+      "language": "en"
+    },
+    "wd-Q9366873": {
+      "title": "The Fall of Phaeton (Rubens)",
+      "language": "en"
+    },
+    "wd-Q8353711": {
+      "title": "Daniel in the Lions' Den (Rubens)",
+      "language": "en"
+    },
+    "wd-Q9199625": {
+      "title": "The Four Continents",
+      "language": "en"
+    },
+    "wd-Q3788155": {
+      "title": "Helena Fourment with Children",
+      "language": "en"
+    },
+    "wd-Q4684623": {
+      "title": "Adoration of the Magi (Rubens, Lyon)",
+      "language": "en"
+    },
+    "wd-Q185372": {
+      "title": "Das Mädchen mit dem Perlenohrring",
+      "language": "de"
+    },
+    "wd-Q167605": {
+      "title": "Dienstmagd mit Milchkrug",
+      "language": "de"
+    },
+    "wd-Q523974": {
+      "title": "Ansicht von Delft",
+      "language": "de"
+    },
+    "wd-Q588695": {
+      "title": "Die Malkunst",
+      "language": "de"
+    },
+    "wd-Q586035": {
+      "title": "Straße in Delft",
+      "language": "de"
+    },
+    "wd-Q700251": {
+      "title": "Briefleserin am offenen Fenster",
+      "language": "de"
+    },
+    "wd-Q969367": {
+      "title": "Frau mit Waage",
+      "language": "de"
+    },
+    "wd-Q45130": {
+      "title": "Der Geograph",
+      "language": "de"
+    },
+    "wd-Q166937": {
+      "title": "Briefleserin in Blau",
+      "language": "de"
+    },
+    "wd-Q1169395": {
+      "title": "Das Konzert (Vermeer)",
+      "language": "de"
+    },
+    "wd-Q2336984": {
+      "title": "Die Musikstunde (Vermeer)",
+      "language": "de"
+    },
+    "wd-Q63692": {
+      "title": "Bei der Kupplerin",
+      "language": "de"
+    },
+    "wd-Q467376": {
+      "title": "Der Soldat und das lachende Mädchen",
+      "language": "de"
+    },
+    "wd-Q386453": {
+      "title": "Junge Frau mit Wasserkanne am Fenster",
+      "language": "de"
+    },
+    "wd-Q927449": {
+      "title": "Christus bei Maria und Martha",
+      "language": "de"
+    },
+    "wd-Q1169874": {
+      "title": "Das Mädchen mit dem Weinglas",
+      "language": "de"
+    },
+    "wd-Q684935": {
+      "title": "Schlafendes Mädchen",
+      "language": "de"
+    },
+    "wd-Q32234": {
+      "title": "Diana mit ihren Gefährtinnen",
+      "language": "de"
+    },
+    "wd-Q151143": {
+      "title": "Junge Dame mit Perlenhalsband",
+      "language": "de"
+    },
+    "wd-Q467359": {
+      "title": "Allegorie des Glaubens",
+      "language": "de"
+    },
+    "wd-Q614047": {
+      "title": "Girl with a Red Hat",
+      "language": "en"
+    },
+    "wd-Q641666": {
+      "title": "Briefschreiberin und Dienstmagd",
+      "language": "de"
+    },
+    "wd-Q735061": {
+      "title": "Der Liebesbrief",
+      "language": "de"
+    },
+    "wd-Q2624258": {
+      "title": "Lady Standing at a Virginal",
+      "language": "en"
+    },
+    "wd-Q958088": {
+      "title": "Study of a Young Woman",
+      "language": "en"
+    },
+    "wd-Q2267440": {
+      "title": "Lady Seated at a Virginal",
+      "language": "en"
+    },
+    "wd-Q1219698": {
+      "title": "Die unterbrochene Musikstunde",
+      "language": "de"
+    },
+    "wd-Q3739396": {
+      "title": "Dame mit Dienstmagd und Brief",
+      "language": "de"
+    },
+    "wd-Q839359": {
+      "title": "Lautenspielerin am Fenster",
+      "language": "de"
+    },
+    "wd-Q4358442": {
+      "title": "The Guitar Player (Vermeer)",
+      "language": "en"
+    },
+    "wd-Q1216387": {
+      "title": "Die Spitzenklöpplerin (Vermeer)",
+      "language": "de"
+    },
+    "wd-Q782639": {
+      "title": "Herr und Dame beim Wein",
+      "language": "de"
+    },
+    "wd-Q914984": {
+      "title": "Briefschreiberin in Gelb",
+      "language": "de"
+    },
+    "wd-Q1195610": {
+      "title": "Der Mann mit dem Goldhelm",
+      "language": "de"
     }
   },
   "styles": {

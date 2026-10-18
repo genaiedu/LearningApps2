@@ -61,8 +61,14 @@ test('documented archive, individually free images and explicit ancient anonymou
     assert.ok(work.styleTerms.includes(work.styleOriginal),work.id);
     if(work.attribution==='unknown') {
       assert.equal(work.artist,'Unbekannter Künstler'); assert.equal(work.artistDeath,null);
-      assert.equal(work.rightsBasis,'Ancient work; museum Open Access');
-      assert.ok(work.dateStart>=-10000 && work.dateEnd<=600 && work.dateStart<=work.dateEnd);
+      if(work.id==='wd-Q1195610') {
+        assert.equal(work.rightsBasis,'Reviewed anonymous 17th-century painting; museum attribution and PD image');
+        assert.equal(work.dateStart,1650); assert.equal(work.dateEnd,1660);
+        assert.equal(work.catalogueSource,'https://search.smb.museum/object/obj-865524');
+      } else {
+        assert.equal(work.rightsBasis,'Ancient work; museum Open Access');
+        assert.ok(work.dateStart>=-10000 && work.dateEnd<=600 && work.dateStart<=work.dateEnd);
+      }
       assert.equal(wiki.artists[work.artist].unknown,true);
     } else assert.ok(work.artistDeath > 1300 && work.artistDeath <= 1955,work.id);
     assert.ok(['www.artic.edu','www.wikidata.org','www.clevelandart.org','www.metmuseum.org'].includes(new URL(work.source).hostname));
@@ -147,7 +153,7 @@ test('image download is offered only for individually verified Public Domain / C
   for (const work of pool.filter(core.canDownload)) {
     const host=new URL(work.imageOriginalURL).hostname;
     assert.ok(['upload.wikimedia.org','www.artic.edu','openaccess-cdn.clevelandart.org','images.metmuseum.org'].includes(host),work.id);
-    assert.match(work.downloadRightsChecked,/^2026-10-(09|11|17)$/);
+    assert.match(work.downloadRightsChecked,/^2026-10-(09|11|17|18)$/);
     if(host==='upload.wikimedia.org')assert.ok(work.imageBytes > 0);
     assert.ok(work.imageMime.startsWith('image/'));
   }

@@ -1068,7 +1068,7 @@
       }
       sources.append(node('p','small','Quellenangabe zu Material / Technik: ' + work.medium + '. ' + (work.styleSource?.startsWith('Redaktion') ? 'Einordnung: ' + work.styleSource : 'Dokumentierter Stil: ' + work.styleOriginal) + '.'));
       if(work.dateOriginal && work.dateOriginal!==work.date) sources.append(node('p','small','Originale Datierungsangabe der Werkquelle: '+work.dateOriginal+'.'));
-      if(work.attribution==='unknown') sources.append(node('p','small','Der Name des Urhebers ist nicht überliefert. Dargestellte Personen wie Gudea oder Amenophis sind nicht als Künstlernamen zu verstehen.'));
+      if(work.attribution==='unknown') sources.append(node('p','small',work.id==='wd-Q1195610'?'Der Urheber ist nicht gesichert. Die frühere Rembrandt-Zuschreibung wird im Kuratorhinweis erläutert.':'Der Name des Urhebers ist nicht überliefert. Dargestellte Personen wie Gudea oder Amenophis sind nicht als Künstlernamen zu verstehen.'));
       const source = node('a','small',work.metadataProvider==='Wikidata'?'Werkdatensatz & Nachweise ↗':'Originalwerk & Museumsdaten ↗'); source.href = work.source; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.referrerPolicy = 'no-referrer'; sources.append(source);
       if (work.catalogueSource) {
         const catalogue=node('a','small','Weiterführender Werknachweis ↗');
@@ -1274,9 +1274,9 @@
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
-  const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261017-portraets-bildrunde',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
-  const filmTextRequest=fetch('data/kunst-filmtexte.json?v=20261011-galeriefilm',{credentials:'same-origin'}).then(response=>response.ok?response.json():null).catch(()=>null);
-  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261017-portraets-bildrunde',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest,filmTextRequest])
+  const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261018-hauptmeister',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
+  const filmTextRequest=fetch('data/kunst-filmtexte.json?v=20261018-hauptmeister',{credentials:'same-origin'}).then(response=>response.ok?response.json():null).catch(()=>null);
+  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261018-hauptmeister',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest,filmTextRequest])
     .then(([data,media,wiki,landmarks,titles,knowledge,filmTexts]) => {
       if(resetInProgress)return;
       wikiCatalogue = wiki;

@@ -74,6 +74,13 @@ test('won curator keeps normal order and does not show a failure review',async t
  assert.equal(app.q('#solution-review').hidden,true);assert.equal(app.q('.curator-corrections'),null);
  assert.deepEqual([...app.q('#solutions').children].map(card=>card.dataset.solutionWork),['0','1','2','3','4','5','6']);
 });
+test('Goldhelm museum note is visibly retained when the AI curator replaces personal feedback',async t=>{
+ const core=model.KunstTresor,chosen=[pool.find(w=>w.id==='wd-Q1195610')];for(const work of pool)if(chosen.length<7&&core.compatible(chosen,work))chosen.push(work);
+ let state=core.newState(chosen,null,Math.random,false,{});for(const id of state.ids)for(const field of core.fieldsFor(state))state=core.choose(state,id,field,pool.find(w=>w.id===id)[field]);state=core.inspect(state,pool).state;
+ const app=await setup(t,{state,preferences:{'kunsttresor-ai-consent-v2-wall':'yes','kunsttresor-ai-enabled-v1-wall':'yes'}});app.click('launch-read');app.click('show-solution');await settle();
+ const note=app.q('.curator-work-note');assert.ok(note);assert.match(note.textContent,/1986/);assert.match(note.textContent,/nicht Rembrandt/);assert.match(note.textContent,/keine KI-Fälschung/);assert.equal(note.hidden,false);
+ app.q('#solution-dialog [data-ai-toggle]').click();assert.equal(app.q('.curator-work-note').textContent,note.textContent);
+});
 test('gallery-only import previews and merges curated works without changing game, badges, record or history',async t=>{
  const app=await setup(t);app.click('launch-skip');const before=stored(app.w.localStorage),ids=pool.slice(0,24).map(w=>w.id),at=Date.now();
  const gallery={...app.w.KunstGallery.fresh(),liked:ids.map(id=>({id,source:'curated',at})),film:{name:'Testgalerie',motto:'Test',items:ids.slice(0,10).map(app.w.KunstGallery.item)}};
@@ -89,7 +96,7 @@ test('gallery filter controls combine, count, sort and reset without changing li
  const at=Date.now(),gallery={...model.KunstGallery.fresh(),liked:pool.map(w=>({id:w.id,source:'curated',at}))};gallery.film.items=pool.slice(0,10).map(w=>model.KunstGallery.item(w.id));
  const app=await setup(t,{gallery});app.click('launch-read');app.click('game-gallery');
  const before=stored(app.w.localStorage),cards=()=>[...app.q('#gallery-grid').querySelectorAll('.gallery-card')].map(c=>c.dataset.work);
- assert.equal(cards().length,1807);assert.match(app.q('#gallery-results').textContent,/1\.807 von 1\.807/);
+ assert.equal(cards().length,pool.length);assert.ok(app.q('#gallery-results').textContent.includes(pool.length.toLocaleString('de-DE')+' von '+pool.length.toLocaleString('de-DE')));
  const choose=(id,value)=>{app.q('#'+id).value=value;app.q('#'+id).dispatchEvent(new app.w.Event('change'));};
  const target=pool.find(w=>w.artist==='Claude Monet');assert.ok(target);
  choose('gallery-filter-artist',target.artist);assert.ok(cards().length>1);assert.ok(cards().every(id=>pool.find(w=>w.id===id).artist===target.artist));
