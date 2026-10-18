@@ -11,7 +11,7 @@ test('four real viewport profiles include the large portrait monitor, tablet and
 test('unknown profiles and navigation targets cannot select arbitrary URLs or elements',()=>{
   assert.deepEqual(F.settings({device:'toString',scene:'javascript:evil',view:'url(evil)',rotated:'true'}),F.settings());
   assert.equal(F.settings({device:'phone',scene:'herobereiche',view:'actual',rotated:true}).scene,'herobereiche');
-  assert.ok(ui.includes("frame.src='typografie-atelier.html?format-preview=1'"));assert.ok(!ui.includes('frame.src=current.scene'));
+  assert.ok(ui.includes("frame.src='typografie-atelier.html?format-preview=1&v=20261018-start-am-anfang'"));assert.ok(!ui.includes('frame.src=current.scene'));
 });
 test('overview scales a fully laid-out viewport while actual-size view never changes its dimensions',()=>{
   assert.equal(F.scale({device:'desktop'},720,900),.5);
@@ -41,7 +41,7 @@ test('preview loads automatically once and remains loaded across format changes 
   frame.contentWindow={postMessage(message){messages.push(message);}};
   Object.assign(elements['format-stage'],{clientWidth:1000,clientHeight:600,scrollTo(){}});
   vm.runInNewContext(ui,{window:{TypoFormats:F},document:{getElementById:id=>elements[id],querySelectorAll:()=>buttons,body:{classList:{contains:()=>false}}},location:{origin:'https://example.test',search:''},URLSearchParams,ResizeObserver:class{observe(){}},addEventListener(type,handler){events[type]=handler;}});
-  assert.equal(navigations,1);assert.equal(frame.src,'typografie-atelier.html?format-preview=1');
+  assert.equal(navigations,1);assert.equal(frame.src,'typografie-atelier.html?format-preview=1&v=20261018-start-am-anfang');
   assert.equal(elements['format-jump'].disabled,true);frame.handlers.load();assert.equal(elements['format-jump'].disabled,false);
   buttons.find(b=>b.dataset.formatDevice==='phone').handlers.click();assert.equal(frame.style.width,'390px');
   elements['format-rotate'].handlers.click();assert.equal(frame.style.width,'844px');
@@ -49,6 +49,38 @@ test('preview loads automatically once and remains loaded across format changes 
   assert.ok(messages.length>=4);assert.ok(messages.every(m=>m.type==='typography-format-config'));
   events.message({source:frame.contentWindow,origin:'https://example.test',data:{type:'typography-format-status',width:1440,height:900,contentWidth:1440}});
   assert.ok(elements['format-status'].textContent.includes('Kein horizontaler Seitenüberstand'));
+});
+test('preview navigation scrolls only its own window, respects sticky offsets and never reveals the outer iframe',()=>{
+  const events={},scrolls=[],parent={postMessage(){}},root={classList:{add(){}}};
+  const anchors={start:{top:0},webgrafik:{top:600},'hero-vergleich':{top:1200}};
+  for(const anchor of Object.values(anchors))Object.assign(anchor,{getBoundingClientRect(){return {top:this.top};},scrollIntoView(){throw Error('Must not scroll ancestor frames');}});
+  const window={TypoFormats:F,scrollY:25,scrollTo(options){scrolls.push({...options});}};
+  vm.runInNewContext(ui,{window,parent,location:{origin:'https://example.test',search:'?format-preview=1'},URLSearchParams,
+    document:{documentElement:root,body:{},getElementById:id=>anchors[id],fonts:{ready:Promise.resolve()}},
+    getComputedStyle:element=>element===root?{scrollPaddingTop:'140px'}:{scrollMarginTop:'12px'},
+    addEventListener(type,handler){events[type]=handler;},requestAnimationFrame:()=>1,ResizeObserver:class{observe(){}}});
+  const send=(data,source=parent,origin='https://example.test')=>events.message({source,origin,data:{type:'typography-format-config',...data}});
+  send({scene:'webgrafik',jump:true},{},'https://foreign.test');assert.equal(scrolls.length,0);
+  send({scene:'webgrafik',jump:false});assert.equal(scrolls.length,0);
+  send({scene:'webgrafik',jump:true});assert.deepEqual(scrolls.at(-1),{top:473,left:0,behavior:'instant'});
+  send({scene:'herobereiche',jump:true});assert.equal(scrolls.at(-1).top,1073);
+  send({scene:'start',jump:true});assert.equal(scrolls.at(-1).top,0);
+});
+test('plain openings and restored visits start at the top, while explicit chapter links remain intact',()=>{
+  const startup=html.match(/<script>\s*([\s\S]*?)<\/script>/)[1];
+  for(const hash of ['', '#katalog']){
+    const events={},scrolls=[],frames=[],history={scrollRestoration:'auto'};
+    vm.runInNewContext(startup,{history,location:{hash},window:{addEventListener(type,handler){events[type]=handler;},scrollTo(options){scrolls.push({...options});}},requestAnimationFrame:callback=>frames.push(callback)});
+    assert.equal(history.scrollRestoration,'manual');
+    for(const persisted of [false,true]){events.pageshow({persisted});while(frames.length)frames.shift()();}
+    assert.equal(scrolls.length,hash?0:4);
+    for(const scroll of scrolls)assert.deepEqual(scroll,{top:0,left:0,behavior:'instant'});
+  }
+});
+test('the embedded page and its navigation script use the same fresh cache key',()=>{
+  const version=html.match(/scripts\/typografie-formate\.js\?v=([^"&]+)/)[1];
+  const url=new URL(ui.match(/frame.src='([^']+)'/)[1],'https://example.test/');
+  assert.equal(url.searchParams.get('v'),version);assert.equal(url.searchParams.get('format-preview'),'1');
 });
 test('format comparison has named controls, inherited motion pause and an honest limit statement',()=>{
   for(const id of ['format-scene','format-view','format-rotate','format-jump','format-reset','format-size','format-scale','format-status'])assert.ok(html.includes('id="'+id+'"'));

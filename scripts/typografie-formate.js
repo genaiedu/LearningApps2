@@ -21,7 +21,16 @@
         parentPaused=event.data.paused;
         const button=$('motion-toggle');if(button&&document.body.classList.contains('motion-paused')!==parentPaused)button.click();
       }
-      if(event.data.jump===true){const anchor=$(s.scene==='herobereiche'?'hero-vergleich':s.scene);if(anchor)anchor.scrollIntoView({block:'start',behavior:'instant'});}
+      if(event.data.jump===true){
+        const anchor=$(s.scene==='herobereiche'?'hero-vergleich':s.scene);
+        if(anchor){
+          // scrollIntoView also scrolls ancestor frames and would pull the
+          // outer atelier down to this preview while it is still loading.
+          const padding=parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||0;
+          const margin=parseFloat(getComputedStyle(anchor).scrollMarginTop)||0;
+          window.scrollTo({top:Math.max(0,anchor.getBoundingClientRect().top+window.scrollY-padding-margin),left:0,behavior:'instant'});
+        }
+      }
       schedule();
     });
     addEventListener('resize',schedule,{passive:true});addEventListener('load',schedule);
@@ -66,5 +75,5 @@
   addEventListener('typography-motion-change',()=>config());
   addEventListener('typography-appearance-change',()=>config());
   new ResizeObserver(sizing).observe(stage);update();
-  frame.src='typografie-atelier.html?format-preview=1';
+  frame.src='typografie-atelier.html?format-preview=1&v=20261018-start-am-anfang';
 })();
