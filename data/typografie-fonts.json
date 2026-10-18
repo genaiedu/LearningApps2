@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-11",
+  "checked": "2026-10-18",
   "families": [
     {
       "name": "Poppins",
@@ -4901,6 +4901,59 @@
         ],
         "source": "https://github.com/google/fonts/blob/main/ofl/arimo/DESCRIPTION.en_us.html"
       }
+    },
+    {
+      "name": "Fondamento",
+      "id": "fondamento",
+      "group": "script",
+      "classification": "Kalligrafische Buchhand · Foundational Hand",
+      "advice": "Breite Federzüge für kalligrafische Titel und historische Buchproben. Im Atelier trägt sie den Kohelet mit mittelalterlicher Anmutung; die Lesbarkeit längerer Texte am tatsächlichen Satz prüfen.",
+      "designer": "Brian J. Bonislawsky / Astigmatic",
+      "license": "SIL OFL 1.1",
+      "source": "https://github.com/google/fonts/tree/main/ofl/fondamento",
+      "licensePath": "../LearningApps/fonts/fondamento/OFL.txt",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/fondamento/Fondamento-Regular.ttf",
+          "weight": 400,
+          "style": "normal",
+          "axes": {},
+          "sha256": "ee03a7ccb3b7cdf3cd095d0cc34f9e70c16b1779cbc7c466bf9077323a6ea764"
+        },
+        {
+          "path": "../LearningApps/fonts/fondamento/Fondamento-Italic.ttf",
+          "weight": 400,
+          "style": "italic",
+          "axes": {},
+          "sha256": "8303c76ccfaf81a065c3653a1d559f76e8223a3200a79451d5dedd33cebbef9e"
+        }
+      ],
+      "uses": [
+        {"repo": "LearningApps2", "path": "typografie-atelier.html"},
+        {"repo": "LearningApps2", "path": "schriftsetzer.html"}
+      ],
+      "features": ["aalt", "frac", "kern", "liga", "ordn", "sups"],
+      "desktop": "../LearningApps/fonts/fondamento/Fondamento-Regular.ttf",
+      "new": true,
+      "portrait": {
+        "history": "Brian J. Bonislawsky / Astigmatic gestaltete Fondamento auf Grundlage der Foundational Hand. Diese kalligrafische Lehrschrift entwickelte Edward Johnston im frühen 20. Jahrhundert. Die breiten Federzüge erinnern an ältere Buchhände; Fondamento ist jedoch keine Digitalisierung einer bestimmten mittelalterlichen Handschrift.",
+        "character": "Ruhige, deutlich federbetonte Buchstaben mit kalligrafischem Rhythmus. Der aufrechte Schnitt und die echte Kursive besitzen beide Gewicht 400.",
+        "use": "Kalligrafische Titel, kurze feierliche Texte und bewusst historische Satzproben. Im Atelier wird der vollständige lateinische Kohelet damit gesetzt; in der Schriftsetzer-App bleibt die Schrift frei wählbar.",
+        "caution": "Nur Regular und Italic sind vorhanden, kein echter Fettschnitt. Keine künstliche Fettung als Originalschnitt ausgeben. Die Dateien enthalten Standardligaturen, aber keine umschaltbaren Mediävalziffern. Für lange moderne Gebrauchstexte eine ruhigere Leseschrift vergleichen.",
+        "pairings": [
+          {
+            "id": "firasans",
+            "role": "Orientierung und Erläuterungen",
+            "reason": "Die sachliche humanistische Sans trennt heutige Hinweise deutlich von der kalligrafischen Buchprobe."
+          },
+          {
+            "id": "ebgaramond",
+            "role": "Längere Lesepassagen",
+            "reason": "Die ruhige Renaissance-Antiqua übernimmt den längeren Lesetext, Fondamento setzt einen bewusst kalligrafischen Auftakt."
+          }
+        ],
+        "source": "https://github.com/google/fonts/blob/main/ofl/fondamento/DESCRIPTION.en_us.html"
+      }
     }
   ],
   "existingFamilies": 18,
@@ -4969,6 +5022,6 @@
     }
   ],
   "portraitNote": "Unsere Kombinationen folgen klaren Gestaltungsmaßstäben: Lesbarkeit, eine erkennbare Rangordnung, bewusster Formkontrast und wenige gut begründete Mittel. Sie sind Ausgangspunkte für eigene Entwürfe. Prüfe sie mit deinem Text und in der vorgesehenen Größe.",
-  "portraitChecked": "2026-10-17",
+  "portraitChecked": "2026-10-18",
   "desktopCollection": "fonts/typografie/alle-schriftfamilien-desktop.zip"
 }

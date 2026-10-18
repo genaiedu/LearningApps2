@@ -53,7 +53,7 @@ def inspect_family(family):
 
 def build():
     catalogue = json.loads((ROOT / 'data/typografie-fonts.json').read_text())
-    return {'checked':'2026-10-11','requiredGerman':GERMAN,'optionalCharacters':OPTIONAL,
+    return {'checked':'2026-10-18','requiredGerman':GERMAN,'optionalCharacters':OPTIONAL,
             'scope':'Tatsächliche lokale Webdateien des Schriftarchivs, nicht alle bei Google erhältlichen Schnitte. cmap-Zeichenzuordnung, OS/2, fvar und OpenType-Tags; kein automatischer Lesbarkeits- oder Lizenzrechtsentscheid.',
             'families':[inspect_family(f) for f in catalogue['families']]}
 

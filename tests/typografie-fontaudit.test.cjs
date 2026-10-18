@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'..'),A=require('../scripts/typografie-fontaudit.js'),catalogue=require('../data/typografie-fonts.json'),audit=require('../data/typografie-fontaudit.json');
-test('all 40 font audits refer to unchanged real local font files',()=>{
- assert.equal(audit.families.length,40);assert.equal(audit.families.reduce((n,f)=>n+f.files.length,0),126);
+test('all 41 font audits refer to unchanged real local font files',()=>{
+ assert.equal(audit.families.length,41);assert.equal(audit.families.reduce((n,f)=>n+f.files.length,0),128);
  for(const f of catalogue.families){const a=audit.families.find(a=>a.id===f.id);assert.equal(a.name,f.name);assert.deepEqual(a.files.map(x=>x.path),f.files.map(x=>x.path));
   for(const file of [...a.files,...a.opticalFiles])assert.equal(file.sha256,crypto.createHash('sha256').update(fs.readFileSync(path.resolve(root,file.path))).digest('hex'));
  }

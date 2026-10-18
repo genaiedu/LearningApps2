@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-11",
+  "checked": "2026-10-18",
   "requiredGerman": "ÄÖÜäöüß",
   "optionalCharacters": "ẞ€„“–",
   "scope": "Tatsächliche lokale Webdateien des Schriftarchivs, nicht alle bei Google erhältlichen Schnitte. cmap-Zeichenzuordnung, OS/2, fvar und OpenType-Tags; kein automatischer Lesbarkeits- oder Lizenzrechtsentscheid.",
@@ -4682,6 +4682,66 @@
       "opticalFiles": [],
       "germanMissing": "",
       "optionalMissing": "",
+      "licensePresent": true
+    },
+    {
+      "id": "fondamento",
+      "name": "Fondamento",
+      "files": [
+        {
+          "path": "../LearningApps/fonts/fondamento/Fondamento-Regular.ttf",
+          "sha256": "ee03a7ccb3b7cdf3cd095d0cc34f9e70c16b1779cbc7c466bf9077323a6ea764",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": false,
+          "axes": {},
+          "features": [
+            "aalt",
+            "frac",
+            "kern",
+            "liga",
+            "ordn",
+            "sups"
+          ],
+          "kernTable": false
+        },
+        {
+          "path": "../LearningApps/fonts/fondamento/Fondamento-Italic.ttf",
+          "sha256": "8303c76ccfaf81a065c3653a1d559f76e8223a3200a79451d5dedd33cebbef9e",
+          "germanMissing": "",
+          "optionalMissing": "ẞ",
+          "longSPresent": false,
+          "weight": [
+            400,
+            400
+          ],
+          "italic": true,
+          "axes": {},
+          "features": [
+            "aalt",
+            "frac",
+            "kern",
+            "liga",
+            "ordn",
+            "sups"
+          ],
+          "kernTable": false
+        }
+      ],
+      "cuts": {
+        "regular": true,
+        "bold": false,
+        "italic": true,
+        "boldItalic": false
+      },
+      "opticalFiles": [],
+      "germanMissing": "",
+      "optionalMissing": "ẞ",
       "licensePresent": true
     }
   ]

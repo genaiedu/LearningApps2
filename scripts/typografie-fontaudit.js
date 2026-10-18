@@ -4,6 +4,7 @@
   const count=(audit,test)=>audit.files.filter(test).length;
   const feature=(audit,test)=>count(audit,r=>r.features.some(test));
   const pairings={
+    fondamento:[['Fira Sans','Kalligrafische Buchprobe mit klarer heutiger Orientierung'],['EB Garamond','Kalligrafischer Auftakt und ruhiger längerer Lesetext']],
     courierprime:[['Special Elite','Abgenutzter Titel und sauberer Schreibmaschinentext'],['Source Sans 3','Manuskripttext und klare sachliche Orientierung']],
     tinos:[['Arimo','Times-naher Lesetext mit sachlicher Sans-Orientierung'],['Source Sans 3','Kompakter Dokumententext, offene humanistische Zwischentitel']],
     arimo:[['Tinos','Sachliche Grotesktitel und kompakter Antiquatext'],['EB Garamond','Nüchterne Orientierung und lebendiger Buchtext']],
