@@ -4,7 +4,10 @@
   if(!A||!$('theme-toggle')||!$('page-glyph-toggle')||!$('appearance-dialog'))return;
   const root=document.documentElement,reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const dialog=$('appearance-dialog'),openers=document.querySelectorAll('#theme-toggle,[data-page-theme]');
-  let current=A.settings(),pending=0,lastOpener=null;
+  const appearanceKey='typografie-atelier-appearance',preview=new URLSearchParams(location.search).get('format-preview')==='1';
+  let saved=null;
+  if(!preview)try{saved=JSON.parse(localStorage.getItem(appearanceKey));}catch(_){}
+  let current=A.settings(saved),pending=0,lastOpener=null;
   for(const palette of A.palettes){
     const card=document.createElement('section'),title=document.createElement('h3'),note=document.createElement('p'),choices=document.createElement('div');
     card.className='appearance-palette';title.textContent=palette.name;note.textContent=palette.note;
@@ -54,6 +57,7 @@
   addEventListener('typography-motion-change',readerStatus);
   function apply(o={},announce=true){
     const next=A.settings({...current,...o}),changed=Object.keys(next).some(key=>next[key]!==current[key]);current=next;
+    if(changed&&!preview)try{localStorage.setItem(appearanceKey,JSON.stringify(current));}catch(_){}
     const palette=A.palettes.find(p=>p.id===current.palette),description=palette.name+' · '+(current.theme==='dark'?'Dunkel':'Hell');
     const fonts=A.fontPair(current),fontDescription=fonts.sans.name+' und '+fonts.serif.name;
     root.style.setProperty('--sans',fonts.sans.stack);root.style.setProperty('--serif',fonts.serif.stack);

@@ -25,14 +25,17 @@
   function paint(all=false){
     const p=H.phase(time),satz=H.setting(time),theme=document.documentElement.dataset.theme==='dark'?'dark':'light';
     const from=A.palettes[p.index],to=A.palettes[p.next],colors=H.palette(from[theme],to[theme],p.t);
+    const reading=A.palettes.find(palette=>palette.id===document.documentElement.dataset.palette)||A.palettes.find(palette=>palette.id===A.settings().palette);
+    const readingColors=H.palette(reading[theme],reading[theme],0);
     const path=data?H.outline(pairs[p.index],p.t):null;
     for(const [scene,v] of views){
       if(!all&&!active.has(scene))continue;
       if(path){v.path.setAttribute('d',path);scene.querySelector('[data-hero-fallback]').setAttribute('display','none');v.font.textContent=p.t===0?data.families[p.index].name:p.t===1?data.families[p.next].name:data.families[p.index].name+' → '+data.families[p.next].name;}
       v.nodes.forEach((n,i)=>{const a=v.layouts[satz.from][i],b=v.layouts[satz.to][i];n.setAttribute('x',H.lerp(a.x,b.x,satz.t).toFixed(2));n.setAttribute('y',a.y);});
       v.satz.textContent=satz.label;
-      v.colorLabel.textContent=(p.t===0?from.name:p.t===1?to.name:from.name+' → '+to.name)+' / '+(theme==='dark'?'Dunkel':'Hell');
-      for(const element of v.colors){element.setAttribute('fill',colors[element.dataset.heroColor]);element.style.fill=colors[element.dataset.heroColor];}
+      const followsReading=Boolean(scene.closest('[data-hero-palette="reading"]')),sceneColors=followsReading?readingColors:colors;
+      v.colorLabel.textContent=(followsReading?reading.name:p.t===0?from.name:p.t===1?to.name:from.name+' → '+to.name)+' / '+(theme==='dark'?'Dunkel':'Hell');
+      for(const element of v.colors){element.setAttribute('fill',sceneColors[element.dataset.heroColor]);element.style.fill=sceneColors[element.dataset.heroColor];}
       scene.dataset.heroTime=time.toFixed(2);scene.dataset.heroState=paused()?'paused':'playing';
     }
   }

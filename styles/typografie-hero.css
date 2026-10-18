@@ -17,6 +17,17 @@ html[data-palette] .editorial-scene.hero-morph-scene{background:transparent}
 .hero-example-proof .hero-morph-scene{max-width:560px;align-self:center}
 .hero-example-proof .hero-morph-scene:before{border-radius:0}
 .hero-morph-note{max-width:78ch;font:15px/1.6 var(--sans);margin:22px 0}
+/* The reading-palette alternative uses the same roles on every card, in both
+   modes. The independent color-cycle study remains available for comparison. */
+.editorial-hero[data-hero-palette="reading"]:before{background:radial-gradient(ellipse at 80% 20%,var(--surface),transparent 65%);opacity:.7}
+[data-hero-palette="reading"] .hero-board{fill:var(--white);stroke:var(--line)}
+[data-hero-palette="reading"] .hero-character-board{fill:var(--surface)}
+[data-hero-palette="reading"] :is(.hero-board-index,.hero-board-caption){fill:var(--muted)}
+[data-hero-palette="reading"] :is(.hero-satz-heading,[data-hero-word]){fill:var(--ink)}
+[data-hero-palette="reading"] :is(.hero-outline,[data-hero-fallback]){fill:var(--red)}
+[data-hero-palette="reading"] .hero-baseline{stroke:var(--red)}
+[data-hero-palette="reading"] .hero-divider{stroke:var(--line)}
+.hero-example-shell:has([data-hero-palette="reading"]){background:var(--surface)}
 @media(max-width:760px){.editorial-scene.hero-morph-scene{max-width:470px;margin-top:8px}.editorial-copy .editorial-title{font-size:clamp(62px,13vw,84px)}}
 @container hero-example (max-width:650px){.hero-example-proof .hero-morph-scene{max-width:390px}.hero-example-proof .hero-morph-scene:before{border-radius:0}}
 @media print{.editorial-scene.hero-morph-scene{display:none}}

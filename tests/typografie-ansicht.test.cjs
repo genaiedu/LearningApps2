@@ -9,12 +9,12 @@ test('twenty chapter-specific local glyphs alternate cropped left and right',()=
   assert.equal(A.chapters.find(c=>c.id==='details').glyph,'&');assert.equal(A.chapters.find(c=>c.id==='mathematiksatz').glyph,'π');
   assert.ok(css.includes('left:var(--page-glyph-x,5%)'));assert.ok(css.includes('left:var(--page-glyph-x,95%)'));assert.ok(css.includes('overflow:hidden'));assert.ok(css.includes('pointer-events:none'));
 });
-test('appearance accepts only known settings and never needs storage or external files',()=>{
+test('appearance accepts only known settings and never fetches external files',()=>{
   const positionDefaults={glyphPosition:'alternating',glyphInset:5,glyphHeight:34,sansFont:'firasans',serifFont:'original'};
-  assert.deepEqual(A.settings(),{palette:'atelier',theme:'light',glyphs:true,...positionDefaults});assert.deepEqual(A.settings({palette:'slate',theme:'dark',glyphs:false}),{palette:'slate',theme:'dark',glyphs:false,...positionDefaults});
+  assert.deepEqual(A.settings(),{palette:'graphite',theme:'light',glyphs:true,...positionDefaults});assert.deepEqual(A.settings({palette:'slate',theme:'dark',glyphs:false}),{palette:'slate',theme:'dark',glyphs:false,...positionDefaults});
   assert.deepEqual(A.settings({palette:'url(evil)',theme:'url(evil)',glyphs:'false'}),A.settings());
   assert.deepEqual(A.settings(null),A.settings());assert.deepEqual(A.settings({palette:'constructor'}),A.settings());
-  assert.ok(!/fetch\(|localStorage|sessionStorage|innerHTML/.test(ui));assert.ok(!/url\(https?:/.test(css));
+  assert.ok(!/fetch\(|sessionStorage|innerHTML/.test(ui));assert.ok(!/url\(https?:/.test(css));
   for(const id of ['theme-toggle','page-glyph-toggle','appearance-status'])assert.ok(html.includes('id="'+id+'"'));
   assert.ok(ui.includes("setAttribute('aria-hidden','true')"));assert.ok(ui.includes('glyph.textContent=chapter.glyph'));
 });
@@ -93,9 +93,9 @@ test('bounded parallax responds to scroll while reduced motion and pause remove 
   for(const marker of ['prefers-reduced-motion: reduce',"classList.contains('motion-paused')",'IntersectionObserver','requestAnimationFrame','{passive:true}',"addEventListener('typography-motion-change',schedule)"])assert.ok(ui.includes(marker));
   assert.ok(css.includes('@media(prefers-reduced-motion:reduce)'));assert.ok(css.includes('@media print'));assert.ok(!ui.includes('setInterval'));
 });
-test('all four palettes have genuine light and dark versions and reproducible local CSS',()=>{
+test('all five palettes have genuine light and dark versions and reproducible local CSS',()=>{
   const paletteCSS=read('styles/typografie-palettes.css');
-  assert.equal(A.palettes.length,4);assert.equal(new Set(A.palettes.map(p=>p.id)).size,4);assert.ok(Object.isFrozen(A.palettes));
+  assert.equal(A.palettes.length,5);assert.equal(new Set(A.palettes.map(p=>p.id)).size,5);assert.ok(Object.isFrozen(A.palettes));
   for(const p of A.palettes){
     assert.ok(p.name&&p.note);assert.ok(Object.isFrozen(p));assert.notEqual(p.light.paper,p.dark.paper);
     for(const mode of ['light','dark']){
@@ -107,7 +107,7 @@ test('all four palettes have genuine light and dark versions and reproducible lo
   }
   assert.ok(html.includes('styles/typografie-palettes.css'));assert.ok(!/url\(|@import/.test(paletteCSS));
 });
-test('all eight versions maintain reading contrast on every reading surface and decorative glyph',()=>{
+test('all ten versions maintain reading contrast on every reading surface and decorative glyph',()=>{
   for(const p of A.palettes)for(const mode of ['light','dark']){
     const t=p[mode];
     for(const fg of [t.ink,t.muted,t.red])for(const bg of [t.paper,t.white,t.surface,t['page-mark'],t['hero-bg'],t['quote-bg']])assert.ok(C.contrast(fg,bg)>=4.5,p.id+' '+mode+' '+fg+' / '+bg);
@@ -126,7 +126,7 @@ test('reading accents have a distinct hue rather than disappearing into the base
   for(const p of A.palettes.filter(p=>p.id!=='atelier'))for(const mode of ['light','dark']){
     const t=p[mode],accent=hue(t.red),base=hue(t.ink);
     assert.ok(accent.saturation>=.3,p.id+' '+mode+' uses a visibly colored accent');
-    if(p.id!=='graphite')assert.ok(difference(accent.angle,base.angle)>=120,p.id+' '+mode+' separates base and accent hues');
+    if(base.saturation>=.1)assert.ok(difference(accent.angle,base.angle)>=120,p.id+' '+mode+' separates base and accent hues');
     assert.equal(t['button-bg'],t.red,p.id+' '+mode+' applies the same accent to primary actions');
   }
   assert.equal(A.palettes.find(p=>p.id==='atelier').light.red,'#a83424');

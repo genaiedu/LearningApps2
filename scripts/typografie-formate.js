@@ -75,5 +75,5 @@
   addEventListener('typography-motion-change',()=>config());
   addEventListener('typography-appearance-change',()=>config());
   new ResizeObserver(sizing).observe(stage);update();
-  frame.src='typografie-atelier.html?format-preview=1&v=20261018-start-am-anfang';
+  frame.src='typografie-atelier.html?format-preview=1&v=20261018-hero-palette';
 })();

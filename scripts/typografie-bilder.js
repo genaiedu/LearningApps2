@@ -23,7 +23,7 @@
   }
   for(const id of ['image-width','image-fit','image-position'])$(id).addEventListener('change',crop);
   $('image-reset').addEventListener('click',()=>{$('image-width').value='1000';$('image-fit').value='contain';$('image-position').value='center';crop();});crop();
-  const heroNotes={new:'Drei lebendige Studien: Das a verwandelt sich zwischen vier lokalen Schriften. Dieselben Wörter wandern von Blocksatz zu Flattersatz und Zentrierung zurück zum Blocksatz. Vier Farbwelten gehen ineinander über. Die Zwischenformen illustrieren den Übergang; sie sind keine weiteren Schriftarten. Die Animation bleibt pausierbar.',previous:'Schrift als Motiv: Der Buchstabe selbst ist die grafische Form. Das Raster und die große Schriftprobe geben dem Text einen typografischen Kontext.',image:'Bild und Lesefläche: Ein Bild schafft Atmosphäre, eine deckende Fläche sichert den Kontrast. Bei einem schmalen Format verändert sich der Bildausschnitt.'};
+  const heroNotes={palette:'Eine gemeinsame Farbwelt: Hintergrund, Karten, Schriftprobe und Linien folgen der unter „Darstellung“ gewählten Lesepalette – in Hell und Dunkel. Das a und der Satz bleiben lebendig; die Farben wechseln nicht von selbst. Vergleiche dieselbe Form in Graphit, Papier & Wald, Schieferblau, Pflaume und Bordeaux.',new:'Drei lebendige Studien: Das a verwandelt sich zwischen vier lokalen Schriften. Dieselben Wörter wandern von Blocksatz zu Flattersatz und Zentrierung zurück zum Blocksatz. Vier Farbwelten gehen ineinander über. Die Zwischenformen illustrieren den Übergang; sie sind keine weiteren Schriftarten. Die Animation bleibt pausierbar.',previous:'Schrift als Motiv: Der Buchstabe selbst ist die grafische Form. Das Raster und die große Schriftprobe geben dem Text einen typografischen Kontext.',image:'Bild und Lesefläche: Ein Bild schafft Atmosphäre, eine deckende Fläche sichert den Kontrast. Bei einem schmalen Format verändert sich der Bildausschnitt.'};
   function hero(){
     const kind=$('hero-study').value,proof=$('hero-example-proof');
     proof.style.width=G.crop({width:$('hero-width').value}).width+'px';
@@ -31,9 +31,10 @@
     if(kind==='previous'||kind==='image')fragment=$(kind==='previous'?'previous-hero-template':'image-hero-template').content.cloneNode(true);
     else{
       fragment=$('start').cloneNode(true);
+      if(kind!=='palette')fragment.removeAttribute('data-hero-palette');
       const heading=fragment.querySelector('h1'),replacement=document.createElement('h3');
       replacement.className=heading.className;replacement.innerHTML=heading.innerHTML;heading.replaceWith(replacement);
-      fragment.removeAttribute('id');fragment.removeAttribute('aria-labelledby');fragment.setAttribute('aria-label','Drei lebendige Studien als Hero-Beispiel');
+      fragment.removeAttribute('id');fragment.removeAttribute('aria-labelledby');fragment.setAttribute('aria-label',kind==='palette'?'Palettengebundener Hero als Gestaltungsbeispiel':'Drei lebendige Studien als Hero-Beispiel');
       for(const n of fragment.querySelectorAll('[id]'))n.removeAttribute('id');
     }
     proof.replaceChildren(fragment);
