@@ -26,6 +26,7 @@
  new ResizeObserver(layoutLanding).observe(backdrop);
  const aside=document.createElement('aside');aside.id='wall-settings';aside.setAttribute('aria-label','Zuordnungen zum vergrößerten Werk');
  aside.innerHTML='<p class="eyebrow">Werk untersuchen</p><h3 id="wall-work-title"></h3><div id="wall-work-controls"></div><p class="wall-instructions">Bild anklicken: Lupe. Escape: zurück zur ganzen Abbildung. Noch einmal Escape: zurück zur Wand. Die Zahl hinter einer Technik zeigt die noch freien Plätze im Raum; deine aktuelle Auswahl ist bereits abgezogen.</p><button type="button" id="wall-check">Schloss prüfen</button>';
+ const pictureInfo=document.createElement('button');pictureInfo.id='wall-picture-info';pictureInfo.type='button';pictureInfo.textContent='Bildinfos';pictureInfo.hidden=true;pictureInfo.setAttribute('aria-haspopup','dialog');pictureInfo.setAttribute('aria-controls','gallery-info-dialog');aside.querySelector('h3').after(pictureInfo);
  dialog.append(aside);
  const floating=document.createElement('div');floating.className='wall-floating';
  floating.innerHTML='<button type="button" id="wall-back">← Bilderwand</button><button type="button" id="wall-fit">Ganzes Bild</button><button type="button" id="wall-loupe">Lupe +</button><button type="button" id="wall-prev" aria-label="Vorheriges Werk">←</button><button type="button" id="wall-next" aria-label="Nächstes Werk">→</button>';
@@ -57,13 +58,14 @@
  }
  function cancelFlight(){transitionEpoch++;clearFlight();}
  function interruptOpening(){if(!returning)cancelFlight();}
- function restoreControls(){cancelFlight();if(home){for(const child of [...$('wall-work-controls').children])home.append(child);}home=null;current=null;returnOrigin=null;drag=null;contacts.clear();dialog.classList.remove('wall-zoom');}
- function inspect(id,letter,original,source){restoreControls();const card=[...$('art-grid').children].find(c=>c.dataset.id===id);current=id;
+ function restoreControls(){cancelFlight();pictureInfo.hidden=true;pictureInfo.onclick=null;if(home){for(const child of [...$('wall-work-controls').children])home.append(child);}home=null;current=null;returnOrigin=null;drag=null;contacts.clear();dialog.classList.remove('wall-zoom');}
+ function inspect(id,letter,original,source,showInfo){restoreControls();const card=[...$('art-grid').children].find(c=>c.dataset.id===id);current=id;
   returnOrigin=source===undefined?captureOrigin(card?.querySelector('.artwork-button')):source;
   const wall=returnOrigin?.context==='wall'||(source===undefined&&Boolean(card));
   $('wall-work-title').textContent=wall?(letter?'Werk '+letter+' · ':'')+(card?.querySelector('.work-title')?.textContent||$('zoom-image').alt.replace('Vergrößerte Ansicht: ','')):$('zoom-image').alt.replace('Vergrößerte Ansicht: ','');
   if(card&&wall&&!original){home=card;$('wall-work-controls').append(card.querySelector('.artwork-actions'),card.querySelector('.assignments'));}
   $('wall-check').hidden=!home||$('check').hidden;$('wall-prev').hidden=$('wall-next').hidden=!home;
+  if(returnOrigin?.context==='gallery'&&typeof showInfo==='function'){pictureInfo.hidden=false;pictureInfo.onclick=()=>showInfo(pictureInfo);}
   $('wall-back').textContent=returnOrigin?.context==='gallery-info'?'← Bildinformationen':returnOrigin?.context==='gallery'?'← Meine Galerie':returnOrigin?.context==='curator'?'← Kuratoransicht':'← Bilderwand';
   const destination=returnOrigin?.context==='gallery-info'?'Bildinformation':returnOrigin?.context==='gallery'?'Galerie':returnOrigin?.context==='curator'?'Kuratoransicht':'Bilderwand';
   aside.setAttribute('aria-label',home?'Zuordnungen zum vergrößerten Werk':'Informationen zum vergrößerten Werk');aside.querySelector('.eyebrow').textContent=home?'Werk untersuchen':'Werk betrachten';

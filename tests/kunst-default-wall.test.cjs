@@ -138,29 +138,36 @@ test('clearing film selection requires confirmation and preserves likes, film na
  app.click('gallery-filter-film');assert.equal(app.q('#gallery-grid .gallery-card'),null);assert.match(app.q('.gallery-empty').textContent,/Film enthält noch keine Bilder/);
 });
 const pressRule=(app,n)=>app.q('.rule-steps > li:nth-child('+n+') > button').click();
+function openCollectedInfo(app,selector='#gallery-grid .gallery-image'){
+ assert.equal(app.q('#gallery-grid .gallery-info-trigger'),null,'gallery pictures have no information overlays');app.q(selector).click();
+ assert.equal(app.q('#image-dialog').open,true);const trigger=app.q('#wall-picture-info');assert.equal(trigger.hidden,false);assert.equal(trigger.closest('aside').id,'wall-settings');trigger.click();return trigger;
+}
 test('gallery information reads collected works during an unfinished room without touching progress or requesting AI',async t=>{
  const at=Date.now(),id='wd-Q252485',gallery={...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]};
  const app=await setup(t,{gallery});app.click('launch-read');app.click('game-gallery');const before=stored(app.w.localStorage),requests=app.requests.length;
- const trigger=app.q('.gallery-info-trigger');assert.ok(trigger);assert.match(trigger.getAttribute('aria-label'),/Die große Welle/);trigger.click();
+ const thumbnail=app.q('#gallery-grid .gallery-image'),trigger=openCollectedInfo(app);
  assert.equal(app.q('#gallery-info-dialog').open,true);assert.equal(app.q('#gallery-info-title').textContent,'Die große Welle vor Kanagawa');
+ assert.equal(app.q('#image-dialog').open,true);assert.equal(app.q('#gallery-info-dialog [data-close]').textContent,'Zur Bildansicht ×');assert.equal(app.w.document.activeElement,app.q('#gallery-info-dialog [data-close]'));
  assert.match(app.q('#gallery-info-content').textContent,/Katsushika Hokusai/);assert.match(app.q('#gallery-info-content').textContent,/Ukiyo-e/);assert.match(app.q('#gallery-info-content').textContent,/Farbholzschnitt/);assert.match(app.q('#gallery-info-content').textContent,/Abzüge/);
  assert.equal(app.q('#gallery-info-content .gallery-info-metadata').children.length,12);assert.equal(app.q('#gallery-info-content .curator-section').querySelectorAll('li').length,3);
  assert.equal(app.q('#gallery-info-content [data-gallery-like]'),null);assert.equal(app.q('#gallery-info-content [data-ai-toggle]'),null);assert.equal(app.requests.length,requests);assert.deepEqual(stored(app.w.localStorage),before);
  app.q('#gallery-info-content .curator-glossary-link').click();assert.equal(app.q('#art-glossary-dialog').open,true);assert.equal(app.q('#art-glossary-search').value,'Ukiyo-e');
  app.q('#art-glossary-dialog [data-close]').click();app.q('#gallery-info-dialog [data-close]').click();assert.equal(app.q('#gallery-dialog').open,true);assert.equal(app.w.document.activeElement,trigger);assert.deepEqual(stored(app.w.localStorage),before);
+ app.click('zoom-in');const zoom=app.w.KunstWallZoom.zoom;trigger.click();app.q('.gallery-info-image').click();assert.equal(app.q('#gallery-info-dialog').open,false);assert.equal(app.q('#image-dialog').open,true);assert.equal(app.w.KunstWallZoom.zoom,zoom);assert.equal(app.w.document.activeElement,trigger);
+ app.click('wall-back');assert.equal(app.q('#image-dialog').open,false);assert.equal(app.q('#gallery-dialog').open,true);assert.equal(app.w.document.activeElement,thumbnail);assert.equal(app.q('#wall-picture-info').hidden,true);assert.deepEqual(stored(app.w.localStorage),before);
 });
 test('gallery information retains attribution notes and source links for the anonymous Goldhelm',async t=>{
- const at=Date.now(),id='wd-Q1195610',app=await setup(t,{gallery:{...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]}});app.click('launch-read');app.click('game-gallery');app.q('.gallery-info-trigger').click();
+ const at=Date.now(),id='wd-Q1195610',app=await setup(t,{gallery:{...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]}});app.click('launch-read');app.click('game-gallery');openCollectedInfo(app);
  assert.match(app.q('#gallery-info-content').textContent,/1986/);assert.match(app.q('#gallery-info-content').textContent,/nicht Rembrandt/);assert.ok([...app.q('#gallery-info-content').querySelectorAll('a')].some(a=>a.href==='https://search.smb.museum/object/obj-865524'));
  assert.equal(app.q('#gallery-info-content [data-wiki="Unbekannter Künstler"]'),null);
 });
 test('gallery combines all El Greco works under one name and uses it in picture information',async t=>{
  const at=Date.now(),works=pool.filter(w=>/El Greco/.test(w.artist)),gallery={...model.KunstGallery.fresh(),liked:works.map(w=>({id:w.id,source:'curated',at}))};
  const app=await setup(t,{gallery});app.click('launch-read');app.click('game-gallery');const options=[...app.q('#gallery-filter-artist').options];assert.equal(options.length,2);assert.equal(options[1].textContent,'El Greco · 24');assert.equal(app.q('#gallery-dialog').textContent.includes('Domenico Theotokópoulos'),false);
- const id=works.find(w=>w.artist.startsWith('Domenico')).id;app.q('#gallery-grid [data-work="'+id+'"] .gallery-info-trigger').click();assert.equal(app.q('#gallery-info-dialog').textContent.includes('Domenico Theotokópoulos'),false);assert.match(app.q('#gallery-info-metadata')?.textContent||app.q('.gallery-info-metadata').textContent,/El Greco/);
+ const id=works.find(w=>w.artist.startsWith('Domenico')).id;openCollectedInfo(app,'#gallery-grid [data-work="'+id+'"] .gallery-image');assert.equal(app.q('#gallery-info-dialog').textContent.includes('Domenico Theotokópoulos'),false);assert.match(app.q('#gallery-info-metadata')?.textContent||app.q('.gallery-info-metadata').textContent,/El Greco/);
 });
 test('revoking image permission closes gallery information and clears its image',async t=>{
- const at=Date.now(),id='wd-Q252485',app=await setup(t,{gallery:{...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]}});app.click('launch-read');app.click('game-gallery');app.q('.gallery-info-trigger').click();assert.ok(app.q('#gallery-info-content img'));
+ const at=Date.now(),id='wd-Q252485',app=await setup(t,{gallery:{...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]}});app.click('launch-read');app.click('game-gallery');openCollectedInfo(app);assert.ok(app.q('#gallery-info-content img'));
  app.q('#image-settings').click();app.q('#consent-no').click();assert.equal(app.q('#gallery-info-dialog').open,false);assert.equal(app.q('#gallery-info-content img'),null);
 });
 test('1 → 2 → 4 opens a safely focused reset confirmation; cancellation keeps every saved value',async t=>{

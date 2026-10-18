@@ -19,10 +19,18 @@ function setup(t){
  w.eval(read('scripts/kunsttresor-layout.js'));w.eval(read('scripts/kunsttresor-wall.js'));
  $('image-dialog').addEventListener('close',()=>w.KunstWall.restoreControls());
  function source(parent,id,rect){const button=w.document.createElement('button');button.innerHTML='<img src="https://example.test/'+id+'.jpg">';$(parent).append(button);button.querySelector('img').getBoundingClientRect=()=>rect;return button;}
- async function open(trigger,original=true,id='same-work'){const origin=w.KunstWall.captureOrigin(trigger);$('image-dialog').open=true;w.KunstWall.inspect(id,'A',original,origin);await flush();return origin;}
+ async function open(trigger,original=true,id='same-work',showInfo){const origin=w.KunstWall.captureOrigin(trigger);$('image-dialog').open=true;w.KunstWall.inspect(id,'A',original,origin,showInfo);await flush();return origin;}
  async function close(){w.document.querySelector('[data-close="image-dialog"]').click();await flush();}
  return {w,$,calls,card,image,source,open,close,defer:()=>{deferred=true;}};
 }
+test('picture information is offered at the enlarged gallery image only, never at quiz or curator images',async t=>{
+ const app=setup(t),button=app.source('gallery-dialog','info-entry',box(200,250,180,240)),seen=[];
+ await app.open(button,true,'older-work',origin=>seen.push(origin));assert.equal(app.$('wall-picture-info').hidden,false);assert.equal(app.$('wall-picture-info').closest('aside').id,'wall-settings');app.$('wall-picture-info').click();assert.deepEqual(seen,[app.$('wall-picture-info')]);
+ await app.close();assert.equal(app.$('wall-picture-info').hidden,true);assert.equal(app.$('wall-picture-info').onclick,null);
+ for(const [trigger,original]of [[app.card.querySelector('.artwork-button'),false],[app.source('solution-dialog','curator-info',box(200,250,180,240)),true]]){
+  await app.open(trigger,original,'same-work',()=>seen.push('leaked'));assert.equal(app.$('wall-picture-info').hidden,true);app.$('wall-picture-info').click();assert.equal(seen.length,1);await app.close();
+ }
+});
 test('curator originals animate both ways to the clicked source, never to the same work on the quiz wall',async t=>{
  const app=setup(t),button=app.source('solution-dialog','original',box(420,180,150,200));app.$('solution-dialog').open=true;
  await app.open(button);assert.equal(app.calls.length,1);assert.match(app.calls[0].frames[0].transform,/translate\(320px,130px\) scale\(0.1875,0.3333333333333333\)/);

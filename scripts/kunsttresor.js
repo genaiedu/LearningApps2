@@ -862,7 +862,7 @@
     $('zoom-image').alt = 'Vergrößerte Ansicht: ' + (concealed()&&letter&&!original?'Werk '+letter:core.galleryTitle(work));
     $('zoom-image').onload = () => imageViewer.layout();
     $('zoom-image').referrerPolicy = 'no-referrer'; $('zoom-image').src = original ? imageURL(work) : gameImageURL(work);
-    open('image-dialog'); imageViewer.reset(); if(wallMode)window.KunstWall?.inspect(work.id,letter,original,source);
+    open('image-dialog'); imageViewer.reset(); if(wallMode)window.KunstWall?.inspect(work.id,letter,original,source,infoOrigin=>showGalleryInfo(work,infoOrigin));
     const large = !original && state?.forgery?.id === work.id ? gameImageURL(work) : work.imageLargeURL || imageURL(work);
     if (large !== gameImageURL(work)) {
       zoomLoad = new Image(); zoomLoad.referrerPolicy = 'no-referrer';
@@ -977,10 +977,13 @@
     // solved answer or invoke the personal AI feedback for this reading view.
     if(!work||!personalGallery.liked.some(entry=>entry.id===work.id))return;
     galleryInfoOrigin=origin;
+    const fromImage=Boolean(origin?.closest('#image-dialog')&&$('image-dialog').open);
+    if(fromImage)window.KunstWall?.interruptOpening();
+    const closeInfo=$('gallery-info-dialog').querySelector('[data-close]');closeInfo.textContent=fromImage?'Zur Bildansicht ×':'Zur Galerie ×';
     const content=$('gallery-info-content');content.replaceChildren();
     $('gallery-info-title').textContent=core.galleryTitle(work);
     const overview=node('aside','gallery-info-overview'),reading=node('div','curator-reading gallery-info-reading');
-    if(imagesAllowed){const preview=node('button','gallery-info-image'),img=node('img');preview.type='button';preview.setAttribute('aria-label',core.galleryTitle(work)+' vergrößern');img.alt=core.galleryTitle(work);img.referrerPolicy='no-referrer';img.src=work.imageURL;preview.append(img,node('span',null,'⤢ Bild vergrößern'));preview.onclick=()=>showImage(work,undefined,true,preview);overview.append(preview);}
+    if(imagesAllowed){const preview=node('button','gallery-info-image'),img=node('img');preview.type='button';preview.setAttribute('aria-label',fromImage?'Zur vergrößerten Bildansicht':core.galleryTitle(work)+' vergrößern');img.alt=core.galleryTitle(work);img.referrerPolicy='no-referrer';img.src=work.imageURL;preview.append(img,node('span',null,fromImage?'Zur vergrößerten Bildansicht':'⤢ Bild vergrößern'));preview.onclick=()=>fromImage?close('gallery-info-dialog'):showImage(work,undefined,true,preview);overview.append(preview);}
     const metadata=node('dl','gallery-info-metadata');
     for(const [label,value]of [['Künstler',work.artist],['Entstehung',work.date],['Stil / Tradition',work.style],['Technik',work.technique],['Material',work.medium],['Sammlung',work.museum]])if(value)metadata.append(node('dt',null,label),node('dd',null,value));
     overview.append(metadata);
@@ -1006,7 +1009,7 @@
     const artist=wikiCatalogue.artists[work.artist],article=wikiCatalogue.works[work.id];
     if(artist&&!artist.unknown)links.append(wikiButton('Künstler: '+work.artist,artist.title,artist.language));
     if(article)links.append(wikiButton('Zum Werk',article.title,article.language));sources.append(links);
-    reading.append(sources);content.append(overview,reading);open('gallery-info-dialog');$('gallery-info-dialog').scrollTop=0;$('gallery-info-dialog [data-close]').focus({preventScroll:true});
+    reading.append(sources);content.append(overview,reading);open('gallery-info-dialog');$('gallery-info-dialog').scrollTop=0;closeInfo.focus({preventScroll:true});
   }
   $('gallery-info-dialog').addEventListener('close',()=>{if(galleryInfoOrigin?.isConnected)galleryInfoOrigin.focus({preventScroll:true});galleryInfoOrigin=null;});
   function renderArtGlossary(expand=false) {
@@ -1340,7 +1343,7 @@
       if (!state) store.remove(keys.game);
       const storedGallery=store.get(galleryKey);
       if(storedGallery!==null){try{const restored=galleryModel.restore(JSON.parse(storedGallery),pool,workHistory);if(!restored)throw Error();personalGallery=restored;}catch{galleryBlocked=true;storageWarning();$('progress-notice').textContent='Deine gespeicherte Galerie konnte nicht gelesen werden und wird nicht überschrieben. Lade bitte eine gültige Spielstandsdatei.';}}
-      galleryUI=window.KunstGalleryUI.create({pool,getGallery:()=>personalGallery,setGallery:saveGallery,getState:()=>state,imagesAllowed:()=>imagesAllowed,requestImages:()=>askForImages(false),showImage:(work,origin)=>showImage(work,undefined,true,origin),showInfo:showGalleryInfo,stopIntro:finishIntro,saveFile:async()=>{await exportSave();return $('save-status').textContent;},texts:filmTexts});
+      galleryUI=window.KunstGalleryUI.create({pool,getGallery:()=>personalGallery,setGallery:saveGallery,getState:()=>state,imagesAllowed:()=>imagesAllowed,requestImages:()=>askForImages(false),showImage:(work,origin)=>showImage(work,undefined,true,origin),stopIntro:finishIntro,saveFile:async()=>{await exportSave();return $('save-status').textContent;},texts:filmTexts});
       galleryUI.refresh();$('open-gallery').disabled=false;
       $('save-dialog').querySelector(':scope > p').textContent='Der Browser merkt sich deinen Raum automatisch. Als JSON-Datei nimmst du Zuordnungen, verbrauchte Versuche, Rekord, Abzeichen, Bildhistorie, Lieblingswerke und deine vollständige Filmgestaltung mit auf ein anderes Gerät.';
       $('pool-count').textContent = pool.length;

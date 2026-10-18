@@ -159,3 +159,4 @@ html.kunst-wall{--paper:#24382e;--ink:#24382e;--night:#f6f6f3;--muted:#52645a;--
 
 /* The title is a complete label; the four other facts form two quiet rows. */
 .kunst-wall #wall-work-controls label:has(select[data-field="title"]){grid-column:1/-1}
+.kunst-wall #wall-picture-info{width:100%;min-height:44px;font:500 14px/1.4 var(--sans);margin:4px 0 8px}
