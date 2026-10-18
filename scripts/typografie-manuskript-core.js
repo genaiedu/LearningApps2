@@ -17,7 +17,7 @@
  function load(){if(!loading)loading=fetch('data/typografie-kohelet.json?v=20261018-kohelet').then(r=>{if(!r.ok)throw Error('Kohelet-Text nicht verfügbar');return r.json();}).then(build).catch(error=>{loading=null;throw error;});return loading;}
  function modern(document){return {...document,id:'kohelet',label:'Kohelet · vollständige Vulgata',title:'Kohelet',subtitle:'Liber Ecclesiastes · alle zwölf Kapitel',date:'',credit:'Vollständiger Kohelet, lateinische Vulgata. Großschreibung, Satzzeichen und Leseabsätze redaktionell für diese Satzprobe eingerichtet. Gemeinfreier Originaltext; keine Übersetzung.'};}
  const loadModern=()=>load().then(modern);
- function settings(){return {kind:'vulgata',format:'book',layout:'classic',size:16,leading:1.45,alignment:'left',headingStyle:'classic',numerals:'oldstyle',toc:false,notes:false,grid:false,spread:true,roles:Object.fromEntries(['body','heading','contents','quote','note','data'].map(id=>[id,{font,weight:400}]))};}
+ function settings(){return {kind:'vulgata',format:'book',layout:'classic',size:16,leading:1.45,alignment:'justify',headingStyle:'classic',numerals:'oldstyle',toc:false,notes:false,grid:false,spread:true,roles:Object.fromEntries(['body','heading','contents','quote','note','data'].map(id=>[id,{font,weight:400}]))};}
  function css(doc){if(doc.id!=='vulgata')return '';return `
  .pagedjs_sheet{background:#fbf4e1!important;color:#302c24;}
  .pagedjs_page_content{color:#302c24;font-variant-numeric:normal;}
@@ -28,7 +28,7 @@
  .pagedjs_page_content .print-byline{font-family:'Fondamento',cursive;font-size:16pt;line-height:1.6;}
  .print-section+.print-section{break-before:auto;}
  .print-section-title{font-size:14pt;font-weight:400;color:#9c2924;margin:23.2pt 0 11.6pt;line-height:23.2pt;}
- .pagedjs_page_content .print-paragraph{text-indent:1em;text-align:left;hyphens:none;line-height:23.2pt;margin:0;}
+ .pagedjs_page_content .print-paragraph{text-indent:1em;text-align:justify;text-align-last:left;hyphens:manual;-webkit-hyphens:manual;line-height:23.2pt;margin:0;}
  .pagedjs_page_content .print-chapter-start{display:flow-root;text-indent:0;}
  .print-chapter-start:not([data-split-from])::first-letter{float:left!important;font-family:'Fondamento',cursive!important;font-weight:400!important;font-size:42pt!important;line-height:42pt!important;color:#a52e27!important;margin:0 4pt 0 0!important;}
  .pagedjs_page_content .print-paragraph[data-split-from]{text-indent:0;}

@@ -19,6 +19,27 @@ test('large folio has proportionally smaller lettering, continuous chapters and 
  const s=M.settings();assert.equal(s.spread,true);assert.equal(s.toc,false);assert.equal(s.notes,false);assert.equal(s.layout,'classic');assert.equal(s.roles.body.font.name,'Fondamento');assert.equal(s.roles.heading.weight,400);assert.deepEqual(M.paper,{width:300,height:420});assert.ok(s.size/M.paper.width<14/150);
  const css=M.css(book);assert.ok(css.includes('.print-cover{break-after:page'));assert.ok(css.includes('.print-section+.print-section{break-before:auto'));assert.ok(css.includes('.print-chapter-start:not([data-split-from])::first-letter'));assert.ok(!css.includes('.print-paragraph::first-letter'));assert.ok(css.includes('content:attr(data-manuscript-folio)'));assert.equal(M.css({id:'book'}),'');
 });
+test('the historical book defaults to justified Latin copy with a ragged final line, but keeps its centered title',()=>{
+ assert.equal(M.settings().alignment,'justify');
+ const css=M.css(book);assert.ok(css.includes('text-align:justify;text-align-last:left;hyphens:manual;-webkit-hyphens:manual'));
+ assert.ok(css.includes('.pagedjs_page_content .print-cover p{text-align:center;}'));
+ assert.ok(!css.includes('hyphens:none'));
+});
+test('the actual renderer enables local Latin hyphenation and its safe page-break hook for the whole manuscript',async t=>{
+ const H=require('../scripts/typografie-trennung.js');H.register('la',JSON.parse(read('../LearningApps/vendor/hypher/la.json')));
+ const dom=new JSDOM(read('typografie-lesedruck.html'),{runScripts:'outside-only',url:'https://example.test/typografie-lesedruck.html?embedded=1'}),w=dom.window;t.after(()=>w.close());
+ Object.defineProperty(w.document,'fonts',{value:{load:async()=>[],ready:Promise.resolve()}});w.Range.prototype.getClientRects=()=>[];
+ let source,css,hook;
+ w.TypoHyphenation=H;w.Paged={Previewer:class{constructor(){this.polisher={destroy(){}};this.chunker={hooks:{onOverflow:{register(fn){hook=fn;}}}};}async preview(article,styles,host){source=article;css=Object.values(styles[0])[0];const page=w.document.createElement('div'),area=w.document.createElement('div');page.className='pagedjs_page';area.className='pagedjs_page_content';area.append(article);page.append(area);host.append(page);return{total:1};}}};
+ for(const file of ['scripts/typografie-satzspiegel-core.js','scripts/typografie-manuskript-core.js','scripts/typografie-lesedruck.js'])w.eval(read(file));
+ w.dispatchEvent(new w.MessageEvent('message',{origin:w.location.origin,source:w.parent,data:{type:'typography-layout',id:1,document:book,settings:M.settings()}}));
+ for(let i=0;i<5&&w.document.documentElement.dataset.ready!=='true';i++)await settle();
+ assert.equal(w.document.documentElement.dataset.ready,'true');assert.equal(hook,H.pageBreak);assert.equal(source.lang,'la');
+ const paragraphs=[...source.querySelectorAll('.print-paragraph')];assert.equal(paragraphs.length,46);assert.ok(paragraphs.every(p=>p.dataset.hyphenation==='la'));assert.ok(paragraphs.some(p=>p.textContent.includes('\u00ad')));
+ const plain=s=>s.replace(/[\s\u00ad]/g,'');assert.equal(plain(paragraphs.map(p=>p.textContent).join(' ')),plain(book.sections.flatMap(s=>s.blocks.map(b=>b.runs[0].text)).join(' ')));
+ assert.equal(source.querySelectorAll('.print-chapter-start').length,12);assert.ok(css.includes('text-align:justify;text-align-last:left;hyphens:manual'));
+ assert.ok(!source.querySelector('.print-title').textContent.includes('\u00ad'));
+});
 test('modern workshop version shares the complete text, but does not inherit manuscript styling or fixed paper',()=>{
  const modern=M.modern(book);assert.equal(modern.id,'kohelet');assert.equal(modern.lang,'la');assert.equal(modern.sections,book.sections);assert.equal(M.css(modern),'');assert.match(modern.credit,/redaktionell/);assert.match(modern.label,/vollständige Vulgata/);
  for(const file of ['typografie-atelier.html','schriftsetzer.html'])assert.ok(read(file).includes('scripts/typografie-manuskript-core.js'));
