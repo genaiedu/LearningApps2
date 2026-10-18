@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 const root=new URL('./',import.meta.url);
 // Pinned public fallback; local/package sources must contain the current 2220 works.
 // Public, pinned sources only. No API key is used during the build.
-const revision='06de3120c1fecf5c6d4be1a0c6eacee6832fa7b9';
+const revision='1d73b205682df1213dea3b5c23884787cf72a4ec';
 const files=['scripts/kunsttresor-core.js','scripts/kunst-kurator.js','data/kunstarchiv.json','data/kunst-glossar.json','data/kunst-titel-de.json','data/kunst-wikipedia.json'];
 await mkdir(new URL('generated/',root),{recursive:true});
 for (const path of files) {
