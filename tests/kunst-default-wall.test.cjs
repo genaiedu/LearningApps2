@@ -323,6 +323,44 @@ test('date hints appear above struck entries outside the compact dropdown and su
  assert.equal(transfer.state.locked[ids[0]].artist,selected[0].artist);assert.equal(transfer.state.dateHints[ids[0]][0].label,'zu genau');
  const again=await setup(t,{state:JSON.parse(JSON.stringify(transfer.state))});again.click('launch-skip');assert.equal(again.q('#answer-A-date-excluded .date-feedback').textContent,'zu genau');assert.equal(again.q('#answer-A-artist').disabled,true);
 });
+function chronologicalFixture(){
+ const c=model.KunstTresor,ids=['wd-Q7601237','aic-124307','wd-Q20191494','wd-Q46156131','wd-Q219831','wd-Q3733689','wd-Q2516599'],selected=ids.map(id=>pool.find(work=>work.id===id));
+ let state=c.newState(selected,null,Math.random,false,{});state.ids=ids;state.roomToken='1'.repeat(32);state.runToken='2'.repeat(32);state.parentRoomToken=null;
+ for(const id of ids)for(const field of c.fieldsFor(state))state=c.choose(state,id,field,selected.find(work=>work.id===id)[field]);
+ for(const id of ids)state=c.choose(state,id,'date','');
+ for(const [index,id]of ids.entries())state=c.choose(state,id,'date',selected[(index+1)%7].date);
+ return JSON.parse(JSON.stringify(c.inspect(state,pool).state));
+}
+test('dates remain chronological and only checked wrong years get written hints, not inferred exclusions',async t=>{
+ const state=chronologicalFixture(),before=JSON.stringify(state),app=await setup(t,{state});app.click('launch-read');readyWall(app);app.q('#art-grid .artwork-button').click();
+ assert.equal(JSON.stringify(state),before);const select=app.q('#answer-A-date'),values=()=>[...select.options].filter(option=>option.value).map(option=>option.value);
+ assert.deepEqual(values(),['1440','1500','1642','1890','1901','1910','1912']);
+ for(const date of ['1901','1910','1912']){const option=[...select.options].find(option=>option.value===date);assert.equal(option.disabled,true);assert.match(option.textContent,/^✕ /);assert.equal(option.classList.contains('is-excluded'),true);}
+ assert.match([...select.options].find(option=>option.value==='1901').title,/zu spät/);
+ for(const date of ['1910','1912'])assert.doesNotMatch([...select.options].find(option=>option.value===date).title,/zu spät|zu früh/);
+ const entries=[...app.q('#answer-A-date-excluded').querySelectorAll('.excluded-answer')];assert.deepEqual(entries.map(entry=>[entry.querySelector('s').textContent,entry.querySelector('.date-feedback')?.textContent||'']),[['1901','zu spät'],['1910',''],['1912','']]);
+ assert.equal([...select.options].find(option=>option.value==='1890').disabled,false);
+ for(const input of app.q('#image-dialog').querySelectorAll('select[data-field="date"]'))assert.deepEqual([...input.options].filter(option=>option.value).map(option=>option.value),values());
+ for(const input of app.q('#art-grid').querySelectorAll('select[data-field="date"]'))assert.deepEqual([...input.options].filter(option=>option.value).map(option=>option.value),values());
+ assert.deepEqual(roomOf(app).options.date,state.options.date,'display ordering never rewrites saved options');
+ // Second check adds the new boundary but keeps the original hint.
+ app.click('wall-back');for(const [index,id]of state.ids.entries()){const target=index===0?4:index===4?0:index;selectAnswer(app,'ABCDEFG'[index],'date',pool.find(work=>work.id===state.ids[target]).date);}
+ app.click('check');assert.equal(roomOf(app).attempts,2);
+ const checked=()=>[...app.q('#answer-A-date-excluded').querySelectorAll('.excluded-answer')].filter(entry=>entry.querySelector('.date-feedback')).map(entry=>[entry.querySelector('s').textContent,entry.querySelector('.date-feedback').textContent]);
+ assert.deepEqual(checked(),[['1642','zu früh'],['1901','zu spät']]);
+ const saved=roomOf(app),again=await setup(t,{state:saved});again.click('launch-read');assert.deepEqual([...again.q('#answer-A-date-excluded').querySelectorAll('.date-feedback')].map(node=>node.textContent),['zu früh','zu spät']);
+ assert.deepEqual([...again.q('#answer-A-date').options].filter(option=>option.value).map(option=>option.value),values());
+});
+test('date options sort historical periods before the common era by their beginning, not their text',async t=>{
+ const core=model.KunstTresor,chosen=[pool.find(work=>core.dateWindow(work.date)?.start<0)];for(const work of pool)if(chosen.length<7&&core.compatible(chosen,work))chosen.push(work);
+ const state=JSON.parse(JSON.stringify(core.newState(chosen,null,Math.random,false,{}))),app=await setup(t,{state});app.click('launch-read');
+ for(const select of app.q('#art-grid').querySelectorAll('select[data-field="date"]')){
+  const values=[...select.options].filter(option=>option.value).map(option=>model.KunstTresor.dateWindow(option.value));
+  assert.ok(values.some(value=>value.start<0));assert.equal(values.length,7);
+  for(let index=1;index<values.length;index++)assert.ok(values[index].start>=values[index-1].start);
+ }
+ assert.ok(state.options.date.length);
+});
 test('the count opens the first incomplete artwork and focuses its missing field without a check',async t=>{
  const app=await setup(t);assert.equal(app.q('#jump-missing').disabled,true);app.click('launch-skip');assert.equal(app.q('#jump-missing').disabled,true);readyWall(app);
  const room=roomOf(app),first=pool.find(w=>w.id===room.ids[0]);for(const field of model.KunstTresor.fields)selectAnswer(app,'A',field,first[field]);

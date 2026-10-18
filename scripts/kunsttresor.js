@@ -601,6 +601,19 @@
     }
     close('joker-dialog');
   });
+  function compareDateLabels(left,right) {
+    const a=core.dateWindow(left),b=core.dateWindow(right);
+    if(!a||!b)return a?-1:b?1:left.localeCompare(right,'de',{numeric:true});
+    if(a.start!==b.start)return a.start<b.start?-1:1;
+    if(a.end!==b.end)return a.end<b.end?-1:1;
+    return left.localeCompare(right,'de',{numeric:true});
+  }
+  function checkedDateHint(id,value) {
+    const hint=core.dateHintFor(state,id,value);
+    // Inferred exclusions still disable the other dates, but only an actual
+    // checked guess receives a written hint, not every logical consequence.
+    return hint?.value===value?hint:null;
+  }
   function update() {
     galleryUI?.refresh();
     const timeReady = Date.now() >= revealAt;
@@ -655,7 +668,7 @@
             option.title=left+' von '+total+' Zuordnungen noch frei'+assigned;
           }else {option.textContent=option.dataset.label+assigned;option.title=option.textContent;}
           if(excluded){
-            const confirmed=core.confirmedOwners(state,select.dataset.work,select.dataset.field,option.value),hint=select.dataset.field==='date'?core.dateHintFor(state,select.dataset.work,option.value):null;
+            const confirmed=core.confirmedOwners(state,select.dataset.work,select.dataset.field,option.value),hint=select.dataset.field==='date'?checkedDateHint(select.dataset.work,option.value):null;
             option.textContent='✕ '+option.textContent;
             option.title=option.dataset.label+' · ausgeschlossen'+(confirmed.length?' · bei Bild '+confirmed.map(pictureLetter).join(', ')+' bestätigt':hint?' · '+hint.label:'');
           }
@@ -666,15 +679,15 @@
       });
       const excluded=$(select.id+'-excluded'),values=[...new Set(state.options[select.dataset.field])].filter(value=>core.isExcluded(state,select.dataset.work,select.dataset.field,value));
       const priority=value=>{
-        const hint=select.dataset.field==='date'?core.dateHintFor(state,select.dataset.work,value):null;
+        const hint=select.dataset.field==='date'?checkedDateHint(select.dataset.work,value):null;
         return hint?(hint.value===value?0:1):state.excluded?.[select.dataset.work]?.[select.dataset.field]?.includes(value)?2:3;
       };
-      values.sort((a,b)=>priority(a)-priority(b));
+      values.sort((a,b)=>priority(a)-priority(b)||(select.dataset.field==='date'?compareDateLabels(a,b):0));
       excluded.hidden=locked||values.length===0;excluded.replaceChildren(node('span','excluded-title','Nicht mehr möglich:'));
       const list=node('span','excluded-list');
       values.forEach(value=>{
         const option=[...select.options].find(option=>option.value===value),entry=node('span','excluded-answer');
-        const hint=select.dataset.field==='date'?core.dateHintFor(state,select.dataset.work,value):null;
+        const hint=select.dataset.field==='date'?checkedDateHint(select.dataset.work,value):null;
         const confirmed=core.confirmedOwners(state,select.dataset.work,select.dataset.field,value);
         if(hint)entry.append(node('span','date-feedback',hint.label));
         else if(confirmed.length)entry.append(node('span','confirmed-elsewhere','Bild '+confirmed.map(pictureLetter).join(', ')+' bestätigt'));
@@ -791,7 +804,8 @@
         const select = node('select'); select.dataset.work = id; select.dataset.field = field;
         select.id = 'answer-' + letter + '-' + field; select.setAttribute('aria-label','Werk ' + letter + ': ' + labels[field]);
         const empty = node('option',null,'Zuordnen …'); empty.value = ''; select.append(empty);
-        [...new Set(state.options[field])].forEach(value => { const display = field === 'artist' ? wikiCatalogue.artists[value]?.title || value : field==='title'?titleLabel(value):value; const option = node('option',null,display); option.value = value; option.dataset.label = display; select.append(option); });
+        const values=[...new Set(state.options[field])];if(field==='date')values.sort(compareDateLabels);
+        values.forEach(value => { const display = field === 'artist' ? wikiCatalogue.artists[value]?.title || value : field==='title'?titleLabel(value):value; const option = node('option',null,display); option.value = value; option.dataset.label = display; select.append(option); });
         select.addEventListener('change',()=>chooseAnswer(id,field,select.value,select));
         const result = node('small','answer-result'); result.id = select.id + '-result'; result.hidden = true;
         const excluded=node('small','excluded-answers');excluded.id=select.id+'-excluded';excluded.hidden=true;
