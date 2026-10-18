@@ -55,6 +55,7 @@
   }
   const searchable=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('de').replace(/ß/g,'ss');
   function matchesView(work,view,except) {
+    if(view.onlyFilm&&(!Array.isArray(view.filmIds)||!view.filmIds.includes(work.id)))return false;
     if(viewFields.some(field=>field!==except&&view[field]&&work[field]!==view[field]))return false;
     const words=searchable(view.search).trim().split(/\s+/).filter(Boolean);
     const haystack=searchable([work.titleDe,work.title,work.artist,work.style,work.technique,work.date].join(' '));

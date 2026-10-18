@@ -47,6 +47,8 @@
       const gallery=getGallery(), unlocked=gallery.liked.length>=model.UNLOCK;
       $('gallery-progress').textContent=progressText();$('gallery-summary').textContent=progressText();
       $('gallery-count').textContent=gallery.liked.length;
+      $('gallery-film-filter-count').textContent='('+gallery.film.items.length+')';
+      $('gallery-clear-film').disabled=!gallery.film.items.length;
       document.querySelectorAll('[data-gallery-access]').forEach(button=>{button.disabled=false;button.title=progressText();});
       const winning=model.winningRoom(getState(),pool);
       document.querySelectorAll('[data-gallery-like]').forEach(b=>{
@@ -82,7 +84,7 @@
       else b.append(node('span',null,'Kunstbilder erlauben'));
       return b;
     }
-    function currentView(){return {search:$('gallery-search').value,artist:$('gallery-filter-artist').value,style:$('gallery-filter-style').value,technique:$('gallery-filter-technique').value,sort:$('gallery-sort').value};}
+    function currentView(){return {search:$('gallery-search').value,artist:$('gallery-filter-artist').value,style:$('gallery-filter-style').value,technique:$('gallery-filter-technique').value,sort:$('gallery-sort').value,onlyFilm:$('gallery-filter-film').checked,filmIds:getGallery().film.items.map(item=>item.id)};}
     function renderFilters(works){
       const view=currentView();
       // A removed work may have been the last member of a filter. Keep all
@@ -93,17 +95,17 @@
         for(const {value,count} of model.viewFacets(works,view,field)){const option=node('option',null,value+' · '+count);option.value=value;option.disabled=count===0&&value!==view[field];select.append(option);}
         select.value=view[field];
       }
-      $('gallery-filter-reset').disabled=!view.search&&!view.artist&&!view.style&&!view.technique&&view.sort==='collection';
+      $('gallery-filter-reset').disabled=!view.search&&!view.artist&&!view.style&&!view.technique&&!view.onlyFilm&&view.sort==='collection';
       return view;
     }
     function renderGallery({editor=true}={}) {
       const gallery=getGallery(), selected=new Set(gallery.film.items.map(item=>item.id));
       const entries=new Map(gallery.liked.map(entry=>[entry.id,entry]));
       const works=gallery.liked.map(entry=>byId.get(entry.id)),view=renderFilters(works),visible=model.viewWorks(works,view);
-      $('gallery-results').textContent=visible.length.toLocaleString('de-DE')+' von '+works.length.toLocaleString('de-DE')+' Werken angezeigt · Filter ändern weder deine Sammlung noch die Filmauswahl.';
+      $('gallery-results').textContent=visible.length.toLocaleString('de-DE')+' von '+works.length.toLocaleString('de-DE')+' Werken angezeigt'+(view.onlyFilm?' · Nur Bilder im Film':'')+' · Filter ändern weder deine Sammlung noch die Filmauswahl.';
       $('gallery-grid').replaceChildren();
       if(!gallery.liked.length)$('gallery-grid').append(node('p','gallery-empty','Deine Galerie beginnt nach der ersten gewonnenen Tür. Markiere dann die Werke, die du behalten möchtest, mit dem Herz.'));
-      else if(!visible.length)$('gallery-grid').append(node('p','gallery-empty','Keine Werke passen zu dieser Kombination. Ändere die Filter oder wähle „Ansicht zurücksetzen“.'));
+      else if(!visible.length)$('gallery-grid').append(node('p','gallery-empty',view.onlyFilm&&!gallery.film.items.length?'Dein Film enthält noch keine Bilder. Schalte „Nur Bilder im Film“ aus, um neue Werke auszuwählen.':'Keine Werke passen zu dieser Kombination. Ändere die Filter oder wähle „Ansicht zurücksetzen“.'));
       for(const work of visible){const entry=entries.get(work.id),card=node('article','gallery-card');card.dataset.work=work.id;
         if(work.imageWidth&&work.imageHeight)card.dataset.galleryAspect=String(work.imageWidth/work.imageHeight);
         const visual=node('div','gallery-visual');visual.append(imageButton(work));
@@ -159,10 +161,22 @@
     function applyView(){clearTimeout(filterTimer);renderGallery({editor:false});}
     $('gallery-search').oninput=()=>{clearTimeout(filterTimer);filterTimer=setTimeout(applyView,140);};
     for(const id of ['gallery-filter-artist','gallery-filter-style','gallery-filter-technique','gallery-sort'])$(id).onchange=applyView;
+    $('gallery-filter-film').onchange=applyView;
     $('gallery-filter-reset').onclick=()=>{
       for(const id of ['gallery-search','gallery-filter-artist','gallery-filter-style','gallery-filter-technique'])$(id).value='';
-      $('gallery-sort').value='collection';applyView();
+      $('gallery-sort').value='collection';$('gallery-filter-film').checked=false;applyView();
     };
+    $('gallery-clear-film').onclick=()=>{
+      const n=getGallery().film.items.length;if(!n)return;
+      $('gallery-clear-description').textContent='Alle '+n+' Bilder aus der aktuellen Filmauswahl entfernen? Deine Lieblingswerke bleiben vollständig in der Galerie. Name und Schlussmotto bleiben erhalten. Einblendungstexte zu den entfernten Filmbildern werden gelöscht; sichere deinen Film vorher als JSON, wenn du sie behalten möchtest.';
+      $('gallery-clear-dialog').showModal();$('gallery-clear-cancel').focus();
+    };
+    $('gallery-clear-confirm').onclick=()=>{
+      const g=getGallery();if(!g.film.items.length){$('gallery-clear-dialog').close();return;}
+      $('gallery-filter-film').checked=false;
+      if(change({...g,film:{...g.film,items:[]}},'Filmauswahl geleert. Alle Lieblingswerke, Name und Schlussmotto bleiben erhalten. Du kannst jetzt neue Bilder zum Film hinzufügen.')){$('gallery-clear-dialog').close();}
+    };
+    $('gallery-clear-dialog').addEventListener('close',()=>($('gallery-clear-film').disabled?$('gallery-filter-film'):$('gallery-clear-film')).focus({preventScroll:true}));
     addEventListener('resize',layoutGallery);
     document.fonts?.ready.then(layoutGallery);
     function stopFilm() {

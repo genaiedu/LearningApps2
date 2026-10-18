@@ -27,6 +27,17 @@ test('gallery sorts every requested field, keeps ties deterministic and counts c
  for(const field of ['artist','style','technique'])for(const choice of gallery.viewFacets(works,view,field))assert.equal(choice.count,gallery.viewWorks(works,{...view,[field]:choice.value}).length);
  assert.deepEqual(gallery.viewFacets(works,view,'unknown'),[]);assert.deepEqual(works,before);
 });
+test('the film filter combines with all facets and sorting, including an empty film, without mutating either selection',()=>{
+ const works=pool.slice(0,100),filmIds=[works[4].id,works[1].id,works[7].id],before=structuredClone({works,filmIds});
+ const view={onlyFilm:true,filmIds,sort:'title'},selected=works.filter(work=>filmIds.includes(work.id));
+ assert.deepEqual(gallery.viewWorks(works,view),gallery.viewWorks(selected,{sort:'title'}));
+ assert.deepEqual(gallery.viewWorks(works,{...view,artist:works[1].artist,search:works[1].title}),gallery.viewWorks(selected,{artist:works[1].artist,search:works[1].title,sort:'title'}));
+ for(const field of ['artist','style','technique'])for(const option of gallery.viewFacets(works,view,field))assert.equal(option.count,selected.filter(work=>work[field]===option.value).length);
+ assert.deepEqual(gallery.viewWorks(works,{onlyFilm:true,filmIds:[]}),[]);
+ assert.deepEqual(gallery.viewWorks(works,{onlyFilm:true}),[]);
+ assert.deepEqual(gallery.viewWorks(works,{onlyFilm:false,filmIds:[]}),works);
+ assert.deepEqual({works,filmIds},before);
+});
 test('gallery dates respect BCE, catalogue periods and unknown dates in both directions',()=>{
  const works=[{id:'modern',date:'1902–1905'},{id:'ancient',date:'500 v. Chr.',dateStart:-500},{id:'unknown',date:'unbekannt'},{id:'early',date:'um 1500'}];
  assert.deepEqual(gallery.viewWorks(works,{sort:'date-asc'}).map(w=>w.id),['ancient','early','modern','unknown']);

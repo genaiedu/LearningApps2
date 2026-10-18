@@ -6,7 +6,7 @@
   <title>Kunsttresor · Die Galerie der verschlossenen Türen</title>
   <link rel="preload" href="../LearningApps/fonts/dancing-script-v29-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/typografie/firasans/FiraSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles/kunsttresor.css?v=20261018-galerie-infos">
+  <link rel="stylesheet" href="styles/kunsttresor.css?v=20261018-filmfilter">
   <link rel="stylesheet" href="styles/wikipedia-math.css">
   <link rel="stylesheet" href="styles/app-editorial.css?v=20261011-heading-air">
   <script src="scripts/kunsttresor-mode.js?v=20261017-wall17"></script>
@@ -16,9 +16,9 @@
   <script defer src="scripts/kunsttresor-ki-config.js?v=20261016-kurator-automatisch"></script>
   <script defer src="scripts/kunsttresor-progress.js?v=20261017-museumsauftrag"></script>
   <script defer src="scripts/kunsttresor-history.js?v=20261017-portraets-bildrunde"></script>
-  <script defer src="scripts/kunsttresor-gallery.js?v=20261018-galerie-filter"></script>
+  <script defer src="scripts/kunsttresor-gallery.js?v=20261018-filmfilter"></script>
   <script defer src="scripts/kunsttresor-layout.js?v=20261017-wall18"></script>
-  <script defer src="scripts/kunsttresor-gallery-ui.js?v=20261018-galerie-infos"></script>
+  <script defer src="scripts/kunsttresor-gallery-ui.js?v=20261018-filmfilter"></script>
   <script defer src="scripts/kunsttresor-save.js?v=20261018-galerie-dateien"></script>
   <script defer src="scripts/kunsttresor-zoom.js?v=20261017-ruhige-anzeige-pinch"></script>
   <script defer src="scripts/kunsttresor-intro.js?v=20261011-vorspann-bereit"></script>
@@ -79,10 +79,11 @@
           <label>Technik<select id="gallery-filter-technique" aria-controls="gallery-grid"><option value="">Alle Techniken</option></select></label>
           <label>Sortieren nach<select id="gallery-sort" aria-controls="gallery-grid"><option value="collection">Sammlungsreihenfolge</option><option value="artist">Künstler · A–Z</option><option value="style">Stil · A–Z</option><option value="technique">Technik · A–Z</option><option value="title">Werktitel · A–Z</option><option value="date-asc">Entstehung · älteste zuerst</option><option value="date-desc">Entstehung · neueste zuerst</option></select></label>
           <button id="gallery-filter-reset" type="button" disabled>Ansicht zurücksetzen</button>
-        </div><p id="gallery-results" role="status" aria-live="polite" class="gallery-results"></p>
+        </div><div class="gallery-film-selection-tools"><label class="gallery-film-toggle"><input id="gallery-filter-film" type="checkbox" aria-controls="gallery-grid">Nur Bilder im Film <span id="gallery-film-filter-count">(0)</span></label><button id="gallery-clear-film" type="button" aria-haspopup="dialog" disabled>Filmauswahl leeren</button></div><p id="gallery-results" role="status" aria-live="polite" class="gallery-results"></p>
         <p class="visually-hidden">Nach gewonnenen Räumen sammelst du hier deine Lieblingswerke. Deine Galerie bleibt über neue Runden hinweg erhalten.</p><p id="gallery-status" role="status" aria-live="polite" class="small"></p><div id="gallery-grid" class="gallery-grid"></div>
         <section id="gallery-editor" class="gallery-editor" hidden aria-labelledby="gallery-edit-title"><p class="eyebrow">Dein Schnitt. Deine Worte.</p><h2 id="gallery-edit-title">Ein Film aus deiner Sammlung.</h2><p>6 bis 10 Werke geben Details und vollständigen Ansichten Raum. Zuerst siehst du alle Detailfahrten, danach nacheinander alle vollständigen Werke. Die Orchesterfassung läuft ganz: rund 2 Minuten 8 Sekunden. Der Film wird hier abgespielt; die JSON-Datei speichert deine Auswahl und Gestaltung, keine Videodatei.</p><div class="gallery-name-fields"><label>Name deiner Galerie<input id="gallery-name" type="text" maxlength="80" autocomplete="off"></label><label>Handschriftliches Schlussmotto<textarea id="gallery-motto" maxlength="180" rows="3"></textarea></label></div><button id="gallery-auto" type="button">8 Lieblingswerke zusammenstellen</button><p id="film-selection-count" class="small"></p><ol id="film-selection" class="film-selection"></ol><p class="small">Du kannst oben weitere gelikte Werke hinzufügen. Entfernen aus dem Film lässt das Werk in deiner Galerie. Alle Änderungen werden automatisch im Browser und beim JSON-Export gespeichert. Einblendungen sind redaktionelle Impulse zu Stil und Material, keine automatische Bildanalyse; eigene Texte bleiben ebenfalls lokal. Die Musik stammt wie im Vorspann aus der Fugen-App. Reduzierte Bewegung ersetzt die Kamerafahrt durch ruhige Ansichten.</p></section>
       </dialog>
+      <dialog id="gallery-clear-dialog" aria-labelledby="gallery-clear-title"><div class="dialog-head"><h2 id="gallery-clear-title">Filmauswahl leeren?</h2></div><p id="gallery-clear-description"></p><div class="dialog-actions"><button id="gallery-clear-cancel" type="button" data-close="gallery-clear-dialog">Abbrechen</button><button id="gallery-clear-confirm" type="button" class="primary">Nur die Filmauswahl leeren</button></div></dialog>
       <dialog id="gallery-film-dialog" class="gallery-film-dialog" aria-label="Dein persönlicher Kunstfilm">
         <div id="gallery-film-stage" class="gallery-film-stage" aria-hidden="true"></div><div class="gallery-film-shade" aria-hidden="true"></div><div class="gallery-film-tools"><button id="gallery-film-pause" type="button" hidden>Pause</button><button id="gallery-film-sound" type="button" hidden aria-pressed="true">Musik aus</button><button id="gallery-film-stop" type="button">Zur Galerie ×</button></div>
         <div id="gallery-film-loading" class="gallery-film-loading"><svg class="intro-hourglass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h14M5 21h14M6 3v3a6 6 0 0 0 3 5l3 1 3-1a6 6 0 0 0 3-5V3M6 21v-3a6 6 0 0 1 3-5l3-1 3 1a6 6 0 0 1 3 5v3"/></svg><h2>Dein Kunstfilm.</h2><p id="gallery-film-loading-text" role="status">Die Filmbilder werden geladen …</p><div class="dialog-actions"><button id="gallery-film-start" class="primary" type="button" hidden>Film mit Musik starten</button><button id="gallery-film-silent" type="button" hidden>Bewusst ohne Musik abspielen</button><button id="gallery-film-retry" type="button" hidden>Erneut laden</button></div></div>

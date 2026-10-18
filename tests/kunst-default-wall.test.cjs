@@ -109,6 +109,34 @@ test('gallery filter controls combine, count, sort and reset without changing li
  app.q('#gallery-dialog').close();app.click('game-gallery');assert.equal(app.q('#gallery-sort').value,'date-desc');
  assert.deepEqual(stored(app.w.localStorage),before);assert.equal(app.q('#art-grid [data-gallery-like]'),null);
 });
+test('only-film checkbox combines with gallery filters, updates after removal and resets without altering progress',async t=>{
+ const works=[...new Map(pool.map(work=>[work.artist,work])).values()].slice(0,24),at=Date.now();
+ const gallery={...model.KunstGallery.fresh(),liked:works.map(work=>({id:work.id,source:'curated',at}))};gallery.film.items=works.slice(0,6).map(work=>model.KunstGallery.item(work.id));
+ const app=await setup(t,{gallery});app.click('launch-read');app.click('game-gallery');
+ const before=stored(app.w.localStorage),cards=()=>[...app.q('#gallery-grid').querySelectorAll('.gallery-card')].map(card=>card.dataset.work);
+ app.click('gallery-filter-film');assert.equal(app.q('#gallery-filter-film').checked,true);assert.deepEqual(cards(),works.slice(0,6).map(work=>work.id));
+ assert.equal(app.q('#gallery-film-filter-count').textContent,'(6)');assert.match(app.q('#gallery-results').textContent,/6 von 24.*Nur Bilder im Film/);
+ app.q('#gallery-filter-artist').value=works[1].artist;app.q('#gallery-filter-artist').dispatchEvent(new app.w.Event('change'));assert.deepEqual(cards(),[works[1].id]);
+ app.q('#gallery-filter-artist').value='';app.q('#gallery-search').value='NO MATCH';app.q('#gallery-sort').value='title';app.q('#gallery-sort').dispatchEvent(new app.w.Event('change'));assert.equal(cards().length,0);
+ assert.deepEqual(stored(app.w.localStorage),before);
+ app.click('gallery-filter-reset');assert.equal(app.q('#gallery-filter-film').checked,false);assert.equal(cards().length,24);assert.equal(app.q('#gallery-filter-reset').disabled,true);
+ app.click('gallery-filter-film');app.q('#gallery-grid .gallery-card details').open=true;
+ [...app.q('#gallery-grid .gallery-card').querySelectorAll('button')].find(button=>button.textContent==='Aus Film entfernen').click();
+ assert.equal(app.q('#gallery-filter-film').checked,true);assert.equal(cards().length,5);assert.equal(app.q('#gallery-film-filter-count').textContent,'(5)');
+ const after=stored(app.w.localStorage),saved=JSON.parse(after['kunsttresor-wall-gallery-v1']);assert.deepEqual(saved.liked,JSON.parse(before['kunsttresor-wall-gallery-v1']).liked);assert.equal(saved.film.items.length,5);
+ delete before['kunsttresor-wall-gallery-v1'];delete after['kunsttresor-wall-gallery-v1'];assert.deepEqual(after,before);
+});
+test('clearing film selection requires confirmation and preserves likes, film name, motto, game and history',async t=>{
+ const {s,h}=fixture(),works=pool.slice(0,24),at=Date.now(),gallery={...model.KunstGallery.fresh(),liked:works.map(work=>({id:work.id,source:'curated',at}))};
+ gallery.film={name:'Mein neuer Blick',motto:'Meine Sammlung bleibt.',items:works.slice(0,6).map(work=>model.KunstGallery.item(work.id))};gallery.film.items[0]={...gallery.film.items[0],caption:'custom',text:'Ein eigener Text'};
+ const app=await setup(t,{state:s,history:h,gallery});app.click('launch-read');app.click('game-gallery');app.click('gallery-filter-film');
+ const before=stored(app.w.localStorage);app.click('gallery-clear-film');assert.equal(app.q('#gallery-clear-dialog').open,true);assert.equal(app.w.document.activeElement,app.q('#gallery-clear-cancel'));assert.match(app.q('#gallery-clear-description').textContent,/Alle 6 Bilder/);assert.match(app.q('#gallery-clear-description').textContent,/Einblendungstexte.*gelöscht/);
+ assert.deepEqual(stored(app.w.localStorage),before);app.click('gallery-clear-cancel');assert.equal(app.q('#gallery-clear-dialog').open,false);assert.equal(app.w.document.activeElement,app.q('#gallery-clear-film'));assert.deepEqual(stored(app.w.localStorage),before);
+ app.click('gallery-clear-film');app.click('gallery-clear-confirm');assert.equal(app.q('#gallery-clear-dialog').open,false);assert.equal(app.q('#gallery-filter-film').checked,false);assert.equal(app.q('#gallery-clear-film').disabled,true);assert.equal(app.w.document.activeElement,app.q('#gallery-filter-film'));assert.equal(app.q('#gallery-grid').children.length,24);
+ const after=stored(app.w.localStorage),saved=JSON.parse(after['kunsttresor-wall-gallery-v1']);assert.deepEqual(saved,{...gallery,film:{...gallery.film,items:[]}});assert.equal(app.q('#gallery-film-filter-count').textContent,'(0)');
+ delete before['kunsttresor-wall-gallery-v1'];delete after['kunsttresor-wall-gallery-v1'];assert.deepEqual(after,before);
+ app.click('gallery-filter-film');assert.equal(app.q('#gallery-grid .gallery-card'),null);assert.match(app.q('.gallery-empty').textContent,/Film enthält noch keine Bilder/);
+});
 const pressRule=(app,n)=>app.q('.rule-steps > li:nth-child('+n+') > button').click();
 test('gallery information reads collected works during an unfinished room without touching progress or requesting AI',async t=>{
  const at=Date.now(),id='wd-Q252485',gallery={...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]};
