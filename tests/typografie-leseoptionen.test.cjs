@@ -60,17 +60,27 @@ test('the new default replaces the legacy alignment once, but preserves all othe
 test('justified reading copy includes deeply nested explanations, but never rewrites fixed type studies',t=>{
  const s=setup(t),css=read('styles/typografie-ansicht.css'),selector=css.match(/(html\[data-reading-alignment="justify"\][\s\S]*?)\{text-align:justify;/)[1];
  const copy=[...s.w.document.querySelectorAll(selector)];
- for(const target of ['#fira-height-title+p','#fira-height-title~p','.history-raster-study>div>p:not(.eyebrow,.small)','.fondamento-portrait>p:not(.fondamento-cut)','.history-copy>p:not(.history-era)','.author-comment>p']){
+ for(const target of ['#fira-height-title+p','#fira-height-title~p','.history-raster-study>div>p:not(.eyebrow,.small)','.fondamento-portrait>p:not(.fondamento-cut)','.history-copy>p:not(.history-era)']){
   const paragraphs=[...s.w.document.querySelectorAll(target)];assert.ok(paragraphs.length,target);
   for(const paragraph of paragraphs)assert.ok(copy.includes(paragraph),target+' '+paragraph.textContent.slice(0,45));
  }
- for(const target of ['.text-proof p','.book-body p','.study-sheet p','.grauwert-sample','.classification-sample','.fondamento-cut','.kerning-proof','.serif-example','.sans-example','.ligature-proof']){
+ for(const target of ['.text-proof p','.book-body p','.study-sheet p','.grauwert-sample','.classification-sample','.fondamento-cut','.kerning-proof','.serif-example','.sans-example','.ligature-proof','.author-comment p']){
   for(const paragraph of s.w.document.querySelectorAll(target))assert.ok(!copy.includes(paragraph),'Fixed specimen: '+target);
  }
  const host=s.w.document.createElement('div');host.dataset.readingFixed='';host.innerHTML='<p>A later-created designed document stays independent.</p>';s.q('main').append(host);
  assert.equal(host.firstElementChild.matches(selector),false);
  assert.ok(copy.length>500,'Reading copy must not depend on a handful of parent classes');
  assert.ok(css.includes('.part-heading>div:has(>h2){display:contents}'),'Phone introductions receive the full available reading width');
+});
+test('all personal voices stay ragged right regardless of reading alignment or palette',t=>{
+ const s=setup(t),css=read('styles/typografie-ansicht.css'),selector=css.match(/(html\[data-reading-alignment="justify"\][\s\S]*?)\{text-align:justify;/)[1],voices=[...s.w.document.querySelectorAll('.author-comment')];
+ assert.equal(voices.length,16);
+ assert.ok(css.includes('.author-comment,.author-comment :is(p,blockquote,li,dd,figcaption){text-align:left;text-align-last:auto;hyphens:manual;-webkit-hyphens:manual}'));
+ for(const readingAlignment of ['left','justify'])for(const palette of A.palettes)for(const theme of ['light','dark']){
+  s.w.TypoAppearance.apply({readingAlignment,palette:palette.id,theme});s.flush();
+  for(const voice of voices)for(const paragraph of voice.querySelectorAll('p'))assert.equal(paragraph.matches(selector),false);
+ }
+ assert.ok(s.q('#word-ligaturen .note-reading-copy p').matches(selector),'Factual notes keep the selected justified alignment');
 });
 test('kerning is explicit on real text, while its teaching switch remains genuinely reversible',()=>{
  const css=read('styles/typografie-ansicht.css'),source=read('scripts/typografie-atelier.js');

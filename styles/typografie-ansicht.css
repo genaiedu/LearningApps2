@@ -23,6 +23,9 @@ html[data-palette] :is(.archive-section,.color-section){background:var(--surface
 html[data-palette] :is(.controls,.note,pre),html[data-palette] #wiki-status{background:var(--surface)}
 html[data-palette] .author-comment{background:var(--quote-bg);color:var(--ink)}
 html[data-palette] .author-comment .comment-opening{color:var(--quote-mark)}
+/* Personal voices keep their own ragged-right rhythm, independent of the
+   alignment chosen for explanatory reading copy. */
+.author-comment,.author-comment :is(p,blockquote,li,dd,figcaption){text-align:left;text-align-last:auto;hyphens:manual;-webkit-hyphens:manual}
 /* These two voices keep their typography and placement, not a fixed green palette. */
 html[data-palette] .font-choice-voice{font-family:"EB Garamond",Georgia,serif;margin-inline:auto}
 html[data-palette] .font-choice-voice h3{font-family:"Fira Sans",sans-serif;margin-top:0}
@@ -84,7 +87,7 @@ body.prose-typography :is(#longtext-recommendation-toggle,#longtext-feature-stat
    actual type specimens and interface labels, not whole explanation panels.
    The same rule covers later-created font advice without a DOM rewrite. */
 html[data-reading-alignment="justify"] body.prose-typography main :is(p,blockquote,li,dd,figcaption):not(:where(
-  [data-reading-fixed],[data-reading-fixed] *,nav *,button *,label *,summary *,
+  [data-reading-fixed],[data-reading-fixed] *,.author-comment,.author-comment *,nav *,button *,label *,summary *,
   .controls *,.panel-top *,.hero-meta *,.reading-next *,.reader-appearance-controls *,
   .text-proof,.text-proof *,.book-proof,.book-proof *,.poster,.poster *,
   .page-proof,.page-proof *,.study-sheet,.study-sheet *,.gi-page,.gi-page *,
