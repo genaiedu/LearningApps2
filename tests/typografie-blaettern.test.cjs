@@ -37,6 +37,17 @@ test('stationary masks cover exactly ONE page and reader CSS is cache-busted tog
  const css=read('styles/typografie-lesedruck.css');assert.match(css,/\.reader-resting-page\{[^}]*width:100%;right:auto/);assert.match(css,/\.reader-turning-leaf\{[^}]*z-index:1/);
  const dom=new JSDOM(read('typografie-lesedruck.html'),{url:'https://example.test/typografie-lesedruck.html'}),document=dom.window.document,version=new URL(document.querySelector('script[src*="scripts/typografie-lesedruck.js"]').src).searchParams.get('v'),styleVersion=new URL(document.querySelector('link[href*="styles/typografie-lesedruck.css"]').href).searchParams.get('v');dom.window.close();assert.equal(styleVersion,version);assert.ok(read('scripts/typografie-langtext.js').includes('styles/typografie-lesedruck.css?v='+version));
 });
+test('the centre fold sits above opaque sheet backgrounds, is non-interactive and screen-only',()=>{
+ const dom=new JSDOM('<style>'+read('styles/typografie-lesedruck.css')+'</style>'),sheet=dom.window.document.styleSheets[0];
+ const screen=[...sheet.cssRules].find(rule=>rule.conditionText==='screen'),rules=[...screen.cssRules];
+ const fold=rules.find(rule=>rule.selectorText==='.reader-paging .pagedjs_sheet::after');
+ assert.ok(fold,'the sheet overlay also follows cloned pages during a turn');
+ assert.equal(fold.style.content,"''");assert.equal(fold.style.position,'absolute');assert.equal(fold.style.inset,'0');
+ assert.equal(fold.style['pointer-events'],'none');assert.equal(fold.style['z-index'],'9');assert.match(fold.style['box-shadow'],/inset/);
+ assert.ok(![...sheet.cssRules].some(rule=>rule.selectorText?.includes('.pagedjs_sheet::after')),'no fold overlay in print media');
+ assert.equal(rules.find(rule=>rule.selectorText==='.reader-paging .pagedjs_page').style['box-shadow'],'0 3px 14px #0002','the inner shadow is not doubled');
+ dom.window.close();
+});
 test('resize, zoom, scrolling, fullscreen, printing and new layout clean up an active turn',async t=>{
  const s=await setup(t);for(const action of [()=>s.w.dispatchEvent(new s.w.Event('resize')),()=>s.button('+').click(),()=>s.q('#print-pages').dispatchEvent(new s.w.Event('scroll')),()=>s.w.dispatchEvent(new s.w.MessageEvent('message',{origin:s.w.location.origin,source:s.w.parent,data:{type:'typography-expanded',expanded:true}})),()=>s.w.dispatchEvent(new s.w.Event('beforeprint')),()=>s.button('Scrollansicht').click(),()=>s.layout()]){if(!s.w.document.documentElement.classList.contains('reader-paging'))s.button('Blätteransicht').click();s.next();assert.ok(s.q('.reader-leaf-stage'));const animation=s.animations.at(-1);await action();assert.equal(s.q('.reader-leaf-stage'),null);assert.equal(animation.cancelled,true);assert.equal(animation.onfinish,null);if(s.w.document.documentElement.classList.contains('reader-paging')){s.back();if(s.q('.reader-leaf-stage'))s.finish();}}
 });
