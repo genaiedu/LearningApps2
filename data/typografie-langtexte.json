@@ -5,7 +5,7 @@
     {
       "id": "minutes",
       "label": "Protokoll · Verfassungsversammlung (Englisch)",
-      "lang": "en",
+      "lang": "en-US",
       "title": "Notes of the Federal Convention",
       "subtitle": "Philadelphia · 17 September 1787",
       "author": "James Madison",
@@ -721,7 +721,7 @@
     {
       "id": "book",
       "label": "Buchseiten · Sherlock Holmes (Englisch)",
-      "lang": "en",
+      "lang": "en-GB",
       "title": "A Scandal in Bohemia",
       "subtitle": "From The Adventures of Sherlock Holmes",
       "author": "Arthur Conan Doyle",
