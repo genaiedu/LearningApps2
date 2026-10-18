@@ -2,6 +2,8 @@
   "version": 1,
   "note": "Redaktionelle poetische Einblendungen zum katalogisierten Stil und Material. Keine automatische Bildanalyse. Fachliche Definitionen und Quellen stehen im Kunstglossar. Eigene Texte bleiben lokal; keine KI-Anfragen.",
   "styles": {
+    "Ukiyo-e": ["Ukiyo-e. Bilder einer fließenden Welt.", "Linie, Fläche und ein besonderer Blick auf die Landschaft."],
+    "Suprematismus": ["Geometrische Formen lösen sich vom Gegenstand.", "Farbe und Fläche werden zur eigenen Bildsprache."],
     "Moderne Skulptur": ["Der Körper wird zum Experiment.", "Form braucht Raum."],
     "Neue Sachlichkeit": ["Ein nüchterner Blick auf eine unruhige Zeit.", "Genauigkeit kann unbequem sein."],
     "Konstruktivismus": ["Kunst wird gebaut.", "Linie, Fläche, Konstruktion."],
@@ -59,6 +61,8 @@
     "Ionische Schule": ["Bildtraditionen im Austausch.", "Kunst an einer kulturellen Schnittstelle."]
   },
   "techniques": {
+    "Fresko": ["Fresko. Farbe verbindet sich mit frischem Putz.", "Eine Wand oder Decke wird zum Bildraum."],
+    "Farbholzschnitt": ["Farbholzschnitt. Mehrere Druckvorgänge werden zum Bild.", "Entwurf, Schnitt und Druck spielen zusammen."],
     "Secco-Wandmalerei": ["Secco. Farbe auf trockenem Putz.", "Eine Wand wird zur Bildfläche."],
     "Marmorskulptur": ["Marmor. Licht zeichnet Volumen.", "Eine Form wird aus dem Stein gelöst."],
     "Gipsskulptur": ["Gips. Eine plastische Form wird festgehalten.", "Oberfläche und Körper im Licht."],

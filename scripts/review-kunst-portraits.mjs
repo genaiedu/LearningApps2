@@ -7,6 +7,9 @@ const cache=process.argv[2]||'/private/tmp/kunst-portrait-cache';await fs.mkdir(
 const option=name=>process.argv.find(arg=>arg.startsWith(name+'='))?.slice(name.length+1);
 const artistIds=option('--artists')?.split(',');
 if(artistIds?.some(id=>!/^Q\d+$/.test(id)))throw Error('Invalid artist IDs');
+const perArtist=process.argv.includes('--per-artist');
+const limit=Number(option('--limit')||60);
+if(!Number.isInteger(limit)||limit<1||limit>200)throw Error('Invalid candidate limit');
 const plan=option('--plan')?JSON.parse(await fs.readFile(path.resolve(option('--plan')),'utf8')):null;
 const headers={'User-Agent':'LearningApps-Kunsttresor/3.0 (educational; public metadata review)','Accept':'application/json'};
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -23,7 +26,8 @@ const commons=params=>'https://commons.wikimedia.org/w/api.php?'+new URLSearchPa
 if(process.argv.includes('--discover')){
  const refs=await request(wiki({action:'wbgetentities',ids:artistIds?.join('|')||'Q40599|Q82445|Q34661|Q39931|Q180788|Q23402|Q51252|Q19675|Q134307|Q517|Q1511',props:'labels|claims',languages:'de|en'}),'references-v2');
  console.log(Object.values(refs.entities).map(e=>e.id+' '+(e.labels.de?.value||e.labels.en?.value)).join('\n'));
- const queries=artistIds?{masters:`SELECT DISTINCT ?item ?links WHERE { VALUES ?artist {${artistIds.map(id=>'wd:'+id).join(' ')}} ?item wdt:P170 ?artist; wdt:P18 ?image; wdt:P571 ?date; wdt:P186 ?material; wikibase:sitelinks ?links. } ORDER BY DESC(?links) LIMIT 120`}:{
+ const artistQuery=ids=>`SELECT DISTINCT ?item ?links WHERE { VALUES ?artist {${ids.map(id=>'wd:'+id).join(' ')}} ?item wdt:P170 ?artist; wdt:P18 ?image; wdt:P571 ?date; ${process.argv.includes('--relaxed-material')?'':'wdt:P186 ?material; '}wikibase:sitelinks ?links. } ORDER BY DESC(?links) LIMIT ${perArtist?limit:120}`;
+ const queries=artistIds?(perArtist?Object.fromEntries(artistIds.map(id=>[id,artistQuery([id])])):{masters:artistQuery(artistIds)}):{
   artists:'SELECT DISTINCT ?item ?links WHERE { VALUES ?artist {wd:Q40599 wd:Q82445 wd:Q34661} ?item wdt:P170 ?artist; wdt:P18 ?image; wdt:P571 ?date; wdt:P186 ?material; wikibase:sitelinks ?links. } ORDER BY DESC(?links) LIMIT 200',
   'portraits-500':'SELECT DISTINCT ?item ?links WHERE { VALUES ?collection {wd:Q180788 wd:Q23402 wd:Q51252 wd:Q19675} ?item wdt:P195 ?collection; wdt:P136 wd:Q134307; wdt:P170 ?artist; wdt:P18 ?image; wdt:P571 ?date; wdt:P186 ?material; wikibase:sitelinks ?links. ?artist wdt:P570 ?death. FILTER(YEAR(?death)<=1955) } ORDER BY DESC(?links) LIMIT 500',
   'napoleon-v2':'SELECT DISTINCT ?item ?links WHERE { VALUES ?person {wd:Q517 wd:Q1511} ?item wdt:P180 ?person; wdt:P170 ?artist; wdt:P18 ?image; wdt:P571 ?date; wdt:P186 ?material; wikibase:sitelinks ?links. ?artist wdt:P570 ?death. FILTER(YEAR(?death)<=1955) } ORDER BY DESC(?links) LIMIT 55'
@@ -53,7 +57,7 @@ if(process.argv.includes('--metadata')){
  async function collect(ids){const missing=[...new Set(ids)].filter(id=>!entities[id]);for(let i=0;i<missing.length;i+=40){const batch=missing.slice(i,i+40),key=createHash('sha256').update(batch.join('|')).digest('hex');const value=await request(wiki({action:'wbgetentities',ids:batch.join('|'),props:'labels|claims|sitelinks',languages:'de|en|fr|it',sitefilter:'dewiki|enwiki|frwiki|itwiki'}),'entities-'+key);Object.assign(entities,value.entities);}}
  await collect(rows.map(row=>row.id));
  const ids=(e,p)=>(e?.claims?.[p]||[]).filter(s=>s.rank!=='deprecated').map(s=>s.mainsnak?.datavalue?.value?.id).filter(Boolean);
- await collect(Object.values(entities).flatMap(e=>['P170','P135','P186','P195'].flatMap(p=>ids(e,p))));
+ await collect(Object.values(entities).flatMap(e=>['P170','P135','P186','P195','P31'].flatMap(p=>ids(e,p))));
  await fs.writeFile(path.join(cache,'entities.json'),JSON.stringify(entities));
  const files=[...new Set(rows.flatMap(row=>(entities[row.id]?.claims?.P18||[]).filter(s=>s.rank!=='deprecated').map(s=>s.mainsnak?.datavalue?.value).filter(v=>typeof v==='string').slice(0,1)).map(v=>'File:'+v.replace(/_/g,' ')))];
  const pages=[],aliases=[];

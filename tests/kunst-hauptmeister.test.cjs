@@ -3,11 +3,11 @@ const archive=require('../data/kunstarchiv.json'),media=require('../data/kunstbi
 const curator=require('../scripts/kunst-kurator.js'),ki=require('../services/kunst-kurator/lib/kunst-ki.js');
 const scope={KunstWallEnabled:true,URL};vm.runInNewContext(fs.readFileSync(require.resolve('../scripts/kunsttresor-core.js'),'utf8'),scope);const core=scope.KunstTresor;
 const images=new Map(media.images.map(w=>[w.id,w])),pool=archive.works.map(w=>({...w,...images.get(w.id),titleDe:titles.titles[w.id],artistIdentity:wiki.artists[w.artist].language+':'+wiki.artists[w.artist].title}));
-const added=pool.slice(plan.baseline),hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
+const added=pool.slice(plan.baseline,1921),hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
 function roomWith(work){const chosen=[work];for(const w of pool)if(chosen.length<7&&core.compatible(chosen,w))chosen.push(w);assert.equal(chosen.length,7);return core.newState(chosen,null,Math.random,false,{});}
 function solved(state){for(const id of state.ids)for(const f of core.fieldsFor(state))state=core.choose(state,id,f,pool.find(w=>w.id===id)[f]);return core.inspect(state,pool).state;}
 test('114 reviewed additions preserve every one of the 1807 published works and images',()=>{
- assert.equal(pool.length,1921);assert.equal(added.length,114);
+ assert.ok(pool.length>=1921);assert.equal(added.length,114);
  assert.equal(hash(archive.works.slice(0,plan.baseline)),plan.legacyWorksSHA256);assert.equal(hash(media.images.slice(0,plan.baseline)),plan.legacyImagesSHA256);
  assert.deepEqual(new Set(added.map(w=>w.id)),new Set(plan.works.map(w=>'wd-'+w[0])));
  assert.equal(new Set(pool.map(w=>w.id)).size,pool.length);assert.equal(new Set(pool.map(w=>w.imageOriginalURL)).size,pool.length);

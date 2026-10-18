@@ -18,6 +18,22 @@ const label=id=>entities[id]?.labels?.de?.value||entities[id]?.labels?.en?.value
 const clean=text=>String(text||'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/\s+/g,' ').trim();
 const article=e=>e?.sitelinks?.dewiki?{title:e.sitelinks.dewiki.title,language:'de'}:e?.sitelinks?.enwiki?{title:e.sitelinks.enwiki.title,language:'en'}:null;
 const year=value=>value?.time?.match(/^\+(\d+)-/) ? Number(value.time.match(/^\+(\d+)-/)[1]) : null;
+function techniqueFor(materials,override={}){
+ if(override.technique)return override.technique;
+ const terms=materials.map(label).join(' · ');
+ if(materials.includes('Q25631150'))return 'Fresko';
+ if(materials.includes('Q296955')||materials.includes('Q174219')||/Ölfarbe|Ölmalerei/.test(terms)){
+  if(materials.some(id=>['Q897','Q880','Q929186'].includes(id))&&!/Kupfer/.test(terms))return 'Öl und Metallauflage';
+  if(/Leinwand|canvas|Ölzeug/i.test(terms)||materials.includes('Q12321255')||materials.includes('Q4259259'))return 'Öl auf Leinwand';
+  if(/Holz|Paneel|Panel|Tafel|Brett|wood/i.test(terms)||materials.some(id=>['Q106857709','Q106857823','Q106857865','Q134621705','Q239788','Q287','Q291034'].includes(id)))return 'Öl auf Holz';
+  if(/Papier|Karton|Pappe|paper/i.test(terms)||materials.some(id=>['Q389782','Q18668582','Q11472'].includes(id)))return 'Öl auf Papier / Karton';
+ }
+ if(materials.includes('Q175166')||materials.includes('Q1321267')||/Tempera/.test(terms))return 'Tempera';
+ if(materials.includes('Q189085')||/Pastell/.test(terms))return 'Pastell';
+ if(/Aquarell/.test(terms))return 'Aquarell';
+ if(/Gouache/.test(terms))return 'Gouache';
+ return null;
+}
 export function dating(e){
   const all=claims(e,'P571'),preferred=all.filter(c=>c.rank==='preferred'),entries=preferred.length?preferred:all;
   const dates=entries.map(s=>{
@@ -41,7 +57,7 @@ if(process.argv.includes('--inventory')){
   const override=plan.overrides?.[row.id],dated=override?.date?override:dating(e),file=pages.get(plan.requestedFiles?.[row.id]||'File:'+val(e,'P18')[0]?.replace(/_/g,' ')),i=file?.imageinfo?.[0];
   if(!i||!/^image\/(jpeg|png|webp)$/.test(i.mime)||!/^(?:Public domain|CC0)$/i.test(i.extmetadata?.LicenseShortName?.value||'')||file.categories?.some(c=>/deletion request|copyright violation|permission pending|in the UK with copyright claims/i.test(c.title)))throw Error('image');
   if(knownImages.has(i.url)||archive.works.some(w=>w.wikidata==='https://www.wikidata.org/wiki/'+row.id||w.artistWikidata==='https://www.wikidata.org/wiki/'+maker.id&&w.title.toLowerCase()===(e.labels.de?.value||e.labels.en?.value||'').toLowerCase()))throw Error('duplicate');
-  const materials=val(e,'P186').map(x=>label(x.id));if(!materials.some(x=>/Ölfarbe|Tempera|Pastellkreiden/.test(x))&&!override?.technique)throw Error('medium');
+  const materials=val(e,'P186').map(x=>label(x.id));if(!techniqueFor(val(e,'P186').map(x=>x.id),override))throw Error('medium');
   if(!val(e,'P195').length)throw Error('collection');
   rows.push({...row,title:e.labels.de?.value||e.labels.en?.value||e.labels.fr?.value||e.labels.it?.value,artist:label(maker.id),date:dated.date,styles:val(e,'P135').map(x=>label(x.id)),materials,museum:val(e,'P195').map(x=>label(x.id)).join(' · ')});
  }catch(e){rejected.push({id:row.id,reason:e.message});}}
@@ -57,13 +73,14 @@ for(const [qid,titleDe,style,museum]of reviewed){
   // One museum-documented anonymous exception, not a general relaxation of attribution.
   const anonymous=qid==='Q1195610'&&override.artist==='Unbekannter Künstler'&&override.attribution==='unknown'&&override.artistDeath===null&&override.catalogueSource==='https://search.smb.museum/object/obj-865524';
   const verified=override.verifiedArtistId&&override.catalogueSource&&makers.some(m=>m.id===override.verifiedArtistId);
-  const maker=entities[verified?override.verifiedArtistId:makers[0]?.id],death=year(val(maker,'P570')[0]);
+  const maker=entities[verified?override.verifiedArtistId:makers[0]?.id],death=override.artistDeath??year(val(maker,'P570')[0]);
   if(!e||!anonymous&&((makers.length!==1&&!verified)||claims(e,'P170').some(s=>s.qualifiers?.P5102)||!death||death>1955||!article(maker)))throw Error('Unklare Künstlerangabe '+qid);
   const dated=override.date?{date:override.date,dateStart:override.dateStart,dateEnd:override.dateEnd}:dating(e);
   const materials=override.materialIds||val(e,'P186').map(x=>x.id);
-  const technique=override.technique||(materials.includes('Q296955')?(materials.some(x=>['Q897','Q880','Q929186'].includes(x))?'Öl und Metallauflage':materials.some(x=>['Q106857709','Q106857823','Q106857865','Q134621705','Q239788','Q287','Q291034'].includes(x))?'Öl auf Holz':materials.includes('Q12321255')||materials.includes('Q4259259')?'Öl auf Leinwand':materials.some(x=>['Q389782','Q18668582','Q11472'].includes(x))?'Öl auf Papier / Karton':null):materials.includes('Q175166')||materials.includes('Q1321267')?'Tempera':materials.includes('Q189085')?'Pastell':null);
+  const technique=techniqueFor(materials,override);
   const file=pages.get(plan.requestedFiles?.[qid]||'File:'+val(e,'P18')[0]?.replace(/_/g,' ')),info=file?.imageinfo?.[0],m=info?.extmetadata;
-  if(!info||!/^image\/(jpeg|png|webp)$/.test(info.mime)||!/^(?:Public domain|CC0)$/i.test(m?.LicenseShortName?.value||'')||file.categories?.some(c=>/deletion request|copyright violation|permission pending|in the UK with copyright claims/i.test(c.title)))throw Error('Bildrechte nicht verifiziert '+qid+' '+file?.title);
+  const displayable=info&&(/^image\/(jpeg|png|webp)$/.test(info.mime)||info.mime==='image/tiff'&&/\.jpg(?:\?|$)/i.test(info.thumburl||''));
+  if(!displayable||!/^(?:Public domain|CC0)$/i.test(m?.LicenseShortName?.value||'')||file.categories?.some(c=>/deletion request|copyright violation|permission pending|in the UK with copyright claims/i.test(c.title)))throw Error('Bildrechte nicht verifiziert '+qid+' '+file?.title);
   if(!knowledge.styles[style]||!knowledge.techniques[technique]||!materials.length||!titleDe?.trim()||!anonymous&&dated.dateEnd>death)throw Error('Ungeklärte Angaben '+qid+' '+technique);
   if(knownImages.has(info.url)||knownIdentities.has('https://www.wikidata.org/wiki/'+qid))throw Error('Doppeltes Werk '+qid);
   const styles=val(e,'P135').map(x=>label(x.id)),documented=styles.includes(style)||plan.styleAliases?.[style]?.some(term=>styles.includes(term));
@@ -73,7 +90,8 @@ for(const [qid,titleDe,style,museum]of reviewed){
   if(anonymous)delete work.artistWikidata;
   delete work.verifiedArtistId;
   if(!work.museum||/^Q\d+$/.test(work.museum)||work.medium.split(' · ').some(s=>/^Q\d+$/.test(s)))throw Error('Unübersetzte Katalogangaben '+qid+' '+work.medium);
-  const image={id:work.id,wikidata:work.wikidata,imageURL:info.thumburl||info.url,imageLargeURL:info.thumburl||info.url,imageOriginalURL:info.url,imageSource:info.descriptionurl,imageLicense:m.LicenseShortName.value,imageLicenseURL:m.LicenseUrl?.value||'https://commons.wikimedia.org/wiki/Commons:Reuse_of_PD-Art_photographs',imageCredit:clean(m.Artist?.value)||work.artist,imageWidth:info.width,imageHeight:info.height,imageMime:info.mime,imageBytes:info.size,imageDownloadAllowed:true,downloadRightsChecked:plan.reviewed};
+  const thumb=(info.thumburl||info.url).split('?')[0];
+  const image={id:work.id,wikidata:work.wikidata,imageURL:thumb,imageLargeURL:thumb,imageOriginalURL:info.url,imageSource:info.descriptionurl,imageLicense:m.LicenseShortName.value,imageLicenseURL:m.LicenseUrl?.value||'https://commons.wikimedia.org/wiki/Commons:Reuse_of_PD-Art_photographs',imageCredit:clean(m.Artist?.value)||work.artist,imageWidth:info.width,imageHeight:info.height,imageMime:info.mime,imageBytes:info.size,imageDownloadAllowed:true,downloadRightsChecked:plan.reviewed};
   additions.push(work);images.push(image);knownIds.add(work.id);knownImages.add(info.url);knownIdentities.add(work.wikidata);
   titles.titles[work.id]=titleDe;(titleDe===work.title?titles.retainedTitles:titles.ownTranslations).push(work.id);
   if(!wiki.artists[work.artist])wiki.artists[work.artist]=anonymous?{title:'Unbekannter Künstler',language:'de',unknown:true}:article(maker);

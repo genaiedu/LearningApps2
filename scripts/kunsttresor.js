@@ -1274,9 +1274,9 @@
     state.attempts = previous.attempts; save(); render();
     $('feedback').textContent = 'Technischer Ersatzraum. Deine geöffnete Raumzahl und die bereits verbrauchten Prüfversuche bleiben unverändert.';
   };
-  const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261018-hauptmeister',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
-  const filmTextRequest=fetch('data/kunst-filmtexte.json?v=20261018-hauptmeister',{credentials:'same-origin'}).then(response=>response.ok?response.json():null).catch(()=>null);
-  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261018-hauptmeister',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest,filmTextRequest])
+  const knowledgeRequest=fetch('data/kunst-glossar.json?v=20261018-alle-kuenstler',{credentials:'same-origin'}).then(response=>{if(!response.ok)throw Error('Glossar');return response.json();}).catch(()=>null);
+  const filmTextRequest=fetch('data/kunst-filmtexte.json?v=20261018-alle-kuenstler',{credentials:'same-origin'}).then(response=>response.ok?response.json():null).catch(()=>null);
+  Promise.all([...['data/kunstarchiv.json','data/kunstbilder.json','data/kunst-wikipedia.json','data/kunst-hauptwerke.json','data/kunst-titel-de.json'].map(url => fetch(url+'?v=20261018-alle-kuenstler',{credentials:'same-origin'}).then(response => { if (!response.ok) throw Error('Archiv'); return response.json(); })),knowledgeRequest,filmTextRequest])
     .then(([data,media,wiki,landmarks,titles,knowledge,filmTexts]) => {
       if(resetInProgress)return;
       wikiCatalogue = wiki;

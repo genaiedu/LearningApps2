@@ -1610,6 +1610,54 @@
     "Ernest Meissonier": {
       "title": "Ernest Meissonier",
       "language": "de"
+    },
+    "Lucas Cranach der Ältere": {
+      "title": "Lucas Cranach der Ältere",
+      "language": "de"
+    },
+    "Giotto di Bondone": {
+      "title": "Giotto di Bondone",
+      "language": "de"
+    },
+    "Cimabue": {
+      "title": "Cimabue",
+      "language": "de"
+    },
+    "Duccio di Buoninsegna": {
+      "title": "Duccio di Buoninsegna",
+      "language": "de"
+    },
+    "Artemisia Gentileschi": {
+      "title": "Artemisia Gentileschi",
+      "language": "de"
+    },
+    "Judith Leyster": {
+      "title": "Judith Leyster",
+      "language": "de"
+    },
+    "Rachel Ruysch": {
+      "title": "Rachel Ruysch",
+      "language": "de"
+    },
+    "Élisabeth Vigée-Lebrun": {
+      "title": "Élisabeth Vigée-Lebrun",
+      "language": "de"
+    },
+    "Angelika Kauffmann": {
+      "title": "Angelika Kauffmann",
+      "language": "de"
+    },
+    "Georges de la Tour": {
+      "title": "Georges de La Tour",
+      "language": "de"
+    },
+    "Katsushika Hokusai": {
+      "title": "Katsushika Hokusai",
+      "language": "de"
+    },
+    "Utagawa Hiroshige": {
+      "title": "Utagawa Hiroshige",
+      "language": "de"
     }
   },
   "works": {
@@ -5264,6 +5312,798 @@
     "wd-Q1195610": {
       "title": "Der Mann mit dem Goldhelm",
       "language": "de"
+    },
+    "wd-Q20828882": {
+      "title": "Der Jungbrunnen",
+      "language": "de"
+    },
+    "wd-Q2805058": {
+      "title": "Venus mit Amor als Honigdieb (London)",
+      "language": "de"
+    },
+    "wd-Q3605055": {
+      "title": "Adam and Eve (Cranach, Florence)",
+      "language": "en"
+    },
+    "wd-Q3235872": {
+      "title": "The Three Graces (Cranach)",
+      "language": "en"
+    },
+    "wd-Q4289290": {
+      "title": "Melancholia (Lucas Cranach the Elder, Copenhagen)",
+      "language": "en"
+    },
+    "wd-Q19911426": {
+      "title": "The Martyrdom of Saint Barbara (Lucas Cranach the Elder)",
+      "language": "en"
+    },
+    "wd-Q19911452": {
+      "title": "Judgment of Paris (Cranach, New York)",
+      "language": "en"
+    },
+    "wd-Q64787019": {
+      "title": "Torgauer Altar",
+      "language": "de"
+    },
+    "wd-Q26197830": {
+      "title": "Law and Grace (Prague)",
+      "language": "en"
+    },
+    "wd-Q2067212": {
+      "title": "Die Beweinung Christi (Giotto)",
+      "language": "de"
+    },
+    "wd-Q3907498": {
+      "title": "Badia Polyptych",
+      "language": "en"
+    },
+    "wd-Q23904": {
+      "title": "Saint Francis Receiving the Stigmata (Giotto)",
+      "language": "en"
+    },
+    "wd-Q3472935": {
+      "title": "Saint Stephen (Giotto)",
+      "language": "en"
+    },
+    "wd-Q1197593": {
+      "title": "Der Traum des Joachim",
+      "language": "de"
+    },
+    "wd-Q3005520": {
+      "title": "Giotto's Crucifix at Santa Maria Novella",
+      "language": "en"
+    },
+    "wd-Q1569622": {
+      "title": "Thronende Madonna (Cimabue)",
+      "language": "de"
+    },
+    "wd-Q68496636": {
+      "title": "Der verspottete Christus",
+      "language": "de"
+    },
+    "wd-Q1608116": {
+      "title": "Maestà (Cimabue)",
+      "language": "en"
+    },
+    "wd-Q3698260": {
+      "title": "Crucifix (Cimabue, Santa Croce)",
+      "language": "en"
+    },
+    "wd-Q16556250": {
+      "title": "The Flagellation of Christ (Cimabue)",
+      "language": "en"
+    },
+    "wd-Q948745": {
+      "title": "Rucellai Madonna",
+      "language": "en"
+    },
+    "wd-Q3842715": {
+      "title": "Crevole Madonna",
+      "language": "en"
+    },
+    "wd-Q2247406": {
+      "title": "Judith Slaying Holofernes (Artemisia Gentileschi, Naples)",
+      "language": "en"
+    },
+    "wd-Q3978274": {
+      "title": "Susanna and the Elders (Artemisia Gentileschi, Pommersfelden)",
+      "language": "en"
+    },
+    "wd-Q3630745": {
+      "title": "Self-Portrait as the Allegory of Painting",
+      "language": "en"
+    },
+    "wd-Q3612415": {
+      "title": "Allegory of Inclination",
+      "language": "en"
+    },
+    "wd-Q3769169": {
+      "title": "Judith und Holofernes (Artemisia Gentileschi)",
+      "language": "de"
+    },
+    "wd-Q3733425": {
+      "title": "Esther Before Ahasuerus (Artemisia Gentileschi)",
+      "language": "en"
+    },
+    "wd-Q3762348": {
+      "title": "Jael and Sisera (Artemisia Gentileschi)",
+      "language": "en"
+    },
+    "wd-Q3842443": {
+      "title": "Madonna and Child (Artemisia Gentileschi)",
+      "language": "en"
+    },
+    "wd-Q55429769": {
+      "title": "Self-Portrait as Saint Catherine of Alexandria",
+      "language": "en"
+    },
+    "wd-Q3605519": {
+      "title": "Adoration of the Magi (Artemisia Gentileschi)",
+      "language": "en"
+    },
+    "wd-Q3769173": {
+      "title": "Judith and Her Maidservant (Artemisia Gentileschi, Detroit)",
+      "language": "en"
+    },
+    "wd-Q3948947": {
+      "title": "Saint Cecilia (Artemisia Gentileschi)",
+      "language": "en"
+    },
+    "wd-Q3937737": {
+      "title": "Portrait of a Gonfaloniere",
+      "language": "en"
+    },
+    "wd-Q3947174": {
+      "title": "Saint Januarius in the Amphitheatre at Pozzuoli",
+      "language": "en"
+    },
+    "wd-Q25218172": {
+      "title": "Venus and Cupid (Gentileschi)",
+      "language": "en"
+    },
+    "wd-Q5901183": {
+      "title": "Der Vorschlag",
+      "language": "de"
+    },
+    "wd-Q18888002": {
+      "title": "Self-portrait by Judith Leyster",
+      "language": "en"
+    },
+    "wd-Q17324463": {
+      "title": "Jolly Toper",
+      "language": "en"
+    },
+    "wd-Q17328328": {
+      "title": "Serenade (Leyster)",
+      "language": "en"
+    },
+    "wd-Q19326698": {
+      "title": "A Game of Tric-Trac",
+      "language": "en"
+    },
+    "wd-Q18857549": {
+      "title": "Der letzte Tropfen",
+      "language": "de"
+    },
+    "wd-Q19327893": {
+      "title": "A Boy and a Girl with a Cat and an Eel",
+      "language": "en"
+    },
+    "wd-Q19326613": {
+      "title": "Unequal Love",
+      "language": "en"
+    },
+    "wd-Q17328421": {
+      "title": "Still Life with Flowers on a Marble Slab",
+      "language": "en"
+    },
+    "wd-Q19287713": {
+      "title": "Roses, Convolvulus, Poppies, and Other Flowers in an Urn on a Stone Ledge",
+      "language": "en"
+    },
+    "wd-Q3937621": {
+      "title": "Marie Antoinette and Her Children",
+      "language": "en"
+    },
+    "wd-Q3937618": {
+      "title": "Marie Antoinette with a Rose",
+      "language": "en"
+    },
+    "wd-Q18719540": {
+      "title": "Selbstbildnis mit Strohhut",
+      "language": "de"
+    },
+    "wd-Q19273424": {
+      "title": "Self-Portrait with Julie (Self-Portrait à la Grecque)",
+      "language": "en"
+    },
+    "wd-Q18923677": {
+      "title": "Portrait of Princess Maria Christina",
+      "language": "en"
+    },
+    "wd-Q19361572": {
+      "title": "Self-Portrait Painting Marie Antoinette",
+      "language": "en"
+    },
+    "wd-Q19006513": {
+      "title": "Peace Bringing Back Abundance",
+      "language": "en"
+    },
+    "wd-Q19905205": {
+      "title": "Madame Grand (Louise Élisabeth Vigée Le Brun)",
+      "language": "en"
+    },
+    "wd-Q19912372": {
+      "title": "Comtesse de la Châtre",
+      "language": "en"
+    },
+    "wd-Q41433015": {
+      "title": "Portrait of Countess Yekaterina Skavronskaya",
+      "language": "en"
+    },
+    "wd-Q19005175": {
+      "title": "Self-Portrait with Julie (Maternal Tenderness)",
+      "language": "en"
+    },
+    "wd-Q19273481": {
+      "title": "Portrait of Hubert Robert",
+      "language": "en"
+    },
+    "wd-Q62571116": {
+      "title": "Madame de Staël as Corinne at Cape Miseno",
+      "language": "en"
+    },
+    "wd-Q61473576": {
+      "title": "Portrait of Madame Perregaux",
+      "language": "en"
+    },
+    "wd-Q5703908": {
+      "title": "Ariadne Abandoned by Theseus",
+      "language": "en"
+    },
+    "wd-Q19912047": {
+      "title": "The Sorrow of Telemachus",
+      "language": "en"
+    },
+    "wd-Q19912157": {
+      "title": "Telemachus and the Nymphs of Calypso",
+      "language": "en"
+    },
+    "wd-Q79358025": {
+      "title": "Sappho Inspired by Love",
+      "language": "en"
+    },
+    "wd-Q16038758": {
+      "title": "Venus Persuading Helen to Love Paris",
+      "language": "en"
+    },
+    "wd-Q19985096": {
+      "title": "Ferdinand I and His Family",
+      "language": "en"
+    },
+    "wd-Q21715901": {
+      "title": "Hector Summoning Paris to Battle",
+      "language": "en"
+    },
+    "wd-Q21741326": {
+      "title": "Virgil Reading the Aeneid to Augustus and Octavia",
+      "language": "en"
+    },
+    "wd-Q860936": {
+      "title": "Bildnis Johann Joachim Winckelmann",
+      "language": "de"
+    },
+    "wd-Q23037308": {
+      "title": "Self-Portrait (Kauffman, 1784)",
+      "language": "en"
+    },
+    "wd-Q29952142": {
+      "title": "Christ and the Samaritan Woman (Kauffman)",
+      "language": "en"
+    },
+    "wd-Q3210253": {
+      "title": "Büßende Maria Magdalena mit dem Öllicht",
+      "language": "de"
+    },
+    "wd-Q743643": {
+      "title": "Joseph als Zimmermann",
+      "language": "de"
+    },
+    "wd-Q1193312": {
+      "title": "Der Falschspieler mit dem Karo-Ass",
+      "language": "de"
+    },
+    "wd-Q379906": {
+      "title": "Die Wahrsagerin",
+      "language": "de"
+    },
+    "wd-Q3210250": {
+      "title": "Magdalene at a Mirror",
+      "language": "en"
+    },
+    "wd-Q8774031": {
+      "title": "The Newborn Child",
+      "language": "en"
+    },
+    "wd-Q14940739": {
+      "title": "Saint Sebastian Tended by Saint Irene (Georges de La Tour, Louvre)",
+      "language": "en"
+    },
+    "wd-Q14940735": {
+      "title": "Job Mocked by his Wife",
+      "language": "en"
+    },
+    "wd-Q14940736": {
+      "title": "The Hurdy-Gurdy Player",
+      "language": "en"
+    },
+    "wd-Q14940737": {
+      "title": "The Musicians' Brawl",
+      "language": "en"
+    },
+    "wd-Q17627500": {
+      "title": "The Denial of Saint Peter (La Tour)",
+      "language": "en"
+    },
+    "wd-Q500985": {
+      "title": "Die Jäger im Schnee",
+      "language": "de"
+    },
+    "wd-Q776175": {
+      "title": "Die Kornernte",
+      "language": "de"
+    },
+    "wd-Q697332": {
+      "title": "Die Kinderspiele",
+      "language": "de"
+    },
+    "wd-Q689236": {
+      "title": "Der Kampf zwischen Karneval und Fasten",
+      "language": "de"
+    },
+    "wd-Q698254": {
+      "title": "Die Heimkehr der Herde",
+      "language": "de"
+    },
+    "wd-Q594406": {
+      "title": "Der Sturz der rebellierenden Engel",
+      "language": "de"
+    },
+    "wd-Q686107": {
+      "title": "Die Kreuztragung Christi",
+      "language": "de"
+    },
+    "wd-Q698219": {
+      "title": "Der düstere Tag",
+      "language": "de"
+    },
+    "wd-Q556553": {
+      "title": "Das Schlaraffenland (Bruegel)",
+      "language": "de"
+    },
+    "wd-Q2059447": {
+      "title": "The Misanthrope (Bruegel)",
+      "language": "en"
+    },
+    "wd-Q375216": {
+      "title": "Die Volkszählung zu Bethlehem",
+      "language": "de"
+    },
+    "wd-Q1087244": {
+      "title": "Christus und die Ehebrecherin (Bruegel)",
+      "language": "de"
+    },
+    "wd-Q3702434": {
+      "title": "The Wedding Dance",
+      "language": "en"
+    },
+    "wd-Q95562": {
+      "title": "The Peasant Dance",
+      "language": "en"
+    },
+    "wd-Q666982": {
+      "title": "Der Nestausnehmer",
+      "language": "de"
+    },
+    "wd-Q15293656": {
+      "title": "Großer Turmbau zu Babel",
+      "language": "de"
+    },
+    "wd-Q15295671": {
+      "title": "Kleiner Turmbau zu Babel",
+      "language": "de"
+    },
+    "wd-Q231953": {
+      "title": "Zwei Affen",
+      "language": "de"
+    },
+    "wd-Q568847": {
+      "title": "Kreuzabnahme (Rogier van der Weyden)",
+      "language": "de"
+    },
+    "wd-Q2439462": {
+      "title": "Porträt einer Dame (van der Weyden)",
+      "language": "de"
+    },
+    "wd-Q286096": {
+      "title": "Lukas-Madonna",
+      "language": "de"
+    },
+    "wd-Q323032": {
+      "title": "Miraflores-Altar",
+      "language": "de"
+    },
+    "wd-Q24160": {
+      "title": "Braque Triptych",
+      "language": "en"
+    },
+    "wd-Q1698794": {
+      "title": "Johannesaltar",
+      "language": "de"
+    },
+    "wd-Q2604155": {
+      "title": "Lamentation of Christ (van der Weyden)",
+      "language": "en"
+    },
+    "wd-Q5316837": {
+      "title": "Durán Madonna",
+      "language": "en"
+    },
+    "wd-Q3399411": {
+      "title": "Portrait of a Woman (van der Weyden)",
+      "language": "en"
+    },
+    "wd-Q1395192": {
+      "title": "Kreuzigungstriptychon (Rogier van der Weyden)",
+      "language": "de"
+    },
+    "wd-Q3399428": {
+      "title": "Portrait of Francesco d'Este",
+      "language": "en"
+    },
+    "wd-Q5189814": {
+      "title": "Crucifixion Diptych (van der Weyden)",
+      "language": "en"
+    },
+    "wd-Q377810": {
+      "title": "The Adoration of the Golden Calf",
+      "language": "en"
+    },
+    "wd-Q970808": {
+      "title": "The Flight into Egypt (Poussin)",
+      "language": "en"
+    },
+    "wd-Q2513438": {
+      "title": "A Dance to the Music of Time (painting)",
+      "language": "en"
+    },
+    "wd-Q5817081": {
+      "title": "Echo and Narcissus (Poussin)",
+      "language": "en"
+    },
+    "wd-Q3132791": {
+      "title": "Landscape with Polyphemus",
+      "language": "en"
+    },
+    "wd-Q3900760": {
+      "title": "Plague of Ashdod (Poussin)",
+      "language": "en"
+    },
+    "wd-Q19911450": {
+      "title": "Blind Orion Searching for the Rising Sun",
+      "language": "en"
+    },
+    "wd-Q1140358": {
+      "title": "Et in Arcadia ego (Poussin)",
+      "language": "de"
+    },
+    "wd-Q2502068": {
+      "title": "Urteil des Salomon (Poussin)",
+      "language": "de"
+    },
+    "wd-Q11750116": {
+      "title": "The Empire of Flora",
+      "language": "en"
+    },
+    "wd-Q20890835": {
+      "title": "The Death of Germanicus",
+      "language": "en"
+    },
+    "wd-Q3204226": {
+      "title": "The Inspiration of the Poet",
+      "language": "en"
+    },
+    "wd-Q3620831": {
+      "title": "Saint James the Great's Vision of the Virgin Mary",
+      "language": "en"
+    },
+    "wd-Q3850323": {
+      "title": "The Martyrdom of Saint Erasmus (Poussin)",
+      "language": "en"
+    },
+    "wd-Q9387720": {
+      "title": "The Manna (Poussin)",
+      "language": "en"
+    },
+    "wd-Q22570122": {
+      "title": "Self-Portrait at 6th Wedding Anniversary",
+      "language": "en"
+    },
+    "wd-Q24046511": {
+      "title": "Self-Portrait with Hat and Veil",
+      "language": "en"
+    },
+    "wd-Q650635": {
+      "title": "Der fröhliche Trinker",
+      "language": "de"
+    },
+    "wd-Q880502": {
+      "title": "Willem van Heythuysen",
+      "language": "de"
+    },
+    "wd-Q2311238": {
+      "title": "Marriage Portrait of Isaac Massa and Beatrix van der Laen",
+      "language": "en"
+    },
+    "wd-Q12088934": {
+      "title": "Shrovetide Revellers",
+      "language": "en"
+    },
+    "wd-Q5971284": {
+      "title": "Regentesses of the Old Men's Almshouse",
+      "language": "en"
+    },
+    "wd-Q8242264": {
+      "title": "The Banquet of the Officers of the St George Militia Company in 1616",
+      "language": "en"
+    },
+    "wd-Q17863937": {
+      "title": "Portrait of a Man (Hals)",
+      "language": "en"
+    },
+    "wd-Q18010880": {
+      "title": "Family Group in a Landscape",
+      "language": "en"
+    },
+    "wd-Q6106780": {
+      "title": "Portrait of a Man with a Glove",
+      "language": "en"
+    },
+    "wd-Q1196537": {
+      "title": "Der Rommelpotspieler",
+      "language": "de"
+    },
+    "wd-Q16169050": {
+      "title": "Banquet of the Officers of the Calivermen Civic Guard, Haarlem",
+      "language": "en"
+    },
+    "wd-Q17355822": {
+      "title": "Yonker Ramp and His Sweetheart",
+      "language": "en"
+    },
+    "wd-Q17642974": {
+      "title": "Claes Duyst van Voorhout",
+      "language": "en"
+    },
+    "wd-Q3399387": {
+      "title": "Portrait of Isaak Abrahamsz. Massa",
+      "language": "en"
+    },
+    "wd-Q16166017": {
+      "title": "Regents of the Old Men's Almshouse",
+      "language": "en"
+    },
+    "wd-Q41696660": {
+      "title": "Villa R",
+      "language": "en"
+    },
+    "wd-Q1589802": {
+      "title": "Hauptweg und Nebenwege",
+      "language": "de"
+    },
+    "wd-Q16487556": {
+      "title": "Ad Parnassum",
+      "language": "en"
+    },
+    "wd-Q30078904": {
+      "title": "Grenzen des Verstandes",
+      "language": "de"
+    },
+    "wd-Q62701395": {
+      "title": "Architecture (Klee)",
+      "language": "en"
+    },
+    "wd-Q29784159": {
+      "title": "Engel, noch tastend",
+      "language": "de"
+    },
+    "wd-Q20816550": {
+      "title": "Fish Magic",
+      "language": "en"
+    },
+    "wd-Q17001528": {
+      "title": "Death and Fire",
+      "language": "en"
+    },
+    "wd-Q111482964": {
+      "title": "Heroische Rosen",
+      "language": "de"
+    },
+    "wd-Q19922046": {
+      "title": "Engel Anwärter",
+      "language": "de"
+    },
+    "wd-Q579455": {
+      "title": "White on White",
+      "language": "en"
+    },
+    "wd-Q17086791": {
+      "title": "Red Square (painting)",
+      "language": "en"
+    },
+    "wd-Q4518897": {
+      "title": "Black Circle",
+      "language": "en"
+    },
+    "wd-Q18170345": {
+      "title": "Black Cross (painting)",
+      "language": "en"
+    },
+    "wd-Q24057722": {
+      "title": "An Englishman in Moscow",
+      "language": "en"
+    },
+    "wd-Q323079": {
+      "title": "Dresdner Marienaltar",
+      "language": "de"
+    },
+    "wd-Q2734881": {
+      "title": "Annunciation (van Eyck, Washington)",
+      "language": "en"
+    },
+    "wd-Q2516599": {
+      "title": "Verkündigung (Jan van Eyck)",
+      "language": "de"
+    },
+    "wd-Q3937546": {
+      "title": "Portrait of Giovanni di Nicolao Arnolfini",
+      "language": "en"
+    },
+    "wd-Q19186089": {
+      "title": "Portrait of Jan de Leeuw",
+      "language": "en"
+    },
+    "wd-Q405814": {
+      "title": "Das Narrenschiff (Hieronymus Bosch)",
+      "language": "de"
+    },
+    "wd-Q1217288": {
+      "title": "Die Versuchung des Heiligen Antonius (Hieronymus Bosch)",
+      "language": "de"
+    },
+    "wd-Q2213811": {
+      "title": "Der Heuwagen",
+      "language": "de"
+    },
+    "wd-Q2276130": {
+      "title": "Die Anbetung der Könige (Bosch)",
+      "language": "de"
+    },
+    "wd-Q2733729": {
+      "title": "Christ Crowned with Thorns (Bosch, London)",
+      "language": "en"
+    },
+    "wd-Q2091114": {
+      "title": "Allegory of Intemperance",
+      "language": "en"
+    },
+    "wd-Q2389534": {
+      "title": "Eremiten-Triptychon",
+      "language": "de"
+    },
+    "wd-Q2390197": {
+      "title": "Johannes auf Patmos",
+      "language": "de"
+    },
+    "wd-Q2390211": {
+      "title": "Crucifixion with a Donor",
+      "language": "en"
+    },
+    "wd-Q2565646": {
+      "title": "Saint Christopher Carrying the Christ Child",
+      "language": "en"
+    },
+    "wd-Q2390224": {
+      "title": "The Crucifixion of Saint Wilgefortis",
+      "language": "en"
+    },
+    "wd-Q2566840": {
+      "title": "St. Jerome at Prayer (Bosch)",
+      "language": "en"
+    },
+    "wd-Q2453980": {
+      "title": "St. John the Baptist in the Wilderness",
+      "language": "en"
+    },
+    "wd-Q500242": {
+      "title": "Die Erschaffung Adams",
+      "language": "de"
+    },
+    "wd-Q1473546": {
+      "title": "Tondo Doni",
+      "language": "de"
+    },
+    "wd-Q83862": {
+      "title": "Dying Slave",
+      "language": "en"
+    },
+    "wd-Q1144620": {
+      "title": "Bacchus (Michelangelo)",
+      "language": "de"
+    },
+    "wd-Q1213160": {
+      "title": "Die Grablegung Christi (Michelangelo)",
+      "language": "de"
+    },
+    "wd-Q2154351": {
+      "title": "Apollo (Michelangelo)",
+      "language": "en"
+    },
+    "wd-Q1516449": {
+      "title": "Rolin-Madonna",
+      "language": "de"
+    },
+    "wd-Q2480921": {
+      "title": "Madonna des Kanonikus Joris van der Paele",
+      "language": "de"
+    },
+    "wd-Q3399452": {
+      "title": "Portrait of Margaret van Eyck",
+      "language": "en"
+    },
+    "wd-Q838074": {
+      "title": "Madonna am Springbrunnen",
+      "language": "de"
+    },
+    "wd-Q321303": {
+      "title": "Der Garten der Lüste (Bosch)",
+      "language": "de"
+    },
+    "wd-Q252485": {
+      "title": "Die große Welle vor Kanagawa",
+      "language": "de"
+    },
+    "wd-Q3565037": {
+      "title": "Fine Wind, Clear Morning",
+      "language": "en"
+    },
+    "wd-Q18173384": {
+      "title": "Thunderstorm Beneath the Summit",
+      "language": "en"
+    },
+    "wd-Q17227585": {
+      "title": "Kajikazawa in Kai Province",
+      "language": "en"
+    },
+    "wd-Q18173387": {
+      "title": "Sundai, Edo",
+      "language": "en"
+    },
+    "wd-Q18173402": {
+      "title": "A View of Mount Fuji Across Lake Suwa",
+      "language": "en"
+    },
+    "wd-Q5826309": {
+      "title": "Abendschauer über der großen Brücke in Atake",
+      "language": "de"
+    },
+    "wd-Q21127606": {
+      "title": "Plum Park in Kameido",
+      "language": "en"
+    },
+    "wd-Q22049133": {
+      "title": "Woman with Dead Child",
+      "language": "en"
     }
   },
   "styles": {

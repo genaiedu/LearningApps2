@@ -1,0 +1,2499 @@
+{
+  "reviewed": "2026-10-18",
+  "purpose": "Ausbau aller 23 ausdrücklich besprochenen Künstlerinnen und Künstler. Einzelwerke statt Serien-Dubletten; keine bloß zugeschriebenen, nachgeahmten oder gemeinsam ausgeführten Werke.",
+  "baseline": 1921,
+  "legacyWorksSHA256": "f54b662d945c87f5fe44c9a97b3ee2870038546e2ba8c61541de18e72cacc110",
+  "legacyImagesSHA256": "dec24f6e1e7974f4eb02b5247fa2e32d730bb080f1bd45419553c64a7f8f9a8f",
+  "expansionReason": "Alle 23 unterrepräsentierten Künstlerinnen und Künstler ausgebaut; gesicherte Einzelwerke von der frühen italienischen Malerei bis zur Moderne und zum japanischen Farbholzschnitt. Alle bisherigen Werkdaten bleiben erhalten.",
+  "artists": {
+    "Q191748": 0,
+    "Q7814": 0,
+    "Q15790": 0,
+    "Q15792": 0,
+    "Q212657": 0,
+    "Q232423": 0,
+    "Q234385": 0,
+    "Q213163": 0,
+    "Q123098": 0,
+    "Q203371": 0,
+    "Q5586": 0,
+    "Q200798": 0,
+    "Q43270": 1,
+    "Q68631": 1,
+    "Q41554": 1,
+    "Q142472": 1,
+    "Q234370": 1,
+    "Q167654": 2,
+    "Q44007": 2,
+    "Q130777": 2,
+    "Q102272": 3,
+    "Q130531": 4,
+    "Q5592": 5
+  },
+  "works": [
+    [
+      "Q20828882",
+      "Der Jungbrunnen",
+      "Deutsche Renaissance",
+      "Gemäldegalerie Berlin"
+    ],
+    [
+      "Q2805058",
+      "Venus mit Amor als Honigdieb",
+      "Deutsche Renaissance",
+      "National Gallery"
+    ],
+    [
+      "Q3605055",
+      "Adam und Eva",
+      "Deutsche Renaissance",
+      "Uffizien"
+    ],
+    [
+      "Q3235872",
+      "Die drei Grazien",
+      "Deutsche Renaissance",
+      "Musée du Louvre"
+    ],
+    [
+      "Q4289290",
+      "Melancholie",
+      "Deutsche Renaissance",
+      "Statens Museum for Kunst"
+    ],
+    [
+      "Q19911426",
+      "Das Martyrium der heiligen Barbara",
+      "Deutsche Renaissance",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q19911452",
+      "Das Urteil des Paris",
+      "Deutsche Renaissance",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q45896010",
+      "Venus und Amor",
+      "Deutsche Renaissance",
+      "Eremitage"
+    ],
+    [
+      "Q16038763",
+      "Madonna mit Kind unter dem Apfelbaum",
+      "Deutsche Renaissance",
+      "Eremitage"
+    ],
+    [
+      "Q16691214",
+      "Klage unter dem Kreuz",
+      "Deutsche Renaissance",
+      "Alte Pinakothek"
+    ],
+    [
+      "Q20091496",
+      "Hirschjagd des Kurfürsten Friedrich des Weisen",
+      "Deutsche Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q64787019",
+      "Die heilige Sippe – Torgauer Altar",
+      "Deutsche Renaissance",
+      "Städel Museum"
+    ],
+    [
+      "Q29654731",
+      "Das silberne Zeitalter",
+      "Deutsche Renaissance",
+      "Musée du Louvre"
+    ],
+    [
+      "Q21036112",
+      "Die Quellnymphe",
+      "Deutsche Renaissance",
+      "Museo Thyssen-Bornemisza"
+    ],
+    [
+      "Q26197830",
+      "Gesetz und Gnade",
+      "Deutsche Renaissance",
+      "Nationalgalerie Prag"
+    ],
+    [
+      "Q2067212",
+      "Die Beweinung Christi",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q549172",
+      "Die Flucht nach Ägypten",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q3907498",
+      "Badia-Polyptychon",
+      "Gotische Malerei",
+      "Uffizien"
+    ],
+    [
+      "Q23904",
+      "Der heilige Franziskus empfängt die Wundmale",
+      "Gotische Malerei",
+      "Musée du Louvre"
+    ],
+    [
+      "Q3472935",
+      "Der heilige Stephanus",
+      "Frührenaissance",
+      "Museo Horne"
+    ],
+    [
+      "Q3798718",
+      "Der Einzug in Jerusalem",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q3910927",
+      "Der Tempelgang Mariens",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q3967208",
+      "Die Vermählung Mariens",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q1197593",
+      "Der Traum Joachims",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q3005520",
+      "Kruzifix von Santa Maria Novella",
+      "Gotische Malerei",
+      "Basilika Santa Maria Novella"
+    ],
+    [
+      "Q3649309",
+      "Die Vertreibung der Händler aus dem Tempel",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q3879148",
+      "Die Hochzeit zu Kana",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q3873250",
+      "Die Geburt Mariens",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q3944650",
+      "Das Opfer Joachims",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q4003125",
+      "Das letzte Abendmahl",
+      "Frührenaissance",
+      "Cappella degli Scrovegni, Padua"
+    ],
+    [
+      "Q1569622",
+      "Die thronende Madonna von Santa Trinita",
+      "Gotische Malerei",
+      "Uffizien"
+    ],
+    [
+      "Q68496636",
+      "Die Verspottung Christi",
+      "Gotische Malerei",
+      "Musée du Louvre"
+    ],
+    [
+      "Q1608116",
+      "Die Madonna mit Engeln – Maestà",
+      "Gotische Malerei",
+      "Musée du Louvre"
+    ],
+    [
+      "Q3698260",
+      "Kruzifix von Santa Croce",
+      "Gotische Malerei",
+      "Museo di Santa Croce, Florenz"
+    ],
+    [
+      "Q16556250",
+      "Die Geißelung Christi",
+      "Gotische Malerei",
+      "The Frick Collection"
+    ],
+    [
+      "Q3843027",
+      "Madonna mit Engeln und dem heiligen Franziskus",
+      "Gotische Malerei",
+      "Unterkirche San Francesco, Assisi"
+    ],
+    [
+      "Q948745",
+      "Rucellai-Madonna",
+      "Schule von Siena",
+      "Uffizien"
+    ],
+    [
+      "Q3842715",
+      "Crevole-Madonna",
+      "Schule von Siena",
+      "Museo dell’Opera del Duomo, Siena"
+    ],
+    [
+      "Q9068317",
+      "Die Auferweckung des Lazarus",
+      "Schule von Siena",
+      "Kimbell Art Museum"
+    ],
+    [
+      "Q18684720",
+      "Christus und die Samariterin",
+      "Schule von Siena",
+      "Museo Thyssen-Bornemisza"
+    ],
+    [
+      "Q3873252",
+      "Die Geburt Christi mit den Propheten Jesaja und Ezechiel",
+      "Schule von Siena",
+      "National Gallery of Art"
+    ],
+    [
+      "Q3907537",
+      "Madonna mit Kind und Heiligen",
+      "Schule von Siena",
+      "Pinacoteca Nazionale di Siena"
+    ],
+    [
+      "Q11931777",
+      "Die Hochzeit zu Kana",
+      "Schule von Siena",
+      "Museo dell’Opera del Duomo, Siena"
+    ],
+    [
+      "Q19857218",
+      "Die Versuchung Christi auf dem Berg",
+      "Schule von Siena",
+      "The Frick Collection"
+    ],
+    [
+      "Q26678230",
+      "Die Heilung des Blindgeborenen",
+      "Schule von Siena",
+      "National Gallery"
+    ],
+    [
+      "Q26706454",
+      "Die Verkündigung",
+      "Schule von Siena",
+      "National Gallery"
+    ],
+    [
+      "Q26707719",
+      "Die Verklärung Christi",
+      "Schule von Siena",
+      "National Gallery"
+    ],
+    [
+      "Q2247406",
+      "Judith enthauptet Holofernes – Neapel",
+      "Barock",
+      "Museo di Capodimonte"
+    ],
+    [
+      "Q3978274",
+      "Susanna und die Alten – Pommersfelden",
+      "Barock",
+      "Schloss Weißenstein, Pommersfelden"
+    ],
+    [
+      "Q3630745",
+      "Selbstporträt als Allegorie der Malerei",
+      "Barock",
+      "Royal Collection"
+    ],
+    [
+      "Q3612415",
+      "Allegorie der Neigung",
+      "Barock",
+      "Casa Buonarroti"
+    ],
+    [
+      "Q3769169",
+      "Judith enthauptet Holofernes – Florenz",
+      "Barock",
+      "Uffizien"
+    ],
+    [
+      "Q3733425",
+      "Esther vor Ahasver",
+      "Barock",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q3762348",
+      "Jaël und Sisera",
+      "Barock",
+      "Szépművészeti Múzeum, Budapest"
+    ],
+    [
+      "Q3842443",
+      "Madonna mit Kind",
+      "Barock",
+      "Galleria Spada"
+    ],
+    [
+      "Q55429769",
+      "Selbstporträt als heilige Katharina von Alexandrien",
+      "Barock",
+      "National Gallery"
+    ],
+    [
+      "Q3605519",
+      "Die Anbetung der Könige",
+      "Barock",
+      "Kathedrale von Pozzuoli"
+    ],
+    [
+      "Q3769173",
+      "Judith und ihre Magd mit dem Haupt des Holofernes",
+      "Barock",
+      "Detroit Institute of Arts"
+    ],
+    [
+      "Q3948947",
+      "Die heilige Cäcilia",
+      "Barock",
+      "Galleria Spada"
+    ],
+    [
+      "Q3937737",
+      "Bildnis eines Gonfaloniere",
+      "Barock",
+      "Collezioni Comunali d’Arte, Bologna"
+    ],
+    [
+      "Q3947174",
+      "Der heilige Januarius im Amphitheater von Pozzuoli",
+      "Barock",
+      "Kathedrale von Pozzuoli"
+    ],
+    [
+      "Q25218172",
+      "Venus und Cupido",
+      "Barock",
+      "Virginia Museum of Fine Arts"
+    ],
+    [
+      "Q5901183",
+      "Das Angebot",
+      "Barock",
+      "Mauritshuis"
+    ],
+    [
+      "Q18888002",
+      "Selbstporträt",
+      "Barock",
+      "National Gallery of Art"
+    ],
+    [
+      "Q17324463",
+      "Der fröhliche Trinker",
+      "Barock",
+      "Frans Hals Museum"
+    ],
+    [
+      "Q17328328",
+      "Die Serenade",
+      "Barock",
+      "Rijksmuseum"
+    ],
+    [
+      "Q19326698",
+      "Das Trictrac-Spiel",
+      "Barock",
+      "Worcester Art Museum"
+    ],
+    [
+      "Q18857549",
+      "Der letzte Tropfen",
+      "Barock",
+      "Philadelphia Museum of Art"
+    ],
+    [
+      "Q19327893",
+      "Junge und Mädchen mit Katze und Aal",
+      "Barock",
+      "National Gallery"
+    ],
+    [
+      "Q18981996",
+      "Die lustige Gesellschaft",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q19326613",
+      "Der Lautenspieler",
+      "Barock",
+      "Gallerie Nazionali di Arte Antica, Palazzo Barberini"
+    ],
+    [
+      "Q18573672",
+      "Der Flötenspieler",
+      "Barock",
+      "Nationalmuseum, Stockholm"
+    ],
+    [
+      "Q19326758",
+      "Das Konzert",
+      "Barock",
+      "National Museum of Women in the Arts"
+    ],
+    [
+      "Q17328421",
+      "Blumen auf einer Marmorplatte",
+      "Barock",
+      "Rijksmuseum"
+    ],
+    [
+      "Q19287713",
+      "Rosen, Winde, Mohn und andere Blumen in einer Urne",
+      "Barock",
+      "National Museum of Women in the Arts"
+    ],
+    [
+      "Q17320349",
+      "Blumen in einer Glasvase",
+      "Barock",
+      "Rijksmuseum"
+    ],
+    [
+      "Q19272081",
+      "Blumen in einer Vase",
+      "Barock",
+      "National Gallery"
+    ],
+    [
+      "Q61278430",
+      "Blumenstrauß in einer bauchigen Flasche",
+      "Barock",
+      "Städel Museum"
+    ],
+    [
+      "Q117846483",
+      "Blumen in einer Glasvase",
+      "Barock",
+      "Mauritshuis"
+    ],
+    [
+      "Q118998495",
+      "Blumen in einer Vase",
+      "Barock",
+      "Ashmolean Museum"
+    ],
+    [
+      "Q119351986",
+      "Blumenstillleben",
+      "Barock",
+      "Hamburger Kunsthalle"
+    ],
+    [
+      "Q19271755",
+      "Blumen und Früchte",
+      "Barock",
+      "Museum der bildenden Künste Leipzig"
+    ],
+    [
+      "Q19271833",
+      "Früchte und Insekten",
+      "Barock",
+      "Uffizien"
+    ],
+    [
+      "Q19272227",
+      "Blumenstrauß",
+      "Barock",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q19272288",
+      "Blumen an einem Baumstamm",
+      "Barock",
+      "Gemäldegalerie Alte Meister, Kassel"
+    ],
+    [
+      "Q19286538",
+      "Blumen in einer Glasvase auf einem Marmortisch",
+      "Barock",
+      "Detroit Institute of Arts"
+    ],
+    [
+      "Q19287069",
+      "Blumen und Pfirsiche",
+      "Barock",
+      "Fitzwilliam Museum"
+    ],
+    [
+      "Q19288584",
+      "Blumenstrauß",
+      "Barock",
+      "Alte Pinakothek"
+    ],
+    [
+      "Q3937621",
+      "Marie Antoinette und ihre Kinder",
+      "Rokoko",
+      "Schloss Versailles"
+    ],
+    [
+      "Q3937618",
+      "Marie Antoinette mit einer Rose",
+      "Rokoko",
+      "Schloss Versailles"
+    ],
+    [
+      "Q18719540",
+      "Selbstporträt mit Strohhut",
+      "Rokoko",
+      "National Gallery"
+    ],
+    [
+      "Q19273424",
+      "Selbstporträt mit Tochter Julie",
+      "Klassizismus",
+      "Musée du Louvre"
+    ],
+    [
+      "Q18923677",
+      "Prinzessin Maria Christina",
+      "Klassizismus",
+      "Museo di Capodimonte"
+    ],
+    [
+      "Q19361572",
+      "Selbstporträt an der Staffelei",
+      "Klassizismus",
+      "Uffizien"
+    ],
+    [
+      "Q19006513",
+      "Der Friede bringt den Wohlstand zurück",
+      "Klassizismus",
+      "Musée du Louvre"
+    ],
+    [
+      "Q19905205",
+      "Madame Grand",
+      "Rokoko",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q19912372",
+      "Die Gräfin de la Châtre",
+      "Klassizismus",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q41433015",
+      "Gräfin Skawronskaja",
+      "Klassizismus",
+      "Musée Jacquemart-André"
+    ],
+    [
+      "Q19005175",
+      "Selbstporträt mit Tochter Julie – mütterliche Zärtlichkeit",
+      "Rokoko",
+      "Musée du Louvre"
+    ],
+    [
+      "Q19273481",
+      "Hubert Robert",
+      "Rokoko",
+      "Musée du Louvre"
+    ],
+    [
+      "Q62571116",
+      "Madame de Staël als Corinna",
+      "Klassizismus",
+      "Musée d’Art et d’Histoire, Genf"
+    ],
+    [
+      "Q61473576",
+      "Madame Perregaux",
+      "Klassizismus",
+      "Wallace Collection"
+    ],
+    [
+      "Q9557962",
+      "Die Marquise de Pezay und die Marquise de Rougé mit ihren Söhnen",
+      "Rokoko",
+      "National Gallery of Art"
+    ],
+    [
+      "Q5703908",
+      "Ariadne, von Theseus verlassen",
+      "Klassizismus",
+      "Museum of Fine Arts, Houston"
+    ],
+    [
+      "Q19912047",
+      "Die Trauer des Telemach",
+      "Klassizismus",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q19912157",
+      "Telemach und die Nymphen der Kalypso",
+      "Klassizismus",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q79358025",
+      "Sappho, von der Liebe inspiriert",
+      "Klassizismus",
+      "The Ringling"
+    ],
+    [
+      "Q16038758",
+      "Venus überredet Helena, Paris zu lieben",
+      "Klassizismus",
+      "Eremitage"
+    ],
+    [
+      "Q19985096",
+      "Ferdinand IV. und seine Familie",
+      "Klassizismus",
+      "Museo di Capodimonte"
+    ],
+    [
+      "Q21715901",
+      "Hektor ruft Paris zum Kampf",
+      "Klassizismus",
+      "Eremitage"
+    ],
+    [
+      "Q21741326",
+      "Vergil liest Augustus und Octavia aus der Aeneis vor",
+      "Klassizismus",
+      "Eremitage"
+    ],
+    [
+      "Q860936",
+      "Johann Joachim Winckelmann",
+      "Klassizismus",
+      "Kunsthaus Zürich"
+    ],
+    [
+      "Q23037308",
+      "Selbstporträt",
+      "Klassizismus",
+      "Alte Pinakothek"
+    ],
+    [
+      "Q23008412",
+      "Selbstporträt in Bregenzerwälder Tracht",
+      "Rokoko",
+      "Uffizien"
+    ],
+    [
+      "Q23008414",
+      "Selbstporträt",
+      "Klassizismus",
+      "Uffizien"
+    ],
+    [
+      "Q23037295",
+      "Selbstporträt zwischen Musik und Malerei",
+      "Klassizismus",
+      "Nostell Priory, National Trust"
+    ],
+    [
+      "Q28775882",
+      "Sarah Harrop als Muse",
+      "Klassizismus",
+      "Princeton University Art Museum"
+    ],
+    [
+      "Q29952142",
+      "Christus und die Samariterin",
+      "Klassizismus",
+      "Alte Pinakothek"
+    ],
+    [
+      "Q3210253",
+      "Die büßende Magdalena mit dem Nachtlicht",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q743643",
+      "Der heilige Josef als Zimmermann",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q1193312",
+      "Der Falschspieler mit dem Karo-Ass",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q379906",
+      "Die Wahrsagerin",
+      "Barock",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q3210250",
+      "Die büßende Magdalena",
+      "Barock",
+      "National Gallery of Art"
+    ],
+    [
+      "Q8774031",
+      "Das Neugeborene",
+      "Barock",
+      "Musée des Beaux-Arts de Rennes"
+    ],
+    [
+      "Q14940739",
+      "Der heilige Sebastian, von Irene gepflegt",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q11740522",
+      "Die Frau mit dem Floh",
+      "Barock",
+      "Musée des Beaux-Arts de Nancy"
+    ],
+    [
+      "Q14940735",
+      "Hiob und seine Frau",
+      "Barock",
+      "Musée départemental d’Art ancien et contemporain, Épinal"
+    ],
+    [
+      "Q14940736",
+      "Der Drehleierspieler",
+      "Barock",
+      "Musée d’Arts de Nantes"
+    ],
+    [
+      "Q14940737",
+      "Der Streit der Musikanten",
+      "Barock",
+      "J. Paul Getty Museum"
+    ],
+    [
+      "Q18564687",
+      "Magdalena mit der rauchenden Flamme",
+      "Barock",
+      "Los Angeles County Museum of Art"
+    ],
+    [
+      "Q17627500",
+      "Die Verleugnung des Petrus",
+      "Barock",
+      "Musée d’Arts de Nantes"
+    ],
+    [
+      "Q500985",
+      "Die Jäger im Schnee",
+      "Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q776175",
+      "Die Kornernte",
+      "Renaissance",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q697332",
+      "Die Kinderspiele",
+      "Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q689236",
+      "Der Kampf zwischen Karneval und Fasten",
+      "Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q698254",
+      "Die Heimkehr der Herde",
+      "Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q594406",
+      "Der Sturz der rebellischen Engel",
+      "Renaissance",
+      "Königliche Museen der Schönen Künste, Brüssel"
+    ],
+    [
+      "Q686107",
+      "Die Kreuztragung Christi",
+      "Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q698219",
+      "Der düstere Tag",
+      "Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q556553",
+      "Das Schlaraffenland",
+      "Renaissance",
+      "Alte Pinakothek"
+    ],
+    [
+      "Q2059447",
+      "Der Misanthrop",
+      "Renaissance",
+      "Museo di Capodimonte"
+    ],
+    [
+      "Q375216",
+      "Die Volkszählung zu Bethlehem",
+      "Renaissance",
+      "Königliche Museen der Schönen Künste, Brüssel"
+    ],
+    [
+      "Q1087244",
+      "Christus und die Ehebrecherin",
+      "Renaissance",
+      "The Courtauld Gallery"
+    ],
+    [
+      "Q3702434",
+      "Der Hochzeitstanz",
+      "Renaissance",
+      "Detroit Institute of Arts"
+    ],
+    [
+      "Q95562",
+      "Der Bauerntanz",
+      "Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q666982",
+      "Der Vogeldieb",
+      "Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q15293656",
+      "Der große Turmbau zu Babel",
+      "Renaissance",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q15295671",
+      "Der kleine Turmbau zu Babel",
+      "Renaissance",
+      "Museum Boijmans Van Beuningen"
+    ],
+    [
+      "Q231953",
+      "Zwei Affen",
+      "Renaissance",
+      "Gemäldegalerie Berlin"
+    ],
+    [
+      "Q568847",
+      "Die Kreuzabnahme",
+      "Altniederländische Malerei",
+      "Museo del Prado"
+    ],
+    [
+      "Q2439462",
+      "Bildnis einer Dame",
+      "Altniederländische Malerei",
+      "National Gallery of Art"
+    ],
+    [
+      "Q286096",
+      "Der heilige Lukas zeichnet die Madonna",
+      "Altniederländische Malerei",
+      "Museum of Fine Arts, Boston"
+    ],
+    [
+      "Q323032",
+      "Miraflores-Altar",
+      "Altniederländische Malerei",
+      "Gemäldegalerie Berlin"
+    ],
+    [
+      "Q24160",
+      "Braque-Triptychon",
+      "Altniederländische Malerei",
+      "Musée du Louvre"
+    ],
+    [
+      "Q1698794",
+      "Johannesaltar",
+      "Altniederländische Malerei",
+      "Gemäldegalerie Berlin"
+    ],
+    [
+      "Q2604155",
+      "Die Grablegung Christi",
+      "Altniederländische Malerei",
+      "Uffizien"
+    ],
+    [
+      "Q5316837",
+      "Durán-Madonna",
+      "Altniederländische Malerei",
+      "Museo del Prado"
+    ],
+    [
+      "Q3399411",
+      "Bildnis einer jungen Frau mit Flügelhaube",
+      "Altniederländische Malerei",
+      "Gemäldegalerie Berlin"
+    ],
+    [
+      "Q1395192",
+      "Kreuzigungstriptychon",
+      "Altniederländische Malerei",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q3399428",
+      "Francesco d’Este",
+      "Altniederländische Malerei",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q5189814",
+      "Kreuzigungsdiptychon",
+      "Altniederländische Malerei",
+      "Philadelphia Museum of Art"
+    ],
+    [
+      "Q377810",
+      "Die Anbetung des goldenen Kalbes",
+      "Barock",
+      "National Gallery"
+    ],
+    [
+      "Q970808",
+      "Die Flucht nach Ägypten",
+      "Barock",
+      "Musée des Beaux-Arts de Lyon"
+    ],
+    [
+      "Q2513438",
+      "Ein Tanz zur Musik der Zeit",
+      "Barock",
+      "Wallace Collection"
+    ],
+    [
+      "Q5817081",
+      "Echo und Narziss",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q3132791",
+      "Landschaft mit Polyphem",
+      "Barock",
+      "Eremitage"
+    ],
+    [
+      "Q3900760",
+      "Die Pest von Aschdod",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q19911450",
+      "Der blinde Orion auf der Suche nach der aufgehenden Sonne",
+      "Barock",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q1140358",
+      "Die Hirten von Arkadien – Et in Arcadia ego",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q2502068",
+      "Das Urteil des Salomon",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q11750116",
+      "Das Reich der Flora",
+      "Barock",
+      "Gemäldegalerie Alte Meister, Dresden"
+    ],
+    [
+      "Q20890835",
+      "Der Tod des Germanicus",
+      "Barock",
+      "Minneapolis Institute of Art"
+    ],
+    [
+      "Q3204226",
+      "Die Inspiration des Dichters",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q3620831",
+      "Die Jungfrau erscheint dem heiligen Jakobus",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q3850323",
+      "Das Martyrium des heiligen Erasmus",
+      "Barock",
+      "Vatikanische Pinakothek"
+    ],
+    [
+      "Q9387720",
+      "Die Mannalese",
+      "Barock",
+      "Musée du Louvre"
+    ],
+    [
+      "Q22570122",
+      "Selbstbildnis am sechsten Hochzeitstag",
+      "Expressionismus",
+      "Paula Modersohn-Becker Museum"
+    ],
+    [
+      "Q24046511",
+      "Selbstbildnis mit Hut und Schleier",
+      "Expressionismus",
+      "Kunstmuseum Den Haag"
+    ],
+    [
+      "Q132892641",
+      "Selbstbildnis vor blau-grauem Grund",
+      "Expressionismus",
+      "Museum Ludwig"
+    ],
+    [
+      "Q136008942",
+      "Selbstbildnis mit zwei Blumen in der erhobenen linken Hand",
+      "Expressionismus",
+      "Museum of Modern Art"
+    ],
+    [
+      "Q137609728",
+      "Mädchenbildnis mit gelbem Kranz im Haar",
+      "Expressionismus",
+      "Von der Heydt-Museum"
+    ],
+    [
+      "Q138835870",
+      "Stillende Mutter",
+      "Expressionismus",
+      "Landesmuseum Hannover"
+    ],
+    [
+      "Q139043925",
+      "Stillleben mit Orangen und Fayencehund",
+      "Expressionismus",
+      "Landesmuseum Hannover"
+    ],
+    [
+      "Q20190735",
+      "Die alte Fabrik",
+      "Expressionismus",
+      "National Gallery of Art"
+    ],
+    [
+      "Q24046534",
+      "Mädchen mit Kleinkind",
+      "Expressionismus",
+      "Kunstmuseum Den Haag"
+    ],
+    [
+      "Q26940796",
+      "Ostfriesisches Mädchen in den Dünen",
+      "Expressionismus",
+      "Groninger Museum"
+    ],
+    [
+      "Q26940797",
+      "Kuh auf der Weide",
+      "Expressionismus",
+      "Groninger Museum"
+    ],
+    [
+      "Q29908860",
+      "Bildnis des alten Bredow",
+      "Expressionismus",
+      "Bayerische Staatsgemäldesammlungen"
+    ],
+    [
+      "Q58477437",
+      "Der Frühstückstisch",
+      "Expressionismus",
+      "Paula Modersohn-Becker Museum"
+    ],
+    [
+      "Q64786979",
+      "Mädchenkopf",
+      "Expressionismus",
+      "Städel Museum"
+    ],
+    [
+      "Q650635",
+      "Der fröhliche Trinker",
+      "Barock",
+      "Rijksmuseum"
+    ],
+    [
+      "Q880502",
+      "Willem van Heythuysen",
+      "Barock",
+      "Alte Pinakothek"
+    ],
+    [
+      "Q2311238",
+      "Isaac Massa und Beatrix van der Laen",
+      "Barock",
+      "Rijksmuseum"
+    ],
+    [
+      "Q12088934",
+      "Fröhliche Gesellschaft",
+      "Barock",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q5971284",
+      "Die Regentinnen des Altmännerhauses",
+      "Barock",
+      "Frans Hals Museum"
+    ],
+    [
+      "Q8242264",
+      "Bankett der Offiziere der St.-Georgs-Schützengilde",
+      "Barock",
+      "Frans Hals Museum"
+    ],
+    [
+      "Q17863937",
+      "Bildnis eines Mannes",
+      "Barock",
+      "Timken Museum of Art"
+    ],
+    [
+      "Q18010880",
+      "Familiengruppe in einer Landschaft",
+      "Barock",
+      "Museo Thyssen-Bornemisza"
+    ],
+    [
+      "Q6106780",
+      "Bildnis eines jungen Mannes",
+      "Barock",
+      "Eremitage"
+    ],
+    [
+      "Q1196537",
+      "Der Rommelpotspieler",
+      "Barock",
+      "Kimbell Art Museum"
+    ],
+    [
+      "Q16169050",
+      "Bankett der Offiziere der St.-Hadrians-Schützengilde",
+      "Barock",
+      "Frans Hals Museum"
+    ],
+    [
+      "Q17355822",
+      "Junger Mann und junge Frau im Wirtshaus",
+      "Barock",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q17642974",
+      "Claes Duyst van Voorhout",
+      "Barock",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q3399387",
+      "Isaac Massa",
+      "Barock",
+      "Art Gallery of Ontario"
+    ],
+    [
+      "Q16166017",
+      "Die Regenten des Altmännerhauses",
+      "Barock",
+      "Frans Hals Museum"
+    ],
+    [
+      "Q41696660",
+      "Villa R",
+      "Moderne",
+      "Kunstmuseum Basel"
+    ],
+    [
+      "Q1589802",
+      "Hauptweg und Nebenwege",
+      "Moderne",
+      "Museum Ludwig"
+    ],
+    [
+      "Q16487556",
+      "Ad Parnassum",
+      "Moderne",
+      "Kunstmuseum Bern"
+    ],
+    [
+      "Q30078904",
+      "Grenzen des Verstandes",
+      "Moderne",
+      "Bayerische Staatsgemäldesammlungen"
+    ],
+    [
+      "Q62701395",
+      "Architektur",
+      "Moderne",
+      "Neue Nationalgalerie"
+    ],
+    [
+      "Q29784159",
+      "Engel, noch tastend",
+      "Moderne",
+      "Zentrum Paul Klee"
+    ],
+    [
+      "Q20816550",
+      "Fischzauber",
+      "Moderne",
+      "Philadelphia Museum of Art"
+    ],
+    [
+      "Q17001528",
+      "Tod und Feuer",
+      "Moderne",
+      "Zentrum Paul Klee"
+    ],
+    [
+      "Q111482964",
+      "Heroische Rosen",
+      "Moderne",
+      "Kunstsammlung Nordrhein-Westfalen"
+    ],
+    [
+      "Q19883388",
+      "Komiker – Invention 4",
+      "Moderne",
+      "Solomon R. Guggenheim Museum"
+    ],
+    [
+      "Q19921302",
+      "Orientalischer Lustgarten",
+      "Moderne",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q19922046",
+      "Engel-Anwärter",
+      "Moderne",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q20190673",
+      "Variationen – progressives Motiv",
+      "Moderne",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q20198210",
+      "Einer, der versteht",
+      "Moderne",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q75392322",
+      "Rosengarten",
+      "Moderne",
+      "Städtische Galerie im Lenbachhaus"
+    ],
+    [
+      "Q579455",
+      "Weiß auf Weiß",
+      "Suprematismus",
+      "Museum of Modern Art"
+    ],
+    [
+      "Q17086791",
+      "Rotes Quadrat",
+      "Suprematismus",
+      "Russisches Museum"
+    ],
+    [
+      "Q4518897",
+      "Schwarzer Kreis",
+      "Suprematismus",
+      "Russisches Museum"
+    ],
+    [
+      "Q18170345",
+      "Schwarzes Kreuz",
+      "Suprematismus",
+      "Musée national d’Art moderne"
+    ],
+    [
+      "Q18279929",
+      "Vier Quadrate",
+      "Suprematismus",
+      "Radischtschew-Kunstmuseum"
+    ],
+    [
+      "Q24057722",
+      "Ein Engländer in Moskau",
+      "Kubismus",
+      "Stedelijk Museum Amsterdam"
+    ],
+    [
+      "Q18241892",
+      "Weißes Kreuz",
+      "Suprematismus",
+      "Stedelijk Museum Amsterdam"
+    ],
+    [
+      "Q18246656",
+      "Aufs Feld II – Marfa und Wanka",
+      "Moderne",
+      "Russisches Museum"
+    ],
+    [
+      "Q18238098",
+      "Kopf einer Bäuerin",
+      "Kubismus",
+      "Stedelijk Museum Amsterdam"
+    ],
+    [
+      "Q19934450",
+      "Supremus Nr. 58 – Gelb und Schwarz",
+      "Suprematismus",
+      "Russisches Museum"
+    ],
+    [
+      "Q19882746",
+      "Ohne Titel – Suprematistische Komposition",
+      "Suprematismus",
+      "Peggy Guggenheim Collection"
+    ],
+    [
+      "Q19934445",
+      "Acht Rechtecke",
+      "Suprematismus",
+      "Stedelijk Museum Amsterdam"
+    ],
+    [
+      "Q19883663",
+      "Samowar",
+      "Kubismus",
+      "Museum of Modern Art"
+    ],
+    [
+      "Q19883748",
+      "Suprematistische Komposition – Flugzeug im Flug",
+      "Suprematismus",
+      "Museum of Modern Art"
+    ],
+    [
+      "Q19883749",
+      "Malerischer Realismus eines Jungen mit Rucksack",
+      "Suprematismus",
+      "Museum of Modern Art"
+    ],
+    [
+      "Q323079",
+      "Dresdner Marienaltar",
+      "Altniederländische Malerei",
+      "Gemäldegalerie Alte Meister, Dresden"
+    ],
+    [
+      "Q2734881",
+      "Die Verkündigung",
+      "Altniederländische Malerei",
+      "National Gallery of Art"
+    ],
+    [
+      "Q2516599",
+      "Verkündigungsdiptychon",
+      "Altniederländische Malerei",
+      "Museo Thyssen-Bornemisza"
+    ],
+    [
+      "Q3937546",
+      "Giovanni di Nicolao Arnolfini",
+      "Altniederländische Malerei",
+      "Gemäldegalerie Berlin"
+    ],
+    [
+      "Q19186089",
+      "Der Goldschmied Jan de Leeuw",
+      "Altniederländische Malerei",
+      "Kunsthistorisches Museum Wien"
+    ],
+    [
+      "Q405814",
+      "Das Narrenschiff",
+      "Altniederländische Malerei",
+      "Musée du Louvre"
+    ],
+    [
+      "Q1217288",
+      "Die Versuchungen des heiligen Antonius",
+      "Altniederländische Malerei",
+      "Museu Nacional de Arte Antiga"
+    ],
+    [
+      "Q2213811",
+      "Das Heuwagen-Triptychon",
+      "Altniederländische Malerei",
+      "Museo del Prado"
+    ],
+    [
+      "Q2276130",
+      "Die Anbetung der Könige – Epiphanias-Altar",
+      "Altniederländische Malerei",
+      "Museo del Prado"
+    ],
+    [
+      "Q2733729",
+      "Die Dornenkrönung Christi",
+      "Altniederländische Malerei",
+      "National Gallery"
+    ],
+    [
+      "Q2091114",
+      "Allegorie der Ausschweifung",
+      "Altniederländische Malerei",
+      "Yale University Art Gallery"
+    ],
+    [
+      "Q2389534",
+      "Eremiten-Triptychon",
+      "Altniederländische Malerei",
+      "Gallerie dell’Accademia, Venedig"
+    ],
+    [
+      "Q2390197",
+      "Johannes auf Patmos",
+      "Altniederländische Malerei",
+      "Gemäldegalerie Berlin"
+    ],
+    [
+      "Q2390211",
+      "Kreuzigung mit Stifter",
+      "Altniederländische Malerei",
+      "Königliche Museen der Schönen Künste, Brüssel"
+    ],
+    [
+      "Q2565646",
+      "Der heilige Christophorus",
+      "Altniederländische Malerei",
+      "Museum Boijmans Van Beuningen"
+    ],
+    [
+      "Q2390224",
+      "Triptychon der heiligen Liberata",
+      "Altniederländische Malerei",
+      "Gallerie dell’Accademia, Venedig"
+    ],
+    [
+      "Q2566840",
+      "Der heilige Hieronymus im Gebet",
+      "Altniederländische Malerei",
+      "Museum voor Schone Kunsten, Gent"
+    ],
+    [
+      "Q2453980",
+      "Johannes der Täufer in der Wüste",
+      "Altniederländische Malerei",
+      "Museo Lázaro Galdiano"
+    ],
+    [
+      "Q500242",
+      "Die Erschaffung Adams",
+      "Hochrenaissance",
+      "Sixtinische Kapelle, Vatikanische Museen"
+    ],
+    [
+      "Q1473546",
+      "Tondo Doni",
+      "Hochrenaissance",
+      "Uffizien"
+    ],
+    [
+      "Q83862",
+      "Der sterbende Sklave",
+      "Hochrenaissance",
+      "Musée du Louvre"
+    ],
+    [
+      "Q1144620",
+      "Bacchus",
+      "Hochrenaissance",
+      "Museo Nazionale del Bargello"
+    ],
+    [
+      "Q1213160",
+      "Die Grablegung Christi",
+      "Hochrenaissance",
+      "National Gallery"
+    ],
+    [
+      "Q2154351",
+      "Apollo – David",
+      "Hochrenaissance",
+      "Museo Nazionale del Bargello"
+    ],
+    [
+      "Q1516449",
+      "Die Madonna des Kanzlers Rolin",
+      "Altniederländische Malerei",
+      "Musée du Louvre"
+    ],
+    [
+      "Q2480921",
+      "Madonna des Kanonikus Joris van der Paele",
+      "Altniederländische Malerei",
+      "Groeningemuseum"
+    ],
+    [
+      "Q3399452",
+      "Margareta van Eyck",
+      "Altniederländische Malerei",
+      "Groeningemuseum"
+    ],
+    [
+      "Q838074",
+      "Madonna am Springbrunnen",
+      "Altniederländische Malerei",
+      "Koninklijk Museum voor Schone Kunsten Antwerpen"
+    ],
+    [
+      "Q321303",
+      "Der Garten der Lüste",
+      "Altniederländische Malerei",
+      "Museo del Prado"
+    ],
+    [
+      "Q252485",
+      "Die große Welle vor Kanagawa",
+      "Ukiyo-e",
+      "Abzüge unter anderem im Metropolitan Museum of Art und im British Museum"
+    ],
+    [
+      "Q3565037",
+      "Südwind, klarer Morgen – Roter Fuji",
+      "Ukiyo-e",
+      "Abzüge unter anderem im British Museum und im Tokyo Fuji Art Museum"
+    ],
+    [
+      "Q18173384",
+      "Gewitter unterhalb des Gipfels",
+      "Ukiyo-e",
+      "Abzüge unter anderem im Metropolitan Museum of Art"
+    ],
+    [
+      "Q17227585",
+      "Kajikazawa in der Provinz Kai",
+      "Ukiyo-e",
+      "Abzüge unter anderem im Metropolitan Museum of Art"
+    ],
+    [
+      "Q18173387",
+      "Sundai in Edo",
+      "Ukiyo-e",
+      "Cleveland Museum of Art; Metropolitan Museum of Art"
+    ],
+    [
+      "Q18173402",
+      "Der Suwa-See in der Provinz Shinano",
+      "Ukiyo-e",
+      "Abzüge unter anderem im Metropolitan Museum of Art"
+    ],
+    [
+      "Q18173386",
+      "Unter der Mannen-Brücke in Fukagawa",
+      "Ukiyo-e",
+      "Cooper Hewitt, Smithsonian Design Museum; Metropolitan Museum of Art"
+    ],
+    [
+      "Q17210582",
+      "Fujimigahara in der Provinz Owari",
+      "Ukiyo-e",
+      "Abzüge unter anderem im Metropolitan Museum of Art"
+    ],
+    [
+      "Q18173389",
+      "Senju in der Provinz Musashi",
+      "Ukiyo-e",
+      "Metropolitan Museum of Art"
+    ],
+    [
+      "Q18173391",
+      "Der Inume-Pass in der Provinz Kai",
+      "Ukiyo-e",
+      "Abzüge unter anderem im Metropolitan Museum of Art"
+    ],
+    [
+      "Q18173408",
+      "Der Sazai-Pavillon des Tempels der 500 Rakan",
+      "Ukiyo-e",
+      "Brooklyn Museum; Metropolitan Museum of Art"
+    ],
+    [
+      "Q17209457",
+      "Morgendämmerung bei Isawa in der Provinz Kai",
+      "Ukiyo-e",
+      "Abzüge unter anderem im Metropolitan Museum of Art"
+    ],
+    [
+      "Q5826309",
+      "Abendschauer über der großen Brücke in Atake",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q21127606",
+      "Pflaumengarten in Kameido",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60152106",
+      "Brennöfen und Hashiba-Fähre am Sumida",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60152107",
+      "Bashōs Klause auf dem Kamelienhügel",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60152108",
+      "Hachiman-Schrein in Ichigaya",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60152109",
+      "Kirschblüten am Ufer des Tama",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60152110",
+      "Nihonbashi-Brücke und Edobashi-Brücke",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60152111",
+      "Blick auf die Straße Nihonbashi itchōme",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60152112",
+      "Yoroi-Fähre in Koami-chō",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60152211",
+      "Fudō-Wasserfälle in Ōji",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60175410",
+      "Im Kameido-Tenjin-Schrein",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q60175448",
+      "Irisgarten in Horikiri",
+      "Ukiyo-e",
+      "Brooklyn Museum"
+    ],
+    [
+      "Q22049133",
+      "Frau mit totem Kind",
+      "Expressionismus",
+      "British Museum; National Gallery of Art"
+    ],
+    [
+      "Q125399043",
+      "Betende Frau",
+      "Expressionismus",
+      "Musée d’Art moderne et contemporain de Strasbourg"
+    ],
+    [
+      "Q125399053",
+      "Not",
+      "Expressionismus",
+      "Musée d’Art moderne et contemporain de Strasbourg"
+    ],
+    [
+      "Q137664769",
+      "Else Rautenberg",
+      "Expressionismus",
+      "Käthe Kollwitz Museum Köln"
+    ],
+    [
+      "Q137665405",
+      "Biergarten mit Figuren",
+      "Expressionismus",
+      "Käthe Kollwitz Museum Köln"
+    ],
+    [
+      "Q137665906",
+      "Biergarten in München",
+      "Expressionismus",
+      "Käthe Kollwitz Museum Köln"
+    ],
+    [
+      "Q22049132",
+      "Schlachtfeld",
+      "Expressionismus",
+      "Honolulu Museum of Art"
+    ],
+    [
+      "Q103297795",
+      "Brot!",
+      "Expressionismus",
+      "Vanderbilt University Fine Arts Gallery"
+    ],
+    [
+      "Q103300447",
+      "Gefallen",
+      "Expressionismus",
+      "Vanderbilt University Fine Arts Gallery"
+    ],
+    [
+      "Q104032326",
+      "Selbstbildnis – Lithografie",
+      "Expressionismus",
+      "Vanderbilt University Fine Arts Gallery"
+    ],
+    [
+      "Q105728291",
+      "Beim Dengeln",
+      "Expressionismus",
+      "Nationalmuseum Warschau"
+    ]
+  ],
+  "overrides": {
+    "Q556553": {
+      "date": "1567",
+      "dateStart": 1567,
+      "dateEnd": 1567,
+      "catalogueSource": "https://www.sammlung.pinakothek.de/de/artwork/01G1P9YLkE"
+    },
+    "Q286096": {
+      "date": "um 1435–1440",
+      "dateStart": 1435,
+      "dateEnd": 1440,
+      "catalogueSource": "https://www.mfa.org/collections/object/saint-luke-drawing-the-virgin-31035"
+    },
+    "Q19883388": {
+      "technique": "Radierung",
+      "artForm": "print"
+    },
+    "Q1217288": {
+      "technique": "Öl auf Holz",
+      "medium": "Ölfarbe auf Holz"
+    },
+    "Q17001528": {
+      "technique": "Öl auf Leinwand",
+      "medium": "Ölfarbe auf Sackleinen (Jutegewebe)"
+    },
+    "Q83862": {
+      "technique": "Marmorskulptur",
+      "artForm": "sculpture",
+      "introEligible": false,
+      "date": "1513–1515",
+      "dateStart": 1513,
+      "dateEnd": 1515,
+      "catalogueSource": "https://collections.louvre.fr/ark:/53355/cl010091872"
+    },
+    "Q1144620": {
+      "technique": "Marmorskulptur",
+      "artForm": "sculpture",
+      "introEligible": false
+    },
+    "Q2154351": {
+      "technique": "Marmorskulptur",
+      "artForm": "sculpture",
+      "introEligible": false
+    },
+    "Q16038763": {
+      "date": "um 1530",
+      "dateStart": 1530,
+      "dateEnd": 1530,
+      "catalogueSource": "https://www.hermitagemuseum.org/wps/portal/hermitage/digital-collection/01.+Paintings/38776/"
+    },
+    "Q3907498": {
+      "date": "um 1300",
+      "dateStart": 1300,
+      "dateEnd": 1300,
+      "catalogueSource": "https://www.uffizi.it/en/the-uffizi"
+    },
+    "Q3698260": {
+      "date": "um 1275–1280",
+      "dateStart": 1275,
+      "dateEnd": 1280,
+      "catalogueSource": "https://www.santacroceopera.it/en/the-works/cimabue-crucifix/"
+    },
+    "Q3630745": {
+      "date": "1638–1639",
+      "dateStart": 1638,
+      "dateEnd": 1639,
+      "catalogueSource": "https://www.rct.uk/collection/405551/self-portrait-as-the-allegory-of-painting-la-pittura",
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3733425": {
+      "date": "1620–1629",
+      "dateStart": 1620,
+      "dateEnd": 1629,
+      "catalogueSource": "https://www.metmuseum.org/art/collection/search/436453",
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q18573672": {
+      "date": "um 1630–1635",
+      "dateStart": 1630,
+      "dateEnd": 1635,
+      "catalogueSource": "https://collection.nationalmuseum.se/en/collection/item/18123/"
+    },
+    "Q17320349": {
+      "date": "um 1700",
+      "dateStart": 1700,
+      "dateEnd": 1700,
+      "catalogueSource": "https://www.rijksmuseum.nl/nl/collectie/SK-A-354"
+    },
+    "Q14940737": {
+      "date": "um 1625–1630",
+      "dateStart": 1625,
+      "dateEnd": 1630,
+      "catalogueSource": "https://www.getty.edu/cona/CONAFullSubject.aspx?subid=700002095"
+    },
+    "Q568847": {
+      "date": "vor 1443",
+      "dateStart": 1430,
+      "dateEnd": 1443,
+      "catalogueSource": "https://www.museodelprado.es/en/the-collection/art-work/the-descent-from-the-cross/856d822a-dd22-4425-bebd-920a1d416aa7"
+    },
+    "Q5316837": {
+      "date": "um 1435–1438",
+      "dateStart": 1435,
+      "dateEnd": 1438,
+      "catalogueSource": "https://www.museodelprado.es/en/the-collection/art-work/the-virgin-and-child-known-as-the-duran-virgin/71eaabd3-2232-449e-9e01-4f302ebbe3e0"
+    },
+    "Q405814": {
+      "date": "um 1500",
+      "dateStart": 1500,
+      "dateEnd": 1500,
+      "catalogueSource": "https://collections.louvre.fr/"
+    },
+    "Q2390211": {
+      "date": "um 1485",
+      "dateStart": 1485,
+      "dateEnd": 1485,
+      "catalogueSource": "https://fine-arts-museum.be/fr/la-collection/hieronymus-van-aken-dit-bosch-calvaire-avec-donateur"
+    },
+    "Q1213160": {
+      "date": "um 1500–1501",
+      "dateStart": 1500,
+      "dateEnd": 1501,
+      "catalogueSource": "https://www.nationalgallery.org.uk/paintings/michelangelo-the-entombment-or-christ-being-carried-to-his-tomb"
+    },
+    "Q64787019": {
+      "technique": "Öl auf Holz",
+      "medium": "Ölfarbe auf Lindenholz"
+    },
+    "Q62701395": {
+      "technique": "Öl auf Holz",
+      "medium": "Ölfarbe auf Hartfaserplatte"
+    },
+    "Q2067212": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q549172": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q3798718": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q3910927": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q3967208": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q1197593": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q3649309": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q3879148": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q3873250": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q3944650": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q4003125": {
+      "date": "1303–1305",
+      "dateStart": 1303,
+      "dateEnd": 1305,
+      "catalogueSource": "https://www.cappelladegliscrovegni.it/index.php/it/"
+    },
+    "Q2247406": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3978274": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3612415": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3769169": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3762348": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3842443": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q55429769": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3605519": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3769173": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3948947": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3937737": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q3947174": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q25218172": {
+      "artistDeath": 1656,
+      "artistDeathApproximate": true,
+      "artistDeathText": "1654 oder später; 1656 vermutet",
+      "artistBiographySource": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "Q1516449": {
+      "date": "um 1430",
+      "dateStart": 1430,
+      "dateEnd": 1430,
+      "catalogueSource": "https://www.louvre.fr/expositions-et-evenements/expositions/revoir-van-eyck"
+    },
+    "Q2480921": {
+      "date": "1434–1436",
+      "dateStart": 1434,
+      "dateEnd": 1436,
+      "catalogueSource": "https://www.museabrugge.be/en/collections"
+    },
+    "Q3399452": {
+      "date": "1439",
+      "dateStart": 1439,
+      "dateEnd": 1439
+    },
+    "Q838074": {
+      "date": "1439",
+      "dateStart": 1439,
+      "dateEnd": 1439
+    },
+    "Q321303": {
+      "date": "1490–1500",
+      "dateStart": 1490,
+      "dateEnd": 1500,
+      "catalogueSource": "https://www.museodelprado.es/en/the-collection/art-work/the-garden-of-earthly-delights/02388242-6d6a-4e9e-a992-e1311eab3609"
+    },
+    "Q252485": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q3565037": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q18173384": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q17227585": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q18173387": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q18173402": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q18173386": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q17210582": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q18173389": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q18173391": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q18173408": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q17209457": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print",
+      "date": "um 1830–1832",
+      "dateStart": 1830,
+      "dateEnd": 1832
+    },
+    "Q5826309": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q21127606": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60152106": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60152107": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60152108": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60152109": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60152110": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60152111": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60152112": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60152211": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60175410": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q60175448": {
+      "technique": "Farbholzschnitt",
+      "medium": "Farbholzschnitt (Nishiki-e) auf Papier",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "artForm": "print"
+    },
+    "Q22049133": {
+      "technique": "Radierung",
+      "artForm": "print"
+    },
+    "Q125399043": {
+      "technique": "Tuschezeichnung",
+      "artForm": "painting"
+    },
+    "Q125399053": {
+      "technique": "Tuschezeichnung",
+      "artForm": "painting"
+    },
+    "Q137664769": {
+      "technique": "Öl auf Leinwand",
+      "artForm": "painting"
+    },
+    "Q137665405": {
+      "technique": "Öl auf Papier / Karton",
+      "artForm": "painting"
+    },
+    "Q137665906": {
+      "technique": "Öl auf Papier / Karton",
+      "artForm": "painting"
+    },
+    "Q22049132": {
+      "technique": "Radierung",
+      "artForm": "print",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "medium": "Radierung auf Papier",
+      "date": "1907",
+      "dateStart": 1907,
+      "dateEnd": 1907,
+      "catalogueSource": "https://www.lwl-museum-kunst-kultur.de/media/filer_public/f7/d6/f7d692cf-937f-4ebe-aebc-ab0b767b9a8c/02_kdm_august_22_56zeilen_hr.pdf"
+    },
+    "Q103297795": {
+      "technique": "Lithografie",
+      "artForm": "print",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "medium": "Lithografie auf Papier"
+    },
+    "Q103300447": {
+      "technique": "Lithografie",
+      "artForm": "print",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "medium": "Lithografie auf Papier",
+      "catalogueSource": "https://emuseum.cornell.edu/objects/45619/gefallen-news-of-the-death-of-a-soldier"
+    },
+    "Q104032326": {
+      "technique": "Lithografie",
+      "artForm": "print",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "medium": "Lithografie auf Papier"
+    },
+    "Q105728291": {
+      "technique": "Radierung",
+      "artForm": "print",
+      "materialIds": [
+        "Q127418",
+        "Q11472"
+      ],
+      "medium": "Radierung auf Papier"
+    },
+    "Q1473546": {
+      "technique": "Tempera",
+      "medium": "Tempera grassa auf Holz",
+      "catalogueSource": "https://www.uffizi.it/en/artworks/holy-family-known-as-the-doni-tondo"
+    }
+  },
+  "excluded": {
+    "Q734834": "Genter Altar: gemeinsame Autorschaft Jan und Hubert van Eyck; keine alleinige Zuschreibung an Jan behaupten.",
+    "Q2510869": "Concert in the Egg: späterer Nachfolger Boschs, nicht Bosch selbst.",
+    "Q680128": "Genter Kreuztragung: umstrittene Zuschreibung, daher nicht neu aufgenommen.",
+    "Q2304870": "Sieben Todsünden: kontroverse Zuschreibung zwischen Museum und Forschungsprojekt, daher nicht neu aufgenommen.",
+    "Q137599158": "Spätere Kopie nach van Eyck; keine gesicherte eigenhändige Arbeit.",
+    "Q3829347": "Verlorene Leda: vorhandene Abbildung ist keine eigenhändige erhaltene Tafel Michelangelos.",
+    "Q2255664": "Palestrina-Pietà: Zuschreibung an Michelangelo nicht gesichert.",
+    "Q3978273": "Späte Susanna: gemeinsame Ausführung, keine alleinige Zuschreibung an Artemisia.",
+    "Q30302632": "Cranachs Reformationsaltar: gemeinsame Ausführung mit dem Sohn.",
+    "Q75837458": "Dasselbe Hokusai-Druckmotiv wie Q41135980: keine zweite Abbildung als neues Werk zählen.",
+    "Q123189179": "Ruyschs Atelierporträt: nicht von Rachel Ruysch selbst gemalt.",
+    "Q3910084": "Assisi-Franziskuszyklus: Zuschreibung an Giotto in der Forschung strittig.",
+    "Q3698254": "Für diese Erweiterung nicht übernommen: konkrete Abbildung oder präzise Datierung nicht ausreichend geklärt; keine pauschale Ablehnung des eigenhändigen Werks.",
+    "Q644734": "Für diese Erweiterung nicht übernommen: konkrete Abbildung oder präzise Datierung nicht ausreichend geklärt; keine pauschale Ablehnung des eigenhändigen Werks.",
+    "Q26692914": "Für diese Erweiterung nicht übernommen: konkrete Abbildung oder präzise Datierung nicht ausreichend geklärt; keine pauschale Ablehnung des eigenhändigen Werks.",
+    "Q6728400": "Für diese Erweiterung nicht übernommen: konkrete Abbildung oder präzise Datierung nicht ausreichend geklärt; keine pauschale Ablehnung des eigenhändigen Werks.",
+    "Q9402747": "Für diese Erweiterung nicht übernommen: konkrete Abbildung oder präzise Datierung nicht ausreichend geklärt; keine pauschale Ablehnung des eigenhändigen Werks.",
+    "Q60515901": "Für diese Erweiterung nicht übernommen: konkrete Abbildung oder präzise Datierung nicht ausreichend geklärt; keine pauschale Ablehnung des eigenhändigen Werks.",
+    "Q64787481": "Für diese Erweiterung nicht übernommen: konkrete Abbildung oder präzise Datierung nicht ausreichend geklärt; keine pauschale Ablehnung des eigenhändigen Werks.",
+    "Q19327619": "Für diese Erweiterung nicht übernommen: konkrete Abbildung oder präzise Datierung nicht ausreichend geklärt; keine pauschale Ablehnung des eigenhändigen Werks.",
+    "Q3553389": "Für diese Erweiterung nicht übernommen: konkrete Abbildung oder präzise Datierung nicht ausreichend geklärt; keine pauschale Ablehnung des eigenhändigen Werks."
+  },
+  "requestedFiles": {
+    "Q14940736": "File:Georges de La Tour-Le Vielleur (2).jpg",
+    "Q3907498": "File:Giotto - Polittico di Badia - Google Art Project.jpg",
+    "Q743643": "File:Georges de La Tour. St. Joseph, the Carpenter.JPG"
+  }
+}

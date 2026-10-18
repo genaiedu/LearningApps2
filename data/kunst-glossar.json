@@ -3,195 +3,2582 @@
   "reviewed": "2026-10-18",
   "method": "Redaktionelle Kurztexte nach Museumsquellen. Merkmale sind Suchhinweise, keine automatische Analyse jedes Bildes. Zeitfenster sind Orientierungen, keine Ausschlussgrenzen; Gründungen werden getrennt behandelt. Künstlerbeispiele sind keine Rangliste.",
   "sources": {
-    "goldhelm": {"title":"Gemäldegalerie Berlin · Der Mann mit dem Goldhelm: heutige Zuschreibung", "url":"https://search.smb.museum/object/obj-865524"},
-    "lastSupper": {"title":"Museo del Cenacolo Vinciano · Leonardo: Das Abendmahl, Malerei auf trockenem Putz", "url":"https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"},
-    "photoProcesses": {"title":"The Met · Fotografische Verfahren und Konservierung", "url":"https://www.metmuseum.org/exhibitions/listings/2001/photography-processes-preservation-conservation"},
-    "photogravure": {"title":"Art Institute of Chicago · Photogravure", "url":"https://archive.artic.edu/stieglitz/photogravure/"},
-    "stieglitz": {"title":"Art Institute of Chicago · Alfred Stieglitz", "url":"https://archive.artic.edu/stieglitz/alfred-stieglitz/"},
-    "pictorialism": {"title":"The Met · International Pictorialism", "url":"https://www.metmuseum.org/ja/essays/international-pictorialism"},
-    "hine": {"title":"Art Institute of Chicago · Sadie Pfeifer und Hines Sozialfotografie", "url":"https://www.artic.edu/artworks/11344"},
-    "atget": {"title":"Art Institute of Chicago · Atget: Versailles, Parkecke", "url":"https://www.artic.edu/artworks/18967"},
-    "mondrianStudy": {"title":"Art Institute of Chicago · Mondrians Kompositionsstudie", "url":"https://www.artic.edu/artworks/142570"},
-    "mondrian": {"title":"Art Institute of Chicago · Composition (No. 1) Gray-Red", "url":"https://www.artic.edu/artworks/65821"},
-    "popova": {"title":"MoMA · Popowa: Painterly Architectonic", "url":"https://www.moma.org/collection/works/78444"},
-    "beckmann": {"title":"Wikidata · Beckmanns Selbstbildnis im Smoking, Werkzuordnung und Nachweise", "url":"https://www.wikidata.org/wiki/Q2267583"},
-    "canova": {"title":"The Met · Canova: Perseus mit dem Haupt der Medusa", "url":"https://www.metmuseum.org/art/collection/search/204758"},
-    "canovaPlaster": {"title":"Art Institute of Chicago · Canova: Head of Medusa, Gips","url":"https://www.artic.edu/artworks/160236"},
-    "canovaBust": {"title":"Art Institute of Chicago · Canova: Bust of Paris", "url":"https://www.artic.edu/artworks/102591"},
-    "rodinPlaster": {"title":"Cleveland Museum of Art · Rodin: Kopf des Pierre de Wissant, Gips", "url":"https://www.clevelandart.org/art/1917.722"},
-    "rodinBronze": {"title":"Cleveland Museum of Art · Rodin: Das eherne Zeitalter, Modell und spätere Gussfassung", "url":"https://www.clevelandart.org/art/1918.328"},
-    "rodinMarble": {"title":"Cleveland Museum of Art · Rodin: Der Sturz der Engel", "url":"https://www.clevelandart.org/art/1960.85"},
-    "gum": {"title":"V&A · Fotografische Verfahren, Gummidruck", "url":"https://www.vam.ac.uk/articles/photographic-processes"},
-    "demachy": {"title":"Cleveland Museum of Art · Demachys Gummidruck und Piktorialismus", "url":"https://www.clevelandart.org/art/1985.203"},
-    "whiteArbor": {"title":"Cleveland Museum of Art · White: The Arbor, 1906, Druck 1908", "url":"https://www.clevelandart.org/art/1980.158"},
-    "steerage": {"title":"Cleveland Museum of Art · Stieglitz: The Steerage", "url":"https://www.clevelandart.org/art/2019.22"},
-    "rodinAdam": {"title":"Art Institute of Chicago · Rodin: Adam, Modell und Bronzeguss", "url":"https://www.artic.edu/artworks/11320"},
-    "egyptHead": {"title":"Cleveland Museum of Art · Amenophis III., Granodiorit und Oberflächen", "url":"https://www.clevelandart.org/art/1952.513"},
-    "heqat": {"title":"Cleveland Museum of Art · Froschgöttin Heqat", "url":"https://www.clevelandart.org/art/1976.5"},
-    "amarna": {"title":"Cleveland Museum of Art · Talatat: Porträt der Nofretete", "url":"https://www.clevelandart.org/art/1976.4"},
-    "persia": {"title":"Cleveland Museum of Art · Wachmann aus dem Palast des Xerxes", "url":"https://www.clevelandart.org/art/1943.279"},
-    "assyria": {"title":"Cleveland Museum of Art · Grüßender Schutzgeist aus Nimrud", "url":"https://www.clevelandart.org/art/1943.246"},
-    "gudea": {"title":"Cleveland Museum of Art · Statue des Gudea", "url":"https://www.clevelandart.org/art/1963.154"},
-    "kouros": {"title":"Cleveland Museum of Art · Torso eines Kouros", "url":"https://www.clevelandart.org/art/1953.125"},
-    "geometricHorse": {"title":"Cleveland Museum of Art · Geometrische Pferdestatuette", "url":"https://www.clevelandart.org/art/1991.49"},
-    "romanApollo": {"title":"Cleveland Museum of Art · Römischer Apollonkopf", "url":"https://www.clevelandart.org/art/2023.108"},
-    "watercolor": {"title":"The Met · Watercolor", "url":"https://www.metmuseum.org/perspectives/materials-and-techniques-drawing-watercolor"},
-    "pastel": {"title":"The Met · Pastel", "url":"https://www.metmuseum.org/perspectives/materials-and-techniques-drawing-pastel"},
-    "graphite": {"title":"The Met · Graphite", "url":"https://www.metmuseum.org/perspectives/materials-and-techniques-drawing-graphite"},
-    "charcoal": {"title":"The Met · Charcoal", "url":"https://www.metmuseum.org/perspectives/materials-and-techniques-drawing-charcoal"},
-    "drawing": {"title":"Princeton University Art Museum · Drawings and Watercolors", "url":"https://artmuseum.princeton.edu/art/stories-perspectives/collection-publications-drawings-and-watercolors"},
-    "woodcut": {"title":"MoMA · Woodcut", "url":"https://www.moma.org/s/ge/curated_ge/techniques/woodcut.html"},
-    "engraving": {"title":"The Met · Engraving", "url":"https://www.metmuseum.org/perspectives/materials-and-techniques-printmaking-engraving"},
-    "etching": {"title":"The Met · Etching", "url":"https://www.metmuseum.org/perspectives/materials-and-techniques-printmaking-etching"},
-    "intaglio": {"title":"MoMA · Intaglio", "url":"https://www.moma.org/s/ge/curated_ge/techniques/intaglio.html"},
-    "lithography": {"title":"MoMA · Lithography", "url":"https://www.moma.org/s/ge/curated_ge/techniques/lithography.html"},
-    "tempera": {"title":"National Gallery · Tempera", "url":"https://www.nationalgallery.org.uk/paintings/glossary/tempera"},
-    "oil": {"title":"The Met · Painting in Oil", "url":"https://www.metmuseum.org/essays/painting-in-oil-in-the-low-countries-and-its-spread-to-southern-europe"},
-    "canvas": {"title":"National Gallery · Titian’s Painting Techniques before 1540", "url":"https://www.nationalgallery.org.uk/upload/pdf/vol-34-essay-1-2013.pdf"},
-    "media": {"title":"National Gallery · Media", "url":"https://www.nationalgallery.org.uk/paintings/glossary/media"},
-    "klimt": {"title":"Belvedere · Der Kuss", "url":"https://sammlung.belvedere.at/objects/6678/der-kuss-liebespaar"},
-    "gothic": {"title":"National Gallery · Gothic", "url":"https://www.nationalgallery.org.uk/paintings/glossary/gothic"},
-    "international": {"title":"National Gallery · International Gothic", "url":"https://www.nationalgallery.org.uk/paintings/glossary/international-gothic"},
-    "medieval": {"title":"The Met · Italian Painting of the Later Middle Ages", "url":"https://www.metmuseum.org/essays/italian-painting-of-the-later-middle-ages"},
-    "early": {"title":"National Gallery · Early Renaissance", "url":"https://www.nationalgallery.org.uk/paintings/glossary/early-renaissance"},
-    "high": {"title":"National Gallery · High Renaissance", "url":"https://www.nationalgallery.org.uk/paintings/glossary/high-renaissance"},
-    "florence": {"title":"The Met · Florence and Central Italy, 1400–1600", "url":"https://82nd-and-fifth.metmuseum.org/toah/ht/08/eustc.html"},
-    "siena": {"title":"The Met · Sienese Painting", "url":"https://www.metmuseum.org/essays/sienese-painting"},
-    "sienaLater": {"title":"National Gallery · Renaissance Siena", "url":"https://www.nationalgallery.org.uk/exhibitions/past/renaissance-siena-art-for-a-city"},
-    "umbria": {"title":"National Gallery · Raffaels Mond-Kreuzigung und Perugino", "url":"https://www.nationalgallery.org.uk/paintings/raphael-the-mond-crucifixion"},
-    "venice": {"title":"The Met · Titian", "url":"https://www.metmuseum.org/essays/titian-ca-148590-1576"},
-    "netherlandish": {"title":"The Met · Early Netherlandish Painting", "url":"https://www.metmuseum.org/essays/early-netherlandish-painting"},
-    "german": {"title":"The Met · German Paintings, 1350–1600", "url":"https://www.metmuseum.org/perspectives/german-paintings"},
-    "mannerism": {"title":"National Gallery · Mannerist", "url":"https://www.nationalgallery.org.uk/paintings/glossary/mannerist"},
-    "baroque": {"title":"National Gallery · Baroque", "url":"https://www.nationalgallery.org.uk/paintings/glossary/baroque"},
-    "baroqueArtists": {"title":"National Galleries of Scotland · Baroque", "url":"https://www.nationalgalleries.org/art-and-artists/glossary-terms/baroque"},
-    "rococo": {"title":"National Gallery · Rococo", "url":"https://www.nationalgallery.org.uk/paintings/glossary/rococo"},
-    "classical": {"title":"National Gallery · Neoclassical", "url":"https://www.nationalgallery.org.uk/paintings/glossary/neoclassical"},
-    "romantic": {"title":"The Met · Romanticism", "url":"https://www.metmuseum.org/essays/romanticism"},
-    "realism": {"title":"The Met · Nineteenth-Century French Realism", "url":"https://www.metmuseum.org/essays/nineteenth-century-french-realism"},
-    "academic": {"title":"The Met · The Salon and the Royal Academy", "url":"https://www.metmuseum.org/essays/the-salon-and-the-royal-academy-in-the-nineteenth-century"},
-    "barbizon": {"title":"The Met · The Barbizon School", "url":"https://www.metmuseum.org/essays/the-barbizon-school-french-painters-of-nature"},
-    "impressionism": {"title":"The Met · Impressionism: Art and Modernity", "url":"https://www.metmuseum.org/essays/impressionism-art-and-modernity"},
-    "american": {"title":"The Met · Childe Hassam", "url":"https://www.metmuseum.org/exhibitions/listings/2004/childe-hassam"},
-    "post": {"title":"The Met · Post-Impressionism", "url":"https://www.metmuseum.org/essays/post-impressionism"},
-    "pointillism": {"title":"The Met · Signac: Master Neo-Impressionist", "url":"https://www.metmuseum.org/exhibitions/listings/2001/paul-signac"},
-    "symbolism": {"title":"The Met · Symbolism", "url":"https://www.metmuseum.org/essays/symbolism"},
-    "nouveau": {"title":"The Met · Art Nouveau", "url":"https://www.metmuseum.org/essays/art-nouveau"},
-    "expressionism": {"title":"MoMA · German Expressionism", "url":"https://www.moma.org/s/ge/curated_ge/index.html"},
-    "blue": {"title":"Lenbachhaus · Der Blaue Reiter", "url":"https://www.lenbachhaus.de/entdecken/der-blaue-reiter"},
-    "fauvism": {"title":"The Met · Fauvism", "url":"https://www.metmuseum.org/essays/fauvism"},
-    "cubism": {"title":"The Met · Cubism", "url":"https://www.metmuseum.org/essays/cubism"},
-    "surrealism": {"title":"The Met · Surrealism", "url":"https://www.metmuseum.org/essays/surrealism"},
-    "naive": {"title":"MoMA · Henri Rousseau", "url":"https://www.moma.org/artists/5056-henri-rousseau"},
-    "preraphaelite": {"title":"National Gallery · The Pre-Raphaelite Brotherhood", "url":"https://www.nationalgallery.org.uk/exhibitions/past/reflections-van-eyck-and-the-pre-raphaelites/reflections-behind-the-inspiration?viewPage=2"},
-    "nazarene": {"title":"National Gallery · Nazarene", "url":"https://www.nationalgallery.org.uk/paintings/glossary/nazarene"},
-    "orientalism": {"title":"The Met · Orientalism in Nineteenth-Century Art", "url":"https://www.metmuseum.org/essays/orientalism-in-nineteenth-century-art"},
-    "macchiaioli": {"title":"National Gallery · Telemaco Signorini", "url":"https://www.nationalgallery.org.uk/artists/telemaco-signorini"},
-    "macchiaioliArtists": {"title":"Uffizien · Cento anni di Galleria d’Arte Moderna", "url":"https://www.uffizi.it/mostre-virtuali/centenario-gam"},
-    "cretan": {"title":"National Gallery of Greece · Icons of Cretan Art", "url":"https://www.nationalgallery.gr/en/exhibitions/icons-of-cretan-art-from-candia-to-moscow-to-st-petersburg/"},
-    "icons": {"title":"Byzantine and Christian Museum · Icons", "url":"https://www.byzantinemuseum.gr/en/bcms-news/42/news/347/icons-en-998"},
-    "ionian": {"title":"National Gallery of Greece · Four Centuries of Greek Painting", "url":"https://www.nationalgallery.gr/wp-content/uploads/2021/10/4centuries_en.pdf"},
-    "modern": {"title":"MoMA · Moderne: Künstler und Entwicklungen", "url":"https://www.moma.org/collection/terms/"},
-    "northernPrints": {"title":"The Met · The Print in the North: Dürer and Lucas van Leyden", "url":"https://resources.metmuseum.org/resources/metpublications/pdf/The_Print_in_the_North_The_Age_of_Albrecht_Durer_and_Lucas_van_Leyden_The_Metropolitan_Museum_of_Art_Bulletin_v_54_no_4_Spring_1997.pdf"},
-    "americanMovement": {"title":"Smithsonian American Art Museum · John Henry Twachtman", "url":"https://americanart.si.edu/artist/john-henry-twachtman-4901"},
-    "cornelius": {"title":"National Gallery Library · Peter Cornelius und die Nazarener (E. Greer, 2017)", "url":"https://library.nationalgallery.org.uk/eosuksql01_N10318UK_Documents/E.Greer%20PhD%202017.pdf"}
+    "ukiyoe": {
+      "title": "The Met · Ukiyo-e: Bildtradition und mehrfarbiger Holzschnitt",
+      "url": "https://www.metmuseum.org/essays/woodblock-prints-in-the-ukiyo-e-style"
+    },
+    "suprematism": {
+      "title": "MoMA · Suprematismus",
+      "url": "https://www.moma.org/collection/terms/suprematism"
+    },
+    "fresco": {
+      "title": "National Gallery · Fresko und Malerei auf trockenem Putz",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/fresco"
+    },
+    "sistine": {
+      "title": "Vatikanische Museen · Geschichte und Fresken der Sixtinischen Kapelle",
+      "url": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/cappella-sistina/storia-cappella-sistina.html"
+    },
+    "goldhelm": {
+      "title": "Gemäldegalerie Berlin · Der Mann mit dem Goldhelm: heutige Zuschreibung",
+      "url": "https://search.smb.museum/object/obj-865524"
+    },
+    "lastSupper": {
+      "title": "Museo del Cenacolo Vinciano · Leonardo: Das Abendmahl, Malerei auf trockenem Putz",
+      "url": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+    },
+    "photoProcesses": {
+      "title": "The Met · Fotografische Verfahren und Konservierung",
+      "url": "https://www.metmuseum.org/exhibitions/listings/2001/photography-processes-preservation-conservation"
+    },
+    "photogravure": {
+      "title": "Art Institute of Chicago · Photogravure",
+      "url": "https://archive.artic.edu/stieglitz/photogravure/"
+    },
+    "stieglitz": {
+      "title": "Art Institute of Chicago · Alfred Stieglitz",
+      "url": "https://archive.artic.edu/stieglitz/alfred-stieglitz/"
+    },
+    "pictorialism": {
+      "title": "The Met · International Pictorialism",
+      "url": "https://www.metmuseum.org/ja/essays/international-pictorialism"
+    },
+    "hine": {
+      "title": "Art Institute of Chicago · Sadie Pfeifer und Hines Sozialfotografie",
+      "url": "https://www.artic.edu/artworks/11344"
+    },
+    "atget": {
+      "title": "Art Institute of Chicago · Atget: Versailles, Parkecke",
+      "url": "https://www.artic.edu/artworks/18967"
+    },
+    "mondrianStudy": {
+      "title": "Art Institute of Chicago · Mondrians Kompositionsstudie",
+      "url": "https://www.artic.edu/artworks/142570"
+    },
+    "mondrian": {
+      "title": "Art Institute of Chicago · Composition (No. 1) Gray-Red",
+      "url": "https://www.artic.edu/artworks/65821"
+    },
+    "popova": {
+      "title": "MoMA · Popowa: Painterly Architectonic",
+      "url": "https://www.moma.org/collection/works/78444"
+    },
+    "beckmann": {
+      "title": "Wikidata · Beckmanns Selbstbildnis im Smoking, Werkzuordnung und Nachweise",
+      "url": "https://www.wikidata.org/wiki/Q2267583"
+    },
+    "canova": {
+      "title": "The Met · Canova: Perseus mit dem Haupt der Medusa",
+      "url": "https://www.metmuseum.org/art/collection/search/204758"
+    },
+    "canovaPlaster": {
+      "title": "Art Institute of Chicago · Canova: Head of Medusa, Gips",
+      "url": "https://www.artic.edu/artworks/160236"
+    },
+    "canovaBust": {
+      "title": "Art Institute of Chicago · Canova: Bust of Paris",
+      "url": "https://www.artic.edu/artworks/102591"
+    },
+    "rodinPlaster": {
+      "title": "Cleveland Museum of Art · Rodin: Kopf des Pierre de Wissant, Gips",
+      "url": "https://www.clevelandart.org/art/1917.722"
+    },
+    "rodinBronze": {
+      "title": "Cleveland Museum of Art · Rodin: Das eherne Zeitalter, Modell und spätere Gussfassung",
+      "url": "https://www.clevelandart.org/art/1918.328"
+    },
+    "rodinMarble": {
+      "title": "Cleveland Museum of Art · Rodin: Der Sturz der Engel",
+      "url": "https://www.clevelandart.org/art/1960.85"
+    },
+    "gum": {
+      "title": "V&A · Fotografische Verfahren, Gummidruck",
+      "url": "https://www.vam.ac.uk/articles/photographic-processes"
+    },
+    "demachy": {
+      "title": "Cleveland Museum of Art · Demachys Gummidruck und Piktorialismus",
+      "url": "https://www.clevelandart.org/art/1985.203"
+    },
+    "whiteArbor": {
+      "title": "Cleveland Museum of Art · White: The Arbor, 1906, Druck 1908",
+      "url": "https://www.clevelandart.org/art/1980.158"
+    },
+    "steerage": {
+      "title": "Cleveland Museum of Art · Stieglitz: The Steerage",
+      "url": "https://www.clevelandart.org/art/2019.22"
+    },
+    "rodinAdam": {
+      "title": "Art Institute of Chicago · Rodin: Adam, Modell und Bronzeguss",
+      "url": "https://www.artic.edu/artworks/11320"
+    },
+    "egyptHead": {
+      "title": "Cleveland Museum of Art · Amenophis III., Granodiorit und Oberflächen",
+      "url": "https://www.clevelandart.org/art/1952.513"
+    },
+    "heqat": {
+      "title": "Cleveland Museum of Art · Froschgöttin Heqat",
+      "url": "https://www.clevelandart.org/art/1976.5"
+    },
+    "amarna": {
+      "title": "Cleveland Museum of Art · Talatat: Porträt der Nofretete",
+      "url": "https://www.clevelandart.org/art/1976.4"
+    },
+    "persia": {
+      "title": "Cleveland Museum of Art · Wachmann aus dem Palast des Xerxes",
+      "url": "https://www.clevelandart.org/art/1943.279"
+    },
+    "assyria": {
+      "title": "Cleveland Museum of Art · Grüßender Schutzgeist aus Nimrud",
+      "url": "https://www.clevelandart.org/art/1943.246"
+    },
+    "gudea": {
+      "title": "Cleveland Museum of Art · Statue des Gudea",
+      "url": "https://www.clevelandart.org/art/1963.154"
+    },
+    "kouros": {
+      "title": "Cleveland Museum of Art · Torso eines Kouros",
+      "url": "https://www.clevelandart.org/art/1953.125"
+    },
+    "geometricHorse": {
+      "title": "Cleveland Museum of Art · Geometrische Pferdestatuette",
+      "url": "https://www.clevelandart.org/art/1991.49"
+    },
+    "romanApollo": {
+      "title": "Cleveland Museum of Art · Römischer Apollonkopf",
+      "url": "https://www.clevelandart.org/art/2023.108"
+    },
+    "watercolor": {
+      "title": "The Met · Watercolor",
+      "url": "https://www.metmuseum.org/perspectives/materials-and-techniques-drawing-watercolor"
+    },
+    "pastel": {
+      "title": "The Met · Pastel",
+      "url": "https://www.metmuseum.org/perspectives/materials-and-techniques-drawing-pastel"
+    },
+    "graphite": {
+      "title": "The Met · Graphite",
+      "url": "https://www.metmuseum.org/perspectives/materials-and-techniques-drawing-graphite"
+    },
+    "charcoal": {
+      "title": "The Met · Charcoal",
+      "url": "https://www.metmuseum.org/perspectives/materials-and-techniques-drawing-charcoal"
+    },
+    "drawing": {
+      "title": "Princeton University Art Museum · Drawings and Watercolors",
+      "url": "https://artmuseum.princeton.edu/art/stories-perspectives/collection-publications-drawings-and-watercolors"
+    },
+    "woodcut": {
+      "title": "MoMA · Woodcut",
+      "url": "https://www.moma.org/s/ge/curated_ge/techniques/woodcut.html"
+    },
+    "engraving": {
+      "title": "The Met · Engraving",
+      "url": "https://www.metmuseum.org/perspectives/materials-and-techniques-printmaking-engraving"
+    },
+    "etching": {
+      "title": "The Met · Etching",
+      "url": "https://www.metmuseum.org/perspectives/materials-and-techniques-printmaking-etching"
+    },
+    "intaglio": {
+      "title": "MoMA · Intaglio",
+      "url": "https://www.moma.org/s/ge/curated_ge/techniques/intaglio.html"
+    },
+    "lithography": {
+      "title": "MoMA · Lithography",
+      "url": "https://www.moma.org/s/ge/curated_ge/techniques/lithography.html"
+    },
+    "tempera": {
+      "title": "National Gallery · Tempera",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/tempera"
+    },
+    "oil": {
+      "title": "The Met · Painting in Oil",
+      "url": "https://www.metmuseum.org/essays/painting-in-oil-in-the-low-countries-and-its-spread-to-southern-europe"
+    },
+    "canvas": {
+      "title": "National Gallery · Titian’s Painting Techniques before 1540",
+      "url": "https://www.nationalgallery.org.uk/upload/pdf/vol-34-essay-1-2013.pdf"
+    },
+    "media": {
+      "title": "National Gallery · Media",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/media"
+    },
+    "klimt": {
+      "title": "Belvedere · Der Kuss",
+      "url": "https://sammlung.belvedere.at/objects/6678/der-kuss-liebespaar"
+    },
+    "gothic": {
+      "title": "National Gallery · Gothic",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/gothic"
+    },
+    "international": {
+      "title": "National Gallery · International Gothic",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/international-gothic"
+    },
+    "medieval": {
+      "title": "The Met · Italian Painting of the Later Middle Ages",
+      "url": "https://www.metmuseum.org/essays/italian-painting-of-the-later-middle-ages"
+    },
+    "early": {
+      "title": "National Gallery · Early Renaissance",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/early-renaissance"
+    },
+    "high": {
+      "title": "National Gallery · High Renaissance",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/high-renaissance"
+    },
+    "florence": {
+      "title": "The Met · Florence and Central Italy, 1400–1600",
+      "url": "https://82nd-and-fifth.metmuseum.org/toah/ht/08/eustc.html"
+    },
+    "siena": {
+      "title": "The Met · Sienese Painting",
+      "url": "https://www.metmuseum.org/essays/sienese-painting"
+    },
+    "sienaLater": {
+      "title": "National Gallery · Renaissance Siena",
+      "url": "https://www.nationalgallery.org.uk/exhibitions/past/renaissance-siena-art-for-a-city"
+    },
+    "umbria": {
+      "title": "National Gallery · Raffaels Mond-Kreuzigung und Perugino",
+      "url": "https://www.nationalgallery.org.uk/paintings/raphael-the-mond-crucifixion"
+    },
+    "venice": {
+      "title": "The Met · Titian",
+      "url": "https://www.metmuseum.org/essays/titian-ca-148590-1576"
+    },
+    "netherlandish": {
+      "title": "The Met · Early Netherlandish Painting",
+      "url": "https://www.metmuseum.org/essays/early-netherlandish-painting"
+    },
+    "german": {
+      "title": "The Met · German Paintings, 1350–1600",
+      "url": "https://www.metmuseum.org/perspectives/german-paintings"
+    },
+    "mannerism": {
+      "title": "National Gallery · Mannerist",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/mannerist"
+    },
+    "baroque": {
+      "title": "National Gallery · Baroque",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/baroque"
+    },
+    "baroqueArtists": {
+      "title": "National Galleries of Scotland · Baroque",
+      "url": "https://www.nationalgalleries.org/art-and-artists/glossary-terms/baroque"
+    },
+    "rococo": {
+      "title": "National Gallery · Rococo",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/rococo"
+    },
+    "classical": {
+      "title": "National Gallery · Neoclassical",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/neoclassical"
+    },
+    "romantic": {
+      "title": "The Met · Romanticism",
+      "url": "https://www.metmuseum.org/essays/romanticism"
+    },
+    "realism": {
+      "title": "The Met · Nineteenth-Century French Realism",
+      "url": "https://www.metmuseum.org/essays/nineteenth-century-french-realism"
+    },
+    "academic": {
+      "title": "The Met · The Salon and the Royal Academy",
+      "url": "https://www.metmuseum.org/essays/the-salon-and-the-royal-academy-in-the-nineteenth-century"
+    },
+    "barbizon": {
+      "title": "The Met · The Barbizon School",
+      "url": "https://www.metmuseum.org/essays/the-barbizon-school-french-painters-of-nature"
+    },
+    "impressionism": {
+      "title": "The Met · Impressionism: Art and Modernity",
+      "url": "https://www.metmuseum.org/essays/impressionism-art-and-modernity"
+    },
+    "american": {
+      "title": "The Met · Childe Hassam",
+      "url": "https://www.metmuseum.org/exhibitions/listings/2004/childe-hassam"
+    },
+    "post": {
+      "title": "The Met · Post-Impressionism",
+      "url": "https://www.metmuseum.org/essays/post-impressionism"
+    },
+    "pointillism": {
+      "title": "The Met · Signac: Master Neo-Impressionist",
+      "url": "https://www.metmuseum.org/exhibitions/listings/2001/paul-signac"
+    },
+    "symbolism": {
+      "title": "The Met · Symbolism",
+      "url": "https://www.metmuseum.org/essays/symbolism"
+    },
+    "nouveau": {
+      "title": "The Met · Art Nouveau",
+      "url": "https://www.metmuseum.org/essays/art-nouveau"
+    },
+    "expressionism": {
+      "title": "MoMA · German Expressionism",
+      "url": "https://www.moma.org/s/ge/curated_ge/index.html"
+    },
+    "blue": {
+      "title": "Lenbachhaus · Der Blaue Reiter",
+      "url": "https://www.lenbachhaus.de/entdecken/der-blaue-reiter"
+    },
+    "fauvism": {
+      "title": "The Met · Fauvism",
+      "url": "https://www.metmuseum.org/essays/fauvism"
+    },
+    "cubism": {
+      "title": "The Met · Cubism",
+      "url": "https://www.metmuseum.org/essays/cubism"
+    },
+    "surrealism": {
+      "title": "The Met · Surrealism",
+      "url": "https://www.metmuseum.org/essays/surrealism"
+    },
+    "naive": {
+      "title": "MoMA · Henri Rousseau",
+      "url": "https://www.moma.org/artists/5056-henri-rousseau"
+    },
+    "preraphaelite": {
+      "title": "National Gallery · The Pre-Raphaelite Brotherhood",
+      "url": "https://www.nationalgallery.org.uk/exhibitions/past/reflections-van-eyck-and-the-pre-raphaelites/reflections-behind-the-inspiration?viewPage=2"
+    },
+    "nazarene": {
+      "title": "National Gallery · Nazarene",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/nazarene"
+    },
+    "orientalism": {
+      "title": "The Met · Orientalism in Nineteenth-Century Art",
+      "url": "https://www.metmuseum.org/essays/orientalism-in-nineteenth-century-art"
+    },
+    "macchiaioli": {
+      "title": "National Gallery · Telemaco Signorini",
+      "url": "https://www.nationalgallery.org.uk/artists/telemaco-signorini"
+    },
+    "macchiaioliArtists": {
+      "title": "Uffizien · Cento anni di Galleria d’Arte Moderna",
+      "url": "https://www.uffizi.it/mostre-virtuali/centenario-gam"
+    },
+    "cretan": {
+      "title": "National Gallery of Greece · Icons of Cretan Art",
+      "url": "https://www.nationalgallery.gr/en/exhibitions/icons-of-cretan-art-from-candia-to-moscow-to-st-petersburg/"
+    },
+    "icons": {
+      "title": "Byzantine and Christian Museum · Icons",
+      "url": "https://www.byzantinemuseum.gr/en/bcms-news/42/news/347/icons-en-998"
+    },
+    "ionian": {
+      "title": "National Gallery of Greece · Four Centuries of Greek Painting",
+      "url": "https://www.nationalgallery.gr/wp-content/uploads/2021/10/4centuries_en.pdf"
+    },
+    "modern": {
+      "title": "MoMA · Moderne: Künstler und Entwicklungen",
+      "url": "https://www.moma.org/collection/terms/"
+    },
+    "northernPrints": {
+      "title": "The Met · The Print in the North: Dürer and Lucas van Leyden",
+      "url": "https://resources.metmuseum.org/resources/metpublications/pdf/The_Print_in_the_North_The_Age_of_Albrecht_Durer_and_Lucas_van_Leyden_The_Metropolitan_Museum_of_Art_Bulletin_v_54_no_4_Spring_1997.pdf"
+    },
+    "americanMovement": {
+      "title": "Smithsonian American Art Museum · John Henry Twachtman",
+      "url": "https://americanart.si.edu/artist/john-henry-twachtman-4901"
+    },
+    "cornelius": {
+      "title": "National Gallery Library · Peter Cornelius und die Nazarener (E. Greer, 2017)",
+      "url": "https://library.nationalgallery.org.uk/eosuksql01_N10318UK_Documents/E.Greer%20PhD%202017.pdf"
+    },
+    "artemisiaBiography": {
+      "title": "National Gallery · Artemisia: 1654 noch am Leben, Todesdatum nicht genau bekannt",
+      "url": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+    },
+    "artemisiaRome": {
+      "title": "Museo di Roma · Artemisia: überliefertes, vermutetes Todesjahr 1656",
+      "url": "https://www.museodiroma.it/sites/default/files/f_file/2.%20Artemisia%20Gentileschi%20-%20Story%20telling.pdf"
+    }
   },
   "techniques": {
-    "Secco-Wandmalerei": {"definition":"Malerei auf bereits trockenem Putz. Die Pigmente werden durch ein zusätzliches Bindemittel an der Wand gehalten; beim Fresko dagegen wird auf frischen, feuchten Kalkputz gemalt.","clues":["großflächige Darstellung auf einer Wand","langsam ausgearbeitete Licht- und Farbübergänge","gegebenenfalls sichtbare Verluste der empfindlichen Malschicht"],"period":"seit der Antike bekannt; in der Renaissance auch für experimentelle Wandmalerei genutzt","artists":["Leonardo da Vinci"],"caution":"Eine Wandmalerei ist nicht automatisch ein Fresko. Leonardos Abendmahl entstand auf trockenem Putz; die genaue Technik belegt der Museumskatalog, nicht das Bildschirmbild allein.","sources":["lastSupper"]},
-    "Marmorskulptur": {"definition":"Eine aus Marmor herausgearbeitete dreidimensionale Form: Material wird abgetragen, nicht wie beim Guss in eine Form gefüllt.","clues":["räumlich durchgearbeitete Körper","glatte Partien neben ausgearbeiteten Haaren oder Falten","gegebenenfalls sichtbare Steinadern"],"period":"von der Antike bis zur Gegenwart; besonders prägend auch für Renaissance und Klassizismus","artists":["Antonio Canova","Michelangelo","Auguste Rodin"],"caution":"Weiß beweist keinen Marmor: Gips kann ähnlich aussehen. Adern müssen nicht sichtbar sein. Der Katalog benennt den Stein.","sources":["canova","canovaBust","romanApollo"]},
-    "Gipsskulptur": {"definition":"Gips kann modellierte Formen als Abguss festhalten. Ein solches Werk kann Arbeitsmodell, eigenständige Fassung oder Vorlage für einen späteren Guss sein.","clues":["helle, oft matte Oberfläche","modelliert wirkende Übergänge","mögliche Nähte einer mehrteiligen Gussform"],"period":"lange als Werkstattmaterial verwendet; im 19. und 20. Jahrhundert wichtig für Bildhauerentwürfe und Museumsabgüsse","artists":["Antonio Canova","Auguste Rodin"],"caution":"Nicht jede Naht ist im Foto erkennbar. Ein Gipsmodell ist kein minderwertiger Marmor; es dokumentiert eine andere Herstellungsphase.","sources":["rodinPlaster","canovaPlaster"]},
-    "Bronzeguss": {"definition":"Eine Form gibt flüssiger Bronze ihre Gestalt. Die Metalloberfläche kann nachbearbeitet und patiniert werden; Modell und Guss müssen nicht aus demselben Jahr stammen.","clues":["metallische Lichtreflexe","dunkle oder grünliche Patina","durchbrochene und weit ausgreifende Formen"],"period":"seit der Antike und bis heute; in der modernen Bildhauerei auch für nachträgliche Güsse älterer Modelle","artists":["Auguste Rodin","Antonio Canova","antike Gießwerkstätten"],"caution":"Farbe allein beweist keine Bronze. Nachgüsse verändern die Datierung der konkreten Fassung; deshalb nennt das Spiel Modell- und Gussjahr getrennt.","sources":["rodinAdam","geometricHorse"]},
-    "Steinskulptur": {"definition":"Aus Stein herausgearbeitete plastische Kunst. Die Spielkategorie umfasst verschiedene Gesteine; der Werkbeleg nennt etwa Granodiorit, Dolerit, Kalkstein, Travertin oder Lapislazuli genauer.","clues":["kompakte räumliche Formen","unterschiedlich polierte und aufgeraute Partien","gegebenenfalls natürliche Bänderung oder Körnung"],"period":"in sehr unterschiedlichen Kulturen von früher Geschichte bis heute verwendet","artists":["ägyptische Bildhauerwerkstätten","Werkstätten der Gudea-Statuen"],"anonymousTradition":true,"caution":"Gesteinsarten lassen sich aus Farbe und Bildschirmfoto nicht sicher bestimmen. Eine helle Statue war in der Antike keineswegs notwendigerweise unbemalt.","sources":["egyptHead","heqat","gudea"]},
-    "Steinrelief": {"definition":"Die Darstellung bleibt mit einer Steinfläche verbunden: Figuren treten aus ihr hervor oder sind in sie vertieft. Das unterscheidet sie von einer frei stehenden Statue.","clues":["Figuren vor einer zusammenhängenden Grundfläche","flache oder eingetiefte Konturen","seitlich gegliederte Figurenfolgen"],"period":"unter anderem in ägyptischen, assyrischen und persischen Tempeln und Palästen; auch in späteren Epochen verbreitet","artists":["Werkstätten von Karnak","Palastwerkstätten von Nimrud","Werkstätten von Persepolis"],"anonymousTradition":true,"caution":"Gipsstein ist hier gehauener Stein, kein gegossenes Gipsmodell. Licht und Aufnahmewinkel können die tatsächliche Relieftiefe stark verändern.","sources":["amarna","assyria","persia"]},
-    "Silbergelatineabzug": {"definition":"Fotografisches Papier mit lichtempfindlichen Silbersalzen in einer Gelatineschicht hält das Bild fest.","clues":["feine fotografische Details","zusammenhängende Graustufen","gegebenenfalls eine glatte Papieroberfläche"],"period":"seit dem späten 19. Jahrhundert, im 20. Jahrhundert ein verbreitetes Schwarzweißverfahren","artists":["Alfred Stieglitz","Lewis Hine"],"caution":"Schwarzweiß ist kein Verfahrensnachweis. Digitalisierung, Tonung und Papier verändern den Eindruck; verbindlich ist die Angabe zum konkreten Abzug.","sources":["photoProcesses","hine"]},
-    "Albuminabzug": {"definition":"Eiweiß bindet die bildgebenden Silbersalze auf dem fotografischen Papier.","clues":["feine fotografische Zeichnung","häufig warme Tonwerte","am Original gelegentlich leicht glänzende Partien"],"period":"besonders in der zweiten Hälfte des 19. Jahrhunderts; Atget verwendete das Verfahren noch im frühen 20. Jahrhundert","artists":["Eugène Atget"],"caution":"Sepia allein beweist kein Albumin. Alterung, Tonung und digitale Wiedergabe beeinflussen die Farbe.","sources":["photoProcesses","atget"]},
-    "Platindruck": {"definition":"Das fotografische Bild besteht aus fein verteiltem Platin im Papier.","clues":["subtile Tonabstufungen","weiche Übergänge","am Original matte Papierwirkung"],"period":"seit dem späten 19. Jahrhundert, auch später wieder aufgegriffen","artists":["Alfred Stieglitz"],"caution":"Das Material kann man am Bildschirm nicht sicher erkennen. Ein matter Scan kann auch andere Verfahren zeigen.","sources":["photoProcesses","stieglitz"]},
-    "Gummidruck": {"definition":"Ein fotografisches Pigmentverfahren: Ein belichteter Überzug aus Gummi arabicum, Pigment und einem lichtempfindlichen Zusatz wird ausgewaschen. Die Bearbeitung kann den Bildcharakter stark verändern.","clues":["malerisch wirkende Tonflächen","bewusst vereinfachte Einzelheiten","gegebenenfalls sichtbar bearbeitete Übergänge"],"period":"besonders im Piktorialismus um 1900, mit späteren Fortsetzungen","artists":["Robert Demachy","Heinrich Kühn"],"caution":"Eine malerische Wirkung allein beweist keinen Gummidruck. Das Verfahren ist am Bildschirm nicht sicher zu bestimmen; maßgeblich ist die dokumentierte Abzugstechnik.","sources":["gum","demachy"]},
-    "Fotogravüre": {"definition":"Ein fotografisches Motiv wird als Tiefdruck von einer geätzten Platte mit Druckfarbe auf Papier übertragen.","clues":["satte dunkle Flächen","fein abgestufte Mitteltöne","gegebenenfalls ein Plattenrand"],"period":"besonders um 1900 wichtig für hochwertige fotografische Drucke und Veröffentlichungen","artists":["Alfred Stieglitz"],"caution":"Eine Fotogravüre ist kein Silbergelatineabzug. Das Negativ, der Druck und die heutige Reproduktion können aus verschiedenen Jahren stammen.","sources":["photogravure"]},
-    "Collage": {"definition":"Ausgeschnittene und aufgeklebte Teile bilden zusammen mit möglichen Zeichnungen oder Farbaufträgen ein Werk.","clues":["Kanten aufgesetzter Papierstücke","unterschiedliche Flächenmaterialien","Überlagerungen von Zeichnung und aufgeklebten Formen"],"period":"besonders seit der frühen Moderne ein eigenständiges künstlerisches Verfahren, mit älteren Vorläufern","artists":["Piet Mondrian","Ljubow Popowa","Kurt Schwitters"],"caution":"Gemalte Kanten können aufgeklebte Teile nachahmen. In Mondrians Studie sind Papiercollage, Gouache und Kohle ausdrücklich dokumentiert.","sources":["mondrianStudy"]},
-    "Aquarell": {"definition":"Wasserverdünnte Farbe lässt häufig das helle Papier mitwirken.","clues":["durchscheinende Farbschichten","weiche, ineinanderlaufende Farbränder","ausgesparte helle Papierstellen"],"period":"besonders seit dem späten 18. und im 19. Jahrhundert als selbstständige Landschafts- und Ausstellungskunst; ältere Anwendungen reichen weit zurück", "artists":["J. M. W. Turner","Winslow Homer","Richard Parkes Bonington"],"caution":"Auch ein Aquarell kann scharfe Kanten haben; deckende Akzente können von zusätzlich verwendeter Gouache stammen.","sources":["watercolor"]},
-    "Gouache": {"definition":"Gouache ist eine deckende Wasserfarbe; anders als transparentes Aquarell kann sie das Papierweiß übermalen.","clues":["matte, geschlossene Farbflächen","deckende helle Partien auf dunklen Flächen","relativ klare Farbkanten"],"period":"in älteren Miniaturen und Entwürfen ebenso wie in der neueren Malerei; keine auf eine Epoche beschränkte Technik", "artists":["Eugène Delacroix","George Barret","Hans Hoffmann"],"caution":"In einer Reproduktion können Gouache, Tempera und matt gemalte Ölfarbe ähnlich aussehen.","sources":["watercolor"]},
-    "Graphitzeichnung": {"definition":"Graphit hinterlässt Linien und graue Tonwerte; die Helligkeit lässt sich über Druck und Schraffur steuern.","clues":["feine graue Konturen","dichte, überlagerte Schraffuren","gleichmäßige Übergänge zwischen hellen und dunklen Grautönen"],"period":"in Europa seit dem 16. Jahrhundert, verbreiteter seit dem späten 18. Jahrhundert und weiterhin gebräuchlich", "artists":["Jean-Auguste-Dominique Ingres","Thomas Gainsborough","Édouard Manet"],"caution":"Den für Graphit möglichen metallischen Glanz erkennt man eher im Streiflicht am Original als auf dem Bildschirm.","sources":["graphite"]},
-    "Kohlezeichnung": {"definition":"Kohle erlaubt sowohl breite dunkle Spuren als auch feine Linien und verwischte Tonflächen.","clues":["weiche, tiefdunkle Flächen","verwischte Übergänge","hell herausgenommene Partien in dunklen Tönen"],"period":"lange als Entwurfsmedium genutzt; im 19. Jahrhundert auch für aufwendig ausgearbeitete eigenständige Zeichnungen", "artists":["Odilon Redon","Adolphe Appian","Francesco Salviati"],"caution":"Schwarze Kreide und Kohle können ähnlich wirken und gemeinsam vorkommen; Schwarzweiß allein beweist die Technik nicht.","sources":["charcoal"]},
-    "Tuschezeichnung": {"definition":"Feder oder Pinsel tragen flüssige Zeichenfarbe auf; Verdünnung erzeugt sogenannte Lavierung, also flächige Tonabstufungen.","clues":["entschiedene dunkle Linien","Schraffuren neben hell gelassenen Flächen","breite, verdünnte Pinselzüge"],"period":"über viele Jahrhunderte ein wichtiges Zeichenmedium, auch in Renaissance-Entwürfen; kein eindeutiger Datierungsschlüssel", "artists":["Albrecht Dürer","Leonardo da Vinci","Rembrandt van Rijn"],"caution":"Die Spielbezeichnung fasst unterschiedliche Tinten zusammen. Federzeichnung und Druckgrafik sind am Foto nicht immer sicher zu trennen.","sources":["drawing"]},
-    "Holzschnitt": {"definition":"Gedruckt wird von den stehen gebliebenen Teilen eines geschnittenen Holzblocks: ein Hochdruckverfahren.","clues":["kräftige Schwarz-Weiß-Kontraste","flächige Formen und ausgesparte Linien","kantige Schnittspuren"],"period":"in Europa seit etwa 1400; bedeutend um 1500 und erneut im Expressionismus des frühen 20. Jahrhunderts", "artists":["Albrecht Dürer","Ernst Ludwig Kirchner","Emil Nolde"],"caution":"Dürers Holzschnitte können sehr fein sein; grobe Linien sind keine notwendige Bedingung und Farbe schließt Holzschnitt nicht aus.","sources":["woodcut"]},
-    "Kupferstich": {"definition":"Der Stichel schneidet Rillen direkt in eine Metallplatte; die vertieften Linien halten beim Drucken die Farbe.","clues":["präzise, kontrolliert geführte Linien","regelmäßige Kreuzschraffuren","an- und abschwellende Linienzüge"],"period":"seit dem 15. Jahrhundert; besonders wichtig in Renaissance und frühneuzeitlicher Druckgrafik", "artists":["Martin Schongauer","Albrecht Dürer","Lucas van Leyden"],"caution":"Ein Plattenrand spricht für Tiefdruck, unterscheidet aber einen Stich noch nicht von einer Radierung.","sources":["engraving","northernPrints"]},
-    "Radierung": {"definition":"Eine Nadel legt Linien in einer Schutzschicht frei; Säure vertieft sie in der Metallplatte. Das ist Tiefdruck, nicht Holzschnitt.","clues":["frei und zeichnerisch wirkende Linien","lockere, ineinanderlaufende Schraffuren","feine Tonabstufungen zwischen verdichteten Strichen"],"period":"seit dem frühen 16. Jahrhundert, mit wichtigen Entwicklungen im 17., 19. und frühen 20. Jahrhundert", "artists":["Rembrandt van Rijn","James McNeill Whistler","Käthe Kollwitz"],"caution":"Eine freie Linie ist nur ein Hinweis. Radierung, Kaltnadel und andere Tiefdrucktechniken werden oft kombiniert.","sources":["etching","intaglio"]},
-    "Lithografie": {"definition":"Lithografie ist Flachdruck von Stein oder einer vorbereiteten Platte; ihre Spuren können an Kreidezeichnungen oder Pinselmalerei erinnern.","clues":["körnige Kreidespuren","große, gleichmäßig gedruckte Farbflächen","weich gezeichnete statt eingeschnitten wirkende Konturen"],"period":"Ende des 18. Jahrhunderts erfunden; besonders prägend für Druckgrafik und Plakate des 19. und 20. Jahrhunderts", "artists":["Henri de Toulouse-Lautrec","Pierre Bonnard","Ernst Ludwig Kirchner"],"caution":"Eine kreidige Oberfläche beweist keinen Direktauftrag: Gerade Lithografien ahmen Zeichnungen überzeugend nach.","sources":["lithography"]},
-    "Pastell": {"definition":"Farbige Pigmentstifte hinterlassen eine körnige, oft leuchtende Oberfläche, ohne eine geschlossene Ölfarbschicht zu bilden.","clues":["sichtbare farbige Striche","pudrig wirkende Übergänge","nebeneinanderliegende, unvermischt leuchtende Farben"],"period":"seit der Renaissance genutzt, mit bedeutenden Porträts im 18. und neuen Anwendungen im 19. Jahrhundert", "artists":["Maurice Quentin de La Tour","Edgar Degas","Odilon Redon"],"caution":"Pastell kann stark verwischt, angefeuchtet oder mit anderen Materialien verbunden sein; die Bildschirmansicht verschluckt leicht seine Körnung.","sources":["pastel"]},
-    "Tempera": {"definition":"Tempera bezeichnet verschiedene gebundene Farben, häufig Eitempera; sie trocknet rasch und eignet sich für fein aufeinandergelegte Striche.","clues":["kleine, sorgfältig gesetzte Farbstriche","klar begrenzte Formen","eher matte als stark pastose Farbpartien"],"period":"besonders wichtig in mittelalterlicher und frühitalienischer Tafelmalerei; nach 1500 in Westeuropa weniger vorherrschend, aber nie vollständig verschwunden", "artists":["Fra Angelico","Sandro Botticelli","Domenico Ghirlandaio"],"caution":"Nicht jede matte Oberfläche ist Tempera. Der Werkbeleg ist entscheidend; Mischungen mit Öl kommen historisch vor.","sources":["tempera","media"]},
-    "Öl auf Holz": {"definition":"Ölfarbe kann transparent geschichtet oder deckend gesetzt werden. Holz benennt den Bildträger, nicht eine eigene Art von Ölfarbe.","clues":["fein geschichtete Farbtiefen","weich modellierte Übergänge","präzise kleine Details"],"period":"besonders bedeutend in der europäischen Tafelmalerei des 15. und 16. Jahrhunderts; Holz blieb auch später in Gebrauch", "artists":["Jan van Eyck","Rogier van der Weyden","Rembrandt van Rijn"],"caution":"Eine glatte Bildfläche beweist keinen Holzträger. Auch grundierte Leinwand kann glatt sein; der Träger ist vor allem durch den Katalog belegt.","sources":["oil"]},
-    "Öl auf Leinwand": {"definition":"Ölfarbe auf textilem Träger bietet Spielraum von dünnen Lasuren bis zu dickem, sichtbarem Pinselauftrag.","clues":["sichtbare Pinselzüge","modellierte, deckende Farbpartien","gegebenenfalls eine durchscheinende Gewebestruktur"],"period":"Leinwand wurde in der europäischen Malerei besonders seit dem 16. Jahrhundert verbreitet und blieb bis heute wichtig", "artists":["Tizian","Claude Monet","Henri Matisse"],"caution":"Nicht jedes Ölbild zeigt Pinselrelief oder Gewebe. Beides hängt von Grundierung, Malweise und Auflösung der Aufnahme ab.","sources":["canvas","media"]},
-    "Öl auf Papier / Karton": {"definition":"Die Farbe ist weiterhin Ölfarbe. Papier oder Karton bieten einen anderen, oft für Studien gewählten Träger.","clues":["zügig gesetzte Farbzüge","stellenweise offen gelassene Trägerflächen","dünne Farbschichten neben deckenden Akzenten"],"period":"unter anderem für Studien und eigenständige Werke des 19. und frühen 20. Jahrhunderts genutzt; nicht auf diese Zeit beschränkt", "artists":["Eugène Delacroix","Vincent van Gogh","Wassily Kandinsky"],"caution":"Diese Hinweise betreffen mögliche Malweisen, nicht einen sicheren Trägertest. Papier und Karton lassen sich im beschnittenen Foto meist nicht nachweisen.","sources":["media"]},
-    "Öl und Metallauflage": {"definition":"Hier verbindet sich Ölfarbe mit aufgebrachtem Metall. Goldfarbene Malerei und echtes Blattmetall sind nicht dasselbe.","clues":["metallisch wirkende Flächen","ornamentale Muster neben modellierten Körpern","starke Unterschiede zwischen flächigem Glanz und gemalten Partien"],"period":"Metallauflagen begegnen in älterer religiöser Malerei und erneut in Klimts Goldener Periode um 1900; kein einheitliches Zeitfenster", "artists":["Bartolomé Bermejo","Gustav Klimt"],"caution":"Die Aufnahme zeigt nicht sicher, welches Metall verwendet wurde. Bei Klimt sind beispielsweise auch Silber und Platin dokumentiert.","sources":["klimt","media"]}
+    "Fresko": {
+      "definition": "Bei der echten Freskomalerei werden Pigmente mit Wasser auf frischen, noch feuchten Kalkputz aufgetragen. Beim Erhärten bindet der Putz die Farbschicht ein.",
+      "clues": [
+        "Malerei als Teil einer Wand oder Decke",
+        "große, zusammenhängend angelegte Figuren- und Raumfelder",
+        "gegebenenfalls erkennbare Grenzen einzelner Tagesabschnitte im Putz"
+      ],
+      "period": "seit der Antike; in Italien besonders für umfangreiche Bildprogramme des späten Mittelalters und der Renaissance wichtig",
+      "artists": [
+        "Giotto di Bondone",
+        "Michelangelo",
+        "Raffael"
+      ],
+      "caution": "Nicht jede Wandmalerei ist ein Fresko. Spätere Ergänzungen auf trockenem Putz sind möglich; einzelne Tagesabschnitte lassen sich auf einem Bildschirmfoto oft nicht erkennen. Leonardos Abendmahl gehört zur gesonderten Kategorie Secco-Wandmalerei.",
+      "sources": [
+        "fresco",
+        "sistine"
+      ]
+    },
+    "Farbholzschnitt": {
+      "definition": "Ein mehrfarbiger Hochdruck von geschnittenen Holzstöcken. Bei den japanischen Blättern dieser Auswahl werden die einzelnen Farben durch aufeinander abgestimmte Druckvorgänge auf Papier übertragen.",
+      "clues": [
+        "klar geführte Konturlinien",
+        "abgegrenzte Farbflächen mit möglichen weichen Farbverläufen",
+        "präzises Zusammenspiel von Linien und mehreren Farben"
+      ],
+      "period": "in Japan besonders seit der zweiten Hälfte des 18. Jahrhunderts als mehrfarbiger Ukiyo-e-Druck verbreitet; Farbholzschnitte gibt es auch in anderen Ländern und Zeiten",
+      "artists": [
+        "Katsushika Hokusai",
+        "Utagawa Hiroshige"
+      ],
+      "caution": "Entwurf, Holzschnitt, Druck und Verlag waren häufig auf mehrere Beteiligte verteilt. Der Künstlername bezeichnet hier den Entwerfer. Ein späterer Nachdruck ist nicht automatisch dieselbe historische Fassung; die konkrete Blatt- und Quellenangabe bleibt wichtig.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "Secco-Wandmalerei": {
+      "definition": "Malerei auf bereits trockenem Putz. Die Pigmente werden durch ein zusätzliches Bindemittel an der Wand gehalten; beim Fresko dagegen wird auf frischen, feuchten Kalkputz gemalt.",
+      "clues": [
+        "großflächige Darstellung auf einer Wand",
+        "langsam ausgearbeitete Licht- und Farbübergänge",
+        "gegebenenfalls sichtbare Verluste der empfindlichen Malschicht"
+      ],
+      "period": "seit der Antike bekannt; in der Renaissance auch für experimentelle Wandmalerei genutzt",
+      "artists": [
+        "Leonardo da Vinci"
+      ],
+      "caution": "Eine Wandmalerei ist nicht automatisch ein Fresko. Leonardos Abendmahl entstand auf trockenem Putz; die genaue Technik belegt der Museumskatalog, nicht das Bildschirmbild allein.",
+      "sources": [
+        "lastSupper"
+      ]
+    },
+    "Marmorskulptur": {
+      "definition": "Eine aus Marmor herausgearbeitete dreidimensionale Form: Material wird abgetragen, nicht wie beim Guss in eine Form gefüllt.",
+      "clues": [
+        "räumlich durchgearbeitete Körper",
+        "glatte Partien neben ausgearbeiteten Haaren oder Falten",
+        "gegebenenfalls sichtbare Steinadern"
+      ],
+      "period": "von der Antike bis zur Gegenwart; besonders prägend auch für Renaissance und Klassizismus",
+      "artists": [
+        "Antonio Canova",
+        "Michelangelo",
+        "Auguste Rodin"
+      ],
+      "caution": "Weiß beweist keinen Marmor: Gips kann ähnlich aussehen. Adern müssen nicht sichtbar sein. Der Katalog benennt den Stein.",
+      "sources": [
+        "canova",
+        "canovaBust",
+        "romanApollo"
+      ]
+    },
+    "Gipsskulptur": {
+      "definition": "Gips kann modellierte Formen als Abguss festhalten. Ein solches Werk kann Arbeitsmodell, eigenständige Fassung oder Vorlage für einen späteren Guss sein.",
+      "clues": [
+        "helle, oft matte Oberfläche",
+        "modelliert wirkende Übergänge",
+        "mögliche Nähte einer mehrteiligen Gussform"
+      ],
+      "period": "lange als Werkstattmaterial verwendet; im 19. und 20. Jahrhundert wichtig für Bildhauerentwürfe und Museumsabgüsse",
+      "artists": [
+        "Antonio Canova",
+        "Auguste Rodin"
+      ],
+      "caution": "Nicht jede Naht ist im Foto erkennbar. Ein Gipsmodell ist kein minderwertiger Marmor; es dokumentiert eine andere Herstellungsphase.",
+      "sources": [
+        "rodinPlaster",
+        "canovaPlaster"
+      ]
+    },
+    "Bronzeguss": {
+      "definition": "Eine Form gibt flüssiger Bronze ihre Gestalt. Die Metalloberfläche kann nachbearbeitet und patiniert werden; Modell und Guss müssen nicht aus demselben Jahr stammen.",
+      "clues": [
+        "metallische Lichtreflexe",
+        "dunkle oder grünliche Patina",
+        "durchbrochene und weit ausgreifende Formen"
+      ],
+      "period": "seit der Antike und bis heute; in der modernen Bildhauerei auch für nachträgliche Güsse älterer Modelle",
+      "artists": [
+        "Auguste Rodin",
+        "Antonio Canova",
+        "antike Gießwerkstätten"
+      ],
+      "caution": "Farbe allein beweist keine Bronze. Nachgüsse verändern die Datierung der konkreten Fassung; deshalb nennt das Spiel Modell- und Gussjahr getrennt.",
+      "sources": [
+        "rodinAdam",
+        "geometricHorse"
+      ]
+    },
+    "Steinskulptur": {
+      "definition": "Aus Stein herausgearbeitete plastische Kunst. Die Spielkategorie umfasst verschiedene Gesteine; der Werkbeleg nennt etwa Granodiorit, Dolerit, Kalkstein, Travertin oder Lapislazuli genauer.",
+      "clues": [
+        "kompakte räumliche Formen",
+        "unterschiedlich polierte und aufgeraute Partien",
+        "gegebenenfalls natürliche Bänderung oder Körnung"
+      ],
+      "period": "in sehr unterschiedlichen Kulturen von früher Geschichte bis heute verwendet",
+      "artists": [
+        "ägyptische Bildhauerwerkstätten",
+        "Werkstätten der Gudea-Statuen"
+      ],
+      "anonymousTradition": true,
+      "caution": "Gesteinsarten lassen sich aus Farbe und Bildschirmfoto nicht sicher bestimmen. Eine helle Statue war in der Antike keineswegs notwendigerweise unbemalt.",
+      "sources": [
+        "egyptHead",
+        "heqat",
+        "gudea"
+      ]
+    },
+    "Steinrelief": {
+      "definition": "Die Darstellung bleibt mit einer Steinfläche verbunden: Figuren treten aus ihr hervor oder sind in sie vertieft. Das unterscheidet sie von einer frei stehenden Statue.",
+      "clues": [
+        "Figuren vor einer zusammenhängenden Grundfläche",
+        "flache oder eingetiefte Konturen",
+        "seitlich gegliederte Figurenfolgen"
+      ],
+      "period": "unter anderem in ägyptischen, assyrischen und persischen Tempeln und Palästen; auch in späteren Epochen verbreitet",
+      "artists": [
+        "Werkstätten von Karnak",
+        "Palastwerkstätten von Nimrud",
+        "Werkstätten von Persepolis"
+      ],
+      "anonymousTradition": true,
+      "caution": "Gipsstein ist hier gehauener Stein, kein gegossenes Gipsmodell. Licht und Aufnahmewinkel können die tatsächliche Relieftiefe stark verändern.",
+      "sources": [
+        "amarna",
+        "assyria",
+        "persia"
+      ]
+    },
+    "Silbergelatineabzug": {
+      "definition": "Fotografisches Papier mit lichtempfindlichen Silbersalzen in einer Gelatineschicht hält das Bild fest.",
+      "clues": [
+        "feine fotografische Details",
+        "zusammenhängende Graustufen",
+        "gegebenenfalls eine glatte Papieroberfläche"
+      ],
+      "period": "seit dem späten 19. Jahrhundert, im 20. Jahrhundert ein verbreitetes Schwarzweißverfahren",
+      "artists": [
+        "Alfred Stieglitz",
+        "Lewis Hine"
+      ],
+      "caution": "Schwarzweiß ist kein Verfahrensnachweis. Digitalisierung, Tonung und Papier verändern den Eindruck; verbindlich ist die Angabe zum konkreten Abzug.",
+      "sources": [
+        "photoProcesses",
+        "hine"
+      ]
+    },
+    "Albuminabzug": {
+      "definition": "Eiweiß bindet die bildgebenden Silbersalze auf dem fotografischen Papier.",
+      "clues": [
+        "feine fotografische Zeichnung",
+        "häufig warme Tonwerte",
+        "am Original gelegentlich leicht glänzende Partien"
+      ],
+      "period": "besonders in der zweiten Hälfte des 19. Jahrhunderts; Atget verwendete das Verfahren noch im frühen 20. Jahrhundert",
+      "artists": [
+        "Eugène Atget"
+      ],
+      "caution": "Sepia allein beweist kein Albumin. Alterung, Tonung und digitale Wiedergabe beeinflussen die Farbe.",
+      "sources": [
+        "photoProcesses",
+        "atget"
+      ]
+    },
+    "Platindruck": {
+      "definition": "Das fotografische Bild besteht aus fein verteiltem Platin im Papier.",
+      "clues": [
+        "subtile Tonabstufungen",
+        "weiche Übergänge",
+        "am Original matte Papierwirkung"
+      ],
+      "period": "seit dem späten 19. Jahrhundert, auch später wieder aufgegriffen",
+      "artists": [
+        "Alfred Stieglitz"
+      ],
+      "caution": "Das Material kann man am Bildschirm nicht sicher erkennen. Ein matter Scan kann auch andere Verfahren zeigen.",
+      "sources": [
+        "photoProcesses",
+        "stieglitz"
+      ]
+    },
+    "Gummidruck": {
+      "definition": "Ein fotografisches Pigmentverfahren: Ein belichteter Überzug aus Gummi arabicum, Pigment und einem lichtempfindlichen Zusatz wird ausgewaschen. Die Bearbeitung kann den Bildcharakter stark verändern.",
+      "clues": [
+        "malerisch wirkende Tonflächen",
+        "bewusst vereinfachte Einzelheiten",
+        "gegebenenfalls sichtbar bearbeitete Übergänge"
+      ],
+      "period": "besonders im Piktorialismus um 1900, mit späteren Fortsetzungen",
+      "artists": [
+        "Robert Demachy",
+        "Heinrich Kühn"
+      ],
+      "caution": "Eine malerische Wirkung allein beweist keinen Gummidruck. Das Verfahren ist am Bildschirm nicht sicher zu bestimmen; maßgeblich ist die dokumentierte Abzugstechnik.",
+      "sources": [
+        "gum",
+        "demachy"
+      ]
+    },
+    "Fotogravüre": {
+      "definition": "Ein fotografisches Motiv wird als Tiefdruck von einer geätzten Platte mit Druckfarbe auf Papier übertragen.",
+      "clues": [
+        "satte dunkle Flächen",
+        "fein abgestufte Mitteltöne",
+        "gegebenenfalls ein Plattenrand"
+      ],
+      "period": "besonders um 1900 wichtig für hochwertige fotografische Drucke und Veröffentlichungen",
+      "artists": [
+        "Alfred Stieglitz"
+      ],
+      "caution": "Eine Fotogravüre ist kein Silbergelatineabzug. Das Negativ, der Druck und die heutige Reproduktion können aus verschiedenen Jahren stammen.",
+      "sources": [
+        "photogravure"
+      ]
+    },
+    "Collage": {
+      "definition": "Ausgeschnittene und aufgeklebte Teile bilden zusammen mit möglichen Zeichnungen oder Farbaufträgen ein Werk.",
+      "clues": [
+        "Kanten aufgesetzter Papierstücke",
+        "unterschiedliche Flächenmaterialien",
+        "Überlagerungen von Zeichnung und aufgeklebten Formen"
+      ],
+      "period": "besonders seit der frühen Moderne ein eigenständiges künstlerisches Verfahren, mit älteren Vorläufern",
+      "artists": [
+        "Piet Mondrian",
+        "Ljubow Popowa",
+        "Kurt Schwitters"
+      ],
+      "caution": "Gemalte Kanten können aufgeklebte Teile nachahmen. In Mondrians Studie sind Papiercollage, Gouache und Kohle ausdrücklich dokumentiert.",
+      "sources": [
+        "mondrianStudy"
+      ]
+    },
+    "Aquarell": {
+      "definition": "Wasserverdünnte Farbe lässt häufig das helle Papier mitwirken.",
+      "clues": [
+        "durchscheinende Farbschichten",
+        "weiche, ineinanderlaufende Farbränder",
+        "ausgesparte helle Papierstellen"
+      ],
+      "period": "besonders seit dem späten 18. und im 19. Jahrhundert als selbstständige Landschafts- und Ausstellungskunst; ältere Anwendungen reichen weit zurück",
+      "artists": [
+        "J. M. W. Turner",
+        "Winslow Homer",
+        "Richard Parkes Bonington"
+      ],
+      "caution": "Auch ein Aquarell kann scharfe Kanten haben; deckende Akzente können von zusätzlich verwendeter Gouache stammen.",
+      "sources": [
+        "watercolor"
+      ]
+    },
+    "Gouache": {
+      "definition": "Gouache ist eine deckende Wasserfarbe; anders als transparentes Aquarell kann sie das Papierweiß übermalen.",
+      "clues": [
+        "matte, geschlossene Farbflächen",
+        "deckende helle Partien auf dunklen Flächen",
+        "relativ klare Farbkanten"
+      ],
+      "period": "in älteren Miniaturen und Entwürfen ebenso wie in der neueren Malerei; keine auf eine Epoche beschränkte Technik",
+      "artists": [
+        "Eugène Delacroix",
+        "George Barret",
+        "Hans Hoffmann"
+      ],
+      "caution": "In einer Reproduktion können Gouache, Tempera und matt gemalte Ölfarbe ähnlich aussehen.",
+      "sources": [
+        "watercolor"
+      ]
+    },
+    "Graphitzeichnung": {
+      "definition": "Graphit hinterlässt Linien und graue Tonwerte; die Helligkeit lässt sich über Druck und Schraffur steuern.",
+      "clues": [
+        "feine graue Konturen",
+        "dichte, überlagerte Schraffuren",
+        "gleichmäßige Übergänge zwischen hellen und dunklen Grautönen"
+      ],
+      "period": "in Europa seit dem 16. Jahrhundert, verbreiteter seit dem späten 18. Jahrhundert und weiterhin gebräuchlich",
+      "artists": [
+        "Jean-Auguste-Dominique Ingres",
+        "Thomas Gainsborough",
+        "Édouard Manet"
+      ],
+      "caution": "Den für Graphit möglichen metallischen Glanz erkennt man eher im Streiflicht am Original als auf dem Bildschirm.",
+      "sources": [
+        "graphite"
+      ]
+    },
+    "Kohlezeichnung": {
+      "definition": "Kohle erlaubt sowohl breite dunkle Spuren als auch feine Linien und verwischte Tonflächen.",
+      "clues": [
+        "weiche, tiefdunkle Flächen",
+        "verwischte Übergänge",
+        "hell herausgenommene Partien in dunklen Tönen"
+      ],
+      "period": "lange als Entwurfsmedium genutzt; im 19. Jahrhundert auch für aufwendig ausgearbeitete eigenständige Zeichnungen",
+      "artists": [
+        "Odilon Redon",
+        "Adolphe Appian",
+        "Francesco Salviati"
+      ],
+      "caution": "Schwarze Kreide und Kohle können ähnlich wirken und gemeinsam vorkommen; Schwarzweiß allein beweist die Technik nicht.",
+      "sources": [
+        "charcoal"
+      ]
+    },
+    "Tuschezeichnung": {
+      "definition": "Feder oder Pinsel tragen flüssige Zeichenfarbe auf; Verdünnung erzeugt sogenannte Lavierung, also flächige Tonabstufungen.",
+      "clues": [
+        "entschiedene dunkle Linien",
+        "Schraffuren neben hell gelassenen Flächen",
+        "breite, verdünnte Pinselzüge"
+      ],
+      "period": "über viele Jahrhunderte ein wichtiges Zeichenmedium, auch in Renaissance-Entwürfen; kein eindeutiger Datierungsschlüssel",
+      "artists": [
+        "Albrecht Dürer",
+        "Leonardo da Vinci",
+        "Rembrandt van Rijn"
+      ],
+      "caution": "Die Spielbezeichnung fasst unterschiedliche Tinten zusammen. Federzeichnung und Druckgrafik sind am Foto nicht immer sicher zu trennen.",
+      "sources": [
+        "drawing"
+      ]
+    },
+    "Holzschnitt": {
+      "definition": "Gedruckt wird von den stehen gebliebenen Teilen eines geschnittenen Holzblocks: ein Hochdruckverfahren.",
+      "clues": [
+        "kräftige Schwarz-Weiß-Kontraste",
+        "flächige Formen und ausgesparte Linien",
+        "kantige Schnittspuren"
+      ],
+      "period": "in Europa seit etwa 1400; bedeutend um 1500 und erneut im Expressionismus des frühen 20. Jahrhunderts",
+      "artists": [
+        "Albrecht Dürer",
+        "Ernst Ludwig Kirchner",
+        "Emil Nolde"
+      ],
+      "caution": "Dürers Holzschnitte können sehr fein sein; grobe Linien sind keine notwendige Bedingung und Farbe schließt Holzschnitt nicht aus.",
+      "sources": [
+        "woodcut"
+      ]
+    },
+    "Kupferstich": {
+      "definition": "Der Stichel schneidet Rillen direkt in eine Metallplatte; die vertieften Linien halten beim Drucken die Farbe.",
+      "clues": [
+        "präzise, kontrolliert geführte Linien",
+        "regelmäßige Kreuzschraffuren",
+        "an- und abschwellende Linienzüge"
+      ],
+      "period": "seit dem 15. Jahrhundert; besonders wichtig in Renaissance und frühneuzeitlicher Druckgrafik",
+      "artists": [
+        "Martin Schongauer",
+        "Albrecht Dürer",
+        "Lucas van Leyden"
+      ],
+      "caution": "Ein Plattenrand spricht für Tiefdruck, unterscheidet aber einen Stich noch nicht von einer Radierung.",
+      "sources": [
+        "engraving",
+        "northernPrints"
+      ]
+    },
+    "Radierung": {
+      "definition": "Eine Nadel legt Linien in einer Schutzschicht frei; Säure vertieft sie in der Metallplatte. Das ist Tiefdruck, nicht Holzschnitt.",
+      "clues": [
+        "frei und zeichnerisch wirkende Linien",
+        "lockere, ineinanderlaufende Schraffuren",
+        "feine Tonabstufungen zwischen verdichteten Strichen"
+      ],
+      "period": "seit dem frühen 16. Jahrhundert, mit wichtigen Entwicklungen im 17., 19. und frühen 20. Jahrhundert",
+      "artists": [
+        "Rembrandt van Rijn",
+        "James McNeill Whistler",
+        "Käthe Kollwitz"
+      ],
+      "caution": "Eine freie Linie ist nur ein Hinweis. Radierung, Kaltnadel und andere Tiefdrucktechniken werden oft kombiniert.",
+      "sources": [
+        "etching",
+        "intaglio"
+      ]
+    },
+    "Lithografie": {
+      "definition": "Lithografie ist Flachdruck von Stein oder einer vorbereiteten Platte; ihre Spuren können an Kreidezeichnungen oder Pinselmalerei erinnern.",
+      "clues": [
+        "körnige Kreidespuren",
+        "große, gleichmäßig gedruckte Farbflächen",
+        "weich gezeichnete statt eingeschnitten wirkende Konturen"
+      ],
+      "period": "Ende des 18. Jahrhunderts erfunden; besonders prägend für Druckgrafik und Plakate des 19. und 20. Jahrhunderts",
+      "artists": [
+        "Henri de Toulouse-Lautrec",
+        "Pierre Bonnard",
+        "Ernst Ludwig Kirchner"
+      ],
+      "caution": "Eine kreidige Oberfläche beweist keinen Direktauftrag: Gerade Lithografien ahmen Zeichnungen überzeugend nach.",
+      "sources": [
+        "lithography"
+      ]
+    },
+    "Pastell": {
+      "definition": "Farbige Pigmentstifte hinterlassen eine körnige, oft leuchtende Oberfläche, ohne eine geschlossene Ölfarbschicht zu bilden.",
+      "clues": [
+        "sichtbare farbige Striche",
+        "pudrig wirkende Übergänge",
+        "nebeneinanderliegende, unvermischt leuchtende Farben"
+      ],
+      "period": "seit der Renaissance genutzt, mit bedeutenden Porträts im 18. und neuen Anwendungen im 19. Jahrhundert",
+      "artists": [
+        "Maurice Quentin de La Tour",
+        "Edgar Degas",
+        "Odilon Redon"
+      ],
+      "caution": "Pastell kann stark verwischt, angefeuchtet oder mit anderen Materialien verbunden sein; die Bildschirmansicht verschluckt leicht seine Körnung.",
+      "sources": [
+        "pastel"
+      ]
+    },
+    "Tempera": {
+      "definition": "Tempera bezeichnet verschiedene gebundene Farben, häufig Eitempera; sie trocknet rasch und eignet sich für fein aufeinandergelegte Striche.",
+      "clues": [
+        "kleine, sorgfältig gesetzte Farbstriche",
+        "klar begrenzte Formen",
+        "eher matte als stark pastose Farbpartien"
+      ],
+      "period": "besonders wichtig in mittelalterlicher und frühitalienischer Tafelmalerei; nach 1500 in Westeuropa weniger vorherrschend, aber nie vollständig verschwunden",
+      "artists": [
+        "Fra Angelico",
+        "Sandro Botticelli",
+        "Domenico Ghirlandaio"
+      ],
+      "caution": "Nicht jede matte Oberfläche ist Tempera. Der Werkbeleg ist entscheidend; Mischungen mit Öl kommen historisch vor.",
+      "sources": [
+        "tempera",
+        "media"
+      ]
+    },
+    "Öl auf Holz": {
+      "definition": "Ölfarbe kann transparent geschichtet oder deckend gesetzt werden. Holz benennt den Bildträger, nicht eine eigene Art von Ölfarbe.",
+      "clues": [
+        "fein geschichtete Farbtiefen",
+        "weich modellierte Übergänge",
+        "präzise kleine Details"
+      ],
+      "period": "besonders bedeutend in der europäischen Tafelmalerei des 15. und 16. Jahrhunderts; Holz blieb auch später in Gebrauch",
+      "artists": [
+        "Jan van Eyck",
+        "Rogier van der Weyden",
+        "Rembrandt van Rijn"
+      ],
+      "caution": "Eine glatte Bildfläche beweist keinen Holzträger. Auch grundierte Leinwand kann glatt sein; der Träger ist vor allem durch den Katalog belegt.",
+      "sources": [
+        "oil"
+      ]
+    },
+    "Öl auf Leinwand": {
+      "definition": "Ölfarbe auf textilem Träger bietet Spielraum von dünnen Lasuren bis zu dickem, sichtbarem Pinselauftrag.",
+      "clues": [
+        "sichtbare Pinselzüge",
+        "modellierte, deckende Farbpartien",
+        "gegebenenfalls eine durchscheinende Gewebestruktur"
+      ],
+      "period": "Leinwand wurde in der europäischen Malerei besonders seit dem 16. Jahrhundert verbreitet und blieb bis heute wichtig",
+      "artists": [
+        "Tizian",
+        "Claude Monet",
+        "Henri Matisse"
+      ],
+      "caution": "Nicht jedes Ölbild zeigt Pinselrelief oder Gewebe. Beides hängt von Grundierung, Malweise und Auflösung der Aufnahme ab.",
+      "sources": [
+        "canvas",
+        "media"
+      ]
+    },
+    "Öl auf Papier / Karton": {
+      "definition": "Die Farbe ist weiterhin Ölfarbe. Papier oder Karton bieten einen anderen, oft für Studien gewählten Träger.",
+      "clues": [
+        "zügig gesetzte Farbzüge",
+        "stellenweise offen gelassene Trägerflächen",
+        "dünne Farbschichten neben deckenden Akzenten"
+      ],
+      "period": "unter anderem für Studien und eigenständige Werke des 19. und frühen 20. Jahrhunderts genutzt; nicht auf diese Zeit beschränkt",
+      "artists": [
+        "Eugène Delacroix",
+        "Vincent van Gogh",
+        "Wassily Kandinsky"
+      ],
+      "caution": "Diese Hinweise betreffen mögliche Malweisen, nicht einen sicheren Trägertest. Papier und Karton lassen sich im beschnittenen Foto meist nicht nachweisen.",
+      "sources": [
+        "media"
+      ]
+    },
+    "Öl und Metallauflage": {
+      "definition": "Hier verbindet sich Ölfarbe mit aufgebrachtem Metall. Goldfarbene Malerei und echtes Blattmetall sind nicht dasselbe.",
+      "clues": [
+        "metallisch wirkende Flächen",
+        "ornamentale Muster neben modellierten Körpern",
+        "starke Unterschiede zwischen flächigem Glanz und gemalten Partien"
+      ],
+      "period": "Metallauflagen begegnen in älterer religiöser Malerei und erneut in Klimts Goldener Periode um 1900; kein einheitliches Zeitfenster",
+      "artists": [
+        "Bartolomé Bermejo",
+        "Gustav Klimt"
+      ],
+      "caution": "Die Aufnahme zeigt nicht sicher, welches Metall verwendet wurde. Bei Klimt sind beispielsweise auch Silber und Platin dokumentiert.",
+      "sources": [
+        "klimt",
+        "media"
+      ]
+    }
   },
   "styles": {
-    "Moderne Skulptur": {"kind":"Weiter kunsthistorischer Zusammenhang","definition":"Seit dem späten 19. Jahrhundert lösen Bildhauer den menschlichen Körper zunehmend von akademischen Idealformen. Bei Rodin tragen Haltung, Volumen und bearbeitete Oberfläche den Ausdruck.","clues":["expressive Körperhaltung oder Gestik","Spannung zwischen glatten und rauen Oberflächen","stark gewichtete Körpermassen statt bloßer äußerer Ähnlichkeit"],"period":"hier vor allem Rodins Arbeiten aus dem späten 19. Jahrhundert; kein gemeinsames Gründungsjahr und keine einzelne Schule","range":null,"artists":["Auguste Rodin","Camille Claudel","Constantin Brâncuși"],"caution":"Die Spielbezeichnung ist eine redaktionelle Zusammenfassung, keine genaue Stilbewegung. Ein moderner Bildhauer arbeitet nicht automatisch abstrakt; Bronze allein ist kein Modernitätsmerkmal.","sources":["rodinPlaster","rodinBronze","rodinMarble"]},
-    "Neue Sachlichkeit": {"kind":"Bewegung / Sammelbegriff","definition":"In der Kunst der Weimarer Zeit verbindet sich ein oft nüchterner oder scharf zugespitzter Blick auf Menschen und Gesellschaft mit sehr unterschiedlichen Malweisen.","clues":["betonte Konturen","distanziert oder schonungslos wirkende Figuren","präzise, mitunter hart gegeneinandergesetzte Formen"],"period":"besonders in den 1920er- und frühen 1930er-Jahren","range":[1920,1933],"artists":["Max Beckmann","Otto Dix","George Grosz"],"caution":"Beckmann lässt sich nicht auf ein Etikett reduzieren. Der Werkdatensatz nennt hier sowohl Expressionismus als auch Neue Sachlichkeit.","sources":["beckmann"]},
-    "Konstruktivismus": {"kind":"Avantgardistischer Zusammenhang","definition":"Geometrische Formen und ein betonter Aufbau der Komposition verbinden sich mit dem Gedanken einer neu zu gestaltenden Welt.","clues":["überschneidende geometrische Flächen","dynamische Achsen","eine konstruiert wirkende räumliche Ordnung"],"period":"vor allem im frühen 20. Jahrhundert im Umfeld der russischen Avantgarde","range":[1915,1935],"artists":["Ljubow Popowa","Wladimir Tatlin","Alexander Rodtschenko"],"caution":"Geometrie allein beweist keinen Konstruktivismus. Popowas Werk wird auch mit Kubismus, Futurismus und Suprematismus verbunden.","sources":["popova"]},
-    "Neoplastizismus": {"kind":"Abstraktes Gestaltungsprinzip","definition":"Mondrians neue Bildordnung arbeitet mit Waagerechten, Senkrechten und begrenzten Farbflächen statt mit der Wiedergabe sichtbarer Gegenstände.","clues":["rechtwinklige Linienbeziehungen","ausgewogen gegeneinander gewichtete Farbflächen","Verzicht auf illusionistisch gemalte Gegenstände"],"period":"seit den späten 1910er-Jahren, im Zusammenhang mit De Stijl","range":[1917,1944],"artists":["Piet Mondrian","Theo van Doesburg"],"caution":"De Stijl ist der größere Bewegungskontext. Mondrians kubistisch zerlegter Apfelbaum von 1912 gehört noch nicht zu dieser späteren Bildordnung.","sources":["mondrian","mondrianStudy"]},
-    "Piktorialismus": {"kind":"Fotografische Kunstbewegung","definition":"Fotografie wird als bewusst gestaltete Kunst aufgefasst. Atmosphäre und Tonwertordnung können an malerische oder grafische Wirkungen anschließen.","clues":["stimmungsvoll vereinfachte Formen","atmosphärische Lichtwirkungen","sorgfältig organisierte Tonflächen"],"period":"besonders um 1890–1910, mit späteren Fortsetzungen","range":[1890,1920],"artists":["Alfred Stieglitz","Edward Steichen","Gertrude Käsebier"],"caution":"Piktorialismus ist keine Abzugstechnik. Derselbe Bildgedanke kann als Fotogravüre, Platin- oder Silbergelatineabzug vorliegen.","sources":["pictorialism","stieglitz"]},
-    "Dokumentarfotografie": {"kind":"Fotografische Bildauffassung","definition":"Menschen, Orte oder gesellschaftliche Bedingungen werden als beobachtete Wirklichkeit festgehalten. Auswahl, Standpunkt und Ausschnitt bleiben gestalterische Entscheidungen.","clues":["konkrete Lebens- oder Arbeitsumstände","erkennbare räumliche Zusammenhänge","aufmerksame Darstellung alltäglicher Situationen"],"period":"seit dem 19. Jahrhundert bis heute; hier besonders frühe Stadt- und Sozialfotografie","range":null,"artists":["Lewis Hine","Eugène Atget"],"caution":"Dokumentarisch bedeutet weder neutral noch unbearbeitet. Diese Kategorie beschreibt eine Arbeitsweise, keine einheitliche Epoche oder Papierart.","sources":["hine","atget"]},
-    "Moderne Fotografie": {"kind":"Weiter Sammelbegriff","definition":"Neue Blickwinkel, Ausschnitte und die eigenständige Ordnung von Formen machen das fotografische Bild zu mehr als einer Nachahmung der Malerei.","clues":["ungewohnte Ausschnitte","bewusst organisierte geometrische Beziehungen","eigenständig gewichtete Licht- und Tonflächen"],"period":"unterschiedliche Entwicklungen des frühen 20. Jahrhunderts, keine einzelne Schule","range":null,"artists":["Alfred Stieglitz","László Moholy-Nagy"],"caution":"Nicht jede moderne Fotografie ist Neue Sachlichkeit oder Neues Sehen. Die hier gewählte breite Einordnung ist redaktionell gekennzeichnet.","sources":["stieglitz","photogravure"]},
-    "Altägyptische Kunst": {"kind":"Kulturelle Tradition","definition":"Ein sehr langer, vielfältiger Zusammenhang. Geordnete Körperhaltungen, Herrschaftszeichen und religiöse Funktionen können wichtiger sein als ein flüchtiger Moment.","clues":["kompakte, klar gegliederte Körper","ausgearbeitete Rang- oder Herrschaftszeichen","bewusst kombinierte glatte und raue Oberflächen"],"period":"über mehrere Jahrtausende; die einzelnen Dynastien und die konkrete Datierung sind entscheidend","range":null,"artists":["ägyptische Hof- und Tempelwerkstätten"],"anonymousTradition":true,"caution":"Ägyptische Kunst ist kein unveränderlicher Stil. Tierbilder und frühe Arbeiten sehen anders aus als spätere Königsbilder; viele Statuen waren bemalt.","sources":["egyptHead","heqat"]},
-    "Amarna-Kunst": {"kind":"Historischer Werkstattzusammenhang","definition":"Die Kunst im Umfeld Echnatons und des Atonkults verändert die Darstellung des Königshauses. Darstellungen Nofretetes gehören zu diesem kurzen, besonderen Abschnitt.","clues":["charakteristische königliche Kopf- und Gesichtsformen","Aton- und Königshausbezüge","ungewöhnlich bewegte oder intime Figurenszenen"],"period":"im späteren 14. Jahrhundert v. Chr.; die Werkquelle datiert das Relief um 1353–1347 v. Chr.","range":[-1360,-1330],"artists":["Hofwerkstätten von Karnak und Amarna"],"anonymousTradition":true,"caution":"Nicht alle Amarna-Merkmale sind an einem Fragment sichtbar. Dieses Relief ist nicht die berühmte Berliner Nofretete-Büste und hat keine gesicherte namentliche Urheberschaft.","sources":["amarna"]},
-    "Achämenidische Kunst": {"kind":"Persische Reichstradition","definition":"Die Kunst des Achämenidenreichs verbindet verschiedene Werkstatttraditionen mit repräsentativen Formen königlicher Macht, etwa in Persepolis.","clues":["feierlich geordnete Figuren","sorgfältig rhythmisierte Gewand- und Haarformen","Tiermotive oder Prozessionsdarstellungen"],"period":"im persischen Achämenidenreich, ungefähr 550–330 v. Chr.","range":[-550,-330],"artists":["Palastwerkstätten von Persepolis"],"anonymousTradition":true,"caution":"Persisch und achämenidisch sind nicht gleichbedeutend. Die Spielzuordnung folgt der konkreten kulturellen Einordnung des Museumskatalogs.","sources":["persia"]},
-    "Neuassyrische Kunst": {"kind":"Mesopotamische Reichstradition","definition":"Palastreliefs vermitteln Herrschaft, Schutz und königliche Taten. Geordnete Figuren und reich ausgeführte Einzelheiten verbinden Bild und Inschrift.","clues":["Flügelfiguren mit betonter Körperkraft","detaillierte Gewänder und Haarmuster","Inschriften oder fortlaufende Reliefszenen"],"period":"vor allem im ersten Jahrtausend v. Chr.; das Nimrud-Relief stammt aus dem 9. Jahrhundert v. Chr.","range":null,"artists":["Palastwerkstätten von Nimrud und Ninive"],"anonymousTradition":true,"caution":"Die Darstellungen sind politische und religiöse Bildprogramme, keine neutralen Momentaufnahmen. Nicht jede geflügelte Figur ist assyrisch.","sources":["assyria"]},
-    "Sumerische Kunst": {"kind":"Mesopotamische Tradition","definition":"Frühe und spätere sumerische Bildwerke erfüllen unterschiedliche kultische und repräsentative Aufgaben. Gudeas Statuen gehören zur neusumerischen Phase.","clues":["kompakte Körperformen","betont geführte Gesten","Tierdarstellungen oder kultische Herrscherbilder"],"period":"mehrere Phasen im 4. und 3. Jahrtausend v. Chr.; Gudea am Ende des 3. Jahrtausends","range":null,"artists":["Werkstätten von Lagasch und Girsu"],"anonymousTradition":true,"caution":"Der Name Gudea bezeichnet den dargestellten Herrscher, nicht den Bildhauer. Sumerisch ist keine einheitliche Formschablone für jedes Objekt.","sources":["gudea"]},
-    "Griechische Archaik": {"kind":"Epoche / Formtradition","definition":"Frühe griechische Großplastik entwickelt fest geordnete Körperbilder wie den Kouros, einen frontal stehenden nackten Jüngling.","clues":["frontal geordnete Körperhaltung","klar gegliederte anatomische Partien","symmetrisch oder gemustert behandelte Oberflächen"],"period":"ungefähr im 7. und 6. Jahrhundert bis ins frühe 5. Jahrhundert v. Chr.","range":[-700,-480],"artists":["attische und ionische Kouros-Werkstätten"],"anonymousTradition":true,"caution":"Ein fragmentierter Torso zeigt keine vollständige Haltung. Ägyptische Vorbilder und eigenständige griechische Entwicklungen schließen sich nicht aus.","sources":["kouros"]},
-    "Griechische geometrische Kunst": {"kind":"Epoche / Formtradition","definition":"Körper und Tierfiguren werden auf deutlich gegliederte, stark vereinfachte Formen und Silhouetten konzentriert.","clues":["geometrisch vereinfachte Gliedmaßen","klar gegliederte Silhouetten","betonte Proportionen statt naturalistischer Einzelheiten"],"period":"besonders im 9. und 8. Jahrhundert v. Chr.; die Pferdestatuette ist auf 750–725 v. Chr. datiert","range":[-900,-700],"artists":["griechische Bronzewerkstätten der geometrischen Zeit"],"anonymousTradition":true,"caution":"Vereinfachung ist hier eine historische Bildsprache, kein Zeichen mangelnder Fähigkeit. Ähnlich reduzierte Formen gibt es auch in viel späterer Kunst.","sources":["geometricHorse"]},
-    "Römische Kunst": {"kind":"Kultureller Epochenbegriff","definition":"Römische Werkstätten verbinden Porträt, Herrschaftsbild, Alltagsobjekt und griechische Vorbilder. Ein antikes Göttermotiv allein ist noch kein Herkunftsnachweis.","clues":["ausgearbeitete Körper- oder Porträtformen","differenzierte Haar- und Gewandpartien","Bezüge zu antiken Göttern oder repräsentativen Bildprogrammen"],"period":"Republik und Kaiserzeit; die hier aufgenommenen Werke gehören zu den ersten Jahrhunderten n. Chr.","range":null,"artists":["römische Bildhauer- und Gießwerkstätten"],"anonymousTradition":true,"caution":"Bei einer römischen Fassung nach griechischem Vorbild ist der Urheber des Vorbilds nicht automatisch der Bildhauer des ausgestellten Objekts.","sources":["romanApollo"]},
-    "Gotik": {"kind":"Epoche","definition":"Ein weiter Epochenbegriff, nicht eine einzige europaweit gleiche Malweise.","clues":["betonte Umrisslinien","elegante, gestreckte Figuren","symbolisch statt einheitlich perspektivisch organisierte Räume"],"period":"ungefähr vom 12. bis zum 16. Jahrhundert, mit großen regionalen Unterschieden","range":[1150,1550],"artists":["Simone Martini","Stefan Lochner"],"caution":"Ein religiöses Motiv allein macht ein Bild noch nicht gotisch.","sources":["gothic","medieval"]},
-    "Gotische Malerei": {"kind":"Epochenbegriff","definition":"Die Malerei der Gotik verbindet erzählende oder religiöse Bildordnungen mit zunehmend genauer Naturbeobachtung.","clues":["deutlich geführte Konturen","dekorative Gewandfalten","unterschiedlich gewichtete Figuren und Bildräume"],"period":"vor allem im späten Mittelalter, etwa vom 13. bis zum 15. Jahrhundert","range":[1250,1500],"artists":["Simone Martini","Stefan Lochner"],"caution":"Goldgrund und Natürlichkeit schließen einander nicht aus; Übergänge zur Renaissance sind fließend.","sources":["gothic","medieval"]},
-    "Internationale Gotik": {"kind":"Höfischer Stil","definition":"Ein überregionaler höfischer Stil mit dekorativer Eleganz und aufmerksam beobachteten Einzelheiten.","clues":["kostbare Gewänder und Goldornament","geschwungene, elegante Figuren","Naturdetails in einem wenig einheitlichen Bildraum"],"period":"vor allem vom späten 14. bis zur Mitte des 15. Jahrhunderts","range":[1370,1450],"artists":["Gentile da Fabriano","Pisanello","Stefan Lochner"],"caution":"Ein reiches Ornament ist eine Spur, aber kein alleiniger Beweis.","sources":["international"]},
-    "Renaissance": {"kind":"Epoche","definition":"Die Beschäftigung mit Antike, Körper und räumlicher Ordnung verändert das Bildverständnis.","clues":["plastisch modellierte Körper","geordnete räumliche Beziehungen","ausgewogene Beziehungen zwischen Figuren"],"period":"in Europa besonders im 15. und 16. Jahrhundert; Anfänge und Grenzen unterscheiden sich regional","range":[1400,1600],"artists":["Leonardo da Vinci","Raffael","Tizian"],"caution":"Perspektive ist ein wichtiges Werkzeug, aber nicht in jedem Renaissancebild das auffälligste Merkmal.","sources":["high","early"]},
-    "Italienische Renaissance": {"kind":"Epochenbegriff","definition":"In italienischen Werkstätten entwickeln sich neue Vorstellungen von Körper, Raum und antiken Vorbildern.","clues":["körperlich gewichtige Figuren","architektonisch geordnete Räume","antikisierende Formen oder ausgewogene Kompositionen"],"period":"besonders im 15. und 16. Jahrhundert, mit Vorläufern im 14. Jahrhundert","range":[1400,1600],"artists":["Masaccio","Leonardo da Vinci","Raffael"],"caution":"Florenz, Siena und Venedig setzen unterschiedliche Akzente; der Sammelbegriff ersetzt nicht den Blick auf das einzelne Bild.","sources":["florence","high"]},
-    "Frührenaissance": {"kind":"Epoche","definition":"Figuren erhalten körperliches Gewicht; Räume werden zunehmend überzeugend konstruiert.","clues":["klar gegliederte Architekturen","plastische Licht-Schatten-Modellierung","nachvollziehbare räumliche Tiefe"],"period":"in Italien vor allem das 15. Jahrhundert","range":[1400,1500],"artists":["Masaccio","Fra Angelico","Piero della Francesca"],"caution":"Ältere Bildordnungen und neue Raumvorstellungen können im selben Werk nebeneinanderstehen.","sources":["early","florence"]},
-    "Hochrenaissance": {"kind":"Epoche","definition":"Idealisierte Körper und komplexe Gruppen erscheinen häufig in besonders ausgewogener Ordnung.","clues":["ruhige, geschlossene Figurengruppen","souveräne Körpermodellierung","übersichtlich verbundene Gesten und Blickrichtungen"],"period":"besonders die ersten Jahrzehnte des 16. Jahrhunderts","range":[1490,1530],"artists":["Leonardo da Vinci","Michelangelo","Raffael"],"caution":"Harmonie ist hier ein Suchhinweis, kein Qualitätsmaßstab für andere Stile.","sources":["high"]},
-    "Altniederländische Malerei": {"kind":"Regionale Tradition","definition":"Die genaue Beobachtung von Oberflächen und Alltagsdetails verbindet sich oft mit religiöser Bedeutung.","clues":["präzise Stoff- und Materialdetails","fein abgestufte Lichtreflexe","symbolisch aufgeladene Gegenstände in glaubhaften Räumen"],"period":"besonders im 15. und frühen 16. Jahrhundert","range":[1400,1530],"artists":["Jan van Eyck","Rogier van der Weyden","Robert Campin"],"caution":"Jan van Eyck machte Ölmalerei berühmt, erfand sie aber nicht.","sources":["netherlandish","oil"]},
-    "Deutsche Renaissance": {"kind":"Regionale Tradition","definition":"Naturstudium und neue Raumvorstellungen verbinden sich mit nordalpiner Detailfreude und eigenständiger Grafik.","clues":["sorgfältig beobachtete Gesichter und Dinge","prägnante Konturen","räumliche Ordnung neben detailreichen Oberflächen"],"period":"besonders um 1500 und in der ersten Hälfte des 16. Jahrhunderts","range":[1470,1560],"artists":["Albrecht Dürer","Lucas Cranach der Ältere","Hans Holbein der Jüngere"],"caution":"Die regionale Bezeichnung ist kein Nationalitätstest: Werkstattkontakte und Einflüsse überschreiten Grenzen.","sources":["german"]},
-    "Florentinische Schule": {"kind":"Regionale Schule","definition":"Ein Werkstatt- und Traditionszusammenhang, häufig mit besonderem Gewicht auf Zeichnung, Körper und Raumkonstruktion.","clues":["klar geführte Umrisse","plastisch gedachte Figuren","bewusst konstruierte Architekturräume"],"period":"besonders in der Florentiner Malerei des 15. und 16. Jahrhunderts","range":[1400,1600],"artists":["Masaccio","Sandro Botticelli","Fra Angelico"],"caution":"Eine Schule ist nicht so scharf am Aussehen ablesbar wie eine bestimmte malerische Methode.","sources":["florence"]},
-    "Schule von Siena": {"kind":"Regionale Schule","definition":"Eine lange lokale Tradition mit lyrischen Linien, differenzierter Farbigkeit und eigener Erzählkunst.","clues":["elegante Linienführung","kostbar wirkende Farb- und Ornamentbeziehungen","sorgfältig erzählte Figurenbeziehungen"],"period":"berühmt seit dem 13. und 14. Jahrhundert, mit wichtigen Fortsetzungen bis ins 16. Jahrhundert","range":[1280,1550],"artists":["Duccio di Buoninsegna","Simone Martini","Domenico Beccafumi"],"caution":"Siena bleibt nicht auf Goldgrundbilder beschränkt; spätere Werke können ganz anders aussehen.","sources":["siena","sienaLater"]},
-    "Umbrische Schule": {"kind":"Regionale Schule","definition":"Ein regionaler Zusammenhang, in dem unter anderem Peruginos klare, harmonische Figurengruppen wichtig sind.","clues":["symmetrisch geordnete Figuren","ruhige Gesten","weite, klar gegliederte Landschaftsräume"],"period":"besonders im späten 15. und frühen 16. Jahrhundert","range":[1450,1530],"artists":["Pietro Perugino","Pintoricchio"],"caution":"Diese Merkmale überschneiden sich mit anderen Renaissancewerkstätten; Herkunft lässt sich nicht allein aus Harmonie bestimmen.","sources":["umbria"]},
-    "Venezianische Schule": {"kind":"Regionale Schule","definition":"Farbe, Licht und atmosphärische Übergänge haben in vielen venezianischen Bildern großes Gewicht.","clues":["differenzierte Farbklänge","weich ineinander übergehende Lichtpartien","malerisch verbundene Figuren und Landschaften"],"period":"besonders prägend im 15. und 16. Jahrhundert, mit späteren Fortsetzungen","range":[1450,1600],"artists":["Giovanni Bellini","Giorgione","Tizian"],"caution":"Farbe gegen Zeichnung ist keine absolute Trennung zwischen Venedig und Florenz.","sources":["venice"]},
-    "Manierismus": {"kind":"Stilbewegung","definition":"Künstler verändern die ausgewogenen Ideale der Hochrenaissance zugunsten kunstvoller Spannung.","clues":["gestreckte Körperproportionen","ungewöhnlich verdrehte Posen","komplizierte oder irritierende Raumbeziehungen"],"period":"besonders vom frühen bis zum späten 16. Jahrhundert, ungefähr 1520–1600","range":[1520,1600],"artists":["Pontormo","Parmigianino","Bronzino"],"caution":"Ungewöhnliche Körper sind bewusst gestaltete Ausdrucksmittel, nicht automatisch fehlendes Können.","sources":["mannerism"]},
-    "Barock": {"kind":"Epoche / Stilbegriff","definition":"Bewegung, Illusion und dramatische Inszenierung können das Bild zu einem unmittelbar wirkenden Ereignis machen.","clues":["bewegte Diagonalen","starke Licht-Schatten-Kontraste","theatralische Gesten und Tiefenwirkungen"],"period":"in der Malerei besonders das 17. Jahrhundert, regional auch bis ins 18. Jahrhundert","range":[1600,1750],"artists":["Caravaggio","Peter Paul Rubens","Rembrandt van Rijn"],"caution":"Auch ruhige Interieurs gehören in die Barockzeit. Nicht jedes Werk erfüllt das dramatische Lehrbuchbild.","sources":["baroque","baroqueArtists"]},
-    "Rokoko": {"kind":"Stilbegriff","definition":"Leichte Farbigkeit und geschwungene, oft asymmetrische Formen prägen viele höfische oder galante Bilder.","clues":["helle, zarte Farbklänge","spielerisch geschwungene Kompositionen","elegante Figuren in galanten Situationen"],"period":"besonders im Frankreich des 18. Jahrhunderts, etwa 1715–1774","range":[1715,1780],"artists":["Antoine Watteau","François Boucher","Jean-Honoré Fragonard"],"caution":"Ein helles Bild allein ist noch kein Rokoko; Komposition und Figurenhaltung sind ebenso wichtig.","sources":["rococo"]},
-    "Klassizismus": {"kind":"Stilbewegung","definition":"Antike Vorbilder, klare Ordnung und eine häufig betonte Kontur verbinden sich mit moralischen oder historischen Themen.","clues":["klar umrissene Figuren","ruhige oder streng gegliederte Bildräume","antikisierende Körper, Gewänder oder Architektur"],"period":"besonders im späten 18. und frühen 19. Jahrhundert","range":[1760,1830],"artists":["Jacques-Louis David","Jean-Auguste-Dominique Ingres","Anton Raphael Mengs","Antonio Canova"],"caution":"Antike Themen kommen auch in anderen Epochen vor; entscheidend ist ihre bildnerische Behandlung.","sources":["classical","romantic","canova"]},
-    "Romantik": {"kind":"Bewegung","definition":"Empfindung, Imagination und das Verhältnis des Menschen zu Natur und Geschichte treten in den Vordergrund.","clues":["stimmungsvoll aufgeladene Landschaften","dramatische Natur- oder Lichtwirkungen","verletzliche oder staunende Menschen gegenüber großen Räumen"],"period":"besonders von etwa 1800 bis zur Mitte des 19. Jahrhunderts","range":[1790,1850],"artists":["Caspar David Friedrich","Eugène Delacroix","J. M. W. Turner"],"caution":"Nicht jede Landschaft ist romantisch; suche nach der emotionalen Funktion des Raumes.","sources":["romantic"]},
-    "Realismus": {"kind":"Bewegung / Darstellungsprinzip","definition":"Als Bewegung rückt Realismus das zeitgenössische, auch unspektakuläre Leben ins Zentrum, statt es zu idealisieren.","clues":["alltägliche oder arbeitende Menschen","unbeschönigte Körper und Lebensumstände","sachlich beobachtete Dinge statt idealer Heldenposen"],"period":"als französische Bewegung besonders seit der Mitte des 19. Jahrhunderts; realistische Darstellungsweisen existieren auch früher und später","range":[1840,1900],"artists":["Gustave Courbet","Jean-François Millet","Honoré Daumier"],"caution":"Fotografisch genaue Malerei ist nicht automatisch der Realismus als historische Bewegung.","sources":["realism"]},
-    "Akademische Kunst": {"kind":"Institutionelle Tradition","definition":"Akademien und Salons fördern ausgebildete Zeichenkunst, etablierte Themen und sorgfältig ausgearbeitete Oberflächen.","clues":["glatt modellierte Körper","minimierte sichtbare Pinselspuren","idealisiert behandelte historische oder mythologische Szenen"],"period":"besonders einflussreich im europäischen Salonbetrieb des 19. Jahrhunderts, mit älteren Wurzeln","range":[1800,1900],"artists":["Alexandre Cabanel","William-Adolphe Bouguereau","Jean-Léon Gérôme"],"caution":"Ausbildung an einer Akademie und akademischer Stil sind nicht dasselbe.","sources":["academic"]},
-    "Schule von Barbizon": {"kind":"Künstlerkreis","definition":"Landschaft wird zum eigenständigen Hauptthema; Beobachtung der Natur ersetzt häufig idealisierte Bühnenlandschaften.","clues":["unspektakuläre Wald- und Landschaftsmotive","tonig verbundene erdige Farben","Aufmerksamkeit für wechselndes Wetter und Licht"],"period":"besonders etwa 1830–1870 im Umfeld des Waldes von Fontainebleau","range":[1830,1870],"artists":["Théodore Rousseau","Charles-François Daubigny","Jean-François Millet"],"caution":"Barbizon bereitet Wege zum Impressionismus, verwendet aber oft einen stärker tonigen Farbzusammenhang.","sources":["barbizon"]},
-    "Impressionismus": {"kind":"Bewegung","definition":"Licht und momentane Wahrnehmung können wichtiger werden als fest umrissene, glatt modellierte Formen.","clues":["kurze, offen sichtbare Pinselzüge","farbige statt nur schwarze Schatten","flüchtig wirkende Licht- und Alltagssituationen"],"period":"entwickelt sich seit den 1860er-Jahren; die acht gemeinsamen Ausstellungen fanden 1874–1886 statt, die Malweise lebte weiter","range":[1860,1900],"origin":{"year":1860,"precision":"decade","statement":"Der Impressionismus entwickelte sich erst seit den 1860er-Jahren als Bewegung."},"artists":["Claude Monet","Berthe Morisot","Camille Pissarro"],"caution":"Offener Farbauftrag und ein Landschaftsmotiv allein reichen nicht. Auch Degas’ Innenräume gehören in diesen Zusammenhang.","sources":["impressionism"]},
-    "Amerikanischer Impressionismus": {"kind":"Regionale Bewegung","definition":"Impressionistische Licht- und Farbmalerei wird auf amerikanische Lebensräume und Motive übertragen.","clues":["helle, in einzelne Pinselzüge zerlegte Farbe","beobachtete Stadt- oder Landschaftsmotive","atmosphärisch aufgelöste Konturen"],"period":"besonders vom späten 19. ins frühe 20. Jahrhundert","range":[1880,1920],"artists":["Childe Hassam","John Henry Twachtman","Theodore Robinson"],"caution":"Die amerikanische Einordnung braucht auch biografische und historische Informationen; sie ist kein eigener Pinselstrichtest.","sources":["american","impressionism","americanMovement"]},
-    "Postimpressionismus": {"kind":"Sammelbegriff","definition":"Unterschiedliche Künstler entwickeln impressionistische Ansätze weiter: durch Formordnung, Ausdrucksfarbe, Symbolik oder systematische Farbpunkte.","clues":["betont aufgebaute Formen","ausdrucksstarke statt rein beobachtete Farben","bewusst vereinfachte oder rhythmisierte Flächen"],"period":"vor allem etwa 1880–1910; ein rückblickender Sammelbegriff, keine einheitliche Vereinigung","range":[1880,1910],"artists":["Paul Cézanne","Vincent van Gogh","Paul Gauguin"],"caution":"Van Gogh und Cézanne sehen nicht gleich aus. Gerade diese Verschiedenheit gehört zum Begriff.","sources":["post"]},
-    "Pointillismus": {"kind":"Malerisches Verfahren / Bewegungskontext","definition":"Kleine getrennte Farbsetzungen organisieren die Mischung der Farben für den betrachtenden Blick.","clues":["regelmäßig nebeneinandergesetzte Farbpunkte","farbig aufgebaute statt schwarz gefüllte Schatten","aus vielen kleinen Farbteilen entstehende Flächen"],"period":"entwickelt sich in den 1880er-Jahren im Neoimpressionismus; später auch mit größeren, mosaikartigen Farbsetzungen","range":[1884,1910],"origin":{"year":1884,"precision":"approximate","statement":"Das neoimpressionistische Verfahren entwickelte sich in den 1880er-Jahren im Umfeld von Seurat und Signac."},"artists":["Georges Seurat","Paul Signac","Henri-Edmond Cross"],"caution":"Viele kleine Punkte sind ein guter Hinweis, aber nicht jeder getupfte Farbauftrag ist systematischer Pointillismus.","sources":["pointillism","post"]},
-    "Symbolismus": {"kind":"Bewegung","definition":"Bilder vermitteln Ideen und innere Zustände durch suggestive Motive statt durch bloße Wiedergabe äußerer Wirklichkeit.","clues":["rätselhafte oder traumartige Figurenbeziehungen","mythisch aufgeladene Motive","bewusst stimmungsbildende Farb- und Raumwirkungen"],"period":"besonders in den letzten Jahrzehnten des 19. und zu Beginn des 20. Jahrhunderts, mit früheren Vorläufern","range":[1870,1910],"artists":["Gustave Moreau","Odilon Redon","Arnold Böcklin"],"caution":"Nicht jedes Symbol macht ein Bild symbolistisch; auch ältere Kunst arbeitet mit Bedeutungszeichen.","sources":["symbolism"]},
-    "Jugendstil": {"kind":"Stilbewegung","definition":"Figuren und Dinge werden häufig mit flächigem Ornament und rhythmisch geführten Linien verbunden.","clues":["ornamental geführte Umrisse","Pflanzenformen oder geschwungene Linienrhythmen","flächige Muster neben gegenständlichen Partien"],"period":"besonders um 1890–1910; regional mit sehr unterschiedlichen Ausprägungen","range":[1890,1910],"artists":["Gustav Klimt","Alphonse Mucha","Henri de Toulouse-Lautrec"],"caution":"Auch geometrisches Ornament gehört dazu. Jugendstil ist nicht ausschließlich eine geschwungene Ranke.","sources":["nouveau","symbolism"]},
-    "Expressionismus": {"kind":"Bewegung / Ausdrucksweise","definition":"Farbe und Form werden zugunsten emotionaler Intensität verändert statt an naturalistische Wiedergabe gebunden.","clues":["gesteigerte, nicht naturgetreue Farben","zugespitzte oder verzerrte Körperformen","unruhige, stark vereinfachte Konturen"],"period":"als deutsche und österreichische Bewegung vor allem in den ersten Jahrzehnten des 20. Jahrhunderts; wichtige Vorläufer liegen früher","range":[1905,1930],"artists":["Ernst Ludwig Kirchner","Emil Nolde","Wassily Kandinsky"],"caution":"Expressiver Ausdruck ist älter als die Bewegung. Ein früheres Werk kann deshalb expressionistische Züge tragen.","sources":["expressionism"]},
-    "Der Blaue Reiter": {"kind":"Künstlerkreis","definition":"Ein vielfältiger Münchner Zusammenhang, in dem Farbe, Ausdruck und die geistige Dimension von Kunst wichtig sind.","clues":["eigenständig expressive Farben","vereinfachte oder abstrahierte Formen","rhythmisch verbundene statt naturalistisch gebundene Flächen"],"period":"die gemeinsamen Ausstellungen und der Almanach gehören in die Jahre 1911–1914; die Künstler arbeiteten davor und danach weiter","range":[1911,1914],"origin":{"year":1911,"precision":"exact","statement":"Der erste gemeinsame Auftritt des Blauen Reiters fand 1911 statt."},"artists":["Wassily Kandinsky","Franz Marc","Gabriele Münter"],"caution":"Es gibt keine einheitliche Blaue-Reiter-Malweise. Frühe Werke der später Beteiligten sind nicht automatisch Werke des bereits bestehenden Kreises.","sources":["blue"]},
-    "Fauvismus": {"kind":"Bewegung","definition":"Intensive, eigenständige Farbe kann Bildraum und Formen stärker bestimmen als naturgetreue Modellierung.","clues":["leuchtende, wenig gebrochene Farben","großzügig vereinfachte Farbflächen","sichtbare, energische Pinselzüge"],"period":"besonders in den Jahren 1905–1908; einzelne Künstler entwickelten diese Ansätze weiter","range":[1905,1908],"origin":{"year":1905,"precision":"exact","statement":"Die Fauves erhielten ihren Namen nach dem Pariser Salon d’Automne von 1905."},"artists":["Henri Matisse","André Derain","Maurice de Vlaminck"],"caution":"Fauvismus und Expressionismus teilen Ausdrucksfarbe; ihre historischen Zusammenhänge sind dennoch verschieden.","sources":["fauvism"]},
-    "Kubismus": {"kind":"Bewegung","definition":"Gegenstände werden in Flächen und Teilansichten zerlegt; eine einzige feste Betrachterperspektive verliert ihre Verbindlichkeit.","clues":["facettierte Gegenstände","überlagerte oder widersprüchliche Ansichten","flach ineinandergeschobene Raumteile"],"period":"entwickelt sich seit etwa 1907, besonders prägend bis in die 1910er-Jahre, mit späteren Fortsetzungen","range":[1907,1920],"origin":{"year":1907,"precision":"approximate","statement":"Kubismus entwickelte sich seit etwa 1907 im Umfeld von Picasso und Braque."},"artists":["Pablo Picasso","Georges Braque","Juan Gris"],"caution":"Geometrische Formen allein reichen nicht: Entscheidend ist, wie Gegenstände und Blickrichtungen neu organisiert werden.","sources":["cubism"]},
-    "Surrealismus": {"kind":"Bewegung","definition":"Traum, Unbewusstes und unerwartete Verbindungen unterlaufen vertraute Vorstellungen von Wirklichkeit.","clues":["unmögliche Verbindungen vertrauter Dinge","traumartige Maßstäbe oder Räume","logisch irritierende Szenen trotz genauer Darstellung"],"period":"als programmatische Bewegung seit André Bretons Manifest von 1924, mit langer Wirkungsgeschichte","range":[1924,1945],"origin":{"year":1924,"precision":"exact","statement":"Surrealismus wurde 1924 mit André Bretons erstem Manifest programmatisch begründet; Vorläufer liegen früher."},"artists":["Max Ernst","René Magritte","Salvador Dalí"],"caution":"Ein älteres fantastisches Bild ist nicht deshalb ein Werk der 1924 begründeten Bewegung.","sources":["surrealism"]},
-    "Moderne": {"kind":"Sammelbegriff","definition":"Moderne umfasst unterschiedliche Brüche mit überlieferten Bildkonventionen, nicht einen einzigen Stil.","clues":["bewusste Vereinfachungen","eigenständige Farb- und Formordnungen","experimentelle Beziehungen zwischen Fläche und Gegenstand"],"period":"ein weiter Zusammenhang vom späten 19. ins 20. Jahrhundert; je nach Definition mit früheren Ansätzen","range":null,"artists":["Paul Cézanne","Wassily Kandinsky","Pablo Picasso"],"caution":"Für die genauere Zuordnung braucht man das einzelne Werk. Das Etikett Moderne allein ist kein sicherer Datierungstest.","sources":["post","cubism","modern"]},
-    "Naive Kunst": {"kind":"Darstellungsbegriff","definition":"Eine oft außerhalb akademischer Ausbildung entstandene Bildsprache mit eigenständiger Raum- und Figurenordnung.","clues":["klar getrennte, sorgfältig beschriebene Formen","ungewohnte Größen- oder Raumverhältnisse","gleichmäßig aufmerksam behandelte Details"],"period":"keine geschlossene Epoche; um 1900 wurde besonders Henri Rousseau von der Avantgarde neu wahrgenommen","range":null,"artists":["Henri Rousseau"],"caution":"Naiv bedeutet nicht minderwertig oder absichtslos. Vereinfachung lässt sich nicht mit fehlender Qualität gleichsetzen.","sources":["naive"]},
-    "Präraffaeliten": {"kind":"Künstlerkreis / Nachwirkung","definition":"Präzise Naturbeobachtung, leuchtende Farben und bedeutungsvolle Einzelheiten verbinden sich mit literarischen oder religiösen Themen.","clues":["akribisch ausgearbeitete Pflanzen und Stoffe","klare, leuchtende Farben","symbolisch bedeutsame Gegenstände"],"period":"die Bruderschaft wurde 1848 gegründet; ihre Ansätze wirkten weit über den ursprünglichen Kreis hinaus","range":[1848,1900],"origin":{"year":1848,"precision":"exact","statement":"Die präraffaelitische Bruderschaft wurde 1848 gegründet."},"artists":["Dante Gabriel Rossetti","John Everett Millais","William Holman Hunt"],"caution":"Die Rückwendung zur Kunst vor Raffael bedeutet nicht, dass diese Bilder im Mittelalter entstanden sind.","sources":["preraphaelite"]},
-    "Nazarener": {"kind":"Künstlerkreis","definition":"Deutsche Künstler erneuern religiöse Malerei durch die bewusste Rückwendung zu älterer Kunst.","clues":["klar gegliederte religiöse Szenen","betonte Konturen und ruhige Gesten","Anklänge an Dürer, Perugino oder Raffael"],"period":"der Lukasbund wurde 1809 in Wien gegründet; ab 1810 arbeitete sein Kern in Rom","range":[1809,1850],"origin":{"year":1809,"precision":"exact","statement":"Der Lukasbund, aus dem die Nazarener hervorgingen, wurde 1809 gegründet."},"artists":["Friedrich Overbeck","Franz Pforr","Peter von Cornelius"],"caution":"Eine altertümlich wirkende Form ist hier ein bewusstes Programm des 19. Jahrhunderts, keine mittelalterliche Datierung.","sources":["nazarene","cornelius"]},
-    "Orientalismus": {"kind":"Themen- und Blickrichtung","definition":"Europäische Darstellungen Nordafrikas und des Nahen Ostens verbinden Beobachtung mit Fantasie und oft kolonialen Vorstellungen.","clues":["als fremdländisch inszenierte Architektur und Kleidung","auffällig detaillierte Gegenstände","idealisiert oder dramatisiert erzählte Alltagsszenen"],"period":"besonders im 19. Jahrhundert, mit älteren Vorläufern","range":[1800,1900],"artists":["Eugène Delacroix","Jean-Léon Gérôme","Théodore Chassériau"],"caution":"Das Motiv ist keine neutrale Dokumentation einer Kultur. Wer schaut auf wen – und für welches Publikum?","sources":["orientalism"]},
-    "Macchiaioli": {"kind":"Künstlerkreis","definition":"Toskanische Maler bauen Formen durch zusammenhängende Hell-Dunkel- und Farbflecken auf und wenden sich dem beobachteten Leben zu.","clues":["klar zusammengefasste Licht- und Schattenflecken","kompakte Farbmassen statt vieler kleiner Punkte","unspektakuläre Szenen unter natürlichem Licht"],"period":"besonders seit den 1850er-Jahren in der Toskana, mit wichtigen späteren Fortsetzungen","range":[1855,1880],"artists":["Giovanni Fattori","Silvestro Lega","Telemaco Signorini"],"caution":"Macchia bedeutet Fleck. Ähnlichkeiten mit Impressionismus dürfen die eigenständige italienische Entwicklung nicht verdecken.","sources":["macchiaioli","macchiaioliArtists"]},
-    "Kretische Schule": {"kind":"Regionale Tradition","definition":"Postbyzantinische Ikonenmalerei auf venezianisch beherrschtem Kreta verbindet überlieferte Bildordnungen mit westlichen Einflüssen.","clues":["klar geführte, stilisierte Gewandlinien","hierarchisch geordnete religiöse Figuren","Goldgrund oder symbolisch organisierte Bildräume"],"period":"besonders im 15.–17. Jahrhundert; nach 1669 wurde die Tradition unter anderem auf den Ionischen Inseln fortgeführt","range":[1400,1669],"artists":["Angelos Akotantos","Michael Damaskinos","Emmanuel Tzanes"],"caution":"Eine Ikone ist nicht automatisch kretisch; die Zuordnung braucht auch Werkstatt- und Herkunftsnachweise.","sources":["cretan","icons"]},
-    "Ionische Schule": {"kind":"Regionale Tradition","definition":"Auf den Ionischen Inseln begegnen sich postbyzantinische Traditionen und westliche Malerei; zunehmend gewinnen Körpermodellierung und illusionistischer Raum Gewicht.","clues":["modellierte Körper statt rein linearer Figuren","räumlich gedachte Architekturen","westlich beeinflusste Licht-Schatten-Wirkungen"],"period":"besonders im 18. und 19. Jahrhundert, auf älteren Inseltraditionen aufbauend","range":[1700,1900],"artists":["Panagiotis Doxaras","Nikolaos Doxaras","Nikolaos Koutouzis"],"caution":"Die Übergänge sind allmählich. Inselherkunft allein beweist nicht eine bestimmte Malweise.","sources":["ionian","icons"]}
+    "Ukiyo-e": {
+      "kind": "Japanische Bildtradition",
+      "definition": "Bilder der sogenannten fließenden Welt: eine japanische Bildtradition mit Darstellungen des städtischen Lebens, des Theaters und später auch berühmter Landschaften. Sie umfasst Malerei und Druckgrafik.",
+      "clues": [
+        "bewusst gegliederte Farbflächen und Konturen",
+        "ungewöhnliche Ausschnitte oder markante Vordergrundformen",
+        "häufig Schriftfelder, Signaturen und sorgfältig gesetzte Bildränder"
+      ],
+      "period": "in Japan besonders während der Edo-Zeit vom 17. bis ins 19. Jahrhundert, mit späteren Fortsetzungen",
+      "range": [
+        1600,
+        1900
+      ],
+      "artists": [
+        "Katsushika Hokusai",
+        "Utagawa Hiroshige",
+        "Kitagawa Utamaro"
+      ],
+      "caution": "Ukiyo-e ist nicht der Name jeder japanischen Kunst und keine Drucktechnik. Die Technik des ausgewählten Blattes wird getrennt angegeben. Weder eine Welle noch ein Berg allein genügt als Stilbeweis.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "Suprematismus": {
+      "kind": "Künstlerische Bewegung",
+      "definition": "Eine von Kasimir Malewitsch seit 1915 öffentlich vertretene gegenstandslose Bildsprache. Geometrische Formen und ihre Farb- und Raumbeziehungen treten an die Stelle erkennbarer Gegenstände.",
+      "clues": [
+        "einfache geometrische Formen ohne gegenständliches Motiv",
+        "schwebend oder gegeneinander verschoben wirkende Flächen",
+        "Spannung zwischen Formen, Farbwerten und freiem Bildgrund"
+      ],
+      "period": "besonders seit 1915 in der russischen Avantgarde, mit wichtigen späteren Fortsetzungen",
+      "range": [
+        1915,
+        1930
+      ],
+      "origin": {
+        "year": 1915,
+        "statement": "Malewitsch prägte den Begriff 1915 für seine neue gegenstandslose Malerei; Vorarbeiten reichen weiter zurück."
+      },
+      "artists": [
+        "Kasimir Malewitsch",
+        "Olga Rosanowa",
+        "Iwan Puni"
+      ],
+      "caution": "Ein geometrisches Bild ist nicht automatisch suprematistisch. Konstruktivismus und andere Formen abstrakter Kunst verfolgen teils andere Ziele. Nicht jedes Werk Malewitschs gehört zu dieser Phase.",
+      "sources": [
+        "suprematism"
+      ]
+    },
+    "Moderne Skulptur": {
+      "kind": "Weiter kunsthistorischer Zusammenhang",
+      "definition": "Seit dem späten 19. Jahrhundert lösen Bildhauer den menschlichen Körper zunehmend von akademischen Idealformen. Bei Rodin tragen Haltung, Volumen und bearbeitete Oberfläche den Ausdruck.",
+      "clues": [
+        "expressive Körperhaltung oder Gestik",
+        "Spannung zwischen glatten und rauen Oberflächen",
+        "stark gewichtete Körpermassen statt bloßer äußerer Ähnlichkeit"
+      ],
+      "period": "hier vor allem Rodins Arbeiten aus dem späten 19. Jahrhundert; kein gemeinsames Gründungsjahr und keine einzelne Schule",
+      "range": null,
+      "artists": [
+        "Auguste Rodin",
+        "Camille Claudel",
+        "Constantin Brâncuși"
+      ],
+      "caution": "Die Spielbezeichnung ist eine redaktionelle Zusammenfassung, keine genaue Stilbewegung. Ein moderner Bildhauer arbeitet nicht automatisch abstrakt; Bronze allein ist kein Modernitätsmerkmal.",
+      "sources": [
+        "rodinPlaster",
+        "rodinBronze",
+        "rodinMarble"
+      ]
+    },
+    "Neue Sachlichkeit": {
+      "kind": "Bewegung / Sammelbegriff",
+      "definition": "In der Kunst der Weimarer Zeit verbindet sich ein oft nüchterner oder scharf zugespitzter Blick auf Menschen und Gesellschaft mit sehr unterschiedlichen Malweisen.",
+      "clues": [
+        "betonte Konturen",
+        "distanziert oder schonungslos wirkende Figuren",
+        "präzise, mitunter hart gegeneinandergesetzte Formen"
+      ],
+      "period": "besonders in den 1920er- und frühen 1930er-Jahren",
+      "range": [
+        1920,
+        1933
+      ],
+      "artists": [
+        "Max Beckmann",
+        "Otto Dix",
+        "George Grosz"
+      ],
+      "caution": "Beckmann lässt sich nicht auf ein Etikett reduzieren. Der Werkdatensatz nennt hier sowohl Expressionismus als auch Neue Sachlichkeit.",
+      "sources": [
+        "beckmann"
+      ]
+    },
+    "Konstruktivismus": {
+      "kind": "Avantgardistischer Zusammenhang",
+      "definition": "Geometrische Formen und ein betonter Aufbau der Komposition verbinden sich mit dem Gedanken einer neu zu gestaltenden Welt.",
+      "clues": [
+        "überschneidende geometrische Flächen",
+        "dynamische Achsen",
+        "eine konstruiert wirkende räumliche Ordnung"
+      ],
+      "period": "vor allem im frühen 20. Jahrhundert im Umfeld der russischen Avantgarde",
+      "range": [
+        1915,
+        1935
+      ],
+      "artists": [
+        "Ljubow Popowa",
+        "Wladimir Tatlin",
+        "Alexander Rodtschenko"
+      ],
+      "caution": "Geometrie allein beweist keinen Konstruktivismus. Popowas Werk wird auch mit Kubismus, Futurismus und Suprematismus verbunden.",
+      "sources": [
+        "popova"
+      ]
+    },
+    "Neoplastizismus": {
+      "kind": "Abstraktes Gestaltungsprinzip",
+      "definition": "Mondrians neue Bildordnung arbeitet mit Waagerechten, Senkrechten und begrenzten Farbflächen statt mit der Wiedergabe sichtbarer Gegenstände.",
+      "clues": [
+        "rechtwinklige Linienbeziehungen",
+        "ausgewogen gegeneinander gewichtete Farbflächen",
+        "Verzicht auf illusionistisch gemalte Gegenstände"
+      ],
+      "period": "seit den späten 1910er-Jahren, im Zusammenhang mit De Stijl",
+      "range": [
+        1917,
+        1944
+      ],
+      "artists": [
+        "Piet Mondrian",
+        "Theo van Doesburg"
+      ],
+      "caution": "De Stijl ist der größere Bewegungskontext. Mondrians kubistisch zerlegter Apfelbaum von 1912 gehört noch nicht zu dieser späteren Bildordnung.",
+      "sources": [
+        "mondrian",
+        "mondrianStudy"
+      ]
+    },
+    "Piktorialismus": {
+      "kind": "Fotografische Kunstbewegung",
+      "definition": "Fotografie wird als bewusst gestaltete Kunst aufgefasst. Atmosphäre und Tonwertordnung können an malerische oder grafische Wirkungen anschließen.",
+      "clues": [
+        "stimmungsvoll vereinfachte Formen",
+        "atmosphärische Lichtwirkungen",
+        "sorgfältig organisierte Tonflächen"
+      ],
+      "period": "besonders um 1890–1910, mit späteren Fortsetzungen",
+      "range": [
+        1890,
+        1920
+      ],
+      "artists": [
+        "Alfred Stieglitz",
+        "Edward Steichen",
+        "Gertrude Käsebier"
+      ],
+      "caution": "Piktorialismus ist keine Abzugstechnik. Derselbe Bildgedanke kann als Fotogravüre, Platin- oder Silbergelatineabzug vorliegen.",
+      "sources": [
+        "pictorialism",
+        "stieglitz"
+      ]
+    },
+    "Dokumentarfotografie": {
+      "kind": "Fotografische Bildauffassung",
+      "definition": "Menschen, Orte oder gesellschaftliche Bedingungen werden als beobachtete Wirklichkeit festgehalten. Auswahl, Standpunkt und Ausschnitt bleiben gestalterische Entscheidungen.",
+      "clues": [
+        "konkrete Lebens- oder Arbeitsumstände",
+        "erkennbare räumliche Zusammenhänge",
+        "aufmerksame Darstellung alltäglicher Situationen"
+      ],
+      "period": "seit dem 19. Jahrhundert bis heute; hier besonders frühe Stadt- und Sozialfotografie",
+      "range": null,
+      "artists": [
+        "Lewis Hine",
+        "Eugène Atget"
+      ],
+      "caution": "Dokumentarisch bedeutet weder neutral noch unbearbeitet. Diese Kategorie beschreibt eine Arbeitsweise, keine einheitliche Epoche oder Papierart.",
+      "sources": [
+        "hine",
+        "atget"
+      ]
+    },
+    "Moderne Fotografie": {
+      "kind": "Weiter Sammelbegriff",
+      "definition": "Neue Blickwinkel, Ausschnitte und die eigenständige Ordnung von Formen machen das fotografische Bild zu mehr als einer Nachahmung der Malerei.",
+      "clues": [
+        "ungewohnte Ausschnitte",
+        "bewusst organisierte geometrische Beziehungen",
+        "eigenständig gewichtete Licht- und Tonflächen"
+      ],
+      "period": "unterschiedliche Entwicklungen des frühen 20. Jahrhunderts, keine einzelne Schule",
+      "range": null,
+      "artists": [
+        "Alfred Stieglitz",
+        "László Moholy-Nagy"
+      ],
+      "caution": "Nicht jede moderne Fotografie ist Neue Sachlichkeit oder Neues Sehen. Die hier gewählte breite Einordnung ist redaktionell gekennzeichnet.",
+      "sources": [
+        "stieglitz",
+        "photogravure"
+      ]
+    },
+    "Altägyptische Kunst": {
+      "kind": "Kulturelle Tradition",
+      "definition": "Ein sehr langer, vielfältiger Zusammenhang. Geordnete Körperhaltungen, Herrschaftszeichen und religiöse Funktionen können wichtiger sein als ein flüchtiger Moment.",
+      "clues": [
+        "kompakte, klar gegliederte Körper",
+        "ausgearbeitete Rang- oder Herrschaftszeichen",
+        "bewusst kombinierte glatte und raue Oberflächen"
+      ],
+      "period": "über mehrere Jahrtausende; die einzelnen Dynastien und die konkrete Datierung sind entscheidend",
+      "range": null,
+      "artists": [
+        "ägyptische Hof- und Tempelwerkstätten"
+      ],
+      "anonymousTradition": true,
+      "caution": "Ägyptische Kunst ist kein unveränderlicher Stil. Tierbilder und frühe Arbeiten sehen anders aus als spätere Königsbilder; viele Statuen waren bemalt.",
+      "sources": [
+        "egyptHead",
+        "heqat"
+      ]
+    },
+    "Amarna-Kunst": {
+      "kind": "Historischer Werkstattzusammenhang",
+      "definition": "Die Kunst im Umfeld Echnatons und des Atonkults verändert die Darstellung des Königshauses. Darstellungen Nofretetes gehören zu diesem kurzen, besonderen Abschnitt.",
+      "clues": [
+        "charakteristische königliche Kopf- und Gesichtsformen",
+        "Aton- und Königshausbezüge",
+        "ungewöhnlich bewegte oder intime Figurenszenen"
+      ],
+      "period": "im späteren 14. Jahrhundert v. Chr.; die Werkquelle datiert das Relief um 1353–1347 v. Chr.",
+      "range": [
+        -1360,
+        -1330
+      ],
+      "artists": [
+        "Hofwerkstätten von Karnak und Amarna"
+      ],
+      "anonymousTradition": true,
+      "caution": "Nicht alle Amarna-Merkmale sind an einem Fragment sichtbar. Dieses Relief ist nicht die berühmte Berliner Nofretete-Büste und hat keine gesicherte namentliche Urheberschaft.",
+      "sources": [
+        "amarna"
+      ]
+    },
+    "Achämenidische Kunst": {
+      "kind": "Persische Reichstradition",
+      "definition": "Die Kunst des Achämenidenreichs verbindet verschiedene Werkstatttraditionen mit repräsentativen Formen königlicher Macht, etwa in Persepolis.",
+      "clues": [
+        "feierlich geordnete Figuren",
+        "sorgfältig rhythmisierte Gewand- und Haarformen",
+        "Tiermotive oder Prozessionsdarstellungen"
+      ],
+      "period": "im persischen Achämenidenreich, ungefähr 550–330 v. Chr.",
+      "range": [
+        -550,
+        -330
+      ],
+      "artists": [
+        "Palastwerkstätten von Persepolis"
+      ],
+      "anonymousTradition": true,
+      "caution": "Persisch und achämenidisch sind nicht gleichbedeutend. Die Spielzuordnung folgt der konkreten kulturellen Einordnung des Museumskatalogs.",
+      "sources": [
+        "persia"
+      ]
+    },
+    "Neuassyrische Kunst": {
+      "kind": "Mesopotamische Reichstradition",
+      "definition": "Palastreliefs vermitteln Herrschaft, Schutz und königliche Taten. Geordnete Figuren und reich ausgeführte Einzelheiten verbinden Bild und Inschrift.",
+      "clues": [
+        "Flügelfiguren mit betonter Körperkraft",
+        "detaillierte Gewänder und Haarmuster",
+        "Inschriften oder fortlaufende Reliefszenen"
+      ],
+      "period": "vor allem im ersten Jahrtausend v. Chr.; das Nimrud-Relief stammt aus dem 9. Jahrhundert v. Chr.",
+      "range": null,
+      "artists": [
+        "Palastwerkstätten von Nimrud und Ninive"
+      ],
+      "anonymousTradition": true,
+      "caution": "Die Darstellungen sind politische und religiöse Bildprogramme, keine neutralen Momentaufnahmen. Nicht jede geflügelte Figur ist assyrisch.",
+      "sources": [
+        "assyria"
+      ]
+    },
+    "Sumerische Kunst": {
+      "kind": "Mesopotamische Tradition",
+      "definition": "Frühe und spätere sumerische Bildwerke erfüllen unterschiedliche kultische und repräsentative Aufgaben. Gudeas Statuen gehören zur neusumerischen Phase.",
+      "clues": [
+        "kompakte Körperformen",
+        "betont geführte Gesten",
+        "Tierdarstellungen oder kultische Herrscherbilder"
+      ],
+      "period": "mehrere Phasen im 4. und 3. Jahrtausend v. Chr.; Gudea am Ende des 3. Jahrtausends",
+      "range": null,
+      "artists": [
+        "Werkstätten von Lagasch und Girsu"
+      ],
+      "anonymousTradition": true,
+      "caution": "Der Name Gudea bezeichnet den dargestellten Herrscher, nicht den Bildhauer. Sumerisch ist keine einheitliche Formschablone für jedes Objekt.",
+      "sources": [
+        "gudea"
+      ]
+    },
+    "Griechische Archaik": {
+      "kind": "Epoche / Formtradition",
+      "definition": "Frühe griechische Großplastik entwickelt fest geordnete Körperbilder wie den Kouros, einen frontal stehenden nackten Jüngling.",
+      "clues": [
+        "frontal geordnete Körperhaltung",
+        "klar gegliederte anatomische Partien",
+        "symmetrisch oder gemustert behandelte Oberflächen"
+      ],
+      "period": "ungefähr im 7. und 6. Jahrhundert bis ins frühe 5. Jahrhundert v. Chr.",
+      "range": [
+        -700,
+        -480
+      ],
+      "artists": [
+        "attische und ionische Kouros-Werkstätten"
+      ],
+      "anonymousTradition": true,
+      "caution": "Ein fragmentierter Torso zeigt keine vollständige Haltung. Ägyptische Vorbilder und eigenständige griechische Entwicklungen schließen sich nicht aus.",
+      "sources": [
+        "kouros"
+      ]
+    },
+    "Griechische geometrische Kunst": {
+      "kind": "Epoche / Formtradition",
+      "definition": "Körper und Tierfiguren werden auf deutlich gegliederte, stark vereinfachte Formen und Silhouetten konzentriert.",
+      "clues": [
+        "geometrisch vereinfachte Gliedmaßen",
+        "klar gegliederte Silhouetten",
+        "betonte Proportionen statt naturalistischer Einzelheiten"
+      ],
+      "period": "besonders im 9. und 8. Jahrhundert v. Chr.; die Pferdestatuette ist auf 750–725 v. Chr. datiert",
+      "range": [
+        -900,
+        -700
+      ],
+      "artists": [
+        "griechische Bronzewerkstätten der geometrischen Zeit"
+      ],
+      "anonymousTradition": true,
+      "caution": "Vereinfachung ist hier eine historische Bildsprache, kein Zeichen mangelnder Fähigkeit. Ähnlich reduzierte Formen gibt es auch in viel späterer Kunst.",
+      "sources": [
+        "geometricHorse"
+      ]
+    },
+    "Römische Kunst": {
+      "kind": "Kultureller Epochenbegriff",
+      "definition": "Römische Werkstätten verbinden Porträt, Herrschaftsbild, Alltagsobjekt und griechische Vorbilder. Ein antikes Göttermotiv allein ist noch kein Herkunftsnachweis.",
+      "clues": [
+        "ausgearbeitete Körper- oder Porträtformen",
+        "differenzierte Haar- und Gewandpartien",
+        "Bezüge zu antiken Göttern oder repräsentativen Bildprogrammen"
+      ],
+      "period": "Republik und Kaiserzeit; die hier aufgenommenen Werke gehören zu den ersten Jahrhunderten n. Chr.",
+      "range": null,
+      "artists": [
+        "römische Bildhauer- und Gießwerkstätten"
+      ],
+      "anonymousTradition": true,
+      "caution": "Bei einer römischen Fassung nach griechischem Vorbild ist der Urheber des Vorbilds nicht automatisch der Bildhauer des ausgestellten Objekts.",
+      "sources": [
+        "romanApollo"
+      ]
+    },
+    "Gotik": {
+      "kind": "Epoche",
+      "definition": "Ein weiter Epochenbegriff, nicht eine einzige europaweit gleiche Malweise.",
+      "clues": [
+        "betonte Umrisslinien",
+        "elegante, gestreckte Figuren",
+        "symbolisch statt einheitlich perspektivisch organisierte Räume"
+      ],
+      "period": "ungefähr vom 12. bis zum 16. Jahrhundert, mit großen regionalen Unterschieden",
+      "range": [
+        1150,
+        1550
+      ],
+      "artists": [
+        "Simone Martini",
+        "Stefan Lochner"
+      ],
+      "caution": "Ein religiöses Motiv allein macht ein Bild noch nicht gotisch.",
+      "sources": [
+        "gothic",
+        "medieval"
+      ]
+    },
+    "Gotische Malerei": {
+      "kind": "Epochenbegriff",
+      "definition": "Die Malerei der Gotik verbindet erzählende oder religiöse Bildordnungen mit zunehmend genauer Naturbeobachtung.",
+      "clues": [
+        "deutlich geführte Konturen",
+        "dekorative Gewandfalten",
+        "unterschiedlich gewichtete Figuren und Bildräume"
+      ],
+      "period": "vor allem im späten Mittelalter, etwa vom 13. bis zum 15. Jahrhundert",
+      "range": [
+        1250,
+        1500
+      ],
+      "artists": [
+        "Simone Martini",
+        "Stefan Lochner"
+      ],
+      "caution": "Goldgrund und Natürlichkeit schließen einander nicht aus; Übergänge zur Renaissance sind fließend.",
+      "sources": [
+        "gothic",
+        "medieval"
+      ]
+    },
+    "Internationale Gotik": {
+      "kind": "Höfischer Stil",
+      "definition": "Ein überregionaler höfischer Stil mit dekorativer Eleganz und aufmerksam beobachteten Einzelheiten.",
+      "clues": [
+        "kostbare Gewänder und Goldornament",
+        "geschwungene, elegante Figuren",
+        "Naturdetails in einem wenig einheitlichen Bildraum"
+      ],
+      "period": "vor allem vom späten 14. bis zur Mitte des 15. Jahrhunderts",
+      "range": [
+        1370,
+        1450
+      ],
+      "artists": [
+        "Gentile da Fabriano",
+        "Pisanello",
+        "Stefan Lochner"
+      ],
+      "caution": "Ein reiches Ornament ist eine Spur, aber kein alleiniger Beweis.",
+      "sources": [
+        "international"
+      ]
+    },
+    "Renaissance": {
+      "kind": "Epoche",
+      "definition": "Die Beschäftigung mit Antike, Körper und räumlicher Ordnung verändert das Bildverständnis.",
+      "clues": [
+        "plastisch modellierte Körper",
+        "geordnete räumliche Beziehungen",
+        "ausgewogene Beziehungen zwischen Figuren"
+      ],
+      "period": "in Europa besonders im 15. und 16. Jahrhundert; Anfänge und Grenzen unterscheiden sich regional",
+      "range": [
+        1400,
+        1600
+      ],
+      "artists": [
+        "Leonardo da Vinci",
+        "Raffael",
+        "Tizian"
+      ],
+      "caution": "Perspektive ist ein wichtiges Werkzeug, aber nicht in jedem Renaissancebild das auffälligste Merkmal.",
+      "sources": [
+        "high",
+        "early"
+      ]
+    },
+    "Italienische Renaissance": {
+      "kind": "Epochenbegriff",
+      "definition": "In italienischen Werkstätten entwickeln sich neue Vorstellungen von Körper, Raum und antiken Vorbildern.",
+      "clues": [
+        "körperlich gewichtige Figuren",
+        "architektonisch geordnete Räume",
+        "antikisierende Formen oder ausgewogene Kompositionen"
+      ],
+      "period": "besonders im 15. und 16. Jahrhundert, mit Vorläufern im 14. Jahrhundert",
+      "range": [
+        1400,
+        1600
+      ],
+      "artists": [
+        "Masaccio",
+        "Leonardo da Vinci",
+        "Raffael"
+      ],
+      "caution": "Florenz, Siena und Venedig setzen unterschiedliche Akzente; der Sammelbegriff ersetzt nicht den Blick auf das einzelne Bild.",
+      "sources": [
+        "florence",
+        "high"
+      ]
+    },
+    "Frührenaissance": {
+      "kind": "Epoche",
+      "definition": "Figuren erhalten körperliches Gewicht; Räume werden zunehmend überzeugend konstruiert.",
+      "clues": [
+        "klar gegliederte Architekturen",
+        "plastische Licht-Schatten-Modellierung",
+        "nachvollziehbare räumliche Tiefe"
+      ],
+      "period": "in Italien vor allem das 15. Jahrhundert",
+      "range": [
+        1400,
+        1500
+      ],
+      "artists": [
+        "Masaccio",
+        "Fra Angelico",
+        "Piero della Francesca"
+      ],
+      "caution": "Ältere Bildordnungen und neue Raumvorstellungen können im selben Werk nebeneinanderstehen.",
+      "sources": [
+        "early",
+        "florence"
+      ]
+    },
+    "Hochrenaissance": {
+      "kind": "Epoche",
+      "definition": "Idealisierte Körper und komplexe Gruppen erscheinen häufig in besonders ausgewogener Ordnung.",
+      "clues": [
+        "ruhige, geschlossene Figurengruppen",
+        "souveräne Körpermodellierung",
+        "übersichtlich verbundene Gesten und Blickrichtungen"
+      ],
+      "period": "besonders die ersten Jahrzehnte des 16. Jahrhunderts",
+      "range": [
+        1490,
+        1530
+      ],
+      "artists": [
+        "Leonardo da Vinci",
+        "Michelangelo",
+        "Raffael"
+      ],
+      "caution": "Harmonie ist hier ein Suchhinweis, kein Qualitätsmaßstab für andere Stile.",
+      "sources": [
+        "high"
+      ]
+    },
+    "Altniederländische Malerei": {
+      "kind": "Regionale Tradition",
+      "definition": "Die genaue Beobachtung von Oberflächen und Alltagsdetails verbindet sich oft mit religiöser Bedeutung.",
+      "clues": [
+        "präzise Stoff- und Materialdetails",
+        "fein abgestufte Lichtreflexe",
+        "symbolisch aufgeladene Gegenstände in glaubhaften Räumen"
+      ],
+      "period": "besonders im 15. und frühen 16. Jahrhundert",
+      "range": [
+        1400,
+        1530
+      ],
+      "artists": [
+        "Jan van Eyck",
+        "Rogier van der Weyden",
+        "Robert Campin"
+      ],
+      "caution": "Jan van Eyck machte Ölmalerei berühmt, erfand sie aber nicht.",
+      "sources": [
+        "netherlandish",
+        "oil"
+      ]
+    },
+    "Deutsche Renaissance": {
+      "kind": "Regionale Tradition",
+      "definition": "Naturstudium und neue Raumvorstellungen verbinden sich mit nordalpiner Detailfreude und eigenständiger Grafik.",
+      "clues": [
+        "sorgfältig beobachtete Gesichter und Dinge",
+        "prägnante Konturen",
+        "räumliche Ordnung neben detailreichen Oberflächen"
+      ],
+      "period": "besonders um 1500 und in der ersten Hälfte des 16. Jahrhunderts",
+      "range": [
+        1470,
+        1560
+      ],
+      "artists": [
+        "Albrecht Dürer",
+        "Lucas Cranach der Ältere",
+        "Hans Holbein der Jüngere"
+      ],
+      "caution": "Die regionale Bezeichnung ist kein Nationalitätstest: Werkstattkontakte und Einflüsse überschreiten Grenzen.",
+      "sources": [
+        "german"
+      ]
+    },
+    "Florentinische Schule": {
+      "kind": "Regionale Schule",
+      "definition": "Ein Werkstatt- und Traditionszusammenhang, häufig mit besonderem Gewicht auf Zeichnung, Körper und Raumkonstruktion.",
+      "clues": [
+        "klar geführte Umrisse",
+        "plastisch gedachte Figuren",
+        "bewusst konstruierte Architekturräume"
+      ],
+      "period": "besonders in der Florentiner Malerei des 15. und 16. Jahrhunderts",
+      "range": [
+        1400,
+        1600
+      ],
+      "artists": [
+        "Masaccio",
+        "Sandro Botticelli",
+        "Fra Angelico"
+      ],
+      "caution": "Eine Schule ist nicht so scharf am Aussehen ablesbar wie eine bestimmte malerische Methode.",
+      "sources": [
+        "florence"
+      ]
+    },
+    "Schule von Siena": {
+      "kind": "Regionale Schule",
+      "definition": "Eine lange lokale Tradition mit lyrischen Linien, differenzierter Farbigkeit und eigener Erzählkunst.",
+      "clues": [
+        "elegante Linienführung",
+        "kostbar wirkende Farb- und Ornamentbeziehungen",
+        "sorgfältig erzählte Figurenbeziehungen"
+      ],
+      "period": "berühmt seit dem 13. und 14. Jahrhundert, mit wichtigen Fortsetzungen bis ins 16. Jahrhundert",
+      "range": [
+        1280,
+        1550
+      ],
+      "artists": [
+        "Duccio di Buoninsegna",
+        "Simone Martini",
+        "Domenico Beccafumi"
+      ],
+      "caution": "Siena bleibt nicht auf Goldgrundbilder beschränkt; spätere Werke können ganz anders aussehen.",
+      "sources": [
+        "siena",
+        "sienaLater"
+      ]
+    },
+    "Umbrische Schule": {
+      "kind": "Regionale Schule",
+      "definition": "Ein regionaler Zusammenhang, in dem unter anderem Peruginos klare, harmonische Figurengruppen wichtig sind.",
+      "clues": [
+        "symmetrisch geordnete Figuren",
+        "ruhige Gesten",
+        "weite, klar gegliederte Landschaftsräume"
+      ],
+      "period": "besonders im späten 15. und frühen 16. Jahrhundert",
+      "range": [
+        1450,
+        1530
+      ],
+      "artists": [
+        "Pietro Perugino",
+        "Pintoricchio"
+      ],
+      "caution": "Diese Merkmale überschneiden sich mit anderen Renaissancewerkstätten; Herkunft lässt sich nicht allein aus Harmonie bestimmen.",
+      "sources": [
+        "umbria"
+      ]
+    },
+    "Venezianische Schule": {
+      "kind": "Regionale Schule",
+      "definition": "Farbe, Licht und atmosphärische Übergänge haben in vielen venezianischen Bildern großes Gewicht.",
+      "clues": [
+        "differenzierte Farbklänge",
+        "weich ineinander übergehende Lichtpartien",
+        "malerisch verbundene Figuren und Landschaften"
+      ],
+      "period": "besonders prägend im 15. und 16. Jahrhundert, mit späteren Fortsetzungen",
+      "range": [
+        1450,
+        1600
+      ],
+      "artists": [
+        "Giovanni Bellini",
+        "Giorgione",
+        "Tizian"
+      ],
+      "caution": "Farbe gegen Zeichnung ist keine absolute Trennung zwischen Venedig und Florenz.",
+      "sources": [
+        "venice"
+      ]
+    },
+    "Manierismus": {
+      "kind": "Stilbewegung",
+      "definition": "Künstler verändern die ausgewogenen Ideale der Hochrenaissance zugunsten kunstvoller Spannung.",
+      "clues": [
+        "gestreckte Körperproportionen",
+        "ungewöhnlich verdrehte Posen",
+        "komplizierte oder irritierende Raumbeziehungen"
+      ],
+      "period": "besonders vom frühen bis zum späten 16. Jahrhundert, ungefähr 1520–1600",
+      "range": [
+        1520,
+        1600
+      ],
+      "artists": [
+        "Pontormo",
+        "Parmigianino",
+        "Bronzino"
+      ],
+      "caution": "Ungewöhnliche Körper sind bewusst gestaltete Ausdrucksmittel, nicht automatisch fehlendes Können.",
+      "sources": [
+        "mannerism"
+      ]
+    },
+    "Barock": {
+      "kind": "Epoche / Stilbegriff",
+      "definition": "Bewegung, Illusion und dramatische Inszenierung können das Bild zu einem unmittelbar wirkenden Ereignis machen.",
+      "clues": [
+        "bewegte Diagonalen",
+        "starke Licht-Schatten-Kontraste",
+        "theatralische Gesten und Tiefenwirkungen"
+      ],
+      "period": "in der Malerei besonders das 17. Jahrhundert, regional auch bis ins 18. Jahrhundert",
+      "range": [
+        1600,
+        1750
+      ],
+      "artists": [
+        "Caravaggio",
+        "Peter Paul Rubens",
+        "Rembrandt van Rijn"
+      ],
+      "caution": "Auch ruhige Interieurs gehören in die Barockzeit. Nicht jedes Werk erfüllt das dramatische Lehrbuchbild.",
+      "sources": [
+        "baroque",
+        "baroqueArtists"
+      ]
+    },
+    "Rokoko": {
+      "kind": "Stilbegriff",
+      "definition": "Leichte Farbigkeit und geschwungene, oft asymmetrische Formen prägen viele höfische oder galante Bilder.",
+      "clues": [
+        "helle, zarte Farbklänge",
+        "spielerisch geschwungene Kompositionen",
+        "elegante Figuren in galanten Situationen"
+      ],
+      "period": "besonders im Frankreich des 18. Jahrhunderts, etwa 1715–1774",
+      "range": [
+        1715,
+        1780
+      ],
+      "artists": [
+        "Antoine Watteau",
+        "François Boucher",
+        "Jean-Honoré Fragonard"
+      ],
+      "caution": "Ein helles Bild allein ist noch kein Rokoko; Komposition und Figurenhaltung sind ebenso wichtig.",
+      "sources": [
+        "rococo"
+      ]
+    },
+    "Klassizismus": {
+      "kind": "Stilbewegung",
+      "definition": "Antike Vorbilder, klare Ordnung und eine häufig betonte Kontur verbinden sich mit moralischen oder historischen Themen.",
+      "clues": [
+        "klar umrissene Figuren",
+        "ruhige oder streng gegliederte Bildräume",
+        "antikisierende Körper, Gewänder oder Architektur"
+      ],
+      "period": "besonders im späten 18. und frühen 19. Jahrhundert",
+      "range": [
+        1760,
+        1830
+      ],
+      "artists": [
+        "Jacques-Louis David",
+        "Jean-Auguste-Dominique Ingres",
+        "Anton Raphael Mengs",
+        "Antonio Canova"
+      ],
+      "caution": "Antike Themen kommen auch in anderen Epochen vor; entscheidend ist ihre bildnerische Behandlung.",
+      "sources": [
+        "classical",
+        "romantic",
+        "canova"
+      ]
+    },
+    "Romantik": {
+      "kind": "Bewegung",
+      "definition": "Empfindung, Imagination und das Verhältnis des Menschen zu Natur und Geschichte treten in den Vordergrund.",
+      "clues": [
+        "stimmungsvoll aufgeladene Landschaften",
+        "dramatische Natur- oder Lichtwirkungen",
+        "verletzliche oder staunende Menschen gegenüber großen Räumen"
+      ],
+      "period": "besonders von etwa 1800 bis zur Mitte des 19. Jahrhunderts",
+      "range": [
+        1790,
+        1850
+      ],
+      "artists": [
+        "Caspar David Friedrich",
+        "Eugène Delacroix",
+        "J. M. W. Turner"
+      ],
+      "caution": "Nicht jede Landschaft ist romantisch; suche nach der emotionalen Funktion des Raumes.",
+      "sources": [
+        "romantic"
+      ]
+    },
+    "Realismus": {
+      "kind": "Bewegung / Darstellungsprinzip",
+      "definition": "Als Bewegung rückt Realismus das zeitgenössische, auch unspektakuläre Leben ins Zentrum, statt es zu idealisieren.",
+      "clues": [
+        "alltägliche oder arbeitende Menschen",
+        "unbeschönigte Körper und Lebensumstände",
+        "sachlich beobachtete Dinge statt idealer Heldenposen"
+      ],
+      "period": "als französische Bewegung besonders seit der Mitte des 19. Jahrhunderts; realistische Darstellungsweisen existieren auch früher und später",
+      "range": [
+        1840,
+        1900
+      ],
+      "artists": [
+        "Gustave Courbet",
+        "Jean-François Millet",
+        "Honoré Daumier"
+      ],
+      "caution": "Fotografisch genaue Malerei ist nicht automatisch der Realismus als historische Bewegung.",
+      "sources": [
+        "realism"
+      ]
+    },
+    "Akademische Kunst": {
+      "kind": "Institutionelle Tradition",
+      "definition": "Akademien und Salons fördern ausgebildete Zeichenkunst, etablierte Themen und sorgfältig ausgearbeitete Oberflächen.",
+      "clues": [
+        "glatt modellierte Körper",
+        "minimierte sichtbare Pinselspuren",
+        "idealisiert behandelte historische oder mythologische Szenen"
+      ],
+      "period": "besonders einflussreich im europäischen Salonbetrieb des 19. Jahrhunderts, mit älteren Wurzeln",
+      "range": [
+        1800,
+        1900
+      ],
+      "artists": [
+        "Alexandre Cabanel",
+        "William-Adolphe Bouguereau",
+        "Jean-Léon Gérôme"
+      ],
+      "caution": "Ausbildung an einer Akademie und akademischer Stil sind nicht dasselbe.",
+      "sources": [
+        "academic"
+      ]
+    },
+    "Schule von Barbizon": {
+      "kind": "Künstlerkreis",
+      "definition": "Landschaft wird zum eigenständigen Hauptthema; Beobachtung der Natur ersetzt häufig idealisierte Bühnenlandschaften.",
+      "clues": [
+        "unspektakuläre Wald- und Landschaftsmotive",
+        "tonig verbundene erdige Farben",
+        "Aufmerksamkeit für wechselndes Wetter und Licht"
+      ],
+      "period": "besonders etwa 1830–1870 im Umfeld des Waldes von Fontainebleau",
+      "range": [
+        1830,
+        1870
+      ],
+      "artists": [
+        "Théodore Rousseau",
+        "Charles-François Daubigny",
+        "Jean-François Millet"
+      ],
+      "caution": "Barbizon bereitet Wege zum Impressionismus, verwendet aber oft einen stärker tonigen Farbzusammenhang.",
+      "sources": [
+        "barbizon"
+      ]
+    },
+    "Impressionismus": {
+      "kind": "Bewegung",
+      "definition": "Licht und momentane Wahrnehmung können wichtiger werden als fest umrissene, glatt modellierte Formen.",
+      "clues": [
+        "kurze, offen sichtbare Pinselzüge",
+        "farbige statt nur schwarze Schatten",
+        "flüchtig wirkende Licht- und Alltagssituationen"
+      ],
+      "period": "entwickelt sich seit den 1860er-Jahren; die acht gemeinsamen Ausstellungen fanden 1874–1886 statt, die Malweise lebte weiter",
+      "range": [
+        1860,
+        1900
+      ],
+      "origin": {
+        "year": 1860,
+        "precision": "decade",
+        "statement": "Der Impressionismus entwickelte sich erst seit den 1860er-Jahren als Bewegung."
+      },
+      "artists": [
+        "Claude Monet",
+        "Berthe Morisot",
+        "Camille Pissarro"
+      ],
+      "caution": "Offener Farbauftrag und ein Landschaftsmotiv allein reichen nicht. Auch Degas’ Innenräume gehören in diesen Zusammenhang.",
+      "sources": [
+        "impressionism"
+      ]
+    },
+    "Amerikanischer Impressionismus": {
+      "kind": "Regionale Bewegung",
+      "definition": "Impressionistische Licht- und Farbmalerei wird auf amerikanische Lebensräume und Motive übertragen.",
+      "clues": [
+        "helle, in einzelne Pinselzüge zerlegte Farbe",
+        "beobachtete Stadt- oder Landschaftsmotive",
+        "atmosphärisch aufgelöste Konturen"
+      ],
+      "period": "besonders vom späten 19. ins frühe 20. Jahrhundert",
+      "range": [
+        1880,
+        1920
+      ],
+      "artists": [
+        "Childe Hassam",
+        "John Henry Twachtman",
+        "Theodore Robinson"
+      ],
+      "caution": "Die amerikanische Einordnung braucht auch biografische und historische Informationen; sie ist kein eigener Pinselstrichtest.",
+      "sources": [
+        "american",
+        "impressionism",
+        "americanMovement"
+      ]
+    },
+    "Postimpressionismus": {
+      "kind": "Sammelbegriff",
+      "definition": "Unterschiedliche Künstler entwickeln impressionistische Ansätze weiter: durch Formordnung, Ausdrucksfarbe, Symbolik oder systematische Farbpunkte.",
+      "clues": [
+        "betont aufgebaute Formen",
+        "ausdrucksstarke statt rein beobachtete Farben",
+        "bewusst vereinfachte oder rhythmisierte Flächen"
+      ],
+      "period": "vor allem etwa 1880–1910; ein rückblickender Sammelbegriff, keine einheitliche Vereinigung",
+      "range": [
+        1880,
+        1910
+      ],
+      "artists": [
+        "Paul Cézanne",
+        "Vincent van Gogh",
+        "Paul Gauguin"
+      ],
+      "caution": "Van Gogh und Cézanne sehen nicht gleich aus. Gerade diese Verschiedenheit gehört zum Begriff.",
+      "sources": [
+        "post"
+      ]
+    },
+    "Pointillismus": {
+      "kind": "Malerisches Verfahren / Bewegungskontext",
+      "definition": "Kleine getrennte Farbsetzungen organisieren die Mischung der Farben für den betrachtenden Blick.",
+      "clues": [
+        "regelmäßig nebeneinandergesetzte Farbpunkte",
+        "farbig aufgebaute statt schwarz gefüllte Schatten",
+        "aus vielen kleinen Farbteilen entstehende Flächen"
+      ],
+      "period": "entwickelt sich in den 1880er-Jahren im Neoimpressionismus; später auch mit größeren, mosaikartigen Farbsetzungen",
+      "range": [
+        1884,
+        1910
+      ],
+      "origin": {
+        "year": 1884,
+        "precision": "approximate",
+        "statement": "Das neoimpressionistische Verfahren entwickelte sich in den 1880er-Jahren im Umfeld von Seurat und Signac."
+      },
+      "artists": [
+        "Georges Seurat",
+        "Paul Signac",
+        "Henri-Edmond Cross"
+      ],
+      "caution": "Viele kleine Punkte sind ein guter Hinweis, aber nicht jeder getupfte Farbauftrag ist systematischer Pointillismus.",
+      "sources": [
+        "pointillism",
+        "post"
+      ]
+    },
+    "Symbolismus": {
+      "kind": "Bewegung",
+      "definition": "Bilder vermitteln Ideen und innere Zustände durch suggestive Motive statt durch bloße Wiedergabe äußerer Wirklichkeit.",
+      "clues": [
+        "rätselhafte oder traumartige Figurenbeziehungen",
+        "mythisch aufgeladene Motive",
+        "bewusst stimmungsbildende Farb- und Raumwirkungen"
+      ],
+      "period": "besonders in den letzten Jahrzehnten des 19. und zu Beginn des 20. Jahrhunderts, mit früheren Vorläufern",
+      "range": [
+        1870,
+        1910
+      ],
+      "artists": [
+        "Gustave Moreau",
+        "Odilon Redon",
+        "Arnold Böcklin"
+      ],
+      "caution": "Nicht jedes Symbol macht ein Bild symbolistisch; auch ältere Kunst arbeitet mit Bedeutungszeichen.",
+      "sources": [
+        "symbolism"
+      ]
+    },
+    "Jugendstil": {
+      "kind": "Stilbewegung",
+      "definition": "Figuren und Dinge werden häufig mit flächigem Ornament und rhythmisch geführten Linien verbunden.",
+      "clues": [
+        "ornamental geführte Umrisse",
+        "Pflanzenformen oder geschwungene Linienrhythmen",
+        "flächige Muster neben gegenständlichen Partien"
+      ],
+      "period": "besonders um 1890–1910; regional mit sehr unterschiedlichen Ausprägungen",
+      "range": [
+        1890,
+        1910
+      ],
+      "artists": [
+        "Gustav Klimt",
+        "Alphonse Mucha",
+        "Henri de Toulouse-Lautrec"
+      ],
+      "caution": "Auch geometrisches Ornament gehört dazu. Jugendstil ist nicht ausschließlich eine geschwungene Ranke.",
+      "sources": [
+        "nouveau",
+        "symbolism"
+      ]
+    },
+    "Expressionismus": {
+      "kind": "Bewegung / Ausdrucksweise",
+      "definition": "Farbe und Form werden zugunsten emotionaler Intensität verändert statt an naturalistische Wiedergabe gebunden.",
+      "clues": [
+        "gesteigerte, nicht naturgetreue Farben",
+        "zugespitzte oder verzerrte Körperformen",
+        "unruhige, stark vereinfachte Konturen"
+      ],
+      "period": "als deutsche und österreichische Bewegung vor allem in den ersten Jahrzehnten des 20. Jahrhunderts; wichtige Vorläufer liegen früher",
+      "range": [
+        1905,
+        1930
+      ],
+      "artists": [
+        "Ernst Ludwig Kirchner",
+        "Emil Nolde",
+        "Wassily Kandinsky"
+      ],
+      "caution": "Expressiver Ausdruck ist älter als die Bewegung. Ein früheres Werk kann deshalb expressionistische Züge tragen.",
+      "sources": [
+        "expressionism"
+      ]
+    },
+    "Der Blaue Reiter": {
+      "kind": "Künstlerkreis",
+      "definition": "Ein vielfältiger Münchner Zusammenhang, in dem Farbe, Ausdruck und die geistige Dimension von Kunst wichtig sind.",
+      "clues": [
+        "eigenständig expressive Farben",
+        "vereinfachte oder abstrahierte Formen",
+        "rhythmisch verbundene statt naturalistisch gebundene Flächen"
+      ],
+      "period": "die gemeinsamen Ausstellungen und der Almanach gehören in die Jahre 1911–1914; die Künstler arbeiteten davor und danach weiter",
+      "range": [
+        1911,
+        1914
+      ],
+      "origin": {
+        "year": 1911,
+        "precision": "exact",
+        "statement": "Der erste gemeinsame Auftritt des Blauen Reiters fand 1911 statt."
+      },
+      "artists": [
+        "Wassily Kandinsky",
+        "Franz Marc",
+        "Gabriele Münter"
+      ],
+      "caution": "Es gibt keine einheitliche Blaue-Reiter-Malweise. Frühe Werke der später Beteiligten sind nicht automatisch Werke des bereits bestehenden Kreises.",
+      "sources": [
+        "blue"
+      ]
+    },
+    "Fauvismus": {
+      "kind": "Bewegung",
+      "definition": "Intensive, eigenständige Farbe kann Bildraum und Formen stärker bestimmen als naturgetreue Modellierung.",
+      "clues": [
+        "leuchtende, wenig gebrochene Farben",
+        "großzügig vereinfachte Farbflächen",
+        "sichtbare, energische Pinselzüge"
+      ],
+      "period": "besonders in den Jahren 1905–1908; einzelne Künstler entwickelten diese Ansätze weiter",
+      "range": [
+        1905,
+        1908
+      ],
+      "origin": {
+        "year": 1905,
+        "precision": "exact",
+        "statement": "Die Fauves erhielten ihren Namen nach dem Pariser Salon d’Automne von 1905."
+      },
+      "artists": [
+        "Henri Matisse",
+        "André Derain",
+        "Maurice de Vlaminck"
+      ],
+      "caution": "Fauvismus und Expressionismus teilen Ausdrucksfarbe; ihre historischen Zusammenhänge sind dennoch verschieden.",
+      "sources": [
+        "fauvism"
+      ]
+    },
+    "Kubismus": {
+      "kind": "Bewegung",
+      "definition": "Gegenstände werden in Flächen und Teilansichten zerlegt; eine einzige feste Betrachterperspektive verliert ihre Verbindlichkeit.",
+      "clues": [
+        "facettierte Gegenstände",
+        "überlagerte oder widersprüchliche Ansichten",
+        "flach ineinandergeschobene Raumteile"
+      ],
+      "period": "entwickelt sich seit etwa 1907, besonders prägend bis in die 1910er-Jahre, mit späteren Fortsetzungen",
+      "range": [
+        1907,
+        1920
+      ],
+      "origin": {
+        "year": 1907,
+        "precision": "approximate",
+        "statement": "Kubismus entwickelte sich seit etwa 1907 im Umfeld von Picasso und Braque."
+      },
+      "artists": [
+        "Pablo Picasso",
+        "Georges Braque",
+        "Juan Gris"
+      ],
+      "caution": "Geometrische Formen allein reichen nicht: Entscheidend ist, wie Gegenstände und Blickrichtungen neu organisiert werden.",
+      "sources": [
+        "cubism"
+      ]
+    },
+    "Surrealismus": {
+      "kind": "Bewegung",
+      "definition": "Traum, Unbewusstes und unerwartete Verbindungen unterlaufen vertraute Vorstellungen von Wirklichkeit.",
+      "clues": [
+        "unmögliche Verbindungen vertrauter Dinge",
+        "traumartige Maßstäbe oder Räume",
+        "logisch irritierende Szenen trotz genauer Darstellung"
+      ],
+      "period": "als programmatische Bewegung seit André Bretons Manifest von 1924, mit langer Wirkungsgeschichte",
+      "range": [
+        1924,
+        1945
+      ],
+      "origin": {
+        "year": 1924,
+        "precision": "exact",
+        "statement": "Surrealismus wurde 1924 mit André Bretons erstem Manifest programmatisch begründet; Vorläufer liegen früher."
+      },
+      "artists": [
+        "Max Ernst",
+        "René Magritte",
+        "Salvador Dalí"
+      ],
+      "caution": "Ein älteres fantastisches Bild ist nicht deshalb ein Werk der 1924 begründeten Bewegung.",
+      "sources": [
+        "surrealism"
+      ]
+    },
+    "Moderne": {
+      "kind": "Sammelbegriff",
+      "definition": "Moderne umfasst unterschiedliche Brüche mit überlieferten Bildkonventionen, nicht einen einzigen Stil.",
+      "clues": [
+        "bewusste Vereinfachungen",
+        "eigenständige Farb- und Formordnungen",
+        "experimentelle Beziehungen zwischen Fläche und Gegenstand"
+      ],
+      "period": "ein weiter Zusammenhang vom späten 19. ins 20. Jahrhundert; je nach Definition mit früheren Ansätzen",
+      "range": null,
+      "artists": [
+        "Paul Cézanne",
+        "Wassily Kandinsky",
+        "Pablo Picasso"
+      ],
+      "caution": "Für die genauere Zuordnung braucht man das einzelne Werk. Das Etikett Moderne allein ist kein sicherer Datierungstest.",
+      "sources": [
+        "post",
+        "cubism",
+        "modern"
+      ]
+    },
+    "Naive Kunst": {
+      "kind": "Darstellungsbegriff",
+      "definition": "Eine oft außerhalb akademischer Ausbildung entstandene Bildsprache mit eigenständiger Raum- und Figurenordnung.",
+      "clues": [
+        "klar getrennte, sorgfältig beschriebene Formen",
+        "ungewohnte Größen- oder Raumverhältnisse",
+        "gleichmäßig aufmerksam behandelte Details"
+      ],
+      "period": "keine geschlossene Epoche; um 1900 wurde besonders Henri Rousseau von der Avantgarde neu wahrgenommen",
+      "range": null,
+      "artists": [
+        "Henri Rousseau"
+      ],
+      "caution": "Naiv bedeutet nicht minderwertig oder absichtslos. Vereinfachung lässt sich nicht mit fehlender Qualität gleichsetzen.",
+      "sources": [
+        "naive"
+      ]
+    },
+    "Präraffaeliten": {
+      "kind": "Künstlerkreis / Nachwirkung",
+      "definition": "Präzise Naturbeobachtung, leuchtende Farben und bedeutungsvolle Einzelheiten verbinden sich mit literarischen oder religiösen Themen.",
+      "clues": [
+        "akribisch ausgearbeitete Pflanzen und Stoffe",
+        "klare, leuchtende Farben",
+        "symbolisch bedeutsame Gegenstände"
+      ],
+      "period": "die Bruderschaft wurde 1848 gegründet; ihre Ansätze wirkten weit über den ursprünglichen Kreis hinaus",
+      "range": [
+        1848,
+        1900
+      ],
+      "origin": {
+        "year": 1848,
+        "precision": "exact",
+        "statement": "Die präraffaelitische Bruderschaft wurde 1848 gegründet."
+      },
+      "artists": [
+        "Dante Gabriel Rossetti",
+        "John Everett Millais",
+        "William Holman Hunt"
+      ],
+      "caution": "Die Rückwendung zur Kunst vor Raffael bedeutet nicht, dass diese Bilder im Mittelalter entstanden sind.",
+      "sources": [
+        "preraphaelite"
+      ]
+    },
+    "Nazarener": {
+      "kind": "Künstlerkreis",
+      "definition": "Deutsche Künstler erneuern religiöse Malerei durch die bewusste Rückwendung zu älterer Kunst.",
+      "clues": [
+        "klar gegliederte religiöse Szenen",
+        "betonte Konturen und ruhige Gesten",
+        "Anklänge an Dürer, Perugino oder Raffael"
+      ],
+      "period": "der Lukasbund wurde 1809 in Wien gegründet; ab 1810 arbeitete sein Kern in Rom",
+      "range": [
+        1809,
+        1850
+      ],
+      "origin": {
+        "year": 1809,
+        "precision": "exact",
+        "statement": "Der Lukasbund, aus dem die Nazarener hervorgingen, wurde 1809 gegründet."
+      },
+      "artists": [
+        "Friedrich Overbeck",
+        "Franz Pforr",
+        "Peter von Cornelius"
+      ],
+      "caution": "Eine altertümlich wirkende Form ist hier ein bewusstes Programm des 19. Jahrhunderts, keine mittelalterliche Datierung.",
+      "sources": [
+        "nazarene",
+        "cornelius"
+      ]
+    },
+    "Orientalismus": {
+      "kind": "Themen- und Blickrichtung",
+      "definition": "Europäische Darstellungen Nordafrikas und des Nahen Ostens verbinden Beobachtung mit Fantasie und oft kolonialen Vorstellungen.",
+      "clues": [
+        "als fremdländisch inszenierte Architektur und Kleidung",
+        "auffällig detaillierte Gegenstände",
+        "idealisiert oder dramatisiert erzählte Alltagsszenen"
+      ],
+      "period": "besonders im 19. Jahrhundert, mit älteren Vorläufern",
+      "range": [
+        1800,
+        1900
+      ],
+      "artists": [
+        "Eugène Delacroix",
+        "Jean-Léon Gérôme",
+        "Théodore Chassériau"
+      ],
+      "caution": "Das Motiv ist keine neutrale Dokumentation einer Kultur. Wer schaut auf wen – und für welches Publikum?",
+      "sources": [
+        "orientalism"
+      ]
+    },
+    "Macchiaioli": {
+      "kind": "Künstlerkreis",
+      "definition": "Toskanische Maler bauen Formen durch zusammenhängende Hell-Dunkel- und Farbflecken auf und wenden sich dem beobachteten Leben zu.",
+      "clues": [
+        "klar zusammengefasste Licht- und Schattenflecken",
+        "kompakte Farbmassen statt vieler kleiner Punkte",
+        "unspektakuläre Szenen unter natürlichem Licht"
+      ],
+      "period": "besonders seit den 1850er-Jahren in der Toskana, mit wichtigen späteren Fortsetzungen",
+      "range": [
+        1855,
+        1880
+      ],
+      "artists": [
+        "Giovanni Fattori",
+        "Silvestro Lega",
+        "Telemaco Signorini"
+      ],
+      "caution": "Macchia bedeutet Fleck. Ähnlichkeiten mit Impressionismus dürfen die eigenständige italienische Entwicklung nicht verdecken.",
+      "sources": [
+        "macchiaioli",
+        "macchiaioliArtists"
+      ]
+    },
+    "Kretische Schule": {
+      "kind": "Regionale Tradition",
+      "definition": "Postbyzantinische Ikonenmalerei auf venezianisch beherrschtem Kreta verbindet überlieferte Bildordnungen mit westlichen Einflüssen.",
+      "clues": [
+        "klar geführte, stilisierte Gewandlinien",
+        "hierarchisch geordnete religiöse Figuren",
+        "Goldgrund oder symbolisch organisierte Bildräume"
+      ],
+      "period": "besonders im 15.–17. Jahrhundert; nach 1669 wurde die Tradition unter anderem auf den Ionischen Inseln fortgeführt",
+      "range": [
+        1400,
+        1669
+      ],
+      "artists": [
+        "Angelos Akotantos",
+        "Michael Damaskinos",
+        "Emmanuel Tzanes"
+      ],
+      "caution": "Eine Ikone ist nicht automatisch kretisch; die Zuordnung braucht auch Werkstatt- und Herkunftsnachweise.",
+      "sources": [
+        "cretan",
+        "icons"
+      ]
+    },
+    "Ionische Schule": {
+      "kind": "Regionale Tradition",
+      "definition": "Auf den Ionischen Inseln begegnen sich postbyzantinische Traditionen und westliche Malerei; zunehmend gewinnen Körpermodellierung und illusionistischer Raum Gewicht.",
+      "clues": [
+        "modellierte Körper statt rein linearer Figuren",
+        "räumlich gedachte Architekturen",
+        "westlich beeinflusste Licht-Schatten-Wirkungen"
+      ],
+      "period": "besonders im 18. und 19. Jahrhundert, auf älteren Inseltraditionen aufbauend",
+      "range": [
+        1700,
+        1900
+      ],
+      "artists": [
+        "Panagiotis Doxaras",
+        "Nikolaos Doxaras",
+        "Nikolaos Koutouzis"
+      ],
+      "caution": "Die Übergänge sind allmählich. Inselherkunft allein beweist nicht eine bestimmte Malweise.",
+      "sources": [
+        "ionian",
+        "icons"
+      ]
+    }
   },
   "workNotes": {
-    "wd-Q1195610": {"text":"Dieses Gemälde ist die bewusst zugelassene anonyme Ausnahme: Die richtige Künstlerangabe lautet „Unbekannter Künstler“, nicht Rembrandt. Die Gemäldegalerie Berlin zog die frühere Rembrandt-Zuschreibung 1986 nach technischen und kunsthistorischen Untersuchungen zurück. Heute gilt das Bild als Arbeit aus seinem Umkreis, wahrscheinlich Amsterdam 1650–1660. „Umkreis“ benennt einen Zusammenhang, keinen gesicherten Urheber. Es ist ein historisches Original unbekannter Hand und keine KI-Fälschung.","sources":["goldhelm"]},
-    "wd-Q128910": {"text":"Leonardos Abendmahl ist kein Fresko: Er arbeitete auf trockenem Putz und konnte dadurch langsamer malen und Änderungen vornehmen. Diese experimentelle Technik ist empfindlich. Die Spielkategorie lautet deshalb Secco-Wandmalerei.","sources":["lastSupper"]},
-    "met-204758": {"text":"Das Met besitzt Canovas Fassung von 1804–1806, nicht die frühere Statue im Vatikan. Das mythologische Motiv und die ruhig geordnete Körperhaltung passen zum Klassizismus; den konkreten Marmor und diese Datierung belegt der Museumskatalog.","sources":["canova"]},
-    "cma-1918.328": {"text":"Die Datierung 1875–1876 bezeichnet das Modell. Diesen konkreten Bronzeguss gab Ralph King erst 1916 bei Rodin in Auftrag; der Künstler beaufsichtigte seine Herstellung. Aufnahme des Fotos, Modelljahr und Herstellung der gezeigten Fassung sind also verschiedene Dinge.","sources":["rodinBronze"]},
-    "cma-1980.158": {"text":"White fotografierte The Arbor 1906; die hier gezeigte Fotogravüre wurde 1908 gedruckt. Es gibt auch einen Platindruck desselben Motivs im Archiv. Das Motiv bestimmt nicht das Abzugsverfahren: Bei der Technik zählt die konkret gezeigte Museumsfassung.","sources":["whiteArbor","photogravure"]},
-    "cma-2019.22": {"text":"Stieglitz ordnet Menschen, Decks und Schiffsteile zu einem Gefüge aus Formen. Cleveland beschreibt das Bild als einen Schritt vom Piktorialismus zur Moderne. Das Aufnahmejahr 1907 ist belegt; ein davon abweichendes Druckjahr nennt dieser Datensatz nicht und wird hier nicht aus einer anderen Museumsfassung übernommen.","sources":["steerage"]},
-    "aic-142570": {"text":"Die roten und blauen Papierstücke sind hier keine bloß gemalten Flächen: Mondrian untersuchte ihre Wirkung durch Aufkleben. Der Katalog dokumentiert Collage, Gouache und Kohle. Die Studie zeigt, dass eine scheinbar einfache rechtwinklige Ordnung sorgfältig erarbeitet wurde.","sources":["mondrianStudy"]},
-    "wd-Q698487": {"text":"Beim Kuss lohnt sich der Vergleich zwischen den modellierten Gesichtern und den flächigen Gewandmustern. Das Metall ist nicht nur goldgelbe Farbe: Das Belvedere dokumentiert Blattgold, Silber und Platin. Das Museum datiert heute um 1907–1909; die Spielangabe 1907–1908 ist enger gefasst.","sources":["klimt"]},
-    "aic-27992": {"text":"La Grande Jatte wurde 1886 in der letzten gemeinsamen Impressionistenausstellung gezeigt, obwohl Seurats systematischer Farbaufbau bereits einen neuen Weg einschlug. Ein Ausstellungszusammenhang und die Stilzuordnung müssen also nicht identisch sein.","sources":["post"]},
-    "wd-Q62061526": {"text":"Bei Kollwitz ist Druckgrafik kein Nebenfach. Sie arbeitete mit verschiedenen Druckverfahren; deshalb wäre der Künstlername allein noch kein Beweis für Radierung statt Holzschnitt oder Lithografie.","sources":["intaglio","woodcut"]}
+    "wd-Q1195610": {
+      "text": "Dieses Gemälde ist die bewusst zugelassene anonyme Ausnahme: Die richtige Künstlerangabe lautet „Unbekannter Künstler“, nicht Rembrandt. Die Gemäldegalerie Berlin zog die frühere Rembrandt-Zuschreibung 1986 nach technischen und kunsthistorischen Untersuchungen zurück. Heute gilt das Bild als Arbeit aus seinem Umkreis, wahrscheinlich Amsterdam 1650–1660. „Umkreis“ benennt einen Zusammenhang, keinen gesicherten Urheber. Es ist ein historisches Original unbekannter Hand und keine KI-Fälschung.",
+      "sources": [
+        "goldhelm"
+      ]
+    },
+    "wd-Q128910": {
+      "text": "Leonardos Abendmahl ist kein Fresko: Er arbeitete auf trockenem Putz und konnte dadurch langsamer malen und Änderungen vornehmen. Diese experimentelle Technik ist empfindlich. Die Spielkategorie lautet deshalb Secco-Wandmalerei.",
+      "sources": [
+        "lastSupper"
+      ]
+    },
+    "met-204758": {
+      "text": "Das Met besitzt Canovas Fassung von 1804–1806, nicht die frühere Statue im Vatikan. Das mythologische Motiv und die ruhig geordnete Körperhaltung passen zum Klassizismus; den konkreten Marmor und diese Datierung belegt der Museumskatalog.",
+      "sources": [
+        "canova"
+      ]
+    },
+    "cma-1918.328": {
+      "text": "Die Datierung 1875–1876 bezeichnet das Modell. Diesen konkreten Bronzeguss gab Ralph King erst 1916 bei Rodin in Auftrag; der Künstler beaufsichtigte seine Herstellung. Aufnahme des Fotos, Modelljahr und Herstellung der gezeigten Fassung sind also verschiedene Dinge.",
+      "sources": [
+        "rodinBronze"
+      ]
+    },
+    "cma-1980.158": {
+      "text": "White fotografierte The Arbor 1906; die hier gezeigte Fotogravüre wurde 1908 gedruckt. Es gibt auch einen Platindruck desselben Motivs im Archiv. Das Motiv bestimmt nicht das Abzugsverfahren: Bei der Technik zählt die konkret gezeigte Museumsfassung.",
+      "sources": [
+        "whiteArbor",
+        "photogravure"
+      ]
+    },
+    "cma-2019.22": {
+      "text": "Stieglitz ordnet Menschen, Decks und Schiffsteile zu einem Gefüge aus Formen. Cleveland beschreibt das Bild als einen Schritt vom Piktorialismus zur Moderne. Das Aufnahmejahr 1907 ist belegt; ein davon abweichendes Druckjahr nennt dieser Datensatz nicht und wird hier nicht aus einer anderen Museumsfassung übernommen.",
+      "sources": [
+        "steerage"
+      ]
+    },
+    "aic-142570": {
+      "text": "Die roten und blauen Papierstücke sind hier keine bloß gemalten Flächen: Mondrian untersuchte ihre Wirkung durch Aufkleben. Der Katalog dokumentiert Collage, Gouache und Kohle. Die Studie zeigt, dass eine scheinbar einfache rechtwinklige Ordnung sorgfältig erarbeitet wurde.",
+      "sources": [
+        "mondrianStudy"
+      ]
+    },
+    "wd-Q698487": {
+      "text": "Beim Kuss lohnt sich der Vergleich zwischen den modellierten Gesichtern und den flächigen Gewandmustern. Das Metall ist nicht nur goldgelbe Farbe: Das Belvedere dokumentiert Blattgold, Silber und Platin. Das Museum datiert heute um 1907–1909; die Spielangabe 1907–1908 ist enger gefasst.",
+      "sources": [
+        "klimt"
+      ]
+    },
+    "aic-27992": {
+      "text": "La Grande Jatte wurde 1886 in der letzten gemeinsamen Impressionistenausstellung gezeigt, obwohl Seurats systematischer Farbaufbau bereits einen neuen Weg einschlug. Ein Ausstellungszusammenhang und die Stilzuordnung müssen also nicht identisch sein.",
+      "sources": [
+        "post"
+      ]
+    },
+    "wd-Q62061526": {
+      "text": "Bei Kollwitz ist Druckgrafik kein Nebenfach. Sie arbeitete mit verschiedenen Druckverfahren; deshalb wäre der Künstlername allein noch kein Beweis für Radierung statt Holzschnitt oder Lithografie.",
+      "sources": [
+        "intaglio",
+        "woodcut"
+      ]
+    },
+    "wd-Q2247406": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3978274": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3630745": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3612415": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3769169": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3733425": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3762348": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3842443": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q55429769": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3605519": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3769173": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3948947": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3937737": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q3947174": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q25218172": {
+      "text": "Artemisia Gentileschis genaues Todesdatum ist nicht bekannt: Ein Dokument belegt, dass sie im August 1654 noch lebte. Das häufig genannte Jahr 1656 ist eine Vermutung, kein gesichertes Datum. Diese biografische Unsicherheit ändert nichts an der eigenhändigen Zuschreibung dieses Werks oder seiner Gemeinfreiheit.",
+      "sources": [
+        "artemisiaBiography",
+        "artemisiaRome"
+      ]
+    },
+    "wd-Q252485": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q3565037": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q18173384": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q17227585": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q18173387": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q18173402": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q18173386": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q17210582": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q18173389": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q18173391": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q18173408": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q17209457": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q5826309": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q21127606": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60152106": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60152107": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60152108": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60152109": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60152110": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60152111": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60152112": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60152211": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60175410": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    },
+    "wd-Q60175448": {
+      "text": "Bei japanischen Holzschnitten bezeichnet die Datierung den Entwurf beziehungsweise die historische Veröffentlichung des Motivs. Von denselben Druckstöcken konnten mehrere Abzüge entstehen; Zustand, Farben und Druckdatum können deshalb voneinander abweichen. Die App zählt jede hier ausgewählte Komposition nur einmal, nicht jeden Museumsabzug als eigenes Werk.",
+      "sources": [
+        "ukiyoe"
+      ]
+    }
   }
 }
