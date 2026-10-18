@@ -30,7 +30,7 @@
  .print-section-title{font-size:14pt;font-weight:400;color:#9c2924;margin:23.2pt 0 11.6pt;line-height:23.2pt;}
  .pagedjs_page_content .print-paragraph{text-indent:1em;text-align:left;hyphens:none;line-height:23.2pt;margin:0;}
  .pagedjs_page_content .print-chapter-start{display:flow-root;text-indent:0;}
- .print-chapter-start:not([data-split-from])::first-letter{float:left;font-family:'Fondamento',cursive;font-weight:400;font-size:42pt;line-height:42pt;color:#a52e27;margin:0 4pt 0 0;}
+ .print-chapter-start:not([data-split-from])::first-letter{float:left!important;font-family:'Fondamento',cursive!important;font-weight:400!important;font-size:42pt!important;line-height:42pt!important;color:#a52e27!important;margin:0 4pt 0 0!important;}
  .pagedjs_page_content .print-paragraph[data-split-from]{text-indent:0;}
  .pagedjs_margin-content{font-family:'Fondamento',cursive!important;color:#8a3028;}
  .reader-blank-page{background:#fbf4e1!important;}
