@@ -1,0 +1,11 @@
+.longtext-grauwert-tools{margin:18px 0;padding:18px 20px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:4px}
+.longtext-grauwert-tools h4{font:600 18px/1.4 var(--sans);margin:0 0 12px}
+.longtext-grauwert-buttons{display:flex;flex-wrap:wrap;gap:8px}
+.longtext-grauwert-tools button{font:500 14px/1.4 var(--sans);min-height:44px;padding:10px 14px}
+.longtext-grauwert-tools button[aria-pressed=true]:not(:disabled){background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.longtext-grauwert-tools button:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.longtext-grauwert-tools p{font:400 14px/1.6 var(--sans);margin:12px 0 0;max-width:90ch}
+/* The renderer keeps paging, zoom and full-screen controls crisp. */
+@media screen{#print-pages.grauwert-distance .pagedjs_page_content{filter:blur(1.5px)}}
+.reader-navigation .grauwert-preview-toggle[aria-pressed=true]{background:var(--ink,#18251e);color:var(--paper,#fff)}
+@media print{.longtext-grauwert-tools{display:none!important}#print-pages.grauwert-distance .pagedjs_page_content{filter:none!important}}
