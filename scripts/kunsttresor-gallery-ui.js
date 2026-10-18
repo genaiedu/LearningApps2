@@ -9,6 +9,7 @@
     const likeReadiness=new WeakMap();
     const audio=new Audio('../LearningApps/assets/kunst-der-fuge/fuge-orchester-suno.mp3');audio.preload='metadata';audio.volume=.65;
     const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+    let filterTimer=0,layoutFrame=0;
     function node(tag,cls,text) {const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
     function button(label,fn,cls) {const e=node('button',cls,label);e.type='button';e.onclick=fn;return e;}
     function status(message) {$('gallery-status').textContent=message;}
@@ -25,17 +26,23 @@
       if(!$('gallery-dialog').open||!width||!cards.length){grid.style.height='';return;}
       const gap=8,ratios=cards.map(card=>{const img=card.querySelector('img');return img?.naturalWidth?img.naturalWidth/img.naturalHeight:Number(card.dataset.galleryAspect)||1;});
       const rows=root.KunstWallLayout.rows(ratios,width,{gap,target:innerWidth<=760?210:320});let y=0;
+      // Batch writes and measurements: a complete archive must not force a
+      // separate page reflow for each of its 1,800+ cards.
       for(const row of rows){
-        let height=row.height;
         for(const item of row.items){const card=cards[item.index];
-          Object.assign(card.style,{left:item.x+'px',top:y+'px',width:item.width+'px'});
+          Object.assign(card.style,{left:item.x+'px',width:item.width+'px'});
           card.querySelector('.gallery-image').style.height=row.height+'px';
-          height=Math.max(height,card.getBoundingClientRect().height);
         }
+      }
+      const heights=cards.map(card=>card.getBoundingClientRect().height);
+      for(const row of rows){
+        const height=Math.max(row.height,...row.items.map(item=>heights[item.index]));
+        for(const item of row.items)cards[item.index].style.top=y+'px';
         y+=height+gap;
       }
       grid.style.height=y-gap+'px';
     }
+    function scheduleGalleryLayout(){if(!layoutFrame)layoutFrame=requestAnimationFrame(()=>{layoutFrame=0;layoutGallery();});}
     function refresh() {
       const gallery=getGallery(), unlocked=gallery.liked.length>=model.UNLOCK;
       $('gallery-progress').textContent=progressText();$('gallery-summary').textContent=progressText();
@@ -71,15 +78,33 @@
     function imageButton(work) {
       const b=button('',()=>imagesAllowed()?showImage(work,b):requestImages(),'gallery-image');
       b.setAttribute('aria-label',title(work)+' vergrößern');
-      if(imagesAllowed()){const img=node('img');img.alt=title(work);img.loading='lazy';img.referrerPolicy='no-referrer';img.onload=layoutGallery;img.onerror=layoutGallery;img.src=work.imageURL;b.append(img);}
+      if(imagesAllowed()){const img=node('img');img.alt=title(work);img.loading='lazy';img.referrerPolicy='no-referrer';img.onload=scheduleGalleryLayout;img.onerror=scheduleGalleryLayout;img.src=work.imageURL;b.append(img);}
       else b.append(node('span',null,'Kunstbilder erlauben'));
       return b;
     }
-    function renderGallery() {
+    function currentView(){return {search:$('gallery-search').value,artist:$('gallery-filter-artist').value,style:$('gallery-filter-style').value,technique:$('gallery-filter-technique').value,sort:$('gallery-sort').value};}
+    function renderFilters(works){
+      const view=currentView();
+      // A removed work may have been the last member of a filter. Keep all
+      // still-valid selections, but never leave an invisible stale value.
+      for(const field of ['artist','style','technique'])if(view[field]&&!works.some(work=>work[field]===view[field]))view[field]='';
+      for(const [field,all] of [['artist','Alle Künstler'],['style','Alle Stile'],['technique','Alle Techniken']]){
+        const select=$('gallery-filter-'+field),first=node('option',null,all);first.value='';select.replaceChildren(first);
+        for(const {value,count} of model.viewFacets(works,view,field)){const option=node('option',null,value+' · '+count);option.value=value;option.disabled=count===0&&value!==view[field];select.append(option);}
+        select.value=view[field];
+      }
+      $('gallery-filter-reset').disabled=!view.search&&!view.artist&&!view.style&&!view.technique&&view.sort==='collection';
+      return view;
+    }
+    function renderGallery({editor=true}={}) {
       const gallery=getGallery(), selected=new Set(gallery.film.items.map(item=>item.id));
+      const entries=new Map(gallery.liked.map(entry=>[entry.id,entry]));
+      const works=gallery.liked.map(entry=>byId.get(entry.id)),view=renderFilters(works),visible=model.viewWorks(works,view);
+      $('gallery-results').textContent=visible.length.toLocaleString('de-DE')+' von '+works.length.toLocaleString('de-DE')+' Werken angezeigt · Filter ändern weder deine Sammlung noch die Filmauswahl.';
       $('gallery-grid').replaceChildren();
       if(!gallery.liked.length)$('gallery-grid').append(node('p','gallery-empty','Deine Galerie beginnt nach der ersten gewonnenen Tür. Markiere dann die Werke, die du behalten möchtest, mit dem Herz.'));
-      for(const entry of gallery.liked){const work=byId.get(entry.id), card=node('article','gallery-card');
+      else if(!visible.length)$('gallery-grid').append(node('p','gallery-empty','Keine Werke passen zu dieser Kombination. Ändere die Filter oder wähle „Ansicht zurücksetzen“.'));
+      for(const work of visible){const entry=entries.get(work.id),card=node('article','gallery-card');card.dataset.work=work.id;
         if(work.imageWidth&&work.imageHeight)card.dataset.galleryAspect=String(work.imageWidth/work.imageHeight);
         card.append(imageButton(work));
         const details=node('details','gallery-card-details'),summary=node('summary'),actions=node('div','gallery-card-actions');
@@ -97,7 +122,7 @@
         const sources=node('p','gallery-source');
         for(const [label,url] of [['Werkquelle',work.source],['Bildrechte: '+work.imageLicense,work.imageSource]]){const link=node('a',null,label);link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.referrerPolicy='no-referrer';sources.append(link,node('span',null,' '));}details.append(sources);
       }
-      renderEditor();refresh();layoutGallery();
+      if(editor)renderEditor();refresh();layoutGallery();
     }
     function editItem(index,patch) {
       const g=getGallery(), items=g.film.items.map((item,i)=>i===index?{...item,...patch}:item);
@@ -129,6 +154,13 @@
       });
     }
     function openGallery() {renderGallery();status('');$('gallery-dialog').showModal();layoutGallery();}
+    function applyView(){clearTimeout(filterTimer);renderGallery({editor:false});}
+    $('gallery-search').oninput=()=>{clearTimeout(filterTimer);filterTimer=setTimeout(applyView,140);};
+    for(const id of ['gallery-filter-artist','gallery-filter-style','gallery-filter-technique','gallery-sort'])$(id).onchange=applyView;
+    $('gallery-filter-reset').onclick=()=>{
+      for(const id of ['gallery-search','gallery-filter-artist','gallery-filter-style','gallery-filter-technique'])$(id).value='';
+      $('gallery-sort').value='collection';applyView();
+    };
     addEventListener('resize',layoutGallery);
     document.fonts?.ready.then(layoutGallery);
     function stopFilm() {

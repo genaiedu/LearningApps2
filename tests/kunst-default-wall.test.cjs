@@ -85,6 +85,23 @@ test('gallery-only import previews and merges curated works without changing gam
  const restored=await setup(t,{state:roomOf(app),gallery:JSON.parse(app.w.localStorage.getItem('kunsttresor-wall-gallery-v1'))});assert.equal(JSON.parse(restored.w.localStorage.getItem('kunsttresor-wall-gallery-v1')).liked.length,24);
 });
 const stored=storage=>Object.fromEntries(Array.from({length:storage.length},(_,i)=>{const key=storage.key(i);return[key,storage.getItem(key)];}));
+test('gallery filter controls combine, count, sort and reset without changing likes, film or game',async t=>{
+ const at=Date.now(),gallery={...model.KunstGallery.fresh(),liked:pool.map(w=>({id:w.id,source:'curated',at}))};gallery.film.items=pool.slice(0,10).map(w=>model.KunstGallery.item(w.id));
+ const app=await setup(t,{gallery});app.click('launch-read');app.click('game-gallery');
+ const before=stored(app.w.localStorage),cards=()=>[...app.q('#gallery-grid').querySelectorAll('.gallery-card')].map(c=>c.dataset.work);
+ assert.equal(cards().length,1807);assert.match(app.q('#gallery-results').textContent,/1\.807 von 1\.807/);
+ const choose=(id,value)=>{app.q('#'+id).value=value;app.q('#'+id).dispatchEvent(new app.w.Event('change'));};
+ const target=pool.find(w=>w.artist==='Claude Monet');assert.ok(target);
+ choose('gallery-filter-artist',target.artist);assert.ok(cards().length>1);assert.ok(cards().every(id=>pool.find(w=>w.id===id).artist===target.artist));
+ choose('gallery-filter-style',target.style);choose('gallery-filter-technique',target.technique);
+ const expected=pool.filter(w=>w.artist===target.artist&&w.style===target.style&&w.technique===target.technique);
+ assert.equal(cards().length,expected.length);
+ app.q('#gallery-search').value='NOT A REAL WORK';choose('gallery-sort','title');assert.equal(cards().length,0);assert.match(app.q('.gallery-empty').textContent,/Keine Werke/);
+ assert.equal(app.q('#gallery-filter-reset').disabled,false);app.click('gallery-filter-reset');assert.deepEqual(cards(),pool.map(w=>w.id));
+ choose('gallery-sort','date-desc');const dates=cards().map(id=>{const w=pool.find(w=>w.id===id);return w.dateStart??model.KunstTresor.dateWindow(w.date)?.start;}).filter(Number.isFinite);assert.ok(dates.every((date,i)=>!i||date<=dates[i-1]));
+ app.q('#gallery-dialog').close();app.click('game-gallery');assert.equal(app.q('#gallery-sort').value,'date-desc');
+ assert.deepEqual(stored(app.w.localStorage),before);assert.equal(app.q('#art-grid [data-gallery-like]'),null);
+});
 const pressRule=(app,n)=>app.q('.rule-steps > li:nth-child('+n+') > button').click();
 test('1 → 2 → 4 opens a safely focused reset confirmation; cancellation keeps every saved value',async t=>{
  const app=await setup(t,{preferences:{[secretKey]:'yes','kunsttresor-best-v1-wall':'9'}});app.click('launch-read');

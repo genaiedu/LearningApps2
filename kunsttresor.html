@@ -16,9 +16,9 @@
   <script defer src="scripts/kunsttresor-ki-config.js?v=20261016-kurator-automatisch"></script>
   <script defer src="scripts/kunsttresor-progress.js?v=20261017-museumsauftrag"></script>
   <script defer src="scripts/kunsttresor-history.js?v=20261017-portraets-bildrunde"></script>
-  <script defer src="scripts/kunsttresor-gallery.js?v=20261018-galerie-dateien"></script>
+  <script defer src="scripts/kunsttresor-gallery.js?v=20261018-galerie-filter"></script>
   <script defer src="scripts/kunsttresor-layout.js?v=20261017-wall18"></script>
-  <script defer src="scripts/kunsttresor-gallery-ui.js?v=20261018-original-herz"></script>
+  <script defer src="scripts/kunsttresor-gallery-ui.js?v=20261018-galerie-filter"></script>
   <script defer src="scripts/kunsttresor-save.js?v=20261018-galerie-dateien"></script>
   <script defer src="scripts/kunsttresor-zoom.js?v=20261017-ruhige-anzeige-pinch"></script>
   <script defer src="scripts/kunsttresor-intro.js?v=20261011-vorspann-bereit"></script>
@@ -26,7 +26,7 @@
   <script defer src="scripts/kunsttresor.js?v=20261018-fehler-zuerst"></script>
   <script defer src="scripts/wikipedia-math.js"></script>
   <script defer src="scripts/schroedinger-wikipedia.js"></script>
-<link rel="stylesheet" href="styles/kunsttresor-wall.css?v=20261017-portraets-bildrunde"><script defer src="scripts/kunsttresor-wall.js?v=20261017-ruhige-anzeige-pinch"></script></head>
+<link rel="stylesheet" href="styles/kunsttresor-wall.css?v=20261018-galerie-filter"><script defer src="scripts/kunsttresor-wall.js?v=20261017-ruhige-anzeige-pinch"></script></head>
 <body class="editorial-app app-gallery">
   <a class="skip" href="#spiel">Zum Spiel springen</a>
   <header class="masthead"><a class="brand editorial-wordmark" href="#start"><strong>KUNST</strong><span>TRESOR</span></a><span class="edition">Ein Museum. Viele Türen.</span><button class="quiet" id="restart-top" type="button">Neu beginnen</button></header>
@@ -72,6 +72,14 @@
       <div class="gallery-reward"><div><h3>Deine Lieblingswerke. Dein Kunstfilm.</h3><p id="gallery-progress" role="status" aria-live="polite">Nach gewonnenen Räumen kannst du Werke mit dem Herz sammeln. Ab 20 Lieblingswerken wird dein eigener Kunstfilm freigeschaltet.</p></div><button id="open-gallery" type="button" aria-haspopup="dialog" disabled>Meine Galerie <span id="gallery-count">0</span></button></div>
       <dialog id="gallery-dialog" class="gallery-dialog" aria-labelledby="gallery-title">
         <div class="dialog-head gallery-toolbar"><div><h2 id="gallery-title">Deine persönliche Galerie.</h2><p id="gallery-summary" class="gallery-summary"></p></div><div class="gallery-actions"><button id="gallery-edit-open" type="button" disabled>Film gestalten</button><button id="gallery-play" class="primary" type="button" disabled>Kunstfilm vorbereiten</button><button id="gallery-export" type="button">Galerie &amp; Film sichern</button><button type="button" data-close="gallery-dialog">Schließen ×</button></div></div>
+        <div class="gallery-filters" role="search" aria-label="Galerie filtern und sortieren">
+          <label>Werke suchen<input id="gallery-search" type="search" placeholder="Titel, Künstler, Stil …" autocomplete="off" aria-controls="gallery-grid"></label>
+          <label>Künstler<select id="gallery-filter-artist" aria-controls="gallery-grid"><option value="">Alle Künstler</option></select></label>
+          <label>Stil<select id="gallery-filter-style" aria-controls="gallery-grid"><option value="">Alle Stile</option></select></label>
+          <label>Technik<select id="gallery-filter-technique" aria-controls="gallery-grid"><option value="">Alle Techniken</option></select></label>
+          <label>Sortieren nach<select id="gallery-sort" aria-controls="gallery-grid"><option value="collection">Sammlungsreihenfolge</option><option value="artist">Künstler · A–Z</option><option value="style">Stil · A–Z</option><option value="technique">Technik · A–Z</option><option value="title">Werktitel · A–Z</option><option value="date-asc">Entstehung · älteste zuerst</option><option value="date-desc">Entstehung · neueste zuerst</option></select></label>
+          <button id="gallery-filter-reset" type="button" disabled>Ansicht zurücksetzen</button>
+        </div><p id="gallery-results" role="status" aria-live="polite" class="gallery-results"></p>
         <p class="visually-hidden">Nach gewonnenen Räumen sammelst du hier deine Lieblingswerke. Deine Galerie bleibt über neue Runden hinweg erhalten.</p><p id="gallery-status" role="status" aria-live="polite" class="small"></p><div id="gallery-grid" class="gallery-grid"></div>
         <section id="gallery-editor" class="gallery-editor" hidden aria-labelledby="gallery-edit-title"><p class="eyebrow">Dein Schnitt. Deine Worte.</p><h2 id="gallery-edit-title">Ein Film aus deiner Sammlung.</h2><p>6 bis 10 Werke geben Details und vollständigen Ansichten Raum. Zuerst siehst du alle Detailfahrten, danach nacheinander alle vollständigen Werke. Die Orchesterfassung läuft ganz: rund 2 Minuten 8 Sekunden. Der Film wird hier abgespielt; die JSON-Datei speichert deine Auswahl und Gestaltung, keine Videodatei.</p><div class="gallery-name-fields"><label>Name deiner Galerie<input id="gallery-name" type="text" maxlength="80" autocomplete="off"></label><label>Handschriftliches Schlussmotto<textarea id="gallery-motto" maxlength="180" rows="3"></textarea></label></div><button id="gallery-auto" type="button">8 Lieblingswerke zusammenstellen</button><p id="film-selection-count" class="small"></p><ol id="film-selection" class="film-selection"></ol><p class="small">Du kannst oben weitere gelikte Werke hinzufügen. Entfernen aus dem Film lässt das Werk in deiner Galerie. Alle Änderungen werden automatisch im Browser und beim JSON-Export gespeichert. Einblendungen sind redaktionelle Impulse zu Stil und Material, keine automatische Bildanalyse; eigene Texte bleiben ebenfalls lokal. Die Musik stammt wie im Vorspann aus der Fugen-App. Reduzierte Bewegung ersetzt die Kamerafahrt durch ruhige Ansichten.</p></section>
       </dialog>

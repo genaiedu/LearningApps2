@@ -20,18 +20,21 @@ function select(filter) {
   if(selected.length!==80)throw Error('Not enough suitable works');
   return selected;
 }
-const destination=path.resolve(process.argv[2]||path.join(root,'..','output','Kunsttresor'));
+const args=process.argv.slice(2),onlyAll=args.includes('--all');
+const destination=path.resolve(args.find(arg=>arg!=='--all')||path.join(root,'..','output','Kunsttresor'));
 fs.mkdirSync(destination,{recursive:true});
 const result=[];
 for(const [slug,name,motto,filter] of [
   ['impressionismus','Impressionisten','Licht, Farbe und der flüchtige Augenblick.',w=>w.style==='Impressionismus'&&impressionists.has(curator.artistKey(w.artist))],
-  ['moderne','Klassische Moderne','Neue Formen. Neue Farben. Neue Blicke.',w=>modernStyles.has(w.style)]
+  ['moderne','Klassische Moderne','Neue Formen. Neue Farben. Neue Blicke.',w=>modernStyles.has(w.style)],
+  ['alle-bilder','Das gesamte Kunstarchiv','Viele Zeiten. Viele Stile. Ein offener Blick.',null]
 ]) {
-  const works=select(filter),at=Date.now();
+  if(onlyAll&&slug!=='alle-bilder')continue;
+  const works=filter?select(filter):[...pool],at=Date.now();
   const collection={...gallery.fresh(),liked:works.map(w=>({id:w.id,source:'curated',at})),film:{name,motto,items:works.slice(0,10).map(w=>gallery.item(w.id))}};
   const payload={app:save.APP,version:save.VERSION,kind:'gallery',savedAt:at,gallery:collection};
   const content=await save.encode(payload),checked=save.validate(await save.decode(content),pool,archive.replacements||[],core,progress,history,gallery);
-  if(!checked.galleryOnly||checked.gallery.liked.length!==80||!gallery.validateFilm(checked.gallery))throw Error('Invalid gallery export');
+  if(!checked.galleryOnly||checked.gallery.liked.length!==works.length||!gallery.validateFilm(checked.gallery))throw Error('Invalid gallery export');
   const filename='kunsttresor-galerie-'+slug+'.json',file=path.join(destination,filename);
   fs.writeFileSync(file,content+'\n');
   result.push({name,file,filename,works:works.length,artists:new Set(works.map(w=>curator.artistKey(w.artist))).size,filmWorks:10});

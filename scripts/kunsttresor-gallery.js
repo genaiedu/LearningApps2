@@ -45,6 +45,41 @@
   function removeFromFilm(gallery,id) {
     return {...gallery,film:{...gallery.film,items:gallery.film.items.filter(item=>item.id!==id)}};
   }
+  const viewFields=['artist','style','technique'];
+  const dateCore=root.KunstTresor||(typeof require==='function'?require('./kunsttresor-core.js'):null);
+  const collator=new Intl.Collator('de',{sensitivity:'base',numeric:true});
+  function viewYear(work){
+    if(Number.isFinite(work.dateStart))return work.dateStart;
+    const period=dateCore?.dateWindow(work.date);
+    return Number.isFinite(period?.start)?period.start:Number.isFinite(period?.end)?period.end:null;
+  }
+  const searchable=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('de').replace(/ß/g,'ss');
+  function matchesView(work,view,except) {
+    if(viewFields.some(field=>field!==except&&view[field]&&work[field]!==view[field]))return false;
+    const words=searchable(view.search).trim().split(/\s+/).filter(Boolean);
+    const haystack=searchable([work.titleDe,work.title,work.artist,work.style,work.technique,work.date].join(' '));
+    return words.every(word=>haystack.includes(word));
+  }
+  function viewWorks(works,view={}) {
+    const result=works.filter(work=>matchesView(work,view));
+    if(!view.sort||view.sort==='collection')return result;
+    const title=work=>work.titleDe||work.title;
+    const compare=(a,b)=>collator.compare(a,b);
+    const secondary=(a,b)=>compare(title(a),title(b))||compare(a.artist,b.artist)||compare(a.id,b.id);
+    if(viewFields.includes(view.sort))result.sort((a,b)=>compare(a[view.sort],b[view.sort])||secondary(a,b));
+    else if(view.sort==='title')result.sort(secondary);
+    else if(['date-asc','date-desc'].includes(view.sort))result.sort((a,b)=>{
+      const left=viewYear(a),right=viewYear(b);
+      return left===null?right===null?secondary(a,b):1:right===null?-1:(view.sort==='date-desc'?-1:1)*(left-right)||secondary(a,b);
+    });
+    return result;
+  }
+  function viewFacets(works,view={},field) {
+    if(!viewFields.includes(field))return [];
+    const counts=new Map(works.map(work=>[work[field],0]));
+    for(const work of works)if(matchesView(work,view,field))counts.set(work[field],counts.get(work[field])+1);
+    return [...counts].sort((a,b)=>collator.compare(a[0],b[0])).map(([value,count])=>({value,count}));
+  }
   function merge(left,right) {
     const liked=new Map(left.liked.map(entry=>[entry.id,entry]));
     right.liked.forEach(entry=>{if(!liked.has(entry.id))liked.set(entry.id,entry);});
@@ -84,6 +119,6 @@
     const technique=texts?.techniques?.[work.technique]?.[item.variant]||work.technique;
     return item.caption==='style'?style:item.caption==='technique'?technique:style+'\n'+technique;
   }
-  const api={UNLOCK,MIN,MAX,DEFAULT,modes,fresh,winningRoom,restore,like,remove,removeFromFilm,merge,item,automatic,validateFilm,timeline,frameAt,caption};
+  const api={UNLOCK,MIN,MAX,DEFAULT,modes,fresh,winningRoom,restore,like,remove,removeFromFilm,viewWorks,viewFacets,merge,item,automatic,validateFilm,timeline,frameAt,caption};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.KunstGallery=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

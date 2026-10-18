@@ -96,6 +96,15 @@ html.kunst-wall{--paper:#24382e;--ink:#24382e;--night:#f6f6f3;--muted:#52645a;--
 .kunst-wall .gallery-summary{padding:0;margin:4px 0 0;border:0;font-size:12px;line-height:1.4}
 .kunst-wall .gallery-actions{gap:6px;margin:0;padding:0;border:0;background:transparent;flex-wrap:wrap}
 .kunst-wall .gallery-actions button{font-size:12px;padding:9px 12px;min-height:38px}
+.kunst-wall .gallery-filters{display:grid;grid-template-columns:minmax(150px,1.25fr) repeat(3,minmax(130px,1fr)) minmax(170px,1.1fr) auto;gap:8px;align-items:end;margin:12px 0 6px}
+.kunst-wall .gallery-filters label{display:grid;gap:4px;min-width:0;font:500 12px/1.4 var(--sans);color:var(--paper)}
+.kunst-wall .gallery-filters :is(input,select){width:100%;min-width:0;min-height:44px;padding:9px 10px;border:1px solid #bbc9c0;border-radius:6px;background:#f7f9f7;color:#24382e;font:400 14px/1.4 var(--sans);font-variant-ligatures:common-ligatures;font-variant-numeric:lining-nums tabular-nums}
+.kunst-wall .gallery-filters input::placeholder{color:#52645a;opacity:1}
+.kunst-wall .gallery-filters button{min-height:44px;padding:9px 12px;font-size:12px}
+.kunst-wall .gallery-filters :is(input,select,button):focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.kunst-wall .gallery-dialog>.gallery-results{font:400 12px/1.5 var(--sans);font-variant-numeric:lining-nums tabular-nums;color:var(--muted);margin:6px 0}
+@media(max-width:1150px){.kunst-wall .gallery-filters{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.kunst-wall .gallery-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.kunst-wall .gallery-filters label:first-child{grid-column:1/-1}.kunst-wall .gallery-filters button{grid-column:1/-1}}
 .kunst-wall .gallery-grid{position:relative;display:block;width:100%;max-width:none;margin:8px 0 0}
 .kunst-wall .gallery-card{position:absolute;display:block;width:100%;padding:0;margin:0;border:0;background:transparent}
 .kunst-wall .gallery-image{display:block;width:100%;height:auto;min-height:0;padding:0;border:0;background:transparent;box-shadow:0 2px 7px #203a2920}

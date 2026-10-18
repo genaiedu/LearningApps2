@@ -2,6 +2,43 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const core=require('../scripts/kunsttresor-core.js'),progress=require('../scripts/kunsttresor-progress.js'),history=require('../scripts/kunsttresor-history.js'),save=require('../scripts/kunsttresor-save.js'),gallery=require('../scripts/kunsttresor-gallery.js');
 const archive=require('../data/kunstarchiv.json'),pool=archive.works,texts=require('../data/kunst-filmtexte.json'),knowledge=require('../data/kunst-glossar.json');
 const seeded=seed=>()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+test('gallery filtering combines artist, style, technique and accent-insensitive search without altering the collection',()=>{
+ const works=[
+  {id:'a',title:'Été à Paris',artist:'Édouard Manet',style:'Impressionismus',technique:'Öl auf Leinwand',date:'1872',dateStart:1872},
+  {id:'b',title:'Das Meer',artist:'Claude Monet',style:'Impressionismus',technique:'Öl auf Leinwand',date:'1882',dateStart:1882},
+  {id:'c',title:'Étude',artist:'Édouard Manet',style:'Realismus',technique:'Pastell',date:'1868',dateStart:1868}
+ ],before=structuredClone(works);
+ assert.deepEqual(gallery.viewWorks(works,{artist:'Édouard Manet',style:'Impressionismus',technique:'Öl auf Leinwand',search:'ete PARIS'}),[works[0]]);
+ assert.equal(gallery.viewWorks(works,{artist:'Claude Monet',technique:'Pastell'}).length,0);
+ assert.deepEqual(gallery.viewWorks(works,{search:'edouard'}).map(w=>w.id),['a','c']);
+ assert.deepEqual(gallery.viewWorks(works,{search:'<script>'}),[]);assert.deepEqual(works,before);
+ assert.deepEqual(gallery.viewWorks(works),works);
+});
+test('gallery sorts every requested field, keeps ties deterministic and counts compatible facet choices',()=>{
+ const works=pool.slice(0,100),before=structuredClone(works),collator=new Intl.Collator('de',{sensitivity:'base',numeric:true});
+ for(const field of ['artist','style','technique','title']){
+  const sorted=gallery.viewWorks(works,{sort:field});
+  for(let i=1;i<sorted.length;i++)assert.ok(collator.compare(sorted[i-1][field],sorted[i][field])<=0,field);
+ }
+ for(const sort of ['date-asc','date-desc']){
+  const sorted=gallery.viewWorks(works,{sort}),year=w=>w.dateStart??core.dateWindow(w.date)?.start;for(let i=1;i<sorted.length;i++)assert.ok((sort==='date-desc'?-1:1)*(year(sorted[i])-year(sorted[i-1]))>=0);
+ }
+ const view={artist:works[0].artist,style:works[0].style};
+ for(const field of ['artist','style','technique'])for(const choice of gallery.viewFacets(works,view,field))assert.equal(choice.count,gallery.viewWorks(works,{...view,[field]:choice.value}).length);
+ assert.deepEqual(gallery.viewFacets(works,view,'unknown'),[]);assert.deepEqual(works,before);
+});
+test('gallery dates respect BCE, catalogue periods and unknown dates in both directions',()=>{
+ const works=[{id:'modern',date:'1902–1905'},{id:'ancient',date:'500 v. Chr.',dateStart:-500},{id:'unknown',date:'unbekannt'},{id:'early',date:'um 1500'}];
+ assert.deepEqual(gallery.viewWorks(works,{sort:'date-asc'}).map(w=>w.id),['ancient','early','modern','unknown']);
+ assert.deepEqual(gallery.viewWorks(works,{sort:'date-desc'}).map(w=>w.id),['modern','early','ancient','unknown']);
+});
+test('a gallery-only file can contain the complete archive with no duplicate works or fabricated game progress',async()=>{
+ const at=Date.now(),g={...gallery.fresh(),liked:pool.map(w=>({id:w.id,source:'curated',at}))};g.film.items=pool.slice(0,10).map(w=>gallery.item(w.id));
+ const payload={app:save.APP,version:save.VERSION,kind:'gallery',savedAt:at,gallery:g};
+ const decoded=save.validate(await save.decode(await save.encode(payload)),pool,[],core,progress,history,gallery);
+ assert.equal(decoded.gallery.liked.length,1807);assert.equal(new Set(decoded.gallery.liked.map(e=>e.id)).size,pool.length);assert.equal(decoded.galleryOnly,true);assert.equal(decoded.state,undefined);
+ assert.equal(gallery.validateFilm(decoded.gallery),true);
+});
 function room(seed=8){return {...core.newState(pool,null,seeded(seed)),roomToken:progress.token(),runToken:progress.token(),parentRoomToken:null};}
 function win(state){for(const id of state.ids)for(const field of core.fields)state=core.choose(state,id,field,pool.find(work=>work.id===id)[field]);return core.inspect(state,pool).state;}
 function fixture(count=24){let g=gallery.fresh(),h=history.fresh(),p=progress.fresh(),s;for(let i=1;g.liked.length<count;i++){
