@@ -81,3 +81,17 @@ test('kerning is explicit on real text, while its teaching switch remains genuin
  assert.equal(controls['kerning-proof'].style.fontKerning,'normal');
  for(const enabled of [false,true,false,true]){controls['kerning-toggle'].checked=enabled;controls['kerning-toggle'].onchange();assert.equal(controls['kerning-proof'].style.fontKerning,enabled?'normal':'none');}
 });
+test('long Word guidance has a distinct reading column and individually wrapping sources',t=>{
+ const s=setup(t),note=s.q('#word-ligaturen'),copy=note.querySelector('.note-reading-copy'),css=read('styles/typografie-ansicht.css');
+ assert.equal(copy.querySelectorAll(':scope>p').length,3);
+ assert.match(copy.textContent,/Nein, darauf kannst du dich nicht verlassen/);
+ assert.match(copy.textContent,/Auf\|lage/);assert.match(copy.textContent,/Druckvorschau und exportiertes PDF/);
+ assert.equal(note.querySelectorAll('.reading-cards>article').length,2);
+ assert.equal(note.querySelectorAll('.reading-cards ol[data-reading-fixed]').length,2,'Short numbered actions must not acquire stretched word spaces');
+ assert.equal(note.querySelector('.note-reading-section').firstElementChild.tagName,'H4');
+ assert.equal(note.querySelectorAll('.note-sources>a').length,3);
+ assert.ok(note.querySelector('.note-sources').hasAttribute('data-reading-fixed'));
+ assert.ok(css.includes('.note>p:not([class]){max-width:70ch}'));
+ assert.match(css,/\.note-reading-section\{[^}]*grid-template-columns:minmax\(0,1fr\) minmax\(0,2\.2fr\)[^}]*border-top:1px solid var\(--line\)/);
+ assert.match(css,/@media\(max-width:900px\)\{\.note-reading-section\{grid-template-columns:1fr/);
+});

@@ -27,6 +27,25 @@ html[data-palette] .author-comment .comment-opening{color:var(--quote-mark)}
 html[data-palette] .font-choice-voice{font-family:"EB Garamond",Georgia,serif;margin-inline:auto}
 html[data-palette] .font-choice-voice h3{font-family:"Fira Sans",sans-serif;margin-top:0}
 .three-col.reading-cards + p{margin-top:clamp(2rem,4vw,3.5rem)}
+/* Explanatory notes need a reading measure too, not wall-to-wall paragraphs.
+   Only ordinary, unclassified prose is limited; type specimens stay untouched. */
+.note>p:not([class]){max-width:70ch}
+.note>h3{max-width:38ch;line-height:1.25;text-wrap:balance}
+.note-reading-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:clamp(28px,4vw,52px);margin-top:36px;padding-top:32px;border-top:1px solid var(--line);align-items:start}
+.note-reading-section>h4{margin:0;max-width:24ch;line-height:1.3;text-wrap:balance}
+.note-reading-copy{min-width:0;max-width:70ch}
+.note-reading-copy>p{margin:0 0 1.35em}
+.note-reading-copy>p:last-child{margin-bottom:0}
+.note .note-sources{display:flex;flex-wrap:wrap;gap:10px 24px;margin:30px 0 0;padding-top:20px;border-top:1px solid var(--line);text-align:left;line-height:1.5}
+.note-sources>a{max-width:100%;overflow-wrap:anywhere}
+#word-ligaturen>.reading-cards{gap:clamp(28px,4vw,52px);margin-top:28px}
+#word-ligaturen>.reading-cards>article{min-width:0}
+#word-ligaturen>.reading-cards h4{margin-bottom:18px;line-height:1.3}
+#word-ligaturen>.reading-cards ol{padding-left:1.4em;margin:0 0 22px}
+#word-ligaturen>.reading-cards li{padding-left:.2em;margin-bottom:.65em}
+#word-ligaturen>.reading-cards .small{margin-bottom:0;line-height:1.6}
+@media(max-width:900px){.note-reading-section{grid-template-columns:1fr;gap:20px}.note-reading-section>h4{max-width:38ch}#word-ligaturen>.reading-cards{grid-template-columns:1fr;gap:30px}}
+@media(max-width:550px){#word-ligaturen{padding:24px 18px}#word-ligaturen :is(p,li){font-size:17px;line-height:1.65}#word-ligaturen .small,#word-ligaturen .source-note{font-size:15px}.note-reading-section{margin-top:28px;padding-top:24px}}
 html[data-palette] :is(.part-emblem,.part-numeral){color:var(--quote-mark)}
 html[data-palette] :is(.space-quadrant,.space-quadrant:nth-child(2),.space-quadrant:nth-child(3),.space-fixed-controls,.space-outline-wrap svg,.space-empty){background:var(--surface);border-color:var(--line)}
 html[data-palette] .space-quadrant-empty{background:var(--surface)!important}

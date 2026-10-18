@@ -159,7 +159,7 @@ test('every author voice follows the reading palette, including the font-choice 
   for(const id of ['schriftwahl-randstimme','word-randstimme']){
     assert.match(html,new RegExp('<aside[^>]*class="[^"]*author-comment[^"]*font-choice-voice[^"]*"[^>]*id="'+id+'"'));
   }
-  assert.ok(html.includes('styles/typografie-ansicht.css?v=20261018-blocksatz2'));
+  assert.ok(html.includes('styles/typografie-ansicht.css?v=20261018-hinweissatz'));
 });
 test('device previews inherit validated theme and glyph settings from the same-origin parent',()=>{
   const formats=read('scripts/typografie-formate.js');

@@ -11,7 +11,7 @@ test('four real viewport profiles include the large portrait monitor, tablet and
 test('unknown profiles and navigation targets cannot select arbitrary URLs or elements',()=>{
   assert.deepEqual(F.settings({device:'toString',scene:'javascript:evil',view:'url(evil)',rotated:'true'}),F.settings());
   assert.equal(F.settings({device:'phone',scene:'herobereiche',view:'actual',rotated:true}).scene,'herobereiche');
-  assert.ok(ui.includes("frame.src='typografie-atelier.html?format-preview=1&v=20261018-blocksatz2'"));assert.ok(!ui.includes('frame.src=current.scene'));
+  assert.ok(ui.includes("frame.src='typografie-atelier.html?format-preview=1&v=20261018-hinweissatz'"));assert.ok(!ui.includes('frame.src=current.scene'));
 });
 test('overview scales a fully laid-out viewport while actual-size view never changes its dimensions',()=>{
   assert.equal(F.scale({device:'desktop'},720,900),.5);
@@ -41,7 +41,7 @@ test('preview loads automatically once and remains loaded across format changes 
   frame.contentWindow={postMessage(message){messages.push(message);}};
   Object.assign(elements['format-stage'],{clientWidth:1000,clientHeight:600,scrollTo(){}});
   vm.runInNewContext(ui,{window:{TypoFormats:F},document:{getElementById:id=>elements[id],querySelectorAll:()=>buttons,body:{classList:{contains:()=>false}}},location:{origin:'https://example.test',search:''},URLSearchParams,ResizeObserver:class{observe(){}},addEventListener(type,handler){events[type]=handler;}});
-  assert.equal(navigations,1);assert.equal(frame.src,'typografie-atelier.html?format-preview=1&v=20261018-blocksatz2');
+  assert.equal(navigations,1);assert.equal(frame.src,'typografie-atelier.html?format-preview=1&v=20261018-hinweissatz');
   assert.equal(elements['format-jump'].disabled,true);frame.handlers.load();assert.equal(elements['format-jump'].disabled,false);
   buttons.find(b=>b.dataset.formatDevice==='phone').handlers.click();assert.equal(frame.style.width,'390px');
   elements['format-rotate'].handlers.click();assert.equal(frame.style.width,'844px');
