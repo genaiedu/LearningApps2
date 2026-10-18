@@ -47,7 +47,7 @@
  }
  function captureOrigin(trigger){
   const image=trigger?.matches('img')?trigger:trigger?.querySelector('img');if(!image)return null;
-  const context=trigger.closest('#gallery-dialog')?'gallery':trigger.closest('#solution-dialog')?'curator':'wall';
+  const context=trigger.closest('#gallery-info-dialog')?'gallery-info':trigger.closest('#gallery-dialog')?'gallery':trigger.closest('#solution-dialog')?'curator':'wall';
   return {image,trigger,context,rect:imageRect(image)};
  }
  function clearFlight(){
@@ -64,8 +64,8 @@
   $('wall-work-title').textContent=wall?(letter?'Werk '+letter+' · ':'')+(card?.querySelector('.work-title')?.textContent||$('zoom-image').alt.replace('Vergrößerte Ansicht: ','')):$('zoom-image').alt.replace('Vergrößerte Ansicht: ','');
   if(card&&wall&&!original){home=card;$('wall-work-controls').append(card.querySelector('.artwork-actions'),card.querySelector('.assignments'));}
   $('wall-check').hidden=!home||$('check').hidden;$('wall-prev').hidden=$('wall-next').hidden=!home;
-  $('wall-back').textContent=returnOrigin?.context==='gallery'?'← Meine Galerie':returnOrigin?.context==='curator'?'← Kuratoransicht':'← Bilderwand';
-  const destination=returnOrigin?.context==='gallery'?'Galerie':returnOrigin?.context==='curator'?'Kuratoransicht':'Bilderwand';
+  $('wall-back').textContent=returnOrigin?.context==='gallery-info'?'← Bildinformationen':returnOrigin?.context==='gallery'?'← Meine Galerie':returnOrigin?.context==='curator'?'← Kuratoransicht':'← Bilderwand';
+  const destination=returnOrigin?.context==='gallery-info'?'Bildinformation':returnOrigin?.context==='gallery'?'Galerie':returnOrigin?.context==='curator'?'Kuratoransicht':'Bilderwand';
   aside.setAttribute('aria-label',home?'Zuordnungen zum vergrößerten Werk':'Informationen zum vergrößerten Werk');aside.querySelector('.eyebrow').textContent=home?'Werk untersuchen':'Werk betrachten';
   aside.querySelector('.wall-instructions').textContent='Zwei Finger oder Trackpad: zoomen. Bild anklicken: Lupe. Escape: zurück zur ganzen Abbildung. Noch einmal Escape: zurück zur '+destination+'.'+(home?' Die Zahl hinter einer Technik zeigt die noch freien Plätze im Raum; deine aktuelle Auswahl ist bereits abgezogen.':'');
   dialog.classList.remove('wall-zoom');if(returnOrigin)void animateOpen(returnOrigin);

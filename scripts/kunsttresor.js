@@ -325,8 +325,8 @@
   function stopImages() {
     imageEpoch++;
     imageTimers.forEach(clearTimeout); imageTimers.clear();
-    document.querySelectorAll('.mini-frame img, #art-grid img, #solutions img, #zoom-image').forEach(img => { img.removeAttribute('src'); if (img.id !== 'zoom-image') img.remove(); });
-    ready.clear(); failed.clear(); close('image-dialog'); close('solution-dialog'); close('art-glossary-dialog');
+    document.querySelectorAll('.mini-frame img, #art-grid img, #solutions img, #gallery-info-content img, #zoom-image').forEach(img => { img.removeAttribute('src'); if (img.id !== 'zoom-image') img.remove(); });
+    ready.clear(); failed.clear(); close('image-dialog'); close('solution-dialog'); close('art-glossary-dialog'); close('gallery-info-dialog');
     if(!imagesAllowed){galleryUI?.stopImages();window.KunstWall?.clearLanding();}
   }
   function heroImages() {
@@ -971,6 +971,44 @@
     const list=node('ul'); explanation.sources.forEach(reference=>{const item=node('li');item.append(referenceLink(reference));list.append(item);}); references.append(list); container.append(references);
     return container;
   }
+  let galleryInfoOrigin=null;
+  function showGalleryInfo(work,origin) {
+    // Collected works are independent of the current room. Never invent a
+    // solved answer or invoke the personal AI feedback for this reading view.
+    if(!work||!personalGallery.liked.some(entry=>entry.id===work.id))return;
+    galleryInfoOrigin=origin;
+    const content=$('gallery-info-content');content.replaceChildren();
+    $('gallery-info-title').textContent=core.galleryTitle(work);
+    const overview=node('aside','gallery-info-overview'),reading=node('div','curator-reading gallery-info-reading');
+    if(imagesAllowed){const preview=node('button','gallery-info-image'),img=node('img');preview.type='button';preview.setAttribute('aria-label',core.galleryTitle(work)+' vergrößern');img.alt=core.galleryTitle(work);img.referrerPolicy='no-referrer';img.src=work.imageURL;preview.append(img,node('span',null,'⤢ Bild vergrößern'));preview.onclick=()=>showImage(work,undefined,true,preview);overview.append(preview);}
+    const metadata=node('dl','gallery-info-metadata');
+    for(const [label,value]of [['Künstler',work.artist],['Entstehung',work.date],['Stil / Tradition',work.style],['Technik',work.technique],['Material',work.medium],['Sammlung',work.museum]])if(value)metadata.append(node('dt',null,label),node('dd',null,value));
+    overview.append(metadata);
+    if(core.galleryTitle(work)!==work.title)overview.append(node('p','small','Originaltitel der Werkquelle: '+work.title+(work.titleDeTranslated?' · Eigene deutsche Übersetzung; kein offizieller Museumstitel.':'')));
+    const note=artKnowledge?.workNotes?.[work.id];if(note)reading.append(node('p','curator-work-note',note.text));
+    reading.append(node('p','small','Die folgenden Erläuterungen ordnen Stil und Technik ein. Die Erkennungsmerkmale sind Hinweise zum Vergleichen, keine automatische Analyse dieses Bildes.'));
+    const references=new Map();
+    for(const [field,label,group]of [['style','Bildsprache und Zeit','styles'],['technique','Material und Herstellung','techniques']]){
+      const profile=artKnowledge?.[group]?.[work[field]];if(!profile)continue;
+      const section=node('section','curator-section');section.append(node('h3',null,label+' · '+work[field]),node('p',null,profile.definition));
+      const clues=node('ul');profile.clues.forEach(clue=>clues.append(node('li',null,clue)));section.append(clues,node('p',null,'Zeitkontext: '+profile.period+'.'),node('p',null,profile.caution));
+      const glossary=node('button','curator-glossary-link',work[field]+' im Glossar');glossary.type='button';glossary.onclick=()=>showArtGlossary(work[field],group);section.append(glossary);reading.append(section);
+      for(const id of profile.sources||[])if(artKnowledge.sources[id])references.set(id,artKnowledge.sources[id]);
+    }
+    for(const id of note?.sources||[])if(artKnowledge.sources[id])references.set(id,artKnowledge.sources[id]);
+    if(!artKnowledge)reading.append(node('p',null,'Die ausführlichen Hinweise konnten nicht geladen werden. Werkangaben und Quellen stehen dir trotzdem zur Verfügung.'));
+    const sources=node('section','gallery-info-sources');sources.append(node('h3',null,'Werkbelege und Bildrechte'));
+    const list=node('ul');for(const [label,url]of [['Werkdatensatz & Nachweise',work.source],['Weiterführender Museumskatalog',work.catalogueSource],['Bildquelle & Nutzungsrechte',work.imageSource]])if(url){const item=node('li');item.append(referenceLink({title:label,url}));list.append(item);}
+    sources.append(list,node('p','small','Abbildung: '+work.imageCredit+' · '+work.imageLicense+'.'));
+    if(work.styleSource?.startsWith('Redaktion'))sources.append(node('p','small',work.styleSource));
+    if(references.size){const details=node('details'),summary=node('summary',null,'Museumsquellen zu den Erläuterungen'),refs=node('ul');for(const reference of references.values()){const item=node('li');item.append(referenceLink(reference));refs.append(item);}details.append(summary,refs);sources.append(details);}
+    const links=node('div','wiki-links');links.append(node('p',null,'Weiterlesen in Wikipedia · nach gesonderter Freigabe'));
+    const artist=wikiCatalogue.artists[work.artist],article=wikiCatalogue.works[work.id];
+    if(artist&&!artist.unknown)links.append(wikiButton('Künstler: '+work.artist,artist.title,artist.language));
+    if(article)links.append(wikiButton('Zum Werk',article.title,article.language));sources.append(links);
+    reading.append(sources);content.append(overview,reading);open('gallery-info-dialog');$('gallery-info-dialog').scrollTop=0;$('gallery-info-dialog [data-close]').focus({preventScroll:true});
+  }
+  $('gallery-info-dialog').addEventListener('close',()=>{if(galleryInfoOrigin?.isConnected)galleryInfoOrigin.focus({preventScroll:true});galleryInfoOrigin=null;});
   function renderArtGlossary(expand=false) {
     const list=$('art-glossary-entries'); list.replaceChildren();
     if(!artKnowledge) { $('art-glossary-count').textContent='Das Glossar konnte nicht geladen werden. Bitte lade die Seite erneut.'; return; }
@@ -998,7 +1036,7 @@
     });
   }
   function showArtGlossary(term='',category='') {
-    if(!state || state.phase==='playing') return;
+    if((!state || state.phase==='playing')&&!$('gallery-info-dialog').open) return;
     $('art-glossary-search').value=term; $('art-glossary-category').value=category; renderArtGlossary(Boolean(term)); open('art-glossary-dialog'); $('art-glossary-dialog').scrollTop=0;
     if(!term) $('art-glossary-search').focus();
   }
@@ -1302,7 +1340,7 @@
       if (!state) store.remove(keys.game);
       const storedGallery=store.get(galleryKey);
       if(storedGallery!==null){try{const restored=galleryModel.restore(JSON.parse(storedGallery),pool,workHistory);if(!restored)throw Error();personalGallery=restored;}catch{galleryBlocked=true;storageWarning();$('progress-notice').textContent='Deine gespeicherte Galerie konnte nicht gelesen werden und wird nicht überschrieben. Lade bitte eine gültige Spielstandsdatei.';}}
-      galleryUI=window.KunstGalleryUI.create({pool,getGallery:()=>personalGallery,setGallery:saveGallery,getState:()=>state,imagesAllowed:()=>imagesAllowed,requestImages:()=>askForImages(false),showImage:(work,origin)=>showImage(work,undefined,true,origin),stopIntro:finishIntro,saveFile:async()=>{await exportSave();return $('save-status').textContent;},texts:filmTexts});
+      galleryUI=window.KunstGalleryUI.create({pool,getGallery:()=>personalGallery,setGallery:saveGallery,getState:()=>state,imagesAllowed:()=>imagesAllowed,requestImages:()=>askForImages(false),showImage:(work,origin)=>showImage(work,undefined,true,origin),showInfo:showGalleryInfo,stopIntro:finishIntro,saveFile:async()=>{await exportSave();return $('save-status').textContent;},texts:filmTexts});
       galleryUI.refresh();$('open-gallery').disabled=false;
       $('save-dialog').querySelector(':scope > p').textContent='Der Browser merkt sich deinen Raum automatisch. Als JSON-Datei nimmst du Zuordnungen, verbrauchte Versuche, Rekord, Abzeichen, Bildhistorie, Lieblingswerke und deine vollständige Filmgestaltung mit auf ein anderes Gerät.';
       $('pool-count').textContent = pool.length;

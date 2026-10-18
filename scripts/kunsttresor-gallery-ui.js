@@ -1,6 +1,6 @@
 (function(root) {
   'use strict';
-  function create({pool,getGallery,setGallery,getState,imagesAllowed,requestImages,showImage,stopIntro,saveFile,texts}) {
+  function create({pool,getGallery,setGallery,getState,imagesAllowed,requestImages,showImage,showInfo,stopIntro,saveFile,texts}) {
     const model=root.KunstGallery, $=id=>document.getElementById(id);
     const byId=new Map(pool.map(work=>[work.id,work]));
     const title=work=>root.KunstTresor.galleryTitle(work);
@@ -106,7 +106,9 @@
       else if(!visible.length)$('gallery-grid').append(node('p','gallery-empty','Keine Werke passen zu dieser Kombination. Ändere die Filter oder wähle „Ansicht zurücksetzen“.'));
       for(const work of visible){const entry=entries.get(work.id),card=node('article','gallery-card');card.dataset.work=work.id;
         if(work.imageWidth&&work.imageHeight)card.dataset.galleryAspect=String(work.imageWidth/work.imageHeight);
-        card.append(imageButton(work));
+        const visual=node('div','gallery-visual');visual.append(imageButton(work));
+        if(showInfo){const info=button('Bildinfos',()=>showInfo(work,info),'gallery-info-trigger');info.setAttribute('aria-label','Bildinformationen: '+title(work));info.setAttribute('aria-haspopup','dialog');visual.append(info);}
+        card.append(visual);
         const details=node('details','gallery-card-details'),summary=node('summary'),actions=node('div','gallery-card-actions');
         summary.title=title(work)+' · '+work.artist+' · '+work.date;summary.setAttribute('aria-label','Werkdetails & Auswahl: '+summary.title);
         summary.append(node('h3',null,title(work)),node('span','gallery-artist',work.artist+' · '+work.date));

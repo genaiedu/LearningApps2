@@ -110,6 +110,26 @@ test('gallery filter controls combine, count, sort and reset without changing li
  assert.deepEqual(stored(app.w.localStorage),before);assert.equal(app.q('#art-grid [data-gallery-like]'),null);
 });
 const pressRule=(app,n)=>app.q('.rule-steps > li:nth-child('+n+') > button').click();
+test('gallery information reads collected works during an unfinished room without touching progress or requesting AI',async t=>{
+ const at=Date.now(),id='wd-Q252485',gallery={...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]};
+ const app=await setup(t,{gallery});app.click('launch-read');app.click('game-gallery');const before=stored(app.w.localStorage),requests=app.requests.length;
+ const trigger=app.q('.gallery-info-trigger');assert.ok(trigger);assert.match(trigger.getAttribute('aria-label'),/Die große Welle/);trigger.click();
+ assert.equal(app.q('#gallery-info-dialog').open,true);assert.equal(app.q('#gallery-info-title').textContent,'Die große Welle vor Kanagawa');
+ assert.match(app.q('#gallery-info-content').textContent,/Katsushika Hokusai/);assert.match(app.q('#gallery-info-content').textContent,/Ukiyo-e/);assert.match(app.q('#gallery-info-content').textContent,/Farbholzschnitt/);assert.match(app.q('#gallery-info-content').textContent,/Abzüge/);
+ assert.equal(app.q('#gallery-info-content .gallery-info-metadata').children.length,12);assert.equal(app.q('#gallery-info-content .curator-section').querySelectorAll('li').length,3);
+ assert.equal(app.q('#gallery-info-content [data-gallery-like]'),null);assert.equal(app.q('#gallery-info-content [data-ai-toggle]'),null);assert.equal(app.requests.length,requests);assert.deepEqual(stored(app.w.localStorage),before);
+ app.q('#gallery-info-content .curator-glossary-link').click();assert.equal(app.q('#art-glossary-dialog').open,true);assert.equal(app.q('#art-glossary-search').value,'Ukiyo-e');
+ app.q('#art-glossary-dialog [data-close]').click();app.q('#gallery-info-dialog [data-close]').click();assert.equal(app.q('#gallery-dialog').open,true);assert.equal(app.w.document.activeElement,trigger);assert.deepEqual(stored(app.w.localStorage),before);
+});
+test('gallery information retains attribution notes and source links for the anonymous Goldhelm',async t=>{
+ const at=Date.now(),id='wd-Q1195610',app=await setup(t,{gallery:{...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]}});app.click('launch-read');app.click('game-gallery');app.q('.gallery-info-trigger').click();
+ assert.match(app.q('#gallery-info-content').textContent,/1986/);assert.match(app.q('#gallery-info-content').textContent,/nicht Rembrandt/);assert.ok([...app.q('#gallery-info-content').querySelectorAll('a')].some(a=>a.href==='https://search.smb.museum/object/obj-865524'));
+ assert.equal(app.q('#gallery-info-content [data-wiki="Unbekannter Künstler"]'),null);
+});
+test('revoking image permission closes gallery information and clears its image',async t=>{
+ const at=Date.now(),id='wd-Q252485',app=await setup(t,{gallery:{...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]}});app.click('launch-read');app.click('game-gallery');app.q('.gallery-info-trigger').click();assert.ok(app.q('#gallery-info-content img'));
+ app.q('#image-settings').click();app.q('#consent-no').click();assert.equal(app.q('#gallery-info-dialog').open,false);assert.equal(app.q('#gallery-info-content img'),null);
+});
 test('1 → 2 → 4 opens a safely focused reset confirmation; cancellation keeps every saved value',async t=>{
  const app=await setup(t,{preferences:{[secretKey]:'yes','kunsttresor-best-v1-wall':'9'}});app.click('launch-read');
  const before=stored(app.w.localStorage);pressRule(app,1);pressRule(app,4);assert.equal(app.q('#reset-dialog').open,false);

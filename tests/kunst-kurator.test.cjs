@@ -57,11 +57,11 @@ test('each work has a bounded explanation with actual names, date, both fields a
     assert.doesNotMatch(text,/undefined|\[object Object\]|NaN/);
   }
 });
-test('no explanations or glossary data are exposed by the engine while playing',()=>{
+test('current-room answers remain concealed while playing; glossary access additionally belongs to collected-work information',()=>{
   assert.equal(curator.explain(fixtures[0],initial(),knowledge,fixtures),null);
   assert.equal(curator.explain(fixtures[0],{...initial(),phase:'lost'},null,fixtures),null);
   const js=fs.readFileSync(require.resolve('../scripts/kunsttresor.js'),'utf8');
-  assert.match(js,/function showArtGlossary[\s\S]*?if\(!state \|\| state.phase==='playing'\) return;/);
+  assert.match(js,/function showArtGlossary[\s\S]*?if\(\(!state \|\| state.phase==='playing'\)&&!\$\('gallery-info-dialog'\)\.open\) return;/);
   assert.match(js,/function solutions\(\)[\s\S]*?if \(!state \|\| state.phase === 'playing'\) return;/);
 });
 test('the first-check chronology hint remains global, cryptic and based on checked answers',()=>{

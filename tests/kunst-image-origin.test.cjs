@@ -48,6 +48,11 @@ test('return geometry is measured again after the source moves or the viewport c
  button.querySelector('img').getBoundingClientRect=()=>target;
  await app.open(button);target=box(530,160,90,120);await app.close();assert.match(app.calls[1].frames[1].transform,/translate\(430px,110px\) scale\(0.1125,0.2\)/);
 });
+test('gallery information enlargement returns to its own preview and keeps both parent dialogs open',async t=>{
+ const app=setup(t),button=app.source('gallery-info-content','info-preview',box(250,150,300,220));app.$('gallery-dialog').open=true;app.$('gallery-info-dialog').open=true;
+ await app.open(button,true,'older-work');assert.equal(app.$('wall-back').textContent,'← Bildinformationen');assert.match(app.$('wall-settings').textContent,/zurück zur Bildinformation/);assert.equal(app.$('wall-work-controls').children.length,0);
+ await app.close();assert.match(app.calls[1].frames[1].transform,/translate\(150px,100px\)/);assert.equal(app.$('gallery-dialog').open,true);assert.equal(app.$('gallery-info-dialog').open,true);assert.equal(app.w.document.activeElement,button);
+});
 test('contain images use the actual painted rectangle instead of the empty letterbox',async t=>{
  const app=setup(t),button=app.source('solution-dialog','portrait',box(100,200,400,300)),img=button.querySelector('img');
  img.style.objectFit='contain';img.style.objectPosition='50% 50%';Object.defineProperty(img,'naturalWidth',{value:200});Object.defineProperty(img,'naturalHeight',{value:400});
