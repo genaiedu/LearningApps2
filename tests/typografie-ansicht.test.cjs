@@ -149,6 +149,17 @@ test('generic reading surfaces do not outrank the paired code foreground and bac
     assert.ok(C.contrast(p[mode].ink,p[mode].white)>=4.5,p.id+' '+mode+' generated code');
   }
 });
+test('every author voice follows the reading palette, including the font-choice and Word boxes',()=>{
+  assert.ok(css.includes('html[data-palette] .author-comment{background:var(--quote-bg);color:var(--ink)}'));
+  assert.ok(css.includes('html[data-palette] .author-comment .comment-opening{color:var(--quote-mark)}'));
+  const specialRules=[...css.matchAll(/([^{}]*\.font-choice-voice[^{}]*)\{([^{}]*)\}/g)];
+  assert.ok(specialRules.length>=2,'The two voices retain their typography and placement');
+  for(const [,selector,body] of specialRules)assert.ok(!/(?:background(?:-color)?|(?<!-)color)\s*:/.test(body),selector+' cannot override the shared palette roles');
+  for(const id of ['schriftwahl-randstimme','word-randstimme']){
+    assert.match(html,new RegExp('<aside[^>]*class="[^"]*author-comment[^"]*font-choice-voice[^"]*"[^>]*id="'+id+'"'));
+  }
+  assert.ok(html.includes('styles/typografie-ansicht.css?v=20261018-randstimmen-palette'));
+});
 test('device previews inherit validated theme and glyph settings from the same-origin parent',()=>{
   const formats=read('scripts/typografie-formate.js');
   assert.ok(formats.includes('event.source!==parent||event.origin!==origin'));
