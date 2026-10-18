@@ -21,7 +21,8 @@ function retryDelay(value,time) {
 function loadSources() {
   const archive=require('../generated/kunstarchiv.json'), knowledge=require('../generated/kunst-glossar.json');
   const titles=require('../generated/kunst-titel-de.json'), wiki=require('../generated/kunst-wikipedia.json');
-  const pool=archive.works.map(work=>({...work,titleDe:titles.titles[work.id],artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
+  const core=require('../generated/kunsttresor-core.js');
+  const pool=archive.works.map(work=>core.normalizeArtistWork({...work,titleDe:titles.titles[work.id],artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
   return {pool,knowledge,curator:require('../generated/kunst-kurator.js')};
 }
 function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Date.now,logger=console,

@@ -22,6 +22,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,works,knowledge
       const input=JSON.parse(raw);
       work=(works || require('../generated/kunstarchiv.json').works).find(w=>w.id===input.id && w.publicDomain && !['sculpture','relief','object'].includes(w.artForm));
       if(!work)throw Error();
+      if(!works)work=require('../generated/kunsttresor-core.js').normalizeArtistWork(work);
     }catch{return send(400,{error:'work'});}
     const ip=String(req.headers['x-vercel-forwarded-for'] || req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0];
     const time=now(); for(const [key,value] of windows)if(time-value.at>600000)windows.delete(key);

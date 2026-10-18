@@ -3,6 +3,22 @@
   const count = root.KunstWallEnabled ? 7 : 4, limit = root.KunstWallEnabled ? 3 : 2;
   const baseFields = ['date', 'style', 'artist', 'technique'];
   const fields = [...baseFields,...(root.KunstWallEnabled ? ['title'] : [])];
+  const elGrecoSourceName='Domenico Theotokópoulos, called El Greco';
+  function artistName(value) { return value===elGrecoSourceName?'El Greco':value; }
+  function normalizeArtistWork(work) {
+    if(!work||artistName(work.artist)===work.artist)return work;
+    return {...work,artist:artistName(work.artist),artistOriginal:work.artist,
+      ...(typeof work.imageCredit==='string'?{imageCredit:work.imageCredit.replaceAll(elGrecoSourceName,'El Greco')}:{})};
+  }
+  function normalizeArtistState(saved,pool) {
+    // Keep catalogue files unchanged, and preserve older options, checked
+    // snapshots and green confirmations when the display name is unified.
+    if(!Array.isArray(saved?.options?.artist)||!saved.options.artist.includes(elGrecoSourceName)||pool.some(work=>work.artist===elGrecoSourceName))return saved;
+    const selections=records=>!records||typeof records!=='object'||Array.isArray(records)?records:Object.fromEntries(Object.entries(records).map(([id,value])=>[id,value&&typeof value==='object'&&!Array.isArray(value)?{...value,...(typeof value.artist==='string'?{artist:artistName(value.artist)}:{})}:value]));
+    return {...saved,options:{...saved.options,artist:saved.options.artist.map(artistName)},choices:selections(saved.choices),
+      ...(saved.review?{review:{...saved.review,choices:selections(saved.review.choices)}}:{}),
+      ...(Array.isArray(saved.attemptLog)?{attemptLog:saved.attemptLog.map(entry=>entry&&typeof entry==='object'?{...entry,choices:selections(entry.choices)}:entry)}:{})};
+  }
   function fieldsFor(state) { return [...baseFields,...(state?.options?.title ? ['title'] : [])]; }
   function shuffle(items, random = Math.random) {
     const result = [...items];
@@ -343,6 +359,7 @@
     return {checked:true,correct,forgeryCorrect,state:next};
   }
   function restore(saved, pool) {
+    saved=normalizeArtistState(saved,pool);
     const fields=fieldsFor(saved);
     if (!saved || saved.version !== 1 || !['playing','unlocked','lost'].includes(saved.phase) || !Number.isInteger(saved.escaped) || saved.escaped < 0 || !Number.isInteger(saved.attempts) || saved.attempts < 0 || saved.attempts > limit || !Array.isArray(saved.ids) || saved.ids.length !== count || !Array.isArray(saved.recent) || (saved.choices && (typeof saved.choices !== 'object' || Array.isArray(saved.choices)))) return null;
     if (saved.forgery && (!saved.ids.includes(saved.forgery.id) || typeof saved.forgery.image !== 'string' || saved.forgery.image.length > 1800030 || !/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(saved.forgery.image))) return null;
@@ -415,7 +432,7 @@
     if (original.phase === 'lost') { next.phase='lost'; next.attempts=limit; }
     return {state:next,updated:true,newRoom:true};
   }
-  const api = {forgeryPlan,nextForgeryCooldown,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, transferChoice, isLocked, confirmedOwners, isExcluded, exclusions, dateWindow, dateHint, dateHintFor, useJoker, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
+  const api = {artistName,normalizeArtistWork,forgeryPlan,nextForgeryCooldown,fields,fieldsFor, shuffle, compatible, validWork, isIntroImage, canDownload, galleryTitle, heroSelection, introSelection, room, newState, choose, transferChoice, isLocked, confirmedOwners, isExcluded, exclusions, dateWindow, dateHint, dateHintFor, useJoker, capacity, remaining, takenBy, review, filled, inspect, restore, restoreUpdated};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KunstTresor = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

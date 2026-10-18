@@ -50,6 +50,9 @@
     if (fields.some(field=>(count===4||field!=='technique')&&new Set(options[field]).size!==count)) throw Error('ambiguous room');
     function checkedChoices(raw) {
       const result=selection(ids,raw,fields);
+      // Accept the catalogue spelling from older clients, but use only the
+      // canonical artist name in assessment and generated curator feedback.
+      for(const id of ids){const alias=works.find(work=>work.artistOriginal&&work.artistOriginal===result[id].artist);if(alias)result[id].artist=alias.artist;}
       if (ids.some(id=>fields.some(field=>!options[field].includes(result[id][field]))) || fields.some(field=>JSON.stringify(ids.map(id=>result[id][field]).sort())!==JSON.stringify([...options[field]].sort()))) throw Error('choices');
       return result;
     }

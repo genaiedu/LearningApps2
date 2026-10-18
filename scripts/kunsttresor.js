@@ -1322,7 +1322,7 @@
       artKnowledge=knowledge;
       const images = new Map(media.images.map(image => [image.id,image]));
       const translated=new Set(titles.ownTranslations);
-      pool = data.works.filter(work => images.has(work.id) && wiki.artists[work.artist] && core.validWork(work)).map(work => ({...work,...images.get(work.id),titleDe:titles.titles[work.id],titleDeTranslated:translated.has(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
+      pool = data.works.filter(work => images.has(work.id) && wiki.artists[work.artist] && core.validWork(work)).map(work => core.normalizeArtistWork({...work,...images.get(work.id),titleDe:titles.titles[work.id],titleDeTranslated:translated.has(work.id),artistIdentity:wiki.artists[work.artist].language+':'+wiki.artists[work.artist].title}));
       landmarkIds = landmarks.works.map(work=>work.id).filter(id=>pool.some(work=>work.id===id));
       if(pool.length<1000 || pool.length!==data.works.length || images.size!==pool.length || landmarkIds.length!==100 || pool.some(work=>!work.titleDe)) throw Error('Archiv unvollständig');
       core.room(pool); // Verify that a complete, unique room can actually be generated.

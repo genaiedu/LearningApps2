@@ -126,6 +126,11 @@ test('gallery information retains attribution notes and source links for the ano
  assert.match(app.q('#gallery-info-content').textContent,/1986/);assert.match(app.q('#gallery-info-content').textContent,/nicht Rembrandt/);assert.ok([...app.q('#gallery-info-content').querySelectorAll('a')].some(a=>a.href==='https://search.smb.museum/object/obj-865524'));
  assert.equal(app.q('#gallery-info-content [data-wiki="Unbekannter Künstler"]'),null);
 });
+test('gallery combines all El Greco works under one name and uses it in picture information',async t=>{
+ const at=Date.now(),works=pool.filter(w=>/El Greco/.test(w.artist)),gallery={...model.KunstGallery.fresh(),liked:works.map(w=>({id:w.id,source:'curated',at}))};
+ const app=await setup(t,{gallery});app.click('launch-read');app.click('game-gallery');const options=[...app.q('#gallery-filter-artist').options];assert.equal(options.length,2);assert.equal(options[1].textContent,'El Greco · 24');assert.equal(app.q('#gallery-dialog').textContent.includes('Domenico Theotokópoulos'),false);
+ const id=works.find(w=>w.artist.startsWith('Domenico')).id;app.q('#gallery-grid [data-work="'+id+'"] .gallery-info-trigger').click();assert.equal(app.q('#gallery-info-dialog').textContent.includes('Domenico Theotokópoulos'),false);assert.match(app.q('#gallery-info-metadata')?.textContent||app.q('.gallery-info-metadata').textContent,/El Greco/);
+});
 test('revoking image permission closes gallery information and clears its image',async t=>{
  const at=Date.now(),id='wd-Q252485',app=await setup(t,{gallery:{...model.KunstGallery.fresh(),liked:[{id,source:'curated',at}]}});app.click('launch-read');app.click('game-gallery');app.q('.gallery-info-trigger').click();assert.ok(app.q('#gallery-info-content img'));
  app.q('#image-settings').click();app.q('#consent-no').click();assert.equal(app.q('#gallery-info-dialog').open,false);assert.equal(app.q('#gallery-info-content img'),null);
