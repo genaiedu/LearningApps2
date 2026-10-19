@@ -129,7 +129,7 @@ test('Plain text only, local commands, no dialog storage or network', async () =
   assert.equal(app.get('transcript').textContent, '');
   assert.equal(app.w.localStorage.length, 0);
   assert.doesNotMatch(source, /fetch\(|XMLHttpRequest|localStorage|sessionStorage|indexedDB|sendBeacon|WebSocket/);
-  assert.match(html, /connect-src 'none'/);
+  assert.match(html, /connect-src https:\/\/kunstkurator-dienst\.vercel\.app;/);
   app.dom.window.close();
 });
 test('Keyboard clicks are input-only, suppress repeats/modifiers and obey mute', async () => {

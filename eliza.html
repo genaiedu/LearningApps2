@@ -3,15 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="ELIZA ausprobieren: eine deutschsprachige, regelbasierte Gesprächssimulation im grünen Vollbild-Terminal. Mit kurzer Geschichte, ohne KI-Dienst und ohne Speicherung der Gespräche.">
+  <meta name="description" content="ELIZA im klassischen grünen Vollbild-Terminal und optional AI-ELIZA mit GPT-OSS 120B: zwei Gesprächsexperimente, kurze Geschichte und personzentrierter Gesprächsstil nach Carl Rogers.">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src https://kunstkurator-dienst.vercel.app; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>ELIZA · Ein Gespräch. Kein Verstehen.</title>
   <link rel="stylesheet" href="../LearningApps/atelier-tools.css">
   <link rel="stylesheet" href="styles/eliza.css?v=20261019-1">
+  <link rel="stylesheet" href="styles/ai-eliza.css?v=20261019-1">
   <script defer src="../LearningApps/atelier-tools.js"></script>
   <script defer src="scripts/eliza-core.js?v=20261019-1"></script>
   <script defer src="scripts/eliza.js?v=20261019-1"></script>
+  <script defer src="scripts/ai-eliza-core.js?v=20261019-1"></script>
+  <script defer src="scripts/ai-eliza.js?v=20261019-1"></script>
 </head>
 <body data-design-key="eliza-reading-view">
   <a class="skip" href="#geschichte">Zur Geschichte</a>
@@ -29,7 +32,17 @@
       <section class="launch wrap" aria-labelledby="launch-title">
         <div><p class="eyebrow">Jetzt selbst ausprobieren</p><h2 id="launch-title">Der Bildschirm gehört dem Gespräch.</h2><p>Diese neue deutsche Interpretation verwendet eigene Regeln nach dem ELIZA-Prinzip, nicht den unveränderten Originalcode. Die Retro-Monitoroptik ist eine gestalterische Hommage; das ursprüngliche System wurde über eine Fernschreibmaschine bedient.</p><p class="launch-warning"><strong>Eine Simulation, keine Therapie.</strong> ELIZA kann unpassend antworten und ist weder psychologische Beratung noch Krisenhilfe. Verwende gern erfundene Beispiele.</p><p>Deine Eingaben verlassen die App nicht und werden nicht gespeichert. Beim Beenden wird das Gespräch verworfen. Nur deine gewählte Lesedarstellung wird im Browser gemerkt.</p><button class="button primary" id="start-eliza" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5"/></svg>ELIZA im Vollbild starten</button><p class="launch-help">Leises Tastaturklacken ist eingeschaltet und im Terminal abschaltbar. Mit Esc oder „Beenden“ kehrst du zurück.</p><p id="launch-status" role="status"></p><noscript><p>Bitte aktiviere JavaScript, um die lokale Gesprächssimulation zu starten.</p></noscript></div>
       </section>
-      <section class="sources wrap" aria-label="Quellen"><details><summary>Historische Quellen &amp; Einordnung</summary><p>Joseph Weizenbaum: <a href="https://doi.org/10.1145/365153.365168" target="_blank" rel="noopener noreferrer">ELIZA—A Computer Program For the Study of Natural Language Communication Between Man and Machine</a>, <cite>Communications of the ACM</cite> 9 (1), 1966, S. 36–45. <a href="https://courses.cs.umbc.edu/undergraduate/CMSC331/resources/papers/eliza.january1966.html" target="_blank" rel="noopener noreferrer">Lesbare Transkription bei der UMBC</a>.</p><p><a href="https://elizagen.org/original-eliza.html" target="_blank" rel="noopener noreferrer">ELIZAGEN: Original ELIZA</a> dokumentiert die Wiederentdeckung des historischen Quellcodes. Diese App ist eine unabhängige Neuimplementierung und kein historisch exakter Emulator.</p><p>Alle Antworten entstehen lokal aus festen Mustern. Die Gesprächsfragmente im laufenden Arbeitsspeicher dienen nur dem aktuellen Dialog. Es werden keine Analyse-, Chat- oder KI-Dienste aufgerufen. Beim Laden der Webseite erhält der Hostinganbieter wie üblich technische Verbindungsdaten.</p></details></section>
+      <section class="ai-launch wrap" id="ai-eliza" aria-labelledby="ai-launch-title">
+        <div><p class="eyebrow">Eine zweite Begegnung · Mit einem Sprachmodell</p><h2 id="ai-launch-title">AI‑ELIZA.<br><em>Ein anderer Gesprächsraum.</em></h2>
+          <p>Die klassische ELIZA arbeitet mit festen Mustern. Hier antwortet dagegen <strong>GPT‑OSS 120B bei Groq</strong> – dasselbe Modell wie im Kunsttresor. Der Gesprächsstil orientiert sich an <strong>Carl Rogers</strong>: die eigene Sicht ausdrücken können, wertschätzend aufgegriffen werden und selbst entscheiden, wohin das Gespräch führt.</p>
+          <p>Ein weißer Bildschirm, ruhige Fira Sans und gelegentlich ein kurzer Satz in Dancing Script. Auch diese Version hat keine Gefühle, ist keine Therapeutin und bietet weder Diagnosen noch Behandlung oder Krisenhilfe. Die persönlich wirkende Sprache ändert daran nichts.</p>
+          <details class="ai-data"><summary>Was wird für die KI übertragen?</summary><p>Erst beim Absenden gehen deine Nachricht und bis zu acht vorherige Gesprächspaare an den bestehenden Dienst auf Vercel und von dort an Groq. Es werden höchstens 24.000 Zeichen Kontext übertragen; ältere Beiträge können aus dem Modellkontext fallen. Keine Verbindung zur KI beim Laden dieser Seite oder beim klassischen Gespräch.</p><p>Diese App speichert den Dialog weder dauerhaft im Browser noch in einer eigenen Datenbank. Beim Beenden wird der lokale Verlauf verworfen. Bereits übertragene Daten lassen sich damit nicht zurückholen. Vercel und Groq verarbeiten technische Verbindungsdaten; Groq kann Inhalte unter anderem zur Fehler- und Missbrauchsprüfung zeitweise aufbewahren. Eine Vertraulichkeit wie in einer Therapie ist nicht zugesichert. Bitte verwende erfundene oder anonymisierte Situationen und keine vertraulichen Gesundheits- oder Personendaten. <a href="https://console.groq.com/docs/your-data" target="_blank" rel="noopener noreferrer">Groq: Umgang mit Daten</a>.</p></details>
+          <label class="ai-consent"><input id="ai-consent" type="checkbox"><span>Ich möchte die KI-Version ausprobieren und weiß, dass meine Nachrichten samt begrenztem Gesprächskontext über Vercel an Groq übertragen werden. Keine Therapie; bitte keine vertraulichen Angaben.</span></label>
+          <button class="button primary" id="start-ai-eliza" type="button" disabled>AI‑ELIZA im Vollbild starten <span aria-hidden="true">↗</span></button>
+          <p class="launch-help">Die Freigabe gilt nur für dieses Gespräch. Mit Esc oder „Beenden“ wird der lokale Verlauf verworfen. Die klassische ELIZA oben benötigt diese Freigabe nicht.</p><p id="ai-launch-status" role="status"></p>
+        </div>
+      </section>
+      <section class="sources wrap" aria-label="Quellen"><details><summary>Historische Quellen &amp; Einordnung</summary><p>Joseph Weizenbaum: <a href="https://doi.org/10.1145/365153.365168" target="_blank" rel="noopener noreferrer">ELIZA—A Computer Program For the Study of Natural Language Communication Between Man and Machine</a>, <cite>Communications of the ACM</cite> 9 (1), 1966, S. 36–45. <a href="https://courses.cs.umbc.edu/undergraduate/CMSC331/resources/papers/eliza.january1966.html" target="_blank" rel="noopener noreferrer">Lesbare Transkription bei der UMBC</a>.</p><p><a href="https://elizagen.org/original-eliza.html" target="_blank" rel="noopener noreferrer">ELIZAGEN: Original ELIZA</a> dokumentiert die Wiederentdeckung des historischen Quellcodes. Die klassische Version dieser App ist eine unabhängige Neuimplementierung und kein historisch exakter Emulator.</p><p>Zur personzentrierten Haltung: <a href="https://adpca.org/article/24_1-2/pcj24-client-centered-therapy-what-is-it-what-is-it-not1/" target="_blank" rel="noopener noreferrer">Barbara Temaner Brodley: Client-Centered Therapy – What Is It? What Is It Not?</a>, Association for the Development of the Person-Centered Approach. Die KI-Version übernimmt Anregungen für die Sprache, keine therapeutische Beziehung oder Wirksamkeitszusage.</p><p>Nur die klassische ELIZA erzeugt alle Antworten lokal aus festen Mustern, ohne einen KI-Dienst aufzurufen. Die optionale AI‑ELIZA überträgt nach Freigabe Nachrichten an Vercel und Groq, wie vor ihrem Start erläutert. Beide lokalen Gesprächsverläufe werden nur im Arbeitsspeicher gehalten. Beim Laden der Webseite erhält der Hostinganbieter wie üblich technische Verbindungsdaten.</p></details></section>
     </main>
     <footer class="wrap"><span>ELIZA · Ein Versuch über Sprache und Zuschreibung.</span><a href="https://genaiedu.github.io/LearningApps/impressum.html">Kontakt &amp; Impressum</a></footer>
   </div>
@@ -47,6 +60,14 @@
       <footer class="terminal-foot"><span id="input-help">Enter: senden · Umschalt + Enter: neue Zeile · /hilfe</span><span>LOKAL · KEINE SPEICHERUNG · KEINE THERAPIE</span></footer>
     </div>
     <p class="sr-only" role="status" aria-live="polite" id="spoken-response"></p>
+  </section>
+  <section class="ai-terminal" id="ai-terminal" aria-label="AI-ELIZA · Vollbild-Gespräch" hidden>
+    <div class="ai-monitor">
+      <header class="ai-topbar"><div class="ai-brand"><span class="ai-camera" aria-hidden="true"></span><strong>AI</strong><span>ELIZA</span></div><span class="ai-model">GPT‑OSS 120B · Groq</span><div class="ai-toolbar"><button id="ai-stop" type="button" hidden>Antwort abbrechen</button><button id="ai-end" type="button">Beenden <span aria-hidden="true">×</span></button></div></header>
+      <div class="ai-screen" id="ai-screen" tabindex="0" aria-label="Gesprächsverlauf, scrollbar"><div class="ai-conversation" id="ai-transcript" role="log" aria-live="polite" aria-relevant="additions"></div></div>
+      <div class="ai-composer"><p id="ai-error" role="status"></p><form id="ai-form" autocomplete="off"><label class="sr-only" for="ai-message">Deine Nachricht an AI-ELIZA</label><textarea id="ai-message" rows="2" maxlength="2400" placeholder="Was möchtest du ansprechen?" autocomplete="off" aria-describedby="ai-input-help"></textarea><button id="ai-send" type="submit">Senden <span aria-hidden="true">↑</span></button></form><p id="ai-input-help">Enter: senden · Umschalt + Enter: neue Zeile · Keine vertraulichen Angaben</p></div>
+      <footer class="ai-foot"><span>KI-Gesprächsexperiment · Keine Therapie</span><span>Lokaler Verlauf nur für dieses Gespräch</span></footer>
+    </div>
   </section>
 </body>
 </html>
