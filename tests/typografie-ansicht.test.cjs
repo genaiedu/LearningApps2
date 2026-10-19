@@ -159,7 +159,15 @@ test('every author voice follows the reading palette, including the font-choice 
   for(const id of ['schriftwahl-randstimme','word-randstimme']){
     assert.match(html,new RegExp('<aside[^>]*class="[^"]*author-comment[^"]*font-choice-voice[^"]*"[^>]*id="'+id+'"'));
   }
-  assert.ok(html.includes('styles/typografie-ansicht.css?v=20261018-randstimmen'));
+  assert.ok(html.includes('styles/typografie-ansicht.css?v=20261019-notizkontrast'));
+});
+test('notes inside dark chapters pair their foreground and hovered links with the reading surface',()=>{
+  assert.match(html,/<section class="chapter dark-section" id="latex">[\s\S]*?<div class="note" id="latex-satzspiegel">/);
+  assert.ok(css.includes('html[data-palette] .note{color:var(--ink)}'));
+  assert.ok(css.includes('html[data-palette] .note a:hover{color:var(--ink)}'));
+  for(const p of A.palettes)for(const mode of ['light','dark']){
+    assert.ok(C.contrast(p[mode].ink,p[mode].surface)>=4.5,p.id+' '+mode+' note text and hovered link');
+  }
 });
 test('device previews inherit validated theme and glyph settings from the same-origin parent',()=>{
   const formats=read('scripts/typografie-formate.js');

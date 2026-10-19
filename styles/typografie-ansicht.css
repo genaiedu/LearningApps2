@@ -21,6 +21,9 @@ html[data-palette] .editorial-scene{background:var(--dark)}
 html[data-palette] :is(.archive-section,.color-section){background:var(--surface)}
 /* Keep IDs outside :is(): their specificity must not override the paired code colors. */
 html[data-palette] :is(.controls,.note,pre),html[data-palette] #wiki-status{background:var(--surface)}
+/* Notes pair their surface with its reading ink, even inside a dark chapter. */
+html[data-palette] .note{color:var(--ink)}
+html[data-palette] .note a:hover{color:var(--ink)}
 html[data-palette] .author-comment{background:var(--quote-bg);color:var(--ink)}
 html[data-palette] .author-comment .comment-opening{color:var(--quote-mark)}
 /* Personal voices keep their own ragged-right rhythm, independent of the
