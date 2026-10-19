@@ -58,6 +58,12 @@
   }
 
   if (app === 'typografie') {
+    const preface = direct(main, '[data-reading-preface]');
+    if (preface) {
+      const group = { label: 'Vorwort', items: [], subitems: [] };
+      groups.push(group);
+      addSection(preface, group);
+    }
     const labels = { zeichen: 'I · Zeichen', papier: 'II · Papier', bildschirm: 'III · Bildschirm', web: 'Vertiefung · Webseiten bauen' };
     for (const part of main.querySelectorAll('.atelier-part')) {
       const group = { label: labels[part.dataset.part], items: [], subitems: [] };
@@ -66,7 +72,7 @@
     }
     const appendix = { label: 'Nachschlagen & Weiterdenken', items: [], subitems: [] };
     groups.push(appendix);
-    for (const section of main.children) if (section.matches('section.chapter')) addSection(section, appendix);
+    for (const section of main.children) if (section.matches('section.chapter:not([data-reading-preface])')) addSection(section, appendix);
     for (const visual of main.querySelectorAll('#tschichold .wrap>.two-col>div:last-child,#buchsatz>.two-col>.spread')) {
       visual.classList.add('reading-visual');
     }

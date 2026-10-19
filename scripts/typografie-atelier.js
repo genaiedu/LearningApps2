@@ -21,7 +21,7 @@
   const navLinks=[...document.querySelectorAll('.chapter-nav a')];
   const partRegions=[...document.querySelectorAll('.atelier-part')];
   function updatePartNavigation(){
-    let active=partRegions[0];
+    let active;
     for(const part of partRegions)if(part.getBoundingClientRect().top<=140)active=part;
     for(const link of navLinks){const selected=link.dataset.partLink===(active?.dataset.part==='web'?'bildschirm':active?.dataset.part);link.classList.toggle('active',selected);if(selected)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');}
   }

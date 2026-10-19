@@ -143,7 +143,7 @@ test('three parts keep characters, print and screen in a continuous reading orde
   assert.deepEqual(parts.map(p=>p[1]),['zeichen','papier','bildschirm','web']);
   assert.deepEqual([...parts[0][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['buchstabengeschichte','schriftformen','details','lucide','mathematiksatz','beginn','lokal','katalog','font-combinations','schrift-downloads']);
   assert.deepEqual([...parts[1][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['tschichold','haltung','buchsatz','satzspiegel-sparsam','satzlabor','word','richtung','druckfarbe','komposition','bild-und-text','seitenstudien','latex','texatelier','langtext-satzprobe','longtext-own']);
-  assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['webtext','projektion','tablet-pdf','lernplattformen','schriften-mitreisen','text-als-bild','bildschirm-darstellung','bildschirm-kurzcheck','handschrift-der-seite']);
+  assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['webtext','projektion','tablet-pdf','lernplattformen','schriften-mitreisen','text-als-bild','bildschirm-darstellung','bildschirm-kurzcheck']);
   assert.equal([...parts[3][2].matchAll(/<section[^>]*id="([^"]+)"/g)].length,13);
   assert.equal((html.match(/data-part-link=/g)||[]).length,3);
   const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length);

@@ -14,7 +14,7 @@ test('only the two text-heavy apps opt into a local progressive reading layer', 
     const html = read(page + '.html');
     assert.ok(html.includes('data-reading-app="' + app + '"'));
     assert.match(html, /href="styles\/lesepfad\.css\?v=[\w-]+"/);
-    assert.ok(html.includes('defer src="scripts/lesepfad.js?v=20261011-leserhythmus"'));
+    assert.ok(html.includes('defer src="scripts/lesepfad.js?v=' + (app === 'typografie' ? '20261019-vorwort' : '20261011-leserhythmus') + '"'));
     assert.ok(html.indexOf('scripts/lesepfad.js') > html.indexOf('scripts/schroedinger-wikipedia.js'));
   }
   assert.ok(!read('kunsttresor.html').includes('lesepfad'));
@@ -30,7 +30,7 @@ test('original paragraphs, voices and live controls are moved without copying or
   assert.ok(!/innerHTML|outerHTML|replaceChildren|cloneNode|\.remove\(|\.textContent\s*=\s*['"]/.test(script));
   assert.ok(!/\.author-comment|\.author-essay/.test(css));
   const html = read('typografie-atelier.html');
-  assert.equal((html.match(/<aside class="author-essay author-comment/g) || []).length, 14);
+  assert.equal((html.match(/<aside class="author-essay author-comment/g) || []).length, 19);
   for (const phrase of ['Du, der du diesen Text liest, bist mir wichtig.', 'Die Form wird zur Aussage.', 'Gute Typografie ist keine Schnörkelei']) {
     assert.ok(html.includes(phrase), phrase);
   }

@@ -37,7 +37,7 @@ test('school chapters and the technical archive keep live workshops and download
   const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8');
   const part=html.slice(html.indexOf('data-part="bildschirm"'),html.indexOf('id="entscheidungen"'));
   const ids=[...part.matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]);
-  assert.deepEqual(ids,['webtext','projektion','tablet-pdf','lernplattformen','schriften-mitreisen','text-als-bild','bildschirm-darstellung','bildschirm-kurzcheck','handschrift-der-seite','webtechnik-grundlagen','fenstermasse-vertiefung','webrichtung','bildschirmfarbe-vertiefung','hintergrund','weblayout','webgrafik','herobereiche','bewegung-vertiefung','interaktiv','websteuerung','webwerkstatt','webstudien']);
+  assert.deepEqual(ids,['webtext','projektion','tablet-pdf','lernplattformen','schriften-mitreisen','text-als-bild','bildschirm-darstellung','bildschirm-kurzcheck','webtechnik-grundlagen','fenstermasse-vertiefung','webrichtung','bildschirmfarbe-vertiefung','hintergrund','weblayout','webgrafik','herobereiche','bewegung-vertiefung','interaktiv','websteuerung','webwerkstatt','webstudien']);
   for(const id of ['web-study','web-width','web-size','web-leading','web-measure','web-spacing','web-reset'])assert.ok(part.includes('id="'+id+'"'));
   assert.ok(part.includes('Die Downloads sind zusätzliche Arbeitsdateien'));
   for(const source of ['text-spacing.html','reflow.html','transform','@container','17510822'])assert.ok(part.includes(source));

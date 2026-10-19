@@ -3,9 +3,9 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const C=require('../scripts/typografie-schulbildschirm-core.js'),root=path.resolve(__dirname,'..');
 const html=fs.readFileSync(path.join(root,'typografie-atelier.html'),'utf8');
 const main=html.slice(html.indexOf('<div class="atelier-part" data-part="bildschirm">'),html.indexOf('<div class="atelier-part" data-part="web">'));
-test('the school reading track has eight chapters, a closing essay and a separate technical track',()=>{
+test('the school reading track has eight chapters and a separate technical track, without the relocated preface',()=>{
   const chapters=[...main.matchAll(/<section class="chapter[^>]*id="([^"]+)"/g)].map(m=>m[1]);
-  assert.deepEqual(chapters,['webtext','projektion','tablet-pdf','lernplattformen','schriften-mitreisen','text-als-bild','bildschirm-darstellung','bildschirm-kurzcheck','handschrift-der-seite']);
+  assert.deepEqual(chapters,['webtext','projektion','tablet-pdf','lernplattformen','schriften-mitreisen','text-als-bild','bildschirm-darstellung','bildschirm-kurzcheck']);
   for(let n=1;n<=8;n++)assert.ok(main.includes('>III.'+n+' <span>'));
   for(const word of ['CSS-Pixel','devicePixelRatio','<code>','PowerPoint','Keynote','Die Folie ist kein Handout'])assert.ok(!main.includes(word),word);
   for(const id of ['webtext','bildschirmformate','webrichtung','farbe','hintergrund','weblayout','webgrafik','herobereiche','bewegte-grafik','interaktiv','websteuerung','webwerkstatt','webstudien'])assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
@@ -35,15 +35,15 @@ test('font height constants match the actual local Regular TTF tables',()=>{
     assert.equal(C.fonts[id].xHeight,b.readInt16BE(tabs['OS/2']+86)/b.readUInt16BE(tabs.head+18));
   }
 });
-test('the three supplied author voices remain word-for-word, including linked passages',()=>{
-  const hashes={'seite-gehoert':'e8de49ae687675454acf8a1f384377b2eabf17349870a36604e6275cb3e8e0d9','papier-bildschirm':'ade37f6a55267eefefd7bbb574c558a9e8c6ca66bc50851b9eff1fb32cc89a02','handschrift':'3fcc417707852030ca57f1c785d052a318f575dd27a0abaa730f470861286f87'};
+test('the two school-screen author voices remain word-for-word, including linked passages',()=>{
+  const hashes={'seite-gehoert':'e8de49ae687675454acf8a1f384377b2eabf17349870a36604e6275cb3e8e0d9','papier-bildschirm':'ade37f6a55267eefefd7bbb574c558a9e8c6ca66bc50851b9eff1fb32cc89a02'};
   for(const [name,hash]of Object.entries(hashes)){
     const aside=main.match(new RegExp('<aside[^>]*data-randstimme="'+name+'"[\\s\\S]*?</aside>'))[0];
     const text=[...aside.matchAll(/<p>([\s\S]*?)<\/p>/g)].map(m=>m[1].replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')).join('\n\n');
     assert.equal(crypto.createHash('sha256').update(text).digest('hex'),hash,name);
   }
-  for(const id of ['gedankenstrich-randstimme','satzspiegel-sparsam','haltung'])assert.ok(main.includes('href="#'+id+'"'));
-  assert.ok(main.includes('nicht auf unmittelbar gemessene Gewöhnung'));assert.ok(main.includes('eine Garantie für fehlerfreien Satz folgt daraus nicht'));
+  assert.ok(!main.includes('data-randstimme="handschrift"'));
+  assert.ok(main.includes('nicht auf unmittelbar gemessene Gewöhnung'));assert.ok(html.includes('eine Garantie für fehlerfreien Satz folgt daraus nicht'));
 });
 test('source limits, progressive fallback and palette-aware examples remain explicit',()=>{
   for(const phrase of ['keine Normprüfung','keine maßstäbliche Projektion','kein Versprechen für jede PDF-App','keine zusätzliche Metaanalyse','Keine garantierte Mindestlesegröße']){
