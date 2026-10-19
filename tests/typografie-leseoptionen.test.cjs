@@ -74,7 +74,7 @@ test('justified reading copy includes deeply nested explanations, but never rewr
 });
 test('all personal voices stay ragged right regardless of reading alignment or palette',t=>{
  const s=setup(t),css=read('styles/typografie-ansicht.css'),selector=css.match(/(html\[data-reading-alignment="justify"\][\s\S]*?)\{text-align:justify;/)[1],voices=[...s.w.document.querySelectorAll('.author-comment')];
- assert.equal(voices.length,16);
+ assert.equal(voices.length,19);
  assert.ok(css.includes('.author-comment,.author-comment :is(p,blockquote,li,dd,figcaption){text-align:left;text-align-last:auto;hyphens:manual;-webkit-hyphens:manual}'));
  for(const readingAlignment of ['left','justify'])for(const palette of A.palettes)for(const theme of ['light','dark']){
   s.w.TypoAppearance.apply({readingAlignment,palette:palette.id,theme});s.flush();

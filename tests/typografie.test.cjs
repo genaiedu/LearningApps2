@@ -62,7 +62,7 @@ test('letter forms, emphasis and font roles remain inside the characters part',(
   for(const phrase of ['einstöckige a','zweistöckige a','Für das g folgt daraus erst recht keine pauschale Rangliste.','Formprinzip allein','Nonverbal','Dateitechnik','Cardo Regular','Cardo Italic','Cardo Bold','Farbe kann zusätzliche Bedeutungen tragen'])assert.ok(html.includes(phrase),phrase);
   assert.ok(css.includes('.emphasis-comparison strong{font-weight:700}'));
   const statements=[...html.matchAll(/<aside class="author-essay author-comment[^\"]*"[\s\S]*?<\/aside>/g)].map(m=>m[0]);
-  assert.equal(statements.length,16);
+  assert.equal(statements.length,19);
   for(const statement of statements){assert.equal((statement.match(/aria-hidden="true">„<\/span>/g)||[]).length,1);assert.ok(!/Claus|Unterberg|Autorenkommentar/.test(statement));if(!statement.includes('font-choice-voice'))assert.ok(!/“|”/.test(statement));}
   const choice=statements.find(s=>s.includes('font-choice-voice'));assert.ok(choice.includes('Warum ich meine Schriften selbst wähle'));assert.equal((choice.match(/<p>/g)||[]).length,11);assert.ok(html.indexOf(choice)<html.indexOf('data-part="papier"'));assert.ok(choice.includes('„ian“'));assert.ok(choice.includes('<strong>Tinos</strong>'));assert.ok(choice.includes('<strong>Arimo</strong>'));assert.ok(choice.includes('keine identische Nachzeichnung der Helvetica'));
   const word=statements.find(s=>s.includes('id="word-randstimme"'));assert.ok(word.includes('Was Word nicht von selbst macht'));assert.equal((word.match(/<p>/g)||[]).length,9);assert.ok(html.indexOf(word)>html.indexOf('id="texatelier"'));assert.ok(html.indexOf(word)<html.indexOf('data-part="bildschirm"'));assert.ok(word.includes('Mediävalziffern'));assert.ok(word.includes('Ziffernform und Ziffernabstand gezielt auswählen'));assert.ok(!word.includes('verschmolzenen Buchstabenpaare'));assert.ok(word.includes('Ein Schusterjunge ist die erste Zeile eines Absatzes'));assert.ok(word.includes('ein Hurenkind ist die letzte Absatzzeile'));assert.ok(!word.includes('bereits besprochenen Schusterjungen'));
@@ -140,10 +140,11 @@ test('font choice checklist is linked in context with real local ambiguity speci
 test('three parts keep characters, print and screen in a continuous reading order',()=>{
   const html=fs.readFileSync(path.resolve(__dirname,'../typografie-atelier.html'),'utf8');
   const parts=[...html.matchAll(/<div class="atelier-part" data-part="([^"]+)">([\s\S]*?)(?=<div class="atelier-part"|<section class="chapter wrap" id="entscheidungen")/g)];
-  assert.deepEqual(parts.map(p=>p[1]),['zeichen','papier','bildschirm']);
+  assert.deepEqual(parts.map(p=>p[1]),['zeichen','papier','bildschirm','web']);
   assert.deepEqual([...parts[0][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['buchstabengeschichte','schriftformen','details','lucide','mathematiksatz','beginn','lokal','katalog','font-combinations','schrift-downloads']);
   assert.deepEqual([...parts[1][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['tschichold','haltung','buchsatz','satzspiegel-sparsam','satzlabor','word','richtung','druckfarbe','komposition','bild-und-text','seitenstudien','latex','texatelier','langtext-satzprobe','longtext-own']);
-  assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['webtext','bildschirmformate','webrichtung','farbe','hintergrund','weblayout','webgrafik','herobereiche','bewegte-grafik','interaktiv','websteuerung','webwerkstatt','webstudien']);
+  assert.deepEqual([...parts[2][2].matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]),['webtext','projektion','tablet-pdf','lernplattformen','schriften-mitreisen','text-als-bild','bildschirm-darstellung','bildschirm-kurzcheck','handschrift-der-seite']);
+  assert.equal([...parts[3][2].matchAll(/<section[^>]*id="([^"]+)"/g)].length,13);
   assert.equal((html.match(/data-part-link=/g)||[]).length,3);
   const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length);
   const longtext=fs.readFileSync(path.resolve(__dirname,'../scripts/typografie-langtext.js'),'utf8');

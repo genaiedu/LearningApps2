@@ -54,7 +54,7 @@ test('static fallbacks, references, glossary, formula distinction and source con
  assert.ok(html.includes('getrennt von den 41 Schriftfamilien'));assert.ok(!html.includes('30 gewöhnlichen'));
  for(const term of ['glossar-codepunkt','glossar-nfc','glossar-diakritisch','glossar-ersatzschrift','glossar-formatvorlage','glossar-prime'])assert.ok(d.getElementById(term));
  const voice=d.getElementById('schriftwahl-randstimme');assert.ok(voice.textContent.includes('Calibri oder Aptos'));assert.ok(!voice.textContent.includes('kaum noch etwas gedruckt'));assert.ok(!voice.textContent.includes('Zumutung'));assert.equal(voice.querySelectorAll('p').length,11);
- assert.equal((html.match(/class="author-essay author-comment/g)||[]).length,16);
+ assert.equal((html.match(/class="author-essay author-comment/g)||[]).length,19);
  assert.ok(!/localStorage|sessionStorage|fetch\(|XMLHttpRequest|sendBeacon|\.innerHTML\s*=/.test(script));
  for(const a of d.querySelectorAll('.source-note a[data-source-external]'))assert.ok(a.href.startsWith('https://'));
  dom.window.close();

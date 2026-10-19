@@ -44,13 +44,13 @@
     const d=F.dimensions(current),factor=F.scale(current,Math.max(1,stage.clientWidth-48),Math.max(1,stage.clientHeight-48));
     frame.style.width=d.width+'px';frame.style.height=d.height+'px';frame.style.transform='scale('+factor+')';
     shell.style.width=(d.width*factor)+'px';shell.style.height=(d.height*factor)+'px';shell.dataset.device=current.device;
-    $('format-size').textContent=d.width+' × '+d.height+' CSS-Pixel';
+    $('format-size').textContent=d.width+' × '+d.height+' Pixel';
     $('format-scale').textContent=current.view==='actual'?'1:1 · keine Verkleinerung':'Überblick · '+Math.round(factor*100)+' % Anzeigegröße';
   }
   function status(){
     const d=F.dimensions(current);
     $('format-jump').disabled=!ready;
-    $('format-status').textContent=!ready?'Die Seite für die Formatvorschau wird geladen …':reported?'Tatsächliches Browserfenster: '+reported.width+' × '+reported.height+' CSS-Pixel. '+(reported.contentWidth>reported.width+1?'An dieser Seite gibt es einen horizontalen Überstand. Prüfe, ob er auf eine bewusst zweidimensionale Grafik begrenzt ist.':'Kein horizontaler Seitenüberstand in dieser Ansicht.'):'Die Vorschau ist geladen. Scrolle und bediene die Seite innerhalb des Rahmens.';
+    $('format-status').textContent=!ready?'Die Seite für die Formatvorschau wird geladen …':reported?'Tatsächliches Browserfenster: '+reported.width+' × '+reported.height+' Pixel. '+(reported.contentWidth>reported.width+1?'An dieser Seite gibt es einen horizontalen Überstand. Prüfe, ob er auf eine bewusst zweidimensionale Grafik begrenzt ist.':'Kein horizontaler Seitenüberstand in dieser Ansicht.'):'Die Vorschau ist geladen. Scrolle und bediene die Seite innerhalb des Rahmens.';
     frame.title='Vollständiges Typografie-Atelier · '+d.name+' · '+d.width+' × '+d.height;
   }
   function update(o={},jump=false){
@@ -75,5 +75,5 @@
   addEventListener('typography-motion-change',()=>config());
   addEventListener('typography-appearance-change',()=>config());
   new ResizeObserver(sizing).observe(stage);update();
-  frame.src='typografie-atelier.html?format-preview=1&v=20261018-randstimmen';
+  frame.src='typografie-atelier.html?format-preview=1&v=20261019-schulbildschirm';
 })();

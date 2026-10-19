@@ -8,9 +8,9 @@ test('navigation study follows interaction and keeps section numbering and targe
   assert.ok(html.indexOf('id="websteuerung"')<html.indexOf('id="webwerkstatt"'));
   for(const word of ['Navigation','Werkzeuge','position: fixed','position: sticky','nichtmodalen','modales','Browserzoom','Escape','Tastatur','Bildschirmtastatur'])assert.ok(section.includes(word),word);
   for(const source of ['disclosure-navigation','dialog-modal','focus-not-obscured-minimum','reflow.html','target-size-minimum','/Properties/position','/Values/env'])assert.ok(section.includes(source));
-  assert.ok(html.includes('href="#websteuerung">III.11'));
-  assert.match(html,/<div class="section-label">III\.12 <span>Eine Idee/);
-  assert.match(html,/<div class="section-label">III\.13 <span>Bearbeiten/);
+  assert.ok(html.includes('href="#websteuerung">11 ·'));
+  assert.match(html,/<div class="section-label">Vertiefung 12 <span>Eine Idee/);
+  assert.match(html,/<div class="section-label">Vertiefung 13 <span>Bearbeiten/);
 });
 test('all layout choices are sanitized and numeric bounds remain finite',()=>{
   assert.deepEqual(N.settings(),N.defaults);

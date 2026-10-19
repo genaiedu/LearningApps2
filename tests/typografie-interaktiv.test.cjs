@@ -4,7 +4,7 @@ const M=require('../scripts/typografie-bewegung-core.js'),root=path.resolve(__di
 const read=name=>fs.readFileSync(path.join(root,name),'utf8'),html=read('typografie-atelier.html'),ui=read('scripts/typografie-bewegung.js');
 test('margin voices share one constrained format, with a centered closing exception',()=>{
   const css=read('styles/typografie-atelier.css');
-  assert.equal((html.match(/<aside class="author-essay author-comment/g)||[]).length,16); // Includes the font-choice and Word voices.
+  assert.equal((html.match(/<aside class="author-essay author-comment/g)||[]).length,19); // Includes the font-choice and Word voices.
   assert.match(css,/\.author-comment\{[^}]*width:min\(100%,850px\);margin:35px 0 30px auto;/);
   assert.match(css,/\.margin-conversation\{[^}]*grid-template-columns:minmax\(0,1fr\) minmax\(0,850px\)/);
   assert.match(css,/\.margin-conversation>\.author-comment\{justify-self:end;margin:0\}/);
@@ -13,7 +13,7 @@ test('margin voices share one constrained format, with a centered closing except
   assert.ok(!/\.(letterform|emphasis)-statement\{/.test(css),'Topic classes must not maintain separate comment layouts');
 });
 test('approved margin voices appear once, in the intended chapters, without attribution',()=>{
-  const places={fraktur:'gebrochene-schriften',gedankenstrich:'details',modern:'word',plakat:'richtung',proportion:'komposition',bild:'bild-und-text',format:'bildschirmformate',hintergrund:'hintergrund',hero:'herobereiche',bewegung:'bewegte-grafik'};
+  const places={fraktur:'gebrochene-schriften',gedankenstrich:'details',modern:'word',plakat:'richtung',proportion:'komposition',bild:'bild-und-text',format:'bildschirmformate',hintergrund:'hintergrund',hero:'herobereiche',bewegung:'bewegte-grafik','seite-gehoert':'webtext','papier-bildschirm':'tablet-pdf',handschrift:'handschrift-der-seite'};
   assert.equal((html.match(/data-randstimme=/g)||[]).length,Object.keys(places).length+1);
   for(const [name,id]of Object.entries(places)){
     const tail=html.slice(html.indexOf('id="'+id+'"'));

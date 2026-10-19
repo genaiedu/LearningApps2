@@ -58,7 +58,7 @@
   }
 
   if (app === 'typografie') {
-    const labels = { zeichen: 'I · Zeichen', papier: 'II · Papier', bildschirm: 'III · Bildschirm' };
+    const labels = { zeichen: 'I · Zeichen', papier: 'II · Papier', bildschirm: 'III · Bildschirm', web: 'Vertiefung · Webseiten bauen' };
     for (const part of main.querySelectorAll('.atelier-part')) {
       const group = { label: labels[part.dataset.part], items: [], subitems: [] };
       groups.push(group);

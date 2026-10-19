@@ -1,0 +1,44 @@
+/* School-facing examples inherit all reading palettes, with fixed local specimen fonts. */
+.school-screen-lab{margin-block:32px;padding:28px;border:1px solid var(--line);background:var(--white);min-width:0}
+.school-screen-controls{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-bottom:26px}
+.school-screen-ready .school-screen-controls{display:grid}
+.school-spacing-control{display:none}.school-screen-ready .school-spacing-control{display:flex}
+.school-screen-controls label{display:flex;flex-direction:column;gap:8px;min-width:0;font:500 16px/1.45 "Fira Sans",sans-serif}
+.school-screen-controls :is(select,input){min-width:0;width:100%}
+.school-screen-controls .check{flex-direction:row;align-items:center;grid-column:1/-1}.school-screen-controls .check input{width:auto}
+.school-screen-result{padding:18px 0;border-block:1px solid var(--line);font-variant-numeric:lining-nums tabular-nums;text-align:left!important;text-align-last:auto!important}
+.school-screen-chapter .page-glyph-window{width:100%}
+.school-screen-lab :is(output,.small,summary),.screen-calc-work{font-variant-numeric:lining-nums tabular-nums}
+.projection-proof{padding:clamp(24px,5vw,55px);margin-block:24px;background:#fff;color:#17211c;position:relative;overflow:hidden;font-family:"Fira Sans",sans-serif;transition:filter .2s ease}
+.projection-proof h4{font-size:var(--projection-sample-size,28px);line-height:1.35;margin-bottom:24px;font-family:inherit}
+.projection-proof p{font-family:inherit;font-size:var(--projection-sample-size,28px);line-height:1.5;max-width:40ch;color:inherit;text-align:left!important;text-align-last:auto!important}
+.projection-proof.projection-washed{filter:contrast(.52) brightness(1.12)}
+.screen-calc-work{font-size:16px;line-height:1.6}.screen-calc-work p{margin:14px 0;text-align:left!important}
+.screen-equation{overflow-x:auto;max-width:100%;padding-block:10px;font-size:18px}
+.screen-equation mjx-container{max-width:100%;font-size:100%!important}
+.screen-equation mjx-container[display="true"]{margin:16px 0!important;text-align:left!important}
+.tablet-comparison{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.tablet-comparison figure{margin:0;min-width:0}.tablet-comparison figcaption{margin-top:16px;font:400 16px/1.6 "Fira Sans",sans-serif;color:var(--muted);font-variant-numeric:lining-nums tabular-nums}
+.tablet-screen{width:100%;position:relative;overflow:auto;background:#e6e7e5;border:9px solid #303431;border-radius:10px;isolation:isolate;overscroll-behavior:contain}
+.tablet-page{width:100%;padding:24px;background:#fff;color:#17211c;transform-origin:0 0;font-family:"EB Garamond",serif;line-height:1.5;font-kerning:normal;font-variant-ligatures:common-ligatures;font-variant-numeric:oldstyle-nums proportional-nums}
+.school-screen-ready .tablet-page{position:absolute;inset:0 auto auto 0;width:793.7008px;min-height:1122.5197px;padding:75.59px}
+.school-screen-ready #tablet-portrait{width:69.4915%;margin-inline:auto}
+.tablet-page h4{font:700 26px/1.3 "Fira Sans",sans-serif;margin-bottom:22px;color:inherit}
+.tablet-page :is(p,li){font-family:inherit;font-size:inherit;line-height:inherit;color:inherit;text-align:left!important;hyphens:auto}
+.tablet-page .tablet-answer{height:85px;border-bottom:1px solid #777;margin-bottom:20px}
+.tablet-page-shell{position:relative;overflow:hidden;min-height:100%}
+.platform-example{padding:28px;border:1px solid var(--line);background:var(--white);font-family:"Fira Sans",sans-serif;margin-block:26px}
+.platform-example h3{font:650 27px/1.3 "Fira Sans",sans-serif}.platform-example h4{font:600 21px/1.4 "Fira Sans",sans-serif}
+.platform-example :is(p,li){max-width:65ch}.platform-example .platform-kicker{font-size:14px;color:var(--muted)}
+.screen-checklist{padding-left:1.4em}.screen-checklist li{padding-left:.3em;margin-block:14px}
+.school-spacing-proof{border:1px solid var(--line);padding:24px;background:var(--white);max-width:100%;overflow-wrap:anywhere}
+.school-spacing-proof.school-spacing-on p{line-height:1.5!important;margin-bottom:2em!important;letter-spacing:.12em!important;word-spacing:.16em!important}
+.screen-format-embedded{margin-block:45px}.screen-format-embedded>h3{font-size:30px;line-height:1.3;margin-bottom:24px}
+.web-depth-intro{padding:80px 0 40px;border-top:1px solid var(--line)}
+.web-depth-intro h2{font:500 clamp(32px,4vw,52px)/1.15 "Fira Sans",sans-serif}
+.web-depth-intro nav{display:flex;flex-wrap:wrap;gap:12px 25px;margin-top:28px}
+.school-opinion-source{max-width:850px;margin:0 0 34px auto}
+#handschrift-der-seite .author-essay{margin-top:20px}
+@media(max-width:750px){.school-screen-controls,.tablet-comparison{grid-template-columns:1fr}.school-screen-lab{padding:22px 16px}.tablet-comparison figure{max-width:430px;margin-inline:auto;width:100%}.school-screen-controls .check{grid-column:auto}.school-screen-lab .screen-equation{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.projection-proof{transition:none}}
+@media print{.school-screen-controls{display:none}.school-screen-lab{break-inside:avoid}.projection-proof{filter:none!important}.tablet-comparison{grid-template-columns:1fr 1fr}.web-depth-intro{break-before:page}}
