@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="de" data-palette="graphite" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ELIZA ausprobieren: eine deutschsprachige, regelbasierte Gesprächssimulation im grünen Vollbild-Terminal. Mit kurzer Geschichte, ohne KI-Dienst und ohne Speicherung der Gespräche.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>ELIZA · Ein Gespräch. Kein Verstehen.</title>
+  <link rel="stylesheet" href="../LearningApps/atelier-tools.css">
+  <link rel="stylesheet" href="styles/eliza.css?v=20261019-1">
+  <script defer src="../LearningApps/atelier-tools.js"></script>
+  <script defer src="scripts/eliza-core.js?v=20261019-1"></script>
+  <script defer src="scripts/eliza.js?v=20261019-1"></script>
+</head>
+<body data-design-key="eliza-reading-view">
+  <a class="skip" href="#geschichte">Zur Geschichte</a>
+  <div id="introduction">
+    <header class="masthead wrap"><a class="wordmark" href="#anfang"><strong>ELIZA</strong><span>GESPRÄCHSLABOR</span></a><span class="header-caption">Ein frühes Kapitel der KI</span><span data-design-controls></span></header>
+    <main id="anfang">
+      <section class="hero wrap" aria-labelledby="title">
+        <div><p class="eyebrow">Joseph Weizenbaum · MIT · 1966</p><h1 id="title">Ein Gespräch.<br><em>Kein Verstehen.</em></h1><p class="lead">Ein Computer stellt Rückfragen. Du antwortest. Und plötzlich wirkt es, als würde er zuhören.</p><p class="hero-note">ELIZA zeigt, wie wenig es manchmal braucht, damit wir einer Maschine Verständnis zuschreiben. Probiere das historische Prinzip selbst aus.</p><a class="text-link" href="#geschichte">Ein kurzer Blick zurück <span aria-hidden="true">↓</span></a></div>
+        <figure class="archive-sheet"><figcaption><span>Sprachmuster statt Sprachmodell</span><span class="archive-number">1966</span></figcaption><div class="archive-name" aria-hidden="true">ELIZA<span>_</span></div><ol class="pattern-example"><li><span>Eingabe</span><q>Ich bin neugierig.</q></li><li><span>Erkanntes Muster</span><code>ICH BIN …</code></li><li><span>Rückfrage</span><q>Seit wann sehen Sie sich so?</q></li></ol><p>Ein vereinfachtes Beispiel für das Prinzip – keine inhaltliche Analyse.</p></figure>
+      </section>
+      <section class="history wrap" id="geschichte" aria-labelledby="history-title">
+        <div class="history-heading"><p class="eyebrow">Die Geschichte dahinter</p><h2 id="history-title">Worte zurückgeben.<br><em>Verständnis auslösen.</em></h2></div>
+        <div class="history-text"><article><h3>Ein Programm und seine Rolle</h3><p>Joseph Weizenbaum entwickelte ELIZA am Massachusetts Institute of Technology und beschrieb das Programm 1966. Das bekannte Skript <strong>DOCTOR</strong> ahmte die Gesprächsführung einer nichtdirektiven Psychotherapie nach: Aussagen aufgreifen, Begriffe zurückspiegeln, nachfragen. ELIZA war das System; DOCTOR eine mögliche Gesprächsrolle.</p></article><article><h3>Regeln, keine Gedanken</h3><p>Schlüsselwörter bestimmten, welche Regeln angewendet wurden. Das Programm zerlegte Eingaben und setzte daraus Antworten zusammen. Es konnte auch frühere Textfragmente wieder aufgreifen. Es lernte nicht wie ein heutiges Sprachmodell und wusste nicht, was die Wörter bedeuteten.</p></article><article><h3>Warum das bis heute interessant ist</h3><p>Schon Weizenbaum beschrieb, wie Menschen in solchen Rückfragen Wissen und Absichten vermuten. Das ist die spannende Frage dieses Versuchs: <strong>Wann fühlt sich eine Antwort verständnisvoll an – und was davon bringen wir selbst in das Gespräch ein?</strong></p></article></div>
+      </section>
+      <section class="launch wrap" aria-labelledby="launch-title">
+        <div><p class="eyebrow">Jetzt selbst ausprobieren</p><h2 id="launch-title">Der Bildschirm gehört dem Gespräch.</h2><p>Diese neue deutsche Interpretation verwendet eigene Regeln nach dem ELIZA-Prinzip, nicht den unveränderten Originalcode. Die Retro-Monitoroptik ist eine gestalterische Hommage; das ursprüngliche System wurde über eine Fernschreibmaschine bedient.</p><p class="launch-warning"><strong>Eine Simulation, keine Therapie.</strong> ELIZA kann unpassend antworten und ist weder psychologische Beratung noch Krisenhilfe. Verwende gern erfundene Beispiele.</p><p>Deine Eingaben verlassen die App nicht und werden nicht gespeichert. Beim Beenden wird das Gespräch verworfen. Nur deine gewählte Lesedarstellung wird im Browser gemerkt.</p><button class="button primary" id="start-eliza" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5"/></svg>ELIZA im Vollbild starten</button><p class="launch-help">Leises Tastaturklacken ist eingeschaltet und im Terminal abschaltbar. Mit Esc oder „Beenden“ kehrst du zurück.</p><p id="launch-status" role="status"></p><noscript><p>Bitte aktiviere JavaScript, um die lokale Gesprächssimulation zu starten.</p></noscript></div>
+      </section>
+      <section class="sources wrap" aria-label="Quellen"><details><summary>Historische Quellen &amp; Einordnung</summary><p>Joseph Weizenbaum: <a href="https://doi.org/10.1145/365153.365168" target="_blank" rel="noopener noreferrer">ELIZA—A Computer Program For the Study of Natural Language Communication Between Man and Machine</a>, <cite>Communications of the ACM</cite> 9 (1), 1966, S. 36–45. <a href="https://courses.cs.umbc.edu/undergraduate/CMSC331/resources/papers/eliza.january1966.html" target="_blank" rel="noopener noreferrer">Lesbare Transkription bei der UMBC</a>.</p><p><a href="https://elizagen.org/original-eliza.html" target="_blank" rel="noopener noreferrer">ELIZAGEN: Original ELIZA</a> dokumentiert die Wiederentdeckung des historischen Quellcodes. Diese App ist eine unabhängige Neuimplementierung und kein historisch exakter Emulator.</p><p>Alle Antworten entstehen lokal aus festen Mustern. Die Gesprächsfragmente im laufenden Arbeitsspeicher dienen nur dem aktuellen Dialog. Es werden keine Analyse-, Chat- oder KI-Dienste aufgerufen. Beim Laden der Webseite erhält der Hostinganbieter wie üblich technische Verbindungsdaten.</p></details></section>
+    </main>
+    <footer class="wrap"><span>ELIZA · Ein Versuch über Sprache und Zuschreibung.</span><a href="https://genaiedu.github.io/LearningApps/impressum.html">Kontakt &amp; Impressum</a></footer>
+  </div>
+  <section class="terminal" id="terminal" aria-label="ELIZA · Vollbild-Terminal" hidden>
+    <div class="monitor">
+      <header class="terminal-bar"><span class="terminal-brand"><span class="power-dot" aria-hidden="true"></span>ELIZA <span class="terminal-subtitle">/ DEUTSCH</span></span><div class="terminal-tools"><button id="sound-toggle" type="button" aria-pressed="true">Tastaturton: an</button><button id="instant-toggle" type="button" aria-pressed="false">Sofortausgabe: aus</button><button id="end-eliza" type="button">Beenden <span aria-hidden="true">×</span></button></div></header>
+      <div class="screen" id="screen" tabindex="0" aria-label="Gesprächsverlauf, scrollbar">
+        <div class="phosphor" id="transcript" role="log" aria-label="Gespräch" aria-live="off"></div>
+        <form class="terminal-form phosphor" id="terminal-form" autocomplete="off" hidden>
+          <label for="message"><span aria-hidden="true">SIE &gt;</span><span class="sr-only">Ihre Nachricht an ELIZA</span></label><div class="input-wrap" id="input-wrap"><textarea id="message" rows="1" maxlength="1200" spellcheck="false" autocapitalize="sentences" autocomplete="off" autocorrect="off" aria-describedby="input-help"></textarea><span class="input-cursor" aria-hidden="true"></span></div><button type="submit" aria-label="Nachricht absenden">↵</button>
+        </form>
+        <div class="screen-bottom" id="screen-bottom" aria-hidden="true"></div>
+      </div>
+      <button class="latest" id="latest" type="button" hidden>Zur aktuellen Eingabe ↓</button>
+      <footer class="terminal-foot"><span id="input-help">Enter: senden · Umschalt + Enter: neue Zeile · /hilfe</span><span>LOKAL · KEINE SPEICHERUNG · KEINE THERAPIE</span></footer>
+    </div>
+    <p class="sr-only" role="status" aria-live="polite" id="spoken-response"></p>
+  </section>
+</body>
+</html>
