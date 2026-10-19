@@ -16,6 +16,9 @@
     },
     "api/chat.js": {
       "maxDuration": 35
+    },
+    "api/eliza.js": {
+      "maxDuration": 35
     }
   },
   "git": {

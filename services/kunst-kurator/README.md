@@ -1,5 +1,59 @@
 # Geschützte KI-Rückmeldungen für den Kunsttresor
 
+## AI-ELIZA: separater Gesprächsendpunkt (19. Oktober 2026)
+
+`POST /api/eliza` ergänzt ausschließlich diesen bestehenden Dienst, nicht die
+Kuratorrolle. Modell und Schlüssel bleiben GPT-OSS 120B bei Groq beziehungsweise
+das bestehende Production-Secret. `AI_ENABLED` und `ALLOWED_ORIGINS` gelten auch
+hier. Die Webseite bleibt auf GitHub Pages. Kein neues Vercel-Projekt.
+
+Die getrennte Systemanweisung orientiert die Sprache an Carl Rogers:
+Wertschätzung, vorsichtiges Spiegeln des subjektiven Erlebens, Nichtdirektivität
+und Selbstbestimmung, ohne menschliche Gefühle oder eine Therapie zu behaupten.
+Keine Diagnose, Behandlung, Exklusivität oder erfundene Hilfekontakte. Ein
+konservativer Krisenwortfilter antwortet ohne Provideraufruf mit einem festen
+Hinweis auf unmittelbare menschliche Unterstützung und gegebenenfalls Notruf;
+weitere Krisenfälle gehören zu den Sicherheitsvorgaben an das Modell. Der
+Filter ist keine zuverlässige medizinische Erkennung oder Notfallbetreuung.
+
+Das Modell liefert strikt strukturiert `personal_opening` und `body`. Nur wenn
+es selbst einen konkret begründeten, kurzen persönlich zugewandten Satz wählt,
+wird der erste Teil in Dancing Script gesetzt. Er darf leer bleiben. Im Chat
+erscheint weder diese interne Feldbezeichnung noch ein Empathie-Etikett.
+Alle Inhalte bleiben Text, niemals ausführbares HTML. Die restliche Antwort
+steht in Fira Sans. Höchstens 220 beziehungsweise 2000 Zeichen pro Feld.
+
+Vor einem KI-Gespräch bestätigt der Besucher die gesonderte Datenweitergabe.
+Der Browser sendet erst auf Absenden: aktuelle Nachricht und höchstens acht
+vollständige frühere Gesprächspaare, zusammen höchstens 24.000 Zeichen. Keine
+Systemrollen aus dem Browser, Modellwahl, Werkzeuge, Cookies oder Bilder.
+Einzelne Nachrichten höchstens 2400 Zeichen. Frühere Paare fallen gegebenenfalls
+aus dem Modellkontext, bleiben aber bis zum Beenden im lokalen sichtbaren Verlauf.
+
+Keine eigene Datenbank, Gesprächsprotokolle oder Antwortcaches. Diagnosen von
+Dienstfehlern enthalten nur feste Fehlerkategorien, Version und Laufzeit, keine
+Gesprächsinhalte, IPs, Prompts, Providertexte oder Schlüssel. Eine auf zehn
+Minuten begrenzte Instanz-Zugriffsbremse nutzt IP-Digests (20 Anfragen), ersetzt
+aber keine Vercel-Firewall. Die vorhandene aktive Vercel-Regel begrenzt nun
+POST auf exakt `/api/feedback` oder `/api/eliza` gemeinsam auf 20 Anfragen
+pro IP in 600 Sekunden und antwortet bei Überschreitung mit 429. Andere
+Pfade und die übrigen Schutzregeln bleiben unverändert. Der Origin-Filter
+ist keine Authentifizierung.
+
+Frist: Server insgesamt 27 Sekunden inklusive Antworttext; Vercel 35 Sekunden,
+Browser 32 Sekunden. Kein automatischer zweiter Modellaufruf. Fehler bleiben
+sichtbar, die Eingabe bleibt editierbar und ein erneutes Absenden erzeugt keine
+doppelten Gesprächspaare. Es gibt keinen lokalen Text, der als KI-Antwort
+ausgegeben wird. Beenden oder Esc bricht die Browseranfrage ab, verwirft den
+lokalen Verlauf und die Freigabe. Bereits übertragene Daten oder eine laufende
+Providerverarbeitung werden damit nicht sicher gelöscht oder zurückgerufen.
+
+Die Datenschutzinformation unterscheidet ausdrücklich lokale Verwerfung von
+der Datenverarbeitung der Plattformen. Groq nennt mögliche zeitweise
+Inhaltsaufbewahrung für Systemzuverlässigkeit und Missbrauchsprüfung; eine
+Zero-Data-Retention-Einstellung des Kontos ist hier nicht verifiziert.
+Tests verwenden erfundene Beispiele und Mock-Antworten, keine privaten Chats.
+
 ## Ergänzung vom 17. Oktober 2026: begrenzte Wiederholung und Fehlerdiagnose
 
 GET `/api/feedback` meldet jetzt Dienstversion 6. Bei einem vorübergehenden
