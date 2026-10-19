@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'..'),A=require('../scripts/typografie-fontaudit.js'),catalogue=require('../data/typografie-fonts.json'),audit=require('../data/typografie-fontaudit.json');
 test('all 41 font audits refer to unchanged real local font files',()=>{
- assert.equal(audit.families.length,41);assert.equal(audit.families.reduce((n,f)=>n+f.files.length,0),128);
+ assert.equal(audit.families.length,41);assert.equal(audit.families.reduce((n,f)=>n+f.files.length,0),103);
  for(const f of catalogue.families){const a=audit.families.find(a=>a.id===f.id);assert.equal(a.name,f.name);assert.deepEqual(a.files.map(x=>x.path),f.files.map(x=>x.path));
   for(const file of [...a.files,...a.opticalFiles])assert.equal(file.sha256,crypto.createHash('sha256').update(fs.readFileSync(path.resolve(root,file.path))).digest('hex'));
  }
@@ -29,7 +29,7 @@ test('Fira Sans has all 18 real static cuts with German characters and local sou
 test('available cuts, optional capital sharp S, and optical files are not conflated',()=>{
  const pop=audit.families.find(f=>f.id==='poppins');assert.equal(pop.germanMissing,'');assert.ok(pop.optionalMissing.includes('ẞ'));assert.equal(pop.cuts.italic,true);
  const eb=audit.families.find(f=>f.id==='ebgaramond');assert.ok(Object.values(eb.cuts).every(Boolean));assert.equal(eb.optionalMissing,'');
- for(const id of ['inter','dmsans']){const a=audit.families.find(a=>a.id===id),f=catalogue.families.find(f=>f.id===id),item=A.checks(f,a).flatMap(c=>c.items).find(c=>c.label==='Optische Größen');assert.equal(item.state,'pass');assert.ok(item.text.includes(id==='inter'?'opsz-Achse in den Archivdateien':'zusätzlichen lokalen Datei'));assert.ok(a.opticalFiles[0].axes.opsz);}
+ for(const id of ['inter','dmsans']){const a=audit.families.find(a=>a.id===id),f=catalogue.families.find(f=>f.id===id),item=A.checks(f,a).flatMap(c=>c.items).find(c=>c.label==='Optische Größen');assert.equal(item.state,'pass');assert.ok(item.text.includes('opsz-Achse in den Archivdateien'));assert.ok(a.opticalFiles[0].axes.opsz);}
 });
 test('every family has two valid, non-self partner suggestions, never a passed harmony test',()=>{
  const names=new Set(catalogue.families.map(f=>f.name));

@@ -19,6 +19,14 @@
   content.append(el('p','eyebrow',f.classification+' · '+f.designer));const h=font(el('h2',null,f.name),f);h.id='font-portrait-title';content.append(h);
   content.append(specimens(f,$('specimen-input').value||'Lesen heißt weiterdenken.'));
   content.append(el('p','font-portrait-character',p.character));
+  if(window.TypoSchool&&f.files.every(file=>file.coverage)){
+   const file=window.TypoSchool.referenceFile(f),section=el('section','font-coverage-summary');section.append(el('h3',null,'Zeichenabdeckung dieser lokalen Fassung'));
+   const groups=Object.entries(file.coverage.testMissing),complete=groups.filter(([,missing])=>!missing).map(([label])=>label),missing=groups.filter(([,chars])=>chars);
+   section.append(el('p',null,'Vollständige Proben im aufrechten Referenzschnitt: '+(complete.join(', ')||'keine der sechs Proben')+'. Keine Zusage für alle Zeichen dieser Sprachen.'));
+   for(const [label,chars]of missing)section.append(el('p','small',label+': nicht enthalten '+chars+'.'));
+   if(f.files.some(other=>JSON.stringify(other.coverage.testMissing)!==JSON.stringify(file.coverage.testMissing)))section.append(el('p','small','Die Zeichenvorräte der Schnitte unterscheiden sich. Den gewünschten Schnitt einzeln prüfen.'));
+   const check=el('a',null,'Eigene erfundene Namensprobe prüfen →');check.href='#namen-werkstatt';check.onclick=()=>dialog.close();section.append(check);content.append(section);
+  }
   const grid=el('div','font-portrait-reading');grid.append(block('Geschichte & Herkunft',p.history),block('Welche Aufgabe passt?',p.use),block('Bewusst einsetzen',p.caution));content.append(grid);
   const heading=el('h3',null,'Gute Partner, klare Rollen');content.append(heading,el('p','small','Unsere Vorschläge: Formkontrast und Hierarchie prüfen, nicht möglichst viele Schriften sammeln. Jede Partnerin lässt sich hier direkt öffnen.'));
   const partners=el('div','font-partners');for(const pair of p.pairings)partners.append(partnerButton(pair.id,pair.role,pair.reason));content.append(partners);

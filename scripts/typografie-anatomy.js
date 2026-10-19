@@ -136,7 +136,7 @@
   }
   async function init(){
     try{
-      const response=await fetch('data/typografie-anatomy.json?v=20261011-fira-oberlaengen',{credentials:'omit'});
+      const response=await fetch('data/typografie-anatomy.json?v=20261019-vollstaendige-zeichen',{credentials:'omit'});
       if(!response.ok)throw Error('metrics unavailable');
       families=(await response.json()).families;
       $('anatomy-font').addEventListener('change',updateAnatomy);

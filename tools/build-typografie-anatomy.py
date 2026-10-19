@@ -47,7 +47,7 @@ def extract(entry):
 
 def main():
     catalogue=json.loads((ROOT/'data/typografie-fonts.json').read_text())
-    data={'checked':'2026-10-11','method':'Konturen aus lokalen WOFF2-Dateien; Regular / Gewicht 400, weitere variable Achsen auf Standardwert. Grundlinie = Fontkoordinate 0; Höhenmarken = Konturgrenzen der jeweils genannten Zeichen. Keine Fontdatei verändert.',
+    data={'checked':'2026-10-19','method':'Konturen aus den tatsächlich eingebundenen lokalen WOFF2- und TTF-Dateien; Regular / Gewicht 400, weitere variable Achsen auf Standardwert. Grundlinie = Fontkoordinate 0; Höhenmarken = Konturgrenzen der jeweils genannten Zeichen. Keine Fontdatei verändert.',
           'families':[extract(entry) for entry in catalogue['families']]}
     (ROOT/'data/typografie-anatomy.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
     print('Measured',len(data['families']),'local fonts;',len(ILLUSTRATED),'outline illustrations.')

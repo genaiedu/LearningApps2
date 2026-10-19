@@ -1,16 +1,16 @@
 {
-  "checked": "2026-10-11",
-  "method": "Konturen aus lokalen WOFF2-Dateien; Regular / Gewicht 400, weitere variable Achsen auf Standardwert. Grundlinie = Fontkoordinate 0; Höhenmarken = Konturgrenzen der jeweils genannten Zeichen. Keine Fontdatei verändert.",
+  "checked": "2026-10-19",
+  "method": "Konturen aus den tatsächlich eingebundenen lokalen WOFF2- und TTF-Dateien; Regular / Gewicht 400, weitere variable Achsen auf Standardwert. Grundlinie = Fontkoordinate 0; Höhenmarken = Konturgrenzen der jeweils genannten Zeichen. Keine Fontdatei verändert.",
   "families": [
     {
       "id": "poppins",
       "name": "Poppins",
-      "source": "../LearningApps/fonts/poppins-v24-latin-regular.woff2",
+      "source": "fonts/typografie/poppins/Poppins-Regular.ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/poppins/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/poppins",
       "copyright": "Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)",
-      "sha256": "7d93459d86585bfcdbb7e0376056226adb25821ee54b96236fe2123e9560929f",
+      "sha256": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba",
       "unitsPerEm": 1000,
       "axes": {},
       "glyphs": {
@@ -99,98 +99,100 @@
     {
       "id": "outfit",
       "name": "Outfit",
-      "source": "../LearningApps/fonts/outfit-v15-latin-regular.woff2",
+      "source": "fonts/typografie/outfit/Outfit[wght].ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/outfit/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/outfit",
       "copyright": "Copyright 2021 The Outfit Project Authors (https://github.com/Outfitio/Outfit-Fonts)",
-      "sha256": "71f028fd2349990b3f8aa643abe767e82e0f596be407ae66f0004ff164121bdb",
+      "sha256": "fc7287273e66929776e2ba54f144fe699080bec29f61bf649d70d871468aeade",
       "unitsPerEm": 1000,
-      "axes": {},
+      "axes": {
+        "wght": 400
+      },
       "glyphs": {
         "a": {
           "bounds": [
-            36,
+            35.75,
             -10,
-            517,
+            516.5,
             485
           ],
-          "advance": 582
+          "advance": 582.25
         },
         "b": {
           "bounds": [
-            66,
+            65.75,
             -10,
-            546,
+            546.25,
             714
           ],
-          "advance": 582
+          "advance": 582.25
         },
         "g": {
           "bounds": [
-            35,
+            35.25,
             -209,
             513,
             485
           ],
-          "advance": 579
+          "advance": 578.5
         },
         "p": {
           "bounds": [
-            66,
+            65.75,
             -199,
-            546,
+            546.25,
             485
           ],
-          "advance": 582
+          "advance": 582.25
         },
         "x": {
           "bounds": [
-            17,
+            16.75,
             0,
             487,
             475
           ],
-          "advance": 504
+          "advance": 503.75
         },
         "H": {
           "bounds": [
-            82,
+            81.75,
             0,
             624,
             694
           ],
-          "advance": 706
+          "advance": 705.75
         },
         "o": {
           "bounds": [
             35,
             -10,
-            531,
+            530.5,
             485
           ],
-          "advance": 566
+          "advance": 565.5
         },
         "O": {
           "bounds": [
-            47,
+            46.5,
             -10,
-            747,
+            746.5,
             704
           ],
-          "advance": 794
+          "advance": 793.75
         }
       }
     },
     {
       "id": "bangers",
       "name": "Bangers",
-      "source": "../LearningApps/fonts/bangers-v25-latin-regular.woff2",
+      "source": "fonts/typografie/bangers/Bangers-Regular.ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/bangers/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/bangers",
       "copyright": "Copyright 2010 The Bangers Project Authors (https://github.com/googlefonts/bangers)",
-      "sha256": "04f54ff42ea2b8fc50b4259c29c60b1e05e606b769c2fb541c98624346c9767c",
+      "sha256": "4160a7311de9342674cce9160cde9fcbb30f48190397d86ff1b70b455af65824",
       "unitsPerEm": 1000,
       "axes": {},
       "glyphs": {
@@ -271,12 +273,12 @@
     {
       "id": "zillaslab",
       "name": "Zilla Slab",
-      "source": "../LearningApps/fonts/zilla-slab-v12-latin-regular.woff2",
+      "source": "fonts/typografie/zillaslab/ZillaSlab-Regular.ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/zillaslab/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/zillaslab",
       "copyright": "Copyright 2017, The Mozilla Foundation",
-      "sha256": "ab2607313bc04e82a53aca235853a0b83463e99b3ae88b17cc963e371f8fe91c",
+      "sha256": "41a4626844da9216b031308d4423045c765fe4231d99862d85d7d74509d37703",
       "unitsPerEm": 1000,
       "axes": {},
       "glyphs": {
@@ -541,12 +543,12 @@
     {
       "id": "dmmono",
       "name": "DM Mono",
-      "source": "../LearningApps/fonts/dm-mono-v16-latin-regular.woff2",
+      "source": "fonts/typografie/dmmono/DMMono-Regular.ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/dmmono/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/dmmono",
       "copyright": "Copyright 2020 The DM Mono Project Authors (https://www.github.com/googlefonts/dm-mono)",
-      "sha256": "e1896b13b2b1bb112fac2f9571bd6c40e118746e77a4511edbf43fbb41bf3e1e",
+      "sha256": "55b4c98f123daebb3ed27947ba47b2af00554fc6284d639a540bcef5e6258ad2",
       "unitsPerEm": 1000,
       "axes": {},
       "glyphs": {
@@ -627,14 +629,16 @@
     {
       "id": "oswald",
       "name": "Oswald",
-      "source": "../LearningApps/fonts/oswald-v57-latin-regular.woff2",
+      "source": "fonts/typografie/oswald/Oswald[wght].ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/oswald/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/oswald",
       "copyright": "Copyright 2016 The Oswald Project Authors (https://github.com/googlefonts/OswaldFont)",
-      "sha256": "e902b779e43944c300cf8ae5e4a1affa68cb8a823fd263dd2f479c4cdfbd213c",
+      "sha256": "5b38c246e255a12f5712d640d56bcced0472466fc68983d2d0410ec0457c2817",
       "unitsPerEm": 1000,
-      "axes": {},
+      "axes": {
+        "wght": 400
+      },
       "glyphs": {
         "a": {
           "bounds": [
@@ -643,7 +647,7 @@
             370,
             586
           ],
-          "advance": 409
+          "advance": 409.0
         },
         "b": {
           "bounds": [
@@ -652,7 +656,7 @@
             404,
             810
           ],
-          "advance": 447
+          "advance": 447.0
         },
         "g": {
           "bounds": [
@@ -661,7 +665,7 @@
             453,
             591
           ],
-          "advance": 441
+          "advance": 441.0
         },
         "p": {
           "bounds": [
@@ -670,7 +674,7 @@
             403,
             586
           ],
-          "advance": 446
+          "advance": 446.0
         },
         "x": {
           "bounds": [
@@ -679,7 +683,7 @@
             381,
             578
           ],
-          "advance": 389
+          "advance": 389.0
         },
         "H": {
           "bounds": [
@@ -688,7 +692,7 @@
             497,
             810
           ],
-          "advance": 561
+          "advance": 561.0
         },
         "o": {
           "bounds": [
@@ -697,7 +701,7 @@
             381,
             586
           ],
-          "advance": 425
+          "advance": 425.0
         },
         "O": {
           "bounds": [
@@ -706,19 +710,19 @@
             491,
             817
           ],
-          "advance": 539
+          "advance": 539.0
         }
       }
     },
     {
       "id": "righteous",
       "name": "Righteous",
-      "source": "../LearningApps/fonts/righteous-v18-latin-regular.woff2",
+      "source": "fonts/typografie/righteous/Righteous-Regular.ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/righteous/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/righteous",
       "copyright": "Copyright (c) 2011 by Brian J. Bonislawsky DBA Astigmatic (AOETI) (astigma@astigmatic.com), with Reserved\rFont Name \"Righteous\"",
-      "sha256": "17055c538efddf7a754a98bb7db3d15405316dfb4645c287421ed3e7f8769144",
+      "sha256": "2ffb3fe5c27d7e6571210b800448c4e234e651b46c6b4426c1bb567e5341348a",
       "unitsPerEm": 2048,
       "axes": {},
       "glyphs": {
@@ -799,12 +803,12 @@
     {
       "id": "bebasneue",
       "name": "Bebas Neue",
-      "source": "../LearningApps/fonts/bebas-neue-v16-latin-regular.woff2",
+      "source": "fonts/typografie/bebasneue/BebasNeue-Regular.ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/bebasneue/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/bebasneue",
       "copyright": "Copyright 2019 The Bebas Neue Project Authors (https://github.com/dharmatype/Bebas-Neue)",
-      "sha256": "a7c90c89240c134f7fdd33d40c000ec90b79d675ea53e8cc5a6d423c073de412",
+      "sha256": "08e4623805102d819f58601e46e345648846075e363b2ceb23313c2d1c83ec73",
       "unitsPerEm": 1000,
       "axes": {},
       "glyphs": {
@@ -885,14 +889,16 @@
     {
       "id": "dancingscript",
       "name": "Dancing Script",
-      "source": "../LearningApps/fonts/dancing-script-v29-latin-regular.woff2",
+      "source": "fonts/typografie/dancingscript/DancingScript[wght].ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/dancingscript/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/dancingscript",
       "copyright": "Copyright 2016 The Dancing Script Project Authors (https://github.com/googlefonts/DancingScript), with Reserved Font Name \"Dancing Script\".",
-      "sha256": "570e4265bbcb453353ce2fdf63d179332d8daa92691d567547b8a383f3b46c3b",
+      "sha256": "21808625578fe8d8cd10cb684be546dca077b27cd03a53a2f1ec11dc743c924c",
       "unitsPerEm": 1000,
-      "axes": {},
+      "axes": {
+        "wght": 400
+      },
       "glyphs": {
         "a": {
           "bounds": [
@@ -901,7 +907,7 @@
             466,
             343
           ],
-          "advance": 436
+          "advance": 436.0
         },
         "b": {
           "bounds": [
@@ -910,7 +916,7 @@
             427,
             714
           ],
-          "advance": 394
+          "advance": 394.0
         },
         "g": {
           "bounds": [
@@ -919,7 +925,7 @@
             420,
             347
           ],
-          "advance": 389
+          "advance": 389.0
         },
         "p": {
           "bounds": [
@@ -928,7 +934,7 @@
             360,
             373
           ],
-          "advance": 391
+          "advance": 391.0
         },
         "x": {
           "bounds": [
@@ -937,7 +943,7 @@
             448,
             332
           ],
-          "advance": 418
+          "advance": 418.0
         },
         "H": {
           "bounds": [
@@ -946,7 +952,7 @@
             632,
             720
           ],
-          "advance": 617
+          "advance": 617.0
         },
         "o": {
           "bounds": [
@@ -955,7 +961,7 @@
             396,
             352
           ],
-          "advance": 365
+          "advance": 365.0
         },
         "O": {
           "bounds": [
@@ -964,107 +970,112 @@
             602,
             719
           ],
-          "advance": 623
+          "advance": 623.0
         }
       }
     },
     {
       "id": "dmsans",
       "name": "DM Sans",
-      "source": "../LearningApps/fonts/dm-sans-v17-latin-regular.woff2",
+      "source": "fonts/typografie/dmsans/DMSans[opsz,wght].ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/dmsans/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/dmsans",
       "copyright": "Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)",
-      "sha256": "4ab51eb2cd7305d177187908d6397474d4520663f6c6e572feb0a64f4fa80006",
+      "sha256": "8cd08d97e89c24d0aa92edd2f0f4c8ee6195eee9b7c9f154865a58b02f0c1c0d",
       "unitsPerEm": 1000,
-      "axes": {},
+      "axes": {
+        "opsz": 9.0,
+        "wght": 400
+      },
       "glyphs": {
         "a": {
           "bounds": [
-            51,
+            55,
             -12,
-            484,
-            516
+            483,
+            538
           ],
-          "advance": 544
+          "advance": 551.0
         },
         "b": {
           "bounds": [
-            70,
+            71,
             -12,
-            578,
+            571,
             720
           ],
-          "advance": 626
+          "advance": 622.0
         },
         "g": {
           "bounds": [
-            38,
+            40,
             -232,
-            531,
-            516
+            545,
+            538
           ],
-          "advance": 558
+          "advance": 575.0
         },
         "p": {
           "bounds": [
-            70,
+            71,
             -220,
-            578,
-            516
+            571,
+            538
           ],
-          "advance": 626
+          "advance": 622.0
         },
         "x": {
           "bounds": [
-            20,
+            24,
             0,
-            476,
-            504
+            468,
+            526
           ],
-          "advance": 496
+          "advance": 491.0
         },
         "H": {
           "bounds": [
-            75,
+            77,
             0,
-            606,
+            608,
             700
           ],
-          "advance": 681
+          "advance": 685.0
         },
         "o": {
           "bounds": [
-            49,
+            50,
             -12,
-            545,
-            516
+            546,
+            538
           ],
-          "advance": 593
+          "advance": 597.0
         },
         "O": {
           "bounds": [
-            48,
+            49,
             -12,
-            727,
+            697,
             712
           ],
-          "advance": 774
+          "advance": 746.0
         }
       }
     },
     {
       "id": "plusjakartasans",
       "name": "Plus Jakarta Sans",
-      "source": "../LearningApps/fonts/plus-jakarta-sans-v12-latin-regular.woff2",
+      "source": "fonts/typografie/plusjakartasans/PlusJakartaSans[wght].ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/plusjakartasans/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/plusjakartasans",
       "copyright": "Copyright 2020 The Plus Jakarta Sans Project Authors (https://github.com/tokotype/PlusJakartaSans)",
-      "sha256": "221a4135d06a4b33abbd535e9a0da4e565d19545ddd9267c4e678a916d54d9b6",
+      "sha256": "89b3fb38aa0d275d7a731d0d817a4f1622b316b4d7fbdedcf02ee9099ff68bc8",
       "unitsPerEm": 1000,
-      "axes": {},
+      "axes": {
+        "wght": 400
+      },
       "glyphs": {
         "a": {
           "bounds": [
@@ -1073,7 +1084,7 @@
             495,
             548
           ],
-          "advance": 572
+          "advance": 572.0
         },
         "b": {
           "bounds": [
@@ -1082,7 +1093,7 @@
             612,
             757
           ],
-          "advance": 667
+          "advance": 667.0
         },
         "g": {
           "bounds": [
@@ -1091,7 +1102,7 @@
             585,
             548
           ],
-          "advance": 662
+          "advance": 662.0
         },
         "p": {
           "bounds": [
@@ -1100,7 +1111,7 @@
             612,
             548
           ],
-          "advance": 667
+          "advance": 667.0
         },
         "x": {
           "bounds": [
@@ -1109,7 +1120,7 @@
             476,
             536
           ],
-          "advance": 487
+          "advance": 487.0
         },
         "H": {
           "bounds": [
@@ -1118,7 +1129,7 @@
             648,
             745
           ],
-          "advance": 736
+          "advance": 736.0
         },
         "o": {
           "bounds": [
@@ -1127,7 +1138,7 @@
             600,
             548
           ],
-          "advance": 655
+          "advance": 655.0
         },
         "O": {
           "bounds": [
@@ -1136,19 +1147,19 @@
             812,
             757
           ],
-          "advance": 878
+          "advance": 878.0
         }
       }
     },
     {
       "id": "forum",
       "name": "Forum",
-      "source": "../LearningApps/fonts/forum-v19-latin-regular.woff2",
+      "source": "fonts/typografie/forum/Forum-Regular.ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/forum/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/forum",
       "copyright": "Copyright (c) 2011, Denis Masharov <denis.masharov@gmail.com>. This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL",
-      "sha256": "21eb0ef1c5f416bd7837e9bcf5c0ba1b026a9d56e5aed213871957ff442cae1d",
+      "sha256": "5c9fbe9c4ce76d0269f5088d921d57e58082fd9c28433eacb6de95baf938adf8",
       "unitsPerEm": 1000,
       "axes": {},
       "glyphs": {
@@ -1229,14 +1240,16 @@
     {
       "id": "caveat",
       "name": "Caveat",
-      "source": "../LearningApps/fonts/caveat-v23-latin-regular.woff2",
+      "source": "fonts/typografie/caveat/Caveat[wght].ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/caveat/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/caveat",
       "copyright": "Copyright 2014 The Caveat Project Authors (https://github.com/googlefonts/caveat)",
-      "sha256": "d0b7b931b8980049327e8f8f9ac264617c8200b8422d62e886473d3d9527bad3",
+      "sha256": "0bdb6b660482d31531b3945849fba5916b3ef8695da7024a9e6b9ee3c4157988",
       "unitsPerEm": 1000,
-      "axes": {},
+      "axes": {
+        "wght": 400
+      },
       "glyphs": {
         "a": {
           "bounds": [
@@ -1245,7 +1258,7 @@
             497,
             384.5625
           ],
-          "advance": 437
+          "advance": 437.0
         },
         "b": {
           "bounds": [
@@ -1254,7 +1267,7 @@
             479.3076923076923,
             652.4
           ],
-          "advance": 435
+          "advance": 435.0
         },
         "g": {
           "bounds": [
@@ -1263,7 +1276,7 @@
             391.7647058823529,
             388.84615384615387
           ],
-          "advance": 355
+          "advance": 355.0
         },
         "p": {
           "bounds": [
@@ -1272,7 +1285,7 @@
             415,
             424.14285714285717
           ],
-          "advance": 378
+          "advance": 378.0
         },
         "x": {
           "bounds": [
@@ -1281,7 +1294,7 @@
             407,
             355.0952380952381
           ],
-          "advance": 343
+          "advance": 343.0
         },
         "H": {
           "bounds": [
@@ -1290,7 +1303,7 @@
             713.52,
             700.5294117647059
           ],
-          "advance": 563
+          "advance": 563.0
         },
         "o": {
           "bounds": [
@@ -1299,7 +1312,7 @@
             395.85714285714283,
             377.0
           ],
-          "advance": 353
+          "advance": 353.0
         },
         "O": {
           "bounds": [
@@ -1308,93 +1321,95 @@
             587.7647058823529,
             665.0833333333334
           ],
-          "advance": 496
+          "advance": 496.0
         }
       }
     },
     {
       "id": "nunito",
       "name": "Nunito",
-      "source": "../LearningApps/fonts/nunito-v32-latin-regular.woff2",
+      "source": "fonts/typografie/nunito/Nunito[wght].ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/nunito/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/nunito",
       "copyright": "Copyright 2014 The Nunito Project Authors (https://github.com/googlefonts/nunito)",
-      "sha256": "a5906e15ceb68f73d3b2c2076b4057c3f6ed401186d56283b45ce12944ca0735",
+      "sha256": "bb55a5ca5c2042335b3991af27c4d0705d0ef41cac6164ac737fd8f2a1e85207",
       "unitsPerEm": 1000,
-      "axes": {},
+      "axes": {
+        "wght": 400
+      },
       "glyphs": {
         "a": {
           "bounds": [
-            54,
-            -9,
-            456,
-            495
+            54.1331787109375,
+            -8.939697265625,
+            456.371826171875,
+            495.2889404296875
           ],
-          "advance": 530
+          "advance": 529.5050048828125
         },
         "b": {
           "bounds": [
-            76,
-            -9,
-            537,
-            712
+            75.60302734375,
+            -8.939697265625,
+            537.0828857421875,
+            711.939697265625
           ],
-          "advance": 583
+          "advance": 583.03515625
         },
         "g": {
           "bounds": [
-            46,
-            -189,
-            510,
-            495
+            45.9522705078125,
+            -188.939697265625,
+            510.371826171875,
+            495.2889404296875
           ],
-          "advance": 586
+          "advance": 585.974853515625
         },
         "p": {
           "bounds": [
-            76,
-            -187,
-            537,
-            495
+            75.60302734375,
+            -186.939697265625,
+            537.0828857421875,
+            495.2889404296875
           ],
-          "advance": 583
+          "advance": 583.03515625
         },
         "x": {
           "bounds": [
-            44.48148148148148,
-            -6,
-            481.52,
-            493
+            44.82960241334084,
+            -6.060302734375,
+            481.68968184523044,
+            493.2889404296875
           ],
-          "advance": 525
+          "advance": 524.7939453125
         },
         "H": {
           "bounds": [
-            87,
-            -7,
-            674,
-            712
+            87.0728759765625,
+            -6.939697265625,
+            674.2637939453125,
+            711.939697265625
           ],
-          "advance": 761
+          "advance": 761.336669921875
         },
         "o": {
           "bounds": [
-            46,
-            -9,
-            510,
-            495
+            45.9522705078125,
+            -8.939697265625,
+            509.9019775390625,
+            495.2889404296875
           ],
-          "advance": 556
+          "advance": 555.854248046875
         },
         "O": {
           "bounds": [
-            61,
-            -9,
-            707,
-            714
+            60.8919677734375,
+            -8.939697265625,
+            706.552734375,
+            713.939697265625
           ],
-          "advance": 767
+          "advance": 766.974853515625
         }
       }
     },
@@ -1498,12 +1513,12 @@
     {
       "id": "archivoblack",
       "name": "Archivo Black",
-      "source": "../LearningApps/fonts/archivo-black-v23-latin-regular.woff2",
+      "source": "fonts/typografie/archivoblack/ArchivoBlack-Regular.ttf",
       "license": "SIL OFL 1.1",
       "licensePath": "fonts/typografie/archivoblack/OFL.txt",
       "fontProject": "https://github.com/google/fonts/tree/main/ofl/archivoblack",
       "copyright": "Copyright 2017 The Archivo Black Project Authors (https://github.com/Omnibus-Type/ArchivoBlack)",
-      "sha256": "25f33e61cf995abd6be62931cf03bf427286259177b43618cc410ee0157cfd30",
+      "sha256": "dd9a89a019b4849f66ab75455fe7bdf931311042cbb0f0f97acc061539703180",
       "unitsPerEm": 1000,
       "axes": {},
       "glyphs": {
@@ -3583,6 +3598,92 @@
             1430
           ],
           "advance": 1593.0
+        }
+      }
+    },
+    {
+      "id": "fondamento",
+      "name": "Fondamento",
+      "source": "../LearningApps/fonts/fondamento/Fondamento-Regular.ttf",
+      "license": "SIL OFL 1.1",
+      "licensePath": "../LearningApps/fonts/fondamento/OFL.txt",
+      "fontProject": "https://github.com/google/fonts/tree/main/ofl/fondamento",
+      "copyright": "Copyright (c) 2011 by Brian J. Bonislawsky DBA Astigmatic (AOETI) (astigma@astigmatic.com), with Reserved\rFont Name \"Fondamento\"",
+      "sha256": "ee03a7ccb3b7cdf3cd095d0cc34f9e70c16b1779cbc7c466bf9077323a6ea764",
+      "unitsPerEm": 2048,
+      "axes": {},
+      "glyphs": {
+        "a": {
+          "bounds": [
+            34.0,
+            -18,
+            906,
+            1001.0
+          ],
+          "advance": 930
+        },
+        "b": {
+          "bounds": [
+            -30,
+            -32,
+            1051,
+            1707
+          ],
+          "advance": 1125
+        },
+        "g": {
+          "bounds": [
+            -3.0,
+            -608.0,
+            1032,
+            993
+          ],
+          "advance": 971
+        },
+        "p": {
+          "bounds": [
+            -4,
+            -608,
+            1055,
+            984
+          ],
+          "advance": 1132
+        },
+        "x": {
+          "bounds": [
+            -9,
+            -19,
+            1101,
+            1008
+          ],
+          "advance": 1090
+        },
+        "H": {
+          "bounds": [
+            59,
+            0,
+            1629,
+            1439
+          ],
+          "advance": 1665
+        },
+        "o": {
+          "bounds": [
+            73,
+            -17,
+            1030.0,
+            991.0
+          ],
+          "advance": 1102
+        },
+        "O": {
+          "bounds": [
+            89,
+            -81,
+            1673,
+            1483
+          ],
+          "advance": 1756
         }
       }
     }

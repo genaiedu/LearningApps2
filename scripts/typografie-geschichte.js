@@ -12,7 +12,7 @@
   let acknowledged=false,pending=null,source=null;
   if(external&&open){
     document.addEventListener('click',event=>{
-      const link=event.target.closest('a[data-history-external]');
+      const link=event.target.closest('a[data-history-external]')||event.target.closest('a[data-source-external]');
       if(!link)return;
       const url=externalURL(link.href);
       if(!url){event.preventDefault();return;}

@@ -98,7 +98,7 @@
   $('optical-reset').onclick=()=>updateOptical(true);updateOptical(true);
 
   async function loadFonts(){
-    try{const r=await fetch('data/typografie-fonts.json?v=20261018-fondamento41',{credentials:'omit'});if(!r.ok)throw Error();catalogue=await r.json();window.TypoLongtext?.setCatalogue(catalogue);catalogue.families.forEach(f=>fonts.set(f.name,f));$('catalog-count').textContent=fonts.size;$('hero-count').textContent=fonts.size;renderFonts();updateBook();
+    try{const r=await fetch('data/typografie-fonts.json?v=20261019-vollstaendige-zeichen',{credentials:'omit'});if(!r.ok)throw Error();catalogue=await r.json();window.TypoLongtext?.setCatalogue(catalogue);window.TypoSchool?.setCatalogue(catalogue);catalogue.families.forEach(f=>fonts.set(f.name,f));$('catalog-count').textContent=fonts.size;$('hero-count').textContent=fonts.size;renderFonts();updateBook();
 
     }
     catch(_){$('catalog-status').textContent='Das Schriftverzeichnis konnte nicht geladen werden. Die übrigen Werkstätten und Downloads bleiben nutzbar.';const retry=node('button',null,'Verzeichnis erneut laden');retry.onclick=()=>{retry.remove();loadFonts();};$('catalog-status').after(retry);}

@@ -1,0 +1,30 @@
+/* Small additions to the existing panel, note and reading-card components. */
+.subchapter:is(#namen-sonderzeichen,#besondere-lesebeduerfnisse,#schriftgroesse-word,#naturwissenschaftliche-zeichen,#word-standardschriften) em{font-family:var(--serif);font-weight:400;font-style:italic}
+.teacher-controls{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.teacher-controls>label:first-child{grid-column:1/-1}
+.teacher-controls select,.teacher-controls input{width:100%;min-width:0}
+.teacher-workshop .name-proof{font-size:clamp(25px,3vw,37px);line-height:1.65;overflow-wrap:anywhere;margin-block:24px;white-space:pre-wrap;text-align:left;text-align-last:auto;hyphens:none}
+.coverage-missing{border:1px solid var(--red);border-radius:2px;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:.18em;background:var(--surface)}
+.teacher-table-wrap{max-width:100%;margin-block:28px}
+.teacher-table{width:100%;border-collapse:collapse;font-size:17px;line-height:1.5;font-variant-numeric:lining-nums tabular-nums}
+.teacher-table caption{text-align:left;font-size:15px;color:var(--muted);padding-bottom:12px}
+.teacher-table :is(th,td){padding:12px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.teacher-table th{font-weight:650}.teacher-table thead{background:var(--surface)}
+.teacher-table code{white-space:nowrap}
+.teacher-instructions li{margin-bottom:.65em}.teacher-instructions h4{line-height:1.3;margin-bottom:18px}
+.teacher-workshop :is(input,select),.teacher-instructions ol,.teacher-table,.font-coverage-summary{font-variant-numeric:lining-nums tabular-nums}
+.font-coverage-summary{padding-top:20px;border-top:1px solid var(--line);margin-top:26px;font-size:17px}
+.font-coverage-summary p{max-width:70ch}.font-coverage-summary a{display:inline-block;margin-top:12px}
+.unit-example{font-style:normal;font-variant-numeric:lining-nums proportional-nums;white-space:nowrap}
+.science-signs th[scope=row]{font-style:normal}
+@media(max-width:700px){
+  .teacher-controls,.teacher-instructions{grid-template-columns:1fr;gap:20px}
+  .teacher-controls>label:first-child{grid-column:auto}
+  .teacher-workshop{padding:24px 18px}
+  .teacher-table,.teacher-table tbody{display:block}
+  .teacher-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .teacher-table tr{display:block;border-bottom:1px solid var(--line);padding-block:14px}
+  .teacher-table :is(th,td){display:block;border:0;padding:4px 0}
+  .teacher-table td[data-label]::before{content:attr(data-label) ": ";font-weight:550}
+  .teacher-table caption{display:block;font-size:14px}
+}

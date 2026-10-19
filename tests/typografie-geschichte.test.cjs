@@ -14,7 +14,7 @@ const credits=JSON.parse(fs.readFileSync(path.join(root,'assets/typografie/gesch
 
 test('history really opens the characters part and all nine labels match its navigation',()=>{
   const part=html.slice(html.indexOf('data-part="zeichen"'),html.indexOf('data-part="papier"'));
-  const ids=['buchstabengeschichte','schriftformen','details','lucide','mathematiksatz','beginn','lokal','katalog','schrift-downloads'];
+  const ids=['buchstabengeschichte','schriftformen','namen-sonderzeichen','besondere-lesebeduerfnisse','schriftgroesse-word','details','naturwissenschaftliche-zeichen','lucide','mathematiksatz','beginn','lokal','katalog','schrift-downloads','word-standardschriften'];
   const nav=part.match(/<nav class="part-contents"[\s\S]*?<\/nav>/)[0];
   assert.deepEqual([...nav.matchAll(/href="#([^"]+)"/g)].map(x=>x[1]),ids);
   assert.deepEqual([...part.matchAll(/class="section-label">I\.(\d+)/g)].map(x=>Number(x[1])),[1,2,3,4,5,6,7,8,9]);
