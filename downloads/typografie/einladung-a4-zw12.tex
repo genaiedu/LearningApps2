@@ -1,0 +1,45 @@
+% Typografie-Atelier · DIN A4 · Zwölferteilung · keine DIN-5008-Zertifizierung.
+% Engine: pdfLaTeX
+\documentclass[12pt,a4paper,ngerman,DIV=12,BCOR=0mm,oneside]{scrartcl}
+\usepackage{iftex}
+\usepackage[T1]{fontenc}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+\else
+  \usepackage[utf8]{luainputenc}
+\fi
+\usepackage[type1]{ebgaramond}
+\usepackage[type1]{FiraSans}
+\usepackage[ngerman]{babel}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage[top=24.75mm,bottom=49.5mm,left=26.25mm,right=26.25mm,headheight=12pt,headsep=8mm,footskip=12mm]{geometry}
+\newcommand{\datenschrift}{\sffamily\small\firalining\firatabular}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
+\setkomafont{disposition}{\rmfamily\bfseries}
+\setkomafont{section}{\rmfamily\normalsize\bfseries}
+\setkomafont{subsection}{\rmfamily\normalsize\itshape}
+\setkomafont{title}{\rmfamily\LARGE\bfseries}
+\setkomafont{author}{\datenschrift}
+\setkomafont{date}{\datenschrift}
+\usepackage{scrlayer-scrpage}
+\clearpairofpagestyles
+\setkomafont{pageheadfoot}{\datenschrift}
+\setkomafont{pagenumber}{\datenschrift}
+\ofoot*{\pagemark}
+\begin{document}
+\begin{center}
+{\normalsize\itshape Einladung\par}
+\bigskip
+{\LARGE\bfseries Ein Raum für Gedanken\par}
+\bigskip
+{\datenschrift 19. Oktober 2026}
+\end{center}
+\bigskip
+Ein guter Text lädt zum Weiterdenken ein. Die Gestaltung ordnet Gedanken, ohne sie zu überlagern.
+
+Schriftwahl, Zeilenlänge und Durchschuss bilden ein System. Ein Preis von 10 € oder 50 \% wird hier als normaler Text behandelt.
+\bigskip
+Beispielname
+\end{document}

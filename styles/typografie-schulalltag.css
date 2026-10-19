@@ -1,0 +1,18 @@
+/* Printed examples keep their deliberate typefaces; lesson colors follow the palette. */
+.single-page-comparison{max-width:48rem;margin:2rem auto}
+.single-page-comparison figure{margin:0;display:flex;flex-direction:column;gap:.7rem;align-items:center}
+.single-page-comparison svg{display:block;width:min(100%,15rem);height:auto;max-height:23rem;color:var(--ink,#292c2e)}
+.single-paper{fill:var(--paper,#fff);stroke:currentColor;stroke-width:.6}
+.single-text{fill:var(--surface,#e2e4e2);stroke:var(--red,#94001c);stroke-width:1}
+.single-page-comparison circle{fill:none;stroke:currentColor;stroke-width:.7}
+.single-page-comparison figcaption{max-width:24ch;font-size:.9rem;text-align:left}
+.table-comparisons{margin:1.5rem 0;align-items:start}
+.measurement-table{font-family:var(--table-family),serif;width:100%;border-collapse:collapse;margin:1rem 0 2rem;font-size:1rem;line-height:1.5;font-variant-numeric:lining-nums tabular-nums}
+.measurement-table caption{text-align:left;margin-bottom:.65rem;font-family:'Fira Sans',sans-serif;font-size:.9rem;line-height:1.4}
+.measurement-table th,.measurement-table td{padding:.5rem .7rem;text-align:right;font-family:inherit}
+.measurement-grid th,.measurement-grid td{border:1px solid currentColor;padding:.25rem}
+.measurement-quiet{border-top:2px solid currentColor;border-bottom:2px solid currentColor}
+.measurement-quiet thead{border-bottom:1px solid currentColor}
+.measurement-quiet th,.measurement-quiet td{border-left:0;border-right:0;background:transparent}
+#word-formatvorlagen,#word-zugaenglich,#register,#tabellen-gestalten,#blatt-nach-kopierer{scroll-margin-top:9rem}
+@media(max-width:650px){.single-page-comparison{gap:1.4rem}.single-page-comparison figure{align-items:start}.measurement-table{font-size:.95rem}.measurement-table th,.measurement-table td{padding:.4rem}}

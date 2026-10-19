@@ -4,21 +4,31 @@
   function contrast(a,b){const x=luminance(a),y=luminance(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05);}
   function escapeTex(text){const map={'\\':'\\textbackslash{}','{':'\\{','}':'\\}','%':'\\%','$':'\\$','&':'\\&','_':'\\_','#':'\\#','~':'\\textasciitilde{}','^':'\\textasciicircum{}'};return String(text||'').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g,'').replace(/[\\{}%$&_#~^]/g,c=>map[c]);}
   function paragraphs(text){return String(text||'').replace(/\r\n?/g,'\n').split(/\n\s*\n/).map(p=>escapeTex(p).replace(/\n/g,' ')).join('\n\n');}
-  function texDocument({kind='bericht',title='Mein Dokument',author='',date='',recipient='',body='',engine='pdftex'}={}){
+  function texDocument({kind='bericht',title='Mein Dokument',author='',date='',recipient='',body='',engine='pdftex',variant='classic'}={}){
     if(!['bericht','brief','einladung','protokoll'].includes(kind))throw Error('Unbekannter Dokumenttyp');
     if(!['pdftex','luatex'].includes(engine))throw Error('Unbekannte Engine');
-    const e=escapeTex, b=paragraphs(body), letter=kind==='brief';
-    let s='% Typografie-Atelier · DIN A4 · Eingaben sind Text, keine TeX-Befehle.\n% Engine: '+(engine==='luatex'?'LuaLaTeX':'pdfLaTeX')+'\n';
-    s+='\\documentclass[11pt,a4paper,ngerman]{'+(letter?'scrlttr2':'scrartcl')+'}\n';
-    s+=engine==='luatex'?'\\usepackage{fontspec}\n% Falls TeX Gyre nicht installiert ist, bleiben die Standardschriften aktiv.\n\\IfFontExistsTF{TeX Gyre Pagella}{\\setmainfont{TeX Gyre Pagella}}{}\n\\IfFontExistsTF{TeX Gyre Heros}{\\setsansfont{TeX Gyre Heros}}{}\n':'\\usepackage[T1]{fontenc}\n\\usepackage[utf8]{inputenc}\n\\usepackage{tgpagella}\n\\usepackage{tgheros}\n';
-    s+='\\usepackage[ngerman]{babel}\n\\usepackage{microtype}\n';
-    if(letter)s+='\\setkomafont{subject}{\\normalfont\\bfseries}\n';
-    else s+='\\setkomafont{disposition}{\\normalfont\\bfseries}\n\\setkomafont{section}{\\normalsize\\bfseries}\n\\setkomafont{title}{\\normalfont\\LARGE}\n\\setkomafont{author}{\\normalfont\\normalsize}\n\\setkomafont{date}{\\normalfont\\normalsize}\n';
-    if(!letter)s+='\\usepackage[left=28mm,right=28mm,top=25mm,bottom=30mm]{geometry}\n';
-    if(letter){s+='\\setkomavar{fromname}{'+e(author)+'}\n\\setkomavar{date}{'+e(date)+'}\n\\setkomavar{subject}{'+e(title)+'}\n\\begin{document}\n\\begin{letter}{'+e(recipient).replace(/\n/g,'\\\\\n')+'}\n\\opening{Sehr geehrte Damen und Herren,}\n'+b+'\n\\closing{Mit freundlichen Grüßen}\n\\end{letter}\n\\end{document}\n';}
-    else if(kind==='einladung'){s+='\\pagestyle{empty}\n\\begin{document}\n\\begin{center}\n{\\normalsize\\itshape Einladung\\par}\n\\bigskip\n{\\LARGE '+e(title)+'\\par}\n\\bigskip\n'+e(date)+'\\par\n\\end{center}\n\\bigskip\n'+b+'\n\\bigskip\n\\begin{flushright}\n'+e(author)+'\n\\end{flushright}\n\\end{document}\n';}
-    else {s+='\\title{'+e(title)+'}\n\\author{'+e(author)+'}\n\\date{'+e(date)+'}\n\\begin{document}\n\\maketitle\n'+(kind==='protokoll'?'\\section*{Ergebnisse und Vereinbarungen}\n':'\\section*{Darstellung}\n')+b+'\n\\end{document}\n';}
-    return s;
+    if(!['classic','modern'].includes(variant))throw Error('Unbekannte Gestaltung');
+    const e=escapeTex,b=paragraphs(body),letter=kind==='brief',modern=variant==='modern',spread=['bericht','protokoll'].includes(kind),font=modern?String.raw`\sffamily`:String.raw`\rmfamily`;
+    const lines=['% Typografie-Atelier · DIN A4 · Zwölferteilung · keine DIN-5008-Zertifizierung.','% Engine: '+(engine==='luatex'?'LuaLaTeX':'pdfLaTeX'),String.raw`\documentclass[12pt,a4paper,ngerman,DIV=12,BCOR=0mm,${spread?'twoside':'oneside'}]{${letter?'scrlttr2':'scrartcl'}}`];
+    lines.push(String.raw`\usepackage{iftex}`,String.raw`\usepackage[T1]{fontenc}`,String.raw`\ifPDFTeX`,String.raw`  \usepackage[utf8]{inputenc}`,String.raw`\else`,String.raw`  \usepackage[utf8]{luainputenc}`,String.raw`\fi`,String.raw`\usepackage[type1]{ebgaramond}`,String.raw`\usepackage[type1${modern?',sfdefault':''}]{FiraSans}`,String.raw`\usepackage[ngerman]{babel}`,String.raw`\usepackage{microtype}`,String.raw`\usepackage{ragged2e}`);
+    lines.push(String.raw`\usepackage[top=24.75mm,bottom=49.5mm,${spread?'inner=17.5mm,outer=35mm':'left=26.25mm,right=26.25mm'},headheight=12pt,headsep=8mm,footskip=12mm]{geometry}`,String.raw`\newcommand{\datenschrift}{\sffamily\small\firalining\firatabular}`,String.raw`\setlength{\parindent}{${modern?'0pt':'1em'}}`,String.raw`\setlength{\parskip}{${modern?'.5\\baselineskip':'0pt'}}`);
+    if(letter){
+      lines.push(String.raw`\KOMAoptions{foldmarks=false,fromalign=left,fromrule=false}`,String.raw`\setkomafont{subject}{${font}\bfseries}`,String.raw`\setkomafont{fromname}{\datenschrift}`,String.raw`\setkomafont{fromaddress}{\datenschrift}`,String.raw`\setkomafont{pagenumber}{\datenschrift}`,String.raw`\setkomafont{addressee}{\datenschrift}`,String.raw`\setkomafont{refname}{\datenschrift}`,String.raw`\setkomafont{refvalue}{\datenschrift}`);
+      for(const [key,value]of [['toaddrhpos',20],['toaddrvpos',45],['toaddrwidth',85],['toaddrheight',45],['backaddrheight',17.7],['refvpos',98.5],['firstfootvpos',279]])lines.push(String.raw`\setplength{${key}}{${value}mm}`);
+      lines.push(String.raw`\setkomavar{fromname}{${e(author)}}`,String.raw`\setkomavar{fromaddress}{[Straße und Hausnummer]\\{} [Postleitzahl Ort]}`,String.raw`\setkomavar{date}{${e(date)}}`,String.raw`\setkomavar{subject}{${e(title)}}`,String.raw`\begin{document}`);
+      lines.push(String.raw`\RaggedRight`,String.raw`\setlength{\parindent}{0pt}`,String.raw`\setlength{\parskip}{.5\baselineskip}`);
+      lines.push(String.raw`\begin{letter}{${e(recipient).split('\n').join(String.raw`\\`+'\n')}}`,String.raw`\opening{Sehr geehrte Damen und Herren,}`,b,String.raw`\closing{Mit freundlichen Grüßen}`,String.raw`\end{letter}`,String.raw`\end{document}`);
+    }else{
+      lines.push(String.raw`\setkomafont{disposition}{${font}\bfseries}`,String.raw`\setkomafont{section}{${font}\normalsize\bfseries}`,String.raw`\setkomafont{subsection}{${font}\normalsize\itshape}`,String.raw`\setkomafont{title}{${font}\LARGE\bfseries}`,String.raw`\setkomafont{author}{\datenschrift}`,String.raw`\setkomafont{date}{\datenschrift}`,String.raw`\usepackage{scrlayer-scrpage}`,String.raw`\clearpairofpagestyles`,String.raw`\setkomafont{pageheadfoot}{\datenschrift}`,String.raw`\setkomafont{pagenumber}{\datenschrift}`,String.raw`\ofoot*{\pagemark}`);
+      if(kind==='einladung'){
+        lines.push(String.raw`\begin{document}`);if(modern)lines.push(String.raw`\RaggedRight`);
+        lines.push(String.raw`\begin{center}`,String.raw`{\normalsize\itshape Einladung\par}`,String.raw`\bigskip`,String.raw`{\LARGE\bfseries ${e(title)}\par}`,String.raw`\bigskip`,String.raw`{\datenschrift ${e(date)}}`,String.raw`\end{center}`,String.raw`\bigskip`,b,String.raw`\bigskip`,e(author),String.raw`\end{document}`);
+      }else{
+        lines.push(String.raw`\title{${e(title)}}`,String.raw`\author{${e(author)}}`,String.raw`\date{${e(date)}}`,String.raw`\begin{document}`);if(modern)lines.push(String.raw`\RaggedRight`);
+        lines.push(String.raw`\maketitle`,kind==='protokoll'?String.raw`\section*{Ergebnisse und Vereinbarungen}`:String.raw`\section*{Darstellung}`,b,String.raw`\end{document}`);
+      }
+    }
+    return lines.join('\n')+'\n';
   }
   function shuffle(items,random=Math.random){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
   function canon(width=210,height=297){return {width,height,inner:width/9,outer:2*width/9,top:height/9,bottom:2*height/9,textWidth:width*2/3,textHeight:height*2/3};}

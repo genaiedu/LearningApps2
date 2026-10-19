@@ -1,0 +1,52 @@
+% Typografie-Atelier · DIN A4 · Zwölferteilung · keine DIN-5008-Zertifizierung.
+% Engine: pdfLaTeX
+\documentclass[12pt,a4paper,ngerman,DIV=12,BCOR=0mm,oneside]{scrlttr2}
+\usepackage{iftex}
+\usepackage[T1]{fontenc}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+\else
+  \usepackage[utf8]{luainputenc}
+\fi
+\usepackage[type1]{ebgaramond}
+\usepackage[type1]{FiraSans}
+\usepackage[ngerman]{babel}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage[top=24.75mm,bottom=49.5mm,left=26.25mm,right=26.25mm,headheight=12pt,headsep=8mm,footskip=12mm]{geometry}
+\newcommand{\datenschrift}{\sffamily\small\firalining\firatabular}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
+\KOMAoptions{foldmarks=false,fromalign=left,fromrule=false}
+\setkomafont{subject}{\rmfamily\bfseries}
+\setkomafont{fromname}{\datenschrift}
+\setkomafont{fromaddress}{\datenschrift}
+\setkomafont{pagenumber}{\datenschrift}
+\setkomafont{addressee}{\datenschrift}
+\setkomafont{refname}{\datenschrift}
+\setkomafont{refvalue}{\datenschrift}
+\setplength{toaddrhpos}{20mm}
+\setplength{toaddrvpos}{45mm}
+\setplength{toaddrwidth}{85mm}
+\setplength{toaddrheight}{45mm}
+\setplength{backaddrheight}{17.7mm}
+\setplength{refvpos}{98.5mm}
+\setplength{firstfootvpos}{279mm}
+\setkomavar{fromname}{Beispielname}
+\setkomavar{fromaddress}{[Straße und Hausnummer]\\{} [Postleitzahl Ort]}
+\setkomavar{date}{19. Oktober 2026}
+\setkomavar{subject}{Ein Raum für Gedanken}
+\begin{document}
+\RaggedRight
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{.5\baselineskip}
+\begin{letter}{Beispielschule\\
+Musterstraße 1\\
+12345 Musterstadt}
+\opening{Sehr geehrte Damen und Herren,}
+Ein guter Text lädt zum Weiterdenken ein. Die Gestaltung ordnet Gedanken, ohne sie zu überlagern.
+
+Schriftwahl, Zeilenlänge und Durchschuss bilden ein System. Ein Preis von 10 € oder 50 \% wird hier als normaler Text behandelt.
+\closing{Mit freundlichen Grüßen}
+\end{letter}
+\end{document}

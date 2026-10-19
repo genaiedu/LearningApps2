@@ -2,10 +2,10 @@
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.SchriftsetzerWord=api;})(typeof window==='object'?window:globalThis,()=>{'use strict';
  const twips=mm=>Math.round(mm*1440/25.4),ptTwips=pt=>Math.round(pt*20);
  const language=lang=>({'de':'de-DE','en':'en-GB','en-US':'en-US','la':'la'}[lang]||'de-DE');
- function pageSettings(settings,geometry){const g=geometry.geometry(settings.format,settings.layout);return {geometry:g,page:{size:{width:twips(g.width),height:twips(g.height)},margin:{top:twips(g.top),bottom:twips(g.bottom),left:twips(g.inner),right:twips(g.outer),gutter:0,header:twips(Math.max(3,g.top-11)),footer:twips(Math.max(3,g.bottom-11))}}};}
+ function pageSettings(settings,geometry){const g=geometry.geometry(settings.format,settings.layout,settings.pageMode);return {geometry:g,page:{size:{width:twips(g.width),height:twips(g.height)},margin:{top:twips(g.top),bottom:twips(g.bottom),left:twips(g.inner),right:twips(g.outer),gutter:0,header:twips(Math.max(3,g.top-11)),footer:twips(Math.max(3,g.bottom-11))}}};}
  function filename(title){return (String(title||'Schriftsetzer').normalize('NFC').replace(/[<>:"/\\|?*\u0000-\u001f]/g,'').trim().slice(0,100)||'Schriftsetzer')+'.docx';}
  function notices(job){return [
-  'Papierformat und gespiegelte Satzränder werden übernommen. Word berechnet Zeilen und Seiten neu.',
+  (job.settings.pageMode&&job.settings.pageMode!=='spread'?'Papierformat und einseitige Ränder werden übernommen.':'Papierformat und gespiegelte Satzränder werden übernommen.')+' Word berechnet Zeilen und Seiten neu.',
   'Die verwendeten Schriftschnitte werden vollständig eingebettet. Moderne Word-Desktopversionen können sie ohne vorherige Installation verwenden.',
   ...(job.settings.toc?['Das Inhaltsverzeichnis in Word bei Bedarf mit „Felder aktualisieren“ neu berechnen.']:[]),
   ...(job.settings.ribbons?.length?['Banderolen werden nicht in Word übernommen. Für diese Gestaltung PDF verwenden.']:[]),
@@ -91,12 +91,13 @@
   }flush();
   if(!doc.own&&doc.credit)sections.push(section([para(doc.lang?.startsWith('de')?'Quelle des Textes':'Text source','heading',{keepNext:true,spacing:{before:0,after:ptTwips(baseline)}}),para(doc.credit,'note'),...(doc.source?[para(doc.source,'note')]:[])]));
   const bodyRun=role('body');
-  const file=new D.Document({title:metadata.title||doc.title,creator:metadata.author||doc.author||'',description:'Mit Schriftsetzer gestaltet',evenAndOddHeaderAndFooters:true,features:{updateFields:true},hyphenation:{autoHyphenation:s.alignment==='justify',consecutiveHyphenLimit:2,doNotHyphenateCaps:true},footnotes,
+  const file=new D.Document({title:metadata.title||doc.title,creator:metadata.author||doc.author||'',description:'Mit Schriftsetzer gestaltet',evenAndOddHeaderAndFooters:!s.pageMode||s.pageMode==='spread',features:{updateFields:true},hyphenation:{autoHyphenation:s.alignment==='justify',consecutiveHyphenLimit:2,doNotHyphenateCaps:true},footnotes,
    styles:{default:{document:{run:bodyRun,paragraph:{alignment:align,spacing:{before:0,after:0,line:ptTwips(baseline),lineRule:D.LineRuleType.EXACT},widowControl:true}}},paragraphStyles:[{id:'Title',name:'Title',basedOn:'Normal',run:role('heading')},{id:'Chapter',name:'Kapitel',basedOn:'Normal',next:'Normal',run:role('heading'),paragraph:{outlineLevel:0,keepNext:true}},{id:'Subheading',name:'Zwischenüberschrift',basedOn:'Normal',next:'Normal',run:role('heading'),paragraph:{outlineLevel:1,keepNext:true}},...['TOC1','TOC2'].map(id=>({id,name:id,basedOn:'Normal',run:role('contents',{size:book.tocSize*2}),paragraph:{spacing:{after:book.tocStyle==='compact'?0:ptTwips(baseline/2)}}}))]},sections});
   // mirrorMargins is not yet exposed by docx. Insert it in schema order before
   // displayBackgroundShape; left/right then mean inside/outside on facing pages.
   const packed=new Uint8Array(await D.Packer.toArrayBuffer(file)),zip=F.unzipSync(packed);
-  const xml=F.strFromU8(zip['word/settings.xml']).replace('<w:displayBackgroundShape','<w:mirrorMargins/><w:displayBackgroundShape');
+  const settingsXML=F.strFromU8(zip['word/settings.xml']);
+  const xml=!s.pageMode||s.pageMode==='spread'?settingsXML.replace('<w:displayBackgroundShape','<w:mirrorMargins/><w:displayBackgroundShape'):settingsXML;
   zip['word/settings.xml']=F.strToU8(xml);
   const fontCount=await fonts.embed(zip,F);
   return {data:F.zipSync(zip,{level:6}),filename:filename(metadata.title||doc.title),geometry:g,fontCount,notices:notices(job)};

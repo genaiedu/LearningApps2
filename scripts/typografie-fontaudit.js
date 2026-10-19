@@ -71,7 +71,7 @@
         {state:'pass',label:'Dateinachweis',text:total+' lokale Archivdatei(en) direkt geprüft, mit SHA-256-Dateinachweisen. Die Aussagen gelten für diese Fassungen.'},
         {state:'manual',label:'Abstände und Kerning',text:count(audit,r=>r.kernTable||r.features.includes('kern'))+' von '+total+' Dateien mit Kerningdaten. Das prüft nicht die Qualität der Abstände; den Textrhythmus im Satzlabor beurteilen. Bei Monospace ist eine feste Laufweite beabsichtigt.'}]},
       {heading:'4 · Im konkreten Einsatz brauchbar?',items:[
-        {state:'manual',label:'Passt zu …',text:'Die Vorschläge unten gelten für ein Schriftpaar und die genannte Aufgabenverteilung. Kontrast und Harmonie müssen an einer gemeinsamen Seite geprüft werden.'},
+        {state:'manual',label:'Passt zu …',text:'Die Beispiele unten gelten für ein Schriftpaar und die genannte Aufgabenverteilung. Kontrast und Harmonie müssen an einer gemeinsamen Seite geprüft werden.'},
         {state:audit.licensePresent?'pass':'warning',label:'Lizenznachweis',text:audit.licensePresent?'Lokaler Lizenztext vorhanden: '+font.license+'. Die geplante Nutzung selbst anhand der Lizenz prüfen.':'Warnung: Lokaler Lizenztext nicht nachgewiesen.'}]}];
   }
   function attach(card,font,audit){
@@ -86,9 +86,9 @@
       for(const item of group.items){const li=make('li','audit-'+item.state),prefix={pass:'✓ ',partial:'◐ ',absent:'— ',manual:'Prüfen: ',warning:'Warnung: '}[item.state];li.append(make('strong',null,prefix+item.label),make('p',null,item.text));list.append(li);}section.append(list);groups.append(section);
     }
     details.append(groups);
-    details.append(make('h4',null,'Passt zu … · Gestaltungsvorschläge'));
+    details.append(make('h4',null,'Passt zu … · Gestaltungsbeispiele'));
     const pairs=make('ul','font-pair-list');for(const [name,role] of pairings[font.id]||[]){const li=make('li');li.append(make('strong',null,name),document.createTextNode(' · '+role));pairs.append(li);}details.append(pairs);
-    const source=make('p','source-note','Prüfraster nach Elliot Jay Stocks: '),a=make('a');a.href='https://fonts.google.com/knowledge/choosing_type/a_checklist_for_choosing_type?preview.script=Latn';a.dataset.googleFont='Checkliste zur Schriftwahl';a.target='_blank';a.rel='noopener noreferrer';a.textContent='A checklist for choosing type · Google Fonts Knowledge ↗';source.append(a,document.createTextNode('. Eigene Messdaten und Gestaltungsvorschläge; keine automatische Qualitätsnote.'));details.append(source);card.append(details);
+    const source=make('p','source-note','Prüfraster nach Elliot Jay Stocks: '),a=make('a');a.href='https://fonts.google.com/knowledge/choosing_type/a_checklist_for_choosing_type?preview.script=Latn';a.dataset.googleFont='Checkliste zur Schriftwahl';a.target='_blank';a.rel='noopener noreferrer';a.textContent='A checklist for choosing type · Google Fonts Knowledge ↗';source.append(a,document.createTextNode('. Eigene Messdaten und Gestaltungsbeispiele; keine automatische Qualitätsnote.'));details.append(source);card.append(details);
   }
   const api={checks,pairings,attach};if(typeof module==='object'&&module.exports)module.exports=api;else root.TypoFontAudit=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

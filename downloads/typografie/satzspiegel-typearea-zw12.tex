@@ -1,0 +1,46 @@
+% Vergleich zur ausdrücklich geometrischen Zwölferteilung.
+% Unveränderte geometrische Sollwerte: A4, 17,5 / 35 / 24,75 / 49,5 mm.
+% typearea passt die Texthöhe an ganze Zeilen an; diese Datei zeigt das Ergebnis.
+\documentclass[12pt,a4paper,ngerman,twoside,DIV=12,BCOR=0mm]{scrartcl}
+\usepackage{iftex}
+\usepackage[T1]{fontenc}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+\else
+  \usepackage[utf8]{luainputenc}
+\fi
+\usepackage[type1]{ebgaramond}
+\usepackage[type1]{FiraSans}
+\usepackage[ngerman]{babel}
+\usepackage{microtype}
+\usepackage{scrlayer-scrpage}
+\setkomafont{disposition}{\rmfamily\bfseries}
+\setkomafont{section}{\rmfamily\normalsize\bfseries}
+\setkomafont{pageheadfoot}{\sffamily\small\firalining\firatabular}
+\recalctypearea
+\ExplSyntaxOn
+\NewDocumentCommand{\inmm}{m}{\fp_eval:n{round(\dim_to_fp:n{#1}/\dim_to_fp:n{1mm},3)}\,mm}
+\ExplSyntaxOff
+\begin{document}
+\section*{Zwölferteilung mit typearea}
+Diese Datei verwendet ausschließlich \textsf{DIV=12,BCOR=0mm}.
+Anders als in den geometrischen Beispielen wird keine zusätzliche
+\textsf{geometry}-Vorgabe angewendet.
+
+Nach dem Laden der Schrift wird der Satzspiegel neu berechnet.
+Die Höhe richtet sich dabei nach den Zeilen des eingestellten Schriftgrads.
+Gleiche Proportionen bedeuten daher nicht automatisch exakt gleiche Maße.
+
+{\sffamily\firalining\firatabular
+\begin{tabular}{ll}
+Papierbreite & \inmm{\paperwidth}\\
+Papierhöhe & \inmm{\paperheight}\\
+Textbreite & \inmm{\textwidth}\\
+Texthöhe & \inmm{\textheight}\\
+Innenrand & \inmm{1in+\oddsidemargin}\\
+Oberrand bis zum Text & \inmm{1in+\topmargin+\headheight+\headsep}
+\end{tabular}}
+
+Die geometrischen Vergleichswerte betragen 157,5\,mm Textbreite
+und 222,75\,mm Texthöhe; innen 17,5\,mm und oben 24,75\,mm.
+\end{document}

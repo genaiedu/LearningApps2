@@ -123,7 +123,8 @@
       }
     }
     const mapColor=op=>{const n={...op};if(n.color)n.color=gray(n.color);if(n.children)n.children=n.children.map(mapColor);return n;};
-    return {id:study.id,title:study.title,mode,width:W,height:H,foreground:fg,background:bg,ops:options.gray?ops.map(mapColor):ops};
+    const copyColor=op=>{const n={...op};if(n.color)n.color=parseInt(gray(n.color).slice(1,3),16)>=145?'#ffffff':'#000000';if(n.children)n.children=n.children.map(copyColor);return n;};
+    return {id:study.id,title:study.title,mode,width:W,height:H,foreground:fg,background:bg,ops:options.photocopy?ops.map(copyColor):options.gray?ops.map(mapColor):ops};
   }
   function svg(page){
     const op=n=>{

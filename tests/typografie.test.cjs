@@ -4,7 +4,7 @@ const vm=require('node:vm');
 test('WCAG luminance and contrast',()=>{assert.equal(C.contrast('#000000','#ffffff'),21);assert.equal(C.contrast('#333333','#333333'),1);assert.ok(Math.abs(C.contrast('#777777','#ffffff')-4.478)<.001);assert.throws(()=>C.contrast('red','#ffffff'));});
 test('all TeX metacharacters escaped, user input cannot become commands',()=>{assert.equal(C.escapeTex('A&B_50%'), 'A\\&B\\_50\\%');assert.equal(C.escapeTex('\\input{secret}'), '\\textbackslash{}input\\{secret\\}');assert.equal(C.escapeTex('#$~^'), '\\#\\$\\textasciitilde{}\\textasciicircum{}');assert.equal(C.escapeTex('Grüße — ÄÖÜ'), 'Grüße — ÄÖÜ');});
 test('paragraphs survive and physical lines do not force line breaks',()=>{assert.equal(C.paragraphs('eins\nzwei\r\n\r\ndrei'),'eins zwei\n\ndrei');});
-test('four standalone templates and two engines',()=>{for(const kind of ['bericht','brief','einladung','protokoll'])for(const engine of ['pdftex','luatex']){const s=C.texDocument({kind,engine,title:'100% & Mut',body:'\\write18{test}\n\nZweiter Absatz',recipient:'Straße 1\nOrt'});assert.ok(s.includes('a4paper'));assert.ok(s.includes('100\\% \\& Mut'));assert.ok(!s.includes('\\write18'));assert.ok(s.endsWith('\\end{document}\n'));assert.equal(s.includes('fontspec'),engine==='luatex');if(kind==='brief')assert.ok(s.includes('Straße 1\\\\\nOrt'));}});
+test('four standalone templates and two engines',()=>{for(const kind of ['bericht','brief','einladung','protokoll'])for(const engine of ['pdftex','luatex']){const s=C.texDocument({kind,engine,title:'100% & Mut',body:'\\write18{test}\n\nZweiter Absatz',recipient:'Straße 1\nOrt'});assert.ok(s.includes('a4paper'));assert.ok(s.includes('100\\% \\& Mut'));assert.ok(!s.includes('\\write18'));assert.ok(s.endsWith('\\end{document}\n'));assert.ok(s.includes('\\usepackage[type1]{ebgaramond}'));assert.ok(s.includes('FiraSans'));if(kind==='brief')assert.ok(s.includes('Straße 1\\\\\nOrt'));}});
 test('canon preserves proportions, margins sum to paper size',()=>{const c=C.canon();assert.equal(c.inner+c.textWidth+c.outer,210);assert.equal(c.top+c.textHeight+c.bottom,297);assert.ok(Math.abs(c.textWidth/c.textHeight-210/297)<1e-12);});
 test('shuffle no duplicates, no mutation',()=>{const a=[1,2,3,4],b=C.shuffle(a,()=>0);assert.deepEqual(a,[1,2,3,4]);assert.deepEqual([...b].sort(),a);assert.notDeepEqual(a,b);});
 test('use existing font weights, not fake cuts',()=>{assert.equal(C.fontWeight({files:[{style:'normal',weight:400},{style:'normal',weight:700}]},500),400);assert.equal(C.fontWeight({files:[{style:'normal',weight:[200,900]}]},612),612);});
@@ -65,7 +65,7 @@ test('letter forms, emphasis and font roles remain inside the characters part',(
   assert.equal(statements.length,16);
   for(const statement of statements){assert.equal((statement.match(/aria-hidden="true">„<\/span>/g)||[]).length,1);assert.ok(!/Claus|Unterberg|Autorenkommentar/.test(statement));if(!statement.includes('font-choice-voice'))assert.ok(!/“|”/.test(statement));}
   const choice=statements.find(s=>s.includes('font-choice-voice'));assert.ok(choice.includes('Warum ich meine Schriften selbst wähle'));assert.equal((choice.match(/<p>/g)||[]).length,11);assert.ok(html.indexOf(choice)<html.indexOf('data-part="papier"'));assert.ok(choice.includes('„ian“'));assert.ok(choice.includes('<strong>Tinos</strong>'));assert.ok(choice.includes('<strong>Arimo</strong>'));assert.ok(choice.includes('keine identische Nachzeichnung der Helvetica'));
-  const word=statements.find(s=>s.includes('id="word-randstimme"'));assert.ok(word.includes('Bloß kein Word'));assert.equal((word.match(/<p>/g)||[]).length,9);assert.ok(html.indexOf(word)>html.indexOf('id="texatelier"'));assert.ok(html.indexOf(word)<html.indexOf('data-part="bildschirm"'));assert.ok(word.includes('Mediävalziffern'));assert.ok(word.includes('Ziffernform und Ziffernabstand gezielt auswählen'));assert.ok(!word.includes('verschmolzenen Buchstabenpaare'));assert.ok(word.includes('Ein Schusterjunge ist die erste Zeile eines Absatzes'));assert.ok(word.includes('ein Hurenkind ist die letzte Absatzzeile'));assert.ok(!word.includes('bereits besprochenen Schusterjungen'));
+  const word=statements.find(s=>s.includes('id="word-randstimme"'));assert.ok(word.includes('Was Word nicht von selbst macht'));assert.equal((word.match(/<p>/g)||[]).length,9);assert.ok(html.indexOf(word)>html.indexOf('id="texatelier"'));assert.ok(html.indexOf(word)<html.indexOf('data-part="bildschirm"'));assert.ok(word.includes('Mediävalziffern'));assert.ok(word.includes('Ziffernform und Ziffernabstand gezielt auswählen'));assert.ok(!word.includes('verschmolzenen Buchstabenpaare'));assert.ok(word.includes('Ein Schusterjunge ist die erste Zeile eines Absatzes'));assert.ok(word.includes('ein Hurenkind ist die letzte Absatzzeile'));assert.ok(!word.includes('bereits besprochenen Schusterjungen'));
   assert.ok(html.includes('Geometrische Fonts für Fließtext zu verwenden ist genauso peinlich wie ein Text voller Rechtschreibfehler.'));
   assert.ok(html.includes('Kursiv und fett sind nicht einfach ästhetische Entscheidungen.'));
 });
@@ -162,10 +162,10 @@ test('Word templates conclude the continuous Tschichold section and match the pa
   const word=paper.match(/<section class="chapter wrap" id="word">([\s\S]*?)<\/section>/)[1];
   assert.ok(paper.indexOf('id="buchsatz"')<paper.indexOf('id="word"'));
   assert.ok(paper.indexOf('id="word"')<paper.indexOf('id="richtung"'));
-  assert.ok(word.includes('Tschicholds Sorgfalt in der Praxis'));
-  assert.ok(word.includes('kein vermeintliches Tschichold-Zitat'));
+  assert.ok(word.includes('Gestaltung im Schulalltag'));
+  assert.ok(word.includes('keine nachgebauten Tschichold-Originale'));
   const downloads=[...word.matchAll(/href="(downloads\/typografie\/[^\"]+\.docx)"/g)].map(m=>m[1]);
-  assert.equal(downloads.length,8);assert.equal(new Set(downloads).size,8);
+  assert.equal(downloads.length,20);assert.equal(new Set(downloads).size,20);
   for(const file of downloads)assert.ok(fs.existsSync(path.resolve(__dirname,'..',file)),file);
 });
 

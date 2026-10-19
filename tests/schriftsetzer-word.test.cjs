@@ -16,6 +16,13 @@ test('all supported paper formats and four margin systems retain physical Word g
   assert.match(settings,/<w:mirrorMargins\/>/);assert.match(settings,/<w:evenAndOddHeaders/);assert.ok(settings.indexOf('mirrorMargins')<settings.indexOf('displayBackgroundShape'));
  }
 });
+test('one-sided Word exports do not mirror their ordinary or asymmetric margins',async()=>{
+ for(const pageMode of ['single','single-asymmetric']){
+  const j=job();j.settings.pageMode=pageMode;const result=await core.build(j,deps),zip=F.unzipSync(result.data),xml=F.strFromU8(zip['word/document.xml']),settings=F.strFromU8(zip['word/settings.xml']),g=geometry.geometry(j.settings.format,j.settings.layout,pageMode);
+  assert.doesNotMatch(settings,/<w:mirrorMargins/);assert.match(settings,/<w:evenAndOddHeaders w:val="false"\/>/);
+  assert.match(xml,new RegExp('w:left="'+core.twips(g.inner)+'"'));assert.match(xml,new RegExp('w:right="'+core.twips(g.outer)+'"'));
+ }
+});
 test('native structure, fonts, TOC, real footnote and odd-page chapter starts survive',async()=>{
  const result=await core.build(job(),deps),zip=F.unzipSync(result.data),xml=F.strFromU8(zip['word/document.xml']),styles=F.strFromU8(zip['word/styles.xml']);
  assert.match(xml,/w:val="oddPage"/);assert.match(xml,/TOC /);assert.match(xml,/<w:tbl>/);assert.match(xml,/footnoteReference/);assert.match(styles,/EB Garamond/);assert.match(styles,/Fira Sans/);assert.match(F.strFromU8(zip['word/footnotes.xml']),/echte Word-Fußnote/);assert.ok(Object.keys(zip).some(p=>/^word\/footer/.test(p)));

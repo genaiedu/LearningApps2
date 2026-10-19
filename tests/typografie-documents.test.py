@@ -129,7 +129,7 @@ class Templates(unittest.TestCase):
     def test_browser_previews_match_the_exact_documents_and_every_page_exists(self):
         from struct import unpack
         documents=json.loads((ROOT/'data/typografie-document-previews.json').read_text())['documents']
-        self.assertEqual(set(documents),{base+suffix for base in NAMES for suffix in ['', '-modern']})
+        self.assertEqual(set(documents),{base+suffix for base in NAMES+ [n+'-zw12' for n in NAMES]+['arbeitsblatt-a4-zw12','elternbrief-a4-zw12'] for suffix in ['', '-modern']})
         hashes=set()
         for name,entry in documents.items():
             with self.subTest(document=name):
@@ -152,6 +152,6 @@ class Templates(unittest.TestCase):
                     self.assertGreater(page['width'],1400)
                     self.assertAlmostEqual(page['width']/page['height'],210/297,delta=.002)
                     self.assertEqual(page['sha256'],sha256(data).hexdigest());hashes.add(page['sha256'])
-        self.assertEqual(len(hashes),8)
+        self.assertEqual(len(hashes),20)
 
 if __name__=='__main__':unittest.main()

@@ -8,12 +8,13 @@
   circle:{label:'Kreiskonstruktion · Satzhöhe = Seitenbreite',note:'Der Textblock behält die Seitenproportion; seine Höhe entspricht der Seitenbreite. Die verbleibenden Ränder werden innen : außen und oben : unten jeweils 1 : 2 geteilt.'}
  };
  const format=id=>Object.hasOwn(formats,id)?id:'book',preset=id=>Object.hasOwn(presets,id)?id:(id==='balanced'||id==='compact'?'raster10':'classic');
- function geometry(formatId='book',presetId='classic'){const f=formats[format(formatId)];return dimensions(f.width,f.height,presetId);}
- function dimensions(width,height,id='classic'){if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=width)throw new RangeError('Hochformat mit positiven Maßen erforderlich.');id=preset(id);const n=presets[id].divisions||9,textHeight=id==='circle'?width:height*(n-3)/n,textWidth=id==='circle'?width*width/height:width*(n-3)/n,inner=(width-textWidth)/3,top=(height-textHeight)/3;return {id,width,height,inner,outer:2*inner,top,bottom:2*top,textWidth,textHeight};}
+ const pageMode=id=>['single','single-asymmetric'].includes(id)?id:'spread';
+ function geometry(formatId='book',presetId='classic',mode='spread'){const f=formats[format(formatId)];return dimensions(f.width,f.height,presetId,mode);}
+ function dimensions(width,height,id='classic',mode='spread'){if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=width)throw new RangeError('Hochformat mit positiven Maßen erforderlich.');id=preset(id);const n=presets[id].divisions||9,textHeight=id==='circle'?width:height*(n-3)/n,textWidth=id==='circle'?width*width/height:width*(n-3)/n,inner=(width-textWidth)/3,top=(height-textHeight)/3,g={id,width,height,inner,outer:2*inner,top,bottom:2*top,textWidth,textHeight};mode=pageMode(mode);if(mode!=='spread'){g.mode=mode;if(mode==='single')g.inner=g.outer=(width-textWidth)/2;}return g;}
  function choices(formatId){const same=Math.abs(geometry(formatId,'classic').textHeight-geometry(formatId,'circle').textHeight)<1e-7;return Object.entries(presets).filter(([id])=>!same||id!=='circle').map(([id,p])=>({id,label:p.label+(same&&id==='classic'?' · auch Kreiskonstruktion':''),note:p.note+(same&&id==='classic'?' Beim Format 2 : 3 ist die Kreiskonstruktion geometrisch identisch und wird deshalb nicht doppelt angeboten.':'')}));}
  const cm=mm=>(mm/10).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
  const coverage=g=>100*g.textWidth*g.textHeight/(g.width*g.height);
  const coverageLabel=g=>coverage(g).toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
- function description(g){return 'Innen '+cm(g.inner)+' · außen '+cm(g.outer)+' · oben '+cm(g.top)+' · unten '+cm(g.bottom)+' cm. Textblock '+cm(g.textWidth)+' × '+cm(g.textHeight)+' cm. Rechteckiges Schriftfeld: '+coverageLabel(g)+' der Papierfläche, nicht der Anteil bedruckter schwarzer Fläche.';}
- return {formats,presets,format,preset,geometry,dimensions,choices,cm,description,coverage,coverageLabel};
+ function description(g){return (g.mode?'Links ':'Innen ')+cm(g.inner)+(g.mode?' · rechts ':' · außen ')+cm(g.outer)+' · oben '+cm(g.top)+' · unten '+cm(g.bottom)+' cm. Textblock '+cm(g.textWidth)+' × '+cm(g.textHeight)+' cm. Rechteckiges Schriftfeld: '+coverageLabel(g)+' der Papierfläche, nicht der Anteil bedruckter schwarzer Fläche.';}
+ return {formats,presets,format,preset,pageMode,geometry,dimensions,choices,cm,description,coverage,coverageLabel};
 });

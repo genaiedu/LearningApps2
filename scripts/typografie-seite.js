@@ -29,7 +29,7 @@
   function defaultColors(){const s=P.scene(byId($('page-color-preset').value));$('page-foreground').value=s.foreground;$('page-background').value=s.background;}
   function color(){
     const study=byId($('page-color-preset').value),fg=$('page-foreground').value,bg=$('page-background').value;
-    colorPage=P.scene(study,{foreground:fg,background:bg,gray:$('page-grayscale').checked});render($('page-color-proof'),colorPage);$('page-color-caption').textContent=study.note;
+    colorPage=P.scene(study,{foreground:fg,background:bg,gray:$('page-grayscale').checked,photocopy:$('page-photocopy').checked});render($('page-color-proof'),colorPage);$('page-color-caption').textContent=study.note;
     const ratio=C.contrast(fg,bg),report=$('page-contrast');report.replaceChildren();
     const b=document.createElement('b');b.textContent=ratio.toLocaleString('de-DE',{maximumFractionDigits:2})+':1 · Lesetext';report.append(b);
     const p=document.createElement('p');p.textContent=ratio>=4.5?'✓ Farbminimum für normalen Webtext erreicht.':ratio>=3?'△ Nur das Farbminimum für große Webschrift erreicht; für normalen Lesetext zu wenig.':'✕ Auch für große Webschrift zu wenig Helligkeitskontrast.';report.append(p);report.dataset.state=ratio>=4.5?'pass':'warning';
@@ -38,8 +38,8 @@
       t.textContent='Titel'+(study.mode==='field'?' im festen blauen Feld':' in festem Ziegelrot')+': '+r.toLocaleString('de-DE',{maximumFractionDigits:2})+':1 · '+(r>=4.5?'auch für normalen Webtext ausreichend.':r>=3?'nur für große Webschrift ausreichend.':'zu wenig Kontrast.');report.append(t);
     }
   }
-  $('page-color-preset').addEventListener('input',()=>{defaultColors();color();});['page-foreground','page-background','page-grayscale'].forEach(id=>$(id).addEventListener('input',color));
-  $('page-color-reset').addEventListener('click',()=>{$('page-color-preset').value='07-positiv';$('page-grayscale').checked=false;defaultColors();color();});
+  $('page-color-preset').addEventListener('input',()=>{defaultColors();color();});['page-foreground','page-background','page-grayscale','page-photocopy'].forEach(id=>$(id).addEventListener('input',color));
+  $('page-color-reset').addEventListener('click',()=>{$('page-color-preset').value='07-positiv';$('page-grayscale').checked=false;$('page-photocopy').checked=false;defaultColors();color();});
   $('page-color-enlarge').addEventListener('click',()=>enlarge(colorPage,byId($('page-color-preset').value)));defaultColors();color();
   let layoutId='13-mittelsymmetrie',layoutPage;
   const layoutOptions=$('page-layout-options');P.studies.filter(s=>s.group==='raum').forEach(s=>{const b=document.createElement('button');b.type='button';b.dataset.layout=s.id;b.textContent=s.title;b.addEventListener('click',()=>{layoutId=s.id;composition();});layoutOptions.append(b);});

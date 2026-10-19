@@ -18,11 +18,13 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--renderer',type=Path,required=True)
     parser.add_argument('--workdir',type=Path,required=True)
+    parser.add_argument('--school',action='store_true',help='Render twelve new examples; retain legacy manifest entries and previews.')
     args=parser.parse_args()
     args.workdir.mkdir(parents=True,exist_ok=True)
     destination=ROOT/'downloads/typografie/vorschau'
     destination.mkdir(parents=True,exist_ok=True)
-    jobs=[(base+suffix,title,bool(suffix)) for base,title in NAMES.items() for suffix in ['', '-modern']]
+    names=({**{base+'-zw12':title for base,title in NAMES.items()},'arbeitsblatt-a4-zw12':'Arbeitsblatt','elternbrief-a4-zw12':'Elternbrief'} if args.school else NAMES)
+    jobs=[(base+suffix,title,bool(suffix)) for base,title in names.items() for suffix in ['', '-modern']]
 
     def render(job):
         name,title,modern=job
@@ -46,6 +48,10 @@ def main():
 
     with ThreadPoolExecutor(max_workers=2) as pool:
         documents=dict(pool.map(render,jobs))
+    if args.school:
+        previous=json.loads((ROOT/'data/typografie-document-previews.json').read_text())['documents']
+        previous={key:value for key,value in previous.items() if not key.startswith('klausur-a4-zw12')}
+        documents={**previous,**documents}
     manifest={'description':'Unveränderte Satzansichten aus den angebotenen Worddateien. Lokale Seitengrafiken, keine externe Dokumentkonvertierung.',
               'documents':documents}
     (ROOT/'data/typografie-document-previews.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')

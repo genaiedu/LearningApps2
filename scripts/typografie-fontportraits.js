@@ -28,9 +28,9 @@
    const check=el('a',null,'Eigene erfundene Namensprobe prüfen →');check.href='#namen-werkstatt';check.onclick=()=>dialog.close();section.append(check);content.append(section);
   }
   const grid=el('div','font-portrait-reading');grid.append(block('Geschichte & Herkunft',p.history),block('Welche Aufgabe passt?',p.use),block('Bewusst einsetzen',p.caution));content.append(grid);
-  const heading=el('h3',null,'Gute Partner, klare Rollen');content.append(heading,el('p','small','Unsere Vorschläge: Formkontrast und Hierarchie prüfen, nicht möglichst viele Schriften sammeln. Jede Partnerin lässt sich hier direkt öffnen.'));
+  const heading=el('h3',null,'Gute Partner, klare Rollen');content.append(heading,el('p','small','Unsere Beispielpaare zeigen Formkontrast und klare Aufgaben, nicht möglichst viele Schriften. Jede Partnerin lässt sich hier direkt öffnen.'));
   const partners=el('div','font-partners');for(const pair of p.pairings)partners.append(partnerButton(pair.id,pair.role,pair.reason));content.append(partners);
-  const foot=el('div','font-portrait-links');foot.append(link(f,'Herkunft nachlesen · offizielles Fontprojekt ↗'));const download=el('a','font-google-download');window.TypoFontLinks.link(download,f.name);foot.append(download);const licence=el('a',null,'Lizenz · '+f.license);licence.href=f.licensePath;foot.append(licence);content.append(foot,el('p','small font-portrait-note','Geschichte nach den verlinkten Fontprojekten; Einsatz- und Paarungshinweise sind Empfehlungen des Ateliers.'));
+  const foot=el('div','font-portrait-links');foot.append(link(f,'Herkunft nachlesen · offizielles Fontprojekt ↗'));const download=el('a','font-google-download');window.TypoFontLinks.link(download,f.name);foot.append(download);const licence=el('a',null,'Lizenz · '+f.license);licence.href=f.licensePath;foot.append(licence);content.append(foot,el('p','small font-portrait-note','Geschichte nach den verlinkten Fontprojekten; Einsatz- und Paarungshinweise erläutern unsere Gestaltungsbeispiele.'));
   back.hidden=!trail.length;dialog.scrollTop=0;
  }
  function open(id,button){
