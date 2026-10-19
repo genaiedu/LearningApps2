@@ -1,0 +1,17 @@
+/* Identify the selected text's shared role without guessing from its font size. */
+(()=>{'use strict';
+ const names={body:'Lesetext',heading:'Titel und Überschriften',contents:'Inhaltsverzeichnis',quote:'Zitate und Dialogauszug',note:'Anmerkungen und Quellen',data:'Tabellen und Metadaten'};
+ function identify(element){if(element.closest('.print-footnote,.print-source,figcaption,.print-caption-unassigned'))return 'note';const explicit=element.closest('[data-font-role]');if(explicit)return explicit.dataset.fontRole;if(element.closest('table,.print-byline,.print-kicker'))return 'data';if(element.closest('.print-contents'))return 'contents';if(element.closest('.print-title,.print-section-title,h1,h2,h3,h4,h5,h6'))return 'heading';if(element.closest('.print-quote,blockquote'))return 'quote';return 'body';}
+ function selection(){const selected=getSelection();if(!selected?.rangeCount||selected.isCollapsed)return;const node=selected.anchorNode,element=node.nodeType===1?node:node.parentElement;if(!element)return;const role=identify(element),direct=!!element.closest('[data-direct-formatting],[data-font-id],[data-size],[data-bold],[data-em]'),titleBlock=element.closest('[data-title-block]')?.dataset.titleBlock;
+  if(document.getElementById('print-pages')&&element.closest('#print-pages')){const origin=element.closest('[data-source-section]'),source=origin?{section:Number(origin.dataset.sourceSection),...(origin.dataset.sourceHeading?{heading:true}:{block:Number(origin.dataset.sourceBlock)})}:null;parent.postMessage({type:'typography-selection',role,direct,titleBlock,source,selectedText:selected.toString().replace(/[\u00ad\u200c]/g,'').slice(0,1000)},location.origin);}
+  else if(element.closest('#longtext-editor,.book-title-rich'))highlight({role,direct,titleBlock});
+ }
+ function highlight({role,direct,titleBlock}){if(!names[role])return;const select=document.getElementById('longtext-font-'+role),box=select?.closest('.longtext-role');if(!box)return;
+  for(const row of document.querySelectorAll('.longtext-role'))row.classList.toggle('longtext-role-active',row===box);
+  for(const [index,row]of [...document.querySelectorAll('.book-title-block')].entries())row.classList.toggle('longtext-role-active',titleBlock!==undefined&&index===Number(titleBlock));
+  let status=document.getElementById('schriftsetzer-active-role');if(!status){status=document.createElement('p');status.id='schriftsetzer-active-role';status.className='small';status.setAttribute('role','status');document.getElementById('longtext-role-controls').before(status);}status.textContent='Markierter Text: '+names[role]+(direct?' · zusätzlich lokal formatiert':' · gemeinsame Schriftrolle');
+  const controls=document.getElementById('longtext-controls');if(controls){controls.open=true;const top=box.offsetTop-controls.offsetTop;if(top<controls.scrollTop||top+box.offsetHeight>controls.scrollTop+controls.clientHeight)controls.scrollTo?.({top:Math.max(0,top-40),behavior:'smooth'});}box.setAttribute('aria-current','true');for(const other of document.querySelectorAll('.longtext-role:not(.longtext-role-active)'))other.removeAttribute('aria-current');
+ }
+ document.addEventListener('selectionchange',selection);
+ addEventListener('message',event=>{if(event.origin!==location.origin||event.source!==document.querySelector('#longtext-stage iframe')?.contentWindow||event.data?.type!=='typography-selection')return;highlight(event.data);});
+})();

@@ -1,0 +1,38 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const root=path.resolve(__dirname,'..'),core=require('../scripts/schriftsetzer-word-core.js'),D=require('docx'),geometry=require('../scripts/typografie-satzspiegel-core.js');
+const context={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'scripts/schriftsetzer-buch-core.js'),'utf8'),context);const bookLayout=context.window.TypoBookLayout;
+const zipContext={module:{exports:{}},exports:{},require,TextEncoder,TextDecoder,Uint8Array,Uint16Array,Uint32Array,Int32Array,ArrayBuffer};vm.runInNewContext(fs.readFileSync(path.join(root,'vendor/fflate/fflate-0.8.2.js'),'utf8'),zipContext);const F=zipContext.module.exports;
+const fonts=JSON.parse(fs.readFileSync(path.join(root,'data/typografie-fonts.json'))),roles=Object.fromEntries(['body','heading','contents','quote','note','data'].map(id=>[id,{font:fonts.families.find(f=>f.id===(['heading','data'].includes(id)?'firasans':'ebgaramond')),weight:id==='heading'?600:400}]));
+const text='Ein Satzspiegel entsteht aus dem Verhältnis von Schrift, Zeilenlänge und freier Fläche. Auf einer Doppelseite stehen die inneren Ränder einander gegenüber. Außen bleibt mehr Raum. Der Text bleibt in Word bearbeitbar und kann dort weitergeführt werden. ';
+const job=()=>({document:{id:'own',own:true,lang:'de',title:'Satzspiegel im Word Export',subtitle:'Prüfung von Papierformat und gespiegelten Rändern',author:'Schriftsetzer',note:'Diese Anmerkung wird als echte Word-Fußnote gesetzt.',sections:[{title:'Die linke und die rechte Seite',level:2,blocks:Array.from({length:8},()=>({kind:'p',runs:[{text:text.repeat(2)}]}))},{title:'Eine neue rechte Seite',level:2,blocks:[{kind:'p',runs:[{text:text.repeat(2)}]},{kind:'table',caption:'Maße des Satzspiegels',heads:['Bereich','Eigenschaft'],rows:[['Innen','Gespiegelt'],['Außen','Mehr Raum']]},{kind:'quote',runs:[{text:'Eine gut gesetzte Seite trägt den Text.',em:true}]}]}]},settings:{format:'a5',layout:'raster12',alignment:'justify',size:11,leading:1.4,headingStyle:'hierarchy',numerals:'oldstyle',roles,toc:true,notes:true,book:{titleMode:'separate',titleSize:28,titleTop:1,title:'Satzspiegel im Word Export',subtitle:'Papierformat und gespiegelte Ränder',author:'Schriftsetzer',chapterStart:'right',chapterSpace:2}}});
+const fontCore=require('../scripts/schriftsetzer-word-fonts.js'),manifest=require('../data/schriftsetzer-word-fonts.json');
+const deps={docx:D,fflate:F,geometry,bookLayout,fonts:fontCore.create(manifest,async face=>new Uint8Array(fs.readFileSync(path.join(root,face.path)))),loadImage:async()=>{throw new Error('Unexpected image');}};
+test('all supported paper formats and four margin systems retain physical Word geometry',async()=>{
+ for(const format of Object.keys(geometry.formats))for(const layout of Object.keys(geometry.presets)){
+  const j=job();j.settings={...j.settings,format,layout,toc:false};j.document.sections=[j.document.sections[1]];
+  const result=await core.build(j,deps),zip=F.unzipSync(result.data),xml=F.strFromU8(zip['word/document.xml']),settings=F.strFromU8(zip['word/settings.xml']),g=geometry.geometry(format,layout);
+  assert.match(xml,new RegExp('<w:pgSz w:w="'+core.twips(g.width)+'" w:h="'+core.twips(g.height)+'"'));
+  for(const [word,key]of [['top','top'],['bottom','bottom'],['left','inner'],['right','outer']])assert.match(xml,new RegExp('w:'+word+'="'+core.twips(g[key])+'"'),format+'/'+layout+'/'+key);
+  assert.match(settings,/<w:mirrorMargins\/>/);assert.match(settings,/<w:evenAndOddHeaders/);assert.ok(settings.indexOf('mirrorMargins')<settings.indexOf('displayBackgroundShape'));
+ }
+});
+test('native structure, fonts, TOC, real footnote and odd-page chapter starts survive',async()=>{
+ const result=await core.build(job(),deps),zip=F.unzipSync(result.data),xml=F.strFromU8(zip['word/document.xml']),styles=F.strFromU8(zip['word/styles.xml']);
+ assert.match(xml,/w:val="oddPage"/);assert.match(xml,/TOC /);assert.match(xml,/<w:tbl>/);assert.match(xml,/footnoteReference/);assert.match(styles,/EB Garamond/);assert.match(styles,/Fira Sans/);assert.match(F.strFromU8(zip['word/footnotes.xml']),/echte Word-Fußnote/);assert.ok(Object.keys(zip).some(p=>/^word\/footer/.test(p)));
+ const title=xml.split('<w:p>').find(p=>p.includes('<w:pStyle w:val="Title"'));assert.match(title,/w:lineRule="atLeast"/);assert.match(title,/w:line="672"/);assert.ok(xml.includes('PAGEREF ss-section-0'));assert.ok(xml.includes('w:name="ss-section-0"'));
+ if(process.env.SCHRIFTSETZER_QA_DOCX)fs.writeFileSync(process.env.SCHRIFTSETZER_QA_DOCX,result.data);
+});
+test('never silently drop an unavailable image or turn fixed PDF pages into empty Word text',async()=>{
+ const j=job();j.document.sections[0].blocks.unshift({kind:'figure',src:'missing.jpg'});await assert.rejects(core.build(j,deps),/Unexpected image/);j.document.fixedPages=true;await assert.rejects(core.build(j,deps),/PDF-Originalseiten/);
+});
+test('export filename is safe and fidelity limitations are explicit',()=>{
+ assert.equal(core.filename('Ein / Titel: A?'),'Ein  Titel A.docx');assert.ok(core.notices(job()).some(n=>/vollständig eingebettet/.test(n)));
+});
+test('full font parts, regular/bold/italic bindings and embedding settings are actually in the file',async()=>{
+ const j=job();j.document.sections[0].blocks[0].runs.push({text:'Eine echte Kursive',em:true});const result=await core.build(j,deps),zip=F.unzipSync(result.data),fonts=F.strFromU8(zip['word/fontTable.xml']),settings=F.strFromU8(zip['word/settings.xml']);assert.ok(result.fontCount>=3);assert.match(fonts,/embedItalic/);assert.match(fonts,/embedRegular/);assert.match(fonts,/w:subsetted="false"/);assert.match(settings,/embedTrueTypeFonts/);assert.match(settings,/saveSubsetFonts w:val="false"/);assert.equal(Object.keys(zip).filter(p=>/\.odttf$/.test(p)).length,result.fontCount);
+});
+test('all permitted font parts have exact bytes and preview-only fonts cannot silently replace selected cuts',()=>{
+ const crypto=require('node:crypto');for(const face of manifest.faces){if(face.blocked)continue;assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,face.path))).digest('hex'),face.sha256,face.path);}
+ const family=fonts.families.find(f=>f.id==='zillaslab'),manager=fontCore.create(manifest,()=>{});assert.throws(()=>manager.resolve(family,300),/erlaubt keine bearbeitbare Einbettung/);
+});
+test('free title runs keep absolute sizes for imported documents and selected paragraph alignment survives',async()=>{const j=job();j.document.imported=true;j.document.baseSize=10;j.document.sections=[{title:'Überschrift',level:2,style:{align:'right',leading:1.7},headingRuns:[{text:'Überschrift',size:20}],blocks:[{kind:'p',style:{align:'center',leading:1.6},runs:[{text:'Zentrierter Absatz',size:12}]}]}];j.settings.book={titleMode:'separate',chapterStart:'flow',titleComposition:true,titleBlocks:[{text:'Freier Titel',runs:[{text:'Freier Titel\nWeitere Zeile',size:30},{text:'Unsichtbar',hidden:true}],size:24,leading:1.3,align:'left',space:1,role:'heading'}]};const result=await core.build(j,deps),zip=F.unzipSync(result.data),xml=F.strFromU8(zip['word/document.xml']);const title=xml.split('<w:p>').find(p=>p.includes('Freier Titel'));assert.match(title,/w:sz w:val="60"/);assert.match(title,/w:line="780"/);assert.match(title,/<w:vanish\/>/);assert.match(title,/<w:br\/>/);assert.match(xml,/<w:jc w:val="right"/);assert.match(xml,/<w:jc w:val="center"/);assert.doesNotMatch(xml,/w:val="oddPage"/);if(process.env.SCHRIFTSETZER_QA_FREE_DOCX)fs.writeFileSync(process.env.SCHRIFTSETZER_QA_FREE_DOCX,result.data);});

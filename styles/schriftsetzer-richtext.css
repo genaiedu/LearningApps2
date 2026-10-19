@@ -1,0 +1,13 @@
+.schriftsetzer-rich-tools{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center;padding:.6rem 0;}
+.schriftsetzer-rich-tools select{width:auto;max-width:100%;font-size:.8rem;}
+.schriftsetzer-rich-tools input{width:5rem;font-size:.8rem;}
+.schriftsetzer-rich-tools button{font-size:.8rem;padding:.3rem .5rem;}
+.schriftsetzer-rich-tools label{font:500 .7rem/1.4 var(--sans);display:flex;flex-direction:column;gap:.25rem;}
+.schriftsetzer-rich-editor{padding:.75rem;min-height:5rem;border:1px solid var(--line);background:var(--white);white-space:pre-wrap;overflow-wrap:anywhere;}
+.schriftsetzer-rich-editor [data-hidden="true"]{opacity:.5;text-decoration:line-through dotted;text-decoration-color:var(--red);}
+.schriftsetzer-rich-editor:focus{outline:2px solid var(--red);outline-offset:2px;}
+.schriftsetzer-selection-dialog{width:min(900px,calc(100vw - 32px));max-height:90dvh;overflow:auto;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:clamp(18px,3vw,32px);}
+.schriftsetzer-selection-dialog::backdrop{background:#0008;}
+.schriftsetzer-selection-text{min-height:180px;max-height:45dvh;overflow:auto;}
+.schriftsetzer-selection-actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
+#schriftsetzer-edit-selection{margin-bottom:1rem;}

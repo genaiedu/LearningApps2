@@ -10,6 +10,7 @@
   titleStyle:choice(value.titleStyle,['classic','editorial','quiet'],'classic'),localMetadata:value.localMetadata===true,
   title:text(value.title,160),subtitle:text(value.subtitle,200),author:text(value.author,120),imprint:text(value.imprint,180),
   titleSize:number(value.titleSize,32,20,44),titleTop:number(value.titleTop,2,0,6),
+  titleComposition:value.titleComposition===true,titleReplaceIntro:value.titleReplaceIntro===true,titleBlocks:(Array.isArray(value.titleBlocks)?value.titleBlocks:[]).slice(0,12).map(block=>({text:text(block.text,1000),runs:Array.isArray(block.runs)?block.runs.slice(0,200).map(r=>({text:text(r.text,1000),...(r.fontId?{fontId:text(r.fontId,80)}:{}),...(r.size?{size:number(r.size,16,6,72)}:{}),...(typeof r.bold==='boolean'?{bold:r.bold}:{}),...(typeof r.em==='boolean'?{em:r.em}:{}),...(typeof r.hidden==='boolean'?{hidden:r.hidden}:{})})):undefined,size:number(block.size,16,8,60),leading:number(block.leading,1.2,1,3),align:choice(block.align,['left','center','right','justify'],'center'),space:number(block.space,.5,0,6),role:choice(block.role,['heading','body','data'],'heading'),emphasis:choice(block.emphasis,['normal','bold','italic'],'normal')})),
   image:typeof value.image==='string'&&/^blob:/.test(value.image)?value.image:'',imageAlt:text(value.imageAlt,120),
   tocStyle:choice(value.tocStyle,['plain','leaders','compact'],'plain'),tocDepth:choice(value.tocDepth,['all','chapters'],'all'),tocTitle:text(value.tocTitle,80),tocSize:number(value.tocSize,10,9,13),
   chapterStart:choice(value.chapterStart,starts,'flow'),chapterSpace:Math.round(number(value.chapterSpace,3,0,8)),hideChapterHeader:value.hideChapterHeader!==false,
@@ -22,14 +23,14 @@
   // Never remove an imported title/image from the user's actual document.
   const oldCover=source.querySelector(':scope > .print-cover');
   if(book.titleMode!=='existing')oldCover?.remove();
+  if(book.titleComposition&&book.titleReplaceIntro&&['separate','inline'].includes(book.titleMode))source.querySelector(':scope > .print-import-intro')?.remove();
   if(['separate','inline'].includes(book.titleMode)){
    const cover=make('header','print-cover '+(book.titleMode==='separate'?'print-book-title-page':'print-book-inline-title'));
    cover.dataset.bookTitleStyle=book.titleStyle;
-   if(book.author)cover.append(make('p','print-byline print-book-author',book.author));
-   cover.append(make('h1','print-title',book.title||doc.title));
-   if(book.subtitle)cover.append(make('p','print-kicker',book.subtitle));
+   if(book.titleComposition&&book.titleBlocks.length){cover.classList.add('print-book-free-title');for(const [index,block]of book.titleBlocks.entries()){const values=block.runs||[{text:block.text}];if(!values.some(r=>!r.hidden&&r.text.trim()))continue;const p=make('p','print-book-free-block'),r=s.roles?.[block.role]||s.roles?.heading,font=r?.font;p.dataset.fontRole=block.role;p.dataset.titleBlock=String(index);if(font){p.style.fontFamily=JSON.stringify(font.name);p.style.fontWeight=String(r.weight);const cuts=font.files.filter(f=>f.style==='normal').flatMap(f=>Array.isArray(f.weight)?[Math.max(f.weight[0],Math.min(700,f.weight[1]))]:[f.weight]);if(block.emphasis==='bold')p.style.fontWeight=String(cuts.sort((a,b)=>Math.abs(a-700)-Math.abs(b-700))[0]||r.weight);p.style.fontStyle=block.emphasis==='italic'&&font.files.some(f=>f.style==='italic')?'italic':'normal';}p.style.fontSize=block.size+'pt';p.style.lineHeight=String(block.leading);p.style.margin=block.space*10+'mm 0 0';p.style.textAlign=block.align;p.style.textAlignLast=block.align==='justify'?'left':block.align;p.style.textIndent='0';p.style.whiteSpace='pre-line';p.style.hyphens='none';for(const run of values){const span=make('span',null,run.text);if(run.hidden)span.hidden=true;if(run.fontId){const selected=(s.titleFonts||[]).find(f=>f.id===run.fontId);if(selected)span.style.fontFamily=JSON.stringify(selected.name);span.dataset.directFormatting='true';}if(run.size)span.style.fontSize=run.size+'pt';if(typeof run.bold==='boolean')span.style.fontWeight=run.bold?'700':'400';if(typeof run.em==='boolean')span.style.fontStyle=run.em?'italic':'normal';p.append(span);}cover.append(p);}}
+   else{if(book.author)cover.append(make('p','print-byline print-book-author',book.author));cover.append(make('h1','print-title',book.title||doc.title));if(book.subtitle)cover.append(make('p','print-kicker',book.subtitle));}
    if(book.image){const image=make('img','print-book-title-image');image.src=book.image;image.alt=book.imageAlt||'Titelbild';image.decoding='sync';cover.append(image);}
-   if(book.imprint)cover.append(make('p','print-byline print-book-imprint',book.imprint));
+   if(book.imprint&&!book.titleComposition)cover.append(make('p','print-byline print-book-imprint',book.imprint));
    // An imported cover stays first: its original edge-to-edge @page:first is retained.
    const importedCover=source.querySelector(':scope > .print-import-cover');
    if(book.titleMode==='inline'){const firstText=source.querySelector(':scope > .print-import-intro,:scope > .print-section');if(firstText)firstText.before(cover);else source.append(cover);}
@@ -51,13 +52,18 @@
   for(const item of included){const li=make('li',item.chapter?'print-book-contents-chapter':'print-contents-sublevel'),a=make('a','print-contents-link',item.entry.title);a.href='#'+item.heading.id;li.append(a);list.append(li);}
   contents.replaceChildren(heading,list);
  }
+ // Leave normal flow implicit. Paged.js 0.4.3 turns explicit `page:auto` into
+ // a named page and its footnote continuation code treats `break-before:auto`
+ // as a forced break. Fresh source nodes have no old break rules to reset.
  function css(doc,s,geometry){if(!s.book||doc.fixedPages)return '';const b=normalize(s.book),height=geometry.height-geometry.top-geometry.bottom,small=Math.max(9,s.size-1),titleSize=b.titleSize,files=s.roles?.heading?.font?.files||[],cuts=files.filter(f=>f.style==='normal').flatMap(f=>Array.isArray(f.weight)?[Math.max(f.weight[0],Math.min(400,f.weight[1]))]:[f.weight]),quietWeight=cuts.sort((a,b)=>Math.abs(a-400)-Math.abs(b-400))[0]||400;
   return `
 @page book-title{@top-left{content:none;}@bottom-left{content:none;}@bottom-right{content:none;}}
 @page book-contents{@top-left{content:none;}}
+@page book-body{}
 @page:blank{@top-left{content:none;}@bottom-left{content:none;}@bottom-right{content:none;}}
+.print-book-document>:not(.print-cover):not(.print-contents):not(.print-import-cover),.print-book-inline-title{page:book-body;}
 .print-book-title-page{page:book-title;min-height:${Math.max(10,height-1)}mm;padding-top:${b.titleTop*10}mm;margin:0;break-before:page;break-after:page;break-inside:avoid;}
-.print-book-title-page .print-title,.print-book-inline-title .print-title{font-size:${titleSize}pt;line-height:1.12;overflow-wrap:anywhere;letter-spacing:-.015em;margin:7mm 0 5mm;}
+.print-book-title-page .print-title,.print-book-inline-title .print-title{font-size:${titleSize}pt;line-height:1.2;overflow-wrap:anywhere;letter-spacing:-.015em;margin:7mm 0 5mm;}
 .print-book-title-page p,.print-book-inline-title p{text-indent:0!important;hyphens:none!important;}
 .print-book-title-page .print-kicker,.print-book-inline-title .print-kicker{font-size:${Math.min(15,s.size+2)}pt;line-height:1.4;}
 .print-cover[data-book-title-style="classic"],.print-cover[data-book-title-style="quiet"],.print-book-inline-title{text-align:center;}
@@ -68,8 +74,9 @@
 .print-cover[data-book-title-style="quiet"] .print-title{font-weight:${quietWeight};letter-spacing:0;}
 .print-book-title-page .print-book-imprint{margin-top:12mm;white-space:pre-line;}
 .print-book-title-image{display:block;max-width:100%;width:auto;height:auto;max-height:${Math.max(15,height*.27)}mm;object-fit:contain;margin:7mm auto 0;}
-.print-book-inline-title{page:auto;break-after:auto;min-height:0;padding:0;margin:0 0 calc(var(--baseline) * 2);}
+.print-book-inline-title{break-after:auto;min-height:0;padding:0;margin:0 0 calc(var(--baseline) * 2);}
 .print-book-document>.print-contents{page:book-contents;break-before:page;break-after:page;font-size:${b.tocSize}pt;line-height:1.5;}
+.print-book-document>.print-contents+*{break-before:page;}
 .print-book-document>.print-contents .print-contents-title{font-size:1.5em;line-height:1.3;font-weight:inherit;margin:0 0 8mm;}
 .print-book-document>.print-contents li{margin:0 0 ${b.tocStyle==='compact'?'1.5':'4'}mm;}
 .print-book-document>.print-contents .print-book-contents-chapter{padding-left:0;}

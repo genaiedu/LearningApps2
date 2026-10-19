@@ -1,0 +1,5 @@
+.schriftsetzer-export{padding:1rem 0;margin:1rem 0;border-block:1px solid var(--line);}
+.schriftsetzer-export-actions{display:flex;flex-wrap:wrap;gap:.65rem;}
+.schriftsetzer-export p{max-width:65ch;}
+.schriftsetzer-export summary{cursor:pointer;font-weight:500;}
+.schriftsetzer-export button{font-variant-numeric:lining-nums tabular-nums;}

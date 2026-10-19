@@ -1,0 +1,8 @@
+.book-title-composer{margin-top:1.5rem;border-top:1px solid var(--line);padding-top:.75rem;}
+.book-title-composer>summary{font-weight:600;cursor:pointer;}
+.book-title-block{margin-block:1rem!important;padding:.75rem!important;min-width:0;}
+.book-title-block legend{font-size:.85rem;}
+.book-title-block-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem .75rem;}
+.book-title-block-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem;}
+.book-title-block-actions button{font-size:.8rem;}
+@media(max-width:480px){.book-title-block-fields{grid-template-columns:1fr;}}
