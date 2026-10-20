@@ -9,7 +9,7 @@ function fixture(blocked=false,start=true){
  return{w,$,dom};
 }
 test('default theme, shared question pool and fixed example, all teaching resources available',async()=>{
- const f=fixture();assert.equal(f.w.document.documentElement.dataset.palette,'graphite');assert.equal(f.w.KraefteApp.round().length,10);assert.equal(f.$('slide-select').options.length,57);assert.equal(f.w.KraefteApp.slides().filter(s=>s.role==='prompt').length,10);assert.ok(f.$('example-solution').textContent.includes('4,91 N/m'));assert.ok(f.w.document.querySelector('a[download][href="material/kraefte-arbeitsblatt.pdf"]'));await tick(150);f.dom.window.close();
+ const f=fixture();assert.equal(f.w.document.documentElement.dataset.palette,'graphite');assert.equal(f.w.KraefteApp.round().length,10);assert.equal(f.$('slide-select').options.length,57);assert.equal(f.w.KraefteApp.slides().filter(s=>s.role==='prompt').length,10);assert.ok(f.$('example-solution').textContent.includes('4,91 N/m'));assert.ok(f.w.document.querySelector('a[download][href^="material/kraefte-arbeitsblatt.pdf"]'));await tick(150);f.dom.window.close();
 });
 test('at most 30 g in integer steps; samples deduplicate, all spring modes remain independent',async()=>{
  const f=fixture();f.$('mass-range').value='30';f.$('mass-range').dispatchEvent(new f.w.Event('input'));assert.equal(f.$('mass-more').disabled,true);assert.equal(f.w.KraefteApp.snapshot().lab.mass,30);f.$('measure').click();f.$('measure').click();assert.equal(f.w.KraefteApp.snapshot().lab.records.length,1);f.w.document.querySelector('[data-mode=series]').click();f.$('measure').click();assert.equal(f.w.KraefteApp.snapshot().lab.records.length,2);assert.equal(f.$('force-value').textContent,'0,2943 N');await tick(150);f.dom.window.close();

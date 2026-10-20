@@ -115,7 +115,7 @@
       body+='<path d="M155 '+(end+38)+'v-57l-6 10m6-10 6 10" fill="none" stroke="var(--ink)" stroke-width="2.5"/><text x="118" y="'+(end+5)+'" class="apparatus-label">F<tspan baseline-shift="sub">F</tspan></text>';
     }else body+='<circle cx="'+x+'" cy="'+(end+19)+'" r="4" class="scene-line"/>';
     if(!hero){
-      body+='<path d="M325 '+zero+'h95M365 '+(zero-10)+'V'+(zero+150*scale)+'" class="scene-muted-line" stroke-dasharray="4 4"/><text x="375" y="'+(zero-20)+'" class="apparatus-label">s / mm</text>';
+      body+='<path d="M325 '+zero+'h95M365 '+(zero-10)+'V'+(zero+150*scale)+'" class="scene-muted-line" stroke-dasharray="4 4"/><text x="375" y="'+(zero-20)+'" class="apparatus-label">S / mm</text>';
       for(let mm=0;mm<=140;mm+=10){const y=zero+mm*scale;body+='<path d="M358 '+y+'h12" class="scene-line"/><text x="380" y="'+(y+4)+'" class="apparatus-label">'+mm+'</text>';}
       body+='<path d="M325 '+zero+'v'+(extension*1000*scale)+'" stroke="var(--red)" stroke-width="2"/><path d="M318 '+end+'h47" class="scene-muted-line"/>';
     }
@@ -126,7 +126,7 @@
     let s='<path d="M'+left+' '+top+'V'+(top+h)+'H'+(left+w)+'" class="plot-line"/>';
     for(let i=0;i<=6;i++){const x=left+i*w/6;s+='<path d="M'+x+' '+(top+h)+'v5" class="plot-line"/><text x="'+x+'" y="'+(top+h+24)+'" text-anchor="middle" class="plot-text">'+C.n(i*.02,2)+'</text>';}
     for(let i=0;i<=3;i++){const y=top+h-i*h/3;s+='<path d="M'+left+' '+y+'H'+(left+w)+'" class="scene-muted-line"/><text x="'+(left-12)+'" y="'+(y+4)+'" text-anchor="end" class="plot-text">'+C.n(i*.1,1)+'</text>';}
-    s+='<text x="12" y="16" class="plot-text">F / N</text><text x="'+(left+w)+'" y="355" text-anchor="end" class="plot-text">s / m</text>';
+    s+='<text x="12" y="16" class="plot-text">F / N</text><text x="'+(left+w)+'" y="355" text-anchor="end" class="plot-text">S / m</text>';
     Object.keys(modeNames).forEach(mode=>{
       const points=state.lab.records.filter(p=>p.mode===mode),D=C.fit(points);
       if(D){const last=Math.max(...points.map(p=>p.extension));s+='<path d="M'+left+' '+(top+h)+'L'+(left+last/maxS*w)+' '+(top+h-D*last/maxF*h)+'" class="plot-line"'+(mode==='series'?' stroke-dasharray="5 4"':mode==='parallel'?' stroke-dasharray="2 3"':'')+'/>';}
@@ -147,7 +147,7 @@
     $('force-value').textContent=C.n(s.force,5)+' N';$('extension-value').textContent=C.n(s.extension,6)+' m';
     $('spring-scene').innerHTML=springGraphic(s);$('spring-caption').textContent=modeNames[s.mode]+' · Verlängerung '+C.n(s.extension*1000,2)+' mm gegenüber der unbelasteten Referenz';
     document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===s.mode)));
-    clearTimeout(labMathTimer);labMathTimer=setTimeout(()=>fill($('live-calculation'),V.math('F_{\\mathrm G}='+C.tn(s.mass)+'\\,\\mathrm{kg}\\cdot9{,}81\\,\\mathrm{N/kg}')+V.math('s=\\frac{F_{\\mathrm G}}{D_{\\mathrm{ges}}}=\\frac{'+C.tn(s.force)+'\\,\\mathrm N}{'+C.tn(s.D)+'\\,\\mathrm{N/m}}')),120);
+    clearTimeout(labMathTimer);labMathTimer=setTimeout(()=>fill($('live-calculation'),V.math('F_{\\mathrm G}='+C.tn(s.mass)+'\\,\\mathrm{kg}\\cdot9{,}81\\,\\mathrm{N/kg}')+V.math('S=\\frac{F_{\\mathrm G}}{D_{\\mathrm{ges}}}=\\frac{'+C.tn(s.force)+'\\,\\mathrm N}{'+C.tn(s.D)+'\\,\\mathrm{N/m}}')),120);
     save();
   }
   function setMass(m){state.lab.mass=Math.max(0,Math.min(30,Math.round(Number(m)||0)));$('measure-feedback').textContent='';renderLab();}

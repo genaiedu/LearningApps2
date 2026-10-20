@@ -8,6 +8,7 @@ Einstieg für die Sekundarstufe I: `kraefte-labor.html`. Veröffentlichung über
 - Die Lehrkraft muss die Federn und die zulässige Belastung prüfen. Höchstens 30 g einschließlich Massehalter und Haken. Geeignete parallele Federn vorsichtig ineinanderschieben und trennen, bei Widerstand stoppen; alternativ gemeinsame Endpunkte nebeneinander.
 - Simulation: statisches lineares Modell, masselose Federn/Haken, Einzelfeder 5 N/m, Reihe 2,5 N/m, parallel 10 N/m; 0–30 g, ganzzahlige Schritte. Keine Behauptung, dass beliebige reale Federn 30 g vertragen.
 - Ortsfaktor 9,81 N/kg, alle Rechenschritte in SI, Antwortsatz mit passend skalierter Einheit. Haltekraft und Gewichtskraft an derselben Masse sind kein Wechselwirkungspaar des dritten Newtonschen Axioms.
+- Die Strecke beziehungsweise Federverlängerung wird in Formeln, Aufgaben, Diagrammen und Arbeitsblatt mit großem S bezeichnet, einschließlich S₁, S₂ und Gesamtverlängerung. Das Einheitenzeichen s für Sekunden bleibt klein (auch in m/s und m/s²).
 - 40 Aufgabenvorlagen, zehn pro Runde in fünf Stufen; Zahlen und Auswahl über einen lokal gespeicherten Zufallsstartwert. Zwei gültige Versuche, danach Musterlösung; 1 beziehungsweise 0,5 Punkte für richtige Antworten, kein erneuter Punktegewinn bei abgeschlossenen Aufgaben.
 - 57 Präsentationsfolien mit denselben zehn Aufgaben und Zahlen wie im Training. Das feste Beispiel (20 g, 40 mm, D = 4,905 N/m) bleibt unverändert.
 

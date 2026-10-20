@@ -42,8 +42,20 @@ test('two valid attempts, reduced second-attempt credit, no third attempt, no pe
   assert.equal(C.grade(t,'4.905','N/m').points,1);assert.equal(C.parseNumber('1 000,5'),1000.5);assert.equal(C.parseNumber('2,5e-3'),.0025);
 });
 test('TeX commands have one actual backslash and line-breaks remain two',()=>{
-  const tex=C.example().solution[0].tex;assert.ok(tex.startsWith('\\begin{aligned}'));assert.ok(tex.includes('\\\\s='));assert.ok(V.math('D=5').includes('\\[D=5\\]'));
+  const tex=C.example().solution[0].tex;assert.ok(tex.startsWith('\\begin{aligned}'));assert.ok(tex.includes('\\\\S='));assert.ok(V.math('D=5').includes('\\[D=5\\]'));
 });
 test('axioms are named, generic balance is not mislabeled spring force, carts start touching',()=>{
  const slides=V.createSlides(C.round(1));for(let i=1;i<=3;i++)assert.match(slides.find(s=>s.id==='axiom'+i).title,new RegExp(i+'\\. Newtonsches Axiom'));assert.match(V.visual('balance'),/Haltekraft/);assert.doesNotMatch(V.visual('balance'),/Federkraft/);assert.match(slides.find(s=>s.id==='gleichgewicht').html,/Seilkraft/);const rectangles=[...V.visual('reaction').matchAll(/<rect x="(\d+)"[^>]*width="(\d+)"/g)];assert.equal(Number(rectangles[0][1])+Number(rectangles[0][2]),Number(rectangles[1][1]));assert.equal(Object.keys(V.media).length,4);for(const id of Object.keys(V.media))assert.doesNotMatch(V.photo(id),/<img[^>]+src=/);
+});
+test('capital S denotes extension everywhere; seconds and acceleration units keep lowercase s',()=>{
+ assert.equal(C.example().given[1].symbol,'S');assert.equal(C.units.time[0][0],'s');assert.equal(C.units.speed[0][0],'m/s');assert.equal(C.units.accel[0][0],'m/s²');
+ const check=tex=>assert.doesNotMatch(tex.replace(/\\mathrm(?:\{[^}]*\}| s)/g,'UNIT'),/(^|[^A-Za-z\\])s(?=[^A-Za-z]|$)/);
+ V.formulas.forEach(f=>check(f.tex));C.example().solution.filter(x=>x.tex).forEach(x=>check(x.tex));
+ for(const html of[V.knowledge(),...V.createSlides(C.round(42)).map(x=>x.html)])for(const match of html.matchAll(/\\\[([\s\S]*?)\\\]|\\\(([\s\S]*?)\\\)/g))check(match[1]||match[2]);
+ for(let seed=1;seed<=1500;seed++)for(const t of C.round(seed)){
+  if(t.dimension==='length')assert.match(t.symbol,/^S(?:_|$)/);
+  for(const q of t.given||[])if(q.type==='length')assert.match(q.symbol,/^S(?:_|$)/);
+  t.solution.filter(x=>x.tex).forEach(x=>check(x.tex));
+ }
+ assert.match(V.visual('graph'),/>S \/ m</);assert.match(V.visual('graph'),/>ΔS</);
 });
