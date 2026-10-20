@@ -15,7 +15,25 @@ const{chromium}=require('playwright');const assert=require('node:assert/strict')
   for(let i=0;i<tasks.length;i++){
    await p.locator('[data-task="'+i+'"]').click();const t=tasks[i];
    if(t.type==='choice')await p.locator('#answer-form [value="'+t.correctIndex+'"]').check();
-   else{await p.locator('#answer-number').fill(String(t.expectedSI).replace('.',','));await p.locator('#answer-unit').selectOption(await p.evaluate(d=>KraefteCore.units[d][0][0],t.dimension));}
+   else{
+    const units=await p.evaluate(d=>KraefteCore.units[d],t.dimension);
+    for(const u of units){await p.locator('#answer-unit').selectOption(u[0]);const format=await p.evaluate(({t,unit})=>KraefteCore.answerFormat(t,unit),{t,unit:u[0]});assert.equal(await p.locator('#answer-number').getAttribute('placeholder'),format.example);assert.equal(await p.locator('#answer-format').innerText(),format.instruction);}
+    await p.locator('#answer-unit').selectOption(units[0][0]);
+    assert.match(await p.locator('#answer-note').innerText(),/±2 %/);
+    if(i===2){
+     for(const size of[{width:1280,height:900},{width:390,height:844}]){
+      await p.setViewportSize(size);
+      for(const palette of['graphite','atelier','slate','plum','bordeaux'])for(const theme of['light','dark']){
+       await p.locator('#view-open').click();await p.selectOption('#palette',palette);await p.locator('[name=theme][value='+theme+']').check();await p.locator('[data-close=view-dialog]').click();
+       const colors=await p.locator('#answer-number').evaluate(e=>({placeholder:getComputedStyle(e,'::placeholder').color,opacity:getComputedStyle(e,'::placeholder').opacity,text:getComputedStyle(e).color,muted:getComputedStyle(document.documentElement).getPropertyValue('--muted').trim()}));
+       assert.notEqual(colors.placeholder,colors.text);assert.equal(colors.opacity,'1');assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
+       if(palette==='graphite')await p.locator('#task-card').screenshot({path:'/private/tmp/kraefte-answer-'+size.width+'-'+theme+'.png',style:'.floating-header{visibility:hidden}'});
+      }
+     }
+     await p.setViewportSize({width:1280,height:800});await p.locator('#view-open').click();await p.selectOption('#palette','graphite');await p.locator('[name=theme][value=light]').check();await p.locator('[data-close=view-dialog]').click();
+    }
+    await p.locator('#answer-number').fill(String(t.expectedSI*1.019).replace('.',','));
+   }
    await p.locator('#answer-form button[type=submit]').click();await p.evaluate(()=>KraefteApp.whenReady());
    assert.match(await p.locator('#task-card').innerText(),/Vollständige Musterlösung/);
   }

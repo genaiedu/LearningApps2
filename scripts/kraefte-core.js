@@ -4,7 +4,7 @@
   else root.KraefteCore=factory();
 })(typeof globalThis!=='undefined'?globalThis:this,function(){
   'use strict';
-  const G=9.81, SINGLE_D=5, VERSION=1;
+  const G=9.81, SINGLE_D=5, VERSION=1, ANSWER_TOLERANCE=.02;
   const units={
     force:[['N',1,'\\mathrm N'],['mN',1e-3,'\\mathrm{mN}'],['kN',1e3,'\\mathrm{kN}'],['µN',1e-6,'\\mathrm{\\mu N}']],
     mass:[['kg',1,'\\mathrm{kg}'],['g',1e-3,'\\mathrm g'],['mg',1e-6,'\\mathrm{mg}'],['t',1e3,'\\mathrm t']],
@@ -19,13 +19,22 @@
   const rng=seed=>{let a=seed>>>0;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};};
   function shuffle(values,random){const a=values.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
   const unitInfo=(type,label)=>units[type]?.find(u=>u[0]===label);
+  const decimalPlaces=value=>value===0?0:Math.max(0,2-Math.floor(Math.log10(Math.abs(Number(value.toPrecision(3))))));
+  const fixed=(value,decimals)=>new Intl.NumberFormat('de-DE',{useGrouping:false,minimumFractionDigits:decimals,maximumFractionDigits:decimals}).format(value);
+  function answerFormat(task,unit=units[task.dimension]?.[0][0]){
+    if(task.type!=='number')return null;
+    const u=unitInfo(task.dimension,unit);if(!u)throw new Error('Unbekannte Eingabeeinheit');
+    const value=task.expectedSI/u[1],decimals=decimalPlaces(value);
+    const example=decimals===0?'123':decimals===1?'12,3':decimals===2?'1,23':'0,'+'0'.repeat(decimals-3)+'123';
+    return{decimals,example,text:fixed(value,decimals),instruction:'Ergebnis in '+unit+': '+(decimals===0?'ohne Nachkommastellen (ganze Zahl) angeben.':'auf '+decimals+' Nachkommastelle'+(decimals===1?'':'n')+' runden.')};
+  }
   function friendly(value,type){
     const choices=units[type];if(!choices||!Number.isFinite(value))throw new Error('Unbekannte Größe');
     if(value===0)return{value:0,unit:choices[0][0],text:'0 '+choices[0][0]};
     const suitable=choices.find(u=>Math.abs(value/u[1])>=1&&Math.abs(value/u[1])<1000)||choices[0];
     let shown=Number((value/suitable[1]).toPrecision(3)),unit=suitable;
     if(Math.abs(shown)>=1000){const larger=choices.find(u=>Math.abs(value/u[1])>=1&&Math.abs(value/u[1])<1000&&u[1]>suitable[1]);if(larger){unit=larger;shown=Number((value/unit[1]).toPrecision(3));}}
-    return{value:shown,unit:unit[0],text:n(shown,8)+' '+unit[0]};
+    return{value:shown,unit:unit[0],text:fixed(shown,decimalPlaces(shown))+' '+unit[0]};
   }
   function q(symbol,label,value,unit,type){
     const u=unitInfo(type,unit);if(!u)throw new Error('Unbekannte Einheit '+unit);
@@ -199,7 +208,9 @@
     if(task.type==='choice'){const value=Number(raw);if(raw===''||!Number.isInteger(value)||value<0||value>=task.options.length)return{valid:false,correct:false};return{valid:true,correct:value===task.correctIndex};}
     const value=parseNumber(raw),u=unitInfo(task.dimension,unit);
     if(!Number.isFinite(value)||!u)return{valid:false,correct:false};
-    return{valid:true,correct:Math.abs(value*u[1]-task.expectedSI)<=Math.max(Math.abs(task.expectedSI)*.006,1e-10)};
+    const enteredSI=value*u[1];if(!Number.isFinite(enteredSI))return{valid:false,correct:false};
+    const expected=Math.abs(task.expectedSI),roundoff=Number.EPSILON*Math.max(Math.abs(enteredSI),expected)*8;
+    return{valid:true,correct:Math.abs(enteredSI-task.expectedSI)<=expected*ANSWER_TOLERANCE+roundoff};
   }
   function grade(task,raw,unit,previous={attempts:0,status:'open',points:0}){
     if(previous.status!=='open')return previous;
@@ -212,5 +223,5 @@
     tasks.forEach(t=>{if(t.type==='number'&&(!Number.isFinite(t.expectedSI)||t.expectedSI<=0))throw new Error('Ungültiges Ergebnis');});
     return true;
   }
-  return Object.freeze({G,SINGLE_D,VERSION,units,pool,round,example,n,tn,friendly,parseNumber,check,grade,validate,effectiveD,springState,fit,rng,shuffle});
+  return Object.freeze({G,SINGLE_D,VERSION,ANSWER_TOLERANCE,units,pool,round,example,n,tn,friendly,answerFormat,parseNumber,check,grade,validate,effectiveD,springState,fit,rng,shuffle});
 });

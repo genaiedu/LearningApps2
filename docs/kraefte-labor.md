@@ -11,6 +11,7 @@ Einstieg für die Sekundarstufe I: `kraefte-labor.html`. Veröffentlichung über
 - Ortsfaktor 9,81 N/kg, alle Rechenschritte in SI, Antwortsatz mit passend skalierter Einheit. Haltekraft und Gewichtskraft an derselben Masse sind kein Wechselwirkungspaar des dritten Newtonschen Axioms.
 - Die Strecke beziehungsweise Federverlängerung wird in Formeln, Aufgaben, Diagrammen und Arbeitsblatt mit großem S bezeichnet, einschließlich S₁, S₂ und Gesamtverlängerung. Das Einheitenzeichen s für Sekunden bleibt klein (auch in m/s und m/s²).
 - 40 Aufgabenvorlagen, zehn pro Runde in fünf Stufen; Zahlen und Auswahl über einen lokal gespeicherten Zufallsstartwert. Zwei gültige Versuche, danach Musterlösung; 1 beziehungsweise 0,5 Punkte für richtige Antworten, kein erneuter Punktegewinn bei abgeschlossenen Aufgaben.
+- Jede Zahlenantwort nennt ihre Nachkommastellen (auf drei sinnvolle Ziffern ausgerichtet) und zeigt ein neutrales graues Formatbeispiel im Feld. Beim Einheitenwechsel werden Hinweis und Beispiel angepasst, nicht die Eingabe. Die Prüfung rechnet die Eingabe in SI um und akzeptiert einschließlich der Grenzen ±2 % vom ungerundeten Ergebnis; zusätzliche Nachkommastellen sind erlaubt. Auch Präsentationsaufgaben und festes Beispiel nennen die Rundung in der SI-Einheit. Im Antwortsatz bleibt die gut lesbare Einheit erhalten.
 - 57 Präsentationsfolien mit denselben zehn Aufgaben und Zahlen wie im Training. Das feste Beispiel (20 g, 40 mm, D = 4,905 N/m) bleibt unverändert.
 
 ## Daten und Medien

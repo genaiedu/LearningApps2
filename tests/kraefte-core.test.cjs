@@ -41,6 +41,30 @@ test('two valid attempts, reduced second-attempt credit, no third attempt, no pe
   let fail=C.grade(t,'0','N/m');fail=C.grade(t,'0','N/m',fail);assert.equal(fail.status,'solved');assert.equal(fail.attempts,2);assert.equal(C.grade(t,'4.905','N/m',fail),fail);
   assert.equal(C.grade(t,'4.905','N/m').points,1);assert.equal(C.parseNumber('1 000,5'),1000.5);assert.equal(C.parseNumber('2,5e-3'),.0025);
 });
+test('numeric answers accept exactly ±2 percent in every unit, but not larger deviations',()=>{
+  assert.equal(C.ANSWER_TOLERANCE,.02);
+  for(let seed=1;seed<=50;seed++)for(const t of C.round(seed).filter(t=>t.type==='number'))for(const u of C.units[t.dimension]){
+    const expected=t.expectedSI/u[1];
+    for(const factor of[.98,1,1.02])assert.equal(C.check(t,String(expected*factor),u[0]).correct,true);
+    for(const factor of[.979999,1.020001])assert.equal(C.check(t,String(expected*factor),u[0]).correct,false);
+    assert.equal(C.check(t,C.answerFormat(t,u[0]).text,u[0]).correct,true,'Das geforderte gerundete Ergebnis wird akzeptiert');
+  }
+  const tiny={type:'number',dimension:'force',expectedSI:1e-12};assert.equal(C.check(tiny,'0','N').correct,false);
+  assert.equal(C.check(C.example(),'4,91','N/m').correct,true);assert.equal(C.check(C.example(),'abc','N/m').valid,false);
+  assert.equal(C.check(C.example(),'1e308','N/cm').valid,false);
+});
+test('precision instructions and neutral examples follow the selected unit and appear in presentation prompts',()=>{
+  for(const [value,decimals,example] of[[123,0,'123'],[12.3,1,'12,3'],[1.23,2,'1,23'],[.123,3,'0,123'],[.0123,4,'0,0123'],[9.9999,1,'12,3']]){
+    const f=C.answerFormat({type:'number',dimension:'force',expectedSI:value},'N');assert.equal(f.decimals,decimals);assert.equal(f.example,example);assert.match(f.instruction,/Nachkommastelle/);
+  }
+  assert.equal(C.answerFormat(C.example()).text,'4,91');assert.equal(C.answerFormat(C.example(),'kN/m').decimals,5);assert.equal(C.answerFormat({type:'choice'}),null);
+  assert.equal(C.friendly(12,'spring').text,'12,0 N/m');
+  for(const seed of[1,33,999]){
+    const tasks=C.round(seed),slides=V.createSlides(tasks);
+    for(const task of tasks){const prompt=slides.find(s=>s.taskId===task.id&&s.role==='prompt');if(task.type==='number')assert.ok(prompt.html.includes(V.esc(C.answerFormat(task).instruction)));else assert.doesNotMatch(prompt.html,/Nachkommastelle/);}
+    assert.ok(slides.find(s=>s.id==='beispiel-frage').html.includes(V.esc(C.answerFormat(C.example()).instruction)));
+  }
+});
 test('TeX commands have one actual backslash and line-breaks remain two',()=>{
   const tex=C.example().solution[0].tex;assert.ok(tex.startsWith('\\begin{aligned}'));assert.ok(tex.includes('\\\\S='));assert.ok(V.math('D=5').includes('\\[D=5\\]'));
 });

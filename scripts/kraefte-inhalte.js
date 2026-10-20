@@ -21,6 +21,7 @@
   function solution(task,steps=task.solution){
     return'<div class="solution-steps">'+steps.map(s=>'<div><h4>'+esc(s.label)+'</h4>'+(s.tex?math(s.tex):'<p>'+esc(s.text)+'</p>')+'</div>').join('')+'</div>';
   }
+  const answerInstruction=task=>task.type==='number'?'<p class="small answer-instruction">'+esc(C.answerFormat(task).instruction)+'</p>':'';
   function visual(kind){
     const svg=(label,body)=>'<svg class="slide-visual law-svg" viewBox="0 0 540 290" role="img" aria-label="'+esc(label)+'">'+body+'</svg>';
     const cart=(x,y,label,cls)=>'<g class="'+(cls||'')+'"><rect x="'+x+'" y="'+y+'" width="90" height="42" rx="4" class="scene-surface"/><circle cx="'+(x+20)+'" cy="'+(y+49)+'" r="8" class="scene-ink"/><circle cx="'+(x+70)+'" cy="'+(y+49)+'" r="8" class="scene-ink"/><text x="'+(x+45)+'" y="'+(y+25)+'" text-anchor="middle" class="apparatus-label">'+label+'</text></g>';
@@ -82,13 +83,13 @@
       slide('modell','Jetzt mit dem Modell vergleichen.','<p>Die App verwendet ideale Einzelfedern mit D = 5 N/m. Zwei davon ergeben in Reihe 2,5 N/m und parallel 10 N/m. Die reale Versuchsfeder kann ganz andere Werte besitzen.</p><p>Das Modell zeigt das ruhige Gleichgewicht. Federgewicht, Reibung, Vorspannung und Schwingungen werden vernachlässigt. Es ist ein Vergleichswerkzeug, kein Ersatz für eure Messung.</p>','Versuch')
     ];
     const example=C.example();
-    result.push(slide('beispiel-frage','Ein Beispiel, gemeinsam gerechnet.','<p>'+esc(example.prompt)+'</p><p>Wir gehen immer gleich vor: Gegeben, gesucht, Formel, umstellen, in SI einsetzen, lösen und einen Antwortsatz schreiben.</p>','Festes Beispiel'));
+    result.push(slide('beispiel-frage','Ein Beispiel, gemeinsam gerechnet.','<p>'+esc(example.prompt)+'</p>'+answerInstruction(example)+'<p>Wir gehen immer gleich vor: Gegeben, gesucht, Formel, umstellen, in SI einsetzen, lösen und einen Antwortsatz schreiben.</p>','Festes Beispiel'));
     result.push(slide('beispiel-ansatz','Beispiel · den Ansatz finden.',solution(example,example.solution.slice(0,4)),'Festes Beispiel'));
     result.push(slide('beispiel-rechnung','Beispiel · rechnen und antworten.',solution(example,example.solution.slice(4)),'Festes Beispiel'));
     result.push(slide('training-start','Jetzt seid ihr dran.','<p>Es folgen die zehn Aufgaben der aktuellen App-Runde. Überlegt zunächst selbst und schreibt euren Lösungsweg auf. Die folgenden Folien zeigen jeweils den vollständigen Ansatz und die Rechnung.</p><p>Im individuellen Training habt ihr zwei Versuche: 1 Punkt im ersten, 0,5 Punkte im zweiten Versuch. Hinweise kosten keine Punkte. Nach zwei Fehlversuchen erscheint die Musterlösung automatisch.</p>','Gemeinsame Aufgaben'));
     tasks.forEach((task,index)=>{
       const tag='Aufgabe '+(index+1)+' · Stufe '+task.level+' / 5';
-      const options=task.type==='choice'?'<ol>'+task.options.map(o=>'<li>'+esc(o)+'</li>').join('')+'</ol>':'<p class="small">g ≈ 9,81 N/kg. Rechne in SI und formuliere einen Antwortsatz mit einer gut lesbaren Einheit.</p>';
+      const options=task.type==='choice'?'<ol>'+task.options.map(o=>'<li>'+esc(o)+'</li>').join('')+'</ol>':answerInstruction(task)+'<p class="small">g ≈ 9,81 N/kg. Rechne in SI und formuliere einen Antwortsatz mit einer gut lesbaren Einheit.</p>';
       result.push({...slide('aufgabe-'+task.id,task.title,'<p class="task-prompt">'+esc(task.prompt)+'</p>'+options,tag),taskId:task.id,role:'prompt'});
       result.push({...slide('ansatz-'+task.id,'Lösung · der Ansatz.',solution(task,task.solution.slice(0,4)),tag),taskId:task.id,role:'solution-first'});
       result.push({...slide('loesung-'+task.id,'Lösung · das Ergebnis.',solution(task,task.solution.slice(4)),tag),taskId:task.id,role:'solution-last'});
