@@ -16,6 +16,8 @@ Einstieg für die Sekundarstufe I: `kraefte-labor.html`. Veröffentlichung über
 
 ## Daten und Medien
 
+Die vollständige zentrale Physik-Formelsammlung ist in Navigation und lokalem Formeldialog unter `../LearningApps/physik-formelsammlung.html#phys-kraefte` verlinkt und öffnet in einem neuen Tab. Dort sind die für diese App benötigten Kraft- und Federbeziehungen ergänzt. S bleibt die positive Verlängerung, F_F der Kraftbetrag; eine vorzeichenbehaftete Rückstellkomponente wird ausdrücklich als F_F,x bezeichnet.
+
 Nur eigener Fortschritt und Darstellung werden lokal gespeichert. Keine Konten, keine Laufzeit-KI. Schriften, MathJax, Lucide und ihre Lizenzen kommen aus dem gemeinsamen lokalen Bestand `../LearningApps/fonts/`.
 
 Vor dem Lerninhalt erscheint ausschließlich der Disclaimer mit den gleichwertigen Startmöglichkeiten „Ohne Bilder starten“ und „Mit Bildern starten“. Der App-Bereich ist bereits im HTML verborgen und nicht bedienbar. Vier Wikimedia-Bilder werden erst nach ausdrücklicher Freigabe für diesen Besuch eingebunden. Keine externen Bildabrufe, Vorschaubilder oder Vorverbindungen davor. Abruf mit `crossorigin="anonymous"` und `referrerpolicy="no-referrer"`; Erklärungen und Simulation bleiben ohne Fotos benutzbar. Die Freigabe lässt sich später unter „Darstellung“ ändern. Ausschalten entfernt Bilder und unterbindet weitere Abrufe; bereits übertragene Zugriffsdaten sind nicht rückholbar. Quellen, Urheber und Lizenzlinks stehen an jedem Bild. Die Freigabe wird nicht dauerhaft gespeichert; beim Neuladen erscheint die Startauswahl erneut, gespeicherte Aufgaben und Messwerte bleiben erhalten. Direkte Abschnittslinks werden erst nach der Startauswahl angesprungen.
