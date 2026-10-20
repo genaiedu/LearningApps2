@@ -15,7 +15,7 @@
   let tasks=C.round(state.seed),slides=V.createSlides(tasks);
   for(const t of tasks){const r=state.results[t.id];if(!r||!['open','correct','solved'].includes(r.status)||!Number.isInteger(r.attempts)||r.attempts<0||r.attempts>2||![0,.5,1].includes(r.points))delete state.results[t.id];}
   const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));}catch{}},icons=()=>window.lucide?.createIcons();
-  function typeset(e){if(!window.MathJax?.startup?.promise)return;mathQueue=mathQueue.catch(()=>{}).then(()=>MathJax.startup.promise).then(()=>{if(e.isConnected)return MathJax.typesetPromise([e]);}).catch(()=>e.dataset.mathError='true');}
+  function typeset(e){if(!window.MathJax?.startup?.promise)return;mathQueue=mathQueue.catch(()=>{}).then(()=>MathJax.startup.promise).then(()=>document.fonts?.ready).then(()=>{if(e.isConnected)return MathJax.typesetPromise([e]);}).catch(()=>e.dataset.mathError='true');}
   function fill(e,html){window.MathJax?.typesetClear?.([e]);e.innerHTML=html;typeset(e);}
   function animate(e){e.classList.remove('entering');if(view.motion&&!matchMedia('(prefers-reduced-motion: reduce)').matches){void e.offsetWidth;e.classList.add('entering');}}
   const closeDialog=id=>{if($(id).close)$(id).close();else $(id).removeAttribute('open');};
