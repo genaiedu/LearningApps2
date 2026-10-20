@@ -41,3 +41,9 @@ test('numeric UI changes placeholders with units, accepts 1.9 percent, and revea
 test('reset, blocked storage and fullscreen fallback remain usable; central formulas are linked',()=>{
  const f=fixture(true),seed=f.w.LensApp.snapshot().seed,e=f.w.LensApp.example();f.$('palette').value='plum';f.$('palette').dispatchEvent(new f.w.Event('change'));f.$('reset-confirm').click();assert.notEqual(f.w.LensApp.snapshot().seed,seed);assert.equal(f.$('palette').value,'plum');assert.deepEqual(f.w.LensApp.example(),e);assert.ok(f.w.document.querySelector('a[href="../LearningApps/physik-formelsammlung.html#phys-optik"][target="_blank"]'));assert.ok(f.w.document.querySelector('a[download][href^="material/sammellinsen-arbeitsblatt.pdf"]'));f.dom.window.close();
 });
+test('every formula control directly links the full collection; no local collection remains',()=>{
+ const f=fixture();f.w.document.querySelector('[data-task="2"]').click();f.$('answer-number').value='2,345';const before=JSON.stringify(f.w.LensApp.snapshot());
+ const links=f.w.document.querySelectorAll('a[href*="physik-formelsammlung.html"]');assert.equal(links.length,3);
+ for(const a of links){assert.equal(a.getAttribute('href'),'../LearningApps/physik-formelsammlung.html#phys-optik');assert.equal(a.target,'_blank');assert.ok(a.relList.contains('noopener'));assert.ok(a.relList.contains('noreferrer'));}
+ assert.equal(f.$('formula-open').tagName,'A');assert.equal(f.$('task-formulas').tagName,'A');assert.equal(f.$('formula-dialog'),null);assert.equal(f.$('formula-content'),null);assert.equal(f.w.LensContent.formulaHTML,undefined);assert.equal(f.w.LensContent.formulas,undefined);assert.equal(JSON.stringify(f.w.LensApp.snapshot()),before);assert.equal(f.$('answer-number').value,'2,345');f.dom.window.close();
+});

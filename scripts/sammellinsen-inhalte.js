@@ -11,16 +11,6 @@
   const history='<p>1608 ist in den Niederlanden ein Fernrohr in einem Patentantrag von Hans Lipperhey dokumentiert. Wer es zuerst erfand, war schon damals umstritten. Galileo Galilei verbesserte solche Instrumente und richtete sie 1609 auf den Himmel.</p><p>Mit Linsen ließen sich Dinge sichtbar machen, die das bloße Auge kaum erkennen konnte. Unser Versuch benutzt nur eine abbildende Sammellinse. An ihr untersuchen wir die Grundlage vieler optischer Geräte: Wie entsteht an einer bestimmten Stelle ein scharfes Bild?</p>';
   const definitions=[['f','Brennweite','Abstand von der dünnen Linse zu ihrem Brennpunkt; hier 10 cm.'],['g','Gegenstandsweite','Abstand von der Ebene der Perl-Eins zur Linse.'],['b','Bildweite','Abstand von der Linse zum scharfen reellen Bild.'],['G','Gegenstandsgröße','Höhe des abzubildenden Gegenstands.'],['B','Bildgröße','Höhe seines scharfen Bildes, hier als positive Länge.'],['A','Abbildungsmaßstab','Positiver Größenfaktor B/G = b/g bei reellen Bildern.']];
   const definitionHTML=()=>'<dl class="definitions">'+definitions.map(d=>'<div><dt>'+esc(d[0])+' · '+esc(d[1])+'</dt><dd>'+esc(d[2])+'</dd></div>').join('')+'</dl>';
-  const formulas=[
-    ['Die Linsengleichung','Arbeitsmodell: dünne Sammellinse in Luft, achsennahe Strahlen. In unseren Rechenaufgaben entstehen reelle Bilder; g, b und f sind positiv und werden in Metern eingesetzt.','\\frac1f=\\frac1g+\\frac1b'],
-    ['Die gesuchte Entfernung','Erst die allgemeine Gleichung umstellen, danach Werte in SI einsetzen. Ein reelles Bild in endlicher Entfernung erfordert g > f.','b=\\frac{fg}{g-f},\\quad g=\\frac{fb}{b-f},\\quad f=\\frac{gb}{g+b}'],
-    ['Der Abbildungsmaßstab','G und B sind Höhen, g und b sind Entfernungen. A ist ein positiver Größenfaktor ohne Einheit. Die umgekehrte Lage des reellen Bildes beschreiben wir zusätzlich in Worten.','A=\\frac BG=\\frac bg,\\quad B=G\\,\\frac bg'],
-    ['Platz auf der Bank','L ist der Abstand von der Gegenstandsebene zum Schirm, nicht automatisch die gesamte Länge der Bank. Lampengehäuse, Reiter und freie Enden brauchen ebenfalls Platz.','L=g+b'],
-    ['Ein gewünschter Maßstab','Aus b = Ag und der Linsengleichung folgen diese Beziehungen für reelle Bilder.','g=f\\left(1+\\frac1A\\right),\\quad b=f(1+A)'],
-    ['Die kürzeste Anordnung','Für positive g und b ist der kürzeste Gegenstand-Schirm-Abstand bei g = b = 2f erreicht. Für f = 10 cm sind mindestens 40 cm zwischen Gegenstand und Schirm nötig.','L_{\\min}=4f'],
-    ['Einheiten','Entfernungen und Höhen in Rechnungen konsequent in Meter umrechnen. Im Antwortsatz ist eine gut lesbare Einheit wie Zentimeter sinnvoll.','1\\,\\mathrm{cm}=10^{-2}\\,\\mathrm m,\\quad1\\,\\mathrm{mm}=10^{-3}\\,\\mathrm m']
-  ];
-  const formulaHTML=()=>definitionHTML()+formulas.map(f=>'<section class="formula-card"><h3>'+esc(f[0])+'</h3><p>'+esc(f[1])+'</p>'+math(f[2])+'</section>').join('');
   const solution=(t,steps=t.solution)=>'<div class="solution-steps">'+steps.map(s=>'<div><h4>'+esc(s.label)+'</h4>'+(s.tex?math(s.tex):'<p>'+esc(s.text)+'</p>')+'</div>').join('')+'</div>';
   const rounding=t=>t.type==='number'?'<p class="small answer-instruction">'+esc(C.answerFormat(t).instruction)+'</p>':'';
   const points=[[-4,-5],[0,-8.35],[0,-4],[0,0],[0,4],[0,8.35],[-4,8.35],[4,8.35]];
@@ -72,5 +62,5 @@
     tasks.forEach((t,i)=>{const tag='Aufgabe '+(i+1)+' · Stufe '+t.level,options=t.type==='choice'?'<ol>'+t.options.map(o=>'<li>'+esc(o)+'</li>').join('')+'</ol>':rounding(t);list.push({...slide('aufgabe-'+t.id,t.title,p(esc(t.prompt))+options,tag),taskId:t.id,role:'prompt'});const steps=t.type==='number'?[t.solution.slice(0,4),t.solution.slice(4)]:[t.solution];steps.forEach((part,j)=>list.push({...slide('loesung-'+t.id+'-'+j,'Lösung: '+(j?'Rechnung und Antwort':'Ansatz und Begründung'),solution(t,part),tag),taskId:t.id,role:'solution'}));});
     list.push(slide('abschluss','Was eure Bilder zeigen',p('Eine feste Brennweite bestimmt nicht allein die Bildlage. Erst g und f legen fest, wo das scharfe Bild entsteht. Sein Größenfaktor folgt aus b/g.')+p('Vergleicht jetzt eure echten Messungen mit der Simulation. Welche Abweichungen könnt ihr erklären?'),'Rückblick'));return list;
   }
-  return Object.freeze({esc,math,history,sourceLinks,definitions,definitionHTML,formulas,formulaHTML,knowledge,solution,rounding,one,benchGraphic,preview,rayVisual,createSlides});
+  return Object.freeze({esc,math,history,sourceLinks,definitions,definitionHTML,knowledge,solution,rounding,one,benchGraphic,preview,rayVisual,createSlides});
 });

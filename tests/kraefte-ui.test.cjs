@@ -14,6 +14,12 @@ test('default theme, shared question pool and fixed example, all teaching resour
 test('at most 30 g in integer steps; samples deduplicate, all spring modes remain independent',async()=>{
  const f=fixture();f.$('mass-range').value='30';f.$('mass-range').dispatchEvent(new f.w.Event('input'));assert.equal(f.$('mass-more').disabled,true);assert.equal(f.w.KraefteApp.snapshot().lab.mass,30);f.$('measure').click();f.$('measure').click();assert.equal(f.w.KraefteApp.snapshot().lab.records.length,1);f.w.document.querySelector('[data-mode=series]').click();f.$('measure').click();assert.equal(f.w.KraefteApp.snapshot().lab.records.length,2);assert.equal(f.$('force-value').textContent,'0,2943 N');await tick(150);f.dom.window.close();
 });
+test('every formula control directly links the full collection; no local collection remains',async()=>{
+ const f=fixture();f.w.document.querySelector('[data-task="2"]').click();f.$('answer-number').value='2,345';const before=JSON.stringify(f.w.KraefteApp.snapshot());
+ const links=f.w.document.querySelectorAll('a[href*="physik-formelsammlung.html"]');assert.equal(links.length,3);
+ for(const a of links){assert.equal(a.getAttribute('href'),'../LearningApps/physik-formelsammlung.html#phys-kraefte');assert.equal(a.target,'_blank');assert.ok(a.relList.contains('noopener'));assert.ok(a.relList.contains('noreferrer'));}
+ assert.equal(f.$('formula-open').tagName,'A');assert.equal(f.$('task-formulas').tagName,'A');assert.equal(f.$('formula-dialog'),null);assert.equal(f.$('formula-content'),null);assert.equal(f.w.KraefteContent.formulaHTML,undefined);assert.equal(f.w.KraefteContent.formulas,undefined);assert.equal(JSON.stringify(f.w.KraefteApp.snapshot()),before);assert.equal(f.$('answer-number').value,'2,345');await tick(150);f.dom.window.close();
+});
 test('after two mistakes the worked solution appears automatically; answered tasks cannot be farmed',async()=>{
  const f=fixture(),task=f.w.KraefteApp.round()[0];const wrong=(task.correctIndex+1)%task.options.length;
  f.$('answer-form').querySelector('[value="'+wrong+'"]').checked=true;f.$('answer-form').dispatchEvent(new f.w.Event('submit',{cancelable:true}));assert.equal(f.w.KraefteApp.snapshot().results[task.id].attempts,1);assert.ok(!f.$('task-card').textContent.includes('Vollständige Musterlösung'));

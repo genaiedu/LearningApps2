@@ -7,15 +7,15 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Kräfte-Labor · Was eine Kraft verändert</title>
   <link rel="stylesheet" href="styles/typografie-palettes.css">
-  <link rel="stylesheet" href="styles/kraefte-labor.css?v=20261020-6">
+  <link rel="stylesheet" href="styles/kraefte-labor.css?v=20261020-7">
   <script>
     window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']],processEscapes:true},svg:{fontCache:'local'},options:{enableMenu:false}};
   </script>
   <script defer src="../LearningApps/fonts/mathjax-svg-3.2.2/tex-svg.js"></script>
   <script defer src="../LearningApps/fonts/lucide.min.js"></script>
   <script defer src="scripts/kraefte-core.js?v=20261020-6"></script>
-  <script defer src="scripts/kraefte-inhalte.js?v=20261020-6"></script>
-  <script defer src="scripts/kraefte-labor.js?v=20261020-6"></script>
+  <script defer src="scripts/kraefte-inhalte.js?v=20261020-7"></script>
+  <script defer src="scripts/kraefte-labor.js?v=20261020-7"></script>
 </head>
 <body>
   <section id="entry-screen" class="entry-screen" aria-labelledby="entry-title">
@@ -32,7 +32,7 @@
   <header class="floating-header">
     <a class="wordmark" href="#anfang"><strong>KRÄFTE</strong> LABOR</a>
     <nav aria-label="Werkzeuge">
-      <button id="formula-open" type="button"><i data-lucide="book-open" aria-hidden="true"></i><span>Formeln</span></button>
+      <a id="formula-open" class="button" href="../LearningApps/physik-formelsammlung.html#phys-kraefte" target="_blank" rel="noopener noreferrer" aria-label="Vollständige Physik-Formelsammlung öffnen (neuer Tab)"><i data-lucide="book-open" aria-hidden="true"></i><span>Formelsammlung</span></a>
       <button id="view-open" type="button"><i data-lucide="sliders-horizontal" aria-hidden="true"></i><span>Darstellung</span></button>
       <button id="reset-open" type="button"><i data-lucide="rotate-ccw" aria-hidden="true"></i><span>Neu beginnen</span></button>
     </nav>
@@ -119,7 +119,6 @@
   </main>
 
   <dialog id="view-dialog" aria-labelledby="view-title"><div class="dialog-heading"><h2 id="view-title">Deine Darstellung</h2><button type="button" data-close="view-dialog" aria-label="Darstellung schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><label for="palette">Farbschema</label><select id="palette"><option value="graphite">Graphit</option><option value="atelier">Papier & Wald</option><option value="slate">Schieferblau</option><option value="plum">Pflaume</option><option value="bordeaux">Bordeaux</option></select><fieldset><legend>Darstellung</legend><label><input type="radio" name="theme" value="light" checked> Hell</label><label><input type="radio" name="theme" value="dark"> Dunkel</label></fieldset><label><input id="motion" type="checkbox" checked> Kurze Animationen</label><label for="text-scale">Schriftgröße <output id="text-scale-value">100 %</output></label><input id="text-scale" type="range" min="90" max="120" step="5" value="100"><section class="media-settings" aria-labelledby="media-settings-title"><h3 id="media-settings-title">Wikimedia-Bilder</h3><p>Beim Laden erhält Wikimedia deine IP-Adresse und technische Browserdaten, nicht deine Antworten oder Messwerte. Die Freigabe gilt nur für diesen Besuch.</p><p id="media-status" role="status">Externe Bilder sind ausgeschaltet.</p><button type="button" id="media-toggle" aria-pressed="false">Bilder für diesen Besuch laden</button></section></dialog>
-  <dialog id="formula-dialog" class="wide-dialog" aria-labelledby="formula-title"><div class="dialog-heading"><h2 id="formula-title">Formelsammlung</h2><button type="button" data-close="formula-dialog" aria-label="Formelsammlung schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><p class="small"><a href="../LearningApps/physik-formelsammlung.html#phys-kraefte" target="_blank" rel="noopener noreferrer">Vollständige Physik-Formelsammlung öffnen ↗</a></p><div id="formula-content"></div></dialog>
   <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">Eine neue Runde?</h2><p>Die zehn Aufgaben und ihre Zahlen werden neu ausgewählt. Antworten, Punkte, Abzeichen und Simulationsmesswerte dieser App werden zurückgesetzt. Deine Darstellung bleibt erhalten. Das feste Beispiel und das Arbeitsblatt ändern sich nicht.</p><div class="dialog-actions"><button type="button" data-close="reset-dialog">Abbrechen</button><button type="button" class="primary" id="reset-confirm">Neue Runde beginnen</button></div></dialog>
   <dialog id="sources-dialog" class="wide-dialog" aria-labelledby="sources-title"><div class="dialog-heading"><h2 id="sources-title">Quellen & Modellgrenzen</h2><button type="button" data-close="sources-dialog" aria-label="Quellen schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><p>Die Inhalte sind für die Sekundarstufe I vereinfacht. Die drei Newtonschen Gesetze werden in einem näherungsweise ruhenden Bezugssystem und bei konstanter Masse verwendet. Für den Ortsfaktor rechnen wir mit \(g\approx9{,}81\,\mathrm{N/kg}\) nahe der Erdoberfläche.</p><p>Das Federlabor beschreibt ein ideales, statisches und lineares Modell. Es sagt nicht voraus, welche reale Feder 30 g verträgt. Die Kraftpfeile sind schematisch.</p><ul><li><a href="https://www.physik.uni-leipzig.de/jvwikis/mechanics/book/chap3/3.3_newton_S_axiomS_and_equationS_of_motion_eom" target="_blank" rel="noopener noreferrer">Universität Leipzig · Newtonsche Axiome</a></li><li><a href="https://labs.physik.kit.edu/prakt-nebenfach-manuals/Experiments/Lineare_Schwingungen/" target="_blank" rel="noopener noreferrer">KIT · Federkonstanten, Reihen- und Parallelschaltung</a></li></ul><p class="small">Externe Quellen öffnen sich erst nach deinem Klick. Die App selbst benötigt sie nicht. Lokale Schriften: Fira Sans und EB Garamond (SIL OFL); Symbole: Lucide (ISC); Formelsatz: MathJax (Apache 2.0). Die Dateien samt Lizenzen liegen im gemeinsamen Schrift- und Bibliotheksbestand.</p></dialog>
   <div id="badge-toast" class="badge-toast" role="status" aria-live="polite" hidden></div>

@@ -15,7 +15,7 @@ Sekundarstufe I, `sammellinsen-labor.html`; Veröffentlichung auf GitHub Pages, 
 
 ## Zentrale Formelsammlung
 
-App und lokaler Formeldialog verlinken `../LearningApps/physik-formelsammlung.html#phys-optik` in einem neuen Tab. Ergänzt wurden dort Umstellungen, positiver Abbildungsmaßstab A, Bankgeometrie, Mindestabstand 4f und vertauschte scharfe Linsenstellungen. Gerichtete Höhen heißen y_G/y_B und bleiben von den positiven Beträgen G/B getrennt. Das Kräfte-Labor verlinkt entsprechend `#phys-kraefte`; Kraftbetrag und gerichtete Komponente sind ausdrücklich unterschieden.
+Kopfzeile, Navigation und Aufgabenhilfe öffnen direkt die vollständige Sammlung unter `../LearningApps/physik-formelsammlung.html#phys-optik` in einem neuen Tab. Ergänzt wurden dort Umstellungen, positiver Abbildungsmaßstab A, Bankgeometrie, Mindestabstand 4f und vertauschte scharfe Linsenstellungen. Gerichtete Höhen heißen y_G/y_B und bleiben von den positiven Beträgen G/B getrennt. Das Kräfte-Labor verlinkt entsprechend `#phys-kraefte`; Kraftbetrag und gerichtete Komponente sind ausdrücklich unterschieden.
 
 ## Prüfung und Export
 

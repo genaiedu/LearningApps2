@@ -74,7 +74,7 @@ test('axioms are named, generic balance is not mislabeled spring force, carts st
 test('capital S denotes extension everywhere; seconds and acceleration units keep lowercase s',()=>{
  assert.equal(C.example().given[1].symbol,'S');assert.equal(C.units.time[0][0],'s');assert.equal(C.units.speed[0][0],'m/s');assert.equal(C.units.accel[0][0],'m/s²');
  const check=tex=>assert.doesNotMatch(tex.replace(/\\mathrm(?:\{[^}]*\}| s)/g,'UNIT'),/(^|[^A-Za-z\\])s(?=[^A-Za-z]|$)/);
- V.formulas.forEach(f=>check(f.tex));C.example().solution.filter(x=>x.tex).forEach(x=>check(x.tex));
+ C.example().solution.filter(x=>x.tex).forEach(x=>check(x.tex));
  for(const html of[V.knowledge(),...V.createSlides(C.round(42)).map(x=>x.html)])for(const match of html.matchAll(/\\\[([\s\S]*?)\\\]|\\\(([\s\S]*?)\\\)/g))check(match[1]||match[2]);
  for(let seed=1;seed<=1500;seed++)for(const t of C.round(seed)){
   if(t.dimension==='length')assert.match(t.symbol,/^S(?:_|$)/);

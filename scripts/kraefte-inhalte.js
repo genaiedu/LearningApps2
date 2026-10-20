@@ -33,17 +33,6 @@
     if(kind==='graph')return svg('Kraft über Verlängerung: Die Steigung einer Ausgleichsgeraden ist die Federkonstante','<path d="M70 35V235H500" class="scene-line"/><path d="M70 235 460 55" fill="none" stroke="var(--red)" stroke-width="3"/><path d="M175 186H380V92" class="scene-muted-line" stroke-dasharray="4 4"/><text x="20" y="35" class="apparatus-label">F / N</text><text x="450" y="268" class="apparatus-label">S / m</text><text x="265" y="210" class="apparatus-label">ΔS</text><text x="395" y="147" class="apparatus-label">ΔF</text>');
     return'';
   }
-  const formulas=[
-    {title:'Bewegung ändern',text:'Fres ist die resultierende Kraft auf einen Körper, m seine Masse, a seine Beschleunigung. Für konstante Masse gilt:',tex:'\\vec F_{\\mathrm{res}}=m\\,\\vec a,\\quad a=\\frac{F_{\\mathrm{res}}}{m},\\quad m=\\frac{F_{\\mathrm{res}}}{a}'},
-    {title:'Gewichtskraft',text:'FG ist die Gewichtskraft. g ist der Ortsfaktor; nahe der Erdoberfläche verwenden wir 9,81 N/kg. Die Masse m wird in kg eingesetzt.',tex:'F_{\\mathrm G}=m\\,g,\\qquad m=\\frac{F_{\\mathrm G}}g,\\qquad g\\approx9{,}81\\,\\mathrm{N/kg}'},
-    {title:'Federkraft',text:'FF bezeichnet den Betrag der Federkraft, D die Federkonstante, S die Verlängerung gegenüber der unbelasteten Referenzlänge L₀. Im ruhigen Gleichgewicht gilt FF = FG.',tex:'S=L-L_0,\\quad F_{\\mathrm F}=D\\,S,\\quad D=\\frac{F_{\\mathrm F}}S,\\quad S=\\frac{F_{\\mathrm F}}D'},
-    {title:'Eine Gerade auswerten',text:'Im F-S-Diagramm steht S in m waagerecht und F in N senkrecht. Wähle für das Steigungsdreieck zwei weit auseinanderliegende Punkte auf der Ausgleichsgeraden.',tex:'D=\\frac{\\Delta F}{\\Delta S}=\\frac{F_2-F_1}{S_2-S_1}'},
-    {title:'Zwei Federn in Reihe',text:'Die gleiche Kraft wirkt in beiden Federn; die Verlängerungen addieren sich. D₁ und D₂ sind die einzelnen Federkonstanten.',tex:'\\frac1{D_{\\mathrm{ges}}}=\\frac1{D_1}+\\frac1{D_2},\\qquad D_1=D_2=D\\Rightarrow D_{\\mathrm{ges}}=\\frac D2'},
-    {title:'Zwei Federn parallel',text:'Beide Federn haben dieselbe Verlängerung. Ihre Kraftbeiträge addieren sich; beide oberen und beide unteren Enden sind gemeinsam befestigt.',tex:'D_{\\mathrm{ges}}=D_1+D_2,\\qquad D_1=D_2=D\\Rightarrow D_{\\mathrm{ges}}=2D'},
-    {title:'Einheiten & Umrechnung',text:'Rechne mit kg, m, s und N. Die Federkonstante hat die Einheit N/m, die Beschleunigung m/s². Im Antwortsatz wählen wir eine Einheit, vor der ein gut lesbarer Zahlenwert zwischen 1 und 1000 steht.',tex:'1\\,\\mathrm N=1\\,\\frac{\\mathrm{kg}\\,\\mathrm m}{\\mathrm{s^2}},\\quad1\\,\\mathrm g=10^{-3}\\,\\mathrm{kg},\\quad1\\,\\mathrm{mm}=10^{-3}\\,\\mathrm m'},
-    {title:'Geschwindigkeitsänderung',text:'Bei gleichmäßiger Beschleunigung ist Δv die Änderung der Geschwindigkeit in der Zeitspanne Δt.',tex:'a=\\frac{\\Delta v}{\\Delta t}'}
-  ];
-  const formulaHTML=()=>formulas.map(f=>'<section class="formula-card"><h3>'+esc(f.title)+'</h3><p>'+esc(f.text)+'</p>'+math(f.tex)+'</section>').join('');
   function knowledge(){
     return[
       '<article class="knowledge-wide newton-profile"><h3>Isaac Newton und seine Axiome.</h3><div>'+newtonText+'<p class="small"><a href="https://www.newtonproject.ox.ac.uk/view/texts/normalized/NATP00076" target="_blank" rel="noopener noreferrer">Die Axiome in Newtons Originaltext · Newton Project, Universität Oxford</a></p></div>'+photo('newton')+'</article>',
@@ -97,5 +86,5 @@
     result.push(slide('abschluss','Welche Verbindung erkennst du?','<p>Newtons zweites Axiom beschreibt Bewegungsänderungen. Die Gewichtskraft liefert die Belastung der Feder. Das hookesche Gesetz verbindet diese Belastung mit der Verlängerung.</p>'+math('F_{\\mathrm{res}}=m\\,a\\qquad F_{\\mathrm G}=m\\,g\\qquad F_{\\mathrm F}=D\\,S')+'<p>Wenn die Masse ruhig hängt, gilt FF = FG. Das macht die Feder zu einem Kraftmesser – solange sie elastisch und näherungsweise linear reagiert.</p>','Rückblick'));
     return result;
   }
-  return Object.freeze({esc,math,solution,formulas,formulaHTML,knowledge,createSlides,visual,media,photo});
+  return Object.freeze({esc,math,solution,knowledge,createSlides,visual,media,photo});
 });

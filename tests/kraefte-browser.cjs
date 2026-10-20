@@ -12,6 +12,13 @@ const{chromium}=require('playwright');const assert=require('node:assert/strict')
   assert.equal(await p.locator('#entry-screen').isVisible(),true);assert.equal(await p.locator('#app-shell').isVisible(),false);await p.locator('#start-without-images').click();
   assert.equal(await p.evaluate(()=>document.fonts.check('400 17px "Fira Sans"')),true);
   const before=await p.evaluate(()=>KraefteApp.snapshot().seed),tasks=await p.evaluate(()=>KraefteApp.round());
+  // Header, navigation and task help all open the complete collection directly.
+  await p.locator('[data-task="2"]').click();await p.locator('#answer-number').fill('2,345');const formulaState=await p.evaluate(()=>JSON.stringify(KraefteApp.snapshot()));
+  for(const selector of['#formula-open','.section-nav a[href*="physik-formelsammlung"]','#task-formulas']){
+   const [ref]=await Promise.all([p.waitForEvent('popup'),p.locator(selector).click()]);await ref.waitForLoadState('load');await ref.waitForFunction(()=>document.querySelector('#phys-kraefte')?.open);await ref.evaluate(()=>window.MathJax?.startup?.promise);
+   assert.equal(new URL(ref.url()).pathname.endsWith('/LearningApps/physik-formelsammlung.html'),true);assert.equal(await ref.locator('.phys-topic').count(),19,'All topics, not a special edition');assert.equal(await ref.locator('mjx-merror,[data-mjx-error]').count(),0);await ref.close();
+   assert.equal(await p.evaluate(()=>JSON.stringify(KraefteApp.snapshot())),formulaState);assert.equal(await p.locator('#answer-number').inputValue(),'2,345');assert.equal(await p.locator('#formula-dialog').count(),0);
+  }
   for(let i=0;i<tasks.length;i++){
    await p.locator('[data-task="'+i+'"]').click();const t=tasks[i];
    if(t.type==='choice')await p.locator('#answer-form [value="'+t.correctIndex+'"]').check();
