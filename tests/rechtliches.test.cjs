@@ -5,12 +5,17 @@ const originals={
  'impressum.html':{count:9,sha:'d5071b1badd1530c5268d50827d6ae941d721f69276aee6ff0355426f8687fbe'},
  'datenschutz.html':{count:22,sha:'2965e97539a9d87268a0c568b79c806349d8c78313382367a72c9901c59f09e2'}
 };
-test('all original legal headings, paragraphs and contact information are unchanged',()=>{
+test('legal content is unchanged apart from the explicitly extended two-repository scope',()=>{
  for(const[file,expected]of Object.entries(originals)){
   const article=read(file).match(/<article\b[^>]*>([\s\S]*?)<\/article>/)[1];
   const parts=[...article.matchAll(/<(h2|p|address)\b[^>]*>([\s\S]*?)<\/\1>/g)].map(m=>m[1]+':'+m[2].replace(/<br\s*\/?\s*>/gi,' ').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim());
-  assert.equal(parts.length,expected.count,file);assert.equal(crypto.createHash('sha256').update(parts.join('\n')).digest('hex'),expected.sha,file);
+  const originalScope=parts.join('\n').replace('p:Diese Hinweise gelten für LearningApps und LearningApps2 unter genaiedu.github.io/LearningApps/ und genaiedu.github.io/LearningApps2/.','p:Diese Hinweise gelten für LearningApps2 unter genaiedu.github.io/LearningApps2/.');
+  assert.equal(parts.length,expected.count,file);assert.equal(crypto.createHash('sha256').update(originalScope).digest('hex'),expected.sha,file);
  }
+});
+test('LearningApps is the displayed brand and privacy explicitly covers both repository URLs',()=>{
+ for(const f of Object.keys(originals)){const s=read(f);assert.ok(s.includes('<strong>LEARNING</strong> <span>APPS</span>'));assert.ok(s.includes(' · LearningApps</title>'));assert.ok(!s.includes('APPS2</span>'));assert.ok(s.includes('<span>LearningApps · Rechtliche Informationen</span>'));}
+ const privacy=read('datenschutz.html');assert.ok(privacy.includes('Diese Hinweise gelten für LearningApps und LearningApps2'));for(const repository of['LearningApps','LearningApps2'])assert.ok(privacy.includes('<code>genaiedu.github.io/'+repository+'/</code>'));
 });
 test('only the two legal pages opt into the new stylesheet and neutral palette',()=>{
  for(const f of Object.keys(originals)){const s=read(f);assert.ok(s.includes('styles/rechtliches.css?v=20261020-1'));assert.ok(!s.includes('styles/shared.css'));assert.ok(s.includes('Schiefergrau'));assert.ok(!/palette-select|fonts\.googleapis|fonts\.gstatic|https?:[^" ]+\.js/.test(s));const ids=[...s.matchAll(/id="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);for(const a of s.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(a[1]));}
