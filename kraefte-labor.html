@@ -7,17 +7,27 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Kräfte-Labor · Was eine Kraft verändert</title>
   <link rel="stylesheet" href="styles/typografie-palettes.css">
-  <link rel="stylesheet" href="styles/kraefte-labor.css?v=20261020-2">
+  <link rel="stylesheet" href="styles/kraefte-labor.css?v=20261020-3">
   <script>
     window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']],processEscapes:true},svg:{fontCache:'local'},options:{enableMenu:false}};
   </script>
   <script defer src="../LearningApps/fonts/mathjax-svg-3.2.2/tex-svg.js"></script>
   <script defer src="../LearningApps/fonts/lucide.min.js"></script>
   <script defer src="scripts/kraefte-core.js?v=20261020-1"></script>
-  <script defer src="scripts/kraefte-inhalte.js?v=20261020-2"></script>
-  <script defer src="scripts/kraefte-labor.js?v=20261020-2"></script>
+  <script defer src="scripts/kraefte-inhalte.js?v=20261020-3"></script>
+  <script defer src="scripts/kraefte-labor.js?v=20261020-3"></script>
 </head>
 <body>
+  <section id="entry-screen" class="entry-screen" aria-labelledby="entry-title">
+    <p class="wordmark"><strong>KRÄFTE</strong> LABOR</p>
+    <h1 id="entry-title" tabindex="-1">Bevor du beginnst.</h1>
+    <h2>Bilder aus Wikipedia / Wikimedia Commons</h2>
+    <p>Porträt und Fotos werden erst nach deiner Freigabe von Wikimedia geladen. Dabei erhält Wikimedia deine IP-Adresse und technische Browserdaten. Antworten und Messwerte werden nicht mitgeschickt.</p>
+    <p>Ohne Bilder bleiben alle Erklärungen, Animationen und Aufgaben nutzbar. Die Freigabe gilt nur für diesen Besuch. Du kannst sie später unter „Darstellung“ ändern.</p>
+    <div class="entry-actions"><button type="button" id="start-without-images" disabled>Ohne Bilder starten</button><button type="button" id="start-with-images" disabled>Mit Bildern starten</button></div>
+    <nav class="entry-legal" aria-label="Rechtliches vor dem Start"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav>
+  </section>
+  <div id="app-shell" hidden inert>
   <a class="skip" href="#inhalt">Zum Inhalt</a>
   <header class="floating-header">
     <a class="wordmark" href="#anfang"><strong>KRÄFTE</strong> LABOR</a>
@@ -53,7 +63,6 @@
 
     <section class="chapter wrap" id="praesentation">
       <div class="section-heading"><div><p class="eyebrow">01 · Gemeinsam beginnen</p><h2>Vom Beobachten<br><em>zum Berechnen.</em></h2></div><p>Die Einführung erklärt die Grundlagen und den Versuch. Danach folgen genau die zehn Aufgaben deiner aktuellen Runde – mit denselben Zahlen wie im Training.</p></div>
-      <aside class="media-notice" aria-labelledby="media-title"><div><h3 id="media-title">Bilder aus Wikipedia / Wikimedia Commons</h3><p>Porträt und Fotos werden erst nach deiner Freigabe von Wikimedia geladen. Dabei erhält Wikimedia deine IP-Adresse und technische Browserdaten. Antworten und Messwerte werden nicht mitgeschickt. Ohne Bilder bleiben alle Erklärungen, Animationen und Aufgaben nutzbar. Die Freigabe gilt nur für diesen Besuch.</p><p id="media-status" class="small" role="status">Externe Bilder sind ausgeschaltet.</p></div><button type="button" id="media-toggle" aria-pressed="false">Bilder für diesen Besuch laden</button></aside>
       <div id="presentation" class="presentation" aria-label="Unterrichtspräsentation">
         <div class="presentation-tools">
           <label for="slide-select" class="sr-only">Folie auswählen</label><select id="slide-select"></select>
@@ -108,11 +117,12 @@
     <footer class="wrap page-footer"><p>Die Rechnungen und die Simulation laufen in deinem Browser. Fortschritt und Darstellung werden nur lokal gespeichert. Keine Anmeldung, keine Laufzeit-KI. Die optionalen Wikimedia-Bilder werden ausschließlich nach Freigabe geladen.</p><nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><button type="button" id="sources-open">Quellen & Modellgrenzen</button></nav></footer>
   </main>
 
-  <dialog id="view-dialog" aria-labelledby="view-title"><div class="dialog-heading"><h2 id="view-title">Deine Darstellung</h2><button type="button" data-close="view-dialog" aria-label="Darstellung schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><label for="palette">Farbschema</label><select id="palette"><option value="graphite">Graphit</option><option value="atelier">Papier & Wald</option><option value="slate">Schieferblau</option><option value="plum">Pflaume</option><option value="bordeaux">Bordeaux</option></select><fieldset><legend>Darstellung</legend><label><input type="radio" name="theme" value="light" checked> Hell</label><label><input type="radio" name="theme" value="dark"> Dunkel</label></fieldset><label><input id="motion" type="checkbox" checked> Kurze Animationen</label><label for="text-scale">Schriftgröße <output id="text-scale-value">100 %</output></label><input id="text-scale" type="range" min="90" max="120" step="5" value="100"></dialog>
+  <dialog id="view-dialog" aria-labelledby="view-title"><div class="dialog-heading"><h2 id="view-title">Deine Darstellung</h2><button type="button" data-close="view-dialog" aria-label="Darstellung schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><label for="palette">Farbschema</label><select id="palette"><option value="graphite">Graphit</option><option value="atelier">Papier & Wald</option><option value="slate">Schieferblau</option><option value="plum">Pflaume</option><option value="bordeaux">Bordeaux</option></select><fieldset><legend>Darstellung</legend><label><input type="radio" name="theme" value="light" checked> Hell</label><label><input type="radio" name="theme" value="dark"> Dunkel</label></fieldset><label><input id="motion" type="checkbox" checked> Kurze Animationen</label><label for="text-scale">Schriftgröße <output id="text-scale-value">100 %</output></label><input id="text-scale" type="range" min="90" max="120" step="5" value="100"><section class="media-settings" aria-labelledby="media-settings-title"><h3 id="media-settings-title">Wikimedia-Bilder</h3><p>Beim Laden erhält Wikimedia deine IP-Adresse und technische Browserdaten, nicht deine Antworten oder Messwerte. Die Freigabe gilt nur für diesen Besuch.</p><p id="media-status" role="status">Externe Bilder sind ausgeschaltet.</p><button type="button" id="media-toggle" aria-pressed="false">Bilder für diesen Besuch laden</button></section></dialog>
   <dialog id="formula-dialog" class="wide-dialog" aria-labelledby="formula-title"><div class="dialog-heading"><h2 id="formula-title">Formelsammlung</h2><button type="button" data-close="formula-dialog" aria-label="Formelsammlung schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><div id="formula-content"></div></dialog>
   <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">Eine neue Runde?</h2><p>Die zehn Aufgaben und ihre Zahlen werden neu ausgewählt. Antworten, Punkte, Abzeichen und Simulationsmesswerte dieser App werden zurückgesetzt. Deine Darstellung bleibt erhalten. Das feste Beispiel und das Arbeitsblatt ändern sich nicht.</p><div class="dialog-actions"><button type="button" data-close="reset-dialog">Abbrechen</button><button type="button" class="primary" id="reset-confirm">Neue Runde beginnen</button></div></dialog>
   <dialog id="sources-dialog" class="wide-dialog" aria-labelledby="sources-title"><div class="dialog-heading"><h2 id="sources-title">Quellen & Modellgrenzen</h2><button type="button" data-close="sources-dialog" aria-label="Quellen schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><p>Die Inhalte sind für die Sekundarstufe I vereinfacht. Die drei Newtonschen Gesetze werden in einem näherungsweise ruhenden Bezugssystem und bei konstanter Masse verwendet. Für den Ortsfaktor rechnen wir mit \(g\approx9{,}81\,\mathrm{N/kg}\) nahe der Erdoberfläche.</p><p>Das Federlabor beschreibt ein ideales, statisches und lineares Modell. Es sagt nicht voraus, welche reale Feder 30 g verträgt. Die Kraftpfeile sind schematisch.</p><ul><li><a href="https://www.physik.uni-leipzig.de/jvwikis/mechanics/book/chap3/3.3_newton_s_axioms_and_equations_of_motion_eom" target="_blank" rel="noopener noreferrer">Universität Leipzig · Newtonsche Axiome</a></li><li><a href="https://labs.physik.kit.edu/prakt-nebenfach-manuals/Experiments/Lineare_Schwingungen/" target="_blank" rel="noopener noreferrer">KIT · Federkonstanten, Reihen- und Parallelschaltung</a></li></ul><p class="small">Externe Quellen öffnen sich erst nach deinem Klick. Die App selbst benötigt sie nicht. Lokale Schriften: Fira Sans und EB Garamond (SIL OFL); Symbole: Lucide (ISC); Formelsatz: MathJax (Apache 2.0). Die Dateien samt Lizenzen liegen im gemeinsamen Schrift- und Bibliotheksbestand.</p></dialog>
   <div id="badge-toast" class="badge-toast" role="status" aria-live="polite" hidden></div>
+  </div>
   <noscript><p class="wrap">Für Simulation, Präsentation und Aufgaben ist JavaScript erforderlich. Das <a href="material/kraefte-arbeitsblatt.pdf">Arbeitsblatt als PDF</a> kannst du auch ohne JavaScript herunterladen.</p></noscript>
 </body>
 </html>

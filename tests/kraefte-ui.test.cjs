@@ -1,10 +1,11 @@
 const{test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const{JSDOM}=require('jsdom');const dir=path.resolve(__dirname,'..');
 const tick=ms=>new Promise(r=>setTimeout(r,ms));
-function fixture(blocked=false){
+function fixture(blocked=false,start=true){
  const dom=new JSDOM(fs.readFileSync(path.join(dir,'kraefte-labor.html'),'utf8'),{url:'https://example.test/LearningApps2/kraefte-labor.html',runScripts:'outside-only',pretendToBeVisual:true});const w=dom.window,$=id=>w.document.getElementById(id);
- w.matchMedia=()=>({matches:true});w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
+ w.matchMedia=()=>({matches:true});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
  if(blocked)Object.defineProperty(w,'localStorage',{get(){throw new Error('blocked')}});
  for(const f of['kraefte-core.js','kraefte-inhalte.js','kraefte-labor.js'])w.eval(fs.readFileSync(path.join(dir,'scripts',f),'utf8'));
+ if(start)$('start-without-images').click();
  return{w,$,dom};
 }
 test('default theme, shared question pool and fixed example, all teaching resources available',async()=>{
@@ -26,4 +27,10 @@ test('blocked storage still permits learning, settings and reset; fullscreen fal
 });
 test('Wikimedia photos never load before consent and can be switched off, including future slides',async()=>{
  const f=fixture();assert.equal(f.w.document.querySelectorAll('img[src]').length,0);f.$('media-toggle').click();assert.equal(f.w.document.querySelectorAll('img[src]').length,4);for(const image of f.w.document.querySelectorAll('img')){assert.equal(image.crossOrigin,'anonymous');assert.equal(image.referrerPolicy,'no-referrer');assert.match(image.src,/^https:\/\/upload\.wikimedia\.org\//);}f.$('slide-select').value='2';f.$('slide-select').dispatchEvent(new f.w.Event('change'));assert.ok(f.$('slide').querySelector('img'));f.$('media-toggle').click();assert.equal(f.w.document.querySelectorAll('img').length,0);f.$('slide-select').value='11';f.$('slide-select').dispatchEvent(new f.w.Event('change'));assert.equal(f.$('slide').querySelectorAll('img').length,0);await tick(150);f.dom.window.close();
+});
+test('disclaimer precedes the hidden app; either start choice opens it, consent stays visit-only',async()=>{
+ for(const allowed of[false,true]){
+  const f=fixture(allowed,false);assert.equal(f.$('entry-screen').hidden,false);assert.equal(f.$('app-shell').hidden,true);assert.equal(f.$('app-shell').hasAttribute('inert'),true);assert.equal(f.w.document.querySelectorAll('img[src]').length,0);
+  f.$(allowed?'start-with-images':'start-without-images').click();assert.equal(f.$('entry-screen').hidden,true);assert.equal(f.$('app-shell').hidden,false);assert.equal(f.$('app-shell').hasAttribute('inert'),false);assert.equal(f.w.document.querySelectorAll('img[src]').length,allowed?4:0);assert.ok(f.$('view-dialog').contains(f.$('media-toggle')));await tick(150);f.dom.window.close();
+ }
 });

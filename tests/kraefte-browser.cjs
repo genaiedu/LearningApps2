@@ -9,6 +9,7 @@ const{chromium}=require('playwright');const assert=require('node:assert/strict')
   p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>{if(new URL(r.url()).origin!==new URL(url).origin)external.push(r.url());});
   const url=process.argv[2]||'http://127.0.0.1:8878/LearningApps2/kraefte-labor.html';await p.goto(url);await p.evaluate(()=>KraefteApp.whenReady());
   assert.equal(external.length,0,'Keine externen Abrufe vor Freigabe');
+  assert.equal(await p.locator('#entry-screen').isVisible(),true);assert.equal(await p.locator('#app-shell').isVisible(),false);await p.locator('#start-without-images').click();
   assert.equal(await p.evaluate(()=>document.fonts.check('400 17px "Fira Sans"')),true);
   const before=await p.evaluate(()=>KraefteApp.snapshot().seed),tasks=await p.evaluate(()=>KraefteApp.round());
   for(let i=0;i<tasks.length;i++){
@@ -20,7 +21,7 @@ const{chromium}=require('playwright');const assert=require('node:assert/strict')
   }
   assert.match(await p.locator('#score').innerText(),/10 \/ 10/);assert.equal(await p.locator('#badges [data-earned=true]').count(),5);
   await p.locator('#task-card').screenshot({path:'/private/tmp/kraefte-solution.png'});
-  await p.reload();await p.evaluate(()=>KraefteApp.whenReady());assert.equal(await p.evaluate(()=>KraefteApp.snapshot().seed),before);assert.match(await p.locator('#score').innerText(),/10 \/ 10/);
+  await p.reload();await p.evaluate(()=>KraefteApp.whenReady());assert.equal(await p.locator('#entry-screen').isVisible(),true);await p.locator('#start-without-images').click();assert.equal(await p.evaluate(()=>KraefteApp.snapshot().seed),before);assert.match(await p.locator('#score').innerText(),/10 \/ 10/);
   for(const mode of['single','series','parallel'])for(const mass of[5,15,30]){
    await p.locator('[data-mode='+mode+']').click();await p.locator('#mass-range').evaluate((e,m)=>{e.value=m;e.dispatchEvent(new Event('input'));},mass);await p.locator('#measure').click();
   }

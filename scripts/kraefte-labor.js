@@ -5,7 +5,7 @@
   const modeNames={single:'Eine Feder',series:'In Reihe',parallel:'Parallel'},modeMarkers={single:'○',series:'□',parallel:'△'};
   const randomSeed=()=>{try{return crypto.getRandomValues(new Uint32Array(1))[0]||1;}catch{return(Date.now()^Math.floor(Math.random()*0xffffffff))>>>0||1;}};
   const fresh=seed=>({version:C.VERSION,seed,current:0,slide:0,results:{},lab:{mass:0,mode:'single',records:[]},badges:[]});
-  let state=fresh(randomSeed()),view={palette:'graphite',theme:'light',motion:true,scale:100},toastTimer,mathQueue=Promise.resolve(),labMathTimer,mediaAllowed=false;
+  let state=fresh(randomSeed()),view={palette:'graphite',theme:'light',motion:true,scale:100},toastTimer,mathQueue=Promise.resolve(),labMathTimer,mediaAllowed=false,started=false;
   try{
     const saved=JSON.parse(localStorage.getItem(STATE_KEY));
     if(saved?.version===C.VERSION&&Number.isInteger(saved.seed)&&saved.seed>0&&saved.seed<=0xffffffff){
@@ -56,11 +56,22 @@
       image.src='https://upload.wikimedia.org/wikipedia/commons/thumb/'+m.path+'/960px-'+m.path.split('/').at(-1);frame.append(image);
     });
   }
-  $('media-toggle').onclick=()=>{
-    mediaAllowed=!mediaAllowed;hydrateMedia(document);
+  function setMediaAllowed(allowed){
+    const wasAllowed=mediaAllowed;mediaAllowed=allowed;hydrateMedia(document);
     $('media-toggle').textContent=mediaAllowed?'Bilder wieder ausschalten':'Bilder für diesen Besuch laden';$('media-toggle').setAttribute('aria-pressed',String(mediaAllowed));
-    $('media-status').textContent=mediaAllowed?'Bilder sind für diesen Besuch freigegeben. Weitere Fotos laden beim Anzeigen.':'Externe Bilder sind ausgeschaltet. Bereits erfolgte Übertragungen lassen sich nicht rückgängig machen.';
-  };
+    $('media-status').textContent=mediaAllowed?'Bilder sind für diesen Besuch freigegeben. Weitere Fotos laden beim Anzeigen.':wasAllowed?'Externe Bilder sind ausgeschaltet. Bereits erfolgte Übertragungen lassen sich nicht rückgängig machen.':'Externe Bilder sind ausgeschaltet.';
+  }
+  $('media-toggle').onclick=()=>setMediaAllowed(!mediaAllowed);
+  function startApp(withImages){
+    if(started)return;started=true;
+    $('entry-screen').hidden=true;$('app-shell').hidden=false;$('app-shell').removeAttribute('inert');setMediaAllowed(withImages);animate($('anfang'));
+    requestAnimationFrame(()=>{
+      let target;try{target=document.getElementById(decodeURIComponent(location.hash.slice(1)));}catch{}
+      const focusTarget=target?.querySelector('h1,h2')||document.querySelector('#anfang h1');focusTarget.setAttribute('tabindex','-1');focusTarget.focus({preventScroll:true});
+      if(target)target.scrollIntoView({behavior:'instant',block:'start'});else window.scrollTo({top:0,behavior:'instant'});
+    });
+  }
+  $('start-without-images').onclick=()=>startApp(false);$('start-with-images').onclick=()=>startApp(true);
 
   function renderSlide(){
     state.slide=Math.max(0,Math.min(slides.length-1,state.slide));const s=slides[state.slide];
@@ -196,4 +207,7 @@
   $('hero-spring').setAttribute('viewBox','70 15 340 390');$('hero-spring').innerHTML=springGraphic(C.springState(20),true);
   slideOptions();renderSlide();renderLab();renderMeasurements();renderTask();renderBadges();icons();typeset($('sources-dialog'));
   window.KraefteApp=Object.freeze({snapshot:()=>JSON.parse(JSON.stringify(state)),round:()=>tasks,slides:()=>slides,example:()=>C.example(),presentationActive,whenReady:()=>mathQueue});
+  $('start-without-images').disabled=false;$('start-with-images').disabled=false;
+  const focusEntry=()=>{if(!started){$('entry-title').focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});}};
+  window.addEventListener('pageshow',focusEntry);requestAnimationFrame(focusEntry);
 })();
