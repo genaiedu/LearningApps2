@@ -11,6 +11,19 @@ const{chromium}=require('playwright'),assert=require('node:assert/strict');
  }
 
  const set=async(g,bv)=>{await p.locator('#g-range').evaluate((e,v)=>{e.value=v;e.dispatchEvent(new Event('input'));},g);await p.locator('#b-range').evaluate((e,v)=>{e.value=v;e.dispatchEvent(new Event('input'));},bv);};
+ // Real pointer dragging and keyboard steps must not reset fractional positions.
+ for(const size of[{width:1440,height:1000},{width:390,height:844}]){
+  await p.setViewportSize(size);const slider=p.locator('#g-range');
+  for(const cm of[15.5,24.5,36,5.5,44.5]){
+   await slider.evaluate(e=>e.scrollIntoView({block:'center'}));const q=await slider.evaluate(e=>{const r=e.getBoundingClientRect();return{x:r.x+8,y:r.y+r.height/2,width:r.width-16,min:Number(e.min),max:Number(e.max),value:e.valueAsNumber};});
+   const x=v=>q.x+(v-q.min)/(q.max-q.min)*q.width;await p.mouse.move(x(q.value),q.y);await p.mouse.down();await p.mouse.move(x(cm),q.y,{steps:20});await p.mouse.up();
+   assert.equal(await slider.inputValue(),String(cm),'pointer drag at '+size.width+'px');assert.equal(await p.evaluate(()=>LensApp.snapshot().lab.g),cm/100);assert.equal(await p.locator('#g-value').innerText(),String(cm).replace('.',',')+' cm');assert.equal(Number(await p.locator('#b-range').getAttribute('max')),62-cm);
+   if(size.width===1440&&[15.5,24.5].includes(cm))await p.locator('.optical-controls').screenshot({path:'/private/tmp/linsen-slider-'+cm+'.png',style:'.floating-header{visibility:hidden}'});
+  }
+  await slider.press('Home');await slider.press('ArrowRight');assert.equal(await slider.inputValue(),'5.5');await slider.press('End');await slider.press('ArrowLeft');assert.equal(await slider.inputValue(),'44.5');
+  await set(15.5,30.1);const screen=p.locator('#b-range');await screen.press('ArrowRight');assert.equal(await screen.inputValue(),'30.2');assert.equal(await p.locator('#b-value').innerText(),'30,2 cm');assert.equal(await slider.inputValue(),'15.5');
+ }
+ await p.setViewportSize({width:1440,height:1000});
  for(const [g,bv] of[[15,30],[20,20],[30,15]]){await set(g,bv);assert.equal(await p.locator('#measure').isEnabled(),true);await p.locator('#measure').click();}
  assert.equal(await p.locator('#measurements tr').count(),3);assert.equal(await p.locator('#badges [data-earned=true]').count(),1);await p.locator('#show-rays').check();await p.locator('.optical-lab').screenshot({path:'/private/tmp/linsen-bank.png',style:'.floating-header{visibility:hidden}'});
  for(const [g,kind] of[[5,'g < f'],[10,'g = f'],[12,'außerhalb']]){await set(g,20);assert.equal(await p.locator('#measure').isEnabled(),false);assert.ok((await p.locator('#focus-state').innerText()).includes(kind));}await set(20,20);
