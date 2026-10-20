@@ -29,7 +29,15 @@ const{chromium}=require('playwright');const assert=require('node:assert/strict')
   const fitText=(await p.locator('#fit-results').innerText()).replace(/\s/g,'');assert.match(fitText,/2,5/);assert.match(fitText,/10/);
   const layout=[];
   for(const size of[{width:1440,height:960},{width:768,height:1024},{width:390,height:844},{width:320,height:740}]){
-   await p.setViewportSize(size);await p.locator('#view-open').click();
+   await p.setViewportSize(size);
+   const geometry=await p.locator('.measurement-grid').evaluate(e=>{
+    const grid=e.getBoundingClientRect(),table=e.firstElementChild.getBoundingClientRect(),chart=e.querySelector('.measurement-plot').getBoundingClientRect(),plot=e.querySelector('#spring-plot').getBoundingClientRect();
+    return{width:grid.width,chartWidth:chart.width,plotWidth:plot.width,belowTable:chart.top>=table.bottom};
+   });
+   assert.ok(Math.abs(geometry.chartWidth-geometry.width)<1,'Diagrammbereich nutzt die volle Inhaltsbreite');
+   assert.ok(Math.abs(geometry.plotWidth-geometry.width)<1,'SVG nutzt die volle Inhaltsbreite');assert.equal(geometry.belowTable,true,'Diagramm steht unter dem Messprotokoll');
+   if(size.width===1440||size.width===390)await p.locator('.measurement-plot').screenshot({path:'/private/tmp/kraefte-plot-'+size.width+'.png'});
+   await p.locator('#view-open').click();
    for(const palette of['graphite','atelier','slate','plum','bordeaux'])for(const theme of['light','dark']){
     await p.selectOption('#palette',palette);await p.locator('[name=theme][value='+theme+']').check();
     assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),theme);

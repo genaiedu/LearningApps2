@@ -7,7 +7,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Kräfte-Labor · Was eine Kraft verändert</title>
   <link rel="stylesheet" href="styles/typografie-palettes.css">
-  <link rel="stylesheet" href="styles/kraefte-labor.css?v=20261020-3">
+  <link rel="stylesheet" href="styles/kraefte-labor.css?v=20261020-5">
   <script>
     window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']],processEscapes:true},svg:{fontCache:'local'},options:{enableMenu:false}};
   </script>
@@ -103,7 +103,7 @@
       </div>
       <div class="measurement-grid">
         <div><div class="row-heading"><h3>Dein Messprotokoll</h3><button type="button" id="measure-clear">Messwerte löschen</button></div><div class="table-scroll"><table><caption class="sr-only">Simulierte Messwerte der drei Anordnungen</caption><thead><tr><th>Anordnung</th><th>m / kg</th><th>F / N</th><th>S / m</th></tr></thead><tbody id="measurements"></tbody></table></div><p class="small">Es sind ideale Simulationswerte, keine Messungen deiner echten Feder. Ein erneuter Klick bei derselben Masse ersetzt den vorhandenen Eintrag.</p></div>
-        <div><h3>Kraft über Verlängerung</h3><svg id="spring-plot" viewBox="0 0 580 365" role="img" aria-label="Kraft-Verlängerungs-Diagramm der übernommenen Messwerte"></svg><p class="small">○ Eine Feder · □ Reihe · △ Parallel. Waagerecht: S in m. Senkrecht: F in N.</p><div id="fit-results"></div></div>
+        <div class="measurement-plot"><h3>Kraft über Verlängerung</h3><svg id="spring-plot" viewBox="0 0 580 365" role="img" aria-label="Kraft-Verlängerungs-Diagramm der übernommenen Messwerte"></svg><p class="small">○ Eine Feder · □ Reihe · △ Parallel. Waagerecht: S in m. Senkrecht: F in N.</p><div id="fit-results"></div></div>
       </div>
     </section>
 
