@@ -27,6 +27,18 @@
     const optics=image(g),available=SCREEN_MAX-OBJECT_X-g,sharp=optics.kind==='real'&&Math.abs(screen-optics.b)<=.001+1e-12;
     return{g,screen,...optics,lensX:OBJECT_X+g,screenX:OBJECT_X+g+screen,available,reachable:optics.kind==='real'&&optics.b<=available&&optics.b>=.02,sharp,scaleOnScreen:screen/g,blurRadius:.012*Math.abs(1+screen/g-screen/F)};
   }
+  function plotData(records){
+    const groups=new Map();
+    for(const r of records){if(!Number.isFinite(r.g)||!Number.isFinite(r.b)||r.g<=0||r.b<=0)continue;const a=groups.get(r.g)||[];a.push(r.b);groups.set(r.g,a);}
+    const points=[...groups].map(([g,bs])=>({g,b:bs.reduce((a,b)=>a+b,0)/bs.length})).sort((a,b)=>a.g-b.g),curve=[];
+    if(points.length<3)return{points,curve};
+    const h=points.slice(1).map((p,i)=>p.g-points[i].g),d=h.map((v,i)=>(points[i+1].b-points[i].b)/v),m=[d[0]];
+    // Shape-preserving Hermite interpolation: no overshoot, no extrapolation.
+    for(let i=1;i<points.length-1;i++){const w1=2*h[i]+h[i-1],w2=h[i]+2*h[i-1];m.push(d[i-1]*d[i]<=0?0:(w1+w2)/(w1/d[i-1]+w2/d[i]));}m.push(d.at(-1));
+    curve.push({...points[0]});
+    for(let i=0;i<points.length-1;i++)for(let j=1;j<=20;j++){const t=j/20,t2=t*t,t3=t2*t;curve.push({g:points[i].g+t*h[i],b:(2*t3-3*t2+1)*points[i].b+(t3-2*t2+t)*h[i]*m[i]+(-2*t3+3*t2)*points[i+1].b+(t3-t2)*h[i]*m[i+1]});}
+    return{points,curve};
+  }
   const si=v=>tn(v)+'\\,\\mathrm m';
   function q(symbol,label,value,unit='cm',dimension='length'){
     const u=units[dimension].find(u=>u[0]===unit),valueSI=value*u[1];return{symbol,label,value,unit,si:valueSI,tex:symbol+'='+tn(value)+(u[2]?'\\,'+u[2]:'')+(u[1]!==1?'='+si(valueSI):'')};
@@ -102,5 +114,5 @@
     const e=Math.abs(t.expectedSI),epsilon=Number.EPSILON*Math.max(e,Math.abs(v))*8;return{valid:true,correct:Math.abs(v-t.expectedSI)<=e*TOLERANCE+epsilon};
   }
   function grade(t,raw,unit,old={attempts:0,status:'open',points:0}){if(old.status!=='open')return old;const c=check(t,raw,unit);if(!c.valid)return{...old,invalid:true};const attempts=old.attempts+1;return{attempts,status:c.correct?'correct':attempts===2?'solved':'open',points:c.correct?(attempts===1?1:.5):0,lastAnswer:String(raw),unit};}
-  return Object.freeze({VERSION,F,BANK,OBJECT_X,SCREEN_MAX,OBJECT_HEIGHT,TOLERANCE,units,n,tn,rng,shuffle,image,bench,pool,round,example,answerFormat,friendly,parseNumber,check,grade});
+  return Object.freeze({VERSION,F,BANK,OBJECT_X,SCREEN_MAX,OBJECT_HEIGHT,TOLERANCE,units,n,tn,rng,shuffle,image,bench,plotData,pool,round,example,answerFormat,friendly,parseNumber,check,grade});
 });

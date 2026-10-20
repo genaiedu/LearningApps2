@@ -14,7 +14,7 @@
     }
     const v=JSON.parse(localStorage.getItem(VIEW));if(['graphite','atelier','slate','plum','bordeaux'].includes(v?.palette))view.palette=v.palette;if(['light','dark'].includes(v?.theme))view.theme=v.theme;if(typeof v?.motion==='boolean')view.motion=v.motion;if(Number.isFinite(v?.scale))view.scale=Math.min(120,Math.max(90,v.scale));
   }catch{}
-  let tasks=C.round(state.seed),slides=V.createSlides(tasks);
+  let tasks=C.round(state.seed),slides=V.createSlides(tasks),plotMode='diagram',analysisRecord='';
   for(const t of tasks){const r=state.results[t.id];if(!r||!['open','correct','solved'].includes(r.status)||!Number.isInteger(r.attempts)||r.attempts<0||r.attempts>2||![0,.5,1].includes(r.points))delete state.results[t.id];}
   const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));}catch{}};
   const icons=()=>window.lucide?.createIcons();
@@ -47,12 +47,32 @@
   $('measure').onclick=()=>{const s=C.bench(state.lab.g,state.lab.screen);if(!s.sharp)return;if(!state.lab.records.some(r=>Math.abs(r.g-s.g)<1e-9&&Math.abs(r.b-s.screen)<1e-9))state.lab.records.push({g:s.g,b:s.screen});$('measure-feedback').textContent='Scharfe Anordnung ins Modellprotokoll übernommen.';renderMeasurements();award();save();};
   $('measure-clear').onclick=()=>{state.lab.records=[];renderMeasurements();$('measure-feedback').textContent='Die Modellmesswerte wurden gelöscht.';save();};
   function renderPlot(){
-    const el=$('lens-plot'),w=el.clientWidth||800,h=Math.max(260,Math.min(420,w*.52)),left=55,top=20,pw=w-75,ph=h-70,maxG=.45,maxB=.5;
+    const data=C.plotData(state.lab.records),ready=data.points.length>=3;
+    if(!ready)plotMode='diagram';
+    $('plot-diagram').hidden=plotMode!=='diagram';$('plot-rays').hidden=plotMode!=='rays';$('plot-rays-open').disabled=!ready;$('curve-key').hidden=!ready;
+    $('plot-diagram-open').setAttribute('aria-pressed',String(plotMode==='diagram'));$('plot-rays-open').setAttribute('aria-pressed',String(plotMode==='rays'));
+    $('plot-status').textContent=ready?'Ab drei verschiedenen Gegenstandsweiten: Die Kurve verbindet nur den gemessenen Bereich. Im Strahlengang kannst du jede gespeicherte Anordnung untersuchen.'+(data.points.length<state.lab.records.length?' Bei gleichem g verwendet die Kurve den Mittelwert von b; alle Einzelpunkte bleiben sichtbar.':''):'Übernimm noch '+(3-data.points.length)+' scharfe Anordnung'+(3-data.points.length===1?'':'en')+' mit verschiedenen Gegenstandsweiten. Ab drei erscheinen eine glatte Verbindungskurve und die Strahlengang-Ansicht.';
+    const el=$('lens-plot'),w=el.clientWidth||$('measurements-area').clientWidth||800,h=Math.max(260,Math.min(420,w*.52)),left=55,top=20,pw=w-75,ph=h-70,maxG=.45,maxB=.5;
+    const x=g=>left+g/maxG*pw,y=b=>top+ph-b/maxB*ph;
     el.setAttribute('viewBox','0 0 '+w+' '+h);let out='<path d="M'+left+' '+top+'V'+(top+ph)+'H'+(left+pw)+'" class="plot-axis"/>';
-    for(let i=0;i<=5;i++){const yy=top+ph-i/5*ph,xx=left+i/5*pw;out+='<path d="M'+left+' '+yy+'H'+(left+pw)+'" class="plot-grid"/><text x="'+(left-10)+'" y="'+(yy+4)+'" text-anchor="end">'+C.n(i*.1,1)+'</text><text x="'+xx+'" y="'+(top+ph+23)+'" text-anchor="middle">'+C.n(i*maxG/5,2)+'</text>';}
+    for(let i=0;i<=5;i++){const yy=y(i*.1);out+='<path d="M'+left+' '+yy+'H'+(left+pw)+'" class="plot-grid"/><text x="'+(left-10)+'" y="'+(yy+4)+'" text-anchor="end">'+C.n(i*.1,1)+'</text>';}
+    const ticks=w<500?3:9;for(let i=0;i<=ticks;i++){const g=i*maxG/ticks,xx=x(g);out+='<path d="M'+xx+' '+(top+ph)+'v5" class="plot-axis"/><text x="'+xx+'" y="'+(top+ph+23)+'" text-anchor="middle">'+C.n(g,2)+'</text>';}
     out+='<text x="4" y="16">b / m</text><text x="'+(left+pw)+'" y="'+(h-4)+'" text-anchor="end">g / m</text>';
-    state.lab.records.forEach(r=>out+='<circle cx="'+(left+r.g/maxG*pw)+'" cy="'+(top+ph-r.b/maxB*ph)+'" r="5"><title>g = '+C.n(r.g)+' m, b = '+C.n(r.b)+' m</title></circle>');el.innerHTML=out;
+    if(ready)out+='<path class="measurement-curve" d="'+data.curve.map((p,i)=>(i?'L':'M')+x(p.g)+' '+y(p.b)).join(' ')+'"><title>Glatte Verbindung zwischen den gemessenen Gegenstandsweiten</title></path>';
+    state.lab.records.forEach(r=>out+='<circle cx="'+x(r.g)+'" cy="'+y(r.b)+'" r="5"><title>g = '+C.n(r.g)+' m, b = '+C.n(r.b)+' m</title></circle>');el.innerHTML=out;
+    renderAnalysis();
   }
+  const recordKey=r=>r.g+':'+r.b;
+  function renderAnalysis(){
+    const rows=state.lab.records.slice().sort((a,b)=>a.g-b.g||a.b-b.b);
+    if(!rows.some(r=>recordKey(r)===analysisRecord))analysisRecord=rows[0]?recordKey(rows[0]):'';
+    $('analysis-record').innerHTML=rows.map(r=>'<option value="'+esc(recordKey(r))+'"'+(recordKey(r)===analysisRecord?' selected':'')+'>g = '+C.n(r.g*100,1)+' cm · b = '+C.n(r.b*100,1)+' cm</option>').join('');
+    const r=rows.find(r=>recordKey(r)===analysisRecord);if(!r){$('analysis-bank').innerHTML='';$('analysis-caption').textContent='';return;}
+    $('analysis-bank').innerHTML=V.benchGraphic(C.bench(r.g,r.b),true,'analysis');
+    $('analysis-caption').textContent='Gespeichert: g = '+C.n(r.g*100,1)+' cm, b = '+C.n(r.b*100,1)+' cm. Größenfaktor b/g ≈ '+C.n(r.b/r.g,3)+': Das Bild ist '+imageKind(r.b/r.g)+' und umgekehrt. Die akzeptierte Modell-Schärfetoleranz beträgt 1 mm.';
+  }
+  $('plot-diagram-open').onclick=()=>{plotMode='diagram';renderPlot();animate($('plot-diagram'));};$('plot-rays-open').onclick=()=>{plotMode='rays';renderPlot();animate($('plot-rays'));};
+  $('analysis-record').onchange=e=>{analysisRecord=e.target.value;renderAnalysis();};
   function renderMeasurements(){const rows=state.lab.records.slice().sort((a,b)=>a.g-b.g);$('measurements').innerHTML=rows.length?rows.map(r=>'<tr><td>'+imageKind(r.b/r.g)+'</td><td>'+C.n(r.g,4)+'</td><td>'+C.n(r.b,4)+'</td><td>'+C.n(r.b/r.g,3)+'</td><td>'+C.n(r.g*r.b/(r.g+r.b),5)+'</td></tr>').join(''):'<tr><td colspan="5">Noch keine scharfe Anordnung übernommen.</td></tr>';$('measure-clear').disabled=!rows.length;renderPlot();}
   window.addEventListener('resize',renderPlot);
   const result=t=>state.results[t.id]||{attempts:0,status:'open',points:0,lastAnswer:'',unit:C.units[t.dimension]?.[0][0]},terminal=r=>r.status!=='open';
@@ -79,7 +99,7 @@
     let hints=0;$('hint-open').onclick=()=>{$('task-hint').hidden=false;$('task-hint').textContent=t.hints[Math.min(hints++,t.hints.length-1)];};$('task-next').onclick=()=>{if(state.current<9){state.current++;renderTask();save();$('task-card').scrollIntoView({behavior:view.motion?'smooth':'instant',block:'start'});}};icons();animate($('task-card'));
   }
   $('reset-confirm').onclick=()=>{closeDialog('reset-dialog');let seed=newSeed();if(seed===state.seed)seed=(seed+1)>>>0||1;state=fresh(seed);tasks=C.round(seed);slides=V.createSlides(tasks);$('badge-message').textContent='';slideOptions();renderSlide();renderLab();renderMeasurements();renderTask();renderBadges();save();$('praesentation').scrollIntoView({behavior:view.motion?'smooth':'instant',block:'start'});};
-  applyView();$('history-copy').innerHTML=V.history;$('history-sources').innerHTML=V.sourceLinks;$('sources-history').innerHTML=V.sourceLinks;fill($('knowledge'),V.knowledge());$('example-prompt').textContent=C.example().prompt;$('example-rounding').textContent=C.answerFormat(C.example()).instruction;fill($('example-solution'),V.solution(C.example()));
+  applyView();$('history-copy').innerHTML=V.history;$('history-sources').innerHTML=V.sourceLinks;$('sources-history').innerHTML=V.sourceLinks;fill($('knowledge'),V.knowledge());fill($('plot-evaluation'),V.evaluation());$('example-prompt').textContent=C.example().prompt;$('example-rounding').textContent=C.answerFormat(C.example()).instruction;fill($('example-solution'),V.solution(C.example()));
   slideOptions();renderSlide();renderLab();renderMeasurements();renderTask();renderBadges();icons();
   window.LensApp=Object.freeze({snapshot:()=>JSON.parse(JSON.stringify(state)),round:()=>tasks,slides:()=>slides,example:C.example,presentationActive,whenReady:()=>mathQueue});
 })();
