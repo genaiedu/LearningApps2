@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="de" data-palette="graphite" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Kräfte für die Sekundarstufe I: Newtonsche Axiome, Gewichtskraft, Hookesches Gesetz, Federversuch und zehn Zufallsaufgaben mit vollständigen Rechenwegen. Mit Präsentation und druckbarem Arbeitsblatt.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Kräfte-Labor · Was eine Kraft verändert</title>
+  <link rel="stylesheet" href="styles/typografie-palettes.css">
+  <link rel="stylesheet" href="styles/kraefte-labor.css?v=20261020-2">
+  <script>
+    window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']],processEscapes:true},svg:{fontCache:'local'},options:{enableMenu:false}};
+  </script>
+  <script defer src="../LearningApps/fonts/mathjax-svg-3.2.2/tex-svg.js"></script>
+  <script defer src="../LearningApps/fonts/lucide.min.js"></script>
+  <script defer src="scripts/kraefte-core.js?v=20261020-1"></script>
+  <script defer src="scripts/kraefte-inhalte.js?v=20261020-2"></script>
+  <script defer src="scripts/kraefte-labor.js?v=20261020-2"></script>
+</head>
+<body>
+  <a class="skip" href="#inhalt">Zum Inhalt</a>
+  <header class="floating-header">
+    <a class="wordmark" href="#anfang"><strong>KRÄFTE</strong> LABOR</a>
+    <nav aria-label="Werkzeuge">
+      <button id="formula-open" type="button"><i data-lucide="book-open" aria-hidden="true"></i><span>Formeln</span></button>
+      <button id="view-open" type="button"><i data-lucide="sliders-horizontal" aria-hidden="true"></i><span>Darstellung</span></button>
+      <button id="reset-open" type="button"><i data-lucide="rotate-ccw" aria-hidden="true"></i><span>Neu beginnen</span></button>
+    </nav>
+  </header>
+  <main id="inhalt">
+    <section class="hero wrap" id="anfang">
+      <div class="hero-copy">
+        <p class="eyebrow">Physik · Sekundarstufe I</p>
+        <h1>Was eine Kraft<br><em>verändert.</em></h1>
+        <p class="lead">Ein Wagen wird schneller. Eine Feder wird länger. Hinter beidem steckt eine Kraft. Finde heraus, was sie bewirkt – und wie du sie berechnest.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#praesentation"><i data-lucide="presentation" aria-hidden="true"></i>Zur Einführung</a>
+          <a class="button" href="material/kraefte-arbeitsblatt.pdf" download><i data-lucide="download" aria-hidden="true"></i>Arbeitsblatt als PDF</a>
+        </div>
+        <p class="small workflow-note">Für den Unterricht: erst das Arbeitsblatt und den echten Versuch bearbeiten, danach mit dem digitalen Federlabor vergleichen.</p>
+      </div>
+      <figure class="hero-figure" aria-label="Eine Feder verlängert sich unter einer angehängten Masse">
+        <svg id="hero-spring" viewBox="0 0 420 450" role="img" aria-label="Schematische Feder mit einer nach unten gerichteten Gewichtskraft"></svg>
+        <figcaption>Bewegen. Verformen. Zusammenhänge erkennen.</figcaption>
+      </figure>
+    </section>
+    <nav class="section-nav wrap" aria-label="Bereiche">
+      <a href="#praesentation"><span>01</span>Präsentation</a>
+      <a href="#verstehen"><span>02</span>Verstehen</a>
+      <a href="#federlabor"><span>03</span>Federlabor</a>
+      <a href="#training"><span>04</span>Trainieren</a>
+    </nav>
+
+    <section class="chapter wrap" id="praesentation">
+      <div class="section-heading"><div><p class="eyebrow">01 · Gemeinsam beginnen</p><h2>Vom Beobachten<br><em>zum Berechnen.</em></h2></div><p>Die Einführung erklärt die Grundlagen und den Versuch. Danach folgen genau die zehn Aufgaben deiner aktuellen Runde – mit denselben Zahlen wie im Training.</p></div>
+      <aside class="media-notice" aria-labelledby="media-title"><div><h3 id="media-title">Bilder aus Wikipedia / Wikimedia Commons</h3><p>Porträt und Fotos werden erst nach deiner Freigabe von Wikimedia geladen. Dabei erhält Wikimedia deine IP-Adresse und technische Browserdaten. Antworten und Messwerte werden nicht mitgeschickt. Ohne Bilder bleiben alle Erklärungen, Animationen und Aufgaben nutzbar. Die Freigabe gilt nur für diesen Besuch.</p><p id="media-status" class="small" role="status">Externe Bilder sind ausgeschaltet.</p></div><button type="button" id="media-toggle" aria-pressed="false">Bilder für diesen Besuch laden</button></aside>
+      <div id="presentation" class="presentation" aria-label="Unterrichtspräsentation">
+        <div class="presentation-tools">
+          <label for="slide-select" class="sr-only">Folie auswählen</label><select id="slide-select"></select>
+          <button type="button" id="presentation-fullscreen"><i data-lucide="maximize" aria-hidden="true"></i>Vollbild</button>
+        </div>
+        <article id="slide" class="slide" aria-live="polite"></article>
+        <div class="presentation-bottom">
+          <button id="slide-prev" type="button"><i data-lucide="arrow-left" aria-hidden="true"></i>Zurück</button>
+          <span id="slide-position" class="numeric"></span>
+          <button id="slide-next" type="button">Weiter<i data-lucide="arrow-right" aria-hidden="true"></i></button>
+        </div>
+        <p class="fullscreen-note">Im Vollbild bleiben nur Zurück und Weiter sichtbar. Mit ← / → blättern, mit Esc zurück zur App.</p>
+      </div>
+      <p id="fullscreen-message" role="status" class="small"></p>
+    </section>
+
+    <section class="chapter wrap" id="verstehen">
+      <div class="section-heading"><div><p class="eyebrow">02 · Die Newtonschen Axiome</p><h2>Drei Grundsätze.<br><em>Viele Folgen.</em></h2></div><p>Kräfte haben einen Betrag, eine Richtung und einen Angriffspunkt. Für die Bewegung zählt ihre gemeinsame Wirkung auf einen bestimmten Körper.</p></div>
+      <div id="knowledge" class="knowledge"></div>
+      <article class="example-block" id="rechenbeispiel"><p class="eyebrow">Das feste Rechenbeispiel</p><h3>Eine Federkonstante bestimmen.</h3><p id="example-prompt"></p><p class="small">Dieses Beispiel bleibt bei jedem Neustart gleich und steht genauso in der Präsentation.</p><div id="example-solution"></div></article>
+    </section>
+
+    <section class="chapter wrap" id="federlabor">
+      <div class="section-heading"><div><p class="eyebrow">03 · Digitales Vergleichsexperiment</p><h2>Ein Gramm mehr.<br><em>Was ändert sich?</em></h2></div><p>Untersuche nach dem echten Versuch eine ideale Beispielfeder. Ihre Federkonstante ist nicht automatisch die deiner Versuchsfeder.</p></div>
+      <div class="lab-grid">
+        <figure class="apparatus"><svg id="spring-scene" viewBox="0 0 520 610" role="img" aria-label="Veränderbare Federanordnung mit Skala"></svg><figcaption id="spring-caption"></figcaption></figure>
+        <div class="lab-controls">
+          <fieldset class="segmented"><legend>Anordnung</legend><button type="button" data-mode="single" aria-pressed="true">Eine Feder</button><button type="button" data-mode="series" aria-pressed="false">In Reihe</button><button type="button" data-mode="parallel" aria-pressed="false">Parallel</button></fieldset>
+          <label class="mass-label" for="mass-range">Angehängte Zusatzmasse <output id="mass-value" class="numeric" for="mass-range">0 g</output></label>
+          <input id="mass-range" type="range" min="0" max="30" step="1" value="0">
+          <div class="mass-step"><button type="button" id="mass-less" aria-label="Ein Gramm entfernen"><i data-lucide="minus" aria-hidden="true"></i></button><span class="small">1-g-Schritte · höchstens 30 g</span><button type="button" id="mass-more" aria-label="Ein Gramm hinzufügen"><i data-lucide="plus" aria-hidden="true"></i></button></div>
+          <dl class="readouts"><div><dt>Gewichtskraft</dt><dd id="force-value" class="numeric"></dd></div><div><dt>Verlängerung</dt><dd id="extension-value" class="numeric"></dd></div></dl>
+          <p id="live-calculation" class="lab-equation"></p>
+          <button type="button" class="primary" id="measure"><i data-lucide="ruler" aria-hidden="true"></i>Messwert übernehmen</button>
+          <p id="measure-feedback" class="small" role="status"></p>
+          <details class="model-notes"><summary>Was bildet das Modell ab?</summary><p>Jede ideale Einzelfeder hat \(D=5\,\mathrm{N/m}\). Feder und Haken werden als masselos betrachtet. Die angezeigte Zusatzmasse umfasst die gesamte wirksame Belastung. Nach jedem Schritt wird das ruhige Gleichgewicht gezeigt; Schwingungen und Reibung werden nicht berechnet. Das lineare Modell gilt hier bis 30 g.</p><p>Im echten Versuch muss die Lehrkraft prüfen, welche Belastung elastisch bleibt. 30 g sind keine allgemeine Sicherheitsgrenze für beliebige Federn. Die parallelen Federn sind hier zur besseren Sicht nebeneinander gezeichnet.</p></details>
+        </div>
+      </div>
+      <div class="measurement-grid">
+        <div><div class="row-heading"><h3>Dein Messprotokoll</h3><button type="button" id="measure-clear">Messwerte löschen</button></div><div class="table-scroll"><table><caption class="sr-only">Simulierte Messwerte der drei Anordnungen</caption><thead><tr><th>Anordnung</th><th>m / kg</th><th>F / N</th><th>s / m</th></tr></thead><tbody id="measurements"></tbody></table></div><p class="small">Es sind ideale Simulationswerte, keine Messungen deiner echten Feder. Ein erneuter Klick bei derselben Masse ersetzt den vorhandenen Eintrag.</p></div>
+        <div><h3>Kraft über Verlängerung</h3><svg id="spring-plot" viewBox="0 0 580 365" role="img" aria-label="Kraft-Verlängerungs-Diagramm der übernommenen Messwerte"></svg><p class="small">○ Eine Feder · □ Reihe · △ Parallel. Waagerecht: s in m. Senkrecht: F in N.</p><div id="fit-results"></div></div>
+      </div>
+    </section>
+
+    <section class="chapter wrap" id="training">
+      <div class="section-heading"><div><p class="eyebrow">04 · Selbst rechnen</p><h2>Erst überlegen.<br><em>Dann einsetzen.</em></h2></div><p>Zehn Aufgaben aus 40 Vorlagen. Die Schwierigkeit steigt in fünf Stufen. Für jede Aufgabe hast du zwei Versuche; Hinweise kosten keine Punkte.</p></div>
+      <div class="training-header"><div><strong id="score">0 / 10 Punkte</strong><p id="round-progress" class="small"></p></div><div class="training-progress" role="progressbar" aria-label="Abgeschlossene Aufgaben" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><span id="training-progress"></span></div><span id="xp" class="numeric">0 XP</span></div>
+      <nav id="task-nav" class="task-nav" aria-label="Aufgabe auswählen"></nav>
+      <article id="task-card" class="task-card"></article>
+      <section class="badge-section" aria-labelledby="badge-title"><p class="eyebrow">Deine Fortschritte</p><h3 id="badge-title">Was du schon kannst.</h3><div id="badges" class="badges"></div></section>
+    </section>
+    <footer class="wrap page-footer"><p>Die Rechnungen und die Simulation laufen in deinem Browser. Fortschritt und Darstellung werden nur lokal gespeichert. Keine Anmeldung, keine Laufzeit-KI. Die optionalen Wikimedia-Bilder werden ausschließlich nach Freigabe geladen.</p><nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><button type="button" id="sources-open">Quellen & Modellgrenzen</button></nav></footer>
+  </main>
+
+  <dialog id="view-dialog" aria-labelledby="view-title"><div class="dialog-heading"><h2 id="view-title">Deine Darstellung</h2><button type="button" data-close="view-dialog" aria-label="Darstellung schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><label for="palette">Farbschema</label><select id="palette"><option value="graphite">Graphit</option><option value="atelier">Papier & Wald</option><option value="slate">Schieferblau</option><option value="plum">Pflaume</option><option value="bordeaux">Bordeaux</option></select><fieldset><legend>Darstellung</legend><label><input type="radio" name="theme" value="light" checked> Hell</label><label><input type="radio" name="theme" value="dark"> Dunkel</label></fieldset><label><input id="motion" type="checkbox" checked> Kurze Animationen</label><label for="text-scale">Schriftgröße <output id="text-scale-value">100 %</output></label><input id="text-scale" type="range" min="90" max="120" step="5" value="100"></dialog>
+  <dialog id="formula-dialog" class="wide-dialog" aria-labelledby="formula-title"><div class="dialog-heading"><h2 id="formula-title">Formelsammlung</h2><button type="button" data-close="formula-dialog" aria-label="Formelsammlung schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><div id="formula-content"></div></dialog>
+  <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">Eine neue Runde?</h2><p>Die zehn Aufgaben und ihre Zahlen werden neu ausgewählt. Antworten, Punkte, Abzeichen und Simulationsmesswerte dieser App werden zurückgesetzt. Deine Darstellung bleibt erhalten. Das feste Beispiel und das Arbeitsblatt ändern sich nicht.</p><div class="dialog-actions"><button type="button" data-close="reset-dialog">Abbrechen</button><button type="button" class="primary" id="reset-confirm">Neue Runde beginnen</button></div></dialog>
+  <dialog id="sources-dialog" class="wide-dialog" aria-labelledby="sources-title"><div class="dialog-heading"><h2 id="sources-title">Quellen & Modellgrenzen</h2><button type="button" data-close="sources-dialog" aria-label="Quellen schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><p>Die Inhalte sind für die Sekundarstufe I vereinfacht. Die drei Newtonschen Gesetze werden in einem näherungsweise ruhenden Bezugssystem und bei konstanter Masse verwendet. Für den Ortsfaktor rechnen wir mit \(g\approx9{,}81\,\mathrm{N/kg}\) nahe der Erdoberfläche.</p><p>Das Federlabor beschreibt ein ideales, statisches und lineares Modell. Es sagt nicht voraus, welche reale Feder 30 g verträgt. Die Kraftpfeile sind schematisch.</p><ul><li><a href="https://www.physik.uni-leipzig.de/jvwikis/mechanics/book/chap3/3.3_newton_s_axioms_and_equations_of_motion_eom" target="_blank" rel="noopener noreferrer">Universität Leipzig · Newtonsche Axiome</a></li><li><a href="https://labs.physik.kit.edu/prakt-nebenfach-manuals/Experiments/Lineare_Schwingungen/" target="_blank" rel="noopener noreferrer">KIT · Federkonstanten, Reihen- und Parallelschaltung</a></li></ul><p class="small">Externe Quellen öffnen sich erst nach deinem Klick. Die App selbst benötigt sie nicht. Lokale Schriften: Fira Sans und EB Garamond (SIL OFL); Symbole: Lucide (ISC); Formelsatz: MathJax (Apache 2.0). Die Dateien samt Lizenzen liegen im gemeinsamen Schrift- und Bibliotheksbestand.</p></dialog>
+  <div id="badge-toast" class="badge-toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="wrap">Für Simulation, Präsentation und Aufgaben ist JavaScript erforderlich. Das <a href="material/kraefte-arbeitsblatt.pdf">Arbeitsblatt als PDF</a> kannst du auch ohne JavaScript herunterladen.</p></noscript>
+</body>
+</html>
