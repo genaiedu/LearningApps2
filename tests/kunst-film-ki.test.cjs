@@ -26,7 +26,7 @@ test('provider must cite an exact verified fact for each work and must not repea
  const named=structuredClone(value);named.works[0].text=context.works[0].artist+' malt dieses Werk.';assert.throws(()=>film.parseGenerated(named,ids,context));
 });
 test('same protected feedback endpoint uses an independent film prompt and strict schema',async()=>{
- let calls=0;const handler=fixture(async(url,options)=>{calls++;const body=JSON.parse(options.body);assert.equal(body.model,'openai/gpt-oss-120b');assert.equal(body.response_format.json_schema.name,'art_film_captions');const review=calls%2===0;assert.equal(body.messages[0].content,review?film.reviewInstructions:film.instructions);const data=JSON.parse(body.messages[1].content);assert.deepEqual((review?data.sources:data).works.map(w=>w.id),ids);return response();});
+ let calls=0;const handler=fixture(async(url,options)=>{calls++;const body=JSON.parse(options.body);assert.equal(body.model,'openai/gpt-oss-120b');assert.equal(body.response_format.json_schema.name,'art_film_captions');const review=calls%2===0;assert.equal(body.messages[0].content,review?film.reviewInstructions:film.instructions);const data=JSON.parse(body.messages[1].content);assert.deepEqual(data.works.map(w=>w.id),ids);assert.ok(data.factCatalog);return response();});
  for(let i=0;i<2;i++){const out=res();await handler(req(input()),out);assert.equal(out.code,200);assert.equal(out.body.works.length,8);}assert.equal(calls,2);
  const out=res();await handler(req({...input(),variation:13}),out);assert.equal(out.code,200);assert.equal(calls,4);
 });

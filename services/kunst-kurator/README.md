@@ -27,6 +27,11 @@ Zeitgrenze; bei erneutem Versuch höchstens vier Modellaufrufe insgesamt. Auch
 das Lektorat wird vollständig validiert. Diese zusätzliche Prüfung ist keine
 Garantie gegen KI-Fehler; der sichtbare Vorschlag braucht weiterhin die bewusste
 Übernahme und kann bearbeitet oder verworfen werden.
+Version 10 übergibt wiederkehrende Fakten nur einmal mit werkbezogenen Referenzen
+und beschränkt den Lektoratskontext auf die jeweils benutzten Belege plus
+Materialangaben und fachliche Vorbehalte. So werden Definitionen weder im Kontext
+noch in den Antworten mehrfach kopiert; die Faktenbindung bleibt erhalten und
+die beiden Aufrufe benötigen deutlich weniger Anfragetokens.
 
 Nur der eigene Knopf „Texte von KI erstellen lassen“ im Filmeditor fordert Texte
 an, nach informierter KI-Freigabe. Weder Filmstart noch Öffnen/Ändern einer Galerie

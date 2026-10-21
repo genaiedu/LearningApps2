@@ -2,7 +2,7 @@
 const {createHash,randomUUID}=require('node:crypto');
 const ki=require('../lib/kunst-ki.js');
 const filmKi=require('../lib/kunst-film-ki.js');
-const VERSION=9;
+const VERSION=10;
 // One browser request owns both attempts. Keep the complete operation below
 // Vercel's 30-second limit and the browser's 28-second deadline.
 const TOTAL_MS=25000, ATTEMPT_MS=11500, RETRY_MS=450;
@@ -81,7 +81,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
         method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+env.GROQ_API_KEY},signal,redirect:'error',
         body:JSON.stringify({model:'openai/gpt-oss-120b',messages:[{role:'system',content:system},{role:'user',content:JSON.stringify(data)}],
           response_format:{type:'json_schema',json_schema:{name:filmMode?'art_film_captions':'museum_curator',strict:true,schema:filmMode?filmKi.schema(input.ids):ki.schema(input.room.ids)}},
-          temperature:review ? .3 : filmMode ? .8 : .65,reasoning_effort:filmMode&&!review?'medium':'low',max_completion_tokens:filmMode?4000:6000})
+          temperature:review ? .3 : filmMode ? .8 : .65,reasoning_effort:filmMode&&!review?'medium':'low',max_completion_tokens:filmMode?(review?2200:2800):6000})
       }); } catch { throw new FeedbackFailure('network',{retryable:true}); }
       if (!response.ok) {
         let code='none';
@@ -107,7 +107,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
       try { result=filmMode?filmKi.parseGenerated(draft,input.ids,context):ki.parseResponse(draft,input.room.ids); }
       catch { throw new FeedbackFailure('response_validation',{retryable:true}); }
       if(filmMode){
-        const reviewed=await completionText(filmKi.reviewInstructions,{sources:context,draft:JSON.parse(draft)},{review:true});
+        const reviewed=await completionText(filmKi.reviewInstructions,filmKi.reviewContext(JSON.parse(draft),context),{review:true});
         try{result=filmKi.parseGenerated(reviewed,input.ids,context);}catch{throw new FeedbackFailure('response_validation',{retryable:true});}
       }
       // Catch invented four-digit dates in each work's personal paragraph.
