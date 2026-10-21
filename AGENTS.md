@@ -1,5 +1,8 @@
 # Publishing and shared assets
 
+- Never link the code generator, profile registration, or code-issuance administration from a learner app, public overview, learner code card, or their privacy notices. Do not add a "get/create a code" action. Learners receive codes from their teacher.
+- Only the authenticated, authorized teacher may create new learning-code profiles in the protected administration. A learner code is not a creation credential; hiding a link is not sufficient access control.
+
 - Do not deploy this repository to Vercel. The user explicitly prohibits it.
 - Narrow exception explicitly approved on 11 October 2026: only the separate
   `services/kunst-kurator` feedback service may be published to Vercel. Do not
