@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de" data-palette="graphite" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hundegenetik verstehen: Vielfalt der Hunderassen, interaktive Verwandtschaftsgrafik, Verhalten, Erbkrankheiten, Inzucht und Mischlinge. Mit lokalen Wikimedia-Fotos, Fuchsexkurs, Präsentation und Lernaufgaben.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Hundegenetik · Vielfalt, Verhalten und Gesundheit</title>
+  <link rel="stylesheet" href="styles/typografie-palettes.css">
+  <link rel="stylesheet" href="styles/hundegenetik.css?v=20261021-1">
+  <script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'local'},options:{enableMenu:false}};</script>
+  <script defer src="../LearningApps/fonts/mathjax-svg-3.2.2/tex-svg.js"></script>
+  <script defer src="../LearningApps/fonts/lucide.min.js"></script>
+  <script defer src="scripts/hundegenetik-core.js?v=20261021-1"></script>
+  <script defer src="scripts/hundegenetik-inhalte.js?v=20261021-1"></script>
+  <script defer src="scripts/hundegenetik.js?v=20261021-1"></script>
+</head>
+<body>
+  <a class="skip" href="#inhalt">Zum Inhalt</a>
+  <header class="floating-header">
+    <a class="wordmark" href="#entdecken"><strong>HUNDE</strong> GENETIK</a>
+    <nav aria-label="Werkzeuge">
+      <button type="button" id="presentation-open" aria-label="Unterrichtspräsentation öffnen"><i data-lucide="presentation" aria-hidden="true"></i><span>Präsentation</span></button>
+      <button type="button" id="view-open" aria-label="Darstellung einstellen"><i data-lucide="sliders-horizontal" aria-hidden="true"></i><span>Darstellung</span></button>
+      <button type="button" id="reset-open" aria-label="Neue Aufgabenrunde beginnen"><i data-lucide="rotate-ccw" aria-hidden="true"></i><span>Neustart</span></button>
+    </nav>
+  </header>
+  <nav id="chapter-nav" class="chapter-nav" aria-label="Kapitel"></nav>
+  <main id="inhalt" class="wrap" tabindex="-1"><p class="loading">Die lokale Lernapp wird vorbereitet …</p></main>
+  <div class="wrap chapter-bottom"><button id="chapter-prev" type="button"><i data-lucide="arrow-left" aria-hidden="true"></i>Zurück</button><span id="chapter-position" class="small"></span><button id="chapter-next" type="button">Weiter<i data-lucide="arrow-right" aria-hidden="true"></i></button></div>
+  <footer class="wrap page-footer"><p>Fotos, Schriften und Lernmodule werden aus diesem Angebot geladen. Keine Laufzeit-KI, keine Anmeldung. Fortschritt und Darstellung bleiben in deinem Browser.</p><nav aria-label="Rechtliches und Bildnachweise"><a href="#quellen">Quellen & Bildnachweise</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav></footer>
+  <dialog id="start-dialog" aria-labelledby="start-title">
+    <p class="eyebrow">Bevor du beginnst</p><h2 id="start-title">Bilder ansehen.<br><em>Daten verstehen.</em></h2>
+    <p>Die App enthält Fotografien aus Wikipedia / Wikimedia Commons. Sie wurden mit ihren Lizenznachweisen in dieses Repository heruntergeladen. Beim Ansehen gibt es <strong>keine Bildabrufe bei Wikimedia</strong>.</p>
+    <p>Die Seite und ihre Dateien werden von GitHub Pages ausgeliefert. Dabei fallen technische Zugriffsdaten beim Hosting an. Externe Quellen öffnen sich erst, wenn du einen entsprechenden Link anklickst.</p>
+    <p>Aufgaben und Fortschritt werden nur lokal in deinem Browser gespeichert. Ohne Fotos bleiben sämtliche Erklärungen, Modelle und Aufgaben benutzbar.</p>
+    <div class="dialog-actions"><button id="start-images" type="button">Mit Fotos beginnen</button><button id="start-no-images" type="button">Ohne Fotos beginnen</button></div>
+    <p class="small">Du kannst Fotos und Darstellung später umschalten. Dieser Hinweis ist keine zusätzliche Lizenz für die Bilder; ihre jeweiligen Nachweise stehen bei den Fotos und im Quellenkapitel.</p>
+  </dialog>
+  <dialog id="view-dialog" aria-labelledby="view-title">
+    <div class="dialog-heading"><h2 id="view-title">Deine Darstellung</h2><button type="button" data-close="view-dialog" aria-label="Darstellung schließen"><i data-lucide="x" aria-hidden="true"></i></button></div>
+    <label for="palette">Farbschema</label><select id="palette"><option value="graphite">Graphit</option><option value="atelier">Papier & Wald</option><option value="slate">Schieferblau</option><option value="plum">Pflaume</option><option value="bordeaux">Bordeaux</option></select>
+    <fieldset><legend>Darstellung</legend><label><input name="theme" type="radio" value="light" checked> Hell</label><label><input name="theme" type="radio" value="dark"> Dunkel</label></fieldset>
+    <label><input id="photos-enabled" type="checkbox" checked> Fotos anzeigen</label>
+    <label><input id="motion-enabled" type="checkbox" checked> Kurze Animationen</label>
+    <label for="text-scale">Schriftgröße <output id="text-scale-value">100 %</output></label><input id="text-scale" type="range" min="90" max="125" step="5" value="100">
+    <p class="small">Die Originalfarben der wissenschaftlichen Verwandtschaftsgrafik bleiben auf weißem Grund erhalten. Das ist eine Quellenabbildung, keine zusätzliche Lesepalette.</p>
+  </dialog>
+  <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">Eine neue Runde?</h2><p>Die zehn Aufgaben werden neu ausgewählt, Zahlen und Reihenfolgen ändern sich. Fortschritt, Punkte und Modell-Einstellungen dieser Runde werden zurückgesetzt. Darstellung, Fotos und das feste Rechenbeispiel bleiben erhalten.</p><div class="dialog-actions"><button type="button" data-close="reset-dialog">Abbrechen</button><button id="reset-confirm" type="button" class="primary">Neue Runde beginnen</button></div></dialog>
+  <dialog id="photo-dialog" class="photo-dialog" aria-labelledby="photo-title"><div class="dialog-heading"><h2 id="photo-title">Foto</h2><button type="button" data-close="photo-dialog" aria-label="Foto schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><div id="photo-content"></div></dialog>
+  <dialog id="presentation" class="presentation" aria-label="Unterrichtspräsentation"><div class="presentation-bar"><label class="sr-only" for="slide-select">Folie auswählen</label><select id="slide-select"></select><button id="presentation-full" type="button"><i data-lucide="maximize" aria-hidden="true"></i>Vollbild</button><button data-close="presentation" type="button" aria-label="Präsentation schließen"><i data-lucide="x" aria-hidden="true"></i></button></div><article id="slide" class="slide" aria-live="polite"></article><div class="presentation-navigation"><button id="slide-prev" type="button" aria-label="Vorherige Folie"><i data-lucide="arrow-left" aria-hidden="true"></i><span>Zurück</span></button><span id="slide-counter" class="small"></span><button id="slide-next" type="button" aria-label="Nächste Folie"><span>Weiter</span><i data-lucide="arrow-right" aria-hidden="true"></i></button></div><p class="presentation-help small">← / → zum Blättern. Im Vollbild bleiben nur Zurück und Weiter. Esc beendet die Vollbildansicht.</p></dialog>
+  <p id="app-message" class="sr-only" role="status"></p>
+  <noscript><p class="wrap">Diese App benötigt JavaScript für Kapitel, Modelle und Aufgaben. Quellen: <a href="https://doi.org/10.1126/science.abk0639">Morrill et al. (2022)</a> und <a href="https://doi.org/10.1016/j.celrep.2017.03.079">Parker et al. (2017)</a>. <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a>.</p></noscript>
+</body>
+</html>

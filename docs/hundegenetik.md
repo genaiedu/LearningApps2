@@ -1,0 +1,54 @@
+# Hundegenetik – Vielfalt, Verhalten und Gesundheit
+
+Einstieg: `hundegenetik.html`. Ausschließlich GitHub Pages; kein Vercel.
+Die App lädt Fotos, Schriften, Symbole und Mathematik lokal; die gemeinsamen
+Bibliotheken und Schriften bleiben in `../LearningApps/`.
+
+## Lernweg
+
+Acht erreichbare Kapitel mit schrittweiser Navigation: Fotoerkundung,
+Verwandtschaft, Gene und Merkmale, Verhalten, Gesundheit, Exkurs Fuchs,
+Training, Quellen. Grundlagen ohne vorausgesetzte Populationsgenetik;
+Vertiefungen bleiben eingeklappt. Kein Schülerversuch und deshalb kein
+Versuchs-PDF. Keine Anmeldung, externe KI oder Analyseaufrufe.
+
+Die Präsentation nutzt dieselben zehn Aufgaben aus derselben gespeicherten
+Runde. Das feste Aa×Aa-Beispiel mit 25 % aa bleibt unverändert. Im
+Präsentationsvollbild bleiben nur Vor und Zurück; Esc verlässt die Ansicht.
+
+40 echte Vorlagen, fünf Stufen mit je zwei zufällig ausgewählten Aufgaben.
+Zahlen und Antwortreihenfolgen werden einmal je Runde erzeugt. Zwei gültige
+Versuche, 1/0,5 Punkte, 20/10 XP. Nach Abschluss vollständige Erklärung.
+Zahlenformat und Nachkommastellen stehen am Feld; ±2 % inklusive Grenzen,
+exakte Null gesondert erklärt. Keine Scheinrechnungen bei Verständnisfragen.
+
+## Wissenschaftliche Grenzen
+
+- SNP-Abstand, Heterozygotie und Populationsvielfalt nicht gleichsetzen.
+- Keine ungemessene Chihuahua-Mastiff-Zahl als Studienergebnis ausgeben.
+- Die 9 % betreffen den Rassen-Erklärungsanteil, nicht Gene gegen Erziehung.
+- 40 % genomischer Inzuchtwert sind kein Anteil defekter DNA.
+- Ein einfacher rezessiver Modell-Erbgang wird ausdrücklich nicht als DCM
+  bezeichnet. Variantenbefund, Stoffwechselmerkmal und klinische Folge trennen.
+- Rassehunde/Mischlinge: konkrete Daten und Auswahlgrenzen statt Pauschalurteil.
+- Fuchs: andere Art, Farmvorgeschichte, genetische Verhaltensauswahl,
+  umstrittene Verallgemeinerung zum Domestikationssyndrom. Kritik und Replik.
+- Verwandtschaftsbild: Originalgeometrie von 2017; keine neue Genomanalyse.
+  Keine Verzweigung als gesicherte historische Elternrasse behaupten.
+
+## Zustand und Datenschutz
+
+Nur `hundegenetik:round:v1` und `hundegenetik:view:v1` in localStorage.
+Gesperrter Speicher darf die App nicht blockieren. Der Neustart verändert
+keine fremden Daten. Der Einstieg erklärt die lokale Bildbereitstellung und
+das Hosting; Fotos sind abschaltbar, ohne Lernfunktionen zu verlieren.
+Keine Wikimedia-Anfragen zur Laufzeit. Lizenzen bleiben pro Foto erhalten.
+
+## Prüfung
+
+`node --test tests/hundegenetik.test.cjs`
+
+`node tests/hundegenetik-browser.cjs [URL]` benötigt Playwright/Chromium.
+Browserprüfung: alle Kapitel, lokale Ressourcen, echter Formelsatz, Fotos,
+Baum-Zoom/Ebenen, beide Fehlversuche, Rundenerhalt, Neustart, alle fünf
+Paletten hell/dunkel, gesperrter Speicher und Vollbildfolien.

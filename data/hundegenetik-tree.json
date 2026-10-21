@@ -1,0 +1,1004 @@
+{
+  "source": "https://doi.org/10.1016/j.celrep.2017.03.079",
+  "license": "CC BY 4.0",
+  "bounds": [
+    50.0,
+    70.0,
+    555.0,
+    515.0
+  ],
+  "labels": [
+    {
+      "id": "label-0",
+      "name": "Basenji",
+      "box": [
+        461.072,
+        294.046,
+        477.77,
+        299.688
+      ],
+      "group": "group-21"
+    },
+    {
+      "id": "label-1",
+      "name": "Xigou",
+      "box": [
+        460.393,
+        288.0,
+        473.345,
+        293.642
+      ],
+      "group": "group-21"
+    },
+    {
+      "id": "label-2",
+      "name": "Tibetan Mastiff (Ch)",
+      "box": [
+        459.392,
+        281.49,
+        503.957,
+        289.548
+      ],
+      "group": "group-21"
+    },
+    {
+      "id": "label-3",
+      "name": "Tibetan Mastiff (Am)",
+      "box": [
+        458.438,
+        273.387,
+        504.222,
+        285.208
+      ],
+      "group": "group-21"
+    },
+    {
+      "id": "label-4",
+      "name": "Siberian Husky",
+      "box": [
+        458.181,
+        267.732,
+        492.797,
+        279.106
+      ],
+      "group": "group-21"
+    },
+    {
+      "id": "label-5",
+      "name": "Alaskan Malamute",
+      "box": [
+        454.654,
+        251.168,
+        496.392,
+        267.79
+      ],
+      "group": "group-21"
+    },
+    {
+      "id": "label-6",
+      "name": "Greenland Sledge Dog",
+      "box": [
+        456.214,
+        257.472,
+        507.949,
+        273.713
+      ],
+      "group": "group-21"
+    },
+    {
+      "id": "label-7",
+      "name": "Shiba Inu",
+      "box": [
+        452.633,
+        249.214,
+        474.734,
+        261.261
+      ],
+      "group": "group-21"
+    },
+    {
+      "id": "label-8",
+      "name": "Papillon",
+      "box": [
+        355.152,
+        144.856,
+        366.012,
+        163.788
+      ],
+      "group": "group-18"
+    },
+    {
+      "id": "label-9",
+      "name": "Brussels Griffon",
+      "box": [
+        350.877,
+        125.873,
+        366.122,
+        162.131
+      ],
+      "group": "group-18"
+    },
+    {
+      "id": "label-10",
+      "name": "Pug Dog",
+      "box": [
+        346.019,
+        139.75,
+        356.062,
+        160.27
+      ],
+      "group": "group-18"
+    },
+    {
+      "id": "label-11",
+      "name": "Pumi",
+      "box": [
+        338.088,
+        146.602,
+        345.294,
+        158.837
+      ],
+      "group": "group-16"
+    },
+    {
+      "id": "label-12",
+      "name": "Puli",
+      "box": [
+        342.229,
+        150.144,
+        349.447,
+        159.581
+      ],
+      "group": "group-16"
+    },
+    {
+      "id": "label-13",
+      "name": "Toy and Miniature",
+      "box": [
+        311.552,
+        115.49,
+        317.194,
+        155.603
+      ],
+      "group": "group-16"
+    },
+    {
+      "id": "label-14",
+      "name": "Poodle",
+      "box": [
+        317.267,
+        139.784,
+        322.908,
+        155.604
+      ],
+      "group": "group-16"
+    },
+    {
+      "id": "label-15",
+      "name": "Standard Poodle",
+      "box": [
+        324.803,
+        118.221,
+        332.343,
+        156.273
+      ],
+      "group": "group-16"
+    },
+    {
+      "id": "label-16",
+      "name": "Coto du Tulear",
+      "box": [
+        334.625,
+        124.607,
+        342.849,
+        158.256
+      ],
+      "group": "group-16"
+    },
+    {
+      "id": "label-17",
+      "name": "Havanese",
+      "box": [
+        295.496,
+        132.427,
+        303.385,
+        155.734
+      ],
+      "group": "group-13"
+    },
+    {
+      "id": "label-18",
+      "name": "Bichon Frise",
+      "box": [
+        303.937,
+        127.212,
+        310.467,
+        155.615
+      ],
+      "group": "group-16"
+    },
+    {
+      "id": "label-19",
+      "name": "Portuguese Water Dog",
+      "box": [
+        330.388,
+        105.766,
+        339.995,
+        157.495
+      ],
+      "group": "group-16"
+    },
+    {
+      "id": "label-20",
+      "name": "Maltese",
+      "box": [
+        288.818,
+        138.253,
+        296.512,
+        156.566
+      ],
+      "group": "group-13"
+    },
+    {
+      "id": "label-21",
+      "name": "Rat Terrier",
+      "box": [
+        284.017,
+        132.93,
+        292.531,
+        157.057
+      ],
+      "group": "group-13"
+    },
+    {
+      "id": "label-22",
+      "name": "Toy Fox Terrier",
+      "box": [
+        278.677,
+        123.76,
+        288.971,
+        157.705
+      ],
+      "group": "group-13"
+    },
+    {
+      "id": "label-23",
+      "name": "American Hairless Terrier",
+      "box": [
+        268.359,
+        101.556,
+        284.832,
+        158.5
+      ],
+      "group": "group-13"
+    },
+    {
+      "id": "label-24",
+      "name": "Chinese Crested",
+      "box": [
+        264.32,
+        121.589,
+        278.455,
+        159.719
+      ],
+      "group": "group-13"
+    },
+    {
+      "id": "label-25",
+      "name": "Chihuahua",
+      "box": [
+        259.464,
+        136.765,
+        271.409,
+        161.92
+      ],
+      "group": "group-7"
+    },
+    {
+      "id": "label-26",
+      "name": "Great Pyrenees",
+      "box": [
+        134.888,
+        239.616,
+        170.354,
+        256.544
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-27",
+      "name": "Cirneco delEtna",
+      "box": [
+        130.943,
+        249.973,
+        167.233,
+        265.217
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-28",
+      "name": "Ibizan Hound",
+      "box": [
+        135.64,
+        257.175,
+        166.012,
+        269.806
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-29",
+      "name": "Pharaoh Hound",
+      "box": [
+        133.201,
+        244.96,
+        168.843,
+        260.898
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-30",
+      "name": "Komondor",
+      "box": [
+        140.883,
+        263.761,
+        164.928,
+        273.904
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-31",
+      "name": "Mastino Abruzzese",
+      "box": [
+        119.652,
+        270.092,
+        162.934,
+        281.646
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-32",
+      "name": "Azawakh",
+      "box": [
+        140.484,
+        283.494,
+        161.45,
+        290.494
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-33",
+      "name": "Kuvasz",
+      "box": [
+        146.463,
+        270.33,
+        163.735,
+        278.325
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-34",
+      "name": "Levriero Meridionale",
+      "box": [
+        115.966,
+        277.022,
+        162.298,
+        287.762
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-35",
+      "name": "Anatolian Shepherd",
+      "box": [
+        116.531,
+        286.247,
+        161.407,
+        294.934
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-36",
+      "name": "Sloughi",
+      "box": [
+        144.519,
+        277.643,
+        161.931,
+        284.892
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-37",
+      "name": "Afghan Hound",
+      "box": [
+        127.934,
+        294.54,
+        160.649,
+        301.831
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-38",
+      "name": "Saluki",
+      "box": [
+        146.416,
+        304.487,
+        160.264,
+        310.129
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-39",
+      "name": "Dachshund",
+      "box": [
+        135.608,
+        312.657,
+        161.587,
+        319.891
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-40",
+      "name": "Petit Basset Griffon Vendeen",
+      "box": [
+        96.693,
+        319.31,
+        162.047,
+        331.793
+      ],
+      "group": "group-10"
+    },
+    {
+      "id": "label-41",
+      "name": "Basset Hound",
+      "box": [
+        130.102,
+        325.903,
+        162.434,
+        335.369
+      ],
+      "group": "group-12"
+    },
+    {
+      "id": "label-42",
+      "name": "Otter Hound",
+      "box": [
+        139.949,
+        347.743,
+        168.044,
+        360.905
+      ],
+      "group": "group-12"
+    },
+    {
+      "id": "label-43",
+      "name": "Redbone Coonhound",
+      "box": [
+        115.18,
+        330.48,
+        163.751,
+        343.598
+      ],
+      "group": "group-12"
+    },
+    {
+      "id": "label-44",
+      "name": "Beagle",
+      "box": [
+        148.146,
+        335.236,
+        164.773,
+        344.149
+      ],
+      "group": "group-12"
+    },
+    {
+      "id": "label-45",
+      "name": "Fox Hound",
+      "box": [
+        141.458,
+        341.643,
+        166.88,
+        353.389
+      ],
+      "group": "group-12"
+    },
+    {
+      "id": "label-46",
+      "name": "English Setter",
+      "box": [
+        247.024,
+        444.743,
+        262.512,
+        476.49
+      ],
+      "group": "group-15"
+    },
+    {
+      "id": "label-47",
+      "name": "Gordon Setter",
+      "box": [
+        254.461,
+        447.108,
+        269.446,
+        479.224
+      ],
+      "group": "group-15"
+    },
+    {
+      "id": "label-48",
+      "name": "Briard",
+      "box": [
+        267.365,
+        449.024,
+        275.818,
+        463.42
+      ],
+      "group": "group-15"
+    },
+    {
+      "id": "label-49",
+      "name": "Bouvier des Flandres",
+      "box": [
+        267.658,
+        450.64,
+        281.803,
+        498.858
+      ],
+      "group": "group-6"
+    },
+    {
+      "id": "label-50",
+      "name": "Belgian Malinois",
+      "box": [
+        275.516,
+        451.56,
+        287.61,
+        488.951
+      ],
+      "group": "group-6"
+    },
+    {
+      "id": "label-51",
+      "name": "Belgian Tervuren and",
+      "box": [
+        282.854,
+        453.192,
+        293.632,
+        501.459
+      ],
+      "group": "group-6"
+    },
+    {
+      "id": "label-52",
+      "name": "Sheepdog",
+      "box": [
+        291.189,
+        453.801,
+        299.303,
+        477.443
+      ],
+      "group": "group-6"
+    },
+    {
+      "id": "label-53",
+      "name": "Italian Greyhound",
+      "box": [
+        298.176,
+        454.015,
+        306.161,
+        494.353
+      ],
+      "group": "group-6"
+    },
+    {
+      "id": "label-54",
+      "name": "Borzoi",
+      "box": [
+        307.63,
+        454.229,
+        313.274,
+        468.642
+      ],
+      "group": "group-6"
+    },
+    {
+      "id": "label-55",
+      "name": "Irish Wolfhound",
+      "box": [
+        314.54,
+        454.104,
+        321.825,
+        489.525
+      ],
+      "group": "group-6"
+    },
+    {
+      "id": "label-56",
+      "name": "Scottish Deerhound",
+      "box": [
+        321.584,
+        453.427,
+        330.42,
+        498.319
+      ],
+      "group": "group-4"
+    },
+    {
+      "id": "label-57",
+      "name": "Whippet",
+      "box": [
+        328.216,
+        452.445,
+        335.835,
+        471.565
+      ],
+      "group": "group-4"
+    },
+    {
+      "id": "label-58",
+      "name": "Greyhound",
+      "box": [
+        335.075,
+        451.347,
+        344.72,
+        477.044
+      ],
+      "group": "group-4"
+    },
+    {
+      "id": "label-59",
+      "name": "Old English Sheepdog",
+      "box": [
+        341.862,
+        449.732,
+        359.738,
+        500.142
+      ],
+      "group": "group-4"
+    },
+    {
+      "id": "label-60",
+      "name": "Australian Cattle Dog",
+      "box": [
+        348.342,
+        448.662,
+        366.236,
+        496.475
+      ],
+      "group": "group-4"
+    },
+    {
+      "id": "label-61",
+      "name": "Bearded Collie",
+      "box": [
+        352.542,
+        447.21,
+        367.868,
+        480.676
+      ],
+      "group": "group-4"
+    },
+    {
+      "id": "label-62",
+      "name": "Bull Terrier",
+      "box": [
+        455.706,
+        338.392,
+        480.572,
+        349.754
+      ],
+      "group": "group-1"
+    },
+    {
+      "id": "label-63",
+      "name": "Miniature Bull Terrier",
+      "box": [
+        453.708,
+        344.828,
+        499.822,
+        363.77
+      ],
+      "group": "group-1"
+    },
+    {
+      "id": "label-64",
+      "name": "Boxer",
+      "box": [
+        459.874,
+        305.483,
+        474.519,
+        311.125
+      ],
+      "group": "group-1"
+    },
+    {
+      "id": "label-65",
+      "name": "Bulldog",
+      "box": [
+        459.346,
+        312.588,
+        476.547,
+        319.128
+      ],
+      "group": "group-1"
+    },
+    {
+      "id": "label-66",
+      "name": "Dogue de Bordeaux",
+      "box": [
+        458.751,
+        318.234,
+        504.303,
+        328.629
+      ],
+      "group": "group-1"
+    },
+    {
+      "id": "label-67",
+      "name": "Boston Terrier",
+      "box": [
+        458.438,
+        325.009,
+        490.432,
+        334.964
+      ],
+      "group": "group-1"
+    },
+    {
+      "id": "label-68",
+      "name": "French Bulldog",
+      "box": [
+        457.1,
+        331.285,
+        491.696,
+        343.373
+      ],
+      "group": "group-1"
+    }
+  ],
+  "groups": [
+    {
+      "id": "group-0",
+      "color": "#001c96",
+      "box": [
+        390.898,
+        344.637,
+        440.721,
+        382.306
+      ]
+    },
+    {
+      "id": "group-1",
+      "color": "#0039ff",
+      "box": [
+        346.709,
+        305.11,
+        457.824,
+        375.36
+      ]
+    },
+    {
+      "id": "group-2",
+      "color": "#005695",
+      "box": [
+        374.665,
+        355.599,
+        478.929,
+        463.092
+      ]
+    },
+    {
+      "id": "group-3",
+      "color": "#009494",
+      "box": [
+        361.369,
+        362.4,
+        411.954,
+        426.084
+      ]
+    },
+    {
+      "id": "group-4",
+      "color": "#00fd00",
+      "box": [
+        300.838,
+        375.36,
+        393.906,
+        452.372
+      ]
+    },
+    {
+      "id": "group-5",
+      "color": "#00ffff",
+      "box": [
+        185.39,
+        167.98,
+        290.174,
+        268.248
+      ]
+    },
+    {
+      "id": "group-6",
+      "color": "#019100",
+      "box": [
+        271.308,
+        378.798,
+        320.364,
+        451.99
+      ]
+    },
+    {
+      "id": "group-7",
+      "color": "#6683ff",
+      "box": [
+        257.689,
+        164.548,
+        281.071,
+        222.37
+      ]
+    },
+    {
+      "id": "group-8",
+      "color": "#979000",
+      "box": [
+        172.994,
+        164.973,
+        275.451,
+        359.456
+      ]
+    },
+    {
+      "id": "group-9",
+      "color": "#a334ff",
+      "box": [
+        305.545,
+        160.881,
+        345.561,
+        252.579
+      ]
+    },
+    {
+      "id": "group-10",
+      "color": "#aa4d00",
+      "box": [
+        163.327,
+        253.333,
+        247.545,
+        331.208
+      ]
+    },
+    {
+      "id": "group-11",
+      "color": "#ad1094",
+      "box": [
+        384.707,
+        349.598,
+        435.621,
+        393.033
+      ]
+    },
+    {
+      "id": "group-12",
+      "color": "#b10000",
+      "box": [
+        163.518,
+        311.866,
+        273.687,
+        366.732
+      ]
+    },
+    {
+      "id": "group-13",
+      "color": "#ee80ff",
+      "box": [
+        267.356,
+        159.206,
+        294.272,
+        220.518
+      ]
+    },
+    {
+      "id": "group-14",
+      "color": "#fd0038",
+      "box": [
+        187.959,
+        362.495,
+        243.923,
+        419.315
+      ]
+    },
+    {
+      "id": "group-15",
+      "color": "#ff0000",
+      "box": [
+        174.004,
+        336.873,
+        275.026,
+        446.808
+      ]
+    },
+    {
+      "id": "group-16",
+      "color": "#ff0090",
+      "box": [
+        287.732,
+        157.887,
+        339.56,
+        252.376
+      ]
+    },
+    {
+      "id": "group-17",
+      "color": "#ff7473",
+      "box": [
+        329.607,
+        181.84,
+        405.858,
+        268.153
+      ]
+    },
+    {
+      "id": "group-18",
+      "color": "#ff82d9",
+      "box": [
+        319.799,
+        162.264,
+        390.519,
+        260.09
+      ]
+    },
+    {
+      "id": "group-19",
+      "color": "#ff8c00",
+      "box": [
+        334.896,
+        220.518,
+        441.337,
+        291.395
+      ]
+    },
+    {
+      "id": "group-20",
+      "color": "#ffd26e",
+      "box": [
+        337.327,
+        197.84,
+        430.679,
+        280.91
+      ]
+    },
+    {
+      "id": "group-21",
+      "color": "#fffa00",
+      "box": [
+        334.129,
+        238.046,
+        457.215,
+        301.209
+      ]
+    },
+    {
+      "id": "group-22",
+      "color": "#fffb6b",
+      "box": [
+        333.984,
+        193.272,
+        410.964,
+        272.955
+      ]
+    }
+  ],
+  "note": "Geometrie aus Abb. 1 extrahiert; nicht neu berechnet. Suchindex enthält die maschinenlesbaren Beschriftungen des Original-PDFs."
+}
