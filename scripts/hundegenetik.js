@@ -14,10 +14,17 @@
  if(ss?.version===C.VERSION&&Number.isInteger(ss.seed)&&ss.seed>0&&ss.seed<=0xffffffff){state=fresh(ss.seed);state.current=Math.max(0,Math.min(9,Math.floor(Number(ss.current)||0)));state.slide=Math.max(0,Math.floor(Number(ss.slide)||0));if(ss.results&&typeof ss.results==='object')state.results=ss.results;if(Array.isArray(ss.parents)&&ss.parents.length===2&&ss.parents.every(p=>C.genotypes.includes(p)))state.parents=ss.parents;}
  const save=()=>write(KEY,state),icons=()=>window.lucide?.createIcons();
  const motion=()=>view.motion&&!matchMedia('(prefers-reduced-motion:reduce)').matches;
+ let depthFrame=0;
+ function depthDrawing(){const a=[],b=[],rungs=[];for(let i=0;i<=80;i++){const y=10+i*10,x=130+75*Math.sin(i*Math.PI/20);a.push(`${i?'L':'M'}${x} ${y}`);b.push(`${i?'L':'M'}${260-x} ${y}`);if(i%4===0)rungs.push(`<path d="M${x} ${y}H${260-x}"/>`);}return`<svg viewBox="0 0 260 830" class="depth-helix" aria-hidden="true" focusable="false"><path d="${a.join('')}"/><path d="${b.join('')}"/>${rungs.join('')}</svg>`;}
+ const appBackdrop=$('app-backdrop');if(appBackdrop)appBackdrop.innerHTML=`<div class="depth-mark depth-one">${depthDrawing()}</div><div class="depth-mark depth-two">${depthDrawing()}</div>`;
+ const presentationTexture=document.createElement('div');presentationTexture.className='presentation-texture';presentationTexture.setAttribute('aria-hidden','true');presentationTexture.innerHTML=depthDrawing();$('presentation').prepend(presentationTexture);
+ function updateDepth(){depthFrame=0;const active=motion(),y=active?scrollY:0;document.documentElement.style.setProperty('--depth-shift',-Math.min(160,y*.06)+'px');document.documentElement.style.setProperty('--hero-shift',Math.min(70,y*.14)+'px');}
+ function scheduleDepth(){if(!depthFrame)depthFrame=requestAnimationFrame(updateDepth);}
+ window.addEventListener('scroll',scheduleDepth,{passive:true});matchMedia('(prefers-reduced-motion:reduce)').addEventListener('change',scheduleDepth);
  function animate(e){if(!e||!motion())return;e.classList.remove('motion-enter');requestAnimationFrame(()=>e.classList.add('motion-enter'));}
  function math(e){mathQueue=mathQueue.catch(()=>{}).then(async()=>{if(!e?.isConnected)return;await window.MathJax?.startup?.promise;if(e.isConnected&&window.MathJax?.typesetPromise)await MathJax.typesetPromise([e]);});return mathQueue;}
  function html(e,s){window.MathJax?.typesetClear?.([e]);e.innerHTML=s;icons();math(e);}
- function applyView(){const h=document.documentElement;h.dataset.palette=view.palette;h.dataset.theme=view.theme;h.dataset.motion=view.motion?'on':'off';h.style.setProperty('--text-scale',view.scale/100);$('palette').value=view.palette;document.querySelector(`[name=theme][value=${view.theme}]`).checked=true;$('photos-enabled').checked=view.images;$('motion-enabled').checked=view.motion;$('text-scale').value=view.scale;$('text-scale-value').textContent=view.scale+' %';write(VIEW,view);}
+ function applyView(){const h=document.documentElement;h.dataset.palette=view.palette;h.dataset.theme=view.theme;h.dataset.motion=view.motion?'on':'off';h.style.setProperty('--text-scale',view.scale/100);$('palette').value=view.palette;document.querySelector(`[name=theme][value=${view.theme}]`).checked=true;$('photos-enabled').checked=view.images;$('motion-enabled').checked=view.motion;$('text-scale').value=view.scale;$('text-scale-value').textContent=view.scale+' %';write(VIEW,view);scheduleDepth();}
  function open(id){const d=$(id);if(!d.open)d.showModal();icons();}
  function close(id){const d=$(id);if(id==='presentation'){document.documentElement.classList.remove('presenting');d.classList.remove('presentation-expanded');if(document.fullscreenElement===d)document.exitFullscreen?.().catch(()=>{});}d.close();}
  document.addEventListener('click',e=>{const b=e.target.closest('[data-close]');if(b)close(b.dataset.close);});
@@ -34,6 +41,7 @@
  window.addEventListener('hashchange',()=>{chapter=location.hash.slice(1);if(!V.chapters.some(c=>c[0]===chapter))chapter='entdecken';renderChapter(true);});
  $('chapter-prev').onclick=()=>{const i=V.chapters.findIndex(c=>c[0]===chapter);if(i>0)go(V.chapters[i-1][0]);};$('chapter-next').onclick=()=>{const i=V.chapters.findIndex(c=>c[0]===chapter);if(i<V.chapters.length-1)go(V.chapters[i+1][0]);};
  function renderChapter(scroll=false){if(!pageContent)return;renderToken++;html($('inhalt'),pageContent.pages[chapter]);nav();$('inhalt').querySelectorAll('[data-presentation]').forEach(b=>b.onclick=openPresentation);bindPhotos($('inhalt'));
+  document.body.dataset.chapter=chapter;$('inhalt').querySelectorAll('[data-explore]').forEach(b=>b.onclick=()=>$('vielfalt-einstieg').scrollIntoView({behavior:motion()?'smooth':'instant',block:'start'}));scheduleDepth();
   if(chapter==='entdecken'){$('gallery-filter').onchange=renderGallery;renderGallery();}
   if(chapter==='bausteine'){renderDistance();$('dna-mark').onclick=()=>{const active=$('dna-mark').getAttribute('aria-pressed')!=='true';$('dna-mark').setAttribute('aria-pressed',active);$('dna-demo').classList.toggle('marked',active);};}
   if(chapter==='gesundheit'){for(let i=0;i<2;i++){const el=$(i?'parent-b':'parent-a');el.value=state.parents[i];el.onchange=()=>{state.parents[i]=el.value;save();renderCross();};}renderCross();html($('fixed-example'),solution(C.example()));renderMixed();}
@@ -68,10 +76,11 @@
  function createSlides(){
   const photo=(...ids)=>view.images?`<div class="slide-photo${ids.length>2?' slide-photo-grid':''}">${ids.map(id=>{const m=media.find(m=>m.id===id);return`<img src="${m.src}" alt="${esc(m.title)}">`;}).join('')}</div><p class="slide-credit">${ids.map(id=>{const m=media.find(m=>m.id===id);return`${esc(m.title)}: ${esc(m.author)} · ${esc(m.license)}`;}).join(' / ')} · Vollständige Nachweise im Quellenkapitel.</p>`:'';
   const graphic=id=>F.figure(id,{caption:false})+`<p class="slide-figure-note">Eigene Infografik · ${F.meta[id].source?esc(V.sources.find(s=>s.id===F.meta[id].source).label):id==='debatte'?'Lord et al. / Trut et al. · 2020':'schematisches Erklärungsmodell, keine Messdaten'}</p>`;
-  const s=(title,text,visual='')=>({title,html:`<div class="slide-story"><div class="slide-copy"><h2>${title}</h2><p>${text}</p></div><div class="slide-visual">${visual}</div></div>`});
+  const s=(title,text,visual='',heading=title)=>({title,html:`<div class="slide-story${heading!==title?' slide-cover':''}"><div class="slide-copy"><h2>${heading}</h2><p>${text}</p></div><div class="slide-visual">${visual}</div></div>`});
   return[
-   s('So verschieden. Und doch Hund.','Welche Merkmale lassen sich auf einem Foto beschreiben? Was müsste man messen oder genetisch untersuchen?',photo('chihuahua','mastiff')),
-   s('Erst beschreiben. Dann erklären.','Beine, Schnauze, Fell und Körperform: Was fällt auf? Die Fotos zeigen Einzeltiere und verwenden nicht denselben Größenmaßstab.',photo('dackel','mops','pudel','saluki')),
+   s('So verschieden. Und doch Hund.','Welche Merkmale lassen sich auf einem Foto beschreiben? Was müsste man messen oder genetisch untersuchen?',photo('chihuahua','mastiff'),'So verschieden.<br><em>Und doch Hund.</em>'),
+   s('Beine und Schnauze: Was fällt auf?','Beschreibe Körperform und Proportionen, bevor du eine Ursache vermutest. Die Fotos zeigen Einzeltiere und verwenden nicht denselben Größenmaßstab.',photo('dackel','mops')),
+   s('Fell und Körperform vergleichen.','Welche Unterschiede betreffen das Fell, welche den Körperbau? Auch Pflege und Schur beeinflussen das Erscheinungsbild. Die Fotos haben keinen gemeinsamen Größenmaßstab.',photo('pudel','saluki')),
    s('Eine Stelle, zwei Varianten','DNA trägt Bau- und Steuerinformationen. Hier unterscheiden sich zwei erfundene Abschnitte an einer Stelle. Eine Variante eines Abschnitts heißt Allel.',graphic('dna')),
    s('Die Kopien im selben Tier','An einem autosomalen Genort kommt eine Kopie von jedem Elternteil. A und a sind Variantenbezeichnungen, keine Angaben zur Körpergröße.',graphic('kopien')),
    s('Sichtbar ist nicht genomweit.','In diesem Gruppenvergleich ist der mittlere SNP-Abstand zwischen Wölfen größer. Die Balken zählen geschätzte Unterschiede an gefilterten SNP-Positionen – keine Prozentwerte des Gesamtgenoms.',graphic('abstand')),

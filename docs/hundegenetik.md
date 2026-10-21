@@ -27,12 +27,24 @@ nicht getrennt gepflegte Nachbauten. Für schmale Ansichten gibt es eigene
 Anordnungen statt bloß verkleinerter Querformatgrafiken. Alle Farben folgen
 den gewählten Lesepaletten; alle Abbildungen besitzen lesbare Alternativtexte.
 
-Die 22 Einführungs- und Beispielfolien haben jeweils Fotografien, eine
+Die 23 Einführungs- und Beispielfolien haben jeweils Fotografien, eine
 Infografik, das Kreuzungsschema oder den gesetzten Rechenweg. Danach folgen
 unverändert die zehn Aufgaben der Runde. Datenabbildungen nennen Studie und
 Aussagegrenze; Sequenzen und Erklärungsmodelle sind ausdrücklich schematisch.
 Die 13 neuen Grafiken wurden eigens erstellt, keine Studiengrafiken kopiert.
 Das separat adaptierte Verwandtschaftsbild von Parker behält seinen Nachweis.
+Fotopaare nutzen ihre tatsächlichen Seitenverhältnisse statt gleich breiter
+Leerzellen. Im Hochformat stehen sie untereinander. Der frühere Viererblock
+ist auf zwei größere Bildvergleiche verteilt. Zusammengehörige Inhalte haben
+reduzierte, aber weiterhin klar erkennbare Abstände.
+
+Der redaktionelle Hero führt mit Bildszene, Gestaltungsraster und einer
+Fira-/Garamond-Hierarchie ein. „Und doch Hund.“ verwendet in der App und
+auf der Titelfolie den echten lokalen EB-Garamond-Kursivschnitt. Dezente
+DNA-Zeichnungen strukturieren den Hintergrund. Ihre begrenzte Parallaxe
+läuft über passive Scroll-Ereignisse und requestAnimationFrame; bei
+reduzierter Bewegung oder ausgeschalteten Animationen bleiben die Ebenen
+statisch. In der Präsentation bleibt das Hintergrundmotiv unbewegt.
 
 40 echte Vorlagen, fünf Stufen mit je zwei zufällig ausgewählten Aufgaben.
 Zahlen und Antwortreihenfolgen werden einmal je Runde erzeugt. Zwei gültige
