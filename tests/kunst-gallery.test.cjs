@@ -146,9 +146,10 @@ test('the film admits sculpture, relief and photographs while the existing intro
   const frames=gallery.timeline(works.slice(0,8).map(w=>gallery.item(w.id)),128.4);assert.ok(frames.some(f=>f.id===works[0].id));
   assert.ok(core.introSelection(pool,archive.works.slice(0,100).map(w=>w.id)).every(w=>core.isIntroImage(w)));
 });
-test('movie playback never calls AI, waits for all decoded pictures and follows the soundtrack clock',()=>{
+test('movie playback never calls AI automatically; text generation has its own explicit editor action',()=>{
   const ui=fs.readFileSync(require.resolve('../scripts/kunsttresor-gallery-ui.js'),'utf8');
-  assert.doesNotMatch(ui,/fetch\(|api\/feedback|Groq|requestAI/);assert.match(ui,/await Promise\.all\(tasks\)/);assert.match(ui,/audio\.currentTime/);assert.match(ui,/audio\.duration/);assert.match(ui,/textContent/);
+  const playback=ui.slice(ui.indexOf('async function prepareFilm()'),ui.indexOf('function showFrame('));
+  assert.doesNotMatch(playback,/fetch\(|api\/feedback|generateFilmTexts|filmAIClient\.request/);assert.match(ui,/film-ai-generate'\)\.onclick/);assert.match(ui,/await Promise\.all\(tasks\)/);assert.match(ui,/audio\.currentTime/);assert.match(ui,/audio\.duration/);assert.match(ui,/textContent/);
 });
 test('the reward heart has its own aligned card row and shows the remaining film threshold locally',()=>{
   const css=fs.readFileSync(require.resolve('../styles/kunsttresor.css'),'utf8'),ui=fs.readFileSync(require.resolve('../scripts/kunsttresor-gallery-ui.js'),'utf8');

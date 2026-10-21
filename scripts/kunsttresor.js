@@ -1292,6 +1292,7 @@
     aiEnabled=enabled; store.set(aiEnabledKey,enabled ? 'yes' : 'no');
     if(enabled && !aiAllowed)aiChoiceConfirmed=false;
     aiDisplayEpoch++; aiClient?.cancel(); updateAIToggles();
+    galleryUI?.stopTextAI('KI-Einstellung geändert. Eine neue Textredaktion startet nur über den Knopf im Filmeditor.');
     updateLaunchAI();
     if (enabled) { if(request)void requestAI(); return; }
     resetAIReading(); $('ai-status').textContent='Redaktionelle Kuratorenhinweise · KI-Antworten sind ausgeschaltet.';
@@ -1453,7 +1454,7 @@
       if (!state) store.remove(keys.game);
       const storedGallery=store.get(galleryKey);
       if(storedGallery!==null){try{const restored=galleryModel.restore(JSON.parse(storedGallery),pool,workHistory);if(!restored)throw Error();personalGallery=restored;}catch{galleryBlocked=true;storageWarning();$('progress-notice').textContent='Deine gespeicherte Galerie konnte nicht gelesen werden und wird nicht überschrieben. Lade bitte eine gültige Spielstandsdatei.';}}
-      galleryUI=window.KunstGalleryUI.create({pool,getGallery:()=>personalGallery,setGallery:saveGallery,getState:()=>state,imagesAllowed:()=>imagesAllowed,requestImages:()=>askForImages(false),showImage:(work,origin)=>showImage(work,undefined,true,origin),stopIntro:finishIntro,saveFile:async()=>{await exportSave();return $('save-status').textContent;},texts:filmTexts});
+      galleryUI=window.KunstGalleryUI.create({pool,getGallery:()=>personalGallery,setGallery:saveGallery,getState:()=>state,imagesAllowed:()=>imagesAllowed,requestImages:()=>askForImages(false),showImage:(work,origin)=>showImage(work,undefined,true,origin),stopIntro:finishIntro,saveFile:async()=>{await exportSave();return $('save-status').textContent;},texts:filmTexts,aiAllowed:()=>aiAllowed&&aiEnabled,requestAIConsent:aiSettings,filmAIEndpoint:aiEndpoint});
       galleryUI.refresh();$('open-gallery').disabled=false;
       $('save-dialog').querySelector(':scope > p').textContent='Der Browser merkt sich deinen Raum automatisch. Mit deinem Lerncode setzt du ihn auf anderen Geräten fort. Als JSON-Datei kannst du Zuordnungen, verbrauchte Versuche, Rekord, Abzeichen, Bildhistorie, Lieblingswerke und deine Filmgestaltung zusätzlich selbst sichern.';
       $('pool-count').textContent = pool.length;

@@ -1,6 +1,6 @@
 (function(root) {
   'use strict';
-  function create({pool,getGallery,setGallery,getState,imagesAllowed,requestImages,showImage,stopIntro,saveFile,texts}) {
+  function create({pool,getGallery,setGallery,getState,imagesAllowed,requestImages,showImage,stopIntro,saveFile,texts,aiAllowed=()=>false,requestAIConsent=()=>{},filmAIEndpoint=''}) {
     const model=root.KunstGallery, $=id=>document.getElementById(id);
     const byId=new Map(pool.map(work=>[work.id,work]));
     const title=work=>root.KunstTresor.galleryTitle(work);
@@ -10,6 +10,36 @@
     const audio=new Audio('../LearningApps/assets/kunst-der-fuge/fuge-orchester-suno.mp3');audio.preload='metadata';audio.volume=.65;
     const reduced=matchMedia('(prefers-reduced-motion: reduce)');
     let filterTimer=0,layoutFrame=0;
+    const filmAI=root.KunstFilmKI,filmAIClient=filmAI?.createClient({endpoint:filmAIEndpoint});
+    let textEpoch=0,textBusy=false,textDraft=null,textSource='';
+    const filmFingerprint=()=>JSON.stringify(getGallery().film);
+    function textStatus(message){$('film-ai-status').textContent=message;}
+    function stopTextAI(message=''){
+      textEpoch++;filmAIClient?.cancel();textBusy=false;textDraft=null;textSource='';
+      $('film-ai-proposal').hidden=true;$('film-ai-cancel').hidden=true;
+      $('film-ai-generate').disabled=false;$('film-ai-generate').textContent='Texte von KI erstellen lassen';
+      if(message)textStatus(message);
+    }
+    async function generateFilmTexts(){
+      if(textBusy)return;
+      const g=getGallery();
+      if(g.liked.length<model.UNLOCK||g.film.items.length<model.MIN||g.film.items.length>model.MAX){textStatus('Wähle zuerst 6 bis 10 Werke für deinen freigeschalteten Kunstfilm.');return;}
+      if(!filmAIClient||!filmAIEndpoint){textStatus('Die KI-Textredaktion ist gerade nicht erreichbar. Deine bisherigen Texte bleiben erhalten.');return;}
+      if(!aiAllowed()){textStatus('Bitte schalte die KI in „Datenschutz & Freigabe“ ein. Klicke danach hier erneut, um nur für diese Bildfolge Texte anzufordern.');requestAIConsent();return;}
+      stopTextAI();textSource=filmFingerprint();const source=textSource,ticket=++textEpoch;
+      textBusy=true;$('film-ai-generate').disabled=true;$('film-ai-generate').textContent='Die KI textet deine Bildfolge …';$('film-ai-cancel').hidden=false;
+      textStatus('Die KI erhält nur die ausgewählten Werkkennungen und ihre Reihenfolge. Deine bisherigen Texte werden nicht übertragen oder verändert.');
+      const result=await filmAIClient.request(filmAI.payload(g.film.items.map(item=>item.id),Math.floor(Math.random()*1000001)));
+      if(ticket!==textEpoch)return;
+      textBusy=false;$('film-ai-generate').disabled=false;$('film-ai-generate').textContent='Texte von KI erstellen lassen';$('film-ai-cancel').hidden=true;
+      if(source!==filmFingerprint()||!aiAllowed()){stopTextAI('Die Auswahl oder Freigabe hat sich geändert. Bitte fordere bei Bedarf neue Texte an.');return;}
+      if(result.status!=='ready'){textSource='';textStatus(filmAI.failureNotice(result.reason));return;}
+      textDraft=result.data;
+      const list=$('film-ai-preview');list.replaceChildren();
+      for(const entry of textDraft.works){const li=node('li');li.append(node('strong',null,title(byId.get(entry.id))),node('p',null,entry.text));list.append(li);}
+      $('film-ai-motto').textContent=textDraft.motto;$('film-ai-use-motto').checked=g.film.motto===model.fresh().film.motto;
+      $('film-ai-proposal').hidden=false;textStatus('Vorschlag bereit. Prüfe die Texte unten. Erst „KI-Texte übernehmen“ ersetzt die Einblendungen dieser Auswahl; danach bleiben alle Texte bearbeitbar.');
+    }
     function node(tag,cls,text) {const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
     function button(label,fn,cls) {const e=node('button',cls,label);e.type='button';e.onclick=fn;return e;}
     function status(message) {$('gallery-status').textContent=message;}
@@ -45,6 +75,7 @@
     function scheduleGalleryLayout(){if(!layoutFrame)layoutFrame=requestAnimationFrame(()=>{layoutFrame=0;layoutGallery();});}
     function refresh() {
       const gallery=getGallery(), unlocked=gallery.liked.length>=model.UNLOCK;
+      if((textBusy||textDraft)&&textSource!==filmFingerprint())stopTextAI('Deine Filmgestaltung hat sich geändert. Der nicht übernommene KI-Vorschlag wurde verworfen.');
       $('gallery-progress').textContent=progressText();$('gallery-summary').textContent=progressText();
       $('gallery-count').textContent=gallery.liked.length;
       $('gallery-film-filter-count').textContent='('+gallery.film.items.length+')';
@@ -146,7 +177,7 @@
         });b.disabled=index+delta<0 || index+delta>=g.film.items.length;b.setAttribute('aria-label',title(work)+' · '+label);tools.append(b);}
         tools.append(button('Aus Film entfernen',()=>change(model.removeFromFilm(getGallery(),item.id),'Aus dem Film entfernt; das Werk bleibt in deiner Galerie.')));head.append(tools);card.append(head);
         const label=node('label',null,'Einblendung für dieses Werk'), select=node('select');select.setAttribute('aria-label','Einblendung für '+title(work));
-        for(const [value,name] of [['both','Stil / Epoche und Material'],['style','Stil / Epoche'],['technique','Material / Technik'],['none','Nur Werkangaben'],['custom','Mein eigener Text']]){const option=node('option',null,name);option.value=value;select.append(option);}select.value=item.caption;label.append(select);
+        for(const [value,name] of [['both','Stil / Epoche und Material'],['style','Stil / Epoche'],['technique','Material / Technik'],['none','Nur Werkangaben'],['custom','Eigener / übernommener KI-Text']]){const option=node('option',null,name);option.value=value;select.append(option);}select.value=item.caption;label.append(select);
         const variantLabel=node('label',null,'Formulierung'), variant=node('select');variant.setAttribute('aria-label','Formulierung für '+title(work));
         for(const [value,name] of [[0,'Erste Variante'],[1,'Zweite Variante']]){const option=node('option',null,name);option.value=value;variant.append(option);}variant.value=item.variant;variantLabel.append(variant);
         const ownLabel=node('label',null,'Mein eingeblendeter Text'), input=node('textarea');input.maxLength=240;input.rows=3;input.value=item.text;input.setAttribute('aria-label','Eigener Filmtext für '+title(work));ownLabel.append(input);
@@ -176,9 +207,22 @@
       if(change({...g,film:{...g.film,items:[]}},'Filmauswahl geleert. Alle Lieblingswerke, Name und Schlussmotto bleiben erhalten. Du kannst jetzt neue Bilder zum Film hinzufügen.')){$('gallery-clear-dialog').close();}
     };
     $('gallery-clear-dialog').addEventListener('close',()=>($('gallery-clear-film').disabled?$('gallery-filter-film'):$('gallery-clear-film')).focus({preventScroll:true}));
+    $('film-ai-generate').onclick=()=>void generateFilmTexts();
+    $('film-ai-permission').onclick=requestAIConsent;
+    $('film-ai-cancel').onclick=()=>stopTextAI('Anfrage im Browser abgebrochen. Deine bisherigen Texte bleiben unverändert. Bereits übertragene Daten lassen sich damit nicht zurückrufen.');
+    $('film-ai-discard').onclick=()=>stopTextAI('Vorschlag verworfen. Deine bisherigen Texte bleiben unverändert.');
+    $('film-ai-apply').onclick=()=>{
+      if(!textDraft||textSource!==filmFingerprint()||!aiAllowed()){stopTextAI('Die Auswahl oder Freigabe hat sich geändert. Bitte erstelle einen neuen Vorschlag.');return;}
+      const g=getGallery(),draft=textDraft,replaceMotto=$('film-ai-use-motto').checked;
+      const checked=filmAI.parseResponse(draft,g.film.items.map(item=>item.id));
+      const next={...g,film:{...g.film,motto:replaceMotto?checked.motto:g.film.motto,items:g.film.items.map(item=>({...item,caption:'custom',text:checked.works.find(work=>work.id===item.id).text}))}};
+      stopTextAI();if(change(next,'KI-Filmtexte übernommen. Du kannst jede Einblendung unten ändern.'))textStatus('KI-Filmtexte übernommen und gespeichert. Die Texte bleiben einzeln bearbeitbar; KI kann irren.');
+    };
+    $('gallery-dialog').addEventListener('close',()=>stopTextAI());
     addEventListener('resize',layoutGallery);
     document.fonts?.ready.then(layoutGallery);
     function stopFilm() {
+      stopTextAI();
       loadingEpoch++;loading=false;cancelAnimationFrame(raf);audio.pause();paused=true;
       preparations.forEach(p=>p.cancel());preparations=[];cache.clear();film=null;
       $('gallery-film-stage').replaceChildren();$('gallery-film-dialog').classList.remove('is-detail','is-full','is-ending','is-opening');
@@ -275,7 +319,7 @@
     $('gallery-film-stop').onclick=stopFilm;$('gallery-film-dialog').addEventListener('cancel',event=>{event.preventDefault();stopFilm();});
     $('gallery-film-dialog').addEventListener('close',()=>{if(film)stopFilm();});
     document.addEventListener('visibilitychange',()=>{if(document.hidden&&film&&!paused&&!loading)void pauseFilm();});
-    return {refresh,renderGallery,likeButton,stopFilm,open:openGallery,stopImages(){stopFilm();$('gallery-grid').querySelectorAll('img').forEach(img=>img.removeAttribute('src'));}};
+    return {refresh,renderGallery,likeButton,stopFilm,stopTextAI,open:openGallery,stopImages(){stopFilm();$('gallery-grid').querySelectorAll('img').forEach(img=>img.removeAttribute('src'));}};
   }
   root.KunstGalleryUI={create};
 })(typeof globalThis!=='undefined'?globalThis:this);
