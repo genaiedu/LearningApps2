@@ -79,7 +79,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
         method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+env.GROQ_API_KEY},signal,redirect:'error',
         body:JSON.stringify({model:'openai/gpt-oss-120b',messages:[{role:'system',content:filmMode?filmKi.instructions:ki.instructions},{role:'user',content:JSON.stringify(context)}],
           response_format:{type:'json_schema',json_schema:{name:filmMode?'art_film_captions':'museum_curator',strict:true,schema:filmMode?filmKi.schema(input.ids):ki.schema(input.room.ids)}},
-          temperature:filmMode ? .8 : .65,reasoning_effort:'low',max_completion_tokens:filmMode?3000:6000})
+          temperature:filmMode ? .8 : .65,reasoning_effort:filmMode?'medium':'low',max_completion_tokens:filmMode?4000:6000})
       }); } catch { throw new FeedbackFailure('network',{retryable:true}); }
       if (!response.ok) {
         let code='none';
