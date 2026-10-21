@@ -54,7 +54,10 @@ themenbezogene Symbolillustrationen. Dieselbe Darstellung steht im Training.
 Erbgänge und Fuchsselektion bauen sich mit kurzen, einmaligen Animationen auf;
 Animationseinstellung und reduzierte Bewegung gelten auch hier.
 
-Hund und Person sind originale Lucide-Symbole aus der gemeinsamen Bibliothek.
+Der Hund ist ein originales Lucide-Symbol aus der gemeinsamen Bibliothek.
+Der Mensch nutzt das fertige Gesichtssymbol Face aus Google Material Icons
+(Apache 2.0): Augen und Haaransatz, vergleichbarer Detailgrad, gleiche sichtbare
+Größe und Linienbreite wie der Fuchskopf. Beide bilden eine zentrierte Gruppe.
 Das Fuchssymbol Fox Face Tail stammt aus Lucide Lab (ISC, lokale Pfadgeometrie
 mit gesichertem Herkunftsstand und Lizenznachweis). Keine eigenen Tier- oder
 Menschen-Piktogramme. Fotos verwenden stets `contain`, keine Vergrößerung auf

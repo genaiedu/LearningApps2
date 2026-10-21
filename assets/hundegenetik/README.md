@@ -34,7 +34,7 @@ Diese Werkzeuge laufen nur beim Erstellen, niemals im Browser.
 
 ## Symbole in den Infografiken
 
-Hund (Dog) und Mensch (User Round): originale SVG-Knoten aus der bereits
+Hund (Dog): originale SVG-Knoten aus der bereits
 lokal eingebundenen gemeinsamen Lucide-Bibliothek, ISC.
 
 Fuchs (Fox Face Tail): Lucide Lab / Lucide Contributors, ISC.
@@ -43,3 +43,12 @@ https://github.com/lucide-icons/lucide-lab/blob/34b6526d0a67bbe67b8a54b9b101018b
 Originale Pfadgeometrie lokal in `scripts/hundegenetik-grafiken.js` eingebettet;
 Größe, Farbe und Liniengewicht an die Komposition angepasst. Vollständiger
 Lizenztext: `LICENSE-lucide-lab.txt`. Kein externer Laufzeitabruf.
+
+Mensch (Face, outlined): Google Material Icons, Apache 2.0.
+https://github.com/google/material-design-icons/blob/49d4db35df873165d6bd6ba09b063c7dafbac2f4/src/action/face/materialiconsoutlined/24px.svg
+
+Originale Pfadgeometrie lokal in `scripts/hundegenetik-grafiken.js` eingebettet;
+Position, Größe und Palettenfarbe angepasst. Die ursprüngliche Linienbreite
+von zwei Einheiten wird auch für die benachbarten Fuchssymbole verwendet.
+Vollständiger Apache-2.0-Lizenztext bereits lokal unter
+`../../fonts/mathjax/LICENSE-MathJax.txt`. Kein externer Laufzeitabruf.
