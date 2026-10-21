@@ -16,6 +16,24 @@ Die Präsentation nutzt dieselben zehn Aufgaben aus derselben gespeicherten
 Runde. Das feste Aa×Aa-Beispiel mit 25 % aa bleibt unverändert. Im
 Präsentationsvollbild bleiben nur Vor und Zurück; Esc verlässt die Ansicht.
 
+## Gemeinsame Bildsprache
+
+13 eigene, skalierbare Vektor-Infografiken in `scripts/hundegenetik-grafiken.js`:
+DNA-Varianten, Kopienweitergabe, SNP-Abstand, Baum lesen, Körpergröße,
+9-%-Erklärungsanteil, Verhaltenseinflüsse, Ahnenvariante, rezessiver Erbgang,
+Risikomarker, 24 Erkrankungen, Fuchsselektion und die Grenzen ihrer Deutung.
+Die Präsentation und die Kapitel verwenden dieselben Zeichnungsfunktionen,
+nicht getrennt gepflegte Nachbauten. Für schmale Ansichten gibt es eigene
+Anordnungen statt bloß verkleinerter Querformatgrafiken. Alle Farben folgen
+den gewählten Lesepaletten; alle Abbildungen besitzen lesbare Alternativtexte.
+
+Die 22 Einführungs- und Beispielfolien haben jeweils Fotografien, eine
+Infografik, das Kreuzungsschema oder den gesetzten Rechenweg. Danach folgen
+unverändert die zehn Aufgaben der Runde. Datenabbildungen nennen Studie und
+Aussagegrenze; Sequenzen und Erklärungsmodelle sind ausdrücklich schematisch.
+Die 13 neuen Grafiken wurden eigens erstellt, keine Studiengrafiken kopiert.
+Das separat adaptierte Verwandtschaftsbild von Parker behält seinen Nachweis.
+
 40 echte Vorlagen, fünf Stufen mit je zwei zufällig ausgewählten Aufgaben.
 Zahlen und Antwortreihenfolgen werden einmal je Runde erzeugt. Zwei gültige
 Versuche, 1/0,5 Punkte, 20/10 XP. Nach Abschluss vollständige Erklärung.

@@ -16,3 +16,82 @@ main:focus-visible{outline:none}.slide-photo img{max-width:calc(50% - 11px);min-
 #tree-viewport .tree-branches.is-muted{opacity:.3}
 .comparison-photos{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:30px}.comparison-photos .photo-open{height:240px}.comparison-photos img{object-fit:contain}@media(max-width:700px){.comparison-photos{gap:12px}.comparison-photos .photo-open{height:150px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+/* Shared, original infographic series. Semantic roles follow every reading palette. */
+.gen-figure{margin:38px auto;max-width:100%;width:100%}
+.gen-art{background:var(--white);border-block:1px solid var(--line);padding:18px 0;min-width:0}
+.gen-art .gen-svg{display:block;width:100%;height:auto;max-height:440px;margin:auto;font-family:"Fira Sans",sans-serif;font-variant-numeric:lining-nums tabular-nums}
+.gen-art .gen-svg-compact{display:none}
+.gen-art .gf-text{fill:var(--ink);font-size:24px;font-weight:400;letter-spacing:0}
+.gen-art .gf-heading{font-size:27px;font-weight:600}
+.gen-art .gf-label,.gen-art .gf-caption{font-size:23px}
+.gen-art .gf-caption,.gen-art .gf-muted{fill:var(--muted)}
+.gen-art .gf-number{font-size:34px;font-weight:600}
+.gen-art .gf-big{font-size:78px;font-weight:600;fill:var(--red)}
+.gen-art .gf-base{font-size:29px;font-weight:600}
+.gen-art .gf-change{fill:var(--red)}
+.gen-art .gf-box{fill:var(--paper);stroke:var(--line);stroke-width:1.6}
+.gen-art .gf-soft{fill:var(--quote-bg);stroke:var(--muted)}
+.gen-art .gf-line{fill:none;stroke:var(--muted);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.gen-art .gf-dashed{stroke-dasharray:6 7}
+.gen-art .gf-accent{stroke:var(--red)}
+.gen-art .gf-fill{fill:var(--red)}
+.gen-art .gf-solid{fill:var(--ink)}
+.gen-art .gf-waffle,.gen-art .gf-track{fill:var(--surface);stroke:var(--muted);stroke-width:.8}
+.gen-art .gf-muted-stroke{stroke:var(--muted);stroke-width:1.5}
+.gen-art .gf-chromosome{fill:var(--surface);stroke:var(--ink);stroke-width:2.2}
+.gen-art .gf-alt{fill:var(--button-bg);stroke:var(--button-bg)}
+.gen-art .gf-allele{font-size:28px;font-weight:600}
+.gen-art .gf-alt~.gf-allele{fill:var(--button-ink)}
+.gen-art .gf-band{stroke:var(--white);stroke-width:2}
+.gen-art .gf-variant-box{stroke:var(--red);stroke-width:2.5;fill:var(--quote-bg)}
+.gen-art .gf-animal{fill:var(--surface);stroke:var(--ink);stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.gen-art .gf-eye{fill:var(--ink);stroke:none}
+.gen-art .gf-person{fill:none;stroke:var(--red);stroke-width:3;stroke-linecap:round}
+.gen-figure figcaption{font-size:13px;line-height:1.6;max-width:100ch;color:var(--muted);padding-top:13px}
+.gen-figure figcaption strong{color:var(--ink);font-weight:600}
+.dna-demo{overflow:visible}
+.dna-demo .gen-figure{margin:0}
+.dna-demo:not(.marked) .gf-change{fill:var(--ink)}
+.dna-demo:not(.marked) .gf-variant-box{stroke:var(--line);fill:var(--paper)}
+.story-pair .gen-figure{margin-top:25px}
+.story-pair .gen-art .gen-svg{max-height:260px}
+.story-pair .gen-art .gen-svg-wide{display:none}
+.story-pair .gen-art .gen-svg-compact{display:block}
+.slide-story{display:grid;grid-template-rows:auto minmax(0,1fr);gap:22px;width:100%;height:100%;min-height:0}
+.slide-copy{min-width:0}
+.slide-copy h2{font-size:clamp(30px,3.6vw,48px);max-width:30ch}
+.slide-copy>p{font-size:clamp(17px,1.65vw,23px);max-width:82ch;margin-top:15px;line-height:1.5}
+.slide-visual{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;min-height:0;max-height:100%}
+.slide-visual .gen-figure{margin:0;min-height:0;max-height:100%;display:flex;flex-direction:column}
+.slide-visual .gen-art{min-height:0;padding:8px 0;display:flex;justify-content:center}
+.slide-visual .gen-svg{max-height:100%;width:auto;max-width:100%;height:auto}
+.slide-visual .slide-photo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;height:min(36vh,360px);max-height:none;flex-shrink:1;min-height:0}
+.slide-visual .slide-photo:has(img:only-child){grid-template-columns:1fr}
+.slide-visual .slide-photo-grid{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:minmax(0,1fr);align-items:stretch}
+.slide-visual .slide-photo img{max-width:100%;max-height:100%;min-height:0;width:100%;height:100%;object-fit:contain}
+.slide-visual .slide-credit{margin:0;font-size:11px;max-width:100ch;line-height:1.4}
+.slide-visual .punnett{font-size:26px;max-width:320px;margin-inline:auto}
+.slide .slide-figure-note{font-size:11px;line-height:1.4;color:var(--muted);margin:0}
+.slide-visual .solution-steps{width:100%}
+@media(max-width:700px){
+ .gen-art{padding:14px 0}
+ .gen-art .gen-svg-wide{display:none}
+ .gen-art .gen-svg-compact{display:block;max-height:500px}
+ .gen-art .gf-text{font-size:26px}
+ .gen-art .gf-heading{font-size:28px}
+ .gen-art .gf-label,.gen-art .gf-caption{font-size:25px}
+ .gen-art .gf-number{font-size:34px}
+ .gen-art .gf-big{font-size:72px}
+ .gen-figure{margin-block:28px}
+ .gen-figure figcaption{font-size:12px}
+ .slide-story{gap:16px}
+ .slide-copy h2{font-size:28px}
+ .slide-copy>p{font-size:16px;line-height:1.45;margin-top:12px}
+ .slide-visual{gap:10px}
+ .slide-visual .slide-photo{height:min(34vh,290px);gap:12px}
+ .slide-visual .slide-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+ .slide-visual .slide-credit,.slide .slide-figure-note{font-size:10px}
+ .slide-visual .gen-art{padding:5px 0}
+ .slide-visual .punnett{max-width:260px;font-size:22px}
+}
+@media(max-width:370px){.slide-copy h2{font-size:25px}.slide-copy>p{font-size:15px}.slide-story{gap:12px}.slide-visual .slide-credit,.slide .slide-figure-note{font-size:9px}}
