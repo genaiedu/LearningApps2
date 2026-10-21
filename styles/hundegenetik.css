@@ -181,6 +181,8 @@ h1 em,h2 em{font-family:"EB Garamond",serif;font-style:italic;font-weight:400;fo
 .feature-photo .photo-open img{height:auto}
 .gen-art .gf-symbol{fill:none;stroke:var(--ink);stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
 .gen-art .gf-symbol-person{stroke:var(--red)}
+.gen-art .gf-fox-back{stroke:var(--muted)}
+.gen-art .gf-symbol-paper{fill:var(--white);stroke:none}
 .task-illustration{margin:22px auto;max-width:760px}
 .task-photos{height:190px;display:flex;align-items:center;justify-content:center;gap:14px;min-height:0}
 .task-photos img{display:block;max-width:calc(50% - 7px);max-height:100%;width:auto;height:auto;object-fit:contain}

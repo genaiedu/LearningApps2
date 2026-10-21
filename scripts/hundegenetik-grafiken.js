@@ -15,8 +15,9 @@
   ['path',{d:'M9 9v.5'}],['path',{d:'M13 13h-2'}],['path',{d:'M12 16v-3'}],['path',{d:'M15 9v.5'}],
   ['path',{d:'M6.3 20.5A6.87 6.87 0 0 0 9 15H2.2c.8 4 4.9 7 9.8 7 5.5 0 10-3.8 10-8.5 0-1.1-.2-2.1-.7-3'}]
  ];
- const symbol=(name,x,y,size,cls='')=>{const nodes=name==='FoxFaceTail'?foxNodes:(lucide.icons||lucide)[name];if(!nodes)throw Error('Fehlendes lokales Symbol: '+name);return`<g transform="translate(${x-size/2} ${y-size/2}) scale(${size/24})" class="gf-symbol ${cls}" data-symbol="${name}">${nodes.map(([tag,attrs])=>`<${tag} ${Object.entries(attrs).map(([k,v])=>`${k}="${esc(v)}"`).join(' ')}/>`).join('')}</g>`;};
+ const symbol=(name,x,y,size,cls='')=>{const nodes=name==='FoxFaceTail'?foxNodes:(lucide.icons||lucide)[name];if(!nodes)throw Error('Fehlendes lokales Symbol: '+name);const backing=cls==='gf-fox-front'?[nodes[0],nodes[nodes.length-1]].map(([,attrs])=>`<path d="${esc(attrs.d)}" class="gf-symbol-paper"/>`).join(''):'';return`<g transform="translate(${x-size/2} ${y-size/2}) scale(${size/24})" class="gf-symbol ${cls}" data-symbol="${name}">${backing}${nodes.map(([tag,attrs])=>`<${tag} ${Object.entries(attrs).map(([k,v])=>`${k}="${esc(v)}"`).join(' ')}/>`).join('')}</g>`;};
  const dog=(x,y,scale=1,fox=false)=>symbol(fox?'FoxFaceTail':'Dog',x,y,88*scale);
+ const foxPair=(x,y,scale=1)=>{const size=88*scale;return`<g class="gf-parent-pair">${symbol('FoxFaceTail',x+size*.28,y-size*.28,size,'gf-fox-back')}${symbol('FoxFaceTail',x-size*.2,y+size*.1,size,'gf-fox-front')}</g>`;};
  const human=(x,y,s=1)=>symbol('UserRound',x,y+6,100*s,'gf-symbol-person');
  const meta={
   dna:{title:'Eine Stelle, zwei Varianten',alt:'Zwei erfundene DNA-Abschnitte unterscheiden sich an genau einer Position: oben G, unten A. Beide sind Varianten desselben Abschnitts.',note:'Erfundener Sequenzausschnitt zur Begriffserklärung. Kein echtes Hundegenom und keine Krankheitsvorhersage.'},
@@ -96,7 +97,7 @@
    [['10','bei Rassehunden häufiger'],['13','kein Unterschied nachgewiesen'],['1','bei Mischlingen häufiger']].forEach(([n,label],i)=>{const lx=m?65:397,ly=m?262+i*72:91+i*76;s+=text(lx,ly,n,'gf-number','start')+text(lx+60,ly,label,'gf-label','start');});
   }else if(id==='fuchs'){
    h=m?490:330;
-   [['Reaktionen testen','auf Menschen'],['Eltern auswählen','für die Weiterzucht'],['Nachkommen','erneut vergleichen']].forEach(([a,b],i)=>{const x=m?118:150+i*300,y=m?75+i*153:105;let stage=dog(x,y,.75,true);if(i<2)stage+=m?arrow(x,y+45,x,y+100):arrow(x+100,y,x+195,y);if(i===0)stage+=human(x+75,y-3,.54);stage+=text(m?256:x,m?y-5:215,a,'gf-heading',m?'start':'middle')+text(m?256:x,m?y+33:253,b,'gf-label',m?'start':'middle');s+=reveal(stage,i);});
+   [['Reaktionen testen','auf Menschen'],['Eltern auswählen','für die Weiterzucht'],['Nachkommen','erneut vergleichen']].forEach(([a,b],i)=>{const x=m?118:150+i*300,y=m?75+i*153:105;let stage=i===1?foxPair(x,y,.75):dog(x,y,.75,true);if(i<2)stage+=m?arrow(x,y+45,x,y+100):arrow(x+100,y,x+195,y);if(i===0)stage+=human(x+75,y-3,.54);stage+=text(m?256:x,m?y-5:215,a,'gf-heading',m?'start':'middle')+text(m?256:x,m?y+33:253,b,'gf-label',m?'start':'middle');s+=reveal(stage,i);});
   }else if(id==='debatte'){
    h=m?470:330;const y=m?158:114;
    s+=text(w/2,35,'Der Farmbestand hatte eine Vorgeschichte.','gf-caption');
