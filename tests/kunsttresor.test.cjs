@@ -494,7 +494,7 @@ test('first failed check retains exact feedback, but changed choices are not eva
 test('personal highscore persists through a loss and automatic new round', () => {
   const vm=require('node:vm'), js=fs.readFileSync(path.join(__dirname,'../scripts/kunsttresor.js'),'utf8');
   const values=new Map([['best','5']]);
-  const context={state:core.newState(pool,null,seeded(50)),pool,best:5,core,imagesAllowed:true,forgeryEverySeries:false,wallMode:false,resetInProgress:false,
+  const context={state:core.newState(pool,null,seeded(50)),pool,best:5,core,imagesAllowed:true,forgeryEverySeries:false,wallMode:false,resetInProgress:false,syncReady:false,syncApplying:false,syncNoticeQueued:false,
     progress:require('../scripts/kunsttresor-progress.js'),playerProgress:{version:1,record:5,events:[]},
     history:require('../scripts/kunsttresor-history.js'),workHistory:{version:1,since:Date.now(),rooms:[]},historyBlocked:false,
     keys:{game:'game',best:'best',progress:'progress'},store:{set:(key,value)=>values.set(key,value)},
