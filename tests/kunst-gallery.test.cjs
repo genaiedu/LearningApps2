@@ -2,6 +2,11 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const core=require('../scripts/kunsttresor-core.js'),progress=require('../scripts/kunsttresor-progress.js'),history=require('../scripts/kunsttresor-history.js'),save=require('../scripts/kunsttresor-save.js'),gallery=require('../scripts/kunsttresor-gallery.js');
 const archive=require('../data/kunstarchiv.json'),pool=archive.works,texts=require('../data/kunst-filmtexte.json'),knowledge=require('../data/kunst-glossar.json');
 const seeded=seed=>()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+test('film captions never include editorial labels, including previously saved suggestions',()=>{
+ const sentence='Ein Bild ist mehr als sein Motiv.';
+ for(const prefix of ['Vorschlag 2: ','Vorschl 2: ','KI-Text: ','Textvorschlag Nr. 3: ','Variante 1: '])assert.equal(gallery.caption(pool[0],{caption:'custom',text:prefix+sentence},{}),sentence);
+ for(const value of ['2. Weltkrieg: Ein historischer Einschnitt.','Ein Bild fragt: Was bleibt?','  Mein eigener Text.'])assert.equal(gallery.cleanCaption(value),value);
+});
 test('gallery filtering combines artist, style, technique and accent-insensitive search without altering the collection',()=>{
  const works=[
   {id:'a',title:'Été à Paris',artist:'Édouard Manet',style:'Impressionismus',technique:'Öl auf Leinwand',date:'1872',dateStart:1872},
