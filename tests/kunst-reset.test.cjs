@@ -16,7 +16,7 @@ test('only the numeric rule buttons complete the sequence',()=>{
   for(const step of [1,2,undefined,4,1,2,NaN,4,'1','2','4'])assert.equal(press(step),false);
 });
 test('reset removes all app versions in local and session storage but no neighbouring app data',()=>{
-  const local=storage({'kunsttresor-game-v1-wall':'game','kunsttresor-gallery-v1':'legacy gallery','kunsttresor-progress-v1-wall':'badges','kunsttresor-history-v1-wall':'history','kunsttresor-images-v2':'yes','kunsttresor-forgery-every-series-v1':'yes','kunsttresor-ai-consent-v2-wall':'yes','kunsttresor-future-key':'new','schriftsetzer':'keep','other-kunsttresor-game':'keep'});
+  const local=storage({'kunsttresor-game-v1-wall':'game','kunsttresor-gallery-v1':'legacy gallery','kunsttresor-progress-v1-wall':'badges','kunsttresor-history-v1-wall':'history','kunsttresor-images-v2':'yes','kunsttresor-forgery-every-series-v1':'yes','kunsttresor-ai-consent-v2-wall':'yes','kunsttresor-future-key':'new','learningapps-lerncode-device-v1:kunsttresor':'test connection','schriftsetzer':'keep','other-kunsttresor-game':'keep'});
   const session=storage({'kunsttresor-old-session':'delete','uvvis':'keep'});
   clearAppStorage([()=>local,()=>session]);
   assert.equal(local.length,2);assert.equal(local.getItem('schriftsetzer'),'keep');assert.equal(local.getItem('other-kunsttresor-game'),'keep');

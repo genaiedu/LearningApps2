@@ -25,8 +25,8 @@ Version 9 ergänzt ein getrennt angewiesenes KI-Sach-/Sprachlektorat vor der
 Anzeige. Entwurf und Lektorat bleiben gemeinsam innerhalb der vorhandenen
 Zeitgrenze; bei erneutem Versuch höchstens vier Modellaufrufe insgesamt. Auch
 das Lektorat wird vollständig validiert. Diese zusätzliche Prüfung ist keine
-Garantie gegen KI-Fehler; der sichtbare Vorschlag braucht weiterhin die bewusste
-Übernahme und kann bearbeitet oder verworfen werden.
+Garantie gegen KI-Fehler; die eingesetzten Texte sollen vor dem Film geprüft
+werden und bleiben bearbeitbar.
 Version 10 übergibt wiederkehrende Fakten nur einmal mit werkbezogenen Referenzen
 und beschränkt den Lektoratskontext auf die jeweils benutzten Belege plus
 Materialangaben und fachliche Vorbehalte. So werden Definitionen weder im Kontext
@@ -35,14 +35,21 @@ die beiden Aufrufe benötigen deutlich weniger Anfragetokens.
 
 Nur der eigene Knopf „Texte von KI erstellen lassen“ im Filmeditor fordert Texte
 an, nach informierter KI-Freigabe. Weder Filmstart noch Öffnen/Ändern einer Galerie
-lösen eine Generierung aus. Ein Vorschlag verändert zunächst nichts. Übernahme
-ersetzt nach sichtbarem Hinweis die Textfelder; das Schlussmotto ist optional.
+lösen eine Generierung aus. Der Knopf zeigt sofort „Eigene Texte / KI-Texte“ und
+die Textfelder mit einem Ladehinweis. Erst eine vollständige, geprüfte Antwort
+ersetzt direkt die Texte aller gewählten Werke und speichert `caption:"custom"`;
+ein zweiter Übernahmeknopf ist nicht nötig. Vorheriger Zustand bleibt bis dahin
+unverändert gespeichert. Ein sichtbarer Hinweis erklärt das Ersetzen vorhandener
+Texte; direkt nach Erfolg lässt es sich rückgängig machen. Das optionale
+Schlussmotto wird nur bei gewählter Checkbox ersetzt (bei einem eigenen Motto
+standardmäßig aus). Bearbeitung, Auswahl- oder Profilwechsel verwerfen die
+kurzlebige Rücknahme, damit diese keine neueren Änderungen überschreibt.
 Die gespeicherten Texte verwenden das vorhandene `caption:"custom"`-Format und
 bleiben bearbeitbar, exportierbar und mit dem Lerncode synchronisierbar. Freigaben
 selbst gehören weiterhin nicht in die Spielstandsdatei.
 
 Abbruch, Widerruf, Schließen, Profilwechsel und Änderungen am Film verwerfen
-offene Vorschläge/Anfragen. Späte Antworten dürfen nichts überschreiben. Bereits
+offene Anfragen. Späte Antworten dürfen nichts überschreiben. Bereits
 übertragene Daten werden durch einen Browserabbruch nicht zurückgerufen. Der
 Browser wartet maximal 28 Sekunden, der Server nutzt dieselben begrenzten zwei
 Versuche wie der Kurator. Fehler lassen bestehende Filmtexte unverändert.

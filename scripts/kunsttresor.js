@@ -246,7 +246,11 @@
     if(!pool.length)throw Error('Das Werkarchiv wird noch geladen.');
     if(historyBlocked)throw Error('Die vorhandene Bildhistorie ist beschädigt. Sie wird nicht überschrieben.');
     if(galleryBlocked)throw Error('Die vorhandene Galerie ist beschädigt. Sie wird nicht überschrieben.');
-    const payload={app:transfers.APP,version:transfers.VERSION,savedAt:Date.now(),state,best,progress:playerProgress,history:workHistory,gallery:personalGallery};
+    // Match reload's canonical empty answers: absent values becoming empty
+    // strings are not new offline progress and must not cause false conflicts.
+    const savedState=state?core.restore(state,pool):null;
+    if(state&&!savedState)throw Error('Der aktuelle Raum kann nicht vollständig gespeichert werden.');
+    const payload={app:transfers.APP,version:transfers.VERSION,savedAt:Date.now(),state:savedState,best,progress:playerProgress,history:workHistory,gallery:personalGallery};
     validateSnapshot(payload);
     return JSON.parse(JSON.stringify(payload));
   }
@@ -306,7 +310,7 @@
       finishIntro();galleryUI?.stopFilm();stopImages();cancelZoomLoad();badgeAwards.clear();
       fileEpoch++;pendingImport=null;pendingAssignment=null;upcomingRoom=null;
       aiDisplayEpoch++;aiClient?.clear();aiBaseline.clear();clearTimeout(revealTimer);revealRoom=null;
-      for(const dialog of document.querySelectorAll('dialog[open]'))if(dialog.id!=='save-dialog')dialog.close();
+      for(const dialog of document.querySelectorAll('dialog[open]'))if(!['save-dialog','launch-dialog'].includes(dialog.id))dialog.close();
       storageProfile=profileId;keys=nextKeys;galleryKey=nextGalleryKey;
       state=candidate.state;best=candidate.best;playerProgress=candidate.progress;workHistory=candidate.history;personalGallery=candidate.gallery;
       historyBlocked=false;galleryBlocked=false;
@@ -1465,7 +1469,9 @@
       $('start-game').disabled = $('start-here').disabled = false;
       $('start-game').textContent = state ? 'Spiel fortsetzen →' : 'Galerie betreten →';
       $('start-here').textContent = state ? 'Spiel fortsetzen →' : 'Galerie betreten →';
-      if (state) save(); else saveProgress();
+      // A remembered profile must be checked before any initial migration save.
+      // In particular a missing cache must never become a fresh cloud overwrite.
+      if (!storageProfile) { if (state) save(); else saveProgress(); }
       $('open-save').disabled = false;
       refreshBadges(); refreshHistory();
       $('best').textContent = number(best); prepareLaunch(); heroImages();

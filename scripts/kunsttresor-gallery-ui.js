@@ -11,13 +11,20 @@
     const reduced=matchMedia('(prefers-reduced-motion: reduce)');
     let filterTimer=0,layoutFrame=0;
     const filmAI=root.KunstFilmKI,filmAIClient=filmAI?.createClient({endpoint:filmAIEndpoint});
-    let textEpoch=0,textBusy=false,textDraft=null,textSource='';
+    let textEpoch=0,textBusy=false,textSource='',textUndo=null;
     const filmFingerprint=()=>JSON.stringify(getGallery().film);
     function textStatus(message){$('film-ai-status').textContent=message;}
+    function updateTextUndo(){
+      if(textUndo&&textUndo.source!==filmFingerprint())textUndo=null;
+      $('film-ai-undo').hidden=!textUndo;$('film-ai-undo').disabled=textBusy;
+    }
     function stopTextAI(message=''){
-      textEpoch++;filmAIClient?.cancel();textBusy=false;textDraft=null;textSource='';
-      $('film-ai-proposal').hidden=true;$('film-ai-cancel').hidden=true;
+      const wasBusy=textBusy;
+      textEpoch++;filmAIClient?.cancel();textBusy=false;textSource='';
+      $('film-ai-cancel').hidden=true;
       $('film-ai-generate').disabled=false;$('film-ai-generate').textContent='Texte von KI erstellen lassen';
+      if(wasBusy)renderEditor();
+      updateTextUndo();
       if(message)textStatus(message);
     }
     async function generateFilmTexts(){
@@ -26,19 +33,28 @@
       if(g.liked.length<model.UNLOCK||g.film.items.length<model.MIN||g.film.items.length>model.MAX){textStatus('Wähle zuerst 6 bis 10 Werke für deinen freigeschalteten Kunstfilm.');return;}
       if(!filmAIClient||!filmAIEndpoint){textStatus('Die KI-Textredaktion ist gerade nicht erreichbar. Deine bisherigen Texte bleiben erhalten.');return;}
       if(!aiAllowed()){textStatus('Bitte schalte die KI in „Datenschutz & Freigabe“ ein. Klicke danach hier erneut, um nur für diese Bildfolge Texte anzufordern.');requestAIConsent();return;}
+      const replaceMotto=$('film-ai-use-motto').checked;
       stopTextAI();textSource=filmFingerprint();const source=textSource,ticket=++textEpoch;
       textBusy=true;$('film-ai-generate').disabled=true;$('film-ai-generate').textContent='Die KI textet deine Bildfolge …';$('film-ai-cancel').hidden=false;
-      textStatus('Die KI erhält nur die ausgewählten Werkkennungen und ihre Reihenfolge. Deine bisherigen Texte werden nicht übertragen oder verändert.');
+      renderEditor();updateTextUndo();
+      textStatus('Eigene Texte / KI-Texte ist ausgewählt. Die KI erstellt die Einblendungen und setzt sie anschließend direkt in die Textfelder ein. Bis dahin bleiben deine bisherigen Texte gespeichert.');
       const result=await filmAIClient.request(filmAI.payload(g.film.items.map(item=>item.id),Math.floor(Math.random()*1000001)));
       if(ticket!==textEpoch)return;
-      textBusy=false;$('film-ai-generate').disabled=false;$('film-ai-generate').textContent='Texte von KI erstellen lassen';$('film-ai-cancel').hidden=true;
       if(source!==filmFingerprint()||!aiAllowed()){stopTextAI('Die Auswahl oder Freigabe hat sich geändert. Bitte fordere bei Bedarf neue Texte an.');return;}
-      if(result.status!=='ready'){textSource='';textStatus(filmAI.failureNotice(result.reason));return;}
-      textDraft=result.data;
-      const list=$('film-ai-preview');list.replaceChildren();
-      for(const entry of textDraft.works){const li=node('li');li.append(node('strong',null,title(byId.get(entry.id))),node('p',null,entry.text));list.append(li);}
-      $('film-ai-motto').textContent=textDraft.motto;$('film-ai-use-motto').checked=g.film.motto===model.fresh().film.motto;
-      $('film-ai-proposal').hidden=false;textStatus('Vorschlag bereit. Prüfe die Texte unten. Erst „KI-Texte übernehmen“ ersetzt die Einblendungen dieser Auswahl; danach bleiben alle Texte bearbeitbar.');
+      if(result.status!=='ready'){stopTextAI(filmAI.failureNotice(result.reason));return;}
+      let checked;
+      try{
+        checked=filmAI.parseResponse(result.data,g.film.items.map(item=>item.id));
+        checked=filmAI.parseResponse({motto:model.cleanCaption(checked.motto),works:checked.works.map(work=>({...work,text:model.cleanCaption(work.text)}))},g.film.items.map(item=>item.id));
+      }
+      catch{stopTextAI(filmAI.failureNotice('invalid_response'));return;}
+      const current=getGallery(),previous=structuredClone(current.film);
+      const next={...current,film:{...current.film,motto:replaceMotto?checked.motto:current.film.motto,items:current.film.items.map(item=>({...item,caption:'custom',text:checked.works.find(work=>work.id===item.id).text}))}};
+      stopTextAI();
+      if(change(next,'KI-Filmtexte direkt in die Textfelder eingesetzt.')){
+        textUndo={film:previous,source:filmFingerprint()};updateTextUndo();
+        textStatus('KI-Filmtexte eingesetzt und gespeichert. „Eigene Texte / KI-Texte“ ist für alle Werke ausgewählt; die Texte werden im Film eingeblendet und bleiben bearbeitbar. Bitte prüfe sie, KI kann irren.');
+      }else textStatus('Die KI-Texte konnten nicht gespeichert werden. Deine bisherigen Texte bleiben erhalten.');
     }
     function node(tag,cls,text) {const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
     function button(label,fn,cls) {const e=node('button',cls,label);e.type='button';e.onclick=fn;return e;}
@@ -75,7 +91,8 @@
     function scheduleGalleryLayout(){if(!layoutFrame)layoutFrame=requestAnimationFrame(()=>{layoutFrame=0;layoutGallery();});}
     function refresh() {
       const gallery=getGallery(), unlocked=gallery.liked.length>=model.UNLOCK;
-      if((textBusy||textDraft)&&textSource!==filmFingerprint())stopTextAI('Deine Filmgestaltung hat sich geändert. Der nicht übernommene KI-Vorschlag wurde verworfen.');
+      if(textBusy&&textSource!==filmFingerprint())stopTextAI('Deine Filmgestaltung hat sich geändert. Die offene KI-Anfrage wurde abgebrochen; deine Änderungen bleiben erhalten.');
+      updateTextUndo();
       $('gallery-progress').textContent=progressText();$('gallery-summary').textContent=progressText();
       $('gallery-count').textContent=gallery.liked.length;
       $('gallery-film-filter-count').textContent='('+gallery.film.items.length+')';
@@ -164,6 +181,8 @@
     }
     function renderEditor() {
       const g=getGallery();$('gallery-name').value=g.film.name;$('gallery-motto').value=g.film.motto;
+      if(!textBusy)$('film-ai-use-motto').checked=g.film.motto===model.fresh().film.motto;
+      $('film-ai-use-motto').disabled=textBusy;
       $('film-selection-count').textContent=g.film.items.length+' / 10 Werke · mindestens 6 · rund 2 Minuten 8 Sekunden';
       $('film-selection').replaceChildren();
       if(!g.film.items.length)$('film-selection').append(node('p',null,'Lass 8 Werke zusammenstellen oder füge sie oben aus deiner Galerie hinzu.'));
@@ -177,13 +196,13 @@
         });b.disabled=index+delta<0 || index+delta>=g.film.items.length;b.setAttribute('aria-label',title(work)+' · '+label);tools.append(b);}
         tools.append(button('Aus Film entfernen',()=>change(model.removeFromFilm(getGallery(),item.id),'Aus dem Film entfernt; das Werk bleibt in deiner Galerie.')));head.append(tools);card.append(head);
         const label=node('label',null,'Einblendung für dieses Werk'), select=node('select');select.setAttribute('aria-label','Einblendung für '+title(work));
-        for(const [value,name] of [['both','Stil / Epoche und Material'],['style','Stil / Epoche'],['technique','Material / Technik'],['none','Nur Werkangaben'],['custom','Eigener / übernommener KI-Text']]){const option=node('option',null,name);option.value=value;select.append(option);}select.value=item.caption;label.append(select);
+        for(const [value,name] of [['both','Stil / Epoche und Material'],['style','Stil / Epoche'],['technique','Material / Technik'],['none','Nur Werkangaben'],['custom','Eigene Texte / KI-Texte']]){const option=node('option',null,name);option.value=value;select.append(option);}select.value=textBusy?'custom':item.caption;label.append(select);
         const variantLabel=node('label',null,'Formulierung'), variant=node('select');variant.setAttribute('aria-label','Formulierung für '+title(work));
         for(const [value,name] of [[0,'Erste Variante'],[1,'Zweite Variante']]){const option=node('option',null,name);option.value=value;variant.append(option);}variant.value=item.variant;variantLabel.append(variant);
-        const ownLabel=node('label',null,'Mein eingeblendeter Text'), input=node('textarea');input.maxLength=240;input.rows=3;input.value=item.text;input.setAttribute('aria-label','Eigener Filmtext für '+title(work));ownLabel.append(input);
+        const ownLabel=node('label',null,'Mein eingeblendeter Text'), input=node('textarea');input.maxLength=240;input.rows=3;input.value=model.cleanCaption(item.text);input.readOnly=textBusy;input.placeholder=textBusy?'Die KI erstellt diesen Filmtext …':'Hier deinen eigenen Text eingeben oder oben KI-Texte erstellen lassen.';input.setAttribute('aria-busy',String(textBusy));input.setAttribute('aria-label','Eigener Filmtext für '+title(work));ownLabel.append(input);
         const preview=node('p','film-caption-preview');
-        function previewText(){const updated=getGallery().film.items[index];preview.textContent=model.caption(work,updated,texts)||'Keine zusätzliche Einblendung.';ownLabel.hidden=updated.caption!=='custom';variantLabel.hidden=['none','custom'].includes(updated.caption);}
-        select.onchange=()=>{editItem(index,{caption:select.value});previewText();};variant.onchange=()=>{editItem(index,{variant:Number(variant.value)});previewText();};input.oninput=()=>{editItem(index,{text:input.value});previewText();};
+        function previewText(){const updated=getGallery().film.items[index];preview.textContent=textBusy?'KI-Text wird erstellt …':model.caption(work,updated,texts)||'Keine zusätzliche Einblendung.';ownLabel.hidden=!textBusy&&updated.caption!=='custom';variantLabel.hidden=textBusy||['none','custom'].includes(updated.caption);}
+        select.onchange=()=>{editItem(index,{caption:select.value});previewText();};variant.onchange=()=>{editItem(index,{variant:Number(variant.value)});previewText();};input.oninput=()=>{editItem(index,{caption:'custom',text:input.value});previewText();};
         card.append(label,variantLabel,ownLabel,preview);previewText();$('film-selection').append(card);
       });
     }
@@ -210,18 +229,17 @@
     $('film-ai-generate').onclick=()=>void generateFilmTexts();
     $('film-ai-permission').onclick=requestAIConsent;
     $('film-ai-cancel').onclick=()=>stopTextAI('Anfrage im Browser abgebrochen. Deine bisherigen Texte bleiben unverändert. Bereits übertragene Daten lassen sich damit nicht zurückrufen.');
-    $('film-ai-discard').onclick=()=>stopTextAI('Vorschlag verworfen. Deine bisherigen Texte bleiben unverändert.');
-    $('film-ai-apply').onclick=()=>{
-      if(!textDraft||textSource!==filmFingerprint()||!aiAllowed()){stopTextAI('Die Auswahl oder Freigabe hat sich geändert. Bitte erstelle einen neuen Vorschlag.');return;}
-      const g=getGallery(),draft=textDraft,replaceMotto=$('film-ai-use-motto').checked;
-      const checked=filmAI.parseResponse(draft,g.film.items.map(item=>item.id));
-      const next={...g,film:{...g.film,motto:replaceMotto?checked.motto:g.film.motto,items:g.film.items.map(item=>({...item,caption:'custom',text:checked.works.find(work=>work.id===item.id).text}))}};
-      stopTextAI();if(change(next,'KI-Filmtexte übernommen. Du kannst jede Einblendung unten ändern.'))textStatus('KI-Filmtexte übernommen und gespeichert. Die Texte bleiben einzeln bearbeitbar; KI kann irren.');
+    $('film-ai-undo').onclick=()=>{
+      if(textBusy||!textUndo)return;
+      if(textUndo.source!==filmFingerprint()){updateTextUndo();return;}
+      const previous=textUndo.film,g=getGallery();
+      if(change({...g,film:structuredClone(previous)},'Vorherige Filmtexte wiederhergestellt.'))textStatus('KI-Übernahme rückgängig gemacht. Deine vorherigen Texte und Einstellungen sind wiederhergestellt.');
     };
-    $('gallery-dialog').addEventListener('close',()=>stopTextAI());
+    $('gallery-dialog').addEventListener('close',()=>{textUndo=null;stopTextAI();});
     addEventListener('resize',layoutGallery);
     document.fonts?.ready.then(layoutGallery);
     function stopFilm() {
+      textUndo=null;
       stopTextAI();
       loadingEpoch++;loading=false;cancelAnimationFrame(raf);audio.pause();paused=true;
       preparations.forEach(p=>p.cancel());preparations=[];cache.clear();film=null;

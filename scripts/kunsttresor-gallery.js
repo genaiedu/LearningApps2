@@ -99,7 +99,7 @@
     if(gallery.liked.length<UNLOCK) throw Error('Für deinen Kunstfilm fehlen noch '+(UNLOCK-gallery.liked.length)+' Lieblingswerke.');
     if(gallery.film.items.length<MIN || gallery.film.items.length>MAX) throw Error('Wähle 6 bis 10 Werke für deinen Film.');
     if(gallery.film.items.some(i=>!gallery.liked.some(l=>l.id===i.id)))throw Error('Im Film sind nur gelikte Kunstwerke erlaubt.');
-    if(gallery.film.items.some(i=>i.caption==='custom'&&!i.text.trim()))throw Error('Trage deine eigenen Einblendungen ein oder wähle eine andere Textart.');
+    if(gallery.film.items.some(i=>i.caption==='custom'&&!cleanCaption(i.text).trim()))throw Error('Trage deine eigenen Einblendungen ein oder wähle eine andere Textart.');
     if(!gallery.film.name.trim())throw Error('Gib deiner Galerie einen Namen.');
     return true;
   }
@@ -115,13 +115,20 @@
     return frames;
   }
   function frameAt(frames,time) {return frames.find(frame=>time>=frame.start&&time<frame.end)||frames.at(-1);}
+  function cleanCaption(value){
+    // Editorial labels are not part of the film essay. Keep ordinary content,
+    // including meaningful numbers such as “2. Weltkrieg”, exactly as written.
+    let result=value;
+    for(let i=0;i<3;i++)result=result.replace(/^\s*(?:(?:KI[\s-]*)?(?:Text(?:vorschlag)?|Vorschl(?:ag)?\.?|Variante|Entwurf|Einblendung|Bildtext|Caption)|Motto)\s*(?:(?:Nr\.?\s*)?\d{1,2})?\s*[:：]\s*/i,'');
+    return result;
+  }
   function caption(work,item,texts) {
     if(item.caption==='none')return '';
-    if(item.caption==='custom')return item.text;
+    if(item.caption==='custom')return cleanCaption(item.text);
     const style=texts?.styles?.[work.style]?.[item.variant]||work.style;
     const technique=texts?.techniques?.[work.technique]?.[item.variant]||work.technique;
     return item.caption==='style'?style:item.caption==='technique'?technique:style+'\n'+technique;
   }
-  const api={UNLOCK,MIN,MAX,DEFAULT,modes,fresh,winningRoom,restore,like,remove,removeFromFilm,viewWorks,viewFacets,merge,item,automatic,validateFilm,timeline,frameAt,caption};
+  const api={UNLOCK,MIN,MAX,DEFAULT,modes,fresh,winningRoom,restore,like,remove,removeFromFilm,viewWorks,viewFacets,merge,item,automatic,validateFilm,timeline,frameAt,cleanCaption,caption};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.KunstGallery=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

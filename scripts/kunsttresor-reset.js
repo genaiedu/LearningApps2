@@ -15,7 +15,7 @@
     const keys = [];
     for (let i=0;i<storage.length;i++) {
       const key = storage.key(i);
-      if (typeof key === 'string' && key.startsWith(prefix)) keys.push(key);
+      if (typeof key === 'string' && (key.startsWith(prefix)||key==='learningapps-lerncode-device-v1:kunsttresor')) keys.push(key);
     }
     return keys;
   }

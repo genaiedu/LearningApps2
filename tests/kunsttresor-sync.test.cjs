@@ -34,7 +34,7 @@ function fixture(overrides={}) {
     if(hooks.afterWrite)await hooks.afterWrite({code,body,saved});
     return {ok:true,status:200,json:async()=>({profileId:saved.profileId,appId:saved.appId,revision:saved.revision,updatedAt:saved.updatedAt})};
   }
-  const options={adapter,fetcher,local,session,crypto:webcrypto,apiBase:'https://example.test',delay:60000,...overrides};
+  const options={adapter,fetcher,local,session,crypto:webcrypto,apiBase:'https://example.test',delay:60000,rememberDevice:false,...overrides};
   let controller=sync.createController(options);
   return {adapter,get controller(){return controller;},options,server,requests,hooks,profiles,local,session,
     edit(label,score){current=payload(label,score);profiles.set(profileId,clone(current));controller.changed();},
@@ -61,6 +61,49 @@ test('the code never enters localStorage or sessionStorage; reload makes no auto
   assert.equal(f.local.getItem(sync.CONNECTION_KEY),null);assert.equal(f.session.getItem(sync.SESSION_KEY),null);
   const count=f.requests.length;f.reload();await f.controller.resume();assert.equal(f.requests.length,count);assert.equal(f.controller.getProfileId(),null);assert.equal(f.adapter.getProfileId(),null);
   assert.equal(f.profiles.get('profil-aaaa-001').state.label,'unsent');
+});
+test('explicit remembered-device mode stores only its app connection, never exports or status secrets',async t=>{
+ const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);
+ const key=sync.deviceKey('kunsttresor'),record=JSON.parse(f.local.getItem(key));assert.equal(record.code,A);assert.equal(record.enabled,true);assert.equal(record.profileId,f.adapter.getProfileId());assert.equal(record.appId,'kunsttresor');
+ assert.equal(f.session.getItem(sync.SESSION_KEY),null);assert.equal(f.local.getItem(sync.deviceKey('kraefte-labor')),null);assert.doesNotMatch(JSON.stringify(f.adapter.getSnapshot())+JSON.stringify(f.controller.getStatus()),new RegExp(A));
+});
+test('remembered restart loads the latest remote position automatically without uploading an older cache',async t=>{
+ const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);
+ f.server.get(A).state=payload('A-latest-other-device',30);f.server.get(A).revision=2;const writes=f.requests.filter(r=>r.method==='PUT').length;
+ f.reload();assert.equal(f.adapter.getProfileId(),'profil-aaaa-001');await f.controller.resume();assert.equal(f.controller.getStatus().kind,'saved');assert.equal(f.controller.getStatus().enabled,true);assert.equal(f.adapter.getSnapshot().state.label,'A-latest-other-device');assert.equal(f.requests.filter(r=>r.method==='PUT').length,writes);assert.equal(f.controller.getStatus().awaitingChoice,false);
+});
+test('restart uploads newer unsent local work automatically only when the remote baseline is unchanged',async t=>{
+ const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);f.edit('A-unsent-before-close',32);f.reload();await f.controller.resume();
+ assert.equal(f.controller.getStatus().kind,'saved');assert.equal(f.adapter.getSnapshot().state.label,'A-unsent-before-close');assert.equal(f.server.get(A).state.state.label,'A-unsent-before-close');assert.equal(f.controller.getStatus().awaitingChoice,false);
+});
+test('concurrent remote and offline local progress survives restart as an explicitly resolvable conflict',async t=>{
+ for(const keepLocal of [true,false]){const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);f.edit('A-offline-local',32);f.server.get(A).state=payload('A-new-remote',40);f.server.get(A).revision=2;f.reload();await f.controller.resume();
+  assert.equal(f.controller.getStatus().kind,'conflict');assert.equal(f.controller.getStatus().ready,true);assert.equal(f.adapter.getSnapshot().state.label,'A-offline-local');assert.equal(f.server.get(A).state.state.label,'A-new-remote');
+  await f.controller.resolveConflict(keepLocal);assert.equal(f.controller.getStatus().kind,'saved');assert.equal(f.adapter.getSnapshot().state.label,keepLocal?'A-offline-local':'A-new-remote');assert.equal(f.server.get(A).state.state.label,f.adapter.getSnapshot().state.label);
+ }
+});
+test('offline restart retains the remembered profile and automatically checks again after reconnect',async t=>{
+ const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);f.hooks.before=async()=>{throw Error('Offline');};f.reload();await f.controller.resume();
+ assert.equal(f.controller.getStatus().kind,'offline');assert.equal(f.adapter.getSnapshot().state.label,'A');assert.equal(f.controller.getStatus().enabled,true);assert.ok(f.local.getItem(sync.deviceKey('kunsttresor')));
+ f.hooks.before=null;f.server.get(A).state=payload('A-current-online',35);f.server.get(A).revision=2;await f.controller.refresh();assert.equal(f.adapter.getSnapshot().state.label,'A-current-online');assert.equal(f.controller.getStatus().kind,'saved');
+});
+test('remembered pause survives reload without any request; signout forgets the code and personal cache',async t=>{
+ const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);f.edit('paused-local',36);f.controller.setEnabled(false);const count=f.requests.length;f.reload();await f.controller.resume();assert.equal(f.requests.length,count);assert.equal(f.controller.getStatus().kind,'paused');assert.equal(f.adapter.getSnapshot().state.label,'paused-local');
+ f.controller.disconnect();assert.equal(f.local.getItem(sync.deviceKey('kunsttresor')),null);assert.equal(f.profiles.has('profil-aaaa-001'),false);f.reload();await f.controller.resume();assert.equal(f.requests.length,count);assert.equal(f.adapter.getProfileId(),null);
+});
+test('accepted upload with lost acknowledgement and later offline edits is reconciled on restart',async t=>{
+ const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);f.edit('accepted',20);f.hooks.afterWrite=async()=>{throw Error('Lost acknowledgement');};await f.controller.flush();f.edit('later-unsent',21);f.reload();f.hooks.afterWrite=null;await f.controller.resume();assert.equal(f.controller.getStatus().kind,'saved');assert.equal(f.server.get(A).state.state.label,'later-unsent');
+});
+test('restart with a missing local cache downloads the remembered profile; aborted loads cannot revive it',async t=>{
+ const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);f.profiles.delete('profil-aaaa-001');f.reload();await f.controller.resume();assert.equal(f.adapter.getSnapshot().state.label,'A');
+ let release,started;const waiting=new Promise(r=>started=r);f.reload();f.hooks.before=async()=>{started();await new Promise(r=>release=r);};const loading=f.controller.resume();await waiting;f.controller.disconnect();release();await loading;assert.equal(f.adapter.getProfileId(),null);assert.equal(f.local.getItem(sync.deviceKey('kunsttresor')),null);
+});
+test('persistent storage quota failure removes the old device login rather than reviving a previous code',async t=>{
+ const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);const original=f.local.setItem,key=sync.deviceKey('kunsttresor');
+ f.local.setItem=(k,v)=>{if(k===key)throw Error('quota');original(k,v);};await select(f,B);assert.equal(f.controller.getStatus().kind,'error');assert.equal(f.controller.getStatus().enabled,false);assert.equal(f.local.getItem(key),null);
+});
+test('an ignored credential removal is reported, not claimed as successful logout',async t=>{
+ const f=fixture({rememberDevice:true});t.after(()=>f.controller.destroy());await select(f,A);const original=f.local.removeItem,key=sync.deviceKey('kunsttresor');f.local.removeItem=k=>{if(k!==key)original(k);};assert.equal(f.controller.disconnect(),false);assert.equal(f.controller.getStatus().kind,'error');assert.match(f.controller.getStatus().message,/nicht entfernen/);
 });
 test('unsubmitted local progress survives reload and is offered explicitly before either side is replaced',async t=>{
   const f=fixture();t.after(()=>f.controller.destroy());await select(f,A);f.edit('A-unsent',33);f.reload();await f.controller.resume();
