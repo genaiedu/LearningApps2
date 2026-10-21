@@ -316,6 +316,15 @@
       $('best').textContent=number(best);
     } finally { syncApplying=false; }
   }
+  function signOutProfile() {
+    const bases=[baseGalleryKey,...['game','best','progress','history'].map(name=>baseKeys[name])];
+    const removed=[];
+    for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(bases.some(base=>key===base||key===scopedKey(base,storageProfile)))removed.push(key);}
+    for(const key of removed)localStorage.removeItem(key);
+    if(removed.some(key=>localStorage.getItem(key)!==null))throw Error('Die persönlichen lokalen Daten konnten nicht vollständig entfernt werden. Bitte lösche die Website-Daten dieses Browsers.');
+    replaceSnapshot(null,freshSnapshot());
+    for(const base of bases)localStorage.removeItem(base);
+  }
   async function exportSave() {
     if (transferBusy || !pool.length) return;
     setTransferBusy(true); $('save-status').textContent = 'Deine Datei wird vorbereitet …';
@@ -1462,7 +1471,7 @@
       if (state && imagesAllowed) render();
       if(learner) {
         syncReady=true;
-        const adapter={getSnapshot:snapshot,validateSnapshot,replaceSnapshot,readProfileSnapshot,freshSnapshot,getProfileId:()=>storageProfile};
+        const adapter={getSnapshot:snapshot,validateSnapshot,replaceSnapshot,readProfileSnapshot,freshSnapshot,signOut:signOutProfile,getProfileId:()=>storageProfile};
         syncController=learner.mount(adapter);
         window.KunstLernstand={adapter,controller:syncController};
       }

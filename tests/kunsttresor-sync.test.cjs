@@ -16,7 +16,8 @@ function fixture(overrides={}) {
     validateSnapshot:value=>{assert.equal(value.app,'kunsttresor');assert.ok(value.state);return value;},
     readProfileSnapshot:id=>profiles.has(id)?clone(profiles.get(id)):null,
     replaceSnapshot:(id,value)=>{profileId=id;current=clone(value);profiles.set(id,clone(value));},
-    freshSnapshot:()=>payload('frisch',0)
+    freshSnapshot:()=>payload('frisch',0),
+    signOut:()=>{profiles.delete(profileId);profileId=null;current=payload('frisch',0);profiles.set(null,clone(current));}
   };
   const server = new Map([[A,{profileId:'profil-aaaa-001',appId:'kunsttresor',state:payload('A',10),revision:1,updatedAt:'2026-10-21T20:00:00Z'}],[B,{profileId:'profil-bbbb-002',appId:'kunsttresor',state:payload('B',20),revision:1,updatedAt:'2026-10-21T20:00:00Z'}],[C,{profileId:'profil-cccc-003',appId:'kunsttresor',state:null,revision:0,updatedAt:null}]]);
   const requests=[], hooks={};
@@ -25,6 +26,7 @@ function fixture(overrides={}) {
     requests.push({code,method:options.method,body,signal:options.signal});
     if(hooks.before)await hooks.before({code,method:options.method,body,signal:options.signal});
     if(!saved)return {ok:false,status:401,json:async()=>({error:'invalid_code',message:'Ungültiger Lerncode.'})};
+    if(options.method==='DELETE'){assert.deepEqual(body,{confirmation:'delete-profile'});server.delete(code);return{ok:true,status:200,json:async()=>({deleted:true,profileId:saved.profileId})};}
     if(saved.disabled)return {ok:false,status:403,json:async()=>({error:'code_disabled',message:'Dieser Lerncode wurde deaktiviert.'})};
     if(options.method==='GET')return {ok:true,status:200,json:async()=>clone(saved)};
     if(body.baseRevision!==saved.revision)return {ok:false,status:409,json:async()=>({error:'revision_conflict',message:'Neuerer Stand vorhanden.',revision:saved.revision,updatedAt:saved.updatedAt})};
@@ -40,11 +42,53 @@ function fixture(overrides={}) {
   };
 }
 async function select(f,code,direction='download'){await f.controller.connect(code);await f.controller.chooseDirection(direction);}
+test('profile deletion needs explicit confirmation, targets the whole profile and signs out only after confirmation',async t=>{
+  const f=fixture();t.after(()=>f.controller.destroy());await select(f,A);await assert.rejects(f.controller.deleteRemoteProfile(''),/bestätigt/);assert.ok(f.server.has(A));
+  await f.controller.deleteRemoteProfile('delete-profile');assert.equal(f.server.has(A),false);assert.equal(f.server.has(B),true);assert.equal(f.adapter.getProfileId(),null);assert.equal(f.controller.getStatus().kind,'disconnected');assert.equal(f.profiles.has('profil-aaaa-001'),false);
+});
+test('failed deletion preserves local progress and leaves synchronization paused for retry',async t=>{
+  const f=fixture();t.after(()=>f.controller.destroy());await select(f,A);f.edit('keep-this',22);f.hooks.before=async({method})=>{if(method==='DELETE')throw Error('Offline');};
+  await f.controller.deleteRemoteProfile('delete-profile');assert.ok(f.server.has(A));assert.equal(f.adapter.getSnapshot().state.label,'keep-this');assert.equal(f.controller.getStatus().enabled,false);assert.equal(f.controller.getStatus().kind,'error');
+});
 test('Lerncodes accept copied groups but reject short or invalid secrets',()=>{
   assert.equal(sync.normalizeCode(sync.formatCode(A).toLowerCase().replaceAll('-',' ')),A);
   assert.throws(()=>sync.normalizeCode('123456'));
   assert.throws(()=>sync.normalizeCode('I'.repeat(26)));
   assert.notEqual(sync.scopedKey('game','profil-aaaa-001'),sync.scopedKey('game','profil-bbbb-002'));
+});
+test('the code never enters localStorage or sessionStorage; reload makes no automatic request',async t=>{
+  const f=fixture();t.after(()=>f.controller.destroy());await select(f,A);f.edit('unsent',33);
+  assert.equal(f.local.getItem(sync.CONNECTION_KEY),null);assert.equal(f.session.getItem(sync.SESSION_KEY),null);
+  const count=f.requests.length;f.reload();await f.controller.resume();assert.equal(f.requests.length,count);assert.equal(f.controller.getProfileId(),null);assert.equal(f.adapter.getProfileId(),null);
+  assert.equal(f.profiles.get('profil-aaaa-001').state.label,'unsent');
+});
+test('unsubmitted local progress survives reload and is offered explicitly before either side is replaced',async t=>{
+  const f=fixture();t.after(()=>f.controller.destroy());await select(f,A);f.edit('A-unsent',33);f.reload();await f.controller.resume();
+  await f.controller.connect(A);assert.equal(f.controller.getStatus().localAvailable,true);assert.equal(f.controller.getStatus().localNewer,true);
+  assert.equal(f.server.get(A).state.state.label,'A');assert.equal(f.profiles.get('profil-aaaa-001').state.label,'A-unsent');
+  await f.controller.chooseDirection('cached');assert.equal(f.adapter.getSnapshot().state.label,'A-unsent');assert.equal(f.server.get(A).state.state.label,'A-unsent');
+});
+test('an offline failed save cannot disappear when the same code is reconnected after reload',async t=>{
+  const f=fixture();t.after(()=>f.controller.destroy());await select(f,A);f.edit('offline-progress',34);
+  f.hooks.before=async({method})=>{if(method==='PUT')throw Error('Offline');};await f.controller.flush();assert.equal(f.controller.getStatus().kind,'offline');f.reload();await f.controller.resume();
+  f.hooks.before=null;await f.controller.connect(A);assert.equal(f.controller.getStatus().localNewer,true);assert.equal(f.profiles.get('profil-aaaa-001').state.label,'offline-progress');
+  await f.controller.chooseDirection('cached');assert.equal(f.server.get(A).state.state.label,'offline-progress');
+});
+test('pausing preserves the visible state but signing out removes that profile and opens a blank guest',async t=>{
+  const f=fixture();t.after(()=>f.controller.destroy());await select(f,A);f.edit('local',12);f.controller.setEnabled(false);
+  assert.equal(f.adapter.getSnapshot().state.label,'local');assert.equal(f.controller.getStatus().enabled,false);
+  f.controller.disconnect();assert.equal(f.adapter.getProfileId(),null);assert.equal(f.adapter.getSnapshot().state.label,'frisch');assert.equal(f.profiles.has('profil-aaaa-001'),false);
+  assert.equal(f.server.get(A).state.state.label,'A');f.reload();await f.controller.resume();assert.equal(f.adapter.getSnapshot().state.label,'frisch');
+});
+test('legacy stored secrets are removed without opening their cached profile or contacting the service',()=>{
+  const local=storage(),session=storage();local.setItem(sync.CONNECTION_KEY,JSON.stringify({profileId:'profil-aaaa-001',code:A,enabled:true}));session.setItem(sync.SESSION_KEY,JSON.stringify({profileId:'profil-aaaa-001',code:A}));local.setItem(sync.VIEW_KEY,JSON.stringify({profileId:'profil-aaaa-001'}));
+  assert.equal(sync.storedProfileId(local,session),null);assert.equal(local.getItem(sync.CONNECTION_KEY),null);assert.equal(session.getItem(sync.SESSION_KEY),null);assert.equal(local.getItem(sync.VIEW_KEY),null);
+});
+test('the shared controller routes other applications separately and requires an explicit app identifier',async t=>{
+  const shared=require('../../LearningApps/scripts/learning-profile.js'),f=fixture(),requests=[];t.after(()=>f.controller.destroy());
+  const controller=shared.createController({...f.options,appId:'kraefte-labor',fetcher:async(url,options)=>{requests.push(url);return{ok:true,json:async()=>({profileId:'profil-aaaa-001',appId:'kraefte-labor',state:payload('force'),revision:1})};}});t.after(()=>controller.destroy());
+  await controller.connect(A);assert.ok(requests[0].endsWith('/api/state/kraefte-labor'));assert.equal(controller.getStatus().awaitingChoice,true);
+  assert.throws(()=>shared.createController(f.options),/Kennung/);
 });
 test('every manual connect waits for a direction before replacing or uploading anything',async t=>{
   const f=fixture();t.after(()=>f.controller.destroy());
@@ -94,20 +138,6 @@ test('cancelling a direction keeps the current game locally with sync paused',as
   assert.equal(f.adapter.getSnapshot().state.label,'A-while-choosing');
   assert.equal(f.controller.getStatus().enabled,false);
 });
-test('pause retains the visible profile, persists disabled, and causes no requests even after reload',async t=>{
-  const f=fixture();t.after(()=>f.controller.destroy());
-  await select(f,A);f.controller.setEnabled(false);f.edit('A-local-only',17);
-  const count=f.requests.length;
-  await f.controller.flush();await f.controller.refresh();
-  assert.equal(f.requests.length,count);
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-only');
-  assert.equal(sync.storedConnection(f.local,f.session).enabled,false);
-  f.reload();await f.controller.resume();
-  assert.equal(f.requests.length,count);
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-only');
-  assert.equal(f.controller.getStatus().enabled,false);
-  assert.equal(f.controller.hasUnsavedChanges(),false);
-});
 test('turning sync back on asks for a direction and does not transfer local offline edits automatically',async t=>{
   const f=fixture();t.after(()=>f.controller.destroy());
   await select(f,A);f.controller.setEnabled(false);f.edit('A-offline',18);
@@ -120,48 +150,6 @@ test('turning sync back on asks for a direction and does not transfer local offl
   assert.equal(f.server.get(A).state.state.label,'A-offline');
   assert.equal(f.controller.getStatus().enabled,true);
 });
-test('enabled reload always downloads the current database before any upload, even over an old dirty cache',async t=>{
-  const f=fixture();t.after(()=>f.controller.destroy());
-  await select(f,A);f.edit('A-unsent-old-cache',33);
-  f.server.get(A).state=payload('A-newest-database',40);f.server.get(A).revision=2;
-  const count=f.requests.length;f.reload();
-  assert.equal(f.adapter.getSnapshot().state.label,'A-unsent-old-cache');
-  await f.controller.resume();
-  assert.deepEqual(f.requests.slice(count).map(r=>r.method),['GET']);
-  assert.equal(f.adapter.getSnapshot().state.label,'A-newest-database');
-  assert.equal(f.controller.getStatus().ready,true);
-  f.edit('A-after-startup-download',41);await f.controller.flush();
-  assert.equal(f.server.get(A).state.state.label,'A-after-startup-download');
-  assert.equal(f.requests.at(-1).body.baseRevision,2);
-});
-test('failed startup download keeps the local view and forbids uploads until a successful download',async t=>{
-  const f=fixture();t.after(()=>f.controller.destroy());
-  await select(f,A);f.edit('A-local-before-reload',33);f.reload();
-  f.hooks.before=async({method})=>{if(method==='GET')throw Error('Offline');};
-  await f.controller.resume();
-  assert.equal(f.controller.getStatus().ready,false);
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-before-reload');
-  f.edit('A-local-during-offline-start',34);const count=f.requests.length;await f.controller.flush();
-  assert.equal(f.requests.length,count);
-  assert.equal(f.server.get(A).state.state.label,'A');
-  f.hooks.before=null;await f.controller.refresh();
-  assert.equal(f.adapter.getSnapshot().state.label,'A');
-  assert.equal(f.controller.getStatus().ready,true);
-  assert.equal(f.requests.at(-1).method,'GET');
-});
-test('pause aborts a startup GET and a late result cannot change the local game',{timeout:3000},async t=>{
-  const f=fixture();let release,started;t.after(()=>{release?.();f.controller.destroy();});
-  await select(f,A);f.edit('A-cached',31);f.reload();
-  const waiting=new Promise(resolve=>started=resolve);
-  f.hooks.before=async()=>{started();await new Promise(resolve=>release=resolve);};
-  const startup=f.controller.resume();await waiting;
-  f.controller.setEnabled(false);
-  assert.equal(f.requests.at(-1).signal.aborted,true);
-  release();await startup;
-  assert.equal(f.adapter.getSnapshot().state.label,'A-cached');
-  assert.equal(f.controller.getStatus().enabled,false);
-  assert.equal(sync.storedConnection(f.local,f.session).enabled,false);
-});
 test('pause aborts an in-flight PUT and stale confirmation cannot re-enable sync',{timeout:3000},async t=>{
   const f=fixture();let release,accepted;t.after(()=>{release?.();f.controller.destroy();});
   const waiting=new Promise(resolve=>accepted=resolve);
@@ -173,25 +161,6 @@ test('pause aborts an in-flight PUT and stale confirmation cannot re-enable sync
   assert.equal(f.adapter.getSnapshot().state.label,'A-after-pause');
   assert.equal(f.server.get(A).state.state.label,'A-already-accepted');
   const count=f.requests.length;await f.controller.refresh();assert.equal(f.requests.length,count);
-});
-test('forgetting a code removes credentials but keeps the local visible profile across reload',async t=>{
-  const f=fixture();t.after(()=>f.controller.destroy());
-  await select(f,A);f.edit('A-local-before-forget',13);f.controller.disconnect();
-  assert.equal(f.local.getItem(sync.CONNECTION_KEY),null);
-  assert.equal(f.session.getItem(sync.SESSION_KEY),null);
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-before-forget');
-  assert.equal(sync.storedProfileId(f.local,f.session),'profil-aaaa-001');
-  const count=f.requests.length;f.reload();await f.controller.resume();
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-before-forget');
-  assert.equal(f.requests.length,count);
-  assert.equal(f.controller.getProfileId(),null);
-});
-test('legacy tab credentials migrate to persistent enabled login before profile keys are chosen',()=>{
-  const local=storage(),session=storage();session.setItem(sync.SESSION_KEY,JSON.stringify({profileId:'profil-aaaa-001',code:A}));
-  assert.equal(sync.storedProfileId(local,session),'profil-aaaa-001');
-  assert.deepEqual(sync.storedConnection(local,session),{profileId:'profil-aaaa-001',code:A,enabled:true});
-  assert.equal(session.getItem(sync.SESSION_KEY),null);
-  assert.ok(local.getItem(sync.CONNECTION_KEY));
 });
 test('a stale response from a previous code cannot block or modify saving a newly selected profile',{timeout:3000},async t=>{
   const f=fixture();let release,accepted;t.after(()=>{release?.();f.controller.destroy();});
@@ -259,84 +228,4 @@ test('new edits during an explicit download require another choice instead of be
   assert.equal(f.adapter.getSnapshot().state.label,'gast-new-live-edit');
   assert.equal(f.controller.getStatus().awaitingChoice,true);
   assert.equal(f.controller.getStatus().enabled,false);
-});
-test('failed connection persistence disables sync and removes any old enabled credential',async t=>{
-  const f=fixture();t.after(()=>f.controller.destroy());
-  await select(f,A);
-  const set=f.local.setItem;
-  f.local.setItem=(key,value)=>{if(key===sync.CONNECTION_KEY&&JSON.parse(value).profileId==='profil-bbbb-002')throw Error('Quota exceeded');set(key,value);};
-  await select(f,B);
-  assert.equal(f.adapter.getSnapshot().state.label,'B');
-  assert.equal(f.controller.getStatus().enabled,false);
-  assert.equal(f.controller.getStatus().kind,'error');
-  assert.equal(f.local.getItem(sync.CONNECTION_KEY),null);
-  const count=f.requests.length;f.reload();await f.controller.resume();
-  assert.equal(f.adapter.getSnapshot().state.label,'B');
-  assert.equal(f.requests.length,count);
-  f.local.setItem=set;await select(f,A);
-  f.local.setItem=(key,value)=>{if(key===sync.CONNECTION_KEY)throw Error('Quota exceeded');set(key,value);};
-  f.controller.setEnabled(false);
-  assert.equal(f.controller.getStatus().enabled,false);
-  assert.equal(f.controller.getStatus().kind,'error');
-  assert.equal(f.local.getItem(sync.CONNECTION_KEY),null);
-});
-test('a disabled-code PUT pauses persistently, keeps local data and credentials, and permits explicit use after reactivation',async t=>{
-  const f=fixture();t.after(()=>f.controller.destroy());
-  await select(f,A);f.server.get(A).disabled=true;f.edit('A-local-while-disabled',55);
-  await f.controller.flush();
-  assert.equal(f.controller.getStatus().enabled,false);
-  assert.equal(f.controller.getStatus().ready,false);
-  assert.equal(f.controller.getStatus().conflicted,false);
-  assert.match(f.controller.getStatus().message,/Lerncode wurde deaktiviert/);
-  assert.deepEqual(sync.storedConnection(f.local,f.session),{profileId:'profil-aaaa-001',code:A,enabled:false});
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-while-disabled');
-  assert.equal(f.server.get(A).state.state.label,'A');
-  const count=f.requests.length;
-  f.edit('A-local-after-disable',56);await f.controller.flush();await f.controller.refresh();
-  f.reload();await f.controller.resume();
-  assert.equal(f.requests.length,count);
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-after-disable');
-  await f.controller.setEnabled(true);
-  assert.equal(f.requests.length,count+1);
-  assert.equal(f.controller.getStatus().enabled,false);
-  assert.match(f.controller.getStatus().message,/Lerncode wurde deaktiviert/);
-  f.server.get(A).disabled=false;await f.controller.setEnabled(true);
-  assert.equal(f.controller.getStatus().awaitingChoice,true);
-  assert.equal(f.server.get(A).state.state.label,'A');
-  await f.controller.chooseDirection('upload');
-  assert.equal(f.controller.getStatus().enabled,true);
-  assert.equal(f.server.get(A).state.state.label,'A-local-after-disable');
-});
-test('a disabled-code startup GET preserves the local cache and switches off before any upload or retry',async t=>{
-  const f=fixture();t.after(()=>f.controller.destroy());
-  await select(f,A);f.edit('A-local-startup',27);f.server.get(A).disabled=true;f.reload();
-  const count=f.requests.length;await f.controller.resume();
-  assert.deepEqual(f.requests.slice(count).map(r=>r.method),['GET']);
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-startup');
-  assert.equal(f.controller.getStatus().enabled,false);
-  assert.equal(f.controller.getStatus().conflicted,false);
-  assert.match(f.controller.getStatus().message,/Lerncode wurde deaktiviert/);
-  const after=f.requests.length;await f.controller.flush();await f.controller.refresh();f.reload();await f.controller.resume();
-  assert.equal(f.requests.length,after);
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-startup');
-});
-test('deactivation while awaiting a direction or resolving a conflict never uploads or replaces the local profile',async t=>{
-  const f=fixture();t.after(()=>f.controller.destroy());
-  await select(f,A);await f.controller.connect(B);f.server.get(B).disabled=true;
-  const count=f.requests.filter(r=>r.method==='PUT').length;
-  await f.controller.chooseDirection('download');
-  assert.equal(f.controller.getStatus().awaitingChoice,false);
-  assert.equal(f.controller.getStatus().enabled,false);
-  assert.equal(f.adapter.getSnapshot().state.label,'A');
-  assert.equal(f.requests.filter(r=>r.method==='PUT').length,count);
-  assert.equal(sync.storedConnection(f.local,f.session).code,A);
-  await f.controller.setEnabled(true);await f.controller.chooseDirection('download');
-  f.server.get(A).state=payload('A-other-browser',31);f.server.get(A).revision=2;
-  f.edit('A-local-conflict',32);await f.controller.flush();
-  assert.equal(f.controller.getStatus().conflicted,true);
-  f.server.get(A).disabled=true;await f.controller.resolveConflict(false);
-  assert.equal(f.controller.getStatus().conflicted,false);
-  assert.equal(f.controller.getStatus().enabled,false);
-  assert.equal(f.adapter.getSnapshot().state.label,'A-local-conflict');
-  assert.match(f.controller.getStatus().message,/Lerncode wurde deaktiviert/);
 });
