@@ -21,6 +21,12 @@ Version 8 verlangt zusätzlich für jede Einblendung einen unverändert zitierte
 Eintrag aus dem serverseitig geprüften Faktenbestand dieses Werks. Dieser interne
 Beleg wird validiert und nicht eingeblendet. Wiederholte Künstlernamen werden
 abgewiesen; sichtbare Werkangaben bleiben getrennt von der Filmtextredaktion.
+Version 9 ergänzt ein getrennt angewiesenes KI-Sach-/Sprachlektorat vor der
+Anzeige. Entwurf und Lektorat bleiben gemeinsam innerhalb der vorhandenen
+Zeitgrenze; bei erneutem Versuch höchstens vier Modellaufrufe insgesamt. Auch
+das Lektorat wird vollständig validiert. Diese zusätzliche Prüfung ist keine
+Garantie gegen KI-Fehler; der sichtbare Vorschlag braucht weiterhin die bewusste
+Übernahme und kann bearbeitet oder verworfen werden.
 
 Nur der eigene Knopf „Texte von KI erstellen lassen“ im Filmeditor fordert Texte
 an, nach informierter KI-Freigabe. Weder Filmstart noch Öffnen/Ändern einer Galerie

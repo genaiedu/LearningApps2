@@ -26,18 +26,23 @@ test('provider must cite an exact verified fact for each work and must not repea
  const named=structuredClone(value);named.works[0].text=context.works[0].artist+' malt dieses Werk.';assert.throws(()=>film.parseGenerated(named,ids,context));
 });
 test('same protected feedback endpoint uses an independent film prompt and strict schema',async()=>{
- let calls=0;const handler=fixture(async(url,options)=>{calls++;const body=JSON.parse(options.body);assert.equal(body.model,'openai/gpt-oss-120b');assert.equal(body.response_format.json_schema.name,'art_film_captions');assert.equal(body.messages[0].content,film.instructions);assert.deepEqual(JSON.parse(body.messages[1].content).works.map(w=>w.id),ids);return response();});
- for(let i=0;i<2;i++){const out=res();await handler(req(input()),out);assert.equal(out.code,200);assert.equal(out.body.works.length,8);}assert.equal(calls,1);
- const out=res();await handler(req({...input(),variation:13}),out);assert.equal(out.code,200);assert.equal(calls,2);
+ let calls=0;const handler=fixture(async(url,options)=>{calls++;const body=JSON.parse(options.body);assert.equal(body.model,'openai/gpt-oss-120b');assert.equal(body.response_format.json_schema.name,'art_film_captions');const review=calls%2===0;assert.equal(body.messages[0].content,review?film.reviewInstructions:film.instructions);const data=JSON.parse(body.messages[1].content);assert.deepEqual((review?data.sources:data).works.map(w=>w.id),ids);return response();});
+ for(let i=0;i<2;i++){const out=res();await handler(req(input()),out);assert.equal(out.code,200);assert.equal(out.body.works.length,8);}assert.equal(calls,2);
+ const out=res();await handler(req({...input(),variation:13}),out);assert.equal(out.code,200);assert.equal(calls,4);
 });
 test('invalid requests never call provider; unknown dates and malformed answers never reach the film',async()=>{
  let calls=0;let handler=fixture(async()=>{calls++;return response();});const denied=res();await handler(req({...input(),freeText:'private'}),denied);assert.equal(denied.code,400);assert.equal(calls,0);
  for(const mutate of [x=>x.works[0].text='Dies entstand im Jahr 9999.',x=>x.works.pop(),x=>x.motto='Im Jahr 9999 wird alles anders.']){const value=answer();mutate(value);handler=fixture(async()=>response(value));const out=res();await handler(req(input()),out);assert.equal(out.code,502);assert.equal(out.body.reason,'invalid_response');}
 });
+test('only the reviewed draft is returned, and a failed review never exposes the first draft',async()=>{
+ let calls=0;const revised=answer();revised.works[0].text='Die geprüfte Fassung ersetzt den ersten Entwurf.';
+ let handler=fixture(async()=>++calls%2===1?response():response(revised));const out=res();await handler(req(input()),out);assert.equal(out.code,200);assert.equal(calls,2);assert.equal(out.body.works[0].text,revised.works[0].text);
+ calls=0;handler=fixture(async()=>++calls%2===1?response():response({...answer(),works:[]}));const failed=res();await handler(req(input()),failed);assert.equal(failed.code,502);assert.equal(calls,4);assert.equal(failed.body.works,undefined);
+});
 test('origin, opt-out and the existing request quota also cover film generation',async()=>{
  let calls=0;const handler=fixture(async()=>{calls++;return response();});const foreign=res();await handler({...req(input()),headers:{origin:'https://foreign.test'}},foreign);assert.equal(foreign.code,403);assert.equal(calls,0);
  const disabled=res();await fixture(async()=>{throw Error('must not run');},{env:{...env,AI_ENABLED:'false'}})(req(input()),disabled);assert.equal(disabled.code,503);
- for(let i=0;i<21;i++){const out=res();await handler(req({...input(),variation:i}),out);assert.equal(out.code,i===20?429:200);}assert.equal(calls,20);
+ for(let i=0;i<21;i++){const out=res();await handler(req({...input(),variation:i}),out);assert.equal(out.code,i===20?429:200);}assert.equal(calls,40);
 });
 test('browser generates only on request and handles invalid, offline, timeout and cancelled responses safely',async()=>{
  let calls=0;const client=film.createClient({endpoint:'https://example.test',fetcher:async()=>{calls++;return {ok:true,text:async()=>JSON.stringify(answer())};}});assert.equal(calls,0);assert.equal((await client.request(input())).status,'ready');assert.equal(calls,1);
