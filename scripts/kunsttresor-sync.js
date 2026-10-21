@@ -117,6 +117,14 @@
         : 'Der Browser kann die Verbindung gerade nicht speichern oder den alten Code entfernen. Die Synchronisierung dieser Seite ist ausgeschaltet. Bitte lösche den gespeicherten Code in den Browserdaten, bevor du die Seite erneut öffnest.';
       return false;
     }
+    function pauseDisabledCode(error) {
+      if (error.status !== 403 || error.code !== 'code_disabled') return false;
+      invalidate(); enabled = false; ready = false; pendingChoice = null; conflict = false;
+      if (connection) connection.needsCheck = true;
+      rememberConnection();
+      publish('error', 'Dieser Lerncode wurde deaktiviert. Die Datenbankverbindung ist ausgeschaltet. ' + (connection ? 'Dein sichtbarer Spielstand und der bisher gemerkte Code bleiben lokal erhalten. ' : 'Dein sichtbarer Spielstand bleibt lokal erhalten. ') + 'Nach einer Freigabe kannst du den Code erneut verbinden.');
+      return true;
+    }
     async function request(code, method = 'GET', body) {
       const abort = new AbortController(), timeout = setTimeout(() => abort.abort(), 25000);
       requests.add(abort);
@@ -168,6 +176,7 @@
         offerChoice(code, remote, epoch);
       } catch (error) {
         if (!validEpoch(epoch)) return;
+        if (pauseDisabledCode(error)) return;
         switching = false;
         publish('error', error.message + ' Dein bisheriger Stand bleibt lokal; die Verbindung ist ausgeschaltet.');
       }
@@ -204,6 +213,7 @@
         } else publish('saved', 'Gespeicherten Stand heruntergeladen. Änderungen werden jetzt automatisch hochgeladen.');
       } catch (error) {
         if (!validEpoch(epoch)) return;
+        if (pauseDisabledCode(error)) return;
         switching = false; publish('error', error.message);
       }
     }
@@ -261,6 +271,7 @@
           publish(dirty ? 'pending' : 'saved', dirty ? 'Weitere Änderungen werden hochgeladen …' : 'Lernstand gespeichert.');
         } catch (error) {
           if (!current(epoch, active) || !enabled) return;
+          if (pauseDisabledCode(error)) return;
           dirty = true;
           if (error.status === 409 && error.code === 'revision_conflict') {
             conflict = true; publish('conflict', 'Auf einem anderen Gerät wurde ein neuerer Stand gespeichert. Bitte wähle, welchen du weiterverwenden möchtest.');
@@ -304,6 +315,7 @@
         publish('saved', startup ? 'Aktuellen Datenbankstand heruntergeladen. Änderungen werden automatisch hochgeladen.' : 'Lernstand ist aktuell.');
       } catch (error) {
         if (!current(epoch, active) || !enabled) return;
+        if (pauseDisabledCode(error)) return;
         switching = false;
         publish('offline', error.message + (startup ? ' Dein lokaler Stand bleibt sichtbar. Hochladen wartet auf einen erfolgreichen Download.' : ' Dein Stand bleibt auf diesem Gerät.'));
         if (!startup && dirty) schedule();
@@ -328,7 +340,12 @@
         conflict = false; switching = false; remember(active);
         publish(useLocal ? 'pending' : 'saved', useLocal ? 'Dein ausgewählter Stand wird hochgeladen …' : 'Gespeicherten Stand heruntergeladen.');
         if (useLocal) await flush();
-      } catch (error) { if (current(epoch, active)) { switching = false; publish('error', error.message); } }
+      } catch (error) {
+        if (current(epoch, active)) {
+          if (pauseDisabledCode(error)) return;
+          switching = false; publish('error', error.message);
+        }
+      }
     }
     function cancelChoice() {
       invalidate(); pendingChoice = null; conflict = false; enabled = false; ready = false; rememberConnection();
