@@ -19,9 +19,10 @@ test('shared learner panel asks for a teacher-issued code and never creates a ne
  w.eval(fs.readFileSync(path.join(shared,'scripts/learning-profile.js'),'utf8'));
  const payload={app:'policy-test',version:1,savedAt:0,data:{}};
  const adapter={getSnapshot:()=>payload,getProfileId:()=>null,validateSnapshot:()=>payload,replaceSnapshot:()=>{},freshSnapshot:()=>payload,readProfileSnapshot:()=>null,signOut:()=>{}};
- const c=w.LearningProfile.mount(adapter,{appId:'policy-test'});
+ const statuses=[],c=w.LearningProfile.mount(adapter,{appId:'policy-test',onStatus:value=>statuses.push(value)});
  try{
   const panel=w.document.getElementById('kunst-lerncode-panel');assert.match(panel.textContent,/Deinen Lerncode erhältst du von deiner Lehrkraft/);assert.equal(panel.querySelector('.lerncode-get'),null);assert.equal(panel.querySelector('a[href*="lerncode.html"]'),null);assert.equal(requests.length,0);
   await c.connect('2'.repeat(26));assert.equal(requests.length,1);assert.equal(requests[0].method,'GET');assert.ok(requests[0].url.endsWith('/api/state/policy-test'));assert.equal(requests.some(r=>r.method==='POST'),false);
+  assert.equal(statuses.at(-1).awaitingChoice,true);assert.doesNotMatch(JSON.stringify(statuses),/22222222222222222222222222/);
  }finally{c.destroy();w.close();}
 });

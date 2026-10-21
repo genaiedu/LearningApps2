@@ -9,15 +9,32 @@
   const galleryModel=window.KunstGallery, baseGalleryKey=wallMode?'kunsttresor-wall-gallery-v1':'kunsttresor-gallery-v1';
   const scopedKey=(key,profileId=storageProfile)=>learner ? learner.scopedKey(key,profileId) : key;
   let galleryKey=scopedKey(baseGalleryKey);
-  let personalGallery=galleryModel.fresh(), galleryUI=null, galleryBlocked=false;
+  let personalGallery=galleryModel.fresh(), galleryUI=null, galleryBlocked=false,galleryStoredLocally=true;
+  function gallerySaveStatus(value=syncController?.getStatus()){
+    const display=$('gallery-save-status');if(!display)return;
+    let message,kind=value?.kind||'local';
+    if(galleryBlocked){kind='error';message='Die gespeicherte Galerie ist nicht lesbar und wird nicht überschrieben.';}
+    else if(!galleryStoredLocally){kind='error';message='Browser-Speicherung fehlgeschlagen. Galerie und Film als Datei sichern.';}
+    else if(syncNoticeQueued&&value?.enabled){kind='pending';message='Lokal gespeichert · Datenbanksicherung läuft …';}
+    else if(value?.enabled&&value.kind==='saved'&&!value.dirty)message='Galerie und Film sind mit deinem Spielstand in der Datenbank gespeichert.';
+    else if(value?.enabled&&['pending','saving'].includes(value.kind))message='Lokal gespeichert · Datenbanksicherung läuft …';
+    else if(value?.conflicted)message='Lokal gespeichert · Konflikt unter „Spielstand“ auflösen.';
+    else if(value?.enabled&&value.kind==='connecting')message='Datenbankstand wird geprüft …';
+    else if(value?.enabled)message='Lokal gespeichert · noch nicht in der Datenbank bestätigt. Bitte „Spielstand“ prüfen.';
+    else message='Nur auf diesem Gerät gespeichert · Datenbank nicht verbunden. Verbindung unter „Spielstand“.';
+    display.textContent=message;display.dataset.state=kind;display.title=value?.message||'';
+  }
   function saveGallery(value) {
     if(galleryBlocked)throw Error('Die gespeicherte Galerie konnte nicht gelesen werden. Sie wird nicht überschrieben; lade bitte eine gültige Spielstandsdatei.');
     rememberWork();
     const checked=galleryModel.restore(value,pool,workHistory);
     if(!checked)throw Error('Diese Galerieänderung ist ungültig. Dein bisheriger Stand bleibt erhalten.');
     personalGallery=checked;
-    if(!store.set(galleryKey,JSON.stringify(personalGallery)))storageWarning();
+    const savedGallery=JSON.stringify(personalGallery);
+    galleryStoredLocally=store.set(galleryKey,savedGallery)&&store.get(galleryKey)===savedGallery;
+    if(!galleryStoredLocally)storageWarning();
     notifySnapshotChange();
+    gallerySaveStatus();
   }
   // Renew image consent: new CC0 photographs are served by the museums, too.
   const baseKeys = {game:'kunsttresor-game-v1', best:'kunsttresor-best-v1', progress:'kunsttresor-progress-v1', history:'kunsttresor-history-v1', images:'kunsttresor-images-v2', hero:'kunsttresor-hero-v1'};
@@ -190,6 +207,7 @@
   function notifySnapshotChange() {
     if(!syncReady || syncApplying || resetInProgress || syncNoticeQueued)return;
     syncNoticeQueued=true;
+    gallerySaveStatus();
     queueMicrotask(()=>{syncNoticeQueued=false;if(!syncApplying&&!resetInProgress)syncController?.changed();});
   }
   function rememberWork(shownId) {
@@ -313,9 +331,9 @@
       for(const dialog of document.querySelectorAll('dialog[open]'))if(!['save-dialog','launch-dialog'].includes(dialog.id))dialog.close();
       storageProfile=profileId;keys=nextKeys;galleryKey=nextGalleryKey;
       state=candidate.state;best=candidate.best;playerProgress=candidate.progress;workHistory=candidate.history;personalGallery=candidate.gallery;
-      historyBlocked=false;galleryBlocked=false;
+      historyBlocked=false;galleryBlocked=false;galleryStoredLocally=true;
       $('import-preview').hidden=true;$('archive-update').hidden=true;$('progress-notice').hidden=true;
-      galleryUI?.refresh();refreshHistory();refreshBadges();render();
+      galleryUI?.refresh();refreshHistory();refreshBadges();render();gallerySaveStatus();
       $('start-game').textContent=$('start-here').textContent=state?'Spiel fortsetzen →':'Galerie betreten →';
       $('best').textContent=number(best);
     } finally { syncApplying=false; }
@@ -1479,9 +1497,10 @@
       if(learner) {
         syncReady=true;
         const adapter={getSnapshot:snapshot,validateSnapshot,replaceSnapshot,readProfileSnapshot,freshSnapshot,signOut:signOutProfile,getProfileId:()=>storageProfile};
-        syncController=learner.mount(adapter);
+        syncController=learner.mount(adapter,undefined,{onStatus:gallerySaveStatus});
         window.KunstLernstand={adapter,controller:syncController};
       }
+      gallerySaveStatus();
       if(wallMode){requestAnimationFrame(()=>$('start').scrollIntoView({block:'start',behavior:'instant'}));}
     }).catch(() => {
       $('start-game').textContent = $('start-here').textContent = 'Archiv nicht erreichbar';

@@ -6,7 +6,7 @@
   <title>Kunsttresor · Die Galerie der verschlossenen Türen</title>
   <link rel="preload" href="../LearningApps/fonts/dancing-script-v29-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/typografie/firasans/FiraSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles/kunsttresor.css?v=20261022-filmtexte-direkt">
+  <link rel="stylesheet" href="styles/kunsttresor.css?v=20261022-film-speicherstatus">
   <link rel="stylesheet" href="styles/kunsttresor-badge-awards.css?v=20261018-siegel-verliehen">
   <link rel="stylesheet" href="styles/kunsttresor-sync.css?v=20261021-lerncode">
   <link rel="stylesheet" href="styles/wikipedia-math.css">
@@ -22,15 +22,15 @@
   <script defer src="scripts/kunsttresor-artist-order.js?v=20261018-nachnamen"></script>
   <script defer src="scripts/kunsttresor-gallery.js?v=20261022-reine-filmtexte"></script>
   <script defer src="scripts/kunsttresor-layout.js?v=20261017-wall18"></script>
-  <script defer src="scripts/kunsttresor-gallery-ui.js?v=20261022-filmtexte-direkt"></script>
+  <script defer src="scripts/kunsttresor-gallery-ui.js?v=20261022-film-speicherstatus"></script>
   <script defer src="scripts/kunsttresor-save.js?v=20261018-galerie-dateien"></script>
   <script defer src="scripts/kunsttresor-zoom.js?v=20261017-ruhige-anzeige-pinch"></script>
   <script defer src="scripts/kunsttresor-intro.js?v=20261011-vorspann-bereit"></script>
   <script defer src="scripts/kunsttresor-reset.js?v=20261022-verbindung-merken"></script>
   <script defer src="scripts/kunsttresor-badge-awards.js?v=20261018-siegel-verliehen"></script>
-  <script defer src="../LearningApps/scripts/learning-profile.js?v=20261022-verbindung-merken"></script>
-  <script defer src="scripts/kunsttresor-sync.js?v=20261022-verbindung-merken"></script>
-  <script defer src="scripts/kunsttresor.js?v=20261022-verbindung-merken"></script>
+  <script defer src="../LearningApps/scripts/learning-profile.js?v=20261022-film-speicherstatus"></script>
+  <script defer src="scripts/kunsttresor-sync.js?v=20261022-film-speicherstatus"></script>
+  <script defer src="scripts/kunsttresor.js?v=20261022-film-speicherstatus"></script>
   <script defer src="scripts/wikipedia-math.js"></script>
   <script defer src="scripts/schroedinger-wikipedia.js"></script>
 <link rel="stylesheet" href="styles/kunsttresor-wall.css?v=20261018-bildinfos-grossansicht"><script defer src="scripts/kunsttresor-wall.js?v=20261018-bildinfos-grossansicht"></script></head>
@@ -78,7 +78,7 @@
       <p class="progress-notice" id="progress-notice" role="status" aria-live="polite" hidden></p>
       <div class="gallery-reward"><div><h3>Deine Lieblingswerke. Dein Kunstfilm.</h3><p id="gallery-progress" role="status" aria-live="polite">Nach gewonnenen Räumen kannst du Werke mit dem Herz sammeln. Ab 20 Lieblingswerken wird dein eigener Kunstfilm freigeschaltet.</p></div><button id="open-gallery" type="button" aria-haspopup="dialog" disabled>Meine Galerie <span id="gallery-count">0</span></button></div>
       <dialog id="gallery-dialog" class="gallery-dialog" aria-labelledby="gallery-title">
-        <div class="dialog-head gallery-toolbar"><div><h2 id="gallery-title">Deine persönliche Galerie.</h2><p id="gallery-summary" class="gallery-summary"></p></div><div class="gallery-actions"><button id="gallery-edit-open" type="button" disabled>Film gestalten</button><button id="gallery-play" class="primary" type="button" disabled>Kunstfilm vorbereiten</button><button id="gallery-export" type="button">Galerie &amp; Film sichern</button><button type="button" data-close="gallery-dialog">Schließen ×</button></div></div>
+        <div class="dialog-head gallery-toolbar"><div><h2 id="gallery-title">Deine persönliche Galerie.</h2><p id="gallery-summary" class="gallery-summary"></p><p id="gallery-save-status" class="gallery-save-status" role="status" aria-live="polite">Galerie und Film gehören zu deinem vollständigen Spielstand.</p></div><div class="gallery-actions"><button id="gallery-edit-open" type="button" disabled>Film gestalten</button><button id="gallery-play" class="primary" type="button" disabled>Kunstfilm vorbereiten</button><button id="gallery-export" type="button">Galerie &amp; Film sichern</button><button type="button" data-close="gallery-dialog">Schließen ×</button></div></div>
         <div class="gallery-filters" role="search" aria-label="Galerie filtern und sortieren">
           <label>Werke suchen<input id="gallery-search" type="search" placeholder="Titel, Künstler, Stil …" autocomplete="off" aria-controls="gallery-grid"></label>
           <label>Künstler<select id="gallery-filter-artist" aria-controls="gallery-grid" title="Nach Nachnamen sortiert, ohne Namensvorsätze; eindeutige Künstlernamen bleiben zusammen, etwa El Greco unter E."><option value="">Alle Künstler</option></select></label>

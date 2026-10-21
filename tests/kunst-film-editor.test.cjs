@@ -28,7 +28,7 @@ async function setup(t,{count=8,motto='PRIVATE eigenes Schlussmotto',caption='bo
 test('one click immediately opens own/AI fields without mutating saved state, then fills and saves all captions',async t=>{
  const pending=deferred(),app=await setup(t,{fetcher:()=>pending.promise}),before=JSON.stringify(app.value);
  assert.equal(app.requests.length,0);app.click('film-ai-generate');
- assert.equal(app.requests.length,1);assert.equal(app.writes,0);assert.equal(JSON.stringify(app.value),before);
+ assert.equal(app.requests.length,1);assert.equal(app.writes,0);assert.equal(JSON.stringify(app.value),before);assert.equal(app.q('#gallery-export').disabled,true);
  for(const card of app.w.document.querySelectorAll('.film-edit-card')){
   assert.equal(card.querySelector('select').value,'custom');assert.equal(card.querySelector('textarea').parentElement.hidden,false);assert.equal(card.querySelector('textarea').readOnly,true);assert.equal(card.querySelector('textarea').getAttribute('aria-busy'),'true');
   assert.match(card.querySelector('.film-caption-preview').textContent,/wird erstellt/);
@@ -37,7 +37,7 @@ test('one click immediately opens own/AI fields without mutating saved state, th
  pending.resolve(app.response(app.requests[0].ids));await settle();assert.equal(app.writes,1);
  assert.ok(app.value.film.items.every((item,i)=>item.caption==='custom'&&item.text===app.answer(app.requests[0].ids).works[i].text));
  const stored=JSON.parse(app.w.localStorage.getItem('fixture-gallery'));assert.equal(stored.film.items[0].text,app.value.film.items[0].text);
- assert.equal(app.value.film.motto,'PRIVATE eigenes Schlussmotto');assert.equal(app.q('#film-ai-undo').hidden,false);assert.match(app.q('#film-ai-status').textContent,/eingesetzt und gespeichert/);
+ assert.equal(app.value.film.motto,'PRIVATE eigenes Schlussmotto');assert.equal(app.q('#film-ai-undo').hidden,false);assert.match(app.q('#film-ai-status').textContent,/KI-Filmtexte eingesetzt/);assert.equal(app.q('#gallery-export').disabled,false);
  for(const card of app.w.document.querySelectorAll('.film-edit-card')){
   const item=app.value.film.items.find(item=>item.id===card.dataset.work);assert.equal(card.querySelector('select').value,'custom');assert.equal(card.querySelector('textarea').value,item.text);assert.equal(card.querySelector('textarea').readOnly,false);assert.equal(card.querySelector('.film-caption-preview').textContent,item.text);
  }

@@ -22,6 +22,7 @@
       const wasBusy=textBusy;
       textEpoch++;filmAIClient?.cancel();textBusy=false;textSource='';
       $('film-ai-cancel').hidden=true;
+      $('gallery-export').disabled=false;
       $('film-ai-generate').disabled=false;$('film-ai-generate').textContent='Texte von KI erstellen lassen';
       if(wasBusy)renderEditor();
       updateTextUndo();
@@ -36,6 +37,7 @@
       const replaceMotto=$('film-ai-use-motto').checked;
       stopTextAI();textSource=filmFingerprint();const source=textSource,ticket=++textEpoch;
       textBusy=true;$('film-ai-generate').disabled=true;$('film-ai-generate').textContent='Die KI textet deine Bildfolge …';$('film-ai-cancel').hidden=false;
+      $('gallery-export').disabled=true;
       renderEditor();updateTextUndo();
       textStatus('Eigene Texte / KI-Texte ist ausgewählt. Die KI erstellt die Einblendungen und setzt sie anschließend direkt in die Textfelder ein. Bis dahin bleiben deine bisherigen Texte gespeichert.');
       const result=await filmAIClient.request(filmAI.payload(g.film.items.map(item=>item.id),Math.floor(Math.random()*1000001)));
@@ -53,7 +55,7 @@
       stopTextAI();
       if(change(next,'KI-Filmtexte direkt in die Textfelder eingesetzt.')){
         textUndo={film:previous,source:filmFingerprint()};updateTextUndo();
-        textStatus('KI-Filmtexte eingesetzt und gespeichert. „Eigene Texte / KI-Texte“ ist für alle Werke ausgewählt; die Texte werden im Film eingeblendet und bleiben bearbeitbar. Bitte prüfe sie, KI kann irren.');
+        textStatus('KI-Filmtexte eingesetzt. „Eigene Texte / KI-Texte“ ist für alle Werke ausgewählt. Die Texte gehören zu deinem vollständigen Spielstand; den lokalen bzw. Datenbank-Speicherstatus siehst du oben. Bitte prüfe sie, KI kann irren.');
       }else textStatus('Die KI-Texte konnten nicht gespeichert werden. Deine bisherigen Texte bleiben erhalten.');
     }
     function node(tag,cls,text) {const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
