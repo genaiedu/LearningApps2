@@ -36,7 +36,7 @@ const get=url=>execFileSync('curl',['-L','--fail','--retry','2','--max-time','60
   const bytes=get(info.thumburl||info.url),out=path.join(dir,id+'.webp');
   await sharp(bytes).rotate().resize({width:1400,height:1400,fit:'inside',withoutEnlargement:true}).webp({quality:84}).toFile(out);
   const dimensions=await sharp(out).metadata();
-  records.push({id,title,file,src:'assets/hundegenetik/'+id+'.webp',width:dimensions.width,height:dimensions.height,author,license,licenseUrl:meta.LicenseUrl?.value||'',source:info.descriptionurl,original:info.url,credit:decode(meta.Credit?.value),modifications:'Verkleinert und in WebP umgewandelt; Bildinhalt unverändert. In einigen Ansichten wird ein Ausschnitt gezeigt; die Großansicht zeigt das vollständige Bild.',retrieved:'2026-10-21',metadata:meta});
+  records.push({id,title,file,src:'assets/hundegenetik/'+id+'.webp',width:dimensions.width,height:dimensions.height,author,license,licenseUrl:meta.LicenseUrl?.value||'',source:info.descriptionurl,original:info.url,credit:decode(meta.Credit?.value),modifications:'Verkleinert und in WebP umgewandelt; Bildinhalt unverändert. Die App zeigt das vollständige Foto ohne Beschneidung, auch beim Darüberfahren mit der Maus.',retrieved:'2026-10-21',metadata:meta});
   process.stdout.write(id+' · '+license+' · '+author.slice(0,100)+'\n');
  }
  fs.writeFileSync(path.join(root,'data/hundegenetik-medien.json'),JSON.stringify(records,null,2)+'\n');

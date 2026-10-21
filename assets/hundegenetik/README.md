@@ -31,3 +31,15 @@ Zeichenkonturen. Dieser Unterschied wird neben dem Suchfeld erklärt.
 Reproduzieren: `tools/build-hundegenetik-tree.py` mit dem Original-PDF und
 PyMuPDF. Fotobestand: `tools/build-hundegenetik-assets.cjs` mit Node und sharp.
 Diese Werkzeuge laufen nur beim Erstellen, niemals im Browser.
+
+## Symbole in den Infografiken
+
+Hund (Dog) und Mensch (User Round): originale SVG-Knoten aus der bereits
+lokal eingebundenen gemeinsamen Lucide-Bibliothek, ISC.
+
+Fuchs (Fox Face Tail): Lucide Lab / Lucide Contributors, ISC.
+https://github.com/lucide-icons/lucide-lab/blob/34b6526d0a67bbe67b8a54b9b101018b1377ef28/icons/fox-face-tail.svg
+
+Originale Pfadgeometrie lokal in `scripts/hundegenetik-grafiken.js` eingebettet;
+Größe, Farbe und Liniengewicht an die Komposition angepasst. Vollständiger
+Lizenztext: `LICENSE-lucide-lab.txt`. Kein externer Laufzeitabruf.

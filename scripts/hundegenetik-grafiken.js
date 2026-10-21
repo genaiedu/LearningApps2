@@ -1,6 +1,8 @@
-/* Original vector infographics. One shared drawing per topic, reused in slides and chapters.
+/* Original infographic compositions with local Lucide icons (ISC).
+   FoxFaceTail: lucide-icons/lucide-lab, commit 34b6526d0a67bbe67b8a54b9b101018b1377ef28.
+   Full notice: assets/hundegenetik/LICENSE-lucide-lab.txt.
    Research numbers are cited; invented sequences and explanatory models are labelled as such. */
-((root,factory)=>{const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.DogFigures=api;})(typeof globalThis!=='undefined'?globalThis:this,()=>{
+((root,factory)=>{const api=factory(typeof module==='object'&&module.exports?require('../../LearningApps/fonts/lucide.min.js'):root.lucide);if(typeof module==='object'&&module.exports)module.exports=api;else root.DogFigures=api;})(typeof globalThis!=='undefined'?globalThis:this,lucide=>{
  'use strict';
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const text=(x,y,s,cls='',anchor='middle')=>`<text x="${x}" y="${y}" class="gf-text ${cls}" text-anchor="${anchor}">${esc(s)}</text>`;
@@ -8,8 +10,14 @@
  const arrow=(x1,y1,x2,y2,cls='')=>{const a=Math.atan2(y2-y1,x2-x1),l=11;return line(x1,y1,x2,y2,cls)+`<path d="M${x2-l*Math.cos(a-.5)} ${y2-l*Math.sin(a-.5)}L${x2} ${y2}L${x2-l*Math.cos(a+.5)} ${y2-l*Math.sin(a+.5)}" class="gf-line ${cls}"/>`;};
  const box=(x,y,w,h,cls='')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" class="gf-box ${cls}"/>`;
  const allele=(x,y,a,scale=1)=>`<g transform="translate(${x} ${y}) scale(${scale})"><rect x="-18" y="-48" width="36" height="96" rx="18" class="gf-chromosome ${a==='a'?'gf-alt':''}"/><path d="M-17 -28H17M-17 -22H17" class="gf-line gf-band"/>${text(0,9,a,'gf-allele')}</g>`;
- const dog=(x,y,scale=1,fox=false)=>`<g transform="translate(${x} ${y}) scale(${scale})" class="gf-animal"><path d="M-60 11Q-65 -18 -24 -16L9 -16L17 -43L29 -26L43 -34L49 -15L67 -4L49 6L38 8L30 41H17L16 13H-22L-25 41H-39L-41 12Q-66 9 -77 -14${fox?'Q-104 -44 -111 -6Q-97 18 -60 11':'Q-91 -30 -84 -42'}"/><circle cx="39" cy="-12" r="2.8" class="gf-eye"/></g>`;
- const human=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})" class="gf-person"><circle cx="0" cy="-30" r="10"/><path d="M0 -17V21M0 -7L-20 6M0 -7L20 6M0 21L-14 48M0 21L14 48"/></g>`;
+ const foxNodes=[
+  ['path',{d:'M19.9 8.3C20.6 7 21 5.6 21 4c0-.6-.4-1-1-1-2.3 0-4.3.8-5.9 2.2a14.92 14.92 0 0 0-4.2 0A8.78 8.78 0 0 0 4 3c-.6 0-1 .4-1 1 0 1.6.4 3 1.1 4.3-.6.7-1.1 1.4-1.4 2.2C4 13 11 16 12 16s8-3 9.3-5.5c-.3-.8-.8-1.5-1.4-2.2'}],
+  ['path',{d:'M9 9v.5'}],['path',{d:'M13 13h-2'}],['path',{d:'M12 16v-3'}],['path',{d:'M15 9v.5'}],
+  ['path',{d:'M6.3 20.5A6.87 6.87 0 0 0 9 15H2.2c.8 4 4.9 7 9.8 7 5.5 0 10-3.8 10-8.5 0-1.1-.2-2.1-.7-3'}]
+ ];
+ const symbol=(name,x,y,size,cls='')=>{const nodes=name==='FoxFaceTail'?foxNodes:(lucide.icons||lucide)[name];if(!nodes)throw Error('Fehlendes lokales Symbol: '+name);return`<g transform="translate(${x-size/2} ${y-size/2}) scale(${size/24})" class="gf-symbol ${cls}" data-symbol="${name}">${nodes.map(([tag,attrs])=>`<${tag} ${Object.entries(attrs).map(([k,v])=>`${k}="${esc(v)}"`).join(' ')}/>`).join('')}</g>`;};
+ const dog=(x,y,scale=1,fox=false)=>symbol(fox?'FoxFaceTail':'Dog',x,y,88*scale);
+ const human=(x,y,s=1)=>symbol('UserRound',x,y+6,100*s,'gf-symbol-person');
  const meta={
   dna:{title:'Eine Stelle, zwei Varianten',alt:'Zwei erfundene DNA-Abschnitte unterscheiden sich an genau einer Position: oben G, unten A. Beide sind Varianten desselben Abschnitts.',note:'Erfundener Sequenzausschnitt zur Begriffserklärung. Kein echtes Hundegenom und keine Krankheitsvorhersage.'},
   kopien:{title:'Eine Kopie von jedem Elternteil',alt:'Ein Elternteil gibt am betrachteten autosomalen Genort A weiter, der andere a. Der Nachkomme trägt hier Aa.',note:'Mögliche Weitergabe an einem autosomalen Genort. A und a bezeichnen Varianten, nicht Körpergrößen.'},
@@ -88,7 +96,7 @@
    [['10','bei Rassehunden häufiger'],['13','kein Unterschied nachgewiesen'],['1','bei Mischlingen häufiger']].forEach(([n,label],i)=>{const lx=m?65:397,ly=m?262+i*72:91+i*76;s+=text(lx,ly,n,'gf-number','start')+text(lx+60,ly,label,'gf-label','start');});
   }else if(id==='fuchs'){
    h=m?490:330;
-   [['Reaktionen testen','auf Menschen'],['Eltern auswählen','für die Weiterzucht'],['Nachkommen','erneut vergleichen']].forEach(([a,b],i)=>{const x=m?118:150+i*300,y=m?75+i*153:105;if(i<2)s+=m?arrow(x,y+45,x,y+100):arrow(x+100,y,x+195,y);s+=dog(x,y,.75,true);if(i===0)s+=human(x+75,y-3,.54);s+=text(m?256:x,m?y-5:215,a,'gf-heading',m?'start':'middle')+text(m?256:x,m?y+33:253,b,'gf-label',m?'start':'middle');});
+   [['Reaktionen testen','auf Menschen'],['Eltern auswählen','für die Weiterzucht'],['Nachkommen','erneut vergleichen']].forEach(([a,b],i)=>{const x=m?118:150+i*300,y=m?75+i*153:105;let stage=dog(x,y,.75,true);if(i<2)stage+=m?arrow(x,y+45,x,y+100):arrow(x+100,y,x+195,y);if(i===0)stage+=human(x+75,y-3,.54);stage+=text(m?256:x,m?y-5:215,a,'gf-heading',m?'start':'middle')+text(m?256:x,m?y+33:253,b,'gf-label',m?'start':'middle');s+=reveal(stage,i);});
   }else if(id==='debatte'){
    h=m?470:330;const y=m?158:114;
    s+=text(w/2,35,'Der Farmbestand hatte eine Vorgeschichte.','gf-caption');
@@ -99,5 +107,30 @@
   return `<svg class="gen-svg gen-svg-${m?'compact':'wide'}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(meta[id].alt)}" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
  }
  function figure(id,{caption=true}={}){if(!meta[id])throw Error('Unbekannte Infografik: '+id);const d=meta[id];return`<figure class="gen-figure gf-${id}" data-infographic="${id}"><div class="gen-art">${draw(id,false)}${draw(id,true)}</div>${caption?`<figcaption><strong>${esc(d.title)}.</strong> ${esc(d.note)}</figcaption>`:''}</figure>`;}
- return Object.freeze({figure,ids:Object.freeze(Object.keys(meta)),meta:Object.freeze(meta)});
+ const reveal=(html,i=0)=>`<g class="gf-reveal" style="--step:${i}">${html}</g>`;
+ function question(task){
+  const render=m=>{const w=m?560:900,h=m?340:280;let s='',alt='';
+   if(task.model==='cross'){
+    const [a,b]=task.parents,x=m?115:210,z=w-x,y=m?112:107;
+    s+=reveal(text(x,36,'Elternteil 1','gf-heading')+allele(x-26,y,a[0],.85)+allele(x+26,y,a[1],.85)+text(x,y+77,a,'gf-number'));
+    s+=reveal(text(z,36,'Elternteil 2','gf-heading')+allele(z-26,y,b[0],.85)+allele(z+26,y,b[1],.85)+text(z,y+77,b,'gf-number'),1);
+    s+=reveal(arrow(x+61,y,w/2-42,y,'gf-accent')+arrow(z-61,y,w/2+42,y,'gf-accent')+text(w/2,y+15,'?','gf-big'),2);
+    s+=text(w/2,h-25,task.n?`${task.n} Nachkommen im Rechenmodell`:'Welche Kombinationen sind möglich?','gf-caption');
+    alt=`Gegebene Eltern-Genotypen: ${a} und ${b}. ${task.n?task.n+' Nachkommen im Rechenmodell. ':''}Mögliche Nachkommen und Wahrscheinlichkeiten sind noch nicht eingetragen.`;
+   }else if(task.model==='frequency'){
+    ['AA','Aa','aa'].forEach((pair,i)=>{const x=m?96+i*184:150+i*300,y=m?105:93;s+=reveal(allele(x-23,y,pair[0],.75)+allele(x+23,y,pair[1],.75)+text(x,y+72,pair,'gf-heading')+text(x,y+122,`${task[pair]} Hunde`,'gf-number'),i);});
+    s+=text(w/2,h-16,`Modellstichprobe: ${task.n} Hunde`,'gf-caption');
+    alt=`Gegebene Modellstichprobe: ${task.AA} Hunde mit AA, ${task.Aa} mit Aa, ${task.aa} mit aa. Insgesamt ${task.n} Hunde. Der gesuchte Genkopienanteil ist nicht eingetragen.`;
+   }else{
+    const fox=/fox|domestication/.test(task.id),tree=/tree|bootstrap/.test(task.id),genes=/dna|allele|copies|regulation|polygenic|heterozygosity/.test(task.id),health=/dob|forty|health|carrier|outcross|mixed|dalmatian|inbreeding/.test(task.id),name=fox?'FoxFaceTail':tree?'GitFork':genes?'Dna':health?'HeartPulse':'Dog';
+    s+=reveal(symbol(name,w*.3,h*.42,m?110:125));
+    s+=reveal(arrow(w*.43,h*.42,w*.57,h*.42,'gf-accent')+text(w*.7,h*.42+25,'?','gf-big'),1);
+    s+=text(w/2,h-26,'Beobachten · überlegen · begründen','gf-caption');
+    alt='Symbolischer Einstieg zur Aufgabe: '+task.title+'. Die Frage bleibt offen; keine Lösung ist dargestellt.';
+   }
+   return`<svg class="gen-svg gen-svg-${m?'compact':'wide'}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(alt)}" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+  };
+  return`<figure class="gen-figure task-illustration" data-task-visual="${esc(task.id)}"><div class="gen-art">${render(false)}${render(true)}</div></figure>`;
+ }
+ return Object.freeze({figure,question,ids:Object.freeze(Object.keys(meta)),meta:Object.freeze(meta)});
 });

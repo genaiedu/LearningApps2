@@ -46,6 +46,21 @@ läuft über passive Scroll-Ereignisse und requestAnimationFrame; bei
 reduzierter Bewegung oder ausgeschalteten Animationen bleiben die Ebenen
 statisch. In der Präsentation bleibt das Hintergrundmotiv unbewegt.
 
+Auch jede Aufgabenfolie besitzt eine Illustration. Bei Modellrechnungen
+werden ausschließlich die gegebenen Eltern-Genotypen oder Stichprobenzahlen
+gezeichnet, keine noch gesuchten Nachkommen, Prozentwerte oder Lösungen.
+Verständnisfragen nutzen passende lokale Fotos; ohne Fotos erscheinen
+themenbezogene Symbolillustrationen. Dieselbe Darstellung steht im Training.
+Erbgänge und Fuchsselektion bauen sich mit kurzen, einmaligen Animationen auf;
+Animationseinstellung und reduzierte Bewegung gelten auch hier.
+
+Hund und Person sind originale Lucide-Symbole aus der gemeinsamen Bibliothek.
+Das Fuchssymbol Fox Face Tail stammt aus Lucide Lab (ISC, lokale Pfadgeometrie
+mit gesichertem Herkunftsstand und Lizenznachweis). Keine eigenen Tier- oder
+Menschen-Piktogramme. Fotos verwenden stets `contain`, keine Vergrößerung auf
+Hover; der Collie folgt seinem vollständigen Bildformat statt einem festen
+Breitbildausschnitt.
+
 40 echte Vorlagen, fünf Stufen mit je zwei zufällig ausgewählten Aufgaben.
 Zahlen und Antwortreihenfolgen werden einmal je Runde erzeugt. Zwei gültige
 Versuche, 1/0,5 Punkte, 20/10 XP. Nach Abschluss vollständige Erklärung.
