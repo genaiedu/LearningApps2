@@ -1,5 +1,37 @@
 # Geschützte KI-Rückmeldungen für den Kunsttresor
 
+## KI-Filmtexte (22. Oktober 2026)
+
+Derselbe geschützte `POST /api/feedback` unterstützt in Dienstversion 7 zusätzlich
+`{version:1,kind:"film",ids:[6 bis 10 eindeutige Archiv-IDs],variation:0..1000000}`.
+Kein neuer Dienst und kein weiterer öffentlicher API-Pfad. Die bestehende Firewall,
+der Freigabeschalter, Origin- und Ratenbegrenzung gelten unverändert. Der Server
+prüft die Werkauswahl und ergänzt ausschließlich geprüfte öffentliche Katalogdaten,
+Stil-/Technikdefinitionen und werkbezogene Hinweise. Er akzeptiert keine freien
+Prompts, Bild-URLs, Galerie- oder Teilnehmertexte in diesem Datenformat.
+
+Die separate Film-Systemanweisung verlangt kurze eigenständige Einblendungen
+mit einem Zusammenhang zur konkreten Auswahl und wechselnden Gedanken statt
+Stil-/Materialbausteinen. Keine Bildsicht behaupten, Details erfinden oder
+Leistungen bewerten. JSON-Schema und Nachprüfung verlangen alle IDs genau einmal,
+höchstens 150 Zeichen/24 Wörter pro Text und 110 Zeichen für das Schlussmotto.
+Ungültige, doppelte oder unvollständige Antworten sowie unbelegte Jahreszahlen
+werden verworfen. Das garantiert nicht die sachliche Richtigkeit jeder Formulierung.
+
+Nur der eigene Knopf „Texte von KI erstellen lassen“ im Filmeditor fordert Texte
+an, nach informierter KI-Freigabe. Weder Filmstart noch Öffnen/Ändern einer Galerie
+lösen eine Generierung aus. Ein Vorschlag verändert zunächst nichts. Übernahme
+ersetzt nach sichtbarem Hinweis die Textfelder; das Schlussmotto ist optional.
+Die gespeicherten Texte verwenden das vorhandene `caption:"custom"`-Format und
+bleiben bearbeitbar, exportierbar und mit dem Lerncode synchronisierbar. Freigaben
+selbst gehören weiterhin nicht in die Spielstandsdatei.
+
+Abbruch, Widerruf, Schließen, Profilwechsel und Änderungen am Film verwerfen
+offene Vorschläge/Anfragen. Späte Antworten dürfen nichts überschreiben. Bereits
+übertragene Daten werden durch einen Browserabbruch nicht zurückgerufen. Der
+Browser wartet maximal 28 Sekunden, der Server nutzt dieselben begrenzten zwei
+Versuche wie der Kurator. Fehler lassen bestehende Filmtexte unverändert.
+
 ## AI-ELIZA: separater Gesprächsendpunkt (19. Oktober 2026)
 
 `POST /api/eliza` ergänzt ausschließlich diesen bestehenden Dienst, nicht die

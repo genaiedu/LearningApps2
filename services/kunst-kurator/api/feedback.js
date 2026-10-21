@@ -1,7 +1,8 @@
 'use strict';
 const {createHash,randomUUID}=require('node:crypto');
 const ki=require('../lib/kunst-ki.js');
-const VERSION=6;
+const filmKi=require('../lib/kunst-film-ki.js');
+const VERSION=7;
 // One browser request owns both attempts. Keep the complete operation below
 // Vercel's 30-second limit and the browser's 28-second deadline.
 const TOTAL_MS=25000, ATTEMPT_MS=11500, RETRY_MS=450;
@@ -41,19 +42,20 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
     res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Vary','Origin');
     if (allowed.includes(origin)) { res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Access-Control-Allow-Methods','POST, OPTIONS');res.setHeader('Access-Control-Allow-Headers','Content-Type'); }
     const send=(status,body)=>res.status(status).json(body);
-    if (req.method==='GET') return send(200,{service:'kunst-kurator',version:VERSION,roomSizes:[4,7],fieldCounts:[4,5],ready:Boolean(env.GROQ_API_KEY && env.AI_ENABLED==='true')});
+    if (req.method==='GET') return send(200,{service:'kunst-kurator',version:VERSION,roomSizes:[4,7],fieldCounts:[4,5],filmCaptions:true,ready:Boolean(env.GROQ_API_KEY && env.AI_ENABLED==='true')});
     if (!allowed.includes(origin)) return send(403,{error:'origin'});
     if (req.method==='OPTIONS') return res.status(204).end();
     if (req.method!=='POST') return send(405,{error:'method'});
     if (env.AI_ENABLED!=='true' || !env.GROQ_API_KEY) return send(503,{error:'local_feedback_available',reason:'unavailable'});
     if (!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'] || '') || Number(req.headers['content-length'])>48000) return send(413,{error:'payload'});
-    let input,context;
+    let input,context,filmMode=false;
     try {
       const raw=typeof req.body==='string' ? req.body : JSON.stringify(req.body);
       if (!raw || Buffer.byteLength(raw)>48000) throw Error('size');
       input=JSON.parse(raw);
-      const verified=sources || loadSources(); context=ki.context(input,verified.pool,verified.knowledge,verified.curator);
-      input=ki.validatePayload(input,verified.pool);
+      const verified=sources || loadSources();filmMode=input?.kind==='film';
+      context=filmMode?filmKi.context(input,verified.pool,verified.knowledge):ki.context(input,verified.pool,verified.knowledge,verified.curator);
+      input=filmMode?filmKi.validatePayload(input,verified.pool):ki.validatePayload(input,verified.pool);
     } catch { return send(400,{error:'invalid_game_result'}); }
     const digest=createHash('sha256').update(JSON.stringify(input)).digest('hex');
     const known=cache.get(digest);
@@ -75,9 +77,9 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
       let response;
       try { response=await fetcher('https://api.groq.com/openai/v1/chat/completions',{
         method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+env.GROQ_API_KEY},signal,redirect:'error',
-        body:JSON.stringify({model:'openai/gpt-oss-120b',messages:[{role:'system',content:ki.instructions},{role:'user',content:JSON.stringify(context)}],
-          response_format:{type:'json_schema',json_schema:{name:'museum_curator',strict:true,schema:ki.schema(input.room.ids)}},
-          temperature:.65,reasoning_effort:'low',max_completion_tokens:6000})
+        body:JSON.stringify({model:'openai/gpt-oss-120b',messages:[{role:'system',content:filmMode?filmKi.instructions:ki.instructions},{role:'user',content:JSON.stringify(context)}],
+          response_format:{type:'json_schema',json_schema:{name:filmMode?'art_film_captions':'museum_curator',strict:true,schema:filmMode?filmKi.schema(input.ids):ki.schema(input.room.ids)}},
+          temperature:filmMode ? .8 : .65,reasoning_effort:'low',max_completion_tokens:filmMode?3000:6000})
       }); } catch { throw new FeedbackFailure('network',{retryable:true}); }
       if (!response.ok) {
         let code='none';
@@ -97,7 +99,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
       const choice=completion?.choices?.[0];
       if (choice?.finish_reason!=='stop') throw new FeedbackFailure('incomplete',{retryable:true,finish:finishReasons.has(choice?.finish_reason)?choice.finish_reason:'other'});
       let result;
-      try { result=ki.parseResponse(choice.message?.content,input.room.ids); }
+      try { result=filmMode?filmKi.parseResponse(choice.message?.content,input.ids):ki.parseResponse(choice.message?.content,input.room.ids); }
       catch { throw new FeedbackFailure('response_validation',{retryable:true}); }
       // Catch invented four-digit dates in each work's personal paragraph.
       for (const work of result.works) {
@@ -105,6 +107,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
         const years=new Set(JSON.stringify(source).match(/\b\d{4}\b/g) || []);
         if ((work.text.match(/\b\d{4}\b/g) || []).some(year=>!years.has(year))) throw new FeedbackFailure('unsupported_date',{retryable:true});
       }
+      if(filmMode){const years=new Set(JSON.stringify(context).match(/\b\d{4}\b/g)||[]);if((result.motto.match(/\b\d{4}\b/g)||[]).some(year=>!years.has(year)))throw new FeedbackFailure('unsupported_date',{retryable:true});}
       return result;
     }
     for(let attempt=1;attempt<=2;attempt++) {
