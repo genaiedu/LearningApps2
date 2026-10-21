@@ -7,7 +7,7 @@ const answer=()=>({motto:'Verschiedene Materialien, verschiedene Wege zu einem e
 const env={GROQ_API_KEY:'synthetic-secret-never-output',AI_ENABLED:'true'};
 function req(body){return {method:'POST',headers:{origin:'https://genaiedu.github.io','content-type':'application/json'},body};}
 function res(){return {headers:{},setHeader(k,v){this.headers[k]=v;},status(code){this.code=code;return this;},json(body){this.body=body;return this;}};}
-function response(value=answer()){return {ok:true,text:async()=>JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify(value)}}]})};}
+function response(value=answer()){const facts=film.context(input(),pool,knowledge);return {ok:true,text:async()=>JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify({...value,works:value.works.map(w=>({...w,fact:facts.works.find(s=>s.id===w.id)?.facts[0]}))})}}]})};}
 function fixture(fetcher,options={}){return createHandler({env,sources:{pool,knowledge},fetcher,logger:{warn(){}},wait:async()=>{},...options});}
 
 test('film payload permits only public known ordered IDs and a bounded one-request variation',()=>{
@@ -18,6 +18,12 @@ test('film payload permits only public known ordered IDs and a bounded one-reque
 test('film response is complete, short, unique and literal text, in original order',()=>{
  const value=answer();value.works.reverse();assert.deepEqual(film.parseResponse(value,ids).works.map(w=>w.id),ids);
  for(const change of [x=>x.works.pop(),x=>x.works[1].id=x.works[0].id,x=>x.works[0].id='outside',x=>x.works[0].text='<img src=x>',x=>x.works[0].text='W'.repeat(151),x=>x.works[0].text='wort '.repeat(25),x=>x.works[1].text=x.works[0].text,x=>x.motto='W'.repeat(111),x=>x.secret='no']){const bad=answer();change(bad);assert.throws(()=>film.parseResponse(bad,ids));}
+});
+test('provider must cite an exact verified fact for each work and must not repeat artist names',()=>{
+ const context=film.context(input(),pool,knowledge),value={...answer(),works:answer().works.map(w=>({...w,fact:context.works.find(s=>s.id===w.id).facts[0]}))};
+ assert.equal(film.parseGenerated(value,ids,context).works.length,8);
+ const fabricated=structuredClone(value);fabricated.works[0].fact='Unbelegte Bildbeschreibung';assert.throws(()=>film.parseGenerated(fabricated,ids,context));
+ const named=structuredClone(value);named.works[0].text=context.works[0].artist+' malt dieses Werk.';assert.throws(()=>film.parseGenerated(named,ids,context));
 });
 test('same protected feedback endpoint uses an independent film prompt and strict schema',async()=>{
  let calls=0;const handler=fixture(async(url,options)=>{calls++;const body=JSON.parse(options.body);assert.equal(body.model,'openai/gpt-oss-120b');assert.equal(body.response_format.json_schema.name,'art_film_captions');assert.equal(body.messages[0].content,film.instructions);assert.deepEqual(JSON.parse(body.messages[1].content).works.map(w=>w.id),ids);return response();});

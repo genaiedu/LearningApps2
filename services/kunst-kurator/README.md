@@ -2,7 +2,7 @@
 
 ## KI-Filmtexte (22. Oktober 2026)
 
-Derselbe geschützte `POST /api/feedback` unterstützt in Dienstversion 7 zusätzlich
+Derselbe geschützte `POST /api/feedback` unterstützt seit Dienstversion 7 zusätzlich
 `{version:1,kind:"film",ids:[6 bis 10 eindeutige Archiv-IDs],variation:0..1000000}`.
 Kein neuer Dienst und kein weiterer öffentlicher API-Pfad. Die bestehende Firewall,
 der Freigabeschalter, Origin- und Ratenbegrenzung gelten unverändert. Der Server
@@ -17,6 +17,10 @@ Leistungen bewerten. JSON-Schema und Nachprüfung verlangen alle IDs genau einma
 höchstens 150 Zeichen/24 Wörter pro Text und 110 Zeichen für das Schlussmotto.
 Ungültige, doppelte oder unvollständige Antworten sowie unbelegte Jahreszahlen
 werden verworfen. Das garantiert nicht die sachliche Richtigkeit jeder Formulierung.
+Version 8 verlangt zusätzlich für jede Einblendung einen unverändert zitierten
+Eintrag aus dem serverseitig geprüften Faktenbestand dieses Werks. Dieser interne
+Beleg wird validiert und nicht eingeblendet. Wiederholte Künstlernamen werden
+abgewiesen; sichtbare Werkangaben bleiben getrennt von der Filmtextredaktion.
 
 Nur der eigene Knopf „Texte von KI erstellen lassen“ im Filmeditor fordert Texte
 an, nach informierter KI-Freigabe. Weder Filmstart noch Öffnen/Ändern einer Galerie

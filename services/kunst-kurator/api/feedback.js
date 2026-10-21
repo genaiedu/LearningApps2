@@ -2,7 +2,7 @@
 const {createHash,randomUUID}=require('node:crypto');
 const ki=require('../lib/kunst-ki.js');
 const filmKi=require('../lib/kunst-film-ki.js');
-const VERSION=7;
+const VERSION=8;
 // One browser request owns both attempts. Keep the complete operation below
 // Vercel's 30-second limit and the browser's 28-second deadline.
 const TOTAL_MS=25000, ATTEMPT_MS=11500, RETRY_MS=450;
@@ -99,7 +99,7 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
       const choice=completion?.choices?.[0];
       if (choice?.finish_reason!=='stop') throw new FeedbackFailure('incomplete',{retryable:true,finish:finishReasons.has(choice?.finish_reason)?choice.finish_reason:'other'});
       let result;
-      try { result=filmMode?filmKi.parseResponse(choice.message?.content,input.ids):ki.parseResponse(choice.message?.content,input.room.ids); }
+      try { result=filmMode?filmKi.parseGenerated(choice.message?.content,input.ids,context):ki.parseResponse(choice.message?.content,input.room.ids); }
       catch { throw new FeedbackFailure('response_validation',{retryable:true}); }
       // Catch invented four-digit dates in each work's personal paragraph.
       for (const work of result.works) {
