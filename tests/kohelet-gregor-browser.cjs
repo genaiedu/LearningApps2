@@ -14,19 +14,25 @@ const contrast=(a,b)=>{const luminance=c=>c.match(/[\d.]+/g).slice(0,3).map(Numb
     page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)badResponses.push([r.status(),r.url()]);});
     await page.route('**/*',r=>{if(!r.request().url().startsWith(new URL(base).origin)){externals.push(r.request().url());return r.abort();}return r.continue();});
     await page.goto(base);await page.evaluate(()=>document.fonts.ready);assert.equal(await page.locator('html').getAttribute('data-palette'),'graphite');
+    const justified=async selector=>assert.equal(await page.locator(selector).first().evaluate(e=>getComputedStyle(e).textAlign),'justify',selector);
+    await justified('.reading-copy p');
     await page.screenshot({path:path.join(out,'01-einstieg.png')});
     for(const t of V.tasks){await page.goto(base+'#arbeiten/'+t.id);await page.locator('#task-title').waitFor();assert.equal(await page.locator('#task-title').innerText(),t.title);assert.equal(await page.locator('.task-steps li').count(),t.steps.length);await page.locator('[data-excerpt]').first().click();await page.locator('#excerpt-full').waitFor();}
     await page.goto(base+'#arbeiten/sklaverei');await page.locator('#task-draft').fill('Mein textgestütztes Argument: „Menschen sind kein Besitz“. <b>Kein HTML</b>');await page.locator('[data-check="0"]').check();await page.locator('#task-done').check();
+    await justified('.task-steps li');await justified('#task-draft');
     await page.reload();assert.ok((await page.locator('#task-draft').inputValue()).includes('<b>Kein HTML</b>'));assert.equal(await page.locator('#task-draft b').count(),0);assert.ok(await page.locator('#task-done').isChecked());
     await page.locator('[data-excerpt]').nth(1).click();await page.locator('#excerpt-full').waitFor();await page.locator('#comparison summary').click();await page.screenshot({path:path.join(out,'02-textarbeit.png'),fullPage:true});
     for(let n=1;n<=12;n++){await page.goto(base+`#lesen/kohelet/${n}`);await page.locator('#reader-text h2').waitFor();const actual=await page.locator('.reader-body .reader-column').allTextContents();assert.equal(compact(actual.join(' ')),compact(corpus.kohelet[n-1].verses.map(v=>v.de).join(' ')));}
     await page.locator('#mode-parallel').click();assert.ok(await page.locator('.original-he').count()>0);await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:path.join(out,'03-kohelet-zweisprachig.png')});
+    await justified('.original-he p');
     for(let n=1;n<=8;n++){await page.goto(base+`#lesen/gregor/${n}`);await page.locator('#reader-text h2').waitFor();assert.ok(await page.locator('.original-el p').count()>10);const actual=await page.locator('.reader-body').evaluate(el=>{const copy=el.cloneNode(true);copy.querySelectorAll('.original-el,.bibref').forEach(n=>n.remove());return copy.textContent;});assert.equal(compact(actual),compact(corpus.gregor[n-1].chunks.flatMap(c=>c.de.map(p=>p.text)).join(' ')));}
     await page.goto(base+'#lesen/gregor/1');await page.locator('#reader-text h2').waitFor();await page.screenshot({path:path.join(out,'04-gregor-absatzwechsel.png')});
+    await justified('.original-el p');
     await page.goto(base+'#material');
     const downloads=await page.locator('#all-downloads a[download]').evaluateAll(nodes=>nodes.map(n=>n.href));assert.equal(downloads.length,10);
     for(const url of downloads){const response=await context.request.get(url);assert.equal(response.status(),200,url);const data=await response.body();if(url.endsWith('.pdf'))assert.equal(data.subarray(0,4).toString(),'%PDF');else assert.ok(data.length>1000);}
     await page.goto(base+'#gespraech/juedisch');assert.ok(await page.locator('#essay-juedisch').isVisible());await page.screenshot({path:path.join(out,'05-begleittext.png')});
+    await justified('.essay-text section p:not(.eyebrow)');
     const paletteResults=[];
     for(const palette of ['graphite','atelier','slate','plum','bordeaux'])for(const theme of ['light','dark']){
       await page.goto(base+'#arbeiten/hauch');await page.locator('#view-open').click();await page.locator('#palette').selectOption(palette);await page.locator(`[name=theme][value=${theme}]`).check();await page.locator('[data-close=view-dialog]').click();

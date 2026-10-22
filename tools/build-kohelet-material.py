@@ -9,7 +9,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib import colors
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.enums import TA_LEFT
+from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.lib.units import mm
 from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate, Paragraph, Spacer, PageBreak, KeepTogether, Flowable
 
@@ -32,8 +32,8 @@ BLUE = colors.HexColor('#245ca8')
 MUTED = colors.HexColor('#5d615e')
 LINE = colors.HexColor('#c6ccc5')
 styles = {
-    'body': ParagraphStyle('body', fontName='Fira', fontSize=11.4, leading=17.1, textColor=INK, alignment=TA_LEFT, spaceAfter=10, allowWidows=0, allowOrphans=0),
-    'small': ParagraphStyle('small', fontName='Fira', fontSize=9, leading=13.4, textColor=MUTED, spaceAfter=9),
+    'body': ParagraphStyle('body', fontName='Fira', fontSize=11.4, leading=17.1, textColor=INK, alignment=TA_JUSTIFY, spaceAfter=10, allowWidows=0, allowOrphans=0),
+    'small': ParagraphStyle('small', fontName='Fira', fontSize=9, leading=13.4, textColor=MUTED, alignment=TA_JUSTIFY, spaceAfter=9),
     'label': ParagraphStyle('label', fontName='FiraBold', fontSize=9, leading=12, textColor=BLUE, spaceAfter=13, keepWithNext=True),
     'title': ParagraphStyle('title', fontName='FiraBold', fontSize=31, leading=35, textColor=INK, spaceAfter=13, keepWithNext=True),
     'subtitle': ParagraphStyle('subtitle', fontName='GaramondItalic', fontSize=28, leading=31, textColor=BLUE, spaceAfter=24, keepWithNext=True),
