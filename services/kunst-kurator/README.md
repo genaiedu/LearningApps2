@@ -2,6 +2,40 @@
 
 ## KI-Filmtexte (22. Oktober 2026)
 
+### Einzelbildredaktion seit Dienstversion 11
+
+Der Editor bietet an jedem Werk „KI-Text für dieses Bild“. Dieser Knopf sendet
+`{version:1,kind:"film-caption",id,position:0..9,variation:0..1000000,withMotto:false}`.
+Der Server akzeptiert genau eine bekannte öffentliche Werkkennung und ergänzt
+nur die geprüften Quellen dieses Werks. Ein erfolgreicher Aufruf benötigt genau
+einen Modellprompt, keine Sammelantwort und keinen separaten Lektoratsaufruf.
+Die Systemanweisung verlangt ausschließlich den fertigen, belegten Filmtext ohne
+„Antwort 1“, „Vorschlag“, Überschriften oder Alternativen und eine interne
+Selbstprüfung. Das strikte Schema begrenzt die Textlänge und die möglichen
+Belegschlüssel bereits bei der Generierung. Ein verbleibendes redaktionelles
+Präfix wird vor der Validierung entfernt; es gelangt nie in den Film.
+
+Die öffentliche Antwort lautet `{id,text}`. Nur wenn `withMotto:true` ausdrücklich
+angefordert wird, kommt `motto` dazu. Der Sammelknopf im Editor verwendet dieselbe
+Einzelbildschnittstelle streng nacheinander: Antwort prüfen, nur dieses Werk auf
+`caption:"custom"` setzen, sofort mit dem vollständigen Spielstand lokal speichern
+und gegebenenfalls synchronisieren, dann die nächste Anfrage. Ein optionales
+Schlussmotto entsteht mit der letzten Einzelbildanfrage als Schlussgedanke zu
+diesem Werk, nicht als angeblich gemeinsame Analyse aller Bilder.
+
+Bei Fehler oder Abbruch bleiben bereits übernommene Texte gespeichert; noch nicht
+bearbeitete Werke bleiben unverändert. Jeder Einzelknopf verändert weder andere
+Texte noch das Motto. Direkt danach ist eine Rücknahme möglich. Bearbeitung,
+Profilwechsel, Auswahlwechsel, Widerruf und Schließen verhindern späte Übernahmen.
+Es gibt weiterhin keine freien Besucherprompts, Bilder oder privaten Texte in
+KI-Anfragen. Ratenbegrenzung und Firewall bleiben unverändert; eine Sammelaktion
+verbraucht entsprechend sechs bis zehn einzelne Anfragen. Bei einer Sperre lässt
+sich später gezielt der Text eines verbleibenden Bildes anfordern.
+
+Die frühere Batch-Schnittstelle bleibt für bereits geöffnete ältere Clients
+kompatibel. Der aktuelle Editor verwendet sie nicht mehr. Die folgenden Angaben
+zu den Versionen 7–10 dokumentieren diesen älteren Ablauf.
+
 Derselbe geschützte `POST /api/feedback` unterstützt seit Dienstversion 7 zusätzlich
 `{version:1,kind:"film",ids:[6 bis 10 eindeutige Archiv-IDs],variation:0..1000000}`.
 Kein neuer Dienst und kein weiterer öffentlicher API-Pfad. Die bestehende Firewall,

@@ -16,9 +16,9 @@ const captions=['Ein Bild ist mehr als sein Motiv: Auch das Material prägt sein
    const r=route.request();if(r.resourceType()==='image'&&!r.url().startsWith(new globalThis.URL(URL).origin))return route.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="800" height="600" fill="#aaa"/></svg>'});return route.continue();
   });
   await page.route('https://kunstkurator-dienst.vercel.app/api/feedback',async route=>{
-   const body=route.request().postDataJSON();assert.equal(body.kind,'film');assert.deepEqual(Object.keys(body).sort(),['ids','kind','variation','version']);filmRequests++;
+   const body=route.request().postDataJSON();assert.equal(body.kind,'film-caption');assert.deepEqual(Object.keys(body).sort(),['id','kind','position','variation','version','withMotto']);filmRequests++;
    if(hold)await new Promise(r=>release=r);
-   await route.fulfill({json:{motto:'Ein gemeinsamer Blick auf verschiedene Materialien.',works:body.ids.map((id,i)=>({id,text:captions[i]}))}});
+   await route.fulfill({json:{id:body.id,text:captions[body.position],...(body.withMotto?{motto:'Ein gemeinsamer Blick auf verschiedene Materialien.'}:{})}});
   });
   const remote={profileId:'profile-browser-synthetic',appId:'kunsttresor',revision:0,updatedAt:null,state:null};
   await page.route('https://learningapps-lerncode.spunky-snipe-1289.chatgpt.site/api/state/kunsttresor',async route=>{
@@ -31,10 +31,10 @@ const captions=['Ein Bild ist mehr als sein Motiv: Auch das Material prägt sein
   await page.locator('#film-ai-generate').click();await page.waitForFunction(()=>document.querySelector('#film-selection textarea')?.readOnly===true);
   assert.equal(await page.locator('#film-selection select').first().inputValue(),'custom');assert.equal(await page.locator('#film-selection textarea').first().isVisible(),true);assert.equal(await page.locator('#film-selection textarea').first().inputValue(),'Vorheriger eigener Text.');
   await page.waitForFunction(()=>document.getElementById('film-ai-cancel').hidden===false);while(!release)await new Promise(r=>setTimeout(r,10));hold=false;release();
-  await page.waitForFunction(()=>document.querySelector('#film-selection textarea')?.value.startsWith('Ein Bild ist mehr'));
-  assert.equal(filmRequests,1);assert.equal(await page.locator('#film-selection select').first().inputValue(),'custom');assert.equal(await page.locator('#gallery-motto').inputValue(),'Eigenes Schlussmotto');assert.equal(await page.locator('#film-ai-undo').isVisible(),true);
+  await page.waitForFunction(()=>document.getElementById('film-ai-cancel').hidden&&document.querySelector('#film-selection textarea')?.value.startsWith('Ein Bild ist mehr'));
+  assert.equal(filmRequests,8);assert.equal(await page.locator('#film-selection select').first().inputValue(),'custom');assert.equal(await page.locator('#gallery-motto').inputValue(),'Eigenes Schlussmotto');assert.equal(await page.locator('#film-ai-undo').isVisible(),true);
   await page.locator('#film-ai-undo').click();assert.equal(await page.locator('#film-selection select').first().inputValue(),'both');
-  await page.locator('#film-ai-generate').click();await page.waitForFunction(()=>document.querySelector('#film-selection textarea')?.value.startsWith('Ein Bild ist mehr'));
+  await page.locator('#film-ai-generate').click();await page.waitForFunction(()=>document.getElementById('film-ai-cancel').hidden&&document.querySelector('#film-selection textarea')?.value.startsWith('Ein Bild ist mehr'));
   const stored=()=>page.evaluate(()=>JSON.parse(localStorage.getItem(KunstLerncode.scopedKey('kunsttresor-wall-gallery-v1',KunstLerncode.storedProfileId()))));
   assert.ok((await stored()).film.items.every((item,i)=>item.caption==='custom'&&item.text===captions[i]));
   for(const width of [1400,390]){
@@ -49,7 +49,7 @@ const captions=['Ein Bild ist mehr als sein Motiv: Auch das Material prägt sein
   await page.locator('#save-dialog [data-close="save-dialog"]').click();await page.locator('#game-gallery').click();await page.locator('#gallery-edit-open').click();
   await page.locator('#gallery-name').fill('Material und Blick');await page.locator('#gallery-motto').fill('Meine Bilder. Meine Gedanken.');
   await page.locator('.film-edit-card').nth(1).getByRole('button',{name:/Nach vorn/}).click();
-  await page.locator('#film-ai-generate').click();await page.waitForFunction(()=>document.querySelector('#film-selection textarea')?.value.startsWith('Ein Bild ist mehr'));
+  await page.locator('#film-ai-generate').click();await page.waitForFunction(()=>document.getElementById('film-ai-cancel').hidden&&document.querySelector('#film-selection textarea')?.value.startsWith('Ein Bild ist mehr'));
   await page.locator('#film-selection textarea').nth(1).fill('Auch nach dem Speichern bleibt mein eigener Gedanke erhalten.');
   assert.match(await page.locator('#gallery-save-status').textContent(),/Datenbanksicherung läuft/);
   const expectedGallery=await page.evaluate(()=>KunstLernstand.adapter.getSnapshot().gallery);
@@ -81,7 +81,7 @@ const captions=['Ein Bild ist mehr als sein Motiv: Auch das Material prägt sein
   catch(error){const local=await page.evaluate(()=>window.KunstLernstand?.adapter.getSnapshot());const differences=[];function compare(a,b,p=''){if(p==='savedAt')return;if(a&&b&&typeof a==='object'&&typeof b==='object'){for(const k of new Set([...Object.keys(a),...Object.keys(b)]))compare(a[k],b[k],p?p+'.'+k:k);}else if(a!==b)differences.push({field:p,before:a,after:b});}compare(synced,local);console.log('Resume diagnostic',await page.evaluate(()=>({status:window.KunstLernstand?.controller.getStatus(),sameLocal:window.KunstLernstand?.adapter.getProfileId(),launch:document.getElementById('launch-dialog').open})),differences);throw error;}
   assert.ok(profileRequests>before);assert.equal(puts,savedPuts,'automatic resume must not overwrite newer cloud');assert.equal(await page.locator('#launch-dialog').isVisible(),true,'initial image/AI choice is not bypassed');
   assert.equal(await page.evaluate(()=>KunstLernstand.adapter.getSnapshot().state.roomToken),room);assert.equal(await page.evaluate(()=>KunstLernstand.adapter.getSnapshot().gallery.film.items[0].text),'Neuerer Text vom anderen Gerät.');assert.equal(await page.evaluate(()=>KunstLernstand.controller.getStatus().enabled),true);
-  await page.locator('#launch-read').click();await page.evaluate(()=>document.getElementById('game-gallery').click());await page.locator('#gallery-edit-open').click();assert.equal(await page.locator('#film-selection textarea').first().inputValue(),'Neuerer Text vom anderen Gerät.');assert.equal(filmRequests,3,'reload never generates AI texts');
+  await page.locator('#launch-read').click();await page.evaluate(()=>document.getElementById('game-gallery').click());await page.locator('#gallery-edit-open').click();assert.equal(await page.locator('#film-selection textarea').first().inputValue(),'Neuerer Text vom anderen Gerät.');assert.equal(filmRequests,24,'reload never generates AI texts');
   await page.locator('#gallery-dialog [data-close="gallery-dialog"]').click();await page.evaluate(()=>KunstLernstand.controller.disconnect());await page.reload();await page.waitForFunction(()=>window.KunstLernstand);assert.equal(await page.evaluate(()=>KunstLernstand.controller.getStatus().enabled),false);assert.equal(await page.evaluate(()=>localStorage.getItem(LearningProfile.deviceKey('kunsttresor'))),null);
   assert.deepEqual(errors,[]);console.log('PASS: post-connection film autosave, complete real file download/import, second-device film restoration, visible cloud confirmation, AI adoption, undo, responsive layout, remembered connection and logout. Synthetic profile and mocked providers only.');
  }finally{await browser.close();}

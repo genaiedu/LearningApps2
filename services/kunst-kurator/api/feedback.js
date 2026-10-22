@@ -2,7 +2,7 @@
 const {createHash,randomUUID}=require('node:crypto');
 const ki=require('../lib/kunst-ki.js');
 const filmKi=require('../lib/kunst-film-ki.js');
-const VERSION=10;
+const VERSION=11;
 // One browser request owns both attempts. Keep the complete operation below
 // Vercel's 30-second limit and the browser's 28-second deadline.
 const TOTAL_MS=25000, ATTEMPT_MS=11500, RETRY_MS=450;
@@ -48,14 +48,14 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
     if (req.method!=='POST') return send(405,{error:'method'});
     if (env.AI_ENABLED!=='true' || !env.GROQ_API_KEY) return send(503,{error:'local_feedback_available',reason:'unavailable'});
     if (!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'] || '') || Number(req.headers['content-length'])>48000) return send(413,{error:'payload'});
-    let input,context,filmMode=false;
+    let input,context,filmMode=false,captionMode=false;
     try {
       const raw=typeof req.body==='string' ? req.body : JSON.stringify(req.body);
       if (!raw || Buffer.byteLength(raw)>48000) throw Error('size');
       input=JSON.parse(raw);
-      const verified=sources || loadSources();filmMode=input?.kind==='film';
-      context=filmMode?filmKi.context(input,verified.pool,verified.knowledge):ki.context(input,verified.pool,verified.knowledge,verified.curator);
-      input=filmMode?filmKi.validatePayload(input,verified.pool):ki.validatePayload(input,verified.pool);
+      const verified=sources || loadSources();filmMode=input?.kind==='film';captionMode=input?.kind==='film-caption';
+      context=captionMode?filmKi.captionContext(input,verified.pool,verified.knowledge):filmMode?filmKi.context(input,verified.pool,verified.knowledge):ki.context(input,verified.pool,verified.knowledge,verified.curator);
+      input=captionMode?filmKi.validateCaptionPayload(input,verified.pool):filmMode?filmKi.validatePayload(input,verified.pool):ki.validatePayload(input,verified.pool);
     } catch { return send(400,{error:'invalid_game_result'}); }
     const digest=createHash('sha256').update(JSON.stringify(input)).digest('hex');
     const known=cache.get(digest);
@@ -80,8 +80,8 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
       try { response=await fetcher('https://api.groq.com/openai/v1/chat/completions',{
         method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+env.GROQ_API_KEY},signal,redirect:'error',
         body:JSON.stringify({model:'openai/gpt-oss-120b',messages:[{role:'system',content:system},{role:'user',content:JSON.stringify(data)}],
-          response_format:{type:'json_schema',json_schema:{name:filmMode?'art_film_captions':'museum_curator',strict:true,schema:filmMode?filmKi.schema(input.ids):ki.schema(input.room.ids)}},
-          temperature:review ? .3 : filmMode ? .8 : .65,reasoning_effort:filmMode&&!review?'medium':'low',max_completion_tokens:filmMode?(review?2200:2800):6000})
+          response_format:{type:'json_schema',json_schema:{name:captionMode?'art_film_caption':filmMode?'art_film_captions':'museum_curator',strict:true,schema:captionMode?filmKi.captionSchema(context):filmMode?filmKi.schema(input.ids):ki.schema(input.room.ids)}},
+          temperature:review ? .3 : filmMode||captionMode ? .8 : .65,reasoning_effort:filmMode&&!review?'medium':'low',max_completion_tokens:captionMode?1600:filmMode?(review?2200:2800):6000})
       }); } catch { throw new FeedbackFailure('network',{retryable:true}); }
       if (!response.ok) {
         let code='none';
@@ -102,21 +102,22 @@ function createHandler({env=process.env,fetcher=globalThis.fetch,sources,now=Dat
       if (choice?.finish_reason!=='stop') throw new FeedbackFailure('incomplete',{retryable:true,finish:finishReasons.has(choice?.finish_reason)?choice.finish_reason:'other'});
       return choice.message?.content;
       }
-      const draft=await completionText(filmMode?filmKi.instructions:ki.instructions,context);
+      const draft=await completionText(captionMode?filmKi.captionInstructions:filmMode?filmKi.instructions:ki.instructions,context);
       let result;
-      try { result=filmMode?filmKi.parseGenerated(draft,input.ids,context):ki.parseResponse(draft,input.room.ids); }
+      try { result=captionMode?filmKi.parseCaptionGenerated(draft,input,context):filmMode?filmKi.parseGenerated(draft,input.ids,context):ki.parseResponse(draft,input.room.ids); }
       catch { throw new FeedbackFailure('response_validation',{retryable:true}); }
       if(filmMode){
         const reviewed=await completionText(filmKi.reviewInstructions,filmKi.reviewContext(JSON.parse(draft),context),{review:true});
         try{result=filmKi.parseGenerated(reviewed,input.ids,context);}catch{throw new FeedbackFailure('response_validation',{retryable:true});}
       }
       // Catch invented four-digit dates in each work's personal paragraph.
-      for (const work of result.works) {
-        const source=context.works.find(item=>item.id===work.id);
-        const years=new Set(JSON.stringify(source).match(/\b\d{4}\b/g) || []);
+      for (const work of captionMode?[result]:result.works) {
+        const source=captionMode?context.work:context.works.find(item=>item.id===work.id);
+        const evidence={source,facts:source.facts?.map(key=>context.factCatalog?.[key])};
+        const years=new Set(JSON.stringify(evidence).match(/\b\d{4}\b/g) || []);
         if ((work.text.match(/\b\d{4}\b/g) || []).some(year=>!years.has(year))) throw new FeedbackFailure('unsupported_date',{retryable:true});
       }
-      if(filmMode){const years=new Set(JSON.stringify(context).match(/\b\d{4}\b/g)||[]);if((result.motto.match(/\b\d{4}\b/g)||[]).some(year=>!years.has(year)))throw new FeedbackFailure('unsupported_date',{retryable:true});}
+      if(result.motto){const years=new Set(JSON.stringify(context).match(/\b\d{4}\b/g)||[]);if((result.motto.match(/\b\d{4}\b/g)||[]).some(year=>!years.has(year)))throw new FeedbackFailure('unsupported_date',{retryable:true});}
       return result;
     }
     for(let attempt=1;attempt<=2;attempt++) {

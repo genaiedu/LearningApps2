@@ -119,7 +119,7 @@
     // Editorial labels are not part of the film essay. Keep ordinary content,
     // including meaningful numbers such as “2. Weltkrieg”, exactly as written.
     let result=value;
-    for(let i=0;i<3;i++)result=result.replace(/^\s*(?:(?:KI[\s-]*)?(?:Text(?:vorschlag)?|Vorschl(?:ag)?\.?|Variante|Entwurf|Einblendung|Bildtext|Caption)|Motto)\s*(?:(?:Nr\.?\s*)?\d{1,2})?\s*[:：]\s*/i,'');
+    for(let i=0;i<3;i++)result=result.replace(/^\s*(?:(?:KI[\s-]*)?(?:Antwort|Text(?:vorschlag)?|Vorschl(?:ag)?\.?|Variante|Entwurf|Einblendung|Bildtext|Caption)|Motto)\s*(?:(?:Nr\.?\s*)?\d{1,2})?\s*[:：]\s*/i,'');
     return result;
   }
   function caption(work,item,texts) {

@@ -121,7 +121,7 @@ test('broker rejects foreign origins, unconfigured use and arbitrary prompts bef
   let calls=0;const handler=createHandler({env,sources,fetcher:async()=>{calls++;throw Error();}});
   for (const request of [req({}, {headers:{origin:'https://evil.example','content-type':'application/json'}}),req({prompt:'unrelated question'}),req({}, {method:'PUT'})]) {const result=res();await handler(request,result);assert.ok([403,400,405].includes(result.code));}
   const disabled=createHandler({env:{},sources});const result=res();await disabled(req(ki.payload(room(),progress.fresh())),result);assert.equal(result.code,503);assert.equal(calls,0);
-  const health=res();await handler(req(null,{method:'GET',headers:{}}),health);assert.deepEqual(health.body,{service:'kunst-kurator',version:10,roomSizes:[4,7],fieldCounts:[4,5],filmCaptions:true,ready:true});
+  const health=res();await handler(req(null,{method:'GET',headers:{}}),health);assert.deepEqual(health.body,{service:'kunst-kurator',version:11,roomSizes:[4,7],fieldCounts:[4,5],filmCaptions:true,ready:true});
 });
 test('broker provider errors and invented dates return neutral failures without provider details',async()=>{
   const input=ki.payload(room(),progress.fresh());

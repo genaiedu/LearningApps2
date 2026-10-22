@@ -11,7 +11,7 @@
     const reduced=matchMedia('(prefers-reduced-motion: reduce)');
     let filterTimer=0,layoutFrame=0;
     const filmAI=root.KunstFilmKI,filmAIClient=filmAI?.createClient({endpoint:filmAIEndpoint});
-    let textEpoch=0,textBusy=false,textSource='',textUndo=null;
+    let textEpoch=0,textBusy=false,textSource='',textUndo=null,textTargets=[],textCurrent='',textDone=new Set();
     const filmFingerprint=()=>JSON.stringify(getGallery().film);
     function textStatus(message){$('film-ai-status').textContent=message;}
     function updateTextUndo(){
@@ -20,7 +20,7 @@
     }
     function stopTextAI(message=''){
       const wasBusy=textBusy;
-      textEpoch++;filmAIClient?.cancel();textBusy=false;textSource='';
+      textEpoch++;filmAIClient?.cancel();textBusy=false;textSource='';textTargets=[];textCurrent='';textDone.clear();
       $('film-ai-cancel').hidden=true;
       $('gallery-export').disabled=false;
       $('film-ai-generate').disabled=false;$('film-ai-generate').textContent='Texte von KI erstellen lassen';
@@ -28,35 +28,42 @@
       updateTextUndo();
       if(message)textStatus(message);
     }
-    async function generateFilmTexts(){
+    async function generateFilmTexts(targetId=null){
       if(textBusy)return;
       const g=getGallery();
       if(g.liked.length<model.UNLOCK||g.film.items.length<model.MIN||g.film.items.length>model.MAX){textStatus('Wähle zuerst 6 bis 10 Werke für deinen freigeschalteten Kunstfilm.');return;}
       if(!filmAIClient||!filmAIEndpoint){textStatus('Die KI-Textredaktion ist gerade nicht erreichbar. Deine bisherigen Texte bleiben erhalten.');return;}
       if(!aiAllowed()){textStatus('Bitte schalte die KI in „Datenschutz & Freigabe“ ein. Klicke danach hier erneut, um nur für diese Bildfolge Texte anzufordern.');requestAIConsent();return;}
-      const replaceMotto=$('film-ai-use-motto').checked;
-      stopTextAI();textSource=filmFingerprint();const source=textSource,ticket=++textEpoch;
-      textBusy=true;$('film-ai-generate').disabled=true;$('film-ai-generate').textContent='Die KI textet deine Bildfolge …';$('film-ai-cancel').hidden=false;
+      const targets=targetId?g.film.items.filter(item=>item.id===targetId):g.film.items;
+      if(!targets.length)return;
+      const replaceMotto=!targetId&&$('film-ai-use-motto').checked,previous=structuredClone(g.film);
+      stopTextAI();textUndo=null;textSource=filmFingerprint();const ticket=++textEpoch;
+      textBusy=true;textTargets=targets.map(item=>item.id);$('film-ai-generate').disabled=true;$('film-ai-cancel').hidden=false;
       $('gallery-export').disabled=true;
-      renderEditor();updateTextUndo();
-      textStatus('Eigene Texte / KI-Texte ist ausgewählt. Die KI erstellt die Einblendungen und setzt sie anschließend direkt in die Textfelder ein. Bis dahin bleiben deine bisherigen Texte gespeichert.');
-      const result=await filmAIClient.request(filmAI.payload(g.film.items.map(item=>item.id),Math.floor(Math.random()*1000001)));
-      if(ticket!==textEpoch)return;
-      if(source!==filmFingerprint()||!aiAllowed()){stopTextAI('Die Auswahl oder Freigabe hat sich geändert. Bitte fordere bei Bedarf neue Texte an.');return;}
-      if(result.status!=='ready'){stopTextAI(filmAI.failureNotice(result.reason));return;}
-      let checked;
-      try{
-        checked=filmAI.parseResponse(result.data,g.film.items.map(item=>item.id));
-        checked=filmAI.parseResponse({motto:model.cleanCaption(checked.motto),works:checked.works.map(work=>({...work,text:model.cleanCaption(work.text)}))},g.film.items.map(item=>item.id));
+      for(let index=0;index<targets.length;index++){
+        const item=targets[index],position=g.film.items.findIndex(work=>work.id===item.id);
+        textCurrent=item.id;$('film-ai-generate').textContent='Die KI textet Bild '+(index+1)+' / '+targets.length+' …';
+        renderEditor();updateTextUndo();
+        textStatus('KI-Text für „'+title(byId.get(item.id))+'“ wird erstellt ('+(index+1)+' / '+targets.length+'). Jede Antwort wird direkt eingesetzt und gespeichert, bevor das nächste Bild folgt.');
+        const request=filmAI.captionPayload(item.id,Math.floor(Math.random()*1000001),position,replaceMotto&&index===targets.length-1);
+        const result=await filmAIClient.request(request);
+        if(ticket!==textEpoch)return;
+        if(textSource!==filmFingerprint()||!aiAllowed()){stopTextAI('Die Auswahl oder Freigabe hat sich geändert. Bereits eingesetzte Texte bleiben erhalten.');return;}
+        if(result.status!=='ready'){stopTextAI(filmAI.failureNotice(result.reason,textDone.size));return;}
+        let checked;
+        try{checked=filmAI.parseCaptionResponse(result.data,request);}
+        catch{stopTextAI(filmAI.failureNotice('invalid_response',textDone.size));return;}
+        const current=getGallery();
+        const next={...current,film:{...current.film,motto:request.withMotto?checked.motto:current.film.motto,items:current.film.items.map(work=>work.id===item.id?{...work,caption:'custom',text:checked.text}:work)}};
+        // Accept our own incremental save, but never a concurrent film/profile edit.
+        textSource=JSON.stringify(next.film);
+        if(!change(next,'KI-Text für dieses Bild eingesetzt und im Browser gespeichert.',{render:false})){
+          stopTextAI('Dieser KI-Text konnte nicht gespeichert werden. Bereits eingesetzte Texte bleiben erhalten; die übrigen Texte wurden nicht geändert.');return;
+        }
+        textDone.add(item.id);textUndo={film:previous,source:filmFingerprint()};
       }
-      catch{stopTextAI(filmAI.failureNotice('invalid_response'));return;}
-      const current=getGallery(),previous=structuredClone(current.film);
-      const next={...current,film:{...current.film,motto:replaceMotto?checked.motto:current.film.motto,items:current.film.items.map(item=>({...item,caption:'custom',text:checked.works.find(work=>work.id===item.id).text}))}};
       stopTextAI();
-      if(change(next,'KI-Filmtexte direkt in die Textfelder eingesetzt.')){
-        textUndo={film:previous,source:filmFingerprint()};updateTextUndo();
-        textStatus('KI-Filmtexte eingesetzt. „Eigene Texte / KI-Texte“ ist für alle Werke ausgewählt. Die Texte gehören zu deinem vollständigen Spielstand; den lokalen bzw. Datenbank-Speicherstatus siehst du oben. Bitte prüfe sie, KI kann irren.');
-      }else textStatus('Die KI-Texte konnten nicht gespeichert werden. Deine bisherigen Texte bleiben erhalten.');
+      textStatus(targetId?'KI-Text für dieses Bild eingesetzt. Alle anderen Bildtexte bleiben unverändert. Du kannst den Text bearbeiten oder die Übernahme rückgängig machen. Den Speicherstatus siehst du oben. Bitte prüfe den Text, KI kann irren.':'KI-Filmtexte eingesetzt – Bild für Bild, jeweils direkt gespeichert. „Eigene Texte / KI-Texte“ ist ausgewählt. Den lokalen bzw. Datenbank-Speicherstatus siehst du oben. Bitte prüfe die Texte, KI kann irren.');
     }
     function node(tag,cls,text) {const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
     function button(label,fn,cls) {const e=node('button',cls,label);e.type='button';e.onclick=fn;return e;}
@@ -190,6 +197,7 @@
       if(!g.film.items.length)$('film-selection').append(node('p',null,'Lass 8 Werke zusammenstellen oder füge sie oben aus deiner Galerie hinzu.'));
       g.film.items.forEach((item,index)=>{
         const work=byId.get(item.id), card=node('li','film-edit-card');card.dataset.work=item.id;
+        const targeted=textBusy&&textTargets.includes(item.id),waiting=targeted&&!textDone.has(item.id);
         const head=node('div','film-edit-head');head.append(node('b','film-order',String(index+1).padStart(2,'0')),node('h3',null,title(work)));
         const tools=node('div','film-edit-tools');
         for(const [label,delta] of [['Nach vorn',-1],['Nach hinten',1]]){const b=button(label,()=>{
@@ -197,13 +205,14 @@
           [items[index],items[other]]=[items[other],items[index]];change({...current,film:{...current.film,items}},'Reihenfolge gespeichert.');
         });b.disabled=index+delta<0 || index+delta>=g.film.items.length;b.setAttribute('aria-label',title(work)+' · '+label);tools.append(b);}
         tools.append(button('Aus Film entfernen',()=>change(model.removeFromFilm(getGallery(),item.id),'Aus dem Film entfernt; das Werk bleibt in deiner Galerie.')));head.append(tools);card.append(head);
+        const generate=button(waiting&&textCurrent===item.id?'KI-Text wird erstellt …':'KI-Text für dieses Bild',()=>void generateFilmTexts(item.id));generate.dataset.filmAiWork=item.id;generate.disabled=textBusy;generate.setAttribute('aria-label','KI-Text für '+title(work));card.append(generate);
         const label=node('label',null,'Einblendung für dieses Werk'), select=node('select');select.setAttribute('aria-label','Einblendung für '+title(work));
-        for(const [value,name] of [['both','Stil / Epoche und Material'],['style','Stil / Epoche'],['technique','Material / Technik'],['none','Nur Werkangaben'],['custom','Eigene Texte / KI-Texte']]){const option=node('option',null,name);option.value=value;select.append(option);}select.value=textBusy?'custom':item.caption;label.append(select);
+        for(const [value,name] of [['both','Stil / Epoche und Material'],['style','Stil / Epoche'],['technique','Material / Technik'],['none','Nur Werkangaben'],['custom','Eigene Texte / KI-Texte']]){const option=node('option',null,name);option.value=value;select.append(option);}select.value=targeted?'custom':item.caption;label.append(select);
         const variantLabel=node('label',null,'Formulierung'), variant=node('select');variant.setAttribute('aria-label','Formulierung für '+title(work));
         for(const [value,name] of [[0,'Erste Variante'],[1,'Zweite Variante']]){const option=node('option',null,name);option.value=value;variant.append(option);}variant.value=item.variant;variantLabel.append(variant);
-        const ownLabel=node('label',null,'Mein eingeblendeter Text'), input=node('textarea');input.maxLength=240;input.rows=3;input.value=model.cleanCaption(item.text);input.readOnly=textBusy;input.placeholder=textBusy?'Die KI erstellt diesen Filmtext …':'Hier deinen eigenen Text eingeben oder oben KI-Texte erstellen lassen.';input.setAttribute('aria-busy',String(textBusy));input.setAttribute('aria-label','Eigener Filmtext für '+title(work));ownLabel.append(input);
+        const ownLabel=node('label',null,'Mein eingeblendeter Text'), input=node('textarea');input.maxLength=240;input.rows=3;input.value=model.cleanCaption(item.text);input.readOnly=targeted;input.placeholder=waiting?'Die KI erstellt diesen Filmtext …':'Hier deinen eigenen Text eingeben oder einen KI-Text für dieses Bild erstellen lassen.';input.setAttribute('aria-busy',String(waiting));input.setAttribute('aria-label','Eigener Filmtext für '+title(work));ownLabel.append(input);
         const preview=node('p','film-caption-preview');
-        function previewText(){const updated=getGallery().film.items[index];preview.textContent=textBusy?'KI-Text wird erstellt …':model.caption(work,updated,texts)||'Keine zusätzliche Einblendung.';ownLabel.hidden=!textBusy&&updated.caption!=='custom';variantLabel.hidden=textBusy||['none','custom'].includes(updated.caption);}
+        function previewText(){const updated=getGallery().film.items[index];preview.textContent=waiting?(textCurrent===item.id?'KI-Text wird erstellt …':'Wartet auf die vorherigen Bilder …'):model.caption(work,updated,texts)||'Keine zusätzliche Einblendung.';ownLabel.hidden=!targeted&&updated.caption!=='custom';variantLabel.hidden=targeted||['none','custom'].includes(updated.caption);}
         select.onchange=()=>{editItem(index,{caption:select.value});previewText();};variant.onchange=()=>{editItem(index,{variant:Number(variant.value)});previewText();};input.oninput=()=>{editItem(index,{caption:'custom',text:input.value});previewText();};
         card.append(label,variantLabel,ownLabel,preview);previewText();$('film-selection').append(card);
       });
@@ -230,7 +239,7 @@
     $('gallery-clear-dialog').addEventListener('close',()=>($('gallery-clear-film').disabled?$('gallery-filter-film'):$('gallery-clear-film')).focus({preventScroll:true}));
     $('film-ai-generate').onclick=()=>void generateFilmTexts();
     $('film-ai-permission').onclick=requestAIConsent;
-    $('film-ai-cancel').onclick=()=>stopTextAI('Anfrage im Browser abgebrochen. Deine bisherigen Texte bleiben unverändert. Bereits übertragene Daten lassen sich damit nicht zurückrufen.');
+    $('film-ai-cancel').onclick=()=>stopTextAI('Anfrage im Browser abgebrochen. Bereits eingesetzte Texte bleiben gespeichert; alle übrigen bleiben unverändert. Bereits übertragene Daten lassen sich damit nicht zurückrufen.');
     $('film-ai-undo').onclick=()=>{
       if(textBusy||!textUndo)return;
       if(textUndo.source!==filmFingerprint()){updateTextUndo();return;}
