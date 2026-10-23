@@ -21,6 +21,8 @@ Fira Sans und EB Garamond aus `../LearningApps/fonts/kanban/`; Noto Serif Hebrew
 
 ## Speicherung
 
+Die sichtbaren Texte stellen die Lektüre und Textarbeit in den Mittelpunkt und bezeichnen das Angebot nicht als „App“. Das gilt auch für Quellenhinweise, Begleittext, Fußzeile, Sicherungs- und Rücksetzdialoge sowie die herunterladbaren Materialien. Interne Dateinamen, Speicherkennungen und das Sicherungsformat bleiben aus Kompatibilitätsgründen unverändert.
+
 Keine Lerncode-Anbindung: Der Nutzer hat ausdrücklich klargestellt, dass mit „Profilen verlinken“ die Übersetzungen gemeint waren. Kein Generator-/Registrierungslink und kein neuer Speicherdienst.
 
 Arbeitsstand nur unter `kohelet-gregor:work:v1`, Darstellung unter `kohelet-gregor:view:v1`. Notizen maximal 20.000 Zeichen je Auftrag; strikte Prüfung importierter Sicherungen. Antworten werden ausschließlich als Text behandelt, nicht als HTML. Vor Import und Reset ausdrückliche Bestätigung. Beschädigte bestehende Stände werden nicht still überschrieben. Bei gesperrtem Speicher bleibt die App nutzbar und bietet Dateiexporte an. Keine automatischen externen Abrufe, keine Laufzeit-KI, keine Konten und keine übertragenen Schülerantworten.

@@ -30,6 +30,15 @@ test('local work, checklist, reading location and slides round trip without cred
   const bad=C.backup(state);bad.data.answers.schluss.code='secret';assert.throws(()=>C.restore(bad));
   for(const mutate of [s=>s.reading.unit=9,s=>s.answers.invalid=C.blankAnswer(),s=>s.slide=NaN,s=>s.answers.schluss.text='x'.repeat(20001),s=>s.answers.schluss.checks=[0,0],s=>s.version=2]){const copy=structuredClone(state);mutate(copy);assert.throws(()=>C.validate(copy));}
 });
+test('reader-facing language centres on the texts rather than an app',()=>{
+  const html=fs.readFileSync(path.join(root,'kohelet-gregor.html'),'utf8');
+  const prose=html.replace(/<[^>]*>/g,' ');
+  const labels=/\b(?:App|Apps|LearningApp|LearningApps|Lernapp|Lernapps)\b/i;
+  assert.doesNotMatch(prose,labels);
+  assert.doesNotMatch(JSON.stringify(V),labels);
+  assert.throws(()=>C.validate({...C.fresh(),version:0}),err=>!labels.test(err.message)&&err.message.includes('Kohelet & Gregor'));
+  assert.throws(()=>C.restore({app:'other',version:1,savedAt:0,data:C.fresh()}),err=>!labels.test(err.message)&&err.message.includes('Kohelet & Gregor'));
+});
 test('shared presentation uses the same task data and every slide has an illustration',()=>{
   const js=fs.readFileSync(path.join(root,'scripts/kohelet-gregor.js'),'utf8');assert.ok(js.includes('...V.tasks.map'));assert.ok(js.includes('visual(s.visual)'));assert.equal(V.slides.length,19);
   const css=fs.readFileSync(path.join(root,'styles/kohelet-gregor.css'),'utf8');assert.ok(css.includes('.presentation-stage:fullscreen .presentation-bar'));assert.ok(css.includes('prefers-reduced-motion'));
