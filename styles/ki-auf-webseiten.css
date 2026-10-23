@@ -1,4 +1,25 @@
 :root{--accent:var(--red)}
+[hidden]{display:none!important}
+.reading-route>div p+p{margin-top:1em}
+.task-grid,.cost-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:35px}
+.task-card{padding:26px;background:var(--white);border:1px solid var(--line);border-top:3px solid var(--red);border-radius:5px}
+.task-card h3{font-size:25px}.task-card p,.cost-grid p{font-size:17px;line-height:1.7}
+.task-card .eyebrow{font-size:13px;margin-bottom:18px}
+.task-basis{border-top:1px solid var(--line);padding-top:18px;margin-top:22px;color:var(--red);font-weight:500}
+.example-wide{margin-top:30px;max-width:80ch}.example-wide p:last-child{margin-bottom:0}
+.subheading{margin-top:42px}
+.glossary{display:grid;grid-template-columns:1fr 1fr;gap:0 35px;margin-block:35px}
+.glossary>div{padding:22px 0;border-top:1px solid var(--line)}
+.glossary dt{font-weight:600;color:var(--red);font-size:21px;margin-bottom:10px}
+.glossary dd{margin:0;font-size:17px;line-height:1.7}
+.cost-rule{padding:30px;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:5px;background:var(--white);margin-bottom:35px}
+.cost-rule p{max-width:80ch}.cost-rule p:last-child{margin-bottom:0}
+.audit-note{margin-top:25px}
+.journey-stations.has-image{grid-template-columns:repeat(4,minmax(0,1fr))}
+.ki-workshop :where(.prose,.role,.task-card,.context-example,.cost-rule,.note,.maintenance,.transfer,.sources,.glossary) :where(p:not(.eyebrow):not(.role-label),dd){hyphens:auto;-webkit-hyphens:auto;text-align:justify;text-justify:inter-word}
+.ki-workshop :where(.lead,.task-basis,.audit-note){hyphens:auto;-webkit-hyphens:auto}
+@media(max-width:1000px){.task-grid,.cost-grid{gap:18px}.task-card,.cost-grid .role{padding:22px}.task-card h3{font-size:23px}.journey-stations.has-image{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.task-grid,.cost-grid,.glossary{grid-template-columns:1fr}.task-card,.cost-rule{padding:22px}.journey-stations.has-image{grid-template-columns:1fr}.task-card h3{font-size:25px}}
 .chapter-menu>summary svg{width:18px;height:18px;margin-left:15px;vertical-align:-3px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round}
 .page-header .chapter-menu{position:relative;right:auto;top:auto;max-width:none;box-shadow:none}
 .page-header .chapter-menu nav{position:absolute;right:0;top:calc(100% + 8px);background:var(--white);border:1px solid var(--line);border-radius:6px;box-shadow:0 8px 25px #0002;max-width:calc(100vw - 40px)}

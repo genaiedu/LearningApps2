@@ -3,7 +3,7 @@
   const core=window.KIWebLesson,q=selector=>document.querySelector(selector);
   if(!core)return;
   let scenario='solved',index=0;
-  const names={browser:'Browser',server:'Vercel',model:'Groq'};
+  const names={browser:'Browser',server:'Vercel',model:'Groq',image:'Cloudflare'};
   function render(){
     const step=core.at(scenario,index);index=step.index;
     q('#journey-counter').textContent='Schritt '+(index+1)+' von '+step.total;
@@ -12,8 +12,11 @@
     q('#journey-example').textContent=step.example||'';q('#journey-result').hidden=!step.example;
     q('#journey-back').disabled=index===0;q('#journey-next').disabled=index===step.total-1;
     const seen=core.stages(scenario).slice(0,index+1).map(item=>item.node);
+    const hasImage=core.stages(scenario).some(item=>item.node==='image');
+    q('.journey-stations').classList.toggle('has-image',hasImage);
     document.querySelectorAll('[data-journey-node]').forEach(node=>{
       const id=node.dataset.journeyNode;
+      node.hidden=id==='image'&&!hasImage;
       if(id===step.node)node.setAttribute('aria-current','step');else node.removeAttribute('aria-current');
       node.querySelector('.node-state').textContent=id===step.node?'Jetzt: '+names[id]:seen.includes(id)?'Bereits beteiligt':'Noch nicht beteiligt';
     });
